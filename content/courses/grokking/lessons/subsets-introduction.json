@@ -1,0 +1,13 @@
+{
+ "id": "subsets-introduction",
+ "courseId": "grokking",
+ "chapterId": "subsets",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>A huge number of coding interview problems involve dealing with <a href=\"https://en.wikipedia.org/wiki/Permutation\" target=\"_blank\" rel=\"noreferrer\">Permutations</a> and <a href=\"https://en.wikipedia.org/wiki/Combination\" target=\"_blank\" rel=\"noreferrer\">Combinations</a> of a given set of elements. This pattern describes an efficient <strong>Breadth First Search (BFS)</strong> approach to handle all these problems.</p>\n<p>Let’s jump onto our first problem to develop an understanding of this pattern.</p>"
+  }
+ ]
+}

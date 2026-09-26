@@ -1,0 +1,53 @@
+{
+ "id": "reverse-a-linkedlist",
+ "courseId": "grokking",
+ "chapterId": "in-place-reversal-of-a-linkedlist",
+ "title": "Reverse a LinkedList",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given the head of a Singly LinkedList, reverse the LinkedList. Write a function to return the new head of the reversed LinkedList.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/bb95c26119a7c3f0.svg",
+   "w": 800,
+   "h": 260
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>To reverse a LinkedList, we need to reverse one node at a time. We will start with a variable <code>current</code> which will initially point to the head of the LinkedList and a variable <code>previous</code> which will point to the previous node that we have processed; initially <code>previous</code> will point to <code>null</code>.</p>\n<p>In a stepwise manner, we will reverse the <code>current</code> node by pointing it to the <code>previous</code> before moving on to the next node. Also, we will update the <code>previous</code> to always point to the previous node that we have processed. Here is the visual representation of our algorithm:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/3bea536ff8bd7f09.svg",
+   "w": 800,
+   "h": 170
+  },
+  {
+   "t": "html",
+   "html": "<h4>Code </h4>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class ListNode {\n  int value = 0;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass ReverseLinkedList {\n\n  public static ListNode reverse(ListNode head) {\n    ListNode current = head; // current node that we will be processing\n    ListNode previous = null; // previous node that we have processed\n    ListNode next = null; // will be used to temporarily store the next node\n\n    while (current != null) {\n      next = current.next; // temporarily store the next node\n      current.next = previous; // reverse the current node\n      previous = current; // before we move to the next node, point previous to the current node\n      current = next; // move on the next node\n    }\n    // after the loop current will be pointing to 'null' and 'previous' will be the new head\n    return previous;\n  }\n\n  public static void main(String[] args) {\n    ListNode head = new ListNode(2);\n    head.next = new ListNode(4);\n    head.next.next = new ListNode(6);\n    head.next.next.next = new ListNode(8);\n    head.next.next.next.next = new ListNode(10);\n\n    ListNode result = ReverseLinkedList.reverse(head);\n    System.out.print(\"Nodes of the reversed LinkedList are: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}",
+   "python": "from __future__ import print_function\n\n\nclass Node:\n  def __init__(self, value, next=None):\n    self.value = value\n    self.next = next\n\n  def print_list(self):\n    temp = self\n    while temp is not None:\n      print(temp.value, end=\" \")\n      temp = temp.next\n    print()\n\n\ndef reverse(head):\n  previous, current, next = None, head, None\n  while current is not None:\n    next = current.next  # temporarily store the next node\n    current.next = previous  # reverse the current node\n    previous = current  # before we move to the next node, point previous to the current node\n    current = next  # move on the next node\n  return previous\n\n\ndef main():\n  head = Node(2)\n  head.next = Node(4)\n  head.next.next = Node(6)\n  head.next.next.next = Node(8)\n  head.next.next.next.next = Node(10)\n\n  print(\"Nodes of original LinkedList are: \", end='')\n  head.print_list()\n  result = reverse(head)\n  print(\"Nodes of reversed LinkedList are: \", end='')\n  result.print_list()\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of our algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> where ‘N’ is the total number of nodes in the LinkedList.</p>\n<h4>Space complexity </h4>\n<p>We only used constant space, therefore, the space complexity of our algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "class ListNode {\n  int value = 0;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass ReverseLinkedList {\n\n  public static ListNode reverse(ListNode head) {\n    // TODO: Write your code here\n    return head;\n  }\n\n  public static void main(String[] args) {\n    ListNode head = new ListNode(2);\n    head.next = new ListNode(4);\n    head.next.next = new ListNode(6);\n    head.next.next.next = new ListNode(8);\n    head.next.next.next.next = new ListNode(10);\n\n    ListNode result = ReverseLinkedList.reverse(head);\n    System.out.print(\"Nodes of the reversed LinkedList are: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}",
+  "python": "from __future__ import print_function\n\n\nclass Node:\n  def __init__(self, value, next=None):\n    self.value = value\n    self.next = next\n\n  def print_list(self):\n    temp = self\n    while temp is not None:\n      print(temp.value, end=\" \")\n      temp = temp.next\n    print()\n\n\ndef reverse(head):\n  # TODO: Write your code here\n  return head\n\n\ndef main():\n  head = Node(2)\n  head.next = Node(4)\n  head.next.next = Node(6)\n  head.next.next.next = Node(8)\n  head.next.next.next.next = Node(10)\n\n  print(\"Nodes of original LinkedList are: \", end='')\n  head.print_list()\n  result = reverse(head)\n  print(\"Nodes of reversed LinkedList are: \", end='')\n  result.print_list()\n\n\nmain()\n"
+ },
+ "reference": {
+  "java": "class ListNode {\n  int value = 0;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass ReverseLinkedList {\n\n  public static ListNode reverse(ListNode head) {\n    ListNode current = head; // current node that we will be processing\n    ListNode previous = null; // previous node that we have processed\n    ListNode next = null; // will be used to temporarily store the next node\n\n    while (current != null) {\n      next = current.next; // temporarily store the next node\n      current.next = previous; // reverse the current node\n      previous = current; // before we move to the next node, point previous to the current node\n      current = next; // move on the next node\n    }\n    // after the loop current will be pointing to 'null' and 'previous' will be the new head\n    return previous;\n  }\n\n  public static void main(String[] args) {\n    ListNode head = new ListNode(2);\n    head.next = new ListNode(4);\n    head.next.next = new ListNode(6);\n    head.next.next.next = new ListNode(8);\n    head.next.next.next.next = new ListNode(10);\n\n    ListNode result = ReverseLinkedList.reverse(head);\n    System.out.print(\"Nodes of the reversed LinkedList are: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}",
+  "python": "from __future__ import print_function\n\n\nclass Node:\n  def __init__(self, value, next=None):\n    self.value = value\n    self.next = next\n\n  def print_list(self):\n    temp = self\n    while temp is not None:\n      print(temp.value, end=\" \")\n      temp = temp.next\n    print()\n\n\ndef reverse(head):\n  previous, current, next = None, head, None\n  while current is not None:\n    next = current.next  # temporarily store the next node\n    current.next = previous  # reverse the current node\n    previous = current  # before we move to the next node, point previous to the current node\n    current = next  # move on the next node\n  return previous\n\n\ndef main():\n  head = Node(2)\n  head.next = Node(4)\n  head.next.next = Node(6)\n  head.next.next.next = Node(8)\n  head.next.next.next.next = Node(10)\n\n  print(\"Nodes of original LinkedList are: \", end='')\n  head.print_list()\n  result = reverse(head)\n  print(\"Nodes of reversed LinkedList are: \", end='')\n  result.print_list()\n\n\nmain()\n"
+ }
+}

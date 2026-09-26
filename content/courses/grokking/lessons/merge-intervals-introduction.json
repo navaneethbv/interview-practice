@@ -1,0 +1,24 @@
+{
+ "id": "merge-intervals-introduction",
+ "courseId": "grokking",
+ "chapterId": "merge-intervals",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>This pattern describes an efficient technique to deal with overlapping intervals. In a lot of problems involving intervals, we either need to find overlapping intervals or merge intervals if they overlap.</p>\n<p>Given two intervals (‘a’ and ‘b’), there will be six different ways the two intervals can relate to each other:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/2681ea6e7a2e6aae.svg",
+   "w": 417,
+   "h": 310,
+   "alt": "svg viewer"
+  },
+  {
+   "t": "html",
+   "html": "<p>Understanding the above six cases will help us in solving all intervals related problems. Let’s jump onto our first problem to understand the <strong>Merge Interval</strong> pattern.</p>"
+  }
+ ]
+}

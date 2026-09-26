@@ -1,0 +1,37 @@
+{
+ "id": "find-all-missing-numbers",
+ "courseId": "grokking",
+ "chapterId": "cyclic-sort",
+ "title": "Find all Missing Numbers",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>We are given an unsorted array containing numbers taken from the range 1 to ‘n’. The array can have duplicates, which means some numbers will be missing. Find all those missing numbers.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;[2,&nbsp;3,&nbsp;1,&nbsp;8,&nbsp;2,&nbsp;3,&nbsp;5,&nbsp;1]<br>Output:&nbsp;4,&nbsp;6,&nbsp;7<br>Explanation:&nbsp;The&nbsp;array&nbsp;should&nbsp;have&nbsp;all&nbsp;numbers&nbsp;from&nbsp;1&nbsp;to&nbsp;8,&nbsp;due&nbsp;to&nbsp;duplicates&nbsp;4,&nbsp;6,&nbsp;and&nbsp;7&nbsp;are&nbsp;missing.<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;[2,&nbsp;4,&nbsp;1,&nbsp;2]<br>Output:&nbsp;3<br></code></pre>\n<p><strong>Example 3:</strong></p>\n<pre><code>Input:&nbsp;[2,&nbsp;3,&nbsp;2,&nbsp;1]<br>Output:&nbsp;4<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <strong>Cyclic Sort</strong> pattern and shares similarities with <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5319932059320320/\" target=\"_blank\" rel=\"noreferrer\">Find the Missing Number</a> with one difference. In this problem, there can be many duplicates whereas in ‘Find the Missing Number’ there were no duplicates and the range was greater than the length of the array.</p>\n<p>However, we will follow a similar approach though as discussed in <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5319932059320320/\" target=\"_blank\" rel=\"noreferrer\">Find the Missing Number</a> to place the numbers on their correct indices. Once we are done with the cyclic sort we will iterate the array to find all indices that are missing the correct numbers.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "import java.util.*;\n\nclass AllMissingNumbers {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    List<Integer> missingNumbers = new ArrayList<>();\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        missingNumbers.add(i + 1);\n\n    return missingNumbers;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    List<Integer> missing = AllMissingNumbers.findNumbers(new int[] { 2, 3, 1, 8, 2, 3, 5, 1 });\n    System.out.println(\"Missing numbers: \" + missing);\n\n    missing = AllMissingNumbers.findNumbers(new int[] { 2, 4, 1, 2 });\n    System.out.println(\"Missing numbers: \" + missing);\n\n    missing = AllMissingNumbers.findNumbers(new int[] { 2, 3, 2, 1 });\n    System.out.println(\"Missing numbers: \" + missing);\n  }\n}\n",
+   "python": "def find_missing_numbers(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  missingNumbers = []\n\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      missingNumbers.append(i + 1)\n\n  return missingNumbers\n\n\ndef main():\n  print(find_missing_numbers([2, 3, 1, 8, 2, 3, 5, 1]))\n  print(find_missing_numbers([2, 4, 1, 2]))\n  print(find_missing_numbers([2, 3, 2, 1]))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<h4>Space complexity </h4>\n<p>Ignoring the space required for the output array, the algorithm runs in constant space <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "import java.util.*;\n\nclass AllMissingNumbers {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    List<Integer> missingNumbers = new ArrayList<>();\n    // TODO: Write your code here\n    return missingNumbers;\n  }\n}\n",
+  "python": "def find_missing_numbers(nums):\n  missingNumbers = []\n  # TODO: Write your code here\n  return missingNumbers\n"
+ },
+ "reference": {
+  "java": "import java.util.*;\n\nclass AllMissingNumbers {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    List<Integer> missingNumbers = new ArrayList<>();\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        missingNumbers.add(i + 1);\n\n    return missingNumbers;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    List<Integer> missing = AllMissingNumbers.findNumbers(new int[] { 2, 3, 1, 8, 2, 3, 5, 1 });\n    System.out.println(\"Missing numbers: \" + missing);\n\n    missing = AllMissingNumbers.findNumbers(new int[] { 2, 4, 1, 2 });\n    System.out.println(\"Missing numbers: \" + missing);\n\n    missing = AllMissingNumbers.findNumbers(new int[] { 2, 3, 2, 1 });\n    System.out.println(\"Missing numbers: \" + missing);\n  }\n}\n",
+  "python": "def find_missing_numbers(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  missingNumbers = []\n\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      missingNumbers.append(i + 1)\n\n  return missingNumbers\n\n\ndef main():\n  print(find_missing_numbers([2, 3, 1, 8, 2, 3, 5, 1]))\n  print(find_missing_numbers([2, 4, 1, 2]))\n  print(find_missing_numbers([2, 3, 2, 1]))\n\n\nmain()\n"
+ }
+}

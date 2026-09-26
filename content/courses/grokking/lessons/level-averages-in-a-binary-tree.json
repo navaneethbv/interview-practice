@@ -1,0 +1,53 @@
+{
+ "id": "level-averages-in-a-binary-tree",
+ "courseId": "grokking",
+ "chapterId": "tree-breadth-first-search",
+ "title": "Level Averages in a Binary Tree",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given a binary tree, populate an array to represent the <strong>averages of all of its levels</strong>.</p>\n<p><strong>Example 1:</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/b37f17fe67051446.svg",
+   "w": 600,
+   "h": 280
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>Example 2:</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/5ef76079678bb951.svg",
+   "w": 600,
+   "h": 280
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5726607939469312/\" target=\"_blank\" rel=\"noreferrer\">Binary Tree Level Order Traversal</a> pattern. We can follow the same <strong>BFS</strong> approach. The only difference will be that instead of keeping track of all nodes of a level, we will only track the running sum of the values of all nodes in each level. In the end, we will append the average of the current level to the result array.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like; only the highlighted lines have changed:</p>"
+  },
+  {
+   "t": "code",
+   "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelAverage {\n  public static List<Double> findLevelAverages(TreeNode root) {\n    List<Double> result = new ArrayList<>();\n    if (root == null)\n      return result;\n\n    Queue<TreeNode> queue = new LinkedList<>();\n    queue.offer(root);\n    while (!queue.isEmpty()) {\n      int levelSize = queue.size();\n      double levelSum = 0;\n      for (int i = 0; i < levelSize; i++) {\n        TreeNode currentNode = queue.poll();\n        // add the node's value to the running sum\n        levelSum += currentNode.val;\n        // insert the children of current node to the queue\n        if (currentNode.left != null)\n          queue.offer(currentNode.left);\n        if (currentNode.right != null)\n          queue.offer(currentNode.right);\n      }\n      // append the current level's average to the result array\n      result.add(levelSum / levelSize);\n    }\n\n    return result;\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.left.right = new TreeNode(2);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    List<Double> result = LevelAverage.findLevelAverages(root);\n    System.out.print(\"Level averages are: \" + result);\n  }\n}\n",
+   "python": "from collections import deque\n\n\nclass TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_level_averages(root):\n  result = []\n  if root is None:\n    return result\n\n  queue = deque()\n  queue.append(root)\n  while queue:\n    levelSize = len(queue)\n    levelSum = 0.0\n    for _ in range(levelSize):\n      currentNode = queue.popleft()\n      # add the node's value to the running sum\n      levelSum += currentNode.val\n      # insert the children of current node to the queue\n      if currentNode.left:\n        queue.append(currentNode.left)\n      if currentNode.right:\n        queue.append(currentNode.right)\n\n    # append the current level's average to the result array\n    result.append(levelSum / levelSize)\n\n  return result\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.left.right = TreeNode(2)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  print(\"Level averages are: \" + str(find_level_averages(root)))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span>, where ‘N’ is the total number of nodes in the tree. This is due to the fact that we traverse each node once.</p>\n<h4>Space complexity </h4>\n<p>The space complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> which is required for the queue. Since we can have a maximum of <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mord\">/2</span></span></span></span></span> nodes at any level (this could happen only at the lowest level), therefore we will need <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> space to store them in the queue.</p>\n<hr>\n<h3>Similar Problems </h3>\n<p><strong>Problem 1:</strong> Find the largest value on each level of a binary tree.</p>\n<p><strong>Solution:</strong> We will follow a similar approach, but instead of having a running sum we will track the maximum value of each level.</p>\n<pre><code>maxValue&nbsp;=&nbsp;max(maxValue,&nbsp;currentNode.val)<br></code></pre>"
+  }
+ ],
+ "starter": {
+  "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelAverage {\n  public static List<Double> findLevelAverages(TreeNode root) {\n    List<Double> result = new ArrayList<>();\n    // TODO: Write your code here\n    return result;\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.left.right = new TreeNode(2);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    List<Double> result = LevelAverage.findLevelAverages(root);\n    System.out.print(\"Level averages are: \" + result);\n  }\n}\n",
+  "python": "class TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_level_averages(root):\n  result = []\n  # TODO: Write your code here\n  return result\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.left.right = TreeNode(2)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  print(\"Level averages are: \" + str(find_level_averages(root)))\n\n\nmain()\n"
+ },
+ "reference": {
+  "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelAverage {\n  public static List<Double> findLevelAverages(TreeNode root) {\n    List<Double> result = new ArrayList<>();\n    if (root == null)\n      return result;\n\n    Queue<TreeNode> queue = new LinkedList<>();\n    queue.offer(root);\n    while (!queue.isEmpty()) {\n      int levelSize = queue.size();\n      double levelSum = 0;\n      for (int i = 0; i < levelSize; i++) {\n        TreeNode currentNode = queue.poll();\n        // add the node's value to the running sum\n        levelSum += currentNode.val;\n        // insert the children of current node to the queue\n        if (currentNode.left != null)\n          queue.offer(currentNode.left);\n        if (currentNode.right != null)\n          queue.offer(currentNode.right);\n      }\n      // append the current level's average to the result array\n      result.add(levelSum / levelSize);\n    }\n\n    return result;\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.left.right = new TreeNode(2);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    List<Double> result = LevelAverage.findLevelAverages(root);\n    System.out.print(\"Level averages are: \" + result);\n  }\n}\n",
+  "python": "from collections import deque\n\n\nclass TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_level_averages(root):\n  result = []\n  if root is None:\n    return result\n\n  queue = deque()\n  queue.append(root)\n  while queue:\n    levelSize = len(queue)\n    levelSum = 0.0\n    for _ in range(levelSize):\n      currentNode = queue.popleft()\n      # add the node's value to the running sum\n      levelSum += currentNode.val\n      # insert the children of current node to the queue\n      if currentNode.left:\n        queue.append(currentNode.left)\n      if currentNode.right:\n        queue.append(currentNode.right)\n\n    # append the current level's average to the result array\n    result.append(levelSum / levelSize)\n\n  return result\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.left.right = TreeNode(2)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  print(\"Level averages are: \" + str(find_level_averages(root)))\n\n\nmain()\n"
+ }
+}

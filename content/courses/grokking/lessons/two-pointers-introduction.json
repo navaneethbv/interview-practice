@@ -1,0 +1,23 @@
+{
+ "id": "two-pointers-introduction",
+ "courseId": "grokking",
+ "chapterId": "two-pointers",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>In problems where we deal with sorted arrays (or LinkedLists) and need to find a set of elements that fulfill certain constraints, the Two Pointers approach becomes quite useful. The set of elements could be a pair, a triplet or even a subarray. For example, take a look at the following problem:</p>\n<blockquote>\n<p>Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target.</p>\n</blockquote>\n<p>To solve this problem, we can consider each element one by one (pointed out by the first pointer) and iterate through the remaining elements (pointed out by the second pointer) to find a pair with the given sum. The time complexity of this algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1.0641em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.8141em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"katex-sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span></span> where ‘N’ is the number of elements in the input array.</p>\n<p>Given that the input array is sorted, an efficient way would be to start with one pointer in the beginning and another pointer at the end. At every step, we will see if the numbers pointed by the two pointers add up to the target sum. If they do not, we will do one of two things:</p>\n<ol>\n<li>If the sum of the two numbers pointed by the two pointers is greater than the target sum, this means that we need a pair with a smaller sum. So, to try more pairs, we can decrement the end-pointer.</li>\n<li>If the sum of the two numbers pointed by the two pointers is smaller than the target sum, this means that we need a pair with a larger sum. So, to try more pairs, we can increment the start-pointer.</li>\n</ol>\n<p>Here is the visual representation of this algorithm:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/87bbca80ef8287d7.svg",
+   "w": 600,
+   "h": 420
+  },
+  {
+   "t": "html",
+   "html": "<p>The time complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<p>In the following chapters, we will apply the <strong>Two Pointers</strong> approach to solve a few problems.</p>"
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+{
+ "id": "count-of-subset-sum",
+ "courseId": "grokking",
+ "chapterId": "0-1-knapsack-dynamic-programming",
+ "title": "Count of Subset Sum",
+ "type": "problem",
+ "difficulty": "hard",
+ "challenge": 1,
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Count of Subset Sum (hard) </h3>\n<p>Given a set of positive numbers, find the total number of subsets whose sum is equal to a given number ‘S’.</p>\n<h5>Example 1: </h5>\n<pre><code>Input:&nbsp;{1,&nbsp;1,&nbsp;2,&nbsp;3},&nbsp;S=4<br>Output:&nbsp;3<br>The&nbsp;given&nbsp;set&nbsp;has&nbsp;'3'&nbsp;subsets&nbsp;whose&nbsp;sum&nbsp;is&nbsp;'4':&nbsp;{1,&nbsp;1,&nbsp;2},&nbsp;{1,&nbsp;3},&nbsp;{1,&nbsp;3}<br>Note&nbsp;that&nbsp;we&nbsp;have&nbsp;two&nbsp;similar&nbsp;sets&nbsp;{1,&nbsp;3},&nbsp;because&nbsp;we&nbsp;have&nbsp;two&nbsp;'1'&nbsp;in&nbsp;our&nbsp;input.<br></code></pre>\n<h5>Example 2: </h5>\n<pre><code>Input:&nbsp;{1,&nbsp;2,&nbsp;7,&nbsp;1,&nbsp;5},&nbsp;S=9<br>Output:&nbsp;3<br>The&nbsp;given&nbsp;set&nbsp;has&nbsp;'3'&nbsp;subsets&nbsp;whose&nbsp;sum&nbsp;is&nbsp;'9':&nbsp;{2,&nbsp;7},&nbsp;{1,&nbsp;7,&nbsp;1},&nbsp;{1,&nbsp;2,&nbsp;1,&nbsp;5}<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h4>Code </h4>\n<p>Here is the code for the brute-force solution:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class SubsetSum {\n\n  public int countSubsets(int[] num, int sum) {\n    return this.countSubsetsRecursive(num, sum, 0);\n  }\n\n  private int countSubsetsRecursive(int[] num, int sum, int currentIndex) {\n    // base checks\n    if (sum == 0)\n      return 1;\n\n    if(num.length == 0 || currentIndex >= num.length)\n      return 0;\n\n    // recursive call after selecting the number at the currentIndex\n    // if the number at currentIndex exceeds the sum, we shouldn't process this\n    int sum1 = 0;\n    if( num[currentIndex] <= sum )\n      sum1 = countSubsetsRecursive(num, sum - num[currentIndex], currentIndex + 1);\n\n    // recursive call after excluding the number at the currentIndex\n    int sum2 = countSubsetsRecursive(num, sum, currentIndex + 1);\n\n    return sum1 + sum2;\n  }\n\n  public static void main(String[] args) {\n    SubsetSum ss = new SubsetSum();\n    int[] num = {1, 1, 2, 3};\n    System.out.println(ss.countSubsets(num, 4));\n    num = new int[]{1, 2, 7, 1, 5};\n    System.out.println(ss.countSubsets(num, 9));\n  }\n}",
+   "python": "def count_subsets(num, sum):\n  return count_subsets_recursive(num, sum, 0)\n\n\ndef count_subsets_recursive(num, sum, currentIndex):\n  # base checks\n  if sum == 0:\n    return 1\n  n = len(num)\n  if n == 0 or currentIndex >= n:\n    return 0\n\n  # recursive call after selecting the number at the currentIndex\n  # if the number at currentIndex exceeds the sum, we shouldn't process this\n  sum1 = 0\n  if num[currentIndex] <= sum:\n    sum1 = count_subsets_recursive(\n      num, sum - num[currentIndex], currentIndex + 1)\n\n  # recursive call after excluding the number at the currentIndex\n  sum2 = count_subsets_recursive(num, sum, currentIndex + 1)\n\n  return sum1 + sum2\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time and Space complexity </h4>\n<p>The time complexity of the above algorithm is exponential <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\"><span class=\"mord\">2</span><span class=\"msupsub\"><span class=\"vlist-t\"><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.6644em;\"><span style=\"top:-3.063em;margin-right:0.05em;\"><span class=\"pstrut\" style=\"height:2.7em;\"></span><span class=\"katex-sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span></span></span></span></span></span><span class=\"mclose\">)</span></span></span></span></span>, where ‘n’ represents the total number. The space complexity is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span>, this memory is used to store the recursion stack.</p>\n<h3>Top-down Dynamic Programming with Memoization </h3>\n<p>We can use memoization to overcome the overlapping sub-problems. We will be using a two-dimensional array to store the results of solved sub-problems. As mentioned above, we need to store results for every subset and for every possible sum.</p>\n<h4>Code </h4>\n<p>Here is the code:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class SubsetSum {\n\n  public int countSubsets(int[] num, int sum) {\n    Integer[][] dp = new Integer[num.length][sum + 1];\n    return this.countSubsetsRecursive(dp, num, sum, 0);\n  }\n\n  private int countSubsetsRecursive(Integer[][] dp, int[] num, int sum, int currentIndex) {\n    // base checks\n    if (sum == 0)\n      return 1;\n\n    if(num.length == 0 || currentIndex >= num.length)\n      return 0;\n\n    // check if we have not already processed a similar problem\n    if(dp[currentIndex][sum] == null) {\n      // recursive call after choosing the number at the currentIndex\n      // if the number at currentIndex exceeds the sum, we shouldn't process this\n      int sum1 = 0;\n      if( num[currentIndex] <= sum )\n        sum1 = countSubsetsRecursive(dp, num, sum - num[currentIndex], currentIndex + 1);\n\n      // recursive call after excluding the number at the currentIndex\n      int sum2 = countSubsetsRecursive(dp, num, sum, currentIndex + 1);\n\n      dp[currentIndex][sum] = sum1 + sum2;\n    }\n\n    return dp[currentIndex][sum];\n  }\n\n  public static void main(String[] args) {\n    SubsetSum ss = new SubsetSum();\n    int[] num = {1, 1, 2, 3};\n    System.out.println(ss.countSubsets(num, 4));\n    num = new int[]{1, 2, 7, 1, 5};\n    System.out.println(ss.countSubsets(num, 9));\n  }\n}",
+   "python": "def count_subsets(num, sum):\n  # create a two dimensional array for Memoization, each element is initialized to '-1'\n  dp = [[-1 for x in range(sum+1)] for y in range(len(num))]\n  return count_subsets_recursive(dp, num, sum, 0)\n\n\ndef count_subsets_recursive(dp, num, sum, currentIndex):\n  # base checks\n  if sum == 0:\n    return 1\n\n  n = len(num)\n  if n == 0 or currentIndex >= n:\n    return 0\n\n  # check if we have not already processed a similar problem\n  if dp[currentIndex][sum] == -1:\n    # recursive call after choosing the number at the currentIndex\n    # if the number at currentIndex exceeds the sum, we shouldn't process this\n    sum1 = 0\n    if num[currentIndex] <= sum:\n      sum1 = count_subsets_recursive(\n        dp, num, sum - num[currentIndex], currentIndex + 1)\n\n    # recursive call after excluding the number at the currentIndex\n    sum2 = count_subsets_recursive(dp, num, sum, currentIndex + 1)\n\n    dp[currentIndex][sum] = sum1 + sum2\n\n  return dp[currentIndex][sum]\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h3>Bottom-up Dynamic Programming </h3>\n<p>We will try to find if we can make all possible sums with every subset to populate the array <code>db[TotalNumbers][S+1</code>].</p>\n<p>So, at every step we have two options:</p>\n<ol>\n<li>Exclude the number. Count all the subsets without the given number up to the given sum =&gt; <code>dp[index-1][sum]</code></li>\n<li>Include the number if its value is not more than the ‘sum’. In this case, we will count all the subsets to get the remaining sum =&gt; <code>dp[index-1][sum-num[index]]</code></li>\n</ol>\n<p>To find the total sets, we will add both of the above two values:</p>\n<pre><code>&nbsp;&nbsp;&nbsp;&nbsp;dp[index][sum]&nbsp;=&nbsp;dp[index-1][sum]&nbsp;+&nbsp;dp[index-1][sum-num[index]])<br></code></pre>\n<p>Let’s start with our base case of size zero:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/a73717b480059093.svg",
+   "w": 600,
+   "h": 250
+  },
+  {
+   "t": "html",
+   "html": "<h4>Code </h4>\n<p>Here is the code for our bottom-up dynamic programming approach:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class SubsetSum {\n\n  public int countSubsets(int[] num, int sum) {\n    int n = num.length;\n    int[][] dp = new int[n][sum + 1];\n\n    // populate the sum=0 columns, as we will always have an empty set for zero sum\n    for(int i=0; i < n; i++)\n      dp[i][0] = 1;\n\n    // with only one number, we can form a subset only when the required sum is equal to its value\n    for(int s=1; s <= sum ; s++) {\n      dp[0][s] = (num[0] == s ? 1 : 0);\n    }\n\n    // process all subsets for all sums\n    for(int i=1; i < num.length; i++) {\n      for(int s=1; s <= sum; s++) {\n        // exclude the number\n        dp[i][s] = dp[i-1][s];\n        // include the number, if it does not exceed the sum\n        if(s >= num[i])\n          dp[i][s] += dp[i-1][s-num[i]];\n      }\n    }\n\n    // the bottom-right corner will have our answer.\n    return dp[num.length-1][sum];\n  }\n\n  public static void main(String[] args) {\n    SubsetSum ss = new SubsetSum();\n    int[] num = {1, 1, 2, 3};\n    System.out.println(ss.countSubsets(num, 4));\n    num = new int[]{1, 2, 7, 1, 5};\n    System.out.println(ss.countSubsets(num, 9));\n  }\n}\n",
+   "python": "def count_subsets(num, sum):\n  n = len(num)\n  dp = [[-1 for x in range(sum+1)] for y in range(n)]\n\n  # populate the sum = 0 columns, as we will always have an empty set for zero sum\n  for i in range(0, n):\n    dp[i][0] = 1\n\n  # with only one number, we can form a subset only when the required sum is\n  # equal to its value\n  for s in range(1, sum+1):\n    dp[0][s] = 1 if num[0] == s else 0\n\n  # process all subsets for all sums\n  for i in range(1, n):\n    for s in range(1, sum+1):\n      # exclude the number\n      dp[i][s] = dp[i - 1][s]\n      # include the number, if it does not exceed the sum\n      if s >= num[i]:\n        dp[i][s] += dp[i - 1][s - num[i]]\n\n  # the bottom-right corner will have our answer.\n  return dp[n - 1][sum]\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time and Space complexity </h4>\n<p>The above solution has the time and space complexity of <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0576em;\">S</span><span class=\"mclose\">)</span></span></span></span></span>, where ‘N’ represents total numbers and ‘S’ is the desired sum.</p>\n<h3>Challenge </h3>\n<p>Can we improve our bottom-up DP solution even further? Can you find an algorithm that has <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.0576em;\">S</span><span class=\"mclose\">)</span></span></span></span></span> space complexity?</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Similar to the space optimized solution for <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5008218180812800/\" target=\"_blank\" rel=\"noreferrer\">0/1 Knapsack</a></p>"
+  },
+  {
+   "t": "code",
+   "java": "class SubsetSum {\n  static int countSubsets(int[] num, int sum) {\n    //TODO: Write - Your - Code\n    return -1;\n  }\n}",
+   "python": "def count_subsets(num, sum):\n  n = len(num)\n  dp = [0 for x in range(sum+1)]\n  dp[0] = 1\n\n  # with only one number, we can form a subset only when the required sum is equal to the number\n  for s in range(1, sum+1):\n    dp[s] = 1 if num[0] == s else 0\n\n  # process all subsets for all sums\n  for i in range(1, n):\n    for s in range(sum, -1, -1):\n      if s >= num[i]:\n        dp[s] += dp[s - num[i]]\n\n  return dp[sum]\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+  }
+ ],
+ "starter": {
+  "java": "class SubsetSum {\n  static int countSubsets(int[] num, int sum) {\n    //TODO: Write - Your - Code\n    return -1;\n  }\n\n  public static void main(String[] args) {\n    SubsetSum ss = new SubsetSum();\n    int[] num = { 1, 1, 2, 3 };\n    System.out.println(ss.countSubsets(num, 4));\n    num = new int[] { 1, 2, 7, 1, 5 };\n    System.out.println(ss.countSubsets(num, 9));\n  }\n}",
+  "python": "def count_subsets(num, sum):\n  #TODO: Write - Your - Code\n  return -1\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+ },
+ "reference": {
+  "java": "class SubsetSum {\n  static int countSubsets(int[] num, int sum) {\n    //TODO: Write - Your - Code\n    return -1;\n  }\n}",
+  "python": "def count_subsets(num, sum):\n  n = len(num)\n  dp = [0 for x in range(sum+1)]\n  dp[0] = 1\n\n  # with only one number, we can form a subset only when the required sum is equal to the number\n  for s in range(1, sum+1):\n    dp[s] = 1 if num[0] == s else 0\n\n  # process all subsets for all sums\n  for i in range(1, n):\n    for s in range(sum, -1, -1):\n      if s >= num[i]:\n        dp[s] += dp[s - num[i]]\n\n  return dp[sum]\n\n\ndef main():\n  print(\"Total number of subsets \" + str(count_subsets([1, 1, 2, 3], 4)))\n  print(\"Total number of subsets: \" + str(count_subsets([1, 2, 7, 1, 5], 9)))\n\n\nmain()\n"
+ }
+}

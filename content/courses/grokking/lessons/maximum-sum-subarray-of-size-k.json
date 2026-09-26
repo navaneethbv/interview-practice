@@ -1,0 +1,56 @@
+{
+ "id": "maximum-sum-subarray-of-size-k",
+ "courseId": "grokking",
+ "chapterId": "sliding-window",
+ "title": "Maximum Sum Subarray of Size K",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given an array of positive numbers and a positive number ‘k’, find the <strong>maximum sum of any contiguous subarray of size ‘k’</strong>.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;[2,&nbsp;1,&nbsp;5,&nbsp;1,&nbsp;3,&nbsp;2],&nbsp;k=3&nbsp;<br>Output:&nbsp;9<br>Explanation:&nbsp;Subarray&nbsp;with&nbsp;maximum&nbsp;sum&nbsp;is&nbsp;[5,&nbsp;1,&nbsp;3].<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;[2,&nbsp;3,&nbsp;4,&nbsp;1,&nbsp;5],&nbsp;k=2&nbsp;<br>Output:&nbsp;7<br>Explanation:&nbsp;Subarray&nbsp;with&nbsp;maximum&nbsp;sum&nbsp;is&nbsp;[3,&nbsp;4].<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>A basic brute force solution will be to calculate the sum of all ‘k’ sized subarrays of the given array, to find the subarray with the highest sum. We can start from every index of the given array and add the next ‘k’ elements to find the sum of the subarray. Following is the visual representation of this algorithm for Example-1:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/29e26be925d56630.svg",
+   "w": 600,
+   "h": 470
+  },
+  {
+   "t": "html",
+   "html": "<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class MaxSumSubArrayOfSizeK {\n  public static int findMaxSumSubArray(int k, int[] arr) {\n    int maxSum = 0, windowSum;\n    for (int i = 0; i <= arr.length - k; i++) {\n      windowSum = 0;\n      for (int j = i; j < i + k; j++) {\n        windowSum += arr[j];\n      }\n      maxSum = Math.max(maxSum, windowSum);\n    }\n\n    return maxSum;\n  }\n\n  public static void main(String[] args) {\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(3, new int[] { 2, 1, 5, 1, 3, 2 }));\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(2, new int[] { 2, 3, 4, 1, 5 }));\n  }\n}",
+   "python": "def max_sub_array_of_size_k(k, arr):\n  max_sum = 0\n  window_sum = 0\n\n  for i in range(len(arr) - k + 1):\n    window_sum = 0\n    for j in range(i, i+k):\n      window_sum += arr[j]\n    max_sum = max(max_sum, window_sum)\n  return max_sum\n\n\ndef main():\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(3, [2, 1, 5, 1, 3, 2])))\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(2, [2, 3, 4, 1, 5])))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<p>The time complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0715em;\">K</span><span class=\"mclose\">)</span></span></span></span></span>, where ‘N’ is the total number of elements in the given array. Is it possible to find a better algorithm than this?</p>\n<h4>A better approach </h4>\n<p>If you observe closely, you will realize that to calculate the sum of a contiguous subarray we can utilize the sum of the previous subarray. For this, consider each subarray as a <strong>Sliding Window</strong> of size ‘k’. To calculate the sum of the next subarray, we need to slide the window ahead by one element. So to slide the window forward and calculate the sum of the new position of the sliding window, we need to do two things:</p>\n<ol>\n<li>Subtract the element going out of the sliding window i.e., subtract the first element of the window.</li>\n<li>Add the new element getting included in the sliding window i.e., the element coming right after the end of the window.</li>\n</ol>\n<p>This approach will save us from re-calculating the sum of the overlapping part of the sliding window. Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class MaxSumSubArrayOfSizeK {\n  public static int findMaxSumSubArray(int k, int[] arr) {\n    int windowSum = 0, maxSum = 0;\n    int windowStart = 0;\n    for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {\n      windowSum += arr[windowEnd]; // add the next element\n      // slide the window, we don't need to slide if we've not hit the required window size of 'k'\n      if (windowEnd >= k - 1) {\n        maxSum = Math.max(maxSum, windowSum);\n        windowSum -= arr[windowStart]; // subtract the element going out\n        windowStart++; // slide the window ahead\n      }\n    }\n\n    return maxSum;\n  }\n\n  public static void main(String[] args) {\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(3, new int[] { 2, 1, 5, 1, 3, 2 }));\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(2, new int[] { 2, 3, 4, 1, 5 }));\n  }\n}",
+   "python": "def max_sub_array_of_size_k(k, arr):\n  max_sum , window_sum = 0, 0\n  window_start = 0\n\n  for window_end in range(len(arr)):\n    window_sum += arr[window_end]  # add the next element\n    # slide the window, we don't need to slide if we've not hit the required window size of 'k'\n    if window_end >= k-1:\n      max_sum = max(max_sum, window_sum)\n      window_sum -= arr[window_start]  # subtract the element going out\n      window_start += 1  # slide the window ahead\n  return max_sum\n\n\ndef main():\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(3, [2, 1, 5, 1, 3, 2])))\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(2, [2, 3, 4, 1, 5])))\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time Complexity </h4>\n<p>The time complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<h4>Space Complexity </h4>\n<p>The algorithm runs in constant space <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "class MaxSumSubArrayOfSizeK {\n  public static int findMaxSumSubArray(int k, int[] arr) {\n    // TODO: Write your code here\n    return -1;\n  }\n}",
+  "python": "def max_sub_array_of_size_k(k, arr):\n  # TODO: Write your code here\n  return -1\n"
+ },
+ "reference": {
+  "java": "class MaxSumSubArrayOfSizeK {\n  public static int findMaxSumSubArray(int k, int[] arr) {\n    int windowSum = 0, maxSum = 0;\n    int windowStart = 0;\n    for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {\n      windowSum += arr[windowEnd]; // add the next element\n      // slide the window, we don't need to slide if we've not hit the required window size of 'k'\n      if (windowEnd >= k - 1) {\n        maxSum = Math.max(maxSum, windowSum);\n        windowSum -= arr[windowStart]; // subtract the element going out\n        windowStart++; // slide the window ahead\n      }\n    }\n\n    return maxSum;\n  }\n\n  public static void main(String[] args) {\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(3, new int[] { 2, 1, 5, 1, 3, 2 }));\n    System.out.println(\"Maximum sum of a subarray of size K: \"\n        + MaxSumSubArrayOfSizeK.findMaxSumSubArray(2, new int[] { 2, 3, 4, 1, 5 }));\n  }\n}",
+  "python": "def max_sub_array_of_size_k(k, arr):\n  max_sum , window_sum = 0, 0\n  window_start = 0\n\n  for window_end in range(len(arr)):\n    window_sum += arr[window_end]  # add the next element\n    # slide the window, we don't need to slide if we've not hit the required window size of 'k'\n    if window_end >= k-1:\n      max_sum = max(max_sum, window_sum)\n      window_sum -= arr[window_start]  # subtract the element going out\n      window_start += 1  # slide the window ahead\n  return max_sum\n\n\ndef main():\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(3, [2, 1, 5, 1, 3, 2])))\n  print(\"Maximum sum of a subarray of size K: \" + str(max_sub_array_of_size_k(2, [2, 3, 4, 1, 5])))\n\nmain()\n"
+ }
+}

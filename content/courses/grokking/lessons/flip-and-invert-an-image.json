@@ -1,0 +1,38 @@
+{
+ "id": "flip-and-invert-an-image",
+ "courseId": "grokking",
+ "chapterId": "bitwise-xor",
+ "title": "Flip and Invert an Image",
+ "type": "problem",
+ "difficulty": "hard",
+ "challenge": 1,
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given a binary matrix representing an image, we want to flip the image horizontally, then invert it.</p>\n<p>To flip an image horizontally means that each row of the image is reversed. For example, flipping [0, 1, 1] horizontally results in [1, 1, 0].</p>\n<p>To invert an image means that each 0 is replaced by 1, and each 1 is replaced by 0. For example, inverting [1, 1, 0] results in [0, 0, 1].</p>\n<p><b>Example 1:</b></p>\n<pre><code>Input:&nbsp;[<br>&nbsp;&nbsp;[1,0,1],<br>&nbsp;&nbsp;[1,1,1],<br>&nbsp;&nbsp;[0,1,1]<br>]<br>Output:&nbsp;[<br>&nbsp;&nbsp;[0,1,0],<br>&nbsp;&nbsp;[0,0,0],<br>&nbsp;&nbsp;[0,0,1]<br>]<br></code></pre>\n<p><b>Explanation</b>: First reverse each row: <code>[[1,0,1],[1,1,1],[1,1,0]]</code>.\nThen, invert the image: <code>[[0,1,0],[0,0,0],[0,0,1]]</code></p>\n<p><b>Example 2:</b></p>\n<pre><code>Input:&nbsp;[<br>&nbsp;&nbsp;[1,1,0,0],<br>&nbsp;&nbsp;[1,0,0,1],<br>&nbsp;&nbsp;[0,1,1,1],&nbsp;<br>&nbsp;&nbsp;[1,0,1,0]<br>]<br>Output:&nbsp;[<br>&nbsp;&nbsp;[1,1,0,0],<br>&nbsp;&nbsp;[0,1,1,0],<br>&nbsp;&nbsp;[0,0,0,1],<br>&nbsp;&nbsp;[1,0,1,0]<br>]<br></code></pre>\n<p><b>Explanation</b>: First reverse each row: <code>[[0,0,1,1],[1,0,0,1],[1,1,1,0],[0,1,0,1]]</code>.\nThen invert the image: <code>[[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]</code></p>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h2>Solution</h2>\n<ul>\n<li>\n<p><strong>Flip</strong>: We can flip the image in place by replacing <em>ith</em> element from left with the <em>ith</em> element from the right.</p>\n</li>\n<li>\n<p><strong>Invert</strong>: We can take XOR of each element with 1. If it is 1 then it will become 0 and if it is 0 then it will become 1.</p>\n</li>\n</ul>\n<h4>Code </h4>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class Solution {\n  public static int[][] flipAndInvertImage(int[][] arr) {\n      int C = arr[0].length;\n      for (int[] row: arr) {\n          for (int i = 0; i < (C + 1) / 2; ++i) {\n              int tmp = row[i] ^ 1;\n              row[i] = row[C - 1 - i] ^ 1;\n              row[C - 1 - i] = tmp;\n          }\n      }\n      return arr;\n  }\n\n  public static void print(int[][] arr) {\n    for(int i=0; i < arr.length; i++) {\n      for (int j=0; j < arr[i].length; j++) {\n        System.out.print(arr[i][j] + \" \");\n      }\n      System.out.println();\n    }\n\n  }\n\n  public static void main(String[] args) {\n    int[][] arr = {{1, 0, 1}, {1, 1, 1}, {0, 1, 1}};\n    print(flipAndInvertImage(arr));\n    System.out.println();\n\n    int[][]arr2 = {{1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}};\n    print(flipAndInvertImage(arr2));\n  }\n}",
+   "python": "def flip_an_invert_image(matrix):\n  C = len(matrix)\n  for row in matrix:\n    for i in range((C+1)//2):\n      row[i], row[C - i - 1] = row[C - i - 1] ^ 1, row[i] ^ 1\n\n  return matrix\n\ndef main():\n    print(flip_an_invert_image([[1,0,1], [1,1,1], [0,1,1]]))\n    print(flip_an_invert_image([[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]))\n\nmain()"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time Complexity </h4>\n<p>The time complexity of this solution is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span> as we iterate through all elements of the input.</p>\n<h4>Space Complexity </h4>\n<p>The space complexity of this solution is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "class Solution {\n  public static int[][] flipAndInvertImage(int[][] arr) {\n      //TODO: Write your code here\n      return arr;\n  }\n\n  public static void print(int[][] arr) {\n    for(int i=0; i < arr.length; i++) {\n      for (int j=0; j < arr[i].length; j++) {\n        System.out.print(arr[i][j] + \" \");\n      }\n      System.out.println();\n    }\n  }\n\n  public static void main(String[] args) {\n    int[][] arr = {{1, 0, 1}, {1, 1, 1}, {0, 1, 1}};\n    print(flipAndInvertImage(arr));\n\n    int[][]arr2 = {{1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}};\n    print(flipAndInvertImage(arr2));\n  }\n}",
+  "python": "def flip_and_invert_image(matrix):\n  #TODO: Write your code here.\n  return matrix\n\ndef main():\n  print(flip_and_invert_image([[1,0,1], [1,1,1], [0,1,1]]))\n  print(flip_and_invert_image([[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]))\n\nmain()"
+ },
+ "reference": {
+  "java": "class Solution {\n  public static int[][] flipAndInvertImage(int[][] arr) {\n      int C = arr[0].length;\n      for (int[] row: arr) {\n          for (int i = 0; i < (C + 1) / 2; ++i) {\n              int tmp = row[i] ^ 1;\n              row[i] = row[C - 1 - i] ^ 1;\n              row[C - 1 - i] = tmp;\n          }\n      }\n      return arr;\n  }\n\n  public static void print(int[][] arr) {\n    for(int i=0; i < arr.length; i++) {\n      for (int j=0; j < arr[i].length; j++) {\n        System.out.print(arr[i][j] + \" \");\n      }\n      System.out.println();\n    }\n\n  }\n\n  public static void main(String[] args) {\n    int[][] arr = {{1, 0, 1}, {1, 1, 1}, {0, 1, 1}};\n    print(flipAndInvertImage(arr));\n    System.out.println();\n\n    int[][]arr2 = {{1,1,0,0},{1,0,0,1},{0,1,1,1},{1,0,1,0}};\n    print(flipAndInvertImage(arr2));\n  }\n}",
+  "python": "def flip_an_invert_image(matrix):\n  C = len(matrix)\n  for row in matrix:\n    for i in range((C+1)//2):\n      row[i], row[C - i - 1] = row[C - i - 1] ^ 1, row[i] ^ 1\n\n  return matrix\n\ndef main():\n    print(flip_an_invert_image([[1,0,1], [1,1,1], [0,1,1]]))\n    print(flip_an_invert_image([[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]))\n\nmain()"
+ }
+}

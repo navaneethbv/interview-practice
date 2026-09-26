@@ -1,0 +1,63 @@
+{
+ "id": "level-order-successor",
+ "courseId": "grokking",
+ "chapterId": "tree-breadth-first-search",
+ "title": "Level Order Successor",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given a binary tree and a node, find the level order successor of the given node in the tree. The level order successor is the node that appears right after the given node in the level order traversal.</p>\n<p><strong>Example 1:</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/cadca2a522c281c0.svg",
+   "w": 600,
+   "h": 280
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>Example 2:</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/cdffa249c40aec4c.svg",
+   "w": 600,
+   "h": 240
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>Example 3:</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/2a6bc869e45664c9.svg",
+   "w": 600,
+   "h": 240
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5726607939469312/\" target=\"_blank\" rel=\"noreferrer\">Binary Tree Level Order Traversal</a> pattern. We can follow the same <strong>BFS</strong> approach. The only difference will be that we will not keep track of all the levels. Instead we will keep inserting child nodes to the queue. As soon as we find the given node, we will return the next node from the queue as the level order successor.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like; most of the changes are in the highlighted lines:</p>"
+  },
+  {
+   "t": "code",
+   "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelOrderSuccessor {\n  public static TreeNode findSuccessor(TreeNode root, int key) {\n    if (root == null)\n      return null;\n\n    Queue<TreeNode> queue = new LinkedList<>();\n    queue.offer(root);\n    while (!queue.isEmpty()) {\n      TreeNode currentNode = queue.poll();\n      // insert the children of current node in the queue\n      if (currentNode.left != null)\n        queue.offer(currentNode.left);\n      if (currentNode.right != null)\n        queue.offer(currentNode.right);\n\n      // break if we have found the key\n      if (currentNode.val == key)\n        break;\n    }\n\n    return queue.peek();\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    TreeNode result = LevelOrderSuccessor.findSuccessor(root, 12);\n    if (result != null)\n      System.out.println(result.val + \" \");\n    result = LevelOrderSuccessor.findSuccessor(root, 9);\n    if (result != null)\n      System.out.println(result.val + \" \");\n  }\n}\n",
+   "python": "from collections import deque\n\n\nclass TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_successor(root, key):\n  if root is None:\n    return None\n\n  queue = deque()\n  queue.append(root)\n  while queue:\n    currentNode = queue.popleft()\n    # insert the children of current node in the queue\n    if currentNode.left:\n      queue.append(currentNode.left)\n    if currentNode.right:\n      queue.append(currentNode.right)\n\n    # break if we have found the key\n    if currentNode.val == key:\n      break\n\n  return queue[0] if queue else None\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  result = find_successor(root, 12)\n  if result:\n    print(result.val)\n  result = find_successor(root, 9)\n  if result:\n    print(result.val)\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span>, where ‘N’ is the total number of nodes in the tree. This is due to the fact that we traverse each node once.</p>\n<h4>Space complexity </h4>\n<p>The space complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> which is required for the queue. Since we can have a maximum of <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mord\">/2</span></span></span></span></span> nodes at any level (this could happen only at the lowest level), therefore we will need <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> space to store them in the queue.</p>"
+  }
+ ],
+ "starter": {
+  "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelOrderSuccessor {\n  public static TreeNode findSuccessor(TreeNode root, int key) {\n    // TODO: Write your code here\n    return null;\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    TreeNode result = LevelOrderSuccessor.findSuccessor(root, 12);\n    if (result != null)\n      System.out.println(result.val + \" \");\n    result = LevelOrderSuccessor.findSuccessor(root, 9);\n    if (result != null)\n      System.out.println(result.val + \" \");\n  }\n}\n",
+  "python": "from collections import deque\n\n\nclass TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_successor(root, key):\n  # TODO: Write your code here\n  return None\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  result = find_successor(root, 12)\n  if result:\n    print(result.val)\n  result = find_successor(root, 9)\n  if result:\n    print(result.val)\n\n\nmain()\n"
+ },
+ "reference": {
+  "java": "import java.util.*;\n\nclass TreeNode {\n  int val;\n  TreeNode left;\n  TreeNode right;\n\n  TreeNode(int x) {\n    val = x;\n  }\n};\n\nclass LevelOrderSuccessor {\n  public static TreeNode findSuccessor(TreeNode root, int key) {\n    if (root == null)\n      return null;\n\n    Queue<TreeNode> queue = new LinkedList<>();\n    queue.offer(root);\n    while (!queue.isEmpty()) {\n      TreeNode currentNode = queue.poll();\n      // insert the children of current node in the queue\n      if (currentNode.left != null)\n        queue.offer(currentNode.left);\n      if (currentNode.right != null)\n        queue.offer(currentNode.right);\n\n      // break if we have found the key\n      if (currentNode.val == key)\n        break;\n    }\n\n    return queue.peek();\n  }\n\n  public static void main(String[] args) {\n    TreeNode root = new TreeNode(12);\n    root.left = new TreeNode(7);\n    root.right = new TreeNode(1);\n    root.left.left = new TreeNode(9);\n    root.right.left = new TreeNode(10);\n    root.right.right = new TreeNode(5);\n    TreeNode result = LevelOrderSuccessor.findSuccessor(root, 12);\n    if (result != null)\n      System.out.println(result.val + \" \");\n    result = LevelOrderSuccessor.findSuccessor(root, 9);\n    if (result != null)\n      System.out.println(result.val + \" \");\n  }\n}\n",
+  "python": "from collections import deque\n\n\nclass TreeNode:\n  def __init__(self, val):\n    self.val = val\n    self.left, self.right = None, None\n\n\ndef find_successor(root, key):\n  if root is None:\n    return None\n\n  queue = deque()\n  queue.append(root)\n  while queue:\n    currentNode = queue.popleft()\n    # insert the children of current node in the queue\n    if currentNode.left:\n      queue.append(currentNode.left)\n    if currentNode.right:\n      queue.append(currentNode.right)\n\n    # break if we have found the key\n    if currentNode.val == key:\n      break\n\n  return queue[0] if queue else None\n\n\ndef main():\n  root = TreeNode(12)\n  root.left = TreeNode(7)\n  root.right = TreeNode(1)\n  root.left.left = TreeNode(9)\n  root.right.left = TreeNode(10)\n  root.right.right = TreeNode(5)\n  result = find_successor(root, 12)\n  if result:\n    print(result.val)\n  result = find_successor(root, 9)\n  if result:\n    print(result.val)\n\n\nmain()\n"
+ }
+}

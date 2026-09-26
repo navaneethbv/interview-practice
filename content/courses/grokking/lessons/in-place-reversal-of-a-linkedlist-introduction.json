@@ -1,0 +1,13 @@
+{
+ "id": "in-place-reversal-of-a-linkedlist-introduction",
+ "courseId": "grokking",
+ "chapterId": "in-place-reversal-of-a-linkedlist",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>In a lot of problems, we are asked to reverse the links between a set of nodes of a <strong>LinkedList</strong>. Often, the constraint is that we need to do this in-place, i.e., using the existing node objects and without using extra memory.</p>\n<p><strong>In-place Reversal of a LinkedList</strong> pattern describes an efficient way to solve the above problem. In the following chapters, we will solve a bunch of problems using this pattern.</p>\n<p>Let’s jump on to our first problem to understand this pattern.</p>"
+  }
+ ]
+}

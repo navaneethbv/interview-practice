@@ -1,0 +1,77 @@
+{
+ "id": "merge-k-sorted-lists",
+ "courseId": "grokking",
+ "chapterId": "k-way-merge",
+ "title": "Merge K Sorted Lists",
+ "type": "problem",
+ "difficulty": "medium",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>Given an array of ‘K’ sorted LinkedLists, merge them into one sorted list.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;L1=[2,&nbsp;6,&nbsp;8],&nbsp;L2=[3,&nbsp;6,&nbsp;7],&nbsp;L3=[1,&nbsp;3,&nbsp;4]<br>Output:&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;3,&nbsp;4,&nbsp;6,&nbsp;6,&nbsp;7,&nbsp;8]<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;L1=[5,&nbsp;8,&nbsp;9],&nbsp;L2=[1,&nbsp;7]<br>Output:&nbsp;[1,&nbsp;5,&nbsp;7,&nbsp;8,&nbsp;9]<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>A brute force solution could be to add all elements of the given ‘K’ lists to one list and sort it. If there are a total of ‘N’ elements in all the input lists, then the brute force solution will have a time complexity of <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0197em;\">l</span><span class=\"mord mathnormal\">o</span><span class=\"mord mathnormal\" style=\"margin-right:0.0359em;\">g</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mclose\">)</span></span></span></span></span> as we will need to sort the merged list. Can we do better than this? How can we utilize the fact that the input lists are individually sorted?</p>\n<p>If we have to find the smallest element of all the input lists, we have to compare only the smallest (i.e. the first) element of all the lists. Once we have the smallest element, we can put it in the merged list. Following a similar pattern, we can then find the next smallest element of all the lists to add it to the merged list.</p>\n<p>The best data structure that comes to mind to find the smallest number among a set of ‘K’ numbers is a <strong><a href=\"https://en.wikipedia.org/wiki/Heap_(data_structure)\" target=\"_blank\" rel=\"noreferrer\">Heap</a></strong>. Let’s see how can we use a heap to find a better algorithm.</p>\n<ol>\n<li>We can insert the first element of each array in a <strong>Min Heap</strong>.</li>\n<li>After this, we can take out the smallest (top) element from the heap and add it to the merged list.</li>\n<li>After removing the smallest element from the heap, we can insert the next element of the same list into the heap.</li>\n<li>We can repeat steps 2 and 3 to populate the merged list in sorted order.</li>\n</ol>\n<p>Let’s take the Example-1 mentioned above to go through each step of our algorithm:</p>\n<p>Given lists: <code>L1=[2, 6, 8]</code>, <code>L2=[3, 6, 7]</code>,<code> L3=[1, 3, 4]</code></p>\n<ol>\n<li>After inserting the 1st element of each list, the heap will have the following elements:</li>\n</ol>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/3ea68d4fd0953139.svg",
+   "w": 500,
+   "h": 220
+  },
+  {
+   "t": "html",
+   "html": "<ol>\n<li>We’ll take the top number from the heap, insert it into the merged list and add the next number in the heap.</li>\n</ol>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/e61acf99a6669da5.svg",
+   "w": 500,
+   "h": 270
+  },
+  {
+   "t": "html",
+   "html": "<ol>\n<li>Again, we’ll take the top element of the heap, insert it into the merged list and add the next number to the heap.</li>\n</ol>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/6cbcba3165319402.svg",
+   "w": 500,
+   "h": 270
+  },
+  {
+   "t": "html",
+   "html": "<ol>\n<li>Repeating the above step, take the top element of the heap, insert it into the merged list and add the next number to the heap. As there are two 3s in the heap, we can pick anyone but we need to take the next element from the corresponding list to insert in the heap.</li>\n</ol>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/grokking/dab81f941aa01008.svg",
+   "w": 500,
+   "h": 270
+  },
+  {
+   "t": "html",
+   "html": "<p>We’ll repeat the above step to populate our merged array.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "import java.util.*;\n\nclass ListNode {\n  int value;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass MergeKSortedLists {\n\n  public static ListNode merge(ListNode[] lists) {\n    PriorityQueue<ListNode> minHeap = new PriorityQueue<ListNode>((n1, n2) -> n1.value - n2.value);\n\n    // put the root of each list in the min heap\n    for (ListNode root : lists)\n      if (root != null)\n        minHeap.add(root);\n\n    // take the smallest (top) element form the min-heap and add it to the result;\n    // if the top element has a next element add it to the heap\n    ListNode resultHead = null, resultTail = null;\n    while (!minHeap.isEmpty()) {\n      ListNode node = minHeap.poll();\n      if (resultHead == null) {\n        resultHead = resultTail = node;\n      } else {\n        resultTail.next = node;\n        resultTail = resultTail.next;\n      }\n      if (node.next != null)\n        minHeap.add(node.next);\n    }\n\n    return resultHead;\n  }\n\n  public static void main(String[] args) {\n    ListNode l1 = new ListNode(2);\n    l1.next = new ListNode(6);\n    l1.next.next = new ListNode(8);\n\n    ListNode l2 = new ListNode(3);\n    l2.next = new ListNode(6);\n    l2.next.next = new ListNode(7);\n\n    ListNode l3 = new ListNode(1);\n    l3.next = new ListNode(3);\n    l3.next.next = new ListNode(4);\n\n    ListNode result = MergeKSortedLists.merge(new ListNode[] { l1, l2, l3 });\n    System.out.print(\"Here are the elements form the merged list: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}\n",
+   "python": "from __future__ import print_function\nfrom heapq import *\n\n\nclass ListNode:\n  def __init__(self, value):\n    self.value = value\n    self.next = None\n\n  # used for the min-heap\n  def __lt__(self, other):\n    return self.value < other.value\n\n\ndef merge_lists(lists):\n  minHeap = []\n\n  # put the root of each list in the min heap\n  for root in lists:\n    if root is not None:\n      heappush(minHeap, root)\n\n  # take the smallest(top) element form the min-heap and add it to the result\n  # if the top element has a next element add it to the heap\n  resultHead, resultTail = None, None\n  while minHeap:\n    node = heappop(minHeap)\n    if resultHead is None:\n      resultHead = resultTail = node\n    else:\n      resultTail.next = node\n      resultTail = resultTail.next\n\n    if node.next is not None:\n      heappush(minHeap, node.next)\n\n  return resultHead\n\n\ndef main():\n  l1 = ListNode(2)\n  l1.next = ListNode(6)\n  l1.next.next = ListNode(8)\n\n  l2 = ListNode(3)\n  l2.next = ListNode(6)\n  l2.next.next = ListNode(7)\n\n  l3 = ListNode(1)\n  l3.next = ListNode(3)\n  l3.next.next = ListNode(4)\n\n  result = merge_lists([l1, l2, l3])\n  print(\"Here are the elements form the merged list: \", end='')\n  while result is not None:\n    print(str(result.value) + \" \", end='')\n    result = result.next\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>Since we’ll be going through all the elements of all arrays and will be removing/adding one element to the heap in each step, the time complexity of the above algorithm will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.109em;\">N</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0197em;\">l</span><span class=\"mord mathnormal\">o</span><span class=\"mord mathnormal\" style=\"margin-right:0.0359em;\">g</span><span class=\"mord mathnormal\" style=\"margin-right:0.0715em;\">K</span><span class=\"mclose\">)</span><span class=\"mpunct\">,</span></span></span></span></span> where ‘N’ is the total number of elements in all the ‘K’ input arrays.</p>\n<h4>Space complexity </h4>\n<p>The space complexity will be <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\" style=\"margin-right:0.0715em;\">K</span><span class=\"mclose\">)</span></span></span></span></span> because, at any time, our min-heap will be storing one number from all the ‘K’ input arrays.</p>"
+  }
+ ],
+ "starter": {
+  "java": "import java.util.*;\n\nclass ListNode {\n  int value;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass MergeKSortedLists {\n\n  public static ListNode merge(ListNode[] lists) {\n    ListNode result = new ListNode(-1);\n    // TODO: Write your code here\n    return result;\n  }\n\n  public static void main(String[] args) {\n    ListNode l1 = new ListNode(2);\n    l1.next = new ListNode(6);\n    l1.next.next = new ListNode(8);\n\n    ListNode l2 = new ListNode(3);\n    l2.next = new ListNode(6);\n    l2.next.next = new ListNode(7);\n\n    ListNode l3 = new ListNode(1);\n    l3.next = new ListNode(3);\n    l3.next.next = new ListNode(4);\n\n    ListNode result = MergeKSortedLists.merge(new ListNode[] { l1, l2, l3 });\n    System.out.print(\"Here are the elements form the merged list: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}\n",
+  "python": "from __future__ import print_function\nfrom heapq import *\n\n\nclass ListNode:\n  def __init__(self, value):\n    self.value = value\n    self.next = None\n\n\ndef merge_lists(lists):\n  resultHead = None\n  # TODO: Write your code here\n  return resultHead\n\n\ndef main():\n  l1 = ListNode(2)\n  l1.next = ListNode(6)\n  l1.next.next = ListNode(8)\n\n  l2 = ListNode(3)\n  l2.next = ListNode(6)\n  l2.next.next = ListNode(7)\n\n  l3 = ListNode(1)\n  l3.next = ListNode(3)\n  l3.next.next = ListNode(4)\n\n  result = merge_lists([l1, l2, l3])\n  print(\"Here are the elements form the merged list: \", end='')\n  while result != None:\n    print(str(result.value) + \" \", end='')\n    result = result.next\n\n\nmain()\n"
+ },
+ "reference": {
+  "java": "import java.util.*;\n\nclass ListNode {\n  int value;\n  ListNode next;\n\n  ListNode(int value) {\n    this.value = value;\n  }\n}\n\nclass MergeKSortedLists {\n\n  public static ListNode merge(ListNode[] lists) {\n    PriorityQueue<ListNode> minHeap = new PriorityQueue<ListNode>((n1, n2) -> n1.value - n2.value);\n\n    // put the root of each list in the min heap\n    for (ListNode root : lists)\n      if (root != null)\n        minHeap.add(root);\n\n    // take the smallest (top) element form the min-heap and add it to the result;\n    // if the top element has a next element add it to the heap\n    ListNode resultHead = null, resultTail = null;\n    while (!minHeap.isEmpty()) {\n      ListNode node = minHeap.poll();\n      if (resultHead == null) {\n        resultHead = resultTail = node;\n      } else {\n        resultTail.next = node;\n        resultTail = resultTail.next;\n      }\n      if (node.next != null)\n        minHeap.add(node.next);\n    }\n\n    return resultHead;\n  }\n\n  public static void main(String[] args) {\n    ListNode l1 = new ListNode(2);\n    l1.next = new ListNode(6);\n    l1.next.next = new ListNode(8);\n\n    ListNode l2 = new ListNode(3);\n    l2.next = new ListNode(6);\n    l2.next.next = new ListNode(7);\n\n    ListNode l3 = new ListNode(1);\n    l3.next = new ListNode(3);\n    l3.next.next = new ListNode(4);\n\n    ListNode result = MergeKSortedLists.merge(new ListNode[] { l1, l2, l3 });\n    System.out.print(\"Here are the elements form the merged list: \");\n    while (result != null) {\n      System.out.print(result.value + \" \");\n      result = result.next;\n    }\n  }\n}\n",
+  "python": "from __future__ import print_function\nfrom heapq import *\n\n\nclass ListNode:\n  def __init__(self, value):\n    self.value = value\n    self.next = None\n\n  # used for the min-heap\n  def __lt__(self, other):\n    return self.value < other.value\n\n\ndef merge_lists(lists):\n  minHeap = []\n\n  # put the root of each list in the min heap\n  for root in lists:\n    if root is not None:\n      heappush(minHeap, root)\n\n  # take the smallest(top) element form the min-heap and add it to the result\n  # if the top element has a next element add it to the heap\n  resultHead, resultTail = None, None\n  while minHeap:\n    node = heappop(minHeap)\n    if resultHead is None:\n      resultHead = resultTail = node\n    else:\n      resultTail.next = node\n      resultTail = resultTail.next\n\n    if node.next is not None:\n      heappush(minHeap, node.next)\n\n  return resultHead\n\n\ndef main():\n  l1 = ListNode(2)\n  l1.next = ListNode(6)\n  l1.next.next = ListNode(8)\n\n  l2 = ListNode(3)\n  l2.next = ListNode(6)\n  l2.next.next = ListNode(7)\n\n  l3 = ListNode(1)\n  l3.next = ListNode(3)\n  l3.next.next = ListNode(4)\n\n  result = merge_lists([l1, l2, l3])\n  print(\"Here are the elements form the merged list: \", end='')\n  while result is not None:\n    print(str(result.value) + \" \", end='')\n    result = result.next\n\n\nmain()\n"
+ }
+}

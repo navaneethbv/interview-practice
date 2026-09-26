@@ -1,0 +1,37 @@
+{
+ "id": "find-all-duplicate-numbers",
+ "courseId": "grokking",
+ "chapterId": "cyclic-sort",
+ "title": "Find all Duplicate Numbers",
+ "type": "problem",
+ "difficulty": "easy",
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Problem Statement </h3>\n<p>We are given an unsorted array containing ‘n’ numbers taken from the range 1 to ‘n’. The array has some duplicates, <strong>find all the duplicate numbers without using any extra space</strong>.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;[3,&nbsp;4,&nbsp;4,&nbsp;5,&nbsp;5]<br>Output:&nbsp;[4,&nbsp;5]<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;[5,&nbsp;4,&nbsp;7,&nbsp;2,&nbsp;3,&nbsp;5,&nbsp;3]<br>Output:&nbsp;[3,&nbsp;5]<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <strong>Cyclic Sort</strong> pattern and shares similarities with <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/4522012447866880/\" target=\"_blank\" rel=\"noreferrer\">Find the Duplicate Number</a>. Following a similar approach, we will place each number at its correct index. After that, we will iterate through the array to find all numbers that are not at the correct indices. All these numbers are duplicates.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "import java.util.*;\n\nclass FindAllDuplicate {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    List<Integer> duplicateNumbers = new ArrayList<>();\n    for (i = 0; i < nums.length; i++) {\n      if (nums[i] != i + 1)\n        duplicateNumbers.add(nums[i]);\n    }\n\n    return duplicateNumbers;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    List<Integer> duplicates = FindAllDuplicate.findNumbers(new int[] { 3, 4, 4, 5, 5 });\n    System.out.println(\"Duplicates are: \" + duplicates);\n\n    duplicates = FindAllDuplicate.findNumbers(new int[] { 5, 4, 7, 2, 3, 5, 3 });\n    System.out.println(\"Duplicates are: \" + duplicates);\n  }\n}\n",
+   "python": "def find_all_duplicates(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  duplicateNumbers = []\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      duplicateNumbers.append(nums[i])\n\n  return duplicateNumbers\n\n\ndef main():\n  print(find_all_duplicates([3, 4, 4, 5, 5]))\n  print(find_all_duplicates([5, 4, 7, 2, 3, 5, 3]))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<h4>Space complexity </h4>\n<p>Ignoring the space required for storing the duplicates, the algorithm runs in constant space <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "import java.util.*;\n\nclass FindAllDuplicate {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    List<Integer> duplicateNumbers = new ArrayList<>();\n    // TODO: Write your code here\n    return duplicateNumbers;\n  }\n}\n",
+  "python": "def find_all_duplicates(nums):\n  duplicateNumbers = []\n  # TODO: Write your code here\n  return duplicateNumbers\n"
+ },
+ "reference": {
+  "java": "import java.util.*;\n\nclass FindAllDuplicate {\n\n  public static List<Integer> findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    List<Integer> duplicateNumbers = new ArrayList<>();\n    for (i = 0; i < nums.length; i++) {\n      if (nums[i] != i + 1)\n        duplicateNumbers.add(nums[i]);\n    }\n\n    return duplicateNumbers;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    List<Integer> duplicates = FindAllDuplicate.findNumbers(new int[] { 3, 4, 4, 5, 5 });\n    System.out.println(\"Duplicates are: \" + duplicates);\n\n    duplicates = FindAllDuplicate.findNumbers(new int[] { 5, 4, 7, 2, 3, 5, 3 });\n    System.out.println(\"Duplicates are: \" + duplicates);\n  }\n}\n",
+  "python": "def find_all_duplicates(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  duplicateNumbers = []\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      duplicateNumbers.append(nums[i])\n\n  return duplicateNumbers\n\n\ndef main():\n  print(find_all_duplicates([3, 4, 4, 5, 5]))\n  print(find_all_duplicates([5, 4, 7, 2, 3, 5, 3]))\n\n\nmain()\n"
+ }
+}

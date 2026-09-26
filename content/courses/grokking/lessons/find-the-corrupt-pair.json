@@ -1,0 +1,38 @@
+{
+ "id": "find-the-corrupt-pair",
+ "courseId": "grokking",
+ "chapterId": "cyclic-sort",
+ "title": "Find the Corrupt Pair",
+ "type": "problem",
+ "difficulty": "easy",
+ "challenge": 1,
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Find the Corrupt Pair (easy) </h3>\n<p>We are given an unsorted array containing ‘n’ numbers taken from the range 1 to ‘n’. The array originally contained all the numbers from 1 to ‘n’, but due to a data error, one of the numbers got duplicated which also resulted in one number going missing. Find both these numbers.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;[3,&nbsp;1,&nbsp;2,&nbsp;5,&nbsp;2]<br>Output:&nbsp;[2,&nbsp;4]<br>Explanation:&nbsp;'2'&nbsp;is&nbsp;duplicated&nbsp;and&nbsp;'4'&nbsp;is&nbsp;missing.<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;[3,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;6,&nbsp;4]<br>Output:&nbsp;[3,&nbsp;5]<br>Explanation:&nbsp;'3'&nbsp;is&nbsp;duplicated&nbsp;and&nbsp;'5'&nbsp;is&nbsp;missing.<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <strong>Cyclic Sort</strong> pattern and shares similarities with <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5115834240335872/\" target=\"_blank\" rel=\"noreferrer\">Find all Duplicate Numbers</a>. Following a similar approach, we will place each number at its correct index. Once we are done with the cyclic sort, we will iterate through the array to find the number that is not at the correct index. Since only one number got corrupted, the number at the wrong index is the duplicated number and the index itself represents the missing number.</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class FindCorruptNums {\n\n  public static int[] findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        return new int[] { nums[i], i + 1 };\n\n    return new int[] { -1, -1 };\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    int[] nums = FindCorruptNums.findNumbers(new int[] { 3, 1, 2, 5, 2 });\n    System.out.println(nums[0] + \", \" + nums[1]);\n    nums = FindCorruptNums.findNumbers(new int[] { 3, 1, 2, 3, 6, 4 });\n    System.out.println(nums[0] + \", \" + nums[1]);\n  }\n}\n",
+   "python": "def find_corrupt_numbers(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      return [nums[i], i + 1]\n\n  return [-1, -1]\n\n\ndef main():\n  print(find_corrupt_numbers([3, 1, 2, 5, 2]))\n  print(find_corrupt_numbers([3, 1, 2, 3, 6, 4]))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<h4>Space complexity </h4>\n<p>The algorithm runs in constant space <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "class FindCorruptNums {\n\n  public static int[] findNumbers(int[] nums) {\n    // TODO: Write your code here\n    return new int[] { -1, -1 };\n  }\n}\n",
+  "python": "def find_corrupt_numbers(nums):\n  # TODO: Write your code here\n  return [-1, -1]\n"
+ },
+ "reference": {
+  "java": "class FindCorruptNums {\n\n  public static int[] findNumbers(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        return new int[] { nums[i], i + 1 };\n\n    return new int[] { -1, -1 };\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    int[] nums = FindCorruptNums.findNumbers(new int[] { 3, 1, 2, 5, 2 });\n    System.out.println(nums[0] + \", \" + nums[1]);\n    nums = FindCorruptNums.findNumbers(new int[] { 3, 1, 2, 3, 6, 4 });\n    System.out.println(nums[0] + \", \" + nums[1]);\n  }\n}\n",
+  "python": "def find_corrupt_numbers(nums):\n  i = 0\n  while i < len(nums):\n    j = nums[i] - 1\n    if nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  for i in range(len(nums)):\n    if nums[i] != i + 1:\n      return [nums[i], i + 1]\n\n  return [-1, -1]\n\n\ndef main():\n  print(find_corrupt_numbers([3, 1, 2, 5, 2]))\n  print(find_corrupt_numbers([3, 1, 2, 3, 6, 4]))\n\n\nmain()\n"
+ }
+}

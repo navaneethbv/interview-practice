@@ -1,0 +1,13 @@
+{
+ "id": "course-overview",
+ "courseId": "grokking",
+ "chapterId": "introduction",
+ "title": "Course Overview",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>This course categorizes coding interview problems into a set of <strong>16 patterns</strong>. Each pattern will be a complete tool - consisting of data structures, algorithms, and analysis techniques - to solve a specific category of problems. The goal is to build an understanding of the underlying pattern so that we can apply that pattern to solve other problems.</p>\n<p>We have chosen each problem carefully such that it not only maps to the same pattern but also presents different constraints. Overall, the course has around <strong>150 problems</strong> mapped to 16 patterns.</p>\n<p>The problems solved under these patterns use a varied set of algorithmic techniques. We will make use of <strong>Breadth-First Search</strong> and <strong>Depth-First Search</strong> to solve problems related to <strong>Trees</strong> and <strong>Graphs</strong>. Similarly, we will also cover <strong>Dynamic Programming</strong>, <strong>Backtracking</strong>, <strong>Recursion</strong>, <strong>Greedy algorithms</strong>, and <strong>Divide &amp; Conquer</strong>.</p>\n<p>We will start with a brief introduction of each pattern before jumping onto the problems. The first problem, under each pattern, will explain the underlying pattern in detail to build the concepts that can be applied to later problems. The later problems will focus on the different constraints each problem presents and how our algorithm needs to change to handle them.</p>\n<p>Let’s start with <strong>Sliding Window</strong> pattern.</p>"
+  }
+ ]
+}

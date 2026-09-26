@@ -1,0 +1,13 @@
+{
+ "id": "topological-sort-graph-introduction",
+ "courseId": "grokking",
+ "chapterId": "topological-sort-graph",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p><a href=\"https://en.wikipedia.org/wiki/Topological_sorting\" target=\"_blank\" rel=\"noreferrer\">Topological Sort</a> is used to find a linear ordering of elements that have dependencies on each other. For example, if event ‘B’ is dependent on event ‘A’, ‘A’ comes before ‘B’ in topological ordering.</p>\n<p>This pattern defines an easy way to understand the technique for performing topological sorting of a set of elements and then solves a few problems using it.</p>\n<p>Let’s see this pattern in action.</p>"
+  }
+ ]
+}

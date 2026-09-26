@@ -1,0 +1,38 @@
+{
+ "id": "find-the-smallest-missing-positive-number",
+ "courseId": "grokking",
+ "chapterId": "cyclic-sort",
+ "title": "Find the Smallest Missing Positive Number",
+ "type": "problem",
+ "difficulty": "medium",
+ "challenge": 2,
+ "statement": [
+  {
+   "t": "html",
+   "html": "<h3>Find the Smallest Missing Positive Number (medium) </h3>\n<p>Given an unsorted array containing numbers, find the <strong>smallest missing positive number</strong> in it.</p>\n<p><strong>Example 1:</strong></p>\n<pre><code>Input:&nbsp;[-3,&nbsp;1,&nbsp;5,&nbsp;4,&nbsp;2]<br>Output:&nbsp;3<br>Explanation:&nbsp;The&nbsp;smallest&nbsp;missing&nbsp;positive&nbsp;number&nbsp;is&nbsp;'3'<br></code></pre>\n<p><strong>Example 2:</strong></p>\n<pre><code>Input:&nbsp;[3,&nbsp;-2,&nbsp;0,&nbsp;1,&nbsp;2]<br>Output:&nbsp;4<br></code></pre>\n<p><strong>Example 3:</strong></p>\n<pre><code>Input:&nbsp;[3,&nbsp;2,&nbsp;5,&nbsp;1]<br>Output:&nbsp;4<br></code></pre>"
+  }
+ ],
+ "solution": [
+  {
+   "t": "html",
+   "html": "<h3>Solution </h3>\n<p>This problem follows the <strong>Cyclic Sort</strong> pattern and shares similarities with <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5319932059320320/\" target=\"_blank\" rel=\"noreferrer\">Find the Missing Number</a> with one big difference. In this problem, the numbers are not bound by any range so we can have any number in the input array.</p>\n<p>However, we will follow a similar approach though as discussed in <a href=\"https://www.educative.io/collection/page/5668639101419520/5671464854355968/5319932059320320/\" target=\"_blank\" rel=\"noreferrer\">Find the Missing Number</a> to place the numbers on their correct indices and ignore all numbers that are out of the range of the array (i.e., all negative numbers and all numbers greater than or equal to the length of the array). Once we are done with the cyclic sort we will iterate the array and the first index that does not have the correct number will be the smallest missing positive number!</p>\n<h3>Code </h3>\n<p>Here is what our algorithm will look like:</p>"
+  },
+  {
+   "t": "code",
+   "java": "class FirstMissingPositive {\n\n  public static int findNumber(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        return i + 1;\n\n    return nums.length + 1;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    System.out.println(FirstMissingPositive.findNumber(new int[] { -3, 1, 5, 4, 2 }));\n    System.out.println(FirstMissingPositive.findNumber(new int[] { 3, -2, 0, 1, 2 }));\n    System.out.println(FirstMissingPositive.findNumber(new int[] { 3, 2, 5, 1 }));\n  }\n}\n",
+   "python": "def find_first_missing_positive(nums):\n  i, n = 0, len(nums)\n  while i < n:\n    j = nums[i] - 1\n    if nums[i] > 0 and nums[i] <= n and nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  for i in range(n):\n    if nums[i] != i + 1:\n      return i + 1\n\n  return nums.length + 1\n\n\ndef main():\n  print(find_first_missing_positive([-3, 1, 5, 4, 2]))\n  print(find_first_missing_positive([3, -2, 0, 1, 2]))\n  print(find_first_missing_positive([3, 2, 5, 1]))\n\n\nmain()\n"
+  },
+  {
+   "t": "html",
+   "html": "<h4>Time complexity </h4>\n<p>The time complexity of the above algorithm is <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">n</span><span class=\"mclose\">)</span></span></span></span></span>.</p>\n<h4>Space complexity </h4>\n<p>The algorithm runs in constant space <span data-math=\"1\"><span class=\"katex\"><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.0278em;\">O</span><span class=\"mopen\">(</span><span class=\"mord\">1</span><span class=\"mclose\">)</span></span></span></span></span>.</p>"
+  }
+ ],
+ "starter": {
+  "java": "class FirstMissingPositive {\n\n  public static int findNumber(int[] nums) {\n    // TODO: Write your code here\n    return -1;\n  }\n}\n",
+  "python": "def find_first_missing_positive(nums):\n  # TODO: Write your code here\n  return -1\n"
+ },
+ "reference": {
+  "java": "class FirstMissingPositive {\n\n  public static int findNumber(int[] nums) {\n    int i = 0;\n    while (i < nums.length) {\n      if (nums[i] > 0 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1])\n        swap(nums, i, nums[i] - 1);\n      else\n        i++;\n    }\n\n    for (i = 0; i < nums.length; i++)\n      if (nums[i] != i + 1)\n        return i + 1;\n\n    return nums.length + 1;\n  }\n\n  private static void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n  }\n\n  public static void main(String[] args) {\n    System.out.println(FirstMissingPositive.findNumber(new int[] { -3, 1, 5, 4, 2 }));\n    System.out.println(FirstMissingPositive.findNumber(new int[] { 3, -2, 0, 1, 2 }));\n    System.out.println(FirstMissingPositive.findNumber(new int[] { 3, 2, 5, 1 }));\n  }\n}\n",
+  "python": "def find_first_missing_positive(nums):\n  i, n = 0, len(nums)\n  while i < n:\n    j = nums[i] - 1\n    if nums[i] > 0 and nums[i] <= n and nums[i] != nums[j]:\n      nums[i], nums[j] = nums[j], nums[i]  # swap\n    else:\n      i += 1\n\n  for i in range(n):\n    if nums[i] != i + 1:\n      return i + 1\n\n  return nums.length + 1\n\n\ndef main():\n  print(find_first_missing_positive([-3, 1, 5, 4, 2]))\n  print(find_first_missing_positive([3, -2, 0, 1, 2]))\n  print(find_first_missing_positive([3, 2, 5, 1]))\n\n\nmain()\n"
+ }
+}

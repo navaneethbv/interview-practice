@@ -1,0 +1,13 @@
+{
+ "id": "two-heaps-introduction",
+ "courseId": "grokking",
+ "chapterId": "two-heaps",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p>In many problems, where we are given a set of elements such that we can divide them into two parts. To solve the problem, we are interested in knowing the smallest element in one part and the biggest element in the other part. This pattern is an efficient approach to solve such problems.</p>\n<p>This pattern uses two <strong>Heaps</strong> to solve these problems; A <strong>Min Heap</strong> to find the smallest element and a <strong>Max Heap</strong> to find the biggest element.</p>\n<p>Let’s jump onto our first problem to see this pattern in action.</p>"
+  }
+ ]
+}

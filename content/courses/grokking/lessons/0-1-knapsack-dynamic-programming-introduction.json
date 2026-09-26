@@ -1,0 +1,13 @@
+{
+ "id": "0-1-knapsack-dynamic-programming-introduction",
+ "courseId": "grokking",
+ "chapterId": "0-1-knapsack-dynamic-programming",
+ "title": "Introduction",
+ "type": "lesson",
+ "body": [
+  {
+   "t": "html",
+   "html": "<p><strong>0/1 Knapsack</strong> pattern is based on the famous problem with the same name which is efficiently solved using <strong>Dynamic Programming (DP)</strong>.</p>\n<p>In this pattern, we will go through a set of problems to develop an understanding of DP. We will always start with a brute-force recursive solution to see the overlapping subproblems, i.e., realizing that we are solving the same problems repeatedly.</p>\n<p>After the recursive solution, we will modify our algorithm to apply advanced techniques of <strong>Memoization</strong> and <strong>Bottom-Up Dynamic Programming</strong> to develop a complete understanding of this pattern.</p>\n<p>Let’s jump onto our first problem.</p>"
+  }
+ ]
+}
