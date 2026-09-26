@@ -10,7 +10,9 @@
     "ingest:grokking": "tsx scripts/ingest/grokking.ts",
     "tests:build": "tsx scripts/judge/build-tests.ts",
     "sandbox:snapshot": "tsx --env-file-if-exists=.env.local scripts/sandbox/create-java-snapshot.ts",
-    "ingest:doc": "tsx scripts/ingest/document.ts"
+    "ingest:doc": "tsx scripts/ingest/document.ts",
+    "test": "tsx --test src/lib/judge/*.test.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",

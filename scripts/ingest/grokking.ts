@@ -132,7 +132,11 @@ function cleanMarkdown($: cheerio.CheerioAPI, el: Element): string {
     for (const name of Object.keys(node.attribs ?? {})) {
       if (!KEEP_ATTRS.has(name)) $(node).removeAttr(name);
     }
-    if (node.tagName === "a") $(node).attr("target", "_blank").attr("rel", "noreferrer");
+    if (node.tagName === "a") {
+      if (!/^https?:\/\//i.test($(node).attr("href") ?? "")) $(node).removeAttr("href");
+      else $(node).attr("target", "_blank").attr("rel", "noreferrer");
+    }
+    if (node.tagName === "img" && !/^(https:|data:image\/)/i.test($(node).attr("src") ?? "")) $(node).remove();
   });
   // Unwrap attribute-less wrappers to keep the HTML compact.
   let changed = true;

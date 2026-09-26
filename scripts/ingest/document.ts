@@ -240,6 +240,8 @@ type Item =
   | { kind: "line"; page: number; top: number; line: Line }
   | { kind: "img"; page: number; top: number; src: string; w: number; h: number };
 
+type ParaKind = "p" | "li" | "pre";
+
 const BULLET = /^([•●▪◦]|[-–]\s|\d+[.)]\s)/;
 
 /** pdftohtml emits one element per text run; join runs that sit on the same baseline into one line. */
@@ -319,7 +321,7 @@ function importPdf(file: string): Article[] {
 
     const nodes: Node[] = [];
     let para: string[] = [];
-    let paraKind: "p" | "li" | "pre" = "p";
+    let paraKind: ParaKind = "p";
     let last: Line | null = null;
     const flush = () => {
       if (!para.length) return;
@@ -356,7 +358,7 @@ function importPdf(file: string): Article[] {
         last = l;
         continue;
       }
-      const kind: typeof paraKind = l.mono ? "pre" : BULLET.test(l.text) ? "li" : "p";
+      const kind: ParaKind = l.mono ? "pre" : BULLET.test(l.text) ? "li" : "p";
       const gap = last && last.page === l.page ? l.top - (last.top + last.height) : Infinity;
       const sameBlock =
         para.length > 0 &&
