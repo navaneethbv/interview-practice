@@ -1,0 +1,22 @@
+{
+  "id": "start-of-linkedlist-cycle",
+  "function": {
+    "python": "find_cycle_start",
+    "java": "findCycleStart"
+  },
+  "params": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "ListNode",
+  "output": {
+    "as": "value"
+  },
+  "tests": [
+    {"input":[{"values":[1,2,3,4,5,6],"pos":2}],"expected":3,"sample":true},
+    {"input":[{"values":[1,2,3,4,5,6],"pos":0}],"sample":true,"expected":1},
+    {"input":[{"values":[7],"pos":0}],"expected":7}
+  ]
+}

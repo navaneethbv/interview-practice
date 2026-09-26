@@ -1,0 +1,28 @@
+{
+  "kind": "design",
+  "id": "find-the-median-of-a-number-stream",
+  "className": "MedianOfAStream",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "insert_num",
+      "java": "insertNum",
+      "params": [
+        {
+          "name": "num",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "find_median",
+      "java": "findMedian",
+      "params": [],
+      "returns": "double"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["insert_num","insert_num","find_median","insert_num","find_median","insert_num","find_median"],"args":[[3],[1],[],[5],[],[4],[]]},"sample":true,"expected":[null,null,2,null,3,null,3.5]}
+  ]
+}
