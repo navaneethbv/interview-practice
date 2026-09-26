@@ -1,26 +1,236 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Soft, low-glare palette inspired by LeetCode. Dark mode avoids pure black and pure white. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f4f5f7;
+  --layer-1: #ffffff;
+  --layer-2: #f2f3f5;
+  --layer-3: #e8eaed;
+  --border: #e3e5e8;
+  --border-strong: #d3d6db;
+  --text-1: #262a30;
+  --text-2: #565b63;
+  --text-3: #868b94;
+  --brand: #e8930c;
+  --brand-soft: #fdf1dc;
+  --blue: #2f6fdb;
+  --blue-soft: #e7effc;
+  --green: #1f9d57;
+  --green-strong: #1f9d57;
+  --green-soft: #e3f5ea;
+  --red: #d93c50;
+  --red-soft: #fde8eb;
+  --easy: #00a38d;
+  --medium: #d99a00;
+  --hard: #e0344d;
+  --code-bg: #f6f7f9;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #18191c;
+  --layer-1: #212226;
+  --layer-2: #2a2b30;
+  --layer-3: #34363c;
+  --border: #303238;
+  --border-strong: #41444b;
+  --text-1: #e4e5e9;
+  --text-2: #b0b3ba;
+  --text-3: #80848d;
+  --brand: #f2a93b;
+  --brand-soft: #3a2f1d;
+  --blue: #6ea3f5;
+  --blue-soft: #1f2a3d;
+  --green: #4cc38a;
+  --green-strong: #2e9e67;
+  --green-soft: #1b3326;
+  --red: #f07183;
+  --red-soft: #3b2126;
+  --easy: #3cc9b0;
+  --medium: #f2c14e;
+  --hard: #f2687c;
+  --code-bg: #1d1e22;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-layer-1: var(--layer-1);
+  --color-layer-2: var(--layer-2);
+  --color-layer-3: var(--layer-3);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-fg-1: var(--text-1);
+  --color-fg-2: var(--text-2);
+  --color-fg-3: var(--text-3);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-ok: var(--green);
+  --color-ok-strong: var(--green-strong);
+  --color-ok-soft: var(--green-soft);
+  --color-bad: var(--red);
+  --color-bad-soft: var(--red-soft);
+  --color-easy: var(--easy);
+  --color-medium: var(--medium);
+  --color-hard: var(--hard);
+  --color-code: var(--code-bg);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: var(--bg);
+  color: var(--text-1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand) 30%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* ------------------------------------------------------------ lesson prose */
+
+.prose-lesson {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-1);
+  overflow-wrap: break-word;
+}
+.prose-lesson :where(p, ul, ol, pre, table, blockquote, figure) {
+  margin-top: 0.85em;
+  margin-bottom: 0.85em;
+}
+.prose-lesson h1,
+.prose-lesson h2,
+.prose-lesson h3,
+.prose-lesson h4 {
+  font-weight: 650;
+  line-height: 1.35;
+  margin-top: 1.5em;
+  margin-bottom: 0.55em;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+.prose-lesson h1 {
+  font-size: 1.45em;
+}
+.prose-lesson h2 {
+  font-size: 1.25em;
+}
+.prose-lesson h3 {
+  font-size: 1.1em;
+}
+.prose-lesson h4 {
+  font-size: 1em;
+}
+.prose-lesson > :first-child,
+.prose-lesson > :first-child > :first-child {
+  margin-top: 0;
+}
+.prose-lesson a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-lesson ul,
+.prose-lesson ol {
+  padding-left: 1.4em;
+}
+.prose-lesson ul {
+  list-style: disc;
+}
+.prose-lesson ol {
+  list-style: decimal;
+}
+.prose-lesson li + li {
+  margin-top: 0.3em;
+}
+.prose-lesson b,
+.prose-lesson strong {
+  font-weight: 650;
+}
+.prose-lesson code {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.86em;
+  background: var(--layer-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+}
+.prose-lesson pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.prose-lesson pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 13px;
+  white-space: pre;
+}
+.prose-lesson blockquote {
+  border-left: 3px solid var(--border-strong);
+  padding-left: 1em;
+  color: var(--text-2);
+}
+.prose-lesson table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+.prose-lesson th,
+.prose-lesson td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+}
+.prose-lesson img {
+  max-width: 100%;
+  height: auto;
+}
+.prose-lesson hr {
+  border-color: var(--border);
+}
+
+/* Diagrams are drawn for a white canvas; keep them readable in dark mode without glare. */
+.diagram {
+  background: #fbfbfc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.dark .diagram {
+  background: #e6e7eb;
+  filter: brightness(0.9);
+}
+
+/* ------------------------------------------------------------ shiki dual themes */
+
+.shiki {
+  background: transparent !important;
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
 }
