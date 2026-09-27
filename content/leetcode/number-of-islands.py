@@ -1,18 +1,29 @@
+from collections import deque
+
+
 class Solution:
     def numIslands(self, grid):
         seen = set()
         islands = 0
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if grid[r][c] == '1' and (r,c) not in seen:
+        for row in range(len(grid)):
+            for column in range(len(grid[0])):
+                if grid[row][column] == '1' and (row, column) not in seen:
                     islands += 1
-                    self._flood(grid, r, c, seen)
+                    self._flood(grid, row, column, seen)
         return islands
 
-    def _flood(self, grid, r, c, seen):
-        rows, cols = len(grid), len(grid[0])
-        seen.add((r,c)); queue = [(r,c)]
-        for x,y in queue:
-            for nx,ny in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
-                if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == '1' and (nx,ny) not in seen:
-                    seen.add((nx,ny)); queue.append((nx,ny))
+    def _flood(self, grid, row, column, seen):
+        seen.add((row, column))
+        queue = deque([(row, column)])
+        while queue:
+            row, column = queue.popleft()
+            neighbors = ((row - 1, column), (row + 1, column),
+                         (row, column - 1), (row, column + 1))
+            for next_row, next_column in neighbors:
+                if self._is_unseen_land(grid, next_row, next_column, seen):
+                    seen.add((next_row, next_column))
+                    queue.append((next_row, next_column))
+
+    def _is_unseen_land(self, grid, row, column, seen):
+        return (0 <= row < len(grid) and 0 <= column < len(grid[0])
+                and grid[row][column] == '1' and (row, column) not in seen)

@@ -37,9 +37,10 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
   const { slug } = await params;
   const problem = getLcProblem(slug);
   if (!problem) notFound();
-  const { meta, spec, reference } = problem;
+  const { meta, spec, reference, javaReference, walkthroughHtml } = problem;
   const title = `${meta.number}. ${meta.title}`;
-  const referenceBlocks = reference && spec.kind !== "sql" ? await renderBlocks([{ t: "code", python: reference }]) : [];
+  const referenceBlocks = reference && spec.kind !== "sql"
+    ? await renderBlocks([{ t: "code", python: reference, java: javaReference ?? undefined }]) : [];
 
   return (
     <Workspace
@@ -71,12 +72,18 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
       }
       solution={
         <div className="prose-lesson">
-          <h2>Approach</h2>
-          <p>{meta.hint ?? "No written approach for this problem yet."}</p>
-          {(meta.time || meta.space) && (
-            <p>
-              Time complexity: <code>{meta.time ?? "?"}</code>. Space complexity: <code>{meta.space ?? "?"}</code>.
-            </p>
+          {walkthroughHtml ? (
+            <LessonContent blocks={[{ t: "html", html: walkthroughHtml }]} />
+          ) : (
+            <>
+              <h2>Approach</h2>
+              <p>{meta.hint ?? "No written approach for this problem yet."}</p>
+              {(meta.time || meta.space) && (
+                <p>
+                  Time complexity: <code>{meta.time ?? "?"}</code>. Space complexity: <code>{meta.space ?? "?"}</code>.
+                </p>
+              )}
+            </>
           )}
           {referenceBlocks.length > 0 && <h2>Reference solution</h2>}
           <LessonContent blocks={referenceBlocks} />
