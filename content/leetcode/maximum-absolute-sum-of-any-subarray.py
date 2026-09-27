@@ -1,5 +1,10 @@
 class Solution:
-    def maxAbsoluteSum(self,nums):
-        prefix=low=high=0
-        for x in nums:prefix+=x;low=min(low,prefix);high=max(high,prefix)
-        return high-low
+    def maxAbsoluteSum(self, nums):
+        prefix = 0
+        lowest = 0
+        highest = 0
+        for value in nums:
+            prefix += value
+            lowest = min(lowest, prefix)
+            highest = max(highest, prefix)
+        return highest - lowest

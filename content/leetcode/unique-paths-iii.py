@@ -1,11 +1,28 @@
 class Solution:
-    def uniquePathsIII(self,grid):
-        m,n=len(grid),len(grid[0]);remaining=sum(v!=-1 for row in grid for v in row)
-        start=next((r,c) for r in range(m) for c in range(n) if grid[r][c]==1)
-        def visit(r,c,left):
-            if not(0<=r<m and 0<=c<n) or grid[r][c]==-1:return 0
-            if grid[r][c]==2:return int(left==1)
-            value=grid[r][c];grid[r][c]=-1
-            total=sum(visit(a,b,left-1) for a,b in [(r-1,c),(r+1,c),(r,c-1),(r,c+1)])
-            grid[r][c]=value;return total
-        return visit(*start,remaining)
+    def uniquePathsIII(self, grid):
+        remaining = 0
+        start_row = 0
+        start_column = 0
+        for row in range(len(grid)):
+            for column in range(len(grid[0])):
+                if grid[row][column] != -1:
+                    remaining += 1
+                if grid[row][column] == 1:
+                    start_row = row
+                    start_column = column
+        return self._visit(grid, start_row, start_column, remaining)
+
+    def _visit(self, grid, row, column, remaining):
+        if not (0 <= row < len(grid) and 0 <= column < len(grid[0])):
+            return 0
+        if grid[row][column] == -1:
+            return 0
+        if grid[row][column] == 2:
+            return int(remaining == 1)
+        original = grid[row][column]
+        grid[row][column] = -1
+        total = 0
+        for row_step, column_step in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            total += self._visit(grid, row + row_step, column + column_step, remaining - 1)
+        grid[row][column] = original
+        return total

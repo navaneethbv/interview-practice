@@ -1,7 +1,10 @@
 class Solution:
-    def validateStackSequences(self,pushed,popped):
-        stack=[];j=0
+    def validateStackSequences(self, pushed, popped):
+        stack = []
+        next_pop = 0
         for value in pushed:
             stack.append(value)
-            while stack and stack[-1]==popped[j]:stack.pop();j+=1
+            while stack and next_pop < len(popped) and stack[-1] == popped[next_pop]:
+                stack.pop()
+                next_pop += 1
         return not stack

@@ -1,8 +1,12 @@
 class Solution:
     def getTargetCopy(self, original, cloned, target):
-        stack=[(original,cloned)]
+        stack = [(original, cloned)]
         while stack:
-            a,b=stack.pop()
-            if a is target: return b
-            if a.left: stack.append((a.left,b.left))
-            if a.right: stack.append((a.right,b.right))
+            source, copy = stack.pop()
+            if source is target:
+                return copy
+            if source.left is not None:
+                stack.append((source.left, copy.left))
+            if source.right is not None:
+                stack.append((source.right, copy.right))
+        return None
