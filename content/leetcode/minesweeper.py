@@ -1,15 +1,43 @@
 from collections import deque
+
+
 class Solution:
     def updateBoard(self, board, click):
-        r,c=click
-        if board[r][c]=='M':board[r][c]='X';return board
-        m,n=len(board),len(board[0]);q=deque([(r,c)]);seen={(r,c)}
-        while q:
-            r,c=q.popleft()
-            neighbors=[(a,b) for a in range(r-1,r+2) for b in range(c-1,c+2) if 0<=a<m and 0<=b<n and (a,b)!=(r,c)]
-            mines=sum(board[a][b]=='M' for a,b in neighbors)
-            board[r][c]=str(mines) if mines else 'B'
-            if not mines:
-                for a,b in neighbors:
-                    if board[a][b]=='E' and (a,b) not in seen:seen.add((a,b));q.append((a,b))
+        row, column = click
+        if board[row][column] == "M":
+            board[row][column] = "X"
+            return board
+
+        rows = len(board)
+        columns = len(board[0])
+        queue = deque([(row, column)])
+        visited = {(row, column)}
+
+        while queue:
+            row, column = queue.popleft()
+            neighbors = self._neighbors(row, column, rows, columns)
+            mine_count = sum(
+                board[next_row][next_column] == "M"
+                for next_row, next_column in neighbors
+            )
+            board[row][column] = str(mine_count) if mine_count else "B"
+
+            if mine_count == 0:
+                for next_row, next_column in neighbors:
+                    cell = (next_row, next_column)
+                    if board[next_row][next_column] == "E" and cell not in visited:
+                        visited.add(cell)
+                        queue.append(cell)
+
         return board
+
+    @staticmethod
+    def _neighbors(row, column, rows, columns):
+        return [
+            (next_row, next_column)
+            for next_row in range(row - 1, row + 2)
+            for next_column in range(column - 1, column + 2)
+            if 0 <= next_row < rows
+            and 0 <= next_column < columns
+            and (next_row, next_column) != (row, column)
+        ]

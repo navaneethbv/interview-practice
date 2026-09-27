@@ -1,7 +1,11 @@
 class Solution:
     def nextGreaterElement(self, nums1, nums2):
-        stack=[]; following={}
+        decreasing_stack = []
+        next_values = {}
+
         for value in nums2:
-            while stack and stack[-1]<value: following[stack.pop()]=value
-            stack.append(value)
-        return [following.get(value,-1) for value in nums1]
+            while decreasing_stack and decreasing_stack[-1] < value:
+                next_values[decreasing_stack.pop()] = value
+            decreasing_stack.append(value)
+
+        return [next_values.get(value, -1) for value in nums1]

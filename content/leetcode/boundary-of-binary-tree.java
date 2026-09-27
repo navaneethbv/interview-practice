@@ -1,3 +1,56 @@
 class Solution {
-public List<Integer> boundaryOfBinaryTree(TreeNode root){List<Integer>out=new ArrayList<>();out.add(root.val);if(leaf(root))return out;for(TreeNode n=root.left;n!=null;n=n.left!=null?n.left:n.right)if(!leaf(n))out.add(n.val);Deque<TreeNode>stack=new ArrayDeque<>();stack.push(root);while(!stack.isEmpty()){TreeNode n=stack.pop();if(leaf(n))out.add(n.val);if(n.right!=null)stack.push(n.right);if(n.left!=null)stack.push(n.left);}List<Integer>right=new ArrayList<>();for(TreeNode n=root.right;n!=null;n=n.right!=null?n.right:n.left)if(!leaf(n))right.add(n.val);Collections.reverse(right);out.addAll(right);return out;}private boolean leaf(TreeNode n){return n.left==null&&n.right==null;}
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> boundary = new ArrayList<>();
+        boundary.add(root.val);
+        if (isLeaf(root)) {
+            return boundary;
+        }
+
+        addLeftBoundary(root.left, boundary);
+        addLeaves(root, boundary);
+        List<Integer> rightBoundary = new ArrayList<>();
+        addRightBoundary(root.right, rightBoundary);
+        Collections.reverse(rightBoundary);
+        boundary.addAll(rightBoundary);
+        return boundary;
+    }
+
+    private void addLeftBoundary(TreeNode node, List<Integer> boundary) {
+        while (node != null) {
+            if (!isLeaf(node)) {
+                boundary.add(node.val);
+            }
+            node = node.left != null ? node.left : node.right;
+        }
+    }
+
+    private void addRightBoundary(TreeNode node, List<Integer> boundary) {
+        while (node != null) {
+            if (!isLeaf(node)) {
+                boundary.add(node.val);
+            }
+            node = node.right != null ? node.right : node.left;
+        }
+    }
+
+    private void addLeaves(TreeNode root, List<Integer> boundary) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (isLeaf(node)) {
+                boundary.add(node.val);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+    }
+
+    private boolean isLeaf(TreeNode node) {
+        return node.left == null && node.right == null;
+    }
 }

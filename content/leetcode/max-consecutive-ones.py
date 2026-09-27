@@ -1,6 +1,13 @@
 class Solution:
     def findMaxConsecutiveOnes(self, nums):
-        best=current=0
+        best_length = 0
+        current_length = 0
+
         for value in nums:
-            current=current+1 if value==1 else 0; best=max(best,current)
-        return best
+            if value == 1:
+                current_length += 1
+                best_length = max(best_length, current_length)
+            else:
+                current_length = 0
+
+        return best_length

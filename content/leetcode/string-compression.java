@@ -1,3 +1,25 @@
 class Solution {
-public int compress(char[] chars) {int read=0,write=0;while(read<chars.length) {int end=read+1;while(end<chars.length&&chars[end]==chars[read]) end++;chars[write++]=chars[read];if(end-read>1) for(char d:Integer.toString(end-read).toCharArray()) chars[write++]=d;read=end;}return write;}
+    public int compress(char[] chars) {
+        int readIndex = 0;
+        int writeIndex = 0;
+
+        while (readIndex < chars.length) {
+            int runEnd = readIndex + 1;
+            while (runEnd < chars.length && chars[runEnd] == chars[readIndex]) {
+                runEnd++;
+            }
+
+            chars[writeIndex++] = chars[readIndex];
+            int runLength = runEnd - readIndex;
+            if (runLength > 1) {
+                String count = Integer.toString(runLength);
+                for (int index = 0; index < count.length(); index++) {
+                    chars[writeIndex++] = count.charAt(index);
+                }
+            }
+            readIndex = runEnd;
+        }
+
+        return writeIndex;
+    }
 }

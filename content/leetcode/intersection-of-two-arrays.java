@@ -1,3 +1,17 @@
 class Solution {
-public int[] intersection(int[] nums1,int[] nums2) {Set<Integer> a=new HashSet<>(),out=new HashSet<>();for(int n:nums1) a.add(n);for(int n:nums2) if(a.contains(n)) out.add(n);return out.stream().mapToInt(Integer::intValue).toArray();}
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> firstValues = new HashSet<>();
+        Set<Integer> commonValues = new HashSet<>();
+
+        for (int value : nums1) {
+            firstValues.add(value);
+        }
+        for (int value : nums2) {
+            if (firstValues.contains(value)) {
+                commonValues.add(value);
+            }
+        }
+
+        return commonValues.stream().mapToInt(Integer::intValue).toArray();
+    }
 }

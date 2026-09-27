@@ -1,18 +1,24 @@
 class Solution:
     def treeToDoublyList(self, root):
-        nodes = []
+        ordered_nodes = []
         stack = []
-        node = root
-        while node or stack:
-            while node:
-                stack.append(node)
-                node = node.left
-            node = stack.pop()
-            nodes.append(node)
-            node = node.right
-        if not nodes:
+        current = root
+
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.left
+            current = stack.pop()
+            ordered_nodes.append(current)
+            current = current.right
+
+        if not ordered_nodes:
             return None
-        for current, following in zip(nodes, nodes[1:] + nodes[:1]):
-            current.right = following
-            following.left = current
-        return nodes[0]
+
+        for index, node in enumerate(ordered_nodes):
+            successor = ordered_nodes[(index + 1) % len(ordered_nodes)]
+            predecessor = ordered_nodes[(index - 1) % len(ordered_nodes)]
+            node.left = predecessor
+            node.right = successor
+
+        return ordered_nodes[0]

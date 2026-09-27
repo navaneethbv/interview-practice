@@ -1,3 +1,38 @@
 class Solution {
-public int splitArray(int[] nums,int k) {int l=Arrays.stream(nums).max().getAsInt(),r=Arrays.stream(nums).sum();while(l<r) {int m=l+(r-l)/2,parts=1,total=0;for(int n:nums) {if(total+n>m) {parts++;total=0;}total+=n;}if(parts<=k) r=m;else l=m+1;}return l;}
+    public int splitArray(int[] nums, int k) {
+        int left = 0;
+        int right = 0;
+        for (int value : nums) {
+            left = Math.max(left, value);
+            right += value;
+        }
+
+        while (left < right) {
+            int limit = left + (right - left) / 2;
+            int parts = requiredParts(nums, limit);
+
+            if (parts <= k) {
+                right = limit;
+            } else {
+                left = limit + 1;
+            }
+        }
+
+        return left;
+    }
+
+    private int requiredParts(int[] nums, int limit) {
+        int parts = 1;
+        int currentSum = 0;
+
+        for (int value : nums) {
+            if (currentSum + value > limit) {
+                parts++;
+                currentSum = 0;
+            }
+            currentSum += value;
+        }
+
+        return parts;
+    }
 }
