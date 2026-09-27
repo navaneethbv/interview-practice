@@ -1,3 +1,16 @@
 class Solution {
-public int arrangeCoins(int n) {long l=0,r=n;while(l<=r) {long m=(l+r)/2;if(m*(m+1)/2<=n) l=m+1;else r=m-1;}return (int)r;}
+public int arrangeCoins(int n) {
+    long left = 0;
+    long right = n;
+    while (left <= right) {
+        long middle = (left + right) / 2;
+        long coinsNeeded = middle * (middle + 1) / 2;
+        if (coinsNeeded <= n) {
+            left = middle + 1;
+        } else {
+            right = middle - 1;
+        }
+    }
+    return (int) right;
+}
 }

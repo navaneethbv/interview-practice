@@ -1,3 +1,23 @@
 class Solution {
-public long maximumSubarraySum(int[] nums,int k) {Map<Integer,Integer> count=new HashMap<>();long total=0,best=0;for(int i=0;i<nums.length;i++) {count.merge(nums[i],1,Integer::sum);total+=nums[i];if(i>=k) {int old=nums[i-k];total-=old;count.put(old,count.get(old)-1);if(count.get(old)==0) count.remove(old);}if(i>=k-1&&count.size()==k) best=Math.max(best,total);}return best;}
+public long maximumSubarraySum(int[] nums, int k) {
+    Map<Integer, Integer> counts = new HashMap<>();
+    long windowSum = 0;
+    long bestSum = 0;
+    for (int right = 0; right < nums.length; right++) {
+        counts.merge(nums[right], 1, Integer::sum);
+        windowSum += nums[right];
+        if (right >= k) {
+            int oldValue = nums[right - k];
+            windowSum -= oldValue;
+            counts.put(oldValue, counts.get(oldValue) - 1);
+            if (counts.get(oldValue) == 0) {
+                counts.remove(oldValue);
+            }
+        }
+        if (right >= k - 1 && counts.size() == k) {
+            bestSum = Math.max(bestSum, windowSum);
+        }
+    }
+    return bestSum;
+}
 }
