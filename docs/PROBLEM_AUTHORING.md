@@ -70,9 +70,8 @@ JavaScript-only problems 2619, 2620, 2667, 2703, and 2704, shell problem 193, an
 The threaded web crawler checks reachable URLs and hostname filtering, not scheduling or network throughput.
 Use Java for threaded submissions; Python in the browser supports the sequential traversal contract.
 
-## Current implementation checkpoint
+## Coverage
 
 All 872 problems supported by the Python, Java, and SQLite runners are authored.
 The remaining seven require JavaScript, shell, or pandas runners.
-See `problem-content-checkpoint.json` for the latest saved coverage snapshot.
-The protected pre-existing README, document importer, importer tests, and package test script remain unchanged by this work.
+`problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
