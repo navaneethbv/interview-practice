@@ -1,0 +1,79 @@
+{
+  "id": "minimum-penalty-for-a-shop",
+  "style": "leetcode",
+  "function": {
+    "python": "bestClosingTime",
+    "java": "bestClosingTime"
+  },
+  "params": [
+    {
+      "name": "customers",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        "YYNY"
+      ],
+      "expected": 2,
+      "sample": true
+    },
+    {
+      "input": [
+        "NNN"
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        "Y"
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "N"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "YYYY"
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "YN"
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "NY"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "YNYN"
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "NYYN"
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        "NNYYYNN"
+      ],
+      "expected": 5
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "concatenation-of-consecutive-binary-numbers",
+  "style": "leetcode",
+  "function": {
+    "python": "concatenatedBinary",
+    "java": "concatenatedBinary"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[3],"expected":27,"sample":true},
+    {"input":[1],"expected":1,"sample":true},
+    {"input":[2],"expected":6},
+    {"input":[4],"expected":220},
+    {"input":[5],"expected":1765},
+    {"input":[6],"expected":14126},
+    {"input":[12],"expected":505379714},
+    {"input":[31],"expected":144699479},
+    {"input":[100],"expected":310828084},
+    {"input":[100000],"expected":757631812}
+  ]
+}

@@ -1,0 +1,7 @@
+class Solution:
+    def canVisitAllRooms(self,rooms):
+        seen={0};stack=[0]
+        while stack:
+            for key in rooms[stack.pop()]:
+                if key not in seen:seen.add(key);stack.append(key)
+        return len(seen)==len(rooms)

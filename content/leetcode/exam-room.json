@@ -1,0 +1,43 @@
+{
+  "kind": "design",
+  "id": "exam-room",
+  "style": "leetcode",
+  "className": "ExamRoom",
+  "ctorParams": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "seat",
+      "java": "seat",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "leave",
+      "java": "leave",
+      "params": [
+        {
+          "name": "p",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[10],"ops":["seat","seat","seat","seat","leave","seat"],"args":[[],[],[],[],[4],[]]},"expected":[0,9,4,2,null,5],"sample":true},
+    {"input":{"ctor":[1],"ops":["seat","leave","seat"],"args":[[],[0],[]]},"expected":[0,null,0],"sample":true},
+    {"input":{"ctor":[2],"ops":["seat","seat"],"args":[[],[]]},"expected":[0,1]},
+    {"input":{"ctor":[3],"ops":["seat","seat","seat"],"args":[[],[],[]]},"expected":[0,2,1]},
+    {"input":{"ctor":[5],"ops":["seat","seat","leave","seat"],"args":[[],[],[0],[]]},"expected":[0,4,null,0]},
+    {"input":{"ctor":[5],"ops":["seat","seat","leave","seat"],"args":[[],[],[4],[]]},"expected":[0,4,null,4]},
+    {"input":{"ctor":[4],"ops":["seat","leave","seat"],"args":[[],[0],[]]},"expected":[0,null,0]},
+    {"input":{"ctor":[1000000000],"ops":["seat","seat","seat"],"args":[[],[],[]]},"expected":[0,999999999,499999999]},
+    {"input":{"ctor":[6],"ops":["seat","seat","seat","seat"],"args":[[],[],[],[]]},"expected":[0,5,2,1]},
+    {"input":{"ctor":[3],"ops":["seat","seat","leave","leave","seat"],"args":[[],[],[0],[2],[]]},"expected":[0,2,null,null,0]}
+  ]
+}

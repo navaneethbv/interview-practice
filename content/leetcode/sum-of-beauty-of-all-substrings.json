@@ -1,0 +1,27 @@
+{
+  "id": "sum-of-beauty-of-all-substrings",
+  "style": "leetcode",
+  "function": {
+    "python": "beautySum",
+    "java": "beautySum"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aab"],"expected":1,"sample":true},
+    {"input":["abc"],"expected":0,"sample":true},
+    {"input":["a"],"expected":0},
+    {"input":["aa"],"expected":0},
+    {"input":["aaa"],"expected":0},
+    {"input":["ab"],"expected":0},
+    {"input":["aabcbaa"],"expected":17},
+    {"input":["aabcb"],"expected":5},
+    {"input":["abab"],"expected":2},
+    {"input":["zzzyx"],"expected":6}
+  ]
+}

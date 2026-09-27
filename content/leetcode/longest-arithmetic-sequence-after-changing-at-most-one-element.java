@@ -1,0 +1,3 @@
+class Solution {
+public int longestArithmetic(int[] nums){int n=nums.length;int[] l=new int[n],r=new int[n];Arrays.fill(l,1);Arrays.fill(r,1);l[1]=2;r[n-2]=2;for(int i=2;i<n;i++)l[i]=nums[i]-nums[i-1]==nums[i-1]-nums[i-2]?l[i-1]+1:2;for(int i=n-3;i>=0;i--)r[i]=nums[i+1]-nums[i]==nums[i+2]-nums[i+1]?r[i+1]+1:2;int ans=2;for(int i=0;i<n;i++){ans=Math.max(ans,l[i]);if(i>0)ans=Math.max(ans,Math.min(n,l[i-1]+1));if(i+1<n)ans=Math.max(ans,Math.min(n,r[i+1]+1));if(i>0&&i+1<n&&(nums[i+1]-nums[i-1])%2==0){int d=(nums[i+1]-nums[i-1])/2,a=i>=2&&nums[i-1]-nums[i-2]==d?l[i-1]:1,b=i+2<n&&nums[i+2]-nums[i+1]==d?r[i+1]:1;ans=Math.max(ans,a+1+b);}}return ans;}
+}

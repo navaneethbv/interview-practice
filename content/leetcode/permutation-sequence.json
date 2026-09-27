@@ -1,0 +1,31 @@
+{
+  "id": "permutation-sequence",
+  "style": "leetcode",
+  "function": {
+    "python": "getPermutation",
+    "java": "getPermutation"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[3,3],"expected":"213","sample":true},
+    {"input":[3,6],"expected":"321","sample":true},
+    {"input":[1,1],"expected":"1"},
+    {"input":[2,1],"expected":"12"},
+    {"input":[2,2],"expected":"21"},
+    {"input":[3,1],"expected":"123"},
+    {"input":[4,9],"expected":"2314"},
+    {"input":[4,24],"expected":"4321"},
+    {"input":[9,1],"expected":"123456789"},
+    {"input":[9,362880],"expected":"987654321"}
+  ]
+}

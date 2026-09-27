@@ -1,0 +1,50 @@
+{
+  "kind": "design",
+  "id": "implement-queue-using-stacks",
+  "style": "leetcode",
+  "className": "MyQueue",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "push",
+      "java": "push",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "pop",
+      "java": "pop",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "peek",
+      "java": "peek",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "empty",
+      "java": "empty",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["push","push","peek","pop","empty"],"args":[[1],[2],[],[],[]]},"expected":[null,null,1,1,false],"sample":true},
+    {"input":{"ctor":[],"ops":["empty","push","pop","empty"],"args":[[],[5],[],[]]},"expected":[true,null,5,true],"sample":true},
+    {"input":{"ctor":[],"ops":["empty"],"args":[[]]},"expected":[true]},
+    {"input":{"ctor":[],"ops":["push","peek","peek"],"args":[[9],[],[]]},"expected":[null,9,9]},
+    {"input":{"ctor":[],"ops":["push","push","pop","pop"],"args":[[2],[1],[],[]]},"expected":[null,null,2,1]},
+    {"input":{"ctor":[],"ops":["push","pop","push","pop"],"args":[[1],[],[2],[]]},"expected":[null,1,null,2]},
+    {"input":{"ctor":[],"ops":["push","push","peek","push","pop","pop","pop"],"args":[[1],[2],[],[3],[],[],[]]},"expected":[null,null,1,null,1,2,3]},
+    {"input":{"ctor":[],"ops":["push","push","pop","empty"],"args":[[3],[3],[],[]]},"expected":[null,null,3,false]},
+    {"input":{"ctor":[],"ops":["push","empty"],"args":[[1],[]]},"expected":[null,false]},
+    {"input":{"ctor":[],"ops":["push","pop","empty","push","peek"],"args":[[9],[],[],[8],[]]},"expected":[null,9,true,null,8]}
+  ]
+}

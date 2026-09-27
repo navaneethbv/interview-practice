@@ -1,0 +1,3 @@
+class Solution {
+public boolean isRectangleCover(int[][] rectangles) {Set<String> corners=new HashSet<>();long area=0;int minX=Integer.MAX_VALUE,minY=Integer.MAX_VALUE,maxX=Integer.MIN_VALUE,maxY=Integer.MIN_VALUE;for(int[] r:rectangles) {area+=(long)(r[2]-r[0])*(r[3]-r[1]);minX=Math.min(minX,r[0]);minY=Math.min(minY,r[1]);maxX=Math.max(maxX,r[2]);maxY=Math.max(maxY,r[3]);for(int x:new int[]{r[0],r[2]}) for(int y:new int[]{r[1],r[3]}) {String key=x+","+y;if(!corners.add(key)) corners.remove(key);}}return area==(long)(maxX-minX)*(maxY-minY)&&corners.equals(new HashSet<>(Arrays.asList(minX+","+minY,minX+","+maxY,maxX+","+minY,maxX+","+maxY)));}
+}

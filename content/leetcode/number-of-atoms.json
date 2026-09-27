@@ -1,0 +1,27 @@
+{
+  "id": "number-of-atoms",
+  "style": "leetcode",
+  "function": {
+    "python": "countOfAtoms",
+    "java": "countOfAtoms"
+  },
+  "params": [
+    {
+      "name": "formula",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["Mg(OH)2"],"expected":"H2MgO2","sample":true},
+    {"input":["K4(ON(SO3)2)2"],"expected":"K4N2O14S4","sample":true},
+    {"input":["H2O"],"expected":"H2O"},
+    {"input":["H"],"expected":"H"},
+    {"input":["NaCl"],"expected":"ClNa"},
+    {"input":["Be32"],"expected":"Be32"},
+    {"input":["(H2O)2"],"expected":"H4O2"},
+    {"input":["((H)2)3"],"expected":"H6"},
+    {"input":["C6H12O6"],"expected":"C6H12O6"},
+    {"input":["HeHHe"],"expected":"HHe2"}
+  ]
+}

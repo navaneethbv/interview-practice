@@ -1,0 +1,31 @@
+{
+  "id": "lexicographically-smallest-permutation-greater-than-target",
+  "style": "leetcode",
+  "function": {
+    "python": "lexGreaterPermutation",
+    "java": "lexGreaterPermutation"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["aabc","abca"],"expected":"acab","sample":true},
+    {"input":["ab","ba"],"expected":"","sample":true},
+    {"input":["a","a"],"expected":""},
+    {"input":["b","a"],"expected":"b"},
+    {"input":["a","z"],"expected":""},
+    {"input":["abc","aaa"],"expected":"abc"},
+    {"input":["abc","cba"],"expected":""},
+    {"input":["aabb","abab"],"expected":"abba"},
+    {"input":["zzxy","xyzz"],"expected":"xzyz"},
+    {"input":["aaaa","aaab"],"expected":""}
+  ]
+}

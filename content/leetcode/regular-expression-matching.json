@@ -1,0 +1,33 @@
+{
+  "id": "regular-expression-matching",
+  "style": "leetcode",
+  "function": {
+    "python": "isMatch",
+    "java": "isMatch"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "p",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["aab","c*a*b"],"expected":true,"sample":true},
+    {"input":["ab",".*c"],"expected":false,"sample":true},
+    {"input":["aa","a"],"expected":false},
+    {"input":["aa","a*"],"expected":true},
+    {"input":["ab",".*"],"expected":true},
+    {"input":["mississippi","mis*is*p*."],"expected":false},
+    {"input":["a","ab*"],"expected":true},
+    {"input":["aaa","a*a"],"expected":true},
+    {"input":["aaa","ab*a*c*a"],"expected":true},
+    {"input":["a","b*"],"expected":false},
+    {"input":["ab",".."],"expected":true},
+    {"input":["aaaaaaaaab","a*a*a*a*c"],"expected":false}
+  ]
+}

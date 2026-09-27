@@ -1,0 +1,79 @@
+{
+  "id": "remove-outermost-parentheses",
+  "style": "leetcode",
+  "function": {
+    "python": "removeOuterParentheses",
+    "java": "removeOuterParentheses"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {
+      "input": [
+        "(()())(())"
+      ],
+      "expected": "()()()",
+      "sample": true
+    },
+    {
+      "input": [
+        "()()"
+      ],
+      "expected": "",
+      "sample": true
+    },
+    {
+      "input": [
+        "()"
+      ],
+      "expected": ""
+    },
+    {
+      "input": [
+        "(())"
+      ],
+      "expected": "()"
+    },
+    {
+      "input": [
+        "((()))"
+      ],
+      "expected": "(())"
+    },
+    {
+      "input": [
+        "(()())"
+      ],
+      "expected": "()()"
+    },
+    {
+      "input": [
+        "()(())"
+      ],
+      "expected": "()"
+    },
+    {
+      "input": [
+        "(())()"
+      ],
+      "expected": "()"
+    },
+    {
+      "input": [
+        "(()(()))"
+      ],
+      "expected": "()(())"
+    },
+    {
+      "input": [
+        "((())())(())"
+      ],
+      "expected": "(())()()"
+    }
+  ]
+}

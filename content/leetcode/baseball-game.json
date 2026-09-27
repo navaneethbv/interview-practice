@@ -1,0 +1,27 @@
+{
+  "function": {
+    "python": "calPoints",
+    "java": "calPoints"
+  },
+  "params": [
+    {
+      "name": "operations",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "id": "baseball-game",
+  "style": "leetcode",
+  "tests": [
+    {"input":[["5","2","C","D","+"]],"sample":true,"expected":30},
+    {"input":[["-3","4","+"]],"sample":true,"expected":2},
+    {"input":[["7"]],"expected":7},
+    {"input":[["1","C"]],"expected":0},
+    {"input":[["0","D","+"]],"expected":0},
+    {"input":[["-5","D"]],"expected":-15},
+    {"input":[["1","2","+","+"]],"expected":11},
+    {"input":[["10","-2","C","D"]],"expected":30},
+    {"input":[["30000","-30000","+"]],"expected":0},
+    {"input":[["2","D","C","3","+"]],"expected":10}
+  ]
+}

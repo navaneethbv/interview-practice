@@ -1,0 +1,27 @@
+{
+  "id": "remove-all-adjacent-duplicates-in-string",
+  "style": "leetcode",
+  "function": {
+    "python": "removeDuplicates",
+    "java": "removeDuplicates"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["abbaca"],"expected":"ca","sample":true},
+    {"input":["azxxzy"],"expected":"ay","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["aa"],"expected":""},
+    {"input":["aaa"],"expected":"a"},
+    {"input":["abba"],"expected":""},
+    {"input":["abcd"],"expected":"abcd"},
+    {"input":["aabbcc"],"expected":""},
+    {"input":["abccba"],"expected":""},
+    {"input":["aaaaaaaaaa"],"expected":""}
+  ]
+}

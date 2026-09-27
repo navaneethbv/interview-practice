@@ -1,0 +1,3 @@
+class Solution {
+public int amountOfTime(TreeNode root,int start){Map<Integer,List<Integer>> g=new HashMap<>();Deque<TreeNode> stack=new ArrayDeque<>();stack.push(root);while(!stack.isEmpty()){TreeNode node=stack.pop();g.computeIfAbsent(node.val,k->new ArrayList<>());for(TreeNode child:new TreeNode[]{node.left,node.right})if(child!=null){g.get(node.val).add(child.val);g.computeIfAbsent(child.val,k->new ArrayList<>()).add(node.val);stack.push(child);}}Set<Integer> seen=new HashSet<>();Deque<int[]> q=new ArrayDeque<>();q.add(new int[]{start,0});seen.add(start);int answer=0;while(!q.isEmpty()){int[] p=q.remove();answer=Math.max(answer,p[1]);for(int v:g.get(p[0]))if(seen.add(v))q.add(new int[]{v,p[1]+1});}return answer;}
+}

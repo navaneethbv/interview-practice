@@ -1,0 +1,34 @@
+{
+  "id": "custom-sort-string",
+  "style": "leetcode",
+  "function": {
+    "python": "customSortString",
+    "java": "customSortString"
+  },
+  "params": [
+    {
+      "name": "order",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "customSort"
+  },
+  "tests": [
+    {"input":["cba","abcd"],"expected":"cbad","sample":true},
+    {"input":["ab","bbaca"],"expected":"aabbc","sample":true},
+    {"input":["a","a"],"expected":"a"},
+    {"input":["a","zzz"],"expected":"zzz"},
+    {"input":["zyx","xyzxyz"],"expected":"zzyyxx"},
+    {"input":["abc","cba"],"expected":"abc"},
+    {"input":["c","cccab"],"expected":"cccab"},
+    {"input":["ab","bbbb"],"expected":"bbbb"},
+    {"input":["b","aaabbb"],"expected":"bbbaaa"},
+    {"input":["qwerty","tryweq"],"expected":"qwerty"}
+  ]
+}

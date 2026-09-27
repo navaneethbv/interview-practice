@@ -1,0 +1,27 @@
+{
+  "id": "longest-nice-subarray",
+  "style": "leetcode",
+  "function": {
+    "python": "longestNiceSubarray",
+    "java": "longestNiceSubarray"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,3,8,48,10]],"expected":3,"sample":true},
+    {"input":[[3,1,5,11,13]],"expected":1,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,2,4,8]],"expected":4},
+    {"input":[[1,1,1]],"expected":1},
+    {"input":[[1,2,3]],"expected":2},
+    {"input":[[5,2,8]],"expected":3},
+    {"input":[[8,1,2,4,8]],"expected":4},
+    {"input":[[1000000000,1]],"expected":2},
+    {"input":[[2,4,8,16,32,3]],"expected":5}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "sql",
+  "id": "replace-employee-id-with-the-unique-identifier",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employees",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "EmployeeUNI",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "unique_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "unique_id",
+    "name"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employees":[[1,"Ana"],[2,"Bo"]],"EmployeeUNI":[[2,9]]}},"expected":[[null,"Ana"],[9,"Bo"]],"sample":true},
+    {"input":{"tables":{"Employees":[[1,"Cy"]],"EmployeeUNI":[[1,5],[1,7]]}},"expected":[[5,"Cy"],[7,"Cy"]],"sample":true},
+    {"input":{"tables":{"Employees":[],"EmployeeUNI":[]}},"expected":[]},
+    {"input":{"tables":{"Employees":[[1,"A"]],"EmployeeUNI":[]}},"expected":[[null,"A"]]},
+    {"input":{"tables":{"Employees":[[1,"A"]],"EmployeeUNI":[[1,1]]}},"expected":[[1,"A"]]},
+    {"input":{"tables":{"Employees":[[1,"A"],[2,"A"]],"EmployeeUNI":[[2,8]]}},"expected":[[null,"A"],[8,"A"]]},
+    {"input":{"tables":{"Employees":[[3,"C"],[1,"A"],[2,"B"]],"EmployeeUNI":[[1,8],[2,9],[3,10]]}},"expected":[[10,"C"],[8,"A"],[9,"B"]]},
+    {"input":{"tables":{"Employees":[[1,"A"],[2,"B"]],"EmployeeUNI":[]}},"expected":[[null,"A"],[null,"B"]]},
+    {"input":{"tables":{"Employees":[[1,"A"]],"EmployeeUNI":[[1,0]]}},"expected":[[0,"A"]]},
+    {"input":{"tables":{"Employees":[[1,"A"],[2,"B"]],"EmployeeUNI":[[1,9],[2,9]]}},"expected":[[9,"A"],[9,"B"]]}
+  ]
+}

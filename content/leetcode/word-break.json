@@ -1,0 +1,32 @@
+{
+  "id": "word-break",
+  "style": "leetcode",
+  "function": {
+    "python": "wordBreak",
+    "java": "wordBreak"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "wordDict",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["rainbowrain",["rain","bow"]],"expected":true,"sample":true},
+    {"input":["catsandog",["cats","dog","sand","and","cat"]],"expected":false,"sample":true},
+    {"input":["a",["a"]],"expected":true},
+    {"input":["a",["b"]],"expected":false},
+    {"input":["aaaaaaa",["aaaa","aaa"]],"expected":true},
+    {"input":["aaaaaaa",["aa","aaaa"]],"expected":false},
+    {"input":["cars",["car","ca","rs"]],"expected":true},
+    {"input":["applepenapple",["apple","pen"]],"expected":true},
+    {"input":["ab",["a","b"]],"expected":true},
+    {"input":["abcd",["abc","b","cd"]],"expected":false},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",["a","aa","aaa","aaaa"]],"expected":false}
+  ]
+}

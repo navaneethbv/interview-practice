@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "find-followers-count",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Followers",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "follower_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "user_id",
+    "followers_count"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Followers":[[3,1],[3,2],[1,2]]}},"expected":[[1,1],[3,2]],"sample":true},
+    {"input":{"tables":{"Followers":[[1,2],[2,1]]}},"expected":[[1,1],[2,1]],"sample":true},
+    {"input":{"tables":{"Followers":[]}},"expected":[]},
+    {"input":{"tables":{"Followers":[[1,2]]}},"expected":[[1,1]]},
+    {"input":{"tables":{"Followers":[[1,2],[1,3]]}},"expected":[[1,2]]},
+    {"input":{"tables":{"Followers":[[3,1],[2,1],[1,2]]}},"expected":[[1,1],[2,1],[3,1]]},
+    {"input":{"tables":{"Followers":[[1,2],[1,3],[1,4],[1,5]]}},"expected":[[1,4]]},
+    {"input":{"tables":{"Followers":[[10,20],[20,10]]}},"expected":[[10,1],[20,1]]},
+    {"input":{"tables":{"Followers":[[1,4],[2,4],[3,4]]}},"expected":[[1,1],[2,1],[3,1]]},
+    {"input":{"tables":{"Followers":[[3,1],[3,2],[2,1],[1,2],[2,3]]}},"expected":[[1,1],[2,2],[3,2]]}
+  ]
+}

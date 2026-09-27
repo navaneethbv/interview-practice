@@ -1,0 +1,27 @@
+{
+  "id": "smallest-string-starting-from-leaf",
+  "style": "leetcode",
+  "function": {
+    "python": "smallestFromLeaf",
+    "java": "smallestFromLeaf"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[[0,1,2,3,4,3,4]],"expected":"dba","sample":true},
+    {"input":[[25,0,1]],"expected":"az","sample":true},
+    {"input":[[0]],"expected":"a"},
+    {"input":[[1,0,0]],"expected":"ab"},
+    {"input":[[2,1,null,0]],"expected":"abc"},
+    {"input":[[0,null,1,null,2]],"expected":"cba"},
+    {"input":[[4,4,4,0,1]],"expected":"aee"},
+    {"input":[[25,25,25]],"expected":"zz"},
+    {"input":[[0,1,0,null,null,0]],"expected":"aaa"},
+    {"input":[[2,2,1,0,null,0]],"expected":"abc"}
+  ]
+}

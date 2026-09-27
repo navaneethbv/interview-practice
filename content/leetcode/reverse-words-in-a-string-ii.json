@@ -1,0 +1,30 @@
+{
+  "id": "reverse-words-in-a-string-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseWords",
+    "java": "reverseWords"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "char[]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[["o","n","e"," ","t","w","o"]],"expected":["t","w","o"," ","o","n","e"],"sample":true},
+    {"input":[["s","o","l","o"]],"expected":["s","o","l","o"],"sample":true},
+    {"input":[["a"]],"expected":["a"]},
+    {"input":[["a"," ","b"]],"expected":["b"," ","a"]},
+    {"input":[["a"," ","b","c"," ","d","e","f"]],"expected":["d","e","f"," ","b","c"," ","a"]},
+    {"input":[["h","e","l","l","o"," ","w","o","r","l","d"]],"expected":["w","o","r","l","d"," ","h","e","l","l","o"]},
+    {"input":[["1"," ","2","2"," ","3","3","3"]],"expected":["3","3","3"," ","2","2"," ","1"]},
+    {"input":[["a","b"," ","c","d"," ","e","f"," ","g","h"]],"expected":["g","h"," ","e","f"," ","c","d"," ","a","b"]},
+    {"input":[["x"," ","l","o","n","g","w","o","r","d"," ","y"]],"expected":["y"," ","l","o","n","g","w","o","r","d"," ","x"]},
+    {"input":[["a"," ","b"," ","c"," ","d"," ","e"]],"expected":["e"," ","d"," ","c"," ","b"," ","a"]}
+  ]
+}

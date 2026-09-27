@@ -1,0 +1,46 @@
+{
+  "kind": "sql",
+  "id": "queries-quality-and-percentage",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Queries",
+      "columns": [
+        {
+          "name": "query_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "result",
+          "type": "TEXT"
+        },
+        {
+          "name": "position",
+          "type": "INTEGER"
+        },
+        {
+          "name": "rating",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "query_name",
+    "quality",
+    "poor_query_percentage"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Queries":[["A","x",1,4],["A","y",2,2],["B","z",4,4]]}},"expected":[["A",2.5,50],["B",1,0]],"sample":true},
+    {"input":{"tables":{"Queries":[["A","x",3,1]]}},"expected":[["A",0.33,100]],"sample":true},
+    {"input":{"tables":{"Queries":[]}},"expected":[]},
+    {"input":{"tables":{"Queries":[["A","x",1,5]]}},"expected":[["A",5,0]]},
+    {"input":{"tables":{"Queries":[["A","x",500,1]]}},"expected":[["A",0,100]]},
+    {"input":{"tables":{"Queries":[["A","x",1,3]]}},"expected":[["A",3,0]]},
+    {"input":{"tables":{"Queries":[["A","x",1,2],["A","x",1,2]]}},"expected":[["A",2,100]]},
+    {"input":{"tables":{"Queries":[["A","x",1,1],["A","y",2,5],["A","z",3,4]]}},"expected":[["A",1.61,33.33]]},
+    {"input":{"tables":{"Queries":[["A","x",1,1],["B","x",2,2]]}},"expected":[["A",1,100],["B",1,100]]},
+    {"input":{"tables":{"Queries":[[null,"x",1,4],[null,"y",2,2]]}},"expected":[[null,2.5,50]]}
+  ]
+}

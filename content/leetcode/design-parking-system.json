@@ -1,0 +1,322 @@
+{
+  "kind": "design",
+  "id": "design-parking-system",
+  "style": "leetcode",
+  "className": "ParkingSystem",
+  "ctorParams": [
+    {
+      "name": "big",
+      "type": "int"
+    },
+    {
+      "name": "medium",
+      "type": "int"
+    },
+    {
+      "name": "small",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "addCar",
+      "java": "addCar",
+      "params": [
+        {
+          "name": "carType",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [
+          1,
+          1,
+          0
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          0,
+          0,
+          1
+        ],
+        "ops": [
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expected": [
+        false,
+        true
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          0,
+          0,
+          0
+        ],
+        "ops": [
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          0,
+          0
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          0,
+          2,
+          0
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            2
+          ],
+          [
+            2
+          ],
+          [
+            2
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          0,
+          0,
+          2
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            3
+          ],
+          [
+            3
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          1,
+          1
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            3
+          ],
+          [
+            2
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          0,
+          1,
+          1
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expected": [
+        false,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          5,
+          0,
+          0
+        ],
+        "ops": [
+          "addCar"
+        ],
+        "args": [
+          [
+            2
+          ]
+        ]
+      },
+      "expected": [
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          2,
+          3
+        ],
+        "ops": [
+          "addCar",
+          "addCar",
+          "addCar",
+          "addCar"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true,
+        true
+      ]
+    }
+  ]
+}

@@ -33,7 +33,7 @@ interface PyRun {
   error?: string;
 }
 
-function runPythonProgram(program: { prelude: string; user: string; runner: string }): Promise<PyRun> {
+function runPythonProgram(program: { prelude: string; user: string; runner: string; packages?: string[] }): Promise<PyRun> {
   return new Promise((resolve) => {
     const w = getWorker();
     const id = nextId++;
@@ -106,7 +106,7 @@ export async function runCode(
   code: string,
   tests: AnyTestCase[],
 ): Promise<RunOutcome> {
-  if (lang === "python") {
+  if (lang === "python" || lang === "sql") {
     const r = await runPythonProgram(buildPythonProgram(spec, code, tests));
     if (r.compileError) return grade({ spec, tests, stdout: "", compileError: r.compileError });
     return grade({ spec, tests, stdout: r.stdout, timedOut: r.timedOut, fatal: r.error });

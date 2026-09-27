@@ -1,0 +1,28 @@
+{
+  "id": "ugly-number",
+  "style": "leetcode",
+  "function": {
+    "python": "isUgly",
+    "java": "isUgly"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[6],"expected":true,"sample":true},
+    {"input":[14],"expected":false,"sample":true},
+    {"input":[0],"expected":false},
+    {"input":[-1],"expected":false},
+    {"input":[1],"expected":true},
+    {"input":[2],"expected":true},
+    {"input":[5],"expected":true},
+    {"input":[30],"expected":true},
+    {"input":[49],"expected":false},
+    {"input":[2147483647],"expected":false},
+    {"input":[1073741824],"expected":true}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "factor-combinations",
+  "style": "leetcode",
+  "function": {
+    "python": "getFactors",
+    "java": "getFactors"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "List<List<int>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[12],"expected":[[2,6],[2,2,3],[3,4]],"sample":true},
+    {"input":[13],"expected":[],"sample":true},
+    {"input":[1],"expected":[]},
+    {"input":[2],"expected":[]},
+    {"input":[4],"expected":[[2,2]]},
+    {"input":[6],"expected":[[2,3]]},
+    {"input":[8],"expected":[[2,4],[2,2,2]]},
+    {"input":[16],"expected":[[2,8],[2,2,4],[2,2,2,2],[4,4]]},
+    {"input":[24],"expected":[[2,12],[2,2,6],[2,2,2,3],[2,3,4],[3,8],[4,6]]},
+    {"input":[36],"expected":[[2,18],[2,2,9],[2,2,3,3],[2,3,6],[3,12],[3,3,4],[4,9],[6,6]]},
+    {"input":[100],"expected":[[2,50],[2,2,25],[2,2,5,5],[2,5,10],[4,25],[4,5,5],[5,20],[10,10]]}
+  ]
+}

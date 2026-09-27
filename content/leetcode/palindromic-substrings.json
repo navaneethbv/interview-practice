@@ -1,0 +1,28 @@
+{
+  "id": "palindromic-substrings",
+  "style": "leetcode",
+  "function": {
+    "python": "countSubstrings",
+    "java": "countSubstrings"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abba"],"expected":6,"sample":true},
+    {"input":["aaaa"],"expected":10,"sample":true},
+    {"input":["a"],"expected":1},
+    {"input":["ab"],"expected":2},
+    {"input":["aa"],"expected":3},
+    {"input":["abc"],"expected":3},
+    {"input":["aba"],"expected":4},
+    {"input":["racecar"],"expected":10},
+    {"input":["abab"],"expected":6},
+    {"input":["abcba"],"expected":7},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":20100}
+  ]
+}

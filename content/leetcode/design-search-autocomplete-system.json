@@ -1,0 +1,41 @@
+{
+  "kind": "design",
+  "id": "design-search-autocomplete-system",
+  "style": "leetcode",
+  "className": "AutocompleteSystem",
+  "ctorParams": [
+    {
+      "name": "sentences",
+      "type": "string[]"
+    },
+    {
+      "name": "times",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "input",
+      "java": "input",
+      "params": [
+        {
+          "name": "c",
+          "type": "char"
+        }
+      ],
+      "returns": "List<string>"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[["cat","car","cart"],[3,2,2]],"ops":["input","input","input"],"args":[["c"],["a"],["#"]]},"expected":[["cat","car","cart"],["cat","car","cart"],[]],"sample":true},
+    {"input":{"ctor":[["a"],[1]],"ops":["input","input","input"],"args":[["b"],["#"],["b"]]},"expected":[[],[],["b"]],"sample":true},
+    {"input":{"ctor":[["a","ab"],[1,2]],"ops":["input"],"args":[["a"]]},"expected":[["ab","a"]]},
+    {"input":{"ctor":[["abc"],[2]],"ops":["input","input","input","input","input"],"args":[["a"],["z"],["#"],["a"],["z"]]},"expected":[["abc"],[],[],["abc","az"],["az"]]},
+    {"input":{"ctor":[["a b","ab"],[1,1]],"ops":["input","input"],"args":[["a"],[" "]]},"expected":[["a b","ab"],["a b"]]},
+    {"input":{"ctor":[["aa","ab","ac","ad"],[1,1,1,1]],"ops":["input"],"args":[["a"]]},"expected":[["aa","ab","ac"]]},
+    {"input":{"ctor":[["a","b"],[1,1]],"ops":["input","input","input"],"args":[["a"],["#"],["a"]]},"expected":[["a"],[],["a"]]},
+    {"input":{"ctor":[["aa","ab"],[1,2]],"ops":["input","input","input","input","input"],"args":[["a"],["a"],["#"],["a"],["a"]]},"expected":[["ab","aa"],["aa"],[],["aa","ab"],["aa"]]},
+    {"input":{"ctor":[["hello"],[1]],"ops":["input","input","input"],"args":[["h"],["#"],["h"]]},"expected":[["hello"],[],["h","hello"]]},
+    {"input":{"ctor":[["car","cat","cap"],[1,1,3]],"ops":["input","input","input","input","input"],"args":[["c"],["a"],["x"],["#"],["c"]]},"expected":[["cap","car","cat"],["cap","car","cat"],[],[],["cap","car","cat"]]}
+  ]
+}

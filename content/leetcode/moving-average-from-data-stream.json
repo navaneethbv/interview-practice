@@ -1,0 +1,37 @@
+{
+  "kind": "design",
+  "id": "moving-average-from-data-stream",
+  "style": "leetcode",
+  "className": "MovingAverage",
+  "ctorParams": [
+    {
+      "name": "size",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "next",
+      "java": "next",
+      "params": [
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "double"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3],"ops":["next","next","next","next"],"args":[[1],[10],[3],[5]]},"expected":[1,5.5,4.666666666666667,6],"sample":true},
+    {"input":{"ctor":[1],"ops":["next","next"],"args":[[2],[8]]},"expected":[2,8],"sample":true},
+    {"input":{"ctor":[2],"ops":["next"],"args":[[0]]},"expected":[0]},
+    {"input":{"ctor":[2],"ops":["next","next"],"args":[[-1],[1]]},"expected":[-1,0]},
+    {"input":{"ctor":[2],"ops":["next","next","next"],"args":[[1],[2],[3]]},"expected":[1,1.5,2.5]},
+    {"input":{"ctor":[3],"ops":["next","next"],"args":[[5],[5]]},"expected":[5,5]},
+    {"input":{"ctor":[2],"ops":["next","next"],"args":[[100000],[-100000]]},"expected":[100000,0]},
+    {"input":{"ctor":[4],"ops":["next","next","next","next","next"],"args":[[1],[2],[3],[4],[5]]},"expected":[1,1.5,2,2.5,3.5]},
+    {"input":{"ctor":[1],"ops":["next","next","next"],"args":[[-2],[0],[2]]},"expected":[-2,0,2]},
+    {"input":{"ctor":[2],"ops":["next","next","next","next"],"args":[[0],[0],[4],[0]]},"expected":[0,0,2,2]}
+  ]
+}

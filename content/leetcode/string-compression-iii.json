@@ -1,0 +1,27 @@
+{
+  "id": "string-compression-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "compressedString",
+    "java": "compressedString"
+  },
+  "params": [
+    {
+      "name": "word",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["aaabb"],"expected":"3a2b","sample":true},
+    {"input":["aaaaaaaaaaa"],"expected":"9a2a","sample":true},
+    {"input":["a"],"expected":"1a"},
+    {"input":["abc"],"expected":"1a1b1c"},
+    {"input":["aaaaaaaaa"],"expected":"9a"},
+    {"input":["aaaaaaaaaa"],"expected":"9a1a"},
+    {"input":["aabbcc"],"expected":"2a2b2c"},
+    {"input":["abab"],"expected":"1a1b1a1b"},
+    {"input":["zzzzzzzzzzzzzzzzzz"],"expected":"9z9z"},
+    {"input":["bbbbbbbbbbbbbbbbbbbbbbbbbbbb"],"expected":"9b9b9b1b"}
+  ]
+}

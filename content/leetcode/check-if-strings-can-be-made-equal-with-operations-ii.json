@@ -1,0 +1,31 @@
+{
+  "id": "check-if-strings-can-be-made-equal-with-operations-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "checkStrings",
+    "java": "checkStrings"
+  },
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["abcd","cdab"],"expected":true,"sample":true},
+    {"input":["abcd","abdc"],"expected":false,"sample":true},
+    {"input":["a","a"],"expected":true},
+    {"input":["a","b"],"expected":false},
+    {"input":["ab","ba"],"expected":false},
+    {"input":["aba","aba"],"expected":true},
+    {"input":["abc","cba"],"expected":true},
+    {"input":["aabb","bbaa"],"expected":true},
+    {"input":["aaaa","aaab"],"expected":false},
+    {"input":["abcabc","cbacba"],"expected":true}
+  ]
+}

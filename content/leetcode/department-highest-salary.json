@@ -1,0 +1,59 @@
+{
+  "kind": "sql",
+  "id": "department-highest-salary",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "salary",
+          "type": "INTEGER"
+        },
+        {
+          "name": "departmentId",
+          "type": "INTEGER"
+        }
+      ]
+    },
+    {
+      "name": "Department",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "Department",
+    "Employee",
+    "Salary"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Department":[[1,"Tools"]],"Employee":[[1,"A",90,1],[2,"B",90,1],[3,"C",80,1],[4,"D",70,1],[5,"E",60,1]]}},"expected":[["Tools","A",90],["Tools","B",90]],"sample":true},
+    {"input":{"tables":{"Department":[[1,"Ops"],[2,"Sales"]],"Employee":[[1,"A",30,1],[2,"B",20,2]]}},"expected":[["Ops","A",30],["Sales","B",20]],"sample":true},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[]}},"expected":[]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",0,1]]}},"expected":[["X","A",0]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",10,1],[2,"B",10,1]]}},"expected":[["X","A",10],["X","B",10]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",1,1],[2,"B",2,1],[3,"C",3,1],[4,"D",4,1]]}},"expected":[["X","D",4]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",100,1],[2,"B",1,2]]}},"expected":[["X","A",100],["Y","B",1]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",5,2],[2,"B",4,2],[3,"C",4,2],[4,"D",3,2],[5,"E",2,2]]}},"expected":[["Y","A",5]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[1,"A",7,1],[2,"A",7,1]]}},"expected":[["X","A",7],["X","A",7]]},
+    {"input":{"tables":{"Department":[[1,"X"],[2,"Y"]],"Employee":[[4,"D",4,1],[2,"B",2,2],[1,"A",1,2],[3,"C",3,1]]}},"expected":[["X","D",4],["Y","B",2]]}
+  ]
+}

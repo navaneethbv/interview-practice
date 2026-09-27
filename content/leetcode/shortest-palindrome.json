@@ -1,0 +1,28 @@
+{
+  "id": "shortest-palindrome",
+  "style": "leetcode",
+  "function": {
+    "python": "shortestPalindrome",
+    "java": "shortestPalindrome"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["aacecaaa"],"expected":"aaacecaaa","sample":true},
+    {"input":["abcd"],"expected":"dcbabcd","sample":true},
+    {"input":[""],"expected":""},
+    {"input":["a"],"expected":"a"},
+    {"input":["aa"],"expected":"aa"},
+    {"input":["ab"],"expected":"bab"},
+    {"input":["aba"],"expected":"aba"},
+    {"input":["abb"],"expected":"bbabb"},
+    {"input":["racecar"],"expected":"racecar"},
+    {"input":["abab"],"expected":"babab"},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"],"expected":"baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"}
+  ]
+}

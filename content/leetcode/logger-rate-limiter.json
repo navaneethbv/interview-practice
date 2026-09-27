@@ -1,0 +1,36 @@
+{
+  "kind": "design",
+  "id": "logger-rate-limiter",
+  "style": "leetcode",
+  "className": "Logger",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "shouldPrintMessage",
+      "java": "shouldPrintMessage",
+      "params": [
+        {
+          "name": "timestamp",
+          "type": "int"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"],"args":[[1,"hello"],[2,"hello"],[11,"hello"]]},"expected":[true,false,true],"sample":true},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage"],"args":[[5,"a"],[5,"b"]]},"expected":[true,true],"sample":true},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage"],"args":[[0,"a"]]},"expected":[true]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage"],"args":[[0,"a"],[0,"a"]]},"expected":[true,false]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"],"args":[[0,"a"],[9,"a"],[10,"a"]]},"expected":[true,false,true]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage"],"args":[[0,"a"],[1000000000,"a"]]},"expected":[true,true]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"],"args":[[1,"a"],[2,"b"],[11,"b"]]},"expected":[true,true,false]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"],"args":[[1,"a"],[11,"a"],[20,"a"]]},"expected":[true,true,false]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage"],"args":[[5,"a"],[6,"A"]]},"expected":[true,true]},
+    {"input":{"ctor":[],"ops":["shouldPrintMessage","shouldPrintMessage","shouldPrintMessage"],"args":[[0,"x"],[10,"x"],[20,"x"]]},"expected":[true,true,true]}
+  ]
+}

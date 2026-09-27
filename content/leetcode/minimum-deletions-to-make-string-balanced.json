@@ -1,0 +1,28 @@
+{
+  "id": "minimum-deletions-to-make-string-balanced",
+  "style": "leetcode",
+  "function": {
+    "python": "minimumDeletions",
+    "java": "minimumDeletions"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["baba"],"expected":2,"sample":true},
+    {"input":["aabb"],"expected":0,"sample":true},
+    {"input":["a"],"expected":0},
+    {"input":["b"],"expected":0},
+    {"input":["ba"],"expected":1},
+    {"input":["ab"],"expected":0},
+    {"input":["bbbb"],"expected":0},
+    {"input":["aaaa"],"expected":0},
+    {"input":["aababbab"],"expected":2},
+    {"input":["bbaaaaabb"],"expected":2},
+    {"input":["abababab"],"expected":3}
+  ]
+}

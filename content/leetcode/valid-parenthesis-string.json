@@ -1,0 +1,29 @@
+{
+  "id": "valid-parenthesis-string",
+  "style": "leetcode",
+  "function": {
+    "python": "checkValidString",
+    "java": "checkValidString"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["(*))"],"expected":true,"sample":true},
+    {"input":[")*("],"expected":false,"sample":true},
+    {"input":["*"],"expected":true},
+    {"input":["("],"expected":false},
+    {"input":[")"],"expected":false},
+    {"input":["()"],"expected":true},
+    {"input":["(*)"],"expected":true},
+    {"input":["(**"],"expected":true},
+    {"input":["**))"],"expected":true},
+    {"input":["(((*)"],"expected":false},
+    {"input":["(*()"],"expected":true},
+    {"input":["****************************************************************************************************"],"expected":true}
+  ]
+}

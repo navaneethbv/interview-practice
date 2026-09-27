@@ -1,0 +1,31 @@
+{
+  "id": "top-k-frequent-words",
+  "style": "leetcode",
+  "function": {
+    "python": "topKFrequent",
+    "java": "topKFrequent"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[["i","love","i","code","love"],2],"expected":["i","love"],"sample":true},
+    {"input":[["b","a","c"],2],"expected":["a","b"],"sample":true},
+    {"input":[["a"],1],"expected":["a"]},
+    {"input":[["a","a","b"],1],"expected":["a"]},
+    {"input":[["z","z","a","a"],2],"expected":["a","z"]},
+    {"input":[["aa","a","aa"],2],"expected":["aa","a"]},
+    {"input":[["b","b","a","a","c"],3],"expected":["a","b","c"]},
+    {"input":[["x","y","x","z","y","y"],2],"expected":["y","x"]},
+    {"input":[["the","day","is","sunny","the","the","the","sunny","is","is"],4],"expected":["the","is","sunny","day"]},
+    {"input":[["abc","ab","a"],3],"expected":["a","ab","abc"]}
+  ]
+}

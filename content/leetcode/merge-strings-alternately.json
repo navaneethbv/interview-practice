@@ -1,0 +1,31 @@
+{
+  "id": "merge-strings-alternately",
+  "style": "leetcode",
+  "function": {
+    "python": "mergeAlternately",
+    "java": "mergeAlternately"
+  },
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["abc","pqr"],"expected":"apbqcr","sample":true},
+    {"input":["ab","pqrs"],"expected":"apbqrs","sample":true},
+    {"input":["a","b"],"expected":"ab"},
+    {"input":["abc","z"],"expected":"azbc"},
+    {"input":["a","xyz"],"expected":"axyz"},
+    {"input":["aa","bb"],"expected":"abab"},
+    {"input":["xy","ab"],"expected":"xayb"},
+    {"input":["hello","q"],"expected":"hqello"},
+    {"input":["q","hello"],"expected":"qhello"},
+    {"input":["abc","defgh"],"expected":"adbecfgh"}
+  ]
+}

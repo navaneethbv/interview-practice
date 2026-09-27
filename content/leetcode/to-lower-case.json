@@ -1,0 +1,27 @@
+{
+  "function": {
+    "python": "toLowerCase",
+    "java": "toLowerCase"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "id": "to-lower-case",
+  "style": "leetcode",
+  "tests": [
+    {"input":["Hello"],"sample":true,"expected":"hello"},
+    {"input":["ALREADY 123!"],"sample":true,"expected":"already 123!"},
+    {"input":["a"],"expected":"a"},
+    {"input":["Z"],"expected":"z"},
+    {"input":["123"],"expected":"123"},
+    {"input":["aBcDeF"],"expected":"abcdef"},
+    {"input":["[]_@"],"expected":"[]_@"},
+    {"input":["Mixed Case"],"expected":"mixed case"},
+    {"input":["ABCDEFGHIJKLMNOPQRSTUVWXYZ"],"expected":"abcdefghijklmnopqrstuvwxyz"},
+    {"input":["lowercase"],"expected":"lowercase"}
+  ]
+}

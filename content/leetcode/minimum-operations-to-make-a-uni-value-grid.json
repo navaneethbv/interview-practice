@@ -1,0 +1,31 @@
+{
+  "id": "minimum-operations-to-make-a-uni-value-grid",
+  "style": "leetcode",
+  "function": {
+    "python": "minOperations",
+    "java": "minOperations"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    },
+    {
+      "name": "x",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[2,4],[6,8]],2],"expected":4,"sample":true},
+    {"input":[[[1,2]],2],"expected":-1,"sample":true},
+    {"input":[[[1]],7],"expected":0},
+    {"input":[[[3,3],[3,3]],2],"expected":0},
+    {"input":[[[1,5,9]],4],"expected":2},
+    {"input":[[[1,2,3]],1],"expected":2},
+    {"input":[[[1,10000]],1],"expected":9999},
+    {"input":[[[2,4,7]],2],"expected":-1},
+    {"input":[[[10,20],[30,40]],10],"expected":4},
+    {"input":[[[5,5,5,15]],5],"expected":2}
+  ]
+}

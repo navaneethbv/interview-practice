@@ -2,7 +2,7 @@
 
 export type Difficulty = "easy" | "medium" | "hard";
 export type LessonType = "lesson" | "problem";
-export type CodeLang = "python" | "java";
+export type CodeLang = "python" | "java" | "sql";
 
 export type Block =
   | { t: "html"; html: string }
@@ -41,3 +41,49 @@ export interface Lesson {
   starter?: { java?: string; python?: string };
   reference?: { java?: string; python?: string };
 }
+
+/* ---------------------------------------------------------------- problem sets */
+
+export type SetKind = "curated" | "company";
+
+export interface ProblemSetItem {
+  slug: string;
+  category?: string;
+}
+
+/** A problem list such as Blind 75 or a company's frequently asked questions. */
+export interface ProblemSet {
+  id: string;
+  title: string;
+  kind: SetKind;
+  description: string;
+  items: ProblemSetItem[];
+}
+
+/** Metadata for a LeetCode problem, imported from the prep workbook. */
+export interface LcMeta {
+  number: number;
+  title: string;
+  difficulty: Difficulty;
+  topics: string[];
+  pattern?: string;
+  hint?: string;
+  time?: string;
+  space?: string;
+  /** LeetCode's acceptance rate in percent. */
+  acceptance?: number;
+  premium?: boolean;
+}
+
+/** One row of a problem set table. `available` is false until the problem's tests are authored. */
+export interface SetRow extends LcMeta {
+  slug: string;
+  category?: string;
+  available: boolean;
+}
+
+/** Scope used for the course's own problem list when resetting progress. */
+export const COURSE_SCOPE = "grokking";
+
+/** Progress key for a list problem, kept apart from course lesson ids, which can share slugs. */
+export const lcProgressId = (slug: string) => `lc:${slug}`;

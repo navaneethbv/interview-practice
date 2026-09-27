@@ -1,0 +1,27 @@
+{
+  "id": "valid-mountain-array",
+  "style": "leetcode",
+  "function": {
+    "python": "validMountainArray",
+    "java": "validMountainArray"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[1,4,2]],"expected":true,"sample":true},
+    {"input":[[1,2,3]],"expected":false,"sample":true},
+    {"input":[[1]],"expected":false},
+    {"input":[[1,2]],"expected":false},
+    {"input":[[2,1]],"expected":false},
+    {"input":[[1,2,2,1]],"expected":false},
+    {"input":[[3,2,1]],"expected":false},
+    {"input":[[0,3,2,1]],"expected":true},
+    {"input":[[0,1,0,1]],"expected":false},
+    {"input":[[0,1,2,1,0]],"expected":true}
+  ]
+}

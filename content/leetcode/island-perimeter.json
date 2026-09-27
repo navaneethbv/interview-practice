@@ -1,0 +1,27 @@
+{
+  "id": "island-perimeter",
+  "style": "leetcode",
+  "function": {
+    "python": "islandPerimeter",
+    "java": "islandPerimeter"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,1],[1,1]]],"expected":8,"sample":true},
+    {"input":[[[1,0]]],"expected":4,"sample":true},
+    {"input":[[[1]]],"expected":4},
+    {"input":[[[1,1,1]]],"expected":8},
+    {"input":[[[1],[1],[1]]],"expected":8},
+    {"input":[[[1,0],[1,1]]],"expected":8},
+    {"input":[[[0,1,0],[1,1,1],[0,1,0]]],"expected":12},
+    {"input":[[[0,0],[0,1]]],"expected":4},
+    {"input":[[[1,1,1],[1,1,1]]],"expected":10},
+    {"input":[[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]],"expected":16}
+  ]
+}

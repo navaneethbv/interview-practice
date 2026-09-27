@@ -1,0 +1,1 @@
+WITH firsts AS (SELECT player_id,MIN(event_date) first_date FROM Activity GROUP BY player_id) SELECT ROUND(AVG(EXISTS(SELECT 1 FROM Activity a WHERE a.player_id=f.player_id AND a.event_date=date(f.first_date,'+1 day'))),2) AS fraction FROM firsts f;

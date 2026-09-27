@@ -1,0 +1,27 @@
+{
+  "id": "strictly-palindromic-number",
+  "style": "leetcode",
+  "function": {
+    "python": "isStrictlyPalindromic",
+    "java": "isStrictlyPalindromic"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[4],"expected":false,"sample":true},
+    {"input":[7],"expected":false,"sample":true},
+    {"input":[5],"expected":false},
+    {"input":[6],"expected":false},
+    {"input":[8],"expected":false},
+    {"input":[9],"expected":false},
+    {"input":[10],"expected":false},
+    {"input":[31],"expected":false},
+    {"input":[99999],"expected":false},
+    {"input":[100000],"expected":false}
+  ]
+}

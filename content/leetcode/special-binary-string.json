@@ -1,0 +1,27 @@
+{
+  "id": "special-binary-string",
+  "style": "leetcode",
+  "function": {
+    "python": "makeLargestSpecial",
+    "java": "makeLargestSpecial"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["11011000"],"expected":"11100100","sample":true},
+    {"input":["10"],"expected":"10","sample":true},
+    {"input":["1010"],"expected":"1010"},
+    {"input":["1100"],"expected":"1100"},
+    {"input":["111000"],"expected":"111000"},
+    {"input":["101100"],"expected":"110010"},
+    {"input":["110010"],"expected":"110010"},
+    {"input":["11001100"],"expected":"11001100"},
+    {"input":["11100010"],"expected":"11100010"},
+    {"input":["10101010"],"expected":"10101010"}
+  ]
+}

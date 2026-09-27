@@ -1,0 +1,58 @@
+{
+  "kind": "sql",
+  "id": "employee-bonus",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "empId",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "supervisor",
+          "type": "INTEGER"
+        },
+        {
+          "name": "salary",
+          "type": "INTEGER"
+        }
+      ]
+    },
+    {
+      "name": "Bonus",
+      "columns": [
+        {
+          "name": "empId",
+          "type": "INTEGER"
+        },
+        {
+          "name": "bonus",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "name",
+    "bonus"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employee":[[1,"Ana",null,3000],[2,"Bo",1,2000],[3,"Cy",1,2000]],"Bonus":[[2,999],[3,1000]]}},"expected":[["Ana",null],["Bo",999]],"sample":true},
+    {"input":{"tables":{"Employee":[[1,"Dee",null,1]],"Bonus":[[1,0]]}},"expected":[["Dee",0]],"sample":true},
+    {"input":{"tables":{"Employee":[],"Bonus":[]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000]],"Bonus":[]}},"expected":[["E0",null]]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000]],"Bonus":[[1,1000]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000]],"Bonus":[[1,1001]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000],[2,"E1",null,1000]],"Bonus":[[1,0],[2,999]]}},"expected":[["E0",0],["E1",999]]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000],[2,"E1",null,1000],[3,"E2",null,1000]],"Bonus":[[2,500]]}},"expected":[["E0",null],["E1",500],["E2",null]]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000],[2,"E1",null,1000]],"Bonus":[[1,1000],[2,1000]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"E0",null,1000],[2,"E1",null,1000],[3,"E2",null,1000]],"Bonus":[[1,1],[2,999],[3,1001]]}},"expected":[["E0",1],["E1",999]]}
+  ]
+}

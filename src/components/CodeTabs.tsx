@@ -5,7 +5,7 @@ import { useState, useSyncExternalStore } from "react";
 import type { CodeLang } from "@/lib/content-types";
 import { loadPrefs, savePrefs } from "@/lib/progress";
 
-const LABEL: Record<CodeLang, string> = { python: "Python", java: "Java" };
+const LABEL: Record<CodeLang, string> = { python: "Python", java: "Java", sql: "SQLite" };
 
 /* A tiny shared store so every code block on the page follows the chosen language. */
 const langListeners = new Set<() => void>();
@@ -30,13 +30,13 @@ export function usePreferredLang(): CodeLang {
   return useSyncExternalStore(subscribe, getLang, () => "python" as CodeLang);
 }
 
-export function CodeTabs(props: { java?: string; python?: string; javaSrc?: string; pythonSrc?: string }) {
+export function CodeTabs(props: { java?: string; python?: string; sql?: string; javaSrc?: string; pythonSrc?: string; sqlSrc?: string }) {
   const preferred = usePreferredLang();
   const [copied, setCopied] = useState(false);
-  const available = (["python", "java"] as const).filter((l) => props[l]);
+  const available = (["python", "java", "sql"] as const).filter((l) => props[l]);
   if (!available.length) return null;
   const lang = available.includes(preferred) ? preferred : available[0];
-  const src = lang === "java" ? props.javaSrc : props.pythonSrc;
+  const src = lang === "java" ? props.javaSrc : lang === "sql" ? props.sqlSrc : props.pythonSrc;
 
   async function copy() {
     try {

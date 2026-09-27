@@ -1,0 +1,58 @@
+{
+  "kind": "design",
+  "id": "design-hashmap",
+  "style": "leetcode",
+  "className": "MyHashMap",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "put",
+      "java": "put",
+      "params": [
+        {
+          "name": "key",
+          "type": "int"
+        },
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "key",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "remove",
+      "java": "remove",
+      "params": [
+        {
+          "name": "key",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["put","get","put","get","remove","get"],"args":[[1,4],[1],[1,8],[1],[1],[1]]},"expected":[null,4,null,8,null,-1],"sample":true},
+    {"input":{"ctor":[],"ops":["get","remove","get"],"args":[[0],[0],[0]]},"expected":[-1,null,-1],"sample":true},
+    {"input":{"ctor":[],"ops":["put","get"],"args":[[0,0],[0]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["put","get"],"args":[[1000000,1000000],[1000000]]},"expected":[null,1000000]},
+    {"input":{"ctor":[],"ops":["put","put","get","get"],"args":[[1,2],[2,3],[1],[2]]},"expected":[null,null,2,3]},
+    {"input":{"ctor":[],"ops":["put","remove","put","get"],"args":[[5,1],[5],[5,9],[5]]},"expected":[null,null,null,9]},
+    {"input":{"ctor":[],"ops":["put","put","remove","get"],"args":[[1,7],[1001,8],[1],[1001]]},"expected":[null,null,null,8]},
+    {"input":{"ctor":[],"ops":["put","put","get"],"args":[[2,4],[2,0],[2]]},"expected":[null,null,0]},
+    {"input":{"ctor":[],"ops":["remove","get"],"args":[[999],[999]]},"expected":[null,-1]},
+    {"input":{"ctor":[],"ops":["put","remove","remove","get"],"args":[[3,4],[3],[3],[3]]},"expected":[null,null,null,-1]}
+  ]
+}

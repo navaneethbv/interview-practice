@@ -1,0 +1,32 @@
+{
+  "id": "longest-substring-with-at-most-k-distinct-characters",
+  "style": "leetcode",
+  "function": {
+    "python": "lengthOfLongestSubstringKDistinct",
+    "java": "lengthOfLongestSubstringKDistinct"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abaccc",2],"expected":4,"sample":true},
+    {"input":["abc",0],"expected":0,"sample":true},
+    {"input":["",2],"expected":0},
+    {"input":["a",1],"expected":1},
+    {"input":["aaaa",1],"expected":4},
+    {"input":["ab",1],"expected":1},
+    {"input":["eceba",2],"expected":3},
+    {"input":["abc",3],"expected":3},
+    {"input":["a b a",2],"expected":3},
+    {"input":["abac",2],"expected":3},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",1],"expected":100}
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "id": "remove-zero-sum-consecutive-nodes-from-linked-list",
+  "style": "leetcode",
+  "function": {
+    "python": "removeZeroSumSublists",
+    "java": "removeZeroSumSublists"
+  },
+  "params": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "ListNode",
+  "compare": {
+    "validator": "zeroSumList"
+  },
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          -3,
+          3,
+          1
+        ]
+      ],
+      "expected": [
+        3,
+        1
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1,
+          -1
+        ]
+      ],
+      "expected": null,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          0
+        ]
+      ],
+      "expected": null
+    },
+    {
+      "input": [
+        [
+          0,
+          0
+        ]
+      ],
+      "expected": null
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          -3,
+          4
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          -3,
+          -2
+        ]
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          3,
+          2,
+          -3,
+          -2,
+          5,
+          5,
+          -5,
+          1
+        ]
+      ],
+      "expected": [
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          -1,
+          1,
+          2,
+          -2,
+          3
+        ]
+      ],
+      "expected": [
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          0,
+          1,
+          0,
+          2,
+          0
+        ]
+      ],
+      "expected": [
+        1,
+        2
+      ]
+    }
+  ]
+}

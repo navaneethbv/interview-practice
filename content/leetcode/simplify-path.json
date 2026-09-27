@@ -1,0 +1,27 @@
+{
+  "id": "simplify-path",
+  "style": "leetcode",
+  "function": {
+    "python": "simplifyPath",
+    "java": "simplifyPath"
+  },
+  "params": [
+    {
+      "name": "path",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["/a//b/../c/"],"expected":"/a/c","sample":true},
+    {"input":["/../../"],"expected":"/","sample":true},
+    {"input":["/"],"expected":"/"},
+    {"input":["/home/"],"expected":"/home"},
+    {"input":["/./"],"expected":"/"},
+    {"input":["/a/./b"],"expected":"/a/b"},
+    {"input":["/a/../../b"],"expected":"/b"},
+    {"input":["/.../a/../b"],"expected":"/.../b"},
+    {"input":["//a///b////"],"expected":"/a/b"},
+    {"input":["/a_b/1/../.hidden"],"expected":"/a_b/.hidden"}
+  ]
+}

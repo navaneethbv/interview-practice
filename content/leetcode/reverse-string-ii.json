@@ -1,0 +1,31 @@
+{
+  "id": "reverse-string-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseStr",
+    "java": "reverseStr"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["abcdefg",2],"expected":"bacdfeg","sample":true},
+    {"input":["abc",4],"expected":"cba","sample":true},
+    {"input":["a",1],"expected":"a"},
+    {"input":["abc",1],"expected":"abc"},
+    {"input":["abcd",2],"expected":"bacd"},
+    {"input":["abcd",4],"expected":"dcba"},
+    {"input":["abcde",3],"expected":"cbade"},
+    {"input":["abcdefgh",2],"expected":"bacdfegh"},
+    {"input":["aaaaa",2],"expected":"aaaaa"},
+    {"input":["abcdefghi",3],"expected":"cbadefihg"}
+  ]
+}

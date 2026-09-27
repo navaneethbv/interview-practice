@@ -1,0 +1,27 @@
+{
+  "id": "unique-morse-code-words",
+  "style": "leetcode",
+  "function": {
+    "python": "uniqueMorseRepresentations",
+    "java": "uniqueMorseRepresentations"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["gin","zen","gig","msg"]],"expected":2,"sample":true},
+    {"input":[["a"]],"expected":1,"sample":true},
+    {"input":[["a","a"]],"expected":1},
+    {"input":[["a","b"]],"expected":2},
+    {"input":[["e","t"]],"expected":2},
+    {"input":[["ab","ba"]],"expected":2},
+    {"input":[["s","eee"]],"expected":1},
+    {"input":[["i","ee"]],"expected":1},
+    {"input":[["abc","def","ghi"]],"expected":3},
+    {"input":[["z","zz"]],"expected":2}
+  ]
+}

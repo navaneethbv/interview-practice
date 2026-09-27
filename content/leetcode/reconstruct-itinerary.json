@@ -1,0 +1,27 @@
+{
+  "id": "reconstruct-itinerary",
+  "style": "leetcode",
+  "function": {
+    "python": "findItinerary",
+    "java": "findItinerary"
+  },
+  "params": [
+    {
+      "name": "tickets",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[[["JFK","SFO"],["SFO","LAX"]]],"expected":["JFK","SFO","LAX"],"sample":true},
+    {"input":[[["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]],"expected":["JFK","NRT","JFK","KUL"],"sample":true},
+    {"input":[[["JFK","AAA"]]],"expected":["JFK","AAA"]},
+    {"input":[[["JFK","AAA"],["AAA","JFK"]]],"expected":["JFK","AAA","JFK"]},
+    {"input":[[["JFK","BBB"],["JFK","AAA"],["AAA","JFK"]]],"expected":["JFK","AAA","JFK","BBB"]},
+    {"input":[[["JFK","AAA"],["JFK","AAA"],["AAA","JFK"]]],"expected":["JFK","AAA","JFK","AAA"]},
+    {"input":[[["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]],"expected":["JFK","ATL","JFK","SFO","ATL","SFO"]},
+    {"input":[[["AAA","BBB"],["JFK","AAA"],["BBB","CCC"]]],"expected":["JFK","AAA","BBB","CCC"]},
+    {"input":[[["JFK","ZZZ"],["ZZZ","AAA"],["AAA","JFK"]]],"expected":["JFK","ZZZ","AAA","JFK"]},
+    {"input":[[["JFK","AAA"],["AAA","BBB"],["BBB","AAA"],["AAA","JFK"],["JFK","CCC"]]],"expected":["JFK","AAA","BBB","AAA","JFK","CCC"]}
+  ]
+}

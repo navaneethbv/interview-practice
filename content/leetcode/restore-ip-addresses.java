@@ -1,0 +1,3 @@
+class Solution {
+public List<String> restoreIpAddresses(String s){List<String>out=new ArrayList<>();go(s,0,new ArrayList<>(),out);return out;}private void go(String s,int start,List<String>parts,List<String>out){if(parts.size()==4){if(start==s.length())out.add(String.join(".",parts));return;}int left=4-parts.size();if(s.length()-start<left||s.length()-start>3*left)return;for(int size=1;size<=3&&start+size<=s.length();size++){String p=s.substring(start,start+size);if((size>1&&p.charAt(0)=='0')||Integer.parseInt(p)>255)continue;parts.add(p);go(s,start+size,parts,out);parts.remove(parts.size()-1);}}
+}

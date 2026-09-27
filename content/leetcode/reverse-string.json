@@ -1,0 +1,30 @@
+{
+  "id": "reverse-string",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseString",
+    "java": "reverseString"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "char[]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[["h","e","l","l","o"]],"expected":["o","l","l","e","h"],"sample":true},
+    {"input":[["a"]],"expected":["a"],"sample":true},
+    {"input":[["a","b"]],"expected":["b","a"]},
+    {"input":[["a","b","c"]],"expected":["c","b","a"]},
+    {"input":[["a","a","a","a"]],"expected":["a","a","a","a"]},
+    {"input":[["a"," ","b"]],"expected":["b"," ","a"]},
+    {"input":[["1","2","3","4","5"]],"expected":["5","4","3","2","1"]},
+    {"input":[["A","a"]],"expected":["a","A"]},
+    {"input":[["!","?","."]],"expected":[".","?","!"]},
+    {"input":[["r","a","c","e","c","a","r"]],"expected":["r","a","c","e","c","a","r"]}
+  ]
+}

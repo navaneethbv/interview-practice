@@ -1,0 +1,32 @@
+{
+  "id": "sum-of-two-integers",
+  "style": "leetcode",
+  "function": {
+    "python": "getSum",
+    "java": "getSum"
+  },
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[7,5],"expected":12,"sample":true},
+    {"input":[-6,2],"expected":-4,"sample":true},
+    {"input":[0,0],"expected":0},
+    {"input":[0,9],"expected":9},
+    {"input":[-1,1],"expected":0},
+    {"input":[-8,-9],"expected":-17},
+    {"input":[1000,1000],"expected":2000},
+    {"input":[-1000,-1000],"expected":-2000},
+    {"input":[1000,-1000],"expected":0},
+    {"input":[15,1],"expected":16},
+    {"input":[-1,-1],"expected":-2}
+  ]
+}

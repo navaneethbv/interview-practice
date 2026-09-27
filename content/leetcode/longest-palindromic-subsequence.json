@@ -1,0 +1,28 @@
+{
+  "id": "longest-palindromic-subsequence",
+  "style": "leetcode",
+  "function": {
+    "python": "longestPalindromeSubseq",
+    "java": "longestPalindromeSubseq"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["agbdba"],"expected":5,"sample":true},
+    {"input":["abc"],"expected":1,"sample":true},
+    {"input":["a"],"expected":1},
+    {"input":["aa"],"expected":2},
+    {"input":["ab"],"expected":1},
+    {"input":["bbbab"],"expected":4},
+    {"input":["cbbd"],"expected":2},
+    {"input":["racecar"],"expected":7},
+    {"input":["abcabc"],"expected":3},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":100},
+    {"input":["character"],"expected":5}
+  ]
+}

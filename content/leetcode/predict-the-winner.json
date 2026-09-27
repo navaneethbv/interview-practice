@@ -1,0 +1,27 @@
+{
+  "id": "predict-the-winner",
+  "style": "leetcode",
+  "function": {
+    "python": "predictTheWinner",
+    "java": "predictTheWinner"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[1,5,2]],"expected":false,"sample":true},
+    {"input":[[1,1]],"expected":true,"sample":true},
+    {"input":[[0]],"expected":true},
+    {"input":[[1]],"expected":true},
+    {"input":[[1,5,233,7]],"expected":true},
+    {"input":[[0,0,0]],"expected":true},
+    {"input":[[2,1]],"expected":true},
+    {"input":[[1,2,3]],"expected":true},
+    {"input":[[3,9,1,2]],"expected":true},
+    {"input":[[1,2,99,2,1]],"expected":false}
+  ]
+}

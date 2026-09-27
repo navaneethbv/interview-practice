@@ -1,0 +1,28 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-with-cooldown",
+  "style": "leetcode",
+  "function": {
+    "python": "maxProfit",
+    "java": "maxProfit"
+  },
+  "params": [
+    {
+      "name": "prices",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,2,3,0,2]],"expected":3,"sample":true},
+    {"input":[[5,4,3]],"expected":0,"sample":true},
+    {"input":[[0]],"expected":0},
+    {"input":[[1,2]],"expected":1},
+    {"input":[[2,1]],"expected":0},
+    {"input":[[1,1,1]],"expected":0},
+    {"input":[[1,4,2,7]],"expected":6},
+    {"input":[[2,1,4,5,2,9,7]],"expected":10},
+    {"input":[[0,1000,0,1000]],"expected":1000},
+    {"input":[[1,2,3,4,5]],"expected":4},
+    {"input":[[0,0,1,0,0,1]],"expected":2}
+  ]
+}

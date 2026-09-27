@@ -1,0 +1,31 @@
+{
+  "id": "is-subsequence",
+  "style": "leetcode",
+  "function": {
+    "python": "isSubsequence",
+    "java": "isSubsequence"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["abc","ahbgdc"],"expected":true,"sample":true},
+    {"input":["axc","ahbgdc"],"expected":false,"sample":true},
+    {"input":["",""],"expected":true},
+    {"input":["","abc"],"expected":true},
+    {"input":["a",""],"expected":false},
+    {"input":["a","a"],"expected":true},
+    {"input":["abc","abc"],"expected":true},
+    {"input":["aaa","aa"],"expected":false},
+    {"input":["abc","acb"],"expected":false},
+    {"input":["ace","abcde"],"expected":true}
+  ]
+}

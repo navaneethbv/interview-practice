@@ -1,0 +1,213 @@
+{
+  "id": "find-a-peak-element-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "findPeakGrid",
+    "java": "findPeakGrid"
+  },
+  "params": [
+    {
+      "name": "mat",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[]",
+  "compare": {
+    "validator": "peakGrid"
+  },
+  "tests": [
+    {
+      "input": [
+        [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        1
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          [
+            7
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2,
+            1
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ]
+      ],
+      "expected": [
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            2
+          ],
+          [
+            1
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      ],
+      "expected": [
+        2,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            9,
+            8,
+            7
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            3,
+            2,
+            1
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            1,
+            9,
+            2
+          ],
+          [
+            8,
+            3,
+            7
+          ],
+          [
+            4,
+            6,
+            5
+          ]
+        ]
+      ],
+      "expected": [
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          [
+            10,
+            20,
+            15
+          ],
+          [
+            21,
+            30,
+            14
+          ],
+          [
+            7,
+            16,
+            32
+          ]
+        ]
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "palindrome-permutation",
+  "style": "leetcode",
+  "function": {
+    "python": "canPermutePalindrome",
+    "java": "canPermutePalindrome"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["aabbc"],"expected":true,"sample":true},
+    {"input":["abc"],"expected":false,"sample":true},
+    {"input":["a"],"expected":true},
+    {"input":["aa"],"expected":true},
+    {"input":["ab"],"expected":false},
+    {"input":["aabb"],"expected":true},
+    {"input":["Aa"],"expected":false},
+    {"input":["carerac"],"expected":true},
+    {"input":["a a"],"expected":true},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],"expected":true}
+  ]
+}

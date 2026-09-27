@@ -1,0 +1,31 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-with-transaction-fee",
+  "style": "leetcode",
+  "function": {
+    "python": "maxProfit",
+    "java": "maxProfit"
+  },
+  "params": [
+    {
+      "name": "prices",
+      "type": "int[]"
+    },
+    {
+      "name": "fee",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,5,2,8],2],"expected":6,"sample":true},
+    {"input":[[5,4,3],1],"expected":0,"sample":true},
+    {"input":[[1],0],"expected":0},
+    {"input":[[1,2],0],"expected":1},
+    {"input":[[1,2],1],"expected":0},
+    {"input":[[1,3,2,8,4,9],2],"expected":8},
+    {"input":[[1,3,7,5,10,3],3],"expected":6},
+    {"input":[[2,2,2],1],"expected":0},
+    {"input":[[1,100],99],"expected":0},
+    {"input":[[1,10,1,10],0],"expected":18}
+  ]
+}

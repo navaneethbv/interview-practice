@@ -1,0 +1,28 @@
+{
+  "id": "find-all-duplicates-in-an-array",
+  "style": "leetcode",
+  "function": {
+    "python": "findDuplicates",
+    "java": "findDuplicates"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "List<int>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[[4,3,2,7,8,2,3,1]],"expected":[2,3],"sample":true},
+    {"input":[[1,1,2]],"expected":[1],"sample":true},
+    {"input":[[1]],"expected":[]},
+    {"input":[[1,2]],"expected":[]},
+    {"input":[[2,2]],"expected":[2]},
+    {"input":[[1,2,3]],"expected":[]},
+    {"input":[[3,3,2,2]],"expected":[3,2]},
+    {"input":[[1,1,2,2,3,3]],"expected":[1,2,3]},
+    {"input":[[5,4,3,2,1]],"expected":[]},
+    {"input":[[4,4,1,2]],"expected":[4]}
+  ]
+}

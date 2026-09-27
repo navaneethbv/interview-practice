@@ -1,0 +1,43 @@
+{
+  "kind": "design",
+  "id": "first-unique-number",
+  "style": "leetcode",
+  "className": "FirstUnique",
+  "ctorParams": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "showFirstUnique",
+      "java": "showFirstUnique",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "add",
+      "java": "add",
+      "params": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[2,3]],"ops":["showFirstUnique","add","showFirstUnique","add","showFirstUnique"],"args":[[],[2],[],[3],[]]},"expected":[2,null,3,null,-1],"sample":true},
+    {"input":{"ctor":[[7,7]],"ops":["showFirstUnique","add","showFirstUnique"],"args":[[],[8],[]]},"expected":[-1,null,8],"sample":true},
+    {"input":{"ctor":[[1]],"ops":["showFirstUnique"],"args":[[]]},"expected":[1]},
+    {"input":{"ctor":[[1,1]],"ops":["showFirstUnique"],"args":[[]]},"expected":[-1]},
+    {"input":{"ctor":[[1]],"ops":["add","showFirstUnique"],"args":[[1],[]]},"expected":[null,-1]},
+    {"input":{"ctor":[[1,1]],"ops":["add","add","showFirstUnique"],"args":[[2],[3],[]]},"expected":[null,null,2]},
+    {"input":{"ctor":[[1,2,1]],"ops":["add","showFirstUnique"],"args":[[3],[]]},"expected":[null,2]},
+    {"input":{"ctor":[[1,1,2,3,3]],"ops":["showFirstUnique","add","showFirstUnique"],"args":[[],[2],[]]},"expected":[2,null,-1]},
+    {"input":{"ctor":[[5,5]],"ops":["add","add","showFirstUnique"],"args":[[5],[5],[]]},"expected":[null,null,-1]},
+    {"input":{"ctor":[[1000000000,1]],"ops":["showFirstUnique"],"args":[[]]},"expected":[1000000000]}
+  ]
+}

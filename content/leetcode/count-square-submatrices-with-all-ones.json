@@ -1,0 +1,27 @@
+{
+  "id": "count-square-submatrices-with-all-ones",
+  "style": "leetcode",
+  "function": {
+    "python": "countSquares",
+    "java": "countSquares"
+  },
+  "params": [
+    {
+      "name": "matrix",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,1],[1,1]]],"expected":5,"sample":true},
+    {"input":[[[1,0],[0,1]]],"expected":2,"sample":true},
+    {"input":[[[0]]],"expected":0},
+    {"input":[[[1]]],"expected":1},
+    {"input":[[[1,1,1]]],"expected":3},
+    {"input":[[[1],[1],[1]]],"expected":3},
+    {"input":[[[0,0],[0,0]]],"expected":0},
+    {"input":[[[1,1,1],[1,1,1],[1,1,1]]],"expected":14},
+    {"input":[[[0,1,1,1],[1,1,1,1],[0,1,1,1]]],"expected":15},
+    {"input":[[[1,1,1],[1,0,1],[1,1,1]]],"expected":8}
+  ]
+}

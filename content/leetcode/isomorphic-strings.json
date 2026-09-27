@@ -1,0 +1,32 @@
+{
+  "id": "isomorphic-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "isIsomorphic",
+    "java": "isIsomorphic"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["paper","title"],"expected":true,"sample":true},
+    {"input":["ab","aa"],"expected":false,"sample":true},
+    {"input":["a","b"],"expected":true},
+    {"input":["aa","ab"],"expected":false},
+    {"input":["egg","add"],"expected":true},
+    {"input":["foo","bar"],"expected":false},
+    {"input":["abc","bca"],"expected":true},
+    {"input":["abca","zbxz"],"expected":true},
+    {"input":["12 1","ab a"],"expected":true},
+    {"input":["aa","bb"],"expected":true},
+    {"input":["abc","abc"],"expected":true}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "function": {
+    "python": "fractionToDecimal",
+    "java": "fractionToDecimal"
+  },
+  "params": [
+    {
+      "name": "numerator",
+      "type": "int"
+    },
+    {
+      "name": "denominator",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "id": "fraction-to-recurring-decimal",
+  "style": "leetcode",
+  "tests": [
+    {"input":[1,2],"sample":true,"expected":"0.5"},
+    {"input":[2,3],"sample":true,"expected":"0.(6)"},
+    {"input":[0,-7],"expected":"0"},
+    {"input":[4,2],"expected":"2"},
+    {"input":[-1,2],"expected":"-0.5"},
+    {"input":[1,-6],"expected":"-0.1(6)"},
+    {"input":[-50,-8],"expected":"6.25"},
+    {"input":[1,7],"expected":"0.(142857)"},
+    {"input":[-2147483648,1],"expected":"-2147483648"},
+    {"input":[1,-2147483648],"expected":"-0.0000000004656612873077392578125"}
+  ]
+}

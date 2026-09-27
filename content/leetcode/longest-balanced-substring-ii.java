@@ -1,0 +1,3 @@
+class Solution {
+public int longestBalanced(String s){int ans=0,run=0;char prev=0;for(char c:s.toCharArray()){run=c==prev?run+1:1;prev=c;ans=Math.max(ans,run);}for(char a='a';a<='c';a++)for(char b=(char)(a+1);b<='c';b++){Map<Integer,Integer> first=new HashMap<>();first.put(0,-1);int diff=0;for(int i=0;i<s.length();i++){char c=s.charAt(i);if(c!=a&&c!=b){first.clear();first.put(0,i);diff=0;continue;}diff+=c==a?1:-1;Integer old=first.putIfAbsent(diff,i);if(old!=null)ans=Math.max(ans,i-old);}}int[] count=new int[3];Map<String,Integer> first=new HashMap<>();first.put("0,0",-1);for(int i=0;i<s.length();i++){count[s.charAt(i)-'a']++;String key=(count[0]-count[1])+","+(count[0]-count[2]);Integer old=first.putIfAbsent(key,i);if(old!=null)ans=Math.max(ans,i-old);}return ans;}
+}

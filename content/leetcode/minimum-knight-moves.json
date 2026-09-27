@@ -1,0 +1,32 @@
+{
+  "id": "minimum-knight-moves",
+  "style": "leetcode",
+  "function": {
+    "python": "minKnightMoves",
+    "java": "minKnightMoves"
+  },
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[2,1],"expected":1,"sample":true},
+    {"input":[1,0],"expected":3,"sample":true},
+    {"input":[0,0],"expected":0},
+    {"input":[1,1],"expected":2},
+    {"input":[2,2],"expected":4},
+    {"input":[3,3],"expected":2},
+    {"input":[5,5],"expected":4},
+    {"input":[-2,-1],"expected":1},
+    {"input":[0,2],"expected":2},
+    {"input":[100,100],"expected":68},
+    {"input":[300,0],"expected":150}
+  ]
+}

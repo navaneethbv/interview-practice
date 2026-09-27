@@ -1,0 +1,3 @@
+class Solution {
+public List<Integer> distanceK(TreeNode root,TreeNode target,int k){Map<TreeNode,TreeNode>parent=new HashMap<>();Deque<TreeNode>stack=new ArrayDeque<>();stack.push(root);parent.put(root,null);while(!stack.isEmpty()){TreeNode v=stack.pop();if(v.left!=null){parent.put(v.left,v);stack.push(v.left);}if(v.right!=null){parent.put(v.right,v);stack.push(v.right);}}Set<TreeNode>seen=new HashSet<>();seen.add(target);Deque<TreeNode>q=new ArrayDeque<>();q.add(target);while(k-->0&&!q.isEmpty())for(int size=q.size();size>0;size--){TreeNode v=q.remove();for(TreeNode next:new TreeNode[]{v.left,v.right,parent.get(v)})if(next!=null&&seen.add(next))q.add(next);}List<Integer>out=new ArrayList<>();for(TreeNode v:q)out.add(v.val);return out;}
+}

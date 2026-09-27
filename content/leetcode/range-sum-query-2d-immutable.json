@@ -1,0 +1,49 @@
+{
+  "kind": "design",
+  "id": "range-sum-query-2d-immutable",
+  "style": "leetcode",
+  "className": "NumMatrix",
+  "ctorParams": [
+    {
+      "name": "matrix",
+      "type": "int[][]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "sumRegion",
+      "java": "sumRegion",
+      "params": [
+        {
+          "name": "row1",
+          "type": "int"
+        },
+        {
+          "name": "col1",
+          "type": "int"
+        },
+        {
+          "name": "row2",
+          "type": "int"
+        },
+        {
+          "name": "col2",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[[1,2],[3,4]]],"ops":["sumRegion","sumRegion"],"args":[[0,0,1,1],[0,1,1,1]]},"expected":[10,6],"sample":true},
+    {"input":{"ctor":[[[-1]]],"ops":["sumRegion"],"args":[[0,0,0,0]]},"expected":[-1],"sample":true},
+    {"input":{"ctor":[[[0]]],"ops":["sumRegion"],"args":[[0,0,0,0]]},"expected":[0]},
+    {"input":{"ctor":[[[1,2,3]]],"ops":["sumRegion"],"args":[[0,1,0,2]]},"expected":[5]},
+    {"input":{"ctor":[[[1],[2],[3]]],"ops":["sumRegion"],"args":[[1,0,2,0]]},"expected":[5]},
+    {"input":{"ctor":[[[1,-1],[-1,1]]],"ops":["sumRegion","sumRegion"],"args":[[0,0,1,1],[1,1,1,1]]},"expected":[0,1]},
+    {"input":{"ctor":[[[5,6],[7,8]]],"ops":["sumRegion","sumRegion"],"args":[[0,0,0,0],[1,0,1,1]]},"expected":[5,15]},
+    {"input":{"ctor":[[[100000,100000,100000],[100000,100000,100000],[100000,100000,100000]]],"ops":["sumRegion"],"args":[[0,0,2,2]]},"expected":[900000]},
+    {"input":{"ctor":[[[1,2,3],[4,5,6],[7,8,9]]],"ops":["sumRegion","sumRegion"],"args":[[1,1,2,2],[0,0,1,1]]},"expected":[28,12]},
+    {"input":{"ctor":[[[1,2],[3,4]]],"ops":["sumRegion","sumRegion"],"args":[[0,0,1,1],[0,0,1,1]]},"expected":[10,10]}
+  ]
+}

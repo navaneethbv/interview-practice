@@ -1,0 +1,31 @@
+{
+  "id": "find-first-and-last-position-of-element-in-sorted-array",
+  "style": "leetcode",
+  "function": {
+    "python": "searchRange",
+    "java": "searchRange"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[1,2,2,2,4],2],"expected":[1,3],"sample":true},
+    {"input":[[1,3,5],2],"expected":[-1,-1],"sample":true},
+    {"input":[[],0],"expected":[-1,-1]},
+    {"input":[[1],1],"expected":[0,0]},
+    {"input":[[1],0],"expected":[-1,-1]},
+    {"input":[[2,2],2],"expected":[0,1]},
+    {"input":[[1,1,2],1],"expected":[0,1]},
+    {"input":[[1,2,2],2],"expected":[1,2]},
+    {"input":[[-2,-1,0,0],0],"expected":[2,3]},
+    {"input":[[-2147483648,2147483647],2147483647],"expected":[1,1]}
+  ]
+}

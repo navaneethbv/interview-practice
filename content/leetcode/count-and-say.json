@@ -1,0 +1,27 @@
+{
+  "id": "count-and-say",
+  "style": "leetcode",
+  "function": {
+    "python": "countAndSay",
+    "java": "countAndSay"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[4],"expected":"1211","sample":true},
+    {"input":[5],"expected":"111221","sample":true},
+    {"input":[1],"expected":"1"},
+    {"input":[2],"expected":"11"},
+    {"input":[3],"expected":"21"},
+    {"input":[6],"expected":"312211"},
+    {"input":[7],"expected":"13112221"},
+    {"input":[8],"expected":"1113213211"},
+    {"input":[10],"expected":"13211311123113112211"},
+    {"input":[15],"expected":"311311222113111231131112132112311321322112111312211312111322212311322113212221"}
+  ]
+}

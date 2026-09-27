@@ -1,0 +1,38 @@
+{
+  "kind": "design",
+  "id": "binary-search-tree-iterator",
+  "style": "leetcode",
+  "className": "BSTIterator",
+  "ctorParams": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "methods": [
+    {
+      "name": "next",
+      "java": "next",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "hasNext",
+      "java": "hasNext",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[2,1,3]],"ops":["hasNext","next","next","next","hasNext"],"args":[[],[],[],[],[]]},"expected":[true,1,2,3,false],"sample":true},
+    {"input":{"ctor":[[5]],"ops":["next","hasNext"],"args":[[],[]]},"expected":[5,false],"sample":true},
+    {"input":{"ctor":[[1]],"ops":["hasNext","hasNext","next"],"args":[[],[],[]]},"expected":[true,true,1]},
+    {"input":{"ctor":[[2,1]],"ops":["next","next","hasNext"],"args":[[],[],[]]},"expected":[1,2,false]},
+    {"input":{"ctor":[[1,null,2]],"ops":["next","hasNext","next"],"args":[[],[],[]]},"expected":[1,true,2]},
+    {"input":{"ctor":[[4,2,6,1,3,5,7]],"ops":["next","next","next","next","next","next","next","hasNext"],"args":[[],[],[],[],[],[],[],[]]},"expected":[1,2,3,4,5,6,7,false]},
+    {"input":{"ctor":[[3,2,null,1]],"ops":["next","next","next"],"args":[[],[],[]]},"expected":[1,2,3]},
+    {"input":{"ctor":[[0]],"ops":["hasNext"],"args":[[]]},"expected":[true]},
+    {"input":{"ctor":[[1000000]],"ops":["next"],"args":[[]]},"expected":[1000000]},
+    {"input":{"ctor":[[5,3,8,null,4,6,9]],"ops":["next","next","hasNext","next"],"args":[[],[],[],[]]},"expected":[3,4,true,5]}
+  ]
+}

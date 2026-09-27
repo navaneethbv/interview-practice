@@ -1,0 +1,27 @@
+{
+  "id": "add-digits",
+  "style": "leetcode",
+  "function": {
+    "python": "addDigits",
+    "java": "addDigits"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[38],"expected":2,"sample":true},
+    {"input":[0],"expected":0,"sample":true},
+    {"input":[1],"expected":1},
+    {"input":[9],"expected":9},
+    {"input":[10],"expected":1},
+    {"input":[99],"expected":9},
+    {"input":[12345],"expected":6},
+    {"input":[999999999],"expected":9},
+    {"input":[2147483647],"expected":1},
+    {"input":[1000000000],"expected":1}
+  ]
+}

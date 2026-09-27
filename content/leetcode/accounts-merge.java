@@ -1,0 +1,3 @@
+class Solution {
+public List<List<String>> accountsMerge(List<List<String>> accounts){Map<String,String>p=new HashMap<>(),names=new HashMap<>();for(List<String>a:accounts)for(int i=1;i<a.size();i++){String e=a.get(i);p.putIfAbsent(e,e);names.put(e,a.get(0));p.put(find(p,e),find(p,a.get(1)));}Map<String,List<String>>g=new HashMap<>();for(String e:p.keySet())g.computeIfAbsent(find(p,e),x->new ArrayList<>()).add(e);List<List<String>>out=new ArrayList<>();for(Map.Entry<String,List<String>>e:g.entrySet()){Collections.sort(e.getValue());List<String>row=new ArrayList<>();row.add(names.get(e.getKey()));row.addAll(e.getValue());out.add(row);}return out;}private String find(Map<String,String>p,String x){if(!p.get(x).equals(x))p.put(x,find(p,p.get(x)));return p.get(x);}
+}

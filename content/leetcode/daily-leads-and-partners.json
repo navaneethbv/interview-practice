@@ -1,0 +1,47 @@
+{
+  "kind": "sql",
+  "id": "daily-leads-and-partners",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "DailySales",
+      "columns": [
+        {
+          "name": "date_id",
+          "type": "TEXT"
+        },
+        {
+          "name": "make_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "lead_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "partner_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "date_id",
+    "make_name",
+    "unique_leads",
+    "unique_partners"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,5],["2024-01-01","A",1,6],["2024-01-01","A",2,6]]}},"expected":[["2024-01-01","A",2,2]],"sample":true},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,5],["2024-01-01","A",1,5]]}},"expected":[["2024-01-01","A",1,1]],"sample":true},
+    {"input":{"tables":{"DailySales":[]}},"expected":[]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1]]}},"expected":[["2024-01-01","A",1,1]]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1],["2024-01-02","A",1,1]]}},"expected":[["2024-01-01","A",1,1],["2024-01-02","A",1,1]]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1],["2024-01-01","B",1,1]]}},"expected":[["2024-01-01","A",1,1],["2024-01-01","B",1,1]]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1],["2024-01-01","A",2,1]]}},"expected":[["2024-01-01","A",2,1]]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1],["2024-01-01","A",1,2]]}},"expected":[["2024-01-01","A",1,2]]},
+    {"input":{"tables":{"DailySales":[["2024-01-01","A",1,1],["2024-01-01","A",1,1],["2024-01-01","A",1,1],["2024-01-01","A",1,1],["2024-01-01","A",1,1]]}},"expected":[["2024-01-01","A",1,1]]},
+    {"input":{"tables":{"DailySales":[["2024-01-02","B",1,2],["2024-01-01","A",2,3],["2024-01-01","A",3,4]]}},"expected":[["2024-01-01","A",2,2],["2024-01-02","B",1,1]]}
+  ]
+}

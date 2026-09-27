@@ -1,0 +1,27 @@
+{
+  "id": "buildings-with-an-ocean-view",
+  "style": "leetcode",
+  "function": {
+    "python": "findBuildings",
+    "java": "findBuildings"
+  },
+  "params": [
+    {
+      "name": "heights",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[4,2,3,1]],"expected":[0,2,3],"sample":true},
+    {"input":[[2,2,2]],"expected":[2],"sample":true},
+    {"input":[[1]],"expected":[0]},
+    {"input":[[1,2,3]],"expected":[2]},
+    {"input":[[3,2,1]],"expected":[0,1,2]},
+    {"input":[[1,1]],"expected":[1]},
+    {"input":[[2,1,2]],"expected":[2]},
+    {"input":[[5,1,4,2,3]],"expected":[0,2,4]},
+    {"input":[[1000000000,1]],"expected":[0,1]},
+    {"input":[[1,5,2,5,1]],"expected":[3,4]}
+  ]
+}

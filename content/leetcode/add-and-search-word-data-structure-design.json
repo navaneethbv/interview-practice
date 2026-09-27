@@ -1,0 +1,43 @@
+{
+  "kind": "design",
+  "id": "add-and-search-word-data-structure-design",
+  "style": "leetcode",
+  "className": "WordDictionary",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "addWord",
+      "java": "addWord",
+      "params": [
+        {
+          "name": "word",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "search",
+      "java": "search",
+      "params": [
+        {
+          "name": "word",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["addWord","search","search","search"],"args":[["cat"],["c.t"],["ca"],["d.t"]]},"expected":[null,true,false,false],"sample":true},
+    {"input":{"ctor":[],"ops":["search","addWord","search"],"args":[["."],["a"],["."]]},"expected":[false,null,true],"sample":true},
+    {"input":{"ctor":[],"ops":["addWord","search"],"args":[["ab"],[".."]]},"expected":[null,true]},
+    {"input":{"ctor":[],"ops":["addWord","search"],"args":[["ab"],["."]]},"expected":[null,false]},
+    {"input":{"ctor":[],"ops":["addWord","addWord","search"],"args":[["ab"],["ac"],["a."]]},"expected":[null,null,true]},
+    {"input":{"ctor":[],"ops":["addWord","search"],"args":[["abc"],[".b."]]},"expected":[null,true]},
+    {"input":{"ctor":[],"ops":["addWord","search"],"args":[["abc"],["a.d"]]},"expected":[null,false]},
+    {"input":{"ctor":[],"ops":["addWord","addWord","search"],"args":[["x"],["x"],["x"]]},"expected":[null,null,true]},
+    {"input":{"ctor":[],"ops":["addWord","search"],"args":[["aaaaaaaaaaaaaaaaaaaaaaaaa"],["aaaaaaaaaaaaaaaaaaaaaaa.."]]},"expected":[null,true]},
+    {"input":{"ctor":[],"ops":["search","search"],"args":[["word"],[".."]]},"expected":[false,false]}
+  ]
+}

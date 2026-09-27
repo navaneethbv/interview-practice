@@ -1,0 +1,3 @@
+class Solution {
+public List<List<Integer>> palindromePairs(String[] words){Map<String,Integer>index=new HashMap<>();for(int i=0;i<words.length;i++)index.put(words[i],i);Set<List<Integer>>out=new HashSet<>();for(int i=0;i<words.length;i++)for(int cut=0;cut<=words[i].length();cut++){String a=words[i].substring(0,cut),b=words[i].substring(cut);if(pal(a)){Integer j=index.get(new StringBuilder(b).reverse().toString());if(j!=null&&j!=i)out.add(Arrays.asList(j,i));}if(pal(b)){Integer j=index.get(new StringBuilder(a).reverse().toString());if(j!=null&&j!=i)out.add(Arrays.asList(i,j));}}return new ArrayList<>(out);}private boolean pal(String s){for(int l=0,r=s.length()-1;l<r;l++,r--)if(s.charAt(l)!=s.charAt(r))return false;return true;}
+}

@@ -1,0 +1,32 @@
+{
+  "id": "distinct-subsequences",
+  "style": "leetcode",
+  "function": {
+    "python": "numDistinct",
+    "java": "numDistinct"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["babgbag","bag"],"expected":5,"sample":true},
+    {"input":["aaa","aa"],"expected":3,"sample":true},
+    {"input":["a","a"],"expected":1},
+    {"input":["a","b"],"expected":0},
+    {"input":["ab","abc"],"expected":0},
+    {"input":["abc","abc"],"expected":1},
+    {"input":["rabbbit","rabbit"],"expected":3},
+    {"input":["abc","ac"],"expected":1},
+    {"input":["AaA","AA"],"expected":1},
+    {"input":["aaaaaaaaaa","aaaaa"],"expected":252},
+    {"input":["abcabc","abc"],"expected":4}
+  ]
+}

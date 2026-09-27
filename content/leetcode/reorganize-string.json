@@ -1,0 +1,30 @@
+{
+  "id": "reorganize-string",
+  "style": "leetcode",
+  "function": {
+    "python": "reorganizeString",
+    "java": "reorganizeString"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "noAdjacentRepeat"
+  },
+  "tests": [
+    {"input":["aab"],"expected":"aba","sample":true},
+    {"input":["aaab"],"expected":"","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["aa"],"expected":""},
+    {"input":["ab"],"expected":"ab"},
+    {"input":["aabb"],"expected":"abab"},
+    {"input":["vvvlo"],"expected":"vlvov"},
+    {"input":["aaaaabbbb"],"expected":"ababababa"},
+    {"input":["abcabc"],"expected":"abcabc"},
+    {"input":["zzzyyyxxx"],"expected":"xyzxyzxyz"}
+  ]
+}

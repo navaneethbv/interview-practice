@@ -1,0 +1,28 @@
+{
+  "id": "maximum-swap",
+  "style": "leetcode",
+  "function": {
+    "python": "maximumSwap",
+    "java": "maximumSwap"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[2736],"expected":7236,"sample":true},
+    {"input":[9973],"expected":9973,"sample":true},
+    {"input":[0],"expected":0},
+    {"input":[1],"expected":1},
+    {"input":[10],"expected":10},
+    {"input":[12],"expected":21},
+    {"input":[98368],"expected":98863},
+    {"input":[1993],"expected":9913},
+    {"input":[100000000],"expected":100000000},
+    {"input":[1111],"expected":1111},
+    {"input":[109090],"expected":909010}
+  ]
+}

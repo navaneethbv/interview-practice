@@ -1,0 +1,32 @@
+{
+  "id": "word-break-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "wordBreak",
+    "java": "wordBreak"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "wordDict",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["catsanddog",["cat","cats","and","sand","dog"]],"expected":["cat sand dog","cats and dog"],"sample":true},
+    {"input":["abc",["a","b"]],"expected":[],"sample":true},
+    {"input":["a",["a"]],"expected":["a"]},
+    {"input":["a",["b"]],"expected":[]},
+    {"input":["aaaa",["a","aa"]],"expected":["a a a a","a a aa","a aa a","aa a a","aa aa"]},
+    {"input":["abc",["abc"]],"expected":["abc"]},
+    {"input":["ab",["a","b","ab"]],"expected":["a b","ab"]},
+    {"input":["pineapple",["pine","apple","pineapple"]],"expected":["pine apple","pineapple"]},
+    {"input":["aaaaab",["a","aa","aaa"]],"expected":[]},
+    {"input":["aaaa",["aa"]],"expected":["aa aa"]}
+  ]
+}

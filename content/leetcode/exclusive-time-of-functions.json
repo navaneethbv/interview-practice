@@ -1,0 +1,31 @@
+{
+  "id": "exclusive-time-of-functions",
+  "style": "leetcode",
+  "function": {
+    "python": "exclusiveTime",
+    "java": "exclusiveTime"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "logs",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[2,["0:start:0","1:start:2","1:end:5","0:end:6"]],"expected":[3,4],"sample":true},
+    {"input":[1,["0:start:3","0:end:3"]],"expected":[1],"sample":true},
+    {"input":[1,["0:start:0","0:end:0"]],"expected":[1]},
+    {"input":[2,["1:start:0","1:end:2"]],"expected":[0,3]},
+    {"input":[1,["0:start:0","0:start:1","0:end:2","0:end:3"]],"expected":[4]},
+    {"input":[2,["0:start:0","0:end:0","1:start:1","1:end:1"]],"expected":[1,1]},
+    {"input":[3,["0:start:0","1:start:1","2:start:2","2:end:3","1:end:4","0:end:5"]],"expected":[2,2,2]},
+    {"input":[2,["0:start:10","1:start:11","1:end:11","0:end:12"]],"expected":[2,1]},
+    {"input":[1,["0:start:0","0:end:1000000000"]],"expected":[1000000001]},
+    {"input":[3,["2:start:5","2:end:7"]],"expected":[0,0,3]}
+  ]
+}

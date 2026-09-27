@@ -1,0 +1,47 @@
+{
+  "id": "read-n-characters-given-read4-ii-call-multiple-times",
+  "style": "leetcode",
+  "kind": "design",
+  "className": "Solution",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "read",
+      "java": "read",
+      "params": [
+        {
+          "name": "buf",
+          "type": "char[]"
+        },
+        {
+          "name": "n",
+          "type": "int"
+        }
+      ],
+      "returns": "int",
+      "output": {
+        "arg": 0,
+        "prefix": true
+      }
+    }
+  ],
+  "environment": {
+    "kind": "read4",
+    "param": {
+      "name": "file",
+      "type": "string"
+    }
+  },
+  "tests": [
+    {"input":{"ctor":[],"ops":["read","read","read"],"args":[[[" "],1],[[" "," "," "],3],[[" "," "],2]],"environment":"abcde"},"sample":true,"expected":[["a"],["b","c","d"],["e"]]},
+    {"input":{"ctor":[],"ops":["read","read"],"args":[[[" "," "," "," "],4],[[" "," "],2]],"environment":"xy"},"sample":true,"expected":[["x","y"],[]]},
+    {"input":{"ctor":[],"ops":["read","read"],"args":[[[" "],1],[[" "," "],2]],"environment":""},"expected":[[],[]]},
+    {"input":{"ctor":[],"ops":["read","read"],"args":[[[" "],1],[[" "],1]],"environment":"a"},"expected":[["a"],[]]},
+    {"input":{"ctor":[],"ops":["read","read","read","read","read"],"args":[[[" "],1],[[" "],1],[[" "],1],[[" "],1],[[" "],1]],"environment":"abcd"},"expected":[["a"],["b"],["c"],["d"],[]]},
+    {"input":{"ctor":[],"ops":["read","read","read","read"],"args":[[[" "," "," "],3],[[" "," "," "],3],[[" "," "," "],3],[[" "," "," "],3]],"environment":"abcdefghi"},"expected":[["a","b","c"],["d","e","f"],["g","h","i"],[]]},
+    {"input":{"ctor":[],"ops":["read","read","read"],"args":[[[" "," "," "," "," "],5],[[" "],1],[[" "," "],2]],"environment":"abcdefgh"},"expected":[["a","b","c","d","e"],["f"],["g","h"]]},
+    {"input":{"ctor":[],"ops":["read","read","read"],"args":[[[" "," "],2],[[" "," "],2],[[" "],1]],"environment":"orbit"},"expected":[["o","r"],["b","i"],["t"]]},
+    {"input":{"ctor":[],"ops":["read","read","read"],"args":[[[" "],1],[[" "," "," "," "],4],[[" "," "],2]],"environment":"ab cd!"},"expected":[["a"],["b"," ","c","d"],["!"]]},
+    {"input":{"ctor":[],"ops":["read","read","read","read","read","read","read","read","read"],"args":[[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7],[[" "," "," "," "," "," "," "],7]],"environment":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"},"expected":[["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x","x","x","x","x","x","x"],["x"],[]]}
+  ]
+}

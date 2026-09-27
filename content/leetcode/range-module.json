@@ -1,0 +1,66 @@
+{
+  "kind": "design",
+  "id": "range-module",
+  "style": "leetcode",
+  "className": "RangeModule",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "addRange",
+      "java": "addRange",
+      "params": [
+        {
+          "name": "left",
+          "type": "int"
+        },
+        {
+          "name": "right",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "queryRange",
+      "java": "queryRange",
+      "params": [
+        {
+          "name": "left",
+          "type": "int"
+        },
+        {
+          "name": "right",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    },
+    {
+      "name": "removeRange",
+      "java": "removeRange",
+      "params": [
+        {
+          "name": "left",
+          "type": "int"
+        },
+        {
+          "name": "right",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["addRange","removeRange","queryRange","queryRange","queryRange"],"args":[[10,20],[14,16],[10,14],[13,15],[16,20]]},"expected":[null,null,true,false,true],"sample":true},
+    {"input":{"ctor":[],"ops":["addRange","addRange","queryRange"],"args":[[1,3],[3,5],[1,5]]},"expected":[null,null,true],"sample":true},
+    {"input":{"ctor":[],"ops":["queryRange"],"args":[[1,2]]},"expected":[false]},
+    {"input":{"ctor":[],"ops":["addRange","queryRange"],"args":[[1,2],[1,2]]},"expected":[null,true]},
+    {"input":{"ctor":[],"ops":["removeRange","queryRange"],"args":[[1,5],[1,2]]},"expected":[null,false]},
+    {"input":{"ctor":[],"ops":["addRange","removeRange","queryRange"],"args":[[1,5],[1,5],[1,5]]},"expected":[null,null,false]},
+    {"input":{"ctor":[],"ops":["addRange","addRange","queryRange"],"args":[[1,3],[4,6],[2,5]]},"expected":[null,null,false]},
+    {"input":{"ctor":[],"ops":["addRange","removeRange","queryRange","queryRange"],"args":[[1,10],[4,7],[1,4],[7,10]]},"expected":[null,null,true,true]},
+    {"input":{"ctor":[],"ops":["addRange","addRange","queryRange"],"args":[[2,8],[1,10],[1,10]]},"expected":[null,null,true]},
+    {"input":{"ctor":[],"ops":["addRange","removeRange","addRange","queryRange"],"args":[[1,10],[2,9],[2,9],[1,10]]},"expected":[null,null,null,true]}
+  ]
+}

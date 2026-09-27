@@ -1,0 +1,27 @@
+{
+  "id": "balanced-binary-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "isBalanced",
+    "java": "isBalanced"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[3,9,20,null,null,15,7]],"expected":true,"sample":true},
+    {"input":[[1,2,null,3]],"expected":false,"sample":true},
+    {"input":[[]],"expected":true},
+    {"input":[[1]],"expected":true},
+    {"input":[[1,2]],"expected":true},
+    {"input":[[1,2,3]],"expected":true},
+    {"input":[[1,null,2,null,3]],"expected":false},
+    {"input":[[1,2,3,4,5,6,7]],"expected":true},
+    {"input":[[1,2,3,4,null,null,5,6,null,null,7]],"expected":false},
+    {"input":[[0,0,0,null,0,null,0]],"expected":true}
+  ]
+}

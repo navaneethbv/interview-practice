@@ -1,0 +1,69 @@
+{
+  "kind": "design",
+  "id": "design-in-memory-file-system",
+  "style": "leetcode",
+  "className": "FileSystem",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "ls",
+      "java": "ls",
+      "params": [
+        {
+          "name": "path",
+          "type": "string"
+        }
+      ],
+      "returns": "List<string>"
+    },
+    {
+      "name": "mkdir",
+      "java": "mkdir",
+      "params": [
+        {
+          "name": "path",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "addContentToFile",
+      "java": "addContentToFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string"
+        },
+        {
+          "name": "content",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "readContentFromFile",
+      "java": "readContentFromFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["ls","mkdir","addContentToFile","ls","readContentFromFile"],"args":[["/"],["/a/b"],["/a/b/f","hi"],["/a/b"],["/a/b/f"]]},"expected":[[],null,null,["f"],"hi"],"sample":true},
+    {"input":{"ctor":[],"ops":["addContentToFile","addContentToFile","readContentFromFile","ls"],"args":[["/x","a"],["/x","b"],["/x"],["/x"]]},"expected":[null,null,"ab",["x"]],"sample":true},
+    {"input":{"ctor":[],"ops":["ls"],"args":[["/"]]},"expected":[[]]},
+    {"input":{"ctor":[],"ops":["mkdir","mkdir","ls"],"args":[["/z"],["/a"],["/"]]},"expected":[null,null,["a","z"]]},
+    {"input":{"ctor":[],"ops":["mkdir","mkdir","ls"],"args":[["/a/b/c"],["/a/b/c"],["/a/b"]]},"expected":[null,null,["c"]]},
+    {"input":{"ctor":[],"ops":["addContentToFile","readContentFromFile"],"args":[["/a","hello"],["/a"]]},"expected":[null,"hello"]},
+    {"input":{"ctor":[],"ops":["mkdir","addContentToFile","ls"],"args":[["/a"],["/a/f","text"],["/"]]},"expected":[null,null,["a"]]},
+    {"input":{"ctor":[],"ops":["mkdir","addContentToFile","addContentToFile","ls"],"args":[["/a"],["/a/z","z"],["/a/b","b"],["/a"]]},"expected":[null,null,null,["b","z"]]},
+    {"input":{"ctor":[],"ops":["mkdir","mkdir","ls","ls"],"args":[["/a/b"],["/a/c"],["/a"],["/a/b"]]},"expected":[null,null,["b","c"],[]]},
+    {"input":{"ctor":[],"ops":["addContentToFile","addContentToFile","addContentToFile","readContentFromFile"],"args":[["/f","a"],["/f","b"],["/f","c"],["/f"]]},"expected":[null,null,null,"abc"]}
+  ]
+}

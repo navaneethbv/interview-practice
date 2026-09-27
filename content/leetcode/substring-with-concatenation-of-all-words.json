@@ -1,0 +1,32 @@
+{
+  "id": "substring-with-concatenation-of-all-words",
+  "style": "leetcode",
+  "function": {
+    "python": "findSubstring",
+    "java": "findSubstring"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<int>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["catdogcat",["cat","dog"]],"expected":[0,3],"sample":true},
+    {"input":["aaaaaa",["aa","aa"]],"expected":[0,1,2],"sample":true},
+    {"input":["a",["a"]],"expected":[0]},
+    {"input":["a",["b"]],"expected":[]},
+    {"input":["ab",["a","b"]],"expected":[0]},
+    {"input":["aaaa",["aa","aa","aa"]],"expected":[]},
+    {"input":["barfoofoobarthefoobarman",["bar","foo","the"]],"expected":[6,9,12]},
+    {"input":["wordgoodgoodgoodbestword",["word","good","best","good"]],"expected":[8]},
+    {"input":["abcabc",["abc","abc"]],"expected":[0]},
+    {"input":["ababab",["ab","ba"]],"expected":[]}
+  ]
+}

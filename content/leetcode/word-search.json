@@ -1,0 +1,35 @@
+{
+  "id": "word-search",
+  "style": "leetcode",
+  "function": {
+    "python": "exist",
+    "java": "exist"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "char[][]"
+    },
+    {
+      "name": "word",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[["C","A","T"],["R","R","E"]],"CATE"],"expected":true,"sample":true},
+    {"input":[[["A","B"],["C","D"]],"ABA"],"expected":false,"sample":true},
+    {"input":[[["A"]],"A"],"expected":true},
+    {"input":[[["A"]],"B"],"expected":false},
+    {"input":[[["a"]],"A"],"expected":false},
+    {"input":[[["A","B","C","D"]],"DCBA"],"expected":true},
+    {"input":[[["A"],["B"],["C"]],"ABC"],"expected":true},
+    {"input":[[["A","B"],["C","D"]],"AD"],"expected":false},
+    {"input":[[["A","A"],["A","A"]],"AAAA"],"expected":true},
+    {"input":[[["A","A"],["A","A"]],"AAAAA"],"expected":false},
+    {"input":[[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],"ABCCED"],"expected":true},
+    {"input":[[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],"SEE"],"expected":true},
+    {"input":[[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],"ABCB"],"expected":false},
+    {"input":[[["A","B"],["B","A"]],"ABA"],"expected":true}
+  ]
+}

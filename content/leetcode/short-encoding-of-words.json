@@ -1,0 +1,27 @@
+{
+  "id": "short-encoding-of-words",
+  "style": "leetcode",
+  "function": {
+    "python": "minimumLengthEncoding",
+    "java": "minimumLengthEncoding"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["time","me","bell"]],"expected":10,"sample":true},
+    {"input":[["a","a"]],"expected":2,"sample":true},
+    {"input":[["a"]],"expected":2},
+    {"input":[["a","b"]],"expected":4},
+    {"input":[["abc","bc","c"]],"expected":4},
+    {"input":[["ab","abc"]],"expected":7},
+    {"input":[["t","time"]],"expected":7},
+    {"input":[["hello","lo","world"]],"expected":12},
+    {"input":[["a","ba","cba"]],"expected":4},
+    {"input":[["same","same","me"]],"expected":5}
+  ]
+}

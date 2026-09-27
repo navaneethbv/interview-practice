@@ -1,0 +1,27 @@
+{
+  "id": "shortest-path-to-get-food",
+  "style": "leetcode",
+  "function": {
+    "python": "getFood",
+    "java": "getFood"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[["*","O","#"]]],"expected":2,"sample":true},
+    {"input":[[["*","X","#"]]],"expected":-1,"sample":true},
+    {"input":[[["*"]]],"expected":-1},
+    {"input":[[["*","#"]]],"expected":1},
+    {"input":[[["*","O"],["O","#"]]],"expected":2},
+    {"input":[[["*","X"],["X","#"]]],"expected":-1},
+    {"input":[[["O","#","O"],["O","*","O"]]],"expected":1},
+    {"input":[[["*","O","O"],["X","X","O"],["#","O","O"]]],"expected":6},
+    {"input":[[["*","O","O"]]],"expected":-1},
+    {"input":[[["X","X","X","X"],["X","*","O","X"],["X","O","O","#"],["X","X","X","X"]]],"expected":3}
+  ]
+}

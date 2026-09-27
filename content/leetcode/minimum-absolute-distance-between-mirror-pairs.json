@@ -1,0 +1,27 @@
+{
+  "id": "minimum-absolute-distance-between-mirror-pairs",
+  "style": "leetcode",
+  "function": {
+    "python": "minMirrorPairDistance",
+    "java": "minMirrorPairDistance"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[30,8,3]],"expected":2,"sample":true},
+    {"input":[[3,30]],"expected":-1,"sample":true},
+    {"input":[[1]],"expected":-1},
+    {"input":[[11,11]],"expected":1},
+    {"input":[[12,21]],"expected":1},
+    {"input":[[10,1,10,1]],"expected":1},
+    {"input":[[100,9,8,1]],"expected":3},
+    {"input":[[123,321,123]],"expected":1},
+    {"input":[[1000000000,1]],"expected":1},
+    {"input":[[12,7,12,21]],"expected":1}
+  ]
+}

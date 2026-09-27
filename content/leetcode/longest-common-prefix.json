@@ -1,0 +1,27 @@
+{
+  "id": "longest-common-prefix",
+  "style": "leetcode",
+  "function": {
+    "python": "longestCommonPrefix",
+    "java": "longestCommonPrefix"
+  },
+  "params": [
+    {
+      "name": "strs",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["flower","flow","flight"]],"expected":"fl","sample":true},
+    {"input":[["dog","racecar","car"]],"expected":"","sample":true},
+    {"input":[[""]],"expected":""},
+    {"input":[["abc"]],"expected":"abc"},
+    {"input":[["a","a"]],"expected":"a"},
+    {"input":[["ab","abc"]],"expected":"ab"},
+    {"input":[["abc",""]],"expected":""},
+    {"input":[["aa","ab"]],"expected":"a"},
+    {"input":[["same","same","same"]],"expected":"same"},
+    {"input":[["interview","internet","internal"]],"expected":"inter"}
+  ]
+}

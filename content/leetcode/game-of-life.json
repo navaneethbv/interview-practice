@@ -1,0 +1,30 @@
+{
+  "function": {
+    "python": "gameOfLife",
+    "java": "gameOfLife"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "id": "game-of-life",
+  "style": "leetcode",
+  "tests": [
+    {"input":[[[0,1,0],[0,1,0],[0,1,0]]],"sample":true,"expected":[[0,0,0],[1,1,1],[0,0,0]]},
+    {"input":[[[1]]],"sample":true,"expected":[[0]]},
+    {"input":[[[0]]],"expected":[[0]]},
+    {"input":[[[1,1],[1,1]]],"expected":[[1,1],[1,1]]},
+    {"input":[[[1,1,1]]],"expected":[[0,1,0]]},
+    {"input":[[[0,0],[0,0]]],"expected":[[0,0],[0,0]]},
+    {"input":[[[1,1,1],[1,1,1],[1,1,1]]],"expected":[[1,0,1],[0,0,0],[1,0,1]]},
+    {"input":[[[1,0,1],[0,1,0],[1,0,1]]],"expected":[[0,1,0],[1,0,1],[0,1,0]]},
+    {"input":[[[0,1],[1,0]]],"expected":[[0,0],[0,0]]},
+    {"input":[[[1,0,0],[0,1,1],[1,1,0]]],"expected":[[0,1,0],[0,0,1],[1,1,1]]}
+  ]
+}

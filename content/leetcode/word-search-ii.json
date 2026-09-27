@@ -1,0 +1,32 @@
+{
+  "id": "word-search-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "findWords",
+    "java": "findWords"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "char[][]"
+    },
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[[["a","b"],["c","d"]],["ab","ac","ad","abd"]],"expected":["ab","ac","abd"],"sample":true},
+    {"input":[[["a","a"]],["a","aa","aaa"]],"expected":["a","aa"],"sample":true},
+    {"input":[[["a"]],["a","b"]],"expected":["a"]},
+    {"input":[[["a","b","c"]],["abc","cba","ac"]],"expected":["abc","cba"]},
+    {"input":[[["a"],["b"],["c"]],["abc","ac","b"]],"expected":["abc","b"]},
+    {"input":[[["a","a"],["a","a"]],["a","aa","aaa","aaaa","aaaaa"]],"expected":["a","aa","aaa","aaaa"]},
+    {"input":[[["a","b"],["b","a"]],["aba","abba","bab"]],"expected":["aba","bab"]},
+    {"input":[[["x","y"],["z","w"]],["cat","dog"]],"expected":[]},
+    {"input":[[["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]],["oath","pea","eat","rain"]],"expected":["oath","eat"]},
+    {"input":[[["a","b"],["c","d"]],["abdc","acdb","abcd"]],"expected":["acdb","abdc"]}
+  ]
+}

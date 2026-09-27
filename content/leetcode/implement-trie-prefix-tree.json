@@ -1,0 +1,54 @@
+{
+  "kind": "design",
+  "id": "implement-trie-prefix-tree",
+  "style": "leetcode",
+  "className": "Trie",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "insert",
+      "java": "insert",
+      "params": [
+        {
+          "name": "word",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "search",
+      "java": "search",
+      "params": [
+        {
+          "name": "word",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    },
+    {
+      "name": "startsWith",
+      "java": "startsWith",
+      "params": [
+        {
+          "name": "prefix",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["insert","search","search","startsWith"],"args":[["cloud"],["cloud"],["clo"],["clo"]]},"expected":[null,true,false,true],"sample":true},
+    {"input":{"ctor":[],"ops":["search","insert","search"],"args":[["a"],["a"],["a"]]},"expected":[false,null,true],"sample":true},
+    {"input":{"ctor":[],"ops":["startsWith"],"args":[["a"]]},"expected":[false]},
+    {"input":{"ctor":[],"ops":["insert","insert","search"],"args":[["x"],["x"],["x"]]},"expected":[null,null,true]},
+    {"input":{"ctor":[],"ops":["insert","search","startsWith"],"args":[["abc"],["abcd"],["abcd"]]},"expected":[null,false,false]},
+    {"input":{"ctor":[],"ops":["insert","insert","search"],"args":[["abc"],["ab"],["ab"]]},"expected":[null,null,true]},
+    {"input":{"ctor":[],"ops":["insert","insert","search","search"],"args":[["ab"],["ac"],["ab"],["ac"]]},"expected":[null,null,true,true]},
+    {"input":{"ctor":[],"ops":["insert","startsWith","startsWith"],"args":[["z"],["z"],["a"]]},"expected":[null,true,false]},
+    {"input":{"ctor":[],"ops":["insert","search"],"args":[["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]]},"expected":[null,true]},
+    {"input":{"ctor":[],"ops":["insert","search","startsWith"],"args":[["ab"],["a"],["a"]]},"expected":[null,false,true]}
+  ]
+}

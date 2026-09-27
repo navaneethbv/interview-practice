@@ -1,0 +1,93 @@
+{
+  "id": "maximum-number-of-vowels-in-a-substring-of-given-length",
+  "style": "leetcode",
+  "function": {
+    "python": "maxVowels",
+    "java": "maxVowels"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        "abciiidef",
+        3
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        "rhythm",
+        2
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        "a",
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "b",
+        1
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "aeiou",
+        2
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "leetcode",
+        3
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "hello",
+        5
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "aaaa",
+        4
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "aabb",
+        2
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "baab",
+        3
+      ],
+      "expected": 2
+    }
+  ]
+}

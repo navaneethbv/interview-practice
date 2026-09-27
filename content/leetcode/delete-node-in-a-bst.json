@@ -1,0 +1,34 @@
+{
+  "id": "delete-node-in-a-bst",
+  "style": "leetcode",
+  "function": {
+    "python": "deleteNode",
+    "java": "deleteNode"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    },
+    {
+      "name": "key",
+      "type": "int"
+    }
+  ],
+  "returns": "TreeNode",
+  "compare": {
+    "validator": "bstDelete"
+  },
+  "tests": [
+    {"input":[[5,3,6,2,4,null,7],3],"expected":[5,4,6,2,null,null,7],"sample":true},
+    {"input":[[1],1],"expected":null,"sample":true},
+    {"input":[[],0],"expected":null},
+    {"input":[[1],2],"expected":[1]},
+    {"input":[[2,1,3],1],"expected":[2,null,3]},
+    {"input":[[2,1,3],3],"expected":[2,1]},
+    {"input":[[2,1,3],2],"expected":[3,1]},
+    {"input":[[1,null,2,null,3],1],"expected":[2,null,3]},
+    {"input":[[3,2,null,1],3],"expected":[2,1]},
+    {"input":[[0,-1,1],0],"expected":[1,-1]}
+  ]
+}

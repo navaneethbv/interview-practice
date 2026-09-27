@@ -1,0 +1,27 @@
+{
+  "id": "decode-string",
+  "style": "leetcode",
+  "function": {
+    "python": "decodeString",
+    "java": "decodeString"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["3[a2[c]]"],"expected":"accaccacc","sample":true},
+    {"input":["2[ab]c"],"expected":"ababc","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["1[a]"],"expected":"a"},
+    {"input":["10[a]"],"expected":"aaaaaaaaaa"},
+    {"input":["2[a]3[b]"],"expected":"aabbb"},
+    {"input":["abc3[cd]xyz"],"expected":"abccdcdcdxyz"},
+    {"input":["2[2[a]b]"],"expected":"aabaab"},
+    {"input":["100[a]"],"expected":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"input":["2[a2[b3[c]]]"],"expected":"abcccbcccabcccbccc"}
+  ]
+}

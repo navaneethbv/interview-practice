@@ -1,0 +1,27 @@
+{
+  "id": "battleships-in-a-board",
+  "style": "leetcode",
+  "function": {
+    "python": "countBattleships",
+    "java": "countBattleships"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[["X",".",".","X"],[".",".",".","X"],[".",".",".","X"]]],"expected":2,"sample":true},
+    {"input":[[[".",".",".","."]]],"expected":0,"sample":true},
+    {"input":[[["X"]]],"expected":1},
+    {"input":[[["."]]],"expected":0},
+    {"input":[[["X","X","X","X"]]],"expected":1},
+    {"input":[[["X"],["X"],["X"]]],"expected":1},
+    {"input":[[["X",".","X"]]],"expected":2},
+    {"input":[[["X","."],[".","X"]]],"expected":2},
+    {"input":[[["X","X",".","."],[".",".",".","."],[".",".","X","X"]]],"expected":2},
+    {"input":[[["X",".","X"],[".",".","."],["X",".","X"]]],"expected":4}
+  ]
+}

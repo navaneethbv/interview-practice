@@ -1,0 +1,139 @@
+{
+  "id": "count-number-of-nice-subarrays",
+  "style": "leetcode",
+  "function": {
+    "python": "numberOfSubarrays",
+    "java": "numberOfSubarrays"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          1,
+          2,
+          1,
+          1
+        ],
+        3
+      ],
+      "expected": 2,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          6
+        ],
+        1
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          2
+        ],
+        1
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          3,
+          5
+        ],
+        2
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          2,
+          1,
+          2
+        ],
+        1
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          1,
+          2,
+          2,
+          1,
+          2
+        ],
+        2
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        1
+      ],
+      "expected": 8
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1
+        ],
+        3
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          2,
+          4,
+          1,
+          6,
+          8
+        ],
+        1
+      ],
+      "expected": 9
+    }
+  ]
+}

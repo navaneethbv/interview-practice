@@ -1,0 +1,32 @@
+{
+  "id": "divide-two-integers",
+  "style": "leetcode",
+  "function": {
+    "python": "divide",
+    "java": "divide"
+  },
+  "params": [
+    {
+      "name": "dividend",
+      "type": "int"
+    },
+    {
+      "name": "divisor",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[10,3],"expected":3,"sample":true},
+    {"input":[7,-3],"expected":-2,"sample":true},
+    {"input":[0,1],"expected":0},
+    {"input":[1,1],"expected":1},
+    {"input":[-1,1],"expected":-1},
+    {"input":[1,-1],"expected":-1},
+    {"input":[-2147483648,-1],"expected":2147483647},
+    {"input":[-2147483648,1],"expected":-2147483648},
+    {"input":[2147483647,2],"expected":1073741823},
+    {"input":[-2147483648,-2147483648],"expected":1},
+    {"input":[5,10],"expected":0}
+  ]
+}

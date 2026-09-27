@@ -1,0 +1,27 @@
+{
+  "id": "rotating-the-box",
+  "style": "leetcode",
+  "function": {
+    "python": "rotateTheBox",
+    "java": "rotateTheBox"
+  },
+  "params": [
+    {
+      "name": "boxGrid",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "char[][]",
+  "tests": [
+    {"input":[[["#",".","#"]]],"expected":[["."],["#"],["#"]],"sample":true},
+    {"input":[[["#","*","."]]],"expected":[["#"],["*"],["."]],"sample":true},
+    {"input":[[["."]]],"expected":[["."]]},
+    {"input":[[["#"]]],"expected":[["#"]]},
+    {"input":[[["*"]]],"expected":[["*"]]},
+    {"input":[[["#",".","*",".","#","."]]],"expected":[["."],["#"],["*"],["."],["."],["#"]]},
+    {"input":[[["#","#"],[".","."]]],"expected":[[".","#"],[".","#"]]},
+    {"input":[[["*","."],["#","#"]]],"expected":[["#","*"],["#","."]]},
+    {"input":[[[".",".","."]]],"expected":[["."],["."],["."]]},
+    {"input":[[["#",".","#"],["#","*","."]]],"expected":[["#","."],["*","#"],[".","#"]]}
+  ]
+}

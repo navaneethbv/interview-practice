@@ -1,0 +1,31 @@
+{
+  "id": "minimum-number-of-seconds-to-make-mountain-height-zero",
+  "style": "leetcode",
+  "function": {
+    "python": "minNumberOfSeconds",
+    "java": "minNumberOfSeconds"
+  },
+  "params": [
+    {
+      "name": "mountainHeight",
+      "type": "int"
+    },
+    {
+      "name": "workerTimes",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[4,[2,1,1]],"expected":3,"sample":true},
+    {"input":[3,[2]],"expected":12,"sample":true},
+    {"input":[1,[1]],"expected":1},
+    {"input":[1,[10,2]],"expected":2},
+    {"input":[5,[1,1]],"expected":6},
+    {"input":[10,[3,2,2]],"expected":20},
+    {"input":[100,[1]],"expected":5050},
+    {"input":[100000,[1000000]],"expected":5000050000000000},
+    {"input":[8,[5,5,5]],"expected":30},
+    {"input":[20,[1,100,1000]],"expected":190}
+  ]
+}

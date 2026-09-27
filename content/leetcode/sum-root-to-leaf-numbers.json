@@ -1,0 +1,27 @@
+{
+  "id": "sum-root-to-leaf-numbers",
+  "style": "leetcode",
+  "function": {
+    "python": "sumNumbers",
+    "java": "sumNumbers"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,1,3]],"expected":44,"sample":true},
+    {"input":[[0,1,2]],"expected":3,"sample":true},
+    {"input":[[0]],"expected":0},
+    {"input":[[9]],"expected":9},
+    {"input":[[1,2]],"expected":12},
+    {"input":[[1,null,2,null,3]],"expected":123},
+    {"input":[[4,9,0,5,1]],"expected":1026},
+    {"input":[[1,0,0]],"expected":20},
+    {"input":[[9,9,9]],"expected":198},
+    {"input":[[1,2,3,4,5,6,7]],"expected":522}
+  ]
+}

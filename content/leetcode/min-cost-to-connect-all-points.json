@@ -1,0 +1,27 @@
+{
+  "id": "min-cost-to-connect-all-points",
+  "style": "leetcode",
+  "function": {
+    "python": "minCostConnectPoints",
+    "java": "minCostConnectPoints"
+  },
+  "params": [
+    {
+      "name": "points",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[0,0],[2,0],[2,3]]],"expected":5,"sample":true},
+    {"input":[[[4,-2]]],"expected":0,"sample":true},
+    {"input":[[[0,0],[1,1]]],"expected":2},
+    {"input":[[[-1,-1],[1,1]]],"expected":4},
+    {"input":[[[0,0],[1,0],[2,0],[3,0]]],"expected":3},
+    {"input":[[[0,0],[0,1],[1,0],[1,1]]],"expected":3},
+    {"input":[[[0,0],[2,2],[3,10],[5,2],[7,0]]],"expected":20},
+    {"input":[[[-1000000,-1000000],[1000000,1000000]]],"expected":4000000},
+    {"input":[[[3,12],[-2,5],[-4,1]]],"expected":18},
+    {"input":[[[0,0],[1,1],[2,4],[3,9],[4,16],[5,25],[6,36],[7,49],[8,64],[9,81],[10,100],[11,121],[12,144],[13,169],[14,196],[15,225],[16,256],[17,289],[18,324],[19,361]]],"expected":380}
+  ]
+}

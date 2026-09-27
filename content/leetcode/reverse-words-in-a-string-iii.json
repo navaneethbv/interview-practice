@@ -1,0 +1,79 @@
+{
+  "id": "reverse-words-in-a-string-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseWords",
+    "java": "reverseWords"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {
+      "input": [
+        "code every day"
+      ],
+      "expected": "edoc yreve yad",
+      "sample": true
+    },
+    {
+      "input": [
+        "ab cd"
+      ],
+      "expected": "ba dc",
+      "sample": true
+    },
+    {
+      "input": [
+        "a"
+      ],
+      "expected": "a"
+    },
+    {
+      "input": [
+        "abc"
+      ],
+      "expected": "cba"
+    },
+    {
+      "input": [
+        "a b c"
+      ],
+      "expected": "a b c"
+    },
+    {
+      "input": [
+        "hello world"
+      ],
+      "expected": "olleh dlrow"
+    },
+    {
+      "input": [
+        "123 456"
+      ],
+      "expected": "321 654"
+    },
+    {
+      "input": [
+        "Hi! there"
+      ],
+      "expected": "!iH ereht"
+    },
+    {
+      "input": [
+        "aa bb"
+      ],
+      "expected": "aa bb"
+    },
+    {
+      "input": [
+        "racecar wow"
+      ],
+      "expected": "racecar wow"
+    }
+  ]
+}

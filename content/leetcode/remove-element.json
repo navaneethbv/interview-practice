@@ -1,0 +1,36 @@
+{
+  "id": "remove-element",
+  "style": "leetcode",
+  "function": {
+    "python": "removeElement",
+    "java": "removeElement"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "val",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "compare": "unordered",
+  "output": {
+    "arg": 0,
+    "prefix": true
+  },
+  "tests": [
+    {"input":[[3,1,3,2],3],"expected":[1,2],"sample":true},
+    {"input":[[5,5],5],"expected":[],"sample":true},
+    {"input":[[],1],"expected":[]},
+    {"input":[[1],1],"expected":[]},
+    {"input":[[1],2],"expected":[1]},
+    {"input":[[1,2,3],9],"expected":[1,2,3]},
+    {"input":[[0,1,0,2,0],0],"expected":[1,2]},
+    {"input":[[1,2,2,3],2],"expected":[1,3]},
+    {"input":[[50,0,50],50],"expected":[0]},
+    {"input":[[1,1,2,2],100],"expected":[1,1,2,2]}
+  ]
+}

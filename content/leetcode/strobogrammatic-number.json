@@ -1,0 +1,29 @@
+{
+  "id": "strobogrammatic-number",
+  "style": "leetcode",
+  "function": {
+    "python": "isStrobogrammatic",
+    "java": "isStrobogrammatic"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["619"],"expected":true,"sample":true},
+    {"input":["68"],"expected":false,"sample":true},
+    {"input":["0"],"expected":true},
+    {"input":["1"],"expected":true},
+    {"input":["8"],"expected":true},
+    {"input":["6"],"expected":false},
+    {"input":["69"],"expected":true},
+    {"input":["96"],"expected":true},
+    {"input":["88"],"expected":true},
+    {"input":["818"],"expected":true},
+    {"input":["123"],"expected":false},
+    {"input":["1001"],"expected":true}
+  ]
+}

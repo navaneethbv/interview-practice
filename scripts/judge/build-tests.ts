@@ -1,7 +1,7 @@
 /**
  * Fills in and verifies expected outputs for problem specs.
  *
- * For every content/problems/<id>.json:
+ * For every content/problems/<id>.json and content/leetcode/<slug>.json:
  *  - runs the Python reference (<id>.py) against every test case with the same harness the site uses;
  *  - fills `expected` where it is missing (or everywhere with --regen);
  *  - fails when a hand-written `expected` disagrees with the reference;
@@ -14,15 +14,16 @@ import path from "node:path";
 import { buildPythonScript } from "../../src/lib/judge/python";
 import { buildJavaProgram, mapJavaCompileErrors } from "../../src/lib/judge/java";
 import { grade, parseHarnessOutput } from "../../src/lib/judge/grade";
-import { judgeOutput } from "../../src/lib/judge/compare";
+import { judgeSpecOutput } from "../../src/lib/judge/compare";
 import { runJavaLocally, runPythonLocally } from "../../src/lib/judge/local-java";
 import type { AnyTestCase, ProblemSpec } from "../../src/lib/judge/types";
 
-const DIR = path.join(process.cwd(), "content/problems");
+const DIRS = ["content/problems", "content/leetcode"].map((d) => path.join(process.cwd(), d));
 const args = process.argv.slice(2);
 const withJava = args.includes("--java");
 const regen = args.includes("--regen");
 const only = new Set(args.filter((a) => !a.startsWith("--")));
+const executions = { python: 0, java: 0, sqlite: 0 };
 
 function formatSpec(spec: ProblemSpec): string {
   const { tests, ...rest } = spec;
@@ -35,22 +36,29 @@ async function processSpec(file: string): Promise<string[]> {
   const errors: string[] = [];
   const spec = JSON.parse(fs.readFileSync(file, "utf8")) as ProblemSpec;
   const id = spec.id;
-  const pyRef = path.join(DIR, `${id}.py`);
-  if (!fs.existsSync(pyRef)) return [`${id}: missing Python reference ${id}.py`];
+  const dir = path.dirname(file);
+  if (id !== path.basename(file, ".json")) return [`${id}: spec id does not match its file name ${path.basename(file)}`];
+  const extension = spec.kind === "sql" ? "sql" : "py";
+  const pyRef = path.join(dir, `${id}.${extension}`);
+  if (!fs.existsSync(pyRef)) return [`${id}: missing reference ${id}.${extension}`];
   const tests = spec.tests as AnyTestCase[];
 
   const py = await runPythonLocally(buildPythonScript(spec, fs.readFileSync(pyRef, "utf8"), tests));
+  executions[spec.kind === "sql" ? "sqlite" : "python"]++;
   if (py.timedOut) return [`${id}: Python reference timed out`];
   const { results, stray } = parseHarnessOutput(py.stdout);
   if (py.stderr.trim()) errors.push(`${id}: python stderr: ${py.stderr.trim().slice(0, 500)}`);
   if (stray) errors.push(`${id}: python printed: ${stray.slice(0, 200)}`);
 
   let changed = false;
-  const compare = spec.kind === "design" ? "exact" : spec.compare;
   tests.forEach((t, i) => {
     const r = results.get(i);
     if (!r || r.status !== "ok") {
       errors.push(`${id}#${i}: reference failed: ${r?.error ?? "no result"}`);
+      return;
+    }
+    if (!judgeSpecOutput(spec, t.input, r.output, r.output)) {
+      errors.push(`${id}#${i}: reference output violates its declared result contract`);
       return;
     }
     if (t.expected === undefined || regen) {
@@ -58,16 +66,17 @@ async function processSpec(file: string): Promise<string[]> {
         (t as { expected?: unknown }).expected = r.output;
         changed = true;
       }
-    } else if (!judgeOutput(compare, t.input, r.output, t.expected)) {
+    } else if (!judgeSpecOutput(spec, t.input, r.output, t.expected)) {
       errors.push(`${id}#${i}: expected ${JSON.stringify(t.expected)} but reference gave ${JSON.stringify(r.output)}`);
     }
   });
   if (changed) fs.writeFileSync(file, formatSpec(spec));
 
-  const javaRef = path.join(DIR, `${id}.java`);
-  if (withJava && fs.existsSync(javaRef)) {
+  const javaRef = path.join(dir, `${id}.java`);
+  if (withJava && spec.kind !== "sql" && fs.existsSync(javaRef)) {
     const program = buildJavaProgram(spec, fs.readFileSync(javaRef, "utf8"), tests);
     const run = await runJavaLocally(program, 20_000);
+    executions.java++;
     const outcome = grade({
       spec,
       tests,
@@ -86,12 +95,17 @@ async function processSpec(file: string): Promise<string[]> {
 }
 
 async function main() {
-  const files = fs
-    .readdirSync(DIR)
-    .filter((f) => f.endsWith(".json"))
-    .filter((f) => !only.size || only.has(f.replace(/\.json$/, "")))
-    .map((f) => path.join(DIR, f));
+  const files = DIRS.filter((d) => fs.existsSync(d)).flatMap((dir) =>
+    fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith(".json"))
+      .filter((f) => !only.size || only.has(f.replace(/\.json$/, "")))
+      .map((f) => path.join(dir, f)),
+  );
   const errors: string[] = [];
+  for (const id of only) {
+    if (!files.some((file) => path.basename(file, ".json") === id)) errors.push(`${id}: no matching spec`);
+  }
   let done = 0;
   const queue = [...files];
   await Promise.all(
@@ -109,6 +123,7 @@ async function main() {
   );
   for (const e of errors) console.error(`✗ ${e}`);
   console.log(`${done} specs processed, ${errors.length} problems found.`);
+  console.log(`Reference executions: ${executions.python} Python, ${executions.java} Java, ${executions.sqlite} SQLite.`);
   if (errors.length) process.exit(1);
 }
 

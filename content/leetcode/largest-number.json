@@ -1,0 +1,27 @@
+{
+  "id": "largest-number",
+  "style": "leetcode",
+  "function": {
+    "python": "largestNumber",
+    "java": "largestNumber"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[[10,2]],"expected":"210","sample":true},
+    {"input":[[3,30,34,5,9]],"expected":"9534330","sample":true},
+    {"input":[[0]],"expected":"0"},
+    {"input":[[0,0]],"expected":"0"},
+    {"input":[[1]],"expected":"1"},
+    {"input":[[12,121]],"expected":"12121"},
+    {"input":[[8308,830]],"expected":"8308830"},
+    {"input":[[10,100,1000]],"expected":"101001000"},
+    {"input":[[999999999,1000000000]],"expected":"9999999991000000000"},
+    {"input":[[1,1,1]],"expected":"111"}
+  ]
+}

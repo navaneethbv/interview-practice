@@ -1,0 +1,31 @@
+{
+  "id": "rearranging-fruits",
+  "style": "leetcode",
+  "function": {
+    "python": "minCost",
+    "java": "minCost"
+  },
+  "params": [
+    {
+      "name": "basket1",
+      "type": "int[]"
+    },
+    {
+      "name": "basket2",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[4,2,2,2],[1,4,1,2]],"expected":1,"sample":true},
+    {"input":[[1,2],[1,3]],"expected":-1,"sample":true},
+    {"input":[[1],[1]],"expected":0},
+    {"input":[[1],[2]],"expected":-1},
+    {"input":[[1,1],[2,2]],"expected":1},
+    {"input":[[10,10,1,1],[20,20,1,1]],"expected":2},
+    {"input":[[5,5,5,5],[7,7,7,7]],"expected":10},
+    {"input":[[1,2,3],[3,2,1]],"expected":0},
+    {"input":[[1,1,3,3],[2,2,3,3]],"expected":1},
+    {"input":[[1000000000,1000000000,1000000000,1000000000],[999999999,999999999,999999999,999999999]],"expected":1999999998}
+  ]
+}

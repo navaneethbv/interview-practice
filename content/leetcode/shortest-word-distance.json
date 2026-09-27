@@ -1,0 +1,35 @@
+{
+  "id": "shortest-word-distance",
+  "style": "leetcode",
+  "function": {
+    "python": "shortestDistance",
+    "java": "shortestDistance"
+  },
+  "params": [
+    {
+      "name": "wordsDict",
+      "type": "string[]"
+    },
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["red","blue","green","red"],"red","green"],"expected":1,"sample":true},
+    {"input":[["a","x","x","b"],"a","b"],"expected":3,"sample":true},
+    {"input":[["a","b"],"a","b"],"expected":1},
+    {"input":[["b","a"],"a","b"],"expected":1},
+    {"input":[["a","b","a","b"],"a","b"],"expected":1},
+    {"input":[["a","x","b","x","a"],"a","b"],"expected":2},
+    {"input":[["a","a","b"],"a","b"],"expected":1},
+    {"input":[["b","b","a"],"a","b"],"expected":1},
+    {"input":[["x","a","x","x","b","x"],"a","b"],"expected":3},
+    {"input":[["a","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","b"],"a","b"],"expected":101}
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "fix-names-in-a-table",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "user_id",
+    "name"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Users":[[2,"bOB"],[1,"aNA"]]}},"expected":[[1,"Ana"],[2,"Bob"]],"sample":true},
+    {"input":{"tables":{"Users":[[1,"z"]]}},"expected":[[1,"Z"]],"sample":true},
+    {"input":{"tables":{"Users":[]}},"expected":[]},
+    {"input":{"tables":{"Users":[[1,"A"]]}},"expected":[[1,"A"]]},
+    {"input":{"tables":{"Users":[[1,"a"]]}},"expected":[[1,"A"]]},
+    {"input":{"tables":{"Users":[[1,"abc"]]}},"expected":[[1,"Abc"]]},
+    {"input":{"tables":{"Users":[[1,"ABC"]]}},"expected":[[1,"Abc"]]},
+    {"input":{"tables":{"Users":[[1,"aBcDe"]]}},"expected":[[1,"Abcde"]]},
+    {"input":{"tables":{"Users":[[3,"same"],[2,"SAME"],[1,"Same"]]}},"expected":[[1,"Same"],[2,"Same"],[3,"Same"]]},
+    {"input":{"tables":{"Users":[[10,"xYz"],[1,"mNO"],[5,"p"]]}},"expected":[[1,"Mno"],[5,"P"],[10,"Xyz"]]}
+  ]
+}

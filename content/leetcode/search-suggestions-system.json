@@ -1,0 +1,233 @@
+{
+  "id": "search-suggestions-system",
+  "style": "leetcode",
+  "function": {
+    "python": "suggestedProducts",
+    "java": "suggestedProducts"
+  },
+  "params": [
+    {
+      "name": "products",
+      "type": "string[]"
+    },
+    {
+      "name": "searchWord",
+      "type": "string"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "tests": [
+    {
+      "input": [
+        [
+          "cat",
+          "car",
+          "cart",
+          "dog"
+        ],
+        "car"
+      ],
+      "expected": [
+        [
+          "car",
+          "cart",
+          "cat"
+        ],
+        [
+          "car",
+          "cart",
+          "cat"
+        ],
+        [
+          "car",
+          "cart"
+        ]
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "apple"
+        ],
+        "b"
+      ],
+      "expected": [
+        []
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "a"
+        ],
+        "a"
+      ],
+      "expected": [
+        [
+          "a"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "a"
+        ],
+        "ab"
+      ],
+      "expected": [
+        [
+          "a"
+        ],
+        []
+      ]
+    },
+    {
+      "input": [
+        [
+          "abc",
+          "abd",
+          "abe",
+          "abf"
+        ],
+        "ab"
+      ],
+      "expected": [
+        [
+          "abc",
+          "abd",
+          "abe"
+        ],
+        [
+          "abc",
+          "abd",
+          "abe"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "mobile",
+          "mouse",
+          "moneypot",
+          "monitor",
+          "mousepad"
+        ],
+        "mouse"
+      ],
+      "expected": [
+        [
+          "mobile",
+          "moneypot",
+          "monitor"
+        ],
+        [
+          "mobile",
+          "moneypot",
+          "monitor"
+        ],
+        [
+          "mouse",
+          "mousepad"
+        ],
+        [
+          "mouse",
+          "mousepad"
+        ],
+        [
+          "mouse",
+          "mousepad"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "z",
+          "za",
+          "zb"
+        ],
+        "z"
+      ],
+      "expected": [
+        [
+          "z",
+          "za",
+          "zb"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "a",
+          "ab",
+          "abc"
+        ],
+        "abc"
+      ],
+      "expected": [
+        [
+          "a",
+          "ab",
+          "abc"
+        ],
+        [
+          "ab",
+          "abc"
+        ],
+        [
+          "abc"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "dog",
+          "cat"
+        ],
+        "do"
+      ],
+      "expected": [
+        [
+          "dog"
+        ],
+        [
+          "dog"
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          "havana"
+        ],
+        "havana"
+      ],
+      "expected": [
+        [
+          "havana"
+        ],
+        [
+          "havana"
+        ],
+        [
+          "havana"
+        ],
+        [
+          "havana"
+        ],
+        [
+          "havana"
+        ],
+        [
+          "havana"
+        ]
+      ]
+    }
+  ]
+}

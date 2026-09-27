@@ -1,0 +1,28 @@
+{
+  "id": "count-good-nodes-in-binary-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "goodNodes",
+    "java": "goodNodes"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[3,1,4,3,null,1,5]],"expected":4,"sample":true},
+    {"input":[[2,2,2]],"expected":3,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[3,2,1]],"expected":1},
+    {"input":[[1,2,3]],"expected":3},
+    {"input":[[0,-1,1]],"expected":2},
+    {"input":[[5,4,null,3,null,2]],"expected":1},
+    {"input":[[1,null,2,null,3]],"expected":3},
+    {"input":[[2,1,3,4,0,2,5]],"expected":4},
+    {"input":[[-10000,-10000,10000]],"expected":3},
+    {"input":[[0,0,0,0,0,0,0]],"expected":7}
+  ]
+}

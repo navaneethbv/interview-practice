@@ -1,0 +1,30 @@
+{
+  "id": "sort-characters-by-frequency",
+  "style": "leetcode",
+  "function": {
+    "python": "frequencySort",
+    "java": "frequencySort"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "frequencySorted"
+  },
+  "tests": [
+    {"input":["aabbc"],"expected":"aabbc","sample":true},
+    {"input":["Aabbb"],"expected":"bbbAa","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["aaa"],"expected":"aaa"},
+    {"input":["abc"],"expected":"abc"},
+    {"input":["tree"],"expected":"eetr"},
+    {"input":["cccaaa"],"expected":"cccaaa"},
+    {"input":["1122333"],"expected":"3331122"},
+    {"input":["AAbb"],"expected":"AAbb"},
+    {"input":["zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"],"expected":"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"}
+  ]
+}

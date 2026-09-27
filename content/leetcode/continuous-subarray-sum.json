@@ -1,0 +1,31 @@
+{
+  "id": "continuous-subarray-sum",
+  "style": "leetcode",
+  "function": {
+    "python": "checkSubarraySum",
+    "java": "checkSubarraySum"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[23,2,4,6,7],6],"expected":true,"sample":true},
+    {"input":[[23,2,6,4,7],13],"expected":false,"sample":true},
+    {"input":[[0],1],"expected":false},
+    {"input":[[0,0],3],"expected":true},
+    {"input":[[1,0],2],"expected":false},
+    {"input":[[1,2],3],"expected":true},
+    {"input":[[5,0],5],"expected":true},
+    {"input":[[1,2,3],7],"expected":false},
+    {"input":[[1,0,0],2],"expected":true},
+    {"input":[[2147483647,0],2147483647],"expected":true}
+  ]
+}

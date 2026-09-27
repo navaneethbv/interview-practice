@@ -1,0 +1,27 @@
+{
+  "id": "reverse-words-in-a-string",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseWords",
+    "java": "reverseWords"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["  learn  by doing "],"expected":"doing by learn","sample":true},
+    {"input":["hello"],"expected":"hello","sample":true},
+    {"input":["a b"],"expected":"b a"},
+    {"input":["a "],"expected":"a"},
+    {"input":[" a"],"expected":"a"},
+    {"input":["one   two"],"expected":"two one"},
+    {"input":["1 2 3"],"expected":"3 2 1"},
+    {"input":["   a   b   "],"expected":"b a"},
+    {"input":["a a a"],"expected":"a a a"},
+    {"input":["Hello World"],"expected":"World Hello"}
+  ]
+}

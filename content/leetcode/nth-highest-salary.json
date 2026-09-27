@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "nth-highest-salary",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "salary",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "getNthHighestSalary"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employee":[[1,40],[2,60],[3,60],[4,20]]},"params":{"n":2}},"expected":[[40]],"sample":true},
+    {"input":{"tables":{"Employee":[[1,7],[2,7]]},"params":{"n":3}},"expected":[[null]],"sample":true},
+    {"input":{"tables":{"Employee":[]},"params":{"n":1}},"expected":[[null]]},
+    {"input":{"tables":{"Employee":[[1,5]]},"params":{"n":2}},"expected":[[null]]},
+    {"input":{"tables":{"Employee":[[1,5],[2,5]]},"params":{"n":3}},"expected":[[null]]},
+    {"input":{"tables":{"Employee":[[1,5],[2,3]]},"params":{"n":4}},"expected":[[null]]},
+    {"input":{"tables":{"Employee":[[1,3],[2,5],[3,5],[4,1]]},"params":{"n":1}},"expected":[[5]]},
+    {"input":{"tables":{"Employee":[[1,0],[2,-1],[3,-2]]},"params":{"n":2}},"expected":[[-1]]},
+    {"input":{"tables":{"Employee":[[1,100000],[2,1],[3,10],[4,100]]},"params":{"n":3}},"expected":[[10]]},
+    {"input":{"tables":{"Employee":[[1,2],[2,2],[3,1],[4,1]]},"params":{"n":4}},"expected":[[null]]}
+  ]
+}

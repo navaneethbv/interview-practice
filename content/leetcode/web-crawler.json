@@ -1,0 +1,32 @@
+{
+  "id": "web-crawler",
+  "style": "leetcode",
+  "function": {
+    "python": "crawl",
+    "java": "crawl"
+  },
+  "params": [
+    {
+      "name": "startUrl",
+      "type": "string"
+    },
+    {
+      "name": "htmlParser",
+      "type": "HtmlParser"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["http://a.test/start",{"urls":["http://a.test/start","http://a.test/next","http://b.test/"],"edges":[[0,1],[1,0],[0,2]]}],"sample":true,"expected":["http://a.test/start","http://a.test/next"]},
+    {"input":["http://a.test/",{"urls":["http://a.test/"],"edges":[]}],"sample":true,"expected":["http://a.test/"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://a.test/x"],"edges":[[0,1],[0,1]]}],"expected":["http://a.test","http://a.test/x"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://b.test"],"edges":[[0,1]]}],"expected":["http://a.test"]},
+    {"input":["http://a.test/one",{"urls":["http://a.test/one","http://a.test/two","http://a.test/three"],"edges":[[0,1],[1,2],[2,0]]}],"expected":["http://a.test/one","http://a.test/two","http://a.test/three"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://a.test/disconnected"],"edges":[]}],"expected":["http://a.test"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://a.test.evil/x","http://a.test/good"],"edges":[[0,1],[1,2]]}],"expected":["http://a.test"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://sub.a.test"],"edges":[[0,1]]}],"expected":["http://a.test"]},
+    {"input":["http://a.test/z",{"urls":["http://a.test/x","http://a.test/z"],"edges":[[1,0],[0,1]]}],"expected":["http://a.test/z","http://a.test/x"]},
+    {"input":["http://a.test",{"urls":["http://a.test","http://a.test/1","http://a.test/2","http://a.test/3"],"edges":[[0,1],[0,2],[1,3],[2,3]]}],"expected":["http://a.test","http://a.test/1","http://a.test/2","http://a.test/3"]}
+  ]
+}

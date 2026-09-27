@@ -1,0 +1,27 @@
+{
+  "id": "robot-bounded-in-circle",
+  "style": "leetcode",
+  "function": {
+    "python": "isRobotBounded",
+    "java": "isRobotBounded"
+  },
+  "params": [
+    {
+      "name": "instructions",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["GL"],"expected":true,"sample":true},
+    {"input":["GG"],"expected":false,"sample":true},
+    {"input":["G"],"expected":false},
+    {"input":["L"],"expected":true},
+    {"input":["R"],"expected":true},
+    {"input":["GGLLGG"],"expected":true},
+    {"input":["GLR"],"expected":false},
+    {"input":["GRGRGRGR"],"expected":true},
+    {"input":["LLLL"],"expected":true},
+    {"input":["GLGLGGLGL"],"expected":false}
+  ]
+}

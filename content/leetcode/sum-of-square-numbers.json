@@ -1,0 +1,29 @@
+{
+  "id": "sum-of-square-numbers",
+  "style": "leetcode",
+  "function": {
+    "python": "judgeSquareSum",
+    "java": "judgeSquareSum"
+  },
+  "params": [
+    {
+      "name": "c",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[13],"expected":true,"sample":true},
+    {"input":[7],"expected":false,"sample":true},
+    {"input":[0],"expected":true},
+    {"input":[1],"expected":true},
+    {"input":[2],"expected":true},
+    {"input":[3],"expected":false},
+    {"input":[4],"expected":true},
+    {"input":[5],"expected":true},
+    {"input":[8],"expected":true},
+    {"input":[9],"expected":true},
+    {"input":[2147483647],"expected":false},
+    {"input":[1000000000],"expected":true}
+  ]
+}

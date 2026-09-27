@@ -1,0 +1,31 @@
+{
+  "id": "word-pattern-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "wordPatternMatch",
+    "java": "wordPatternMatch"
+  },
+  "params": [
+    {
+      "name": "pattern",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["abab","redblueredblue"],"expected":true,"sample":true},
+    {"input":["ab","aa"],"expected":false,"sample":true},
+    {"input":["a","x"],"expected":true},
+    {"input":["aaaa","xxxx"],"expected":true},
+    {"input":["aaaa","xxx"],"expected":false},
+    {"input":["ab","xy"],"expected":true},
+    {"input":["aba","xyzxy"],"expected":true},
+    {"input":["abba","redbluebluered"],"expected":true},
+    {"input":["abc","xxx"],"expected":false},
+    {"input":["ab","xyz"],"expected":true}
+  ]
+}

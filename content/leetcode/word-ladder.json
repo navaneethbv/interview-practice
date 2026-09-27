@@ -1,0 +1,36 @@
+{
+  "id": "word-ladder",
+  "style": "leetcode",
+  "function": {
+    "python": "ladderLength",
+    "java": "ladderLength"
+  },
+  "params": [
+    {
+      "name": "beginWord",
+      "type": "string"
+    },
+    {
+      "name": "endWord",
+      "type": "string"
+    },
+    {
+      "name": "wordList",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["hit","cog",["hot","dot","dog","lot","log","cog"]],"expected":5,"sample":true},
+    {"input":["a","c",["a","b","c"]],"expected":2,"sample":true},
+    {"input":["hit","cog",["hot","dot","dog"]],"expected":0},
+    {"input":["abc","abd",["abd"]],"expected":2},
+    {"input":["abc","xyz",["xyz"]],"expected":0},
+    {"input":["aaa","bbb",["aab","abb","bbb"]],"expected":4},
+    {"input":["aaa","bbb",["aac","abc","bbc","bbb"]],"expected":5},
+    {"input":["ab","ba",["aa","ba"]],"expected":3},
+    {"input":["ab","cd",["ad","cd","cb"]],"expected":3},
+    {"input":["cat","dog",["cot","cog","dog","dat","dot"]],"expected":4},
+    {"input":["red","tax",["ted","tex","red","tax","tad","den","rex","pee"]],"expected":4}
+  ]
+}

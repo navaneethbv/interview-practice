@@ -1,0 +1,3 @@
+class Solution {
+public int largestMagicSquare(int[][] grid){int m=grid.length,n=grid[0].length;int[][]rows=new int[m][n+1],cols=new int[m+1][n];for(int r=0;r<m;r++)for(int c=0;c<n;c++){rows[r][c+1]=rows[r][c]+grid[r][c];cols[r+1][c]=cols[r][c]+grid[r][c];}for(int size=Math.min(m,n);size>1;size--)for(int r=0;r+size<=m;r++)for(int c=0;c+size<=n;c++){int target=rows[r][c+size]-rows[r][c],a=0,b=0;boolean ok=true;for(int i=0;i<size;i++){if(rows[r+i][c+size]-rows[r+i][c]!=target||cols[r+size][c+i]-cols[r][c+i]!=target){ok=false;break;}a+=grid[r+i][c+i];b+=grid[r+i][c+size-1-i];}if(ok&&a==target&&b==target)return size;}return 1;}
+}

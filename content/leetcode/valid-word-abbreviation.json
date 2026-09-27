@@ -1,0 +1,33 @@
+{
+  "id": "valid-word-abbreviation",
+  "style": "leetcode",
+  "function": {
+    "python": "validWordAbbreviation",
+    "java": "validWordAbbreviation"
+  },
+  "params": [
+    {
+      "name": "word",
+      "type": "string"
+    },
+    {
+      "name": "abbr",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["internationalization","i18n"],"expected":true,"sample":true},
+    {"input":["apple","a02e"],"expected":false,"sample":true},
+    {"input":["a","a"],"expected":true},
+    {"input":["a","1"],"expected":true},
+    {"input":["a","0"],"expected":false},
+    {"input":["word","4"],"expected":true},
+    {"input":["word","5"],"expected":false},
+    {"input":["word","w2d"],"expected":true},
+    {"input":["word","w1d"],"expected":false},
+    {"input":["substitution","s10n"],"expected":true},
+    {"input":["apple","a3e"],"expected":true},
+    {"input":["word","4x"],"expected":false}
+  ]
+}

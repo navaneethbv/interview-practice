@@ -1,0 +1,58 @@
+{
+  "kind": "design",
+  "id": "all-oone-data-structure",
+  "style": "leetcode",
+  "className": "AllOne",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "inc",
+      "java": "inc",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "dec",
+      "java": "dec",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getMaxKey",
+      "java": "getMaxKey",
+      "params": [],
+      "returns": "string"
+    },
+    {
+      "name": "getMinKey",
+      "java": "getMinKey",
+      "params": [],
+      "returns": "string"
+    }
+  ],
+  "compare": {
+    "validator": "allOne"
+  },
+  "tests": [
+    {"input":{"ctor":[],"ops":["inc","inc","inc","getMaxKey","getMinKey"],"args":[["a"],["a"],["b"],[],[]]},"expected":[null,null,null,"a","b"],"sample":true},
+    {"input":{"ctor":[],"ops":["inc","dec","getMaxKey"],"args":[["x"],["x"],[]]},"expected":[null,null,""],"sample":true},
+    {"input":{"ctor":[],"ops":["getMinKey","getMaxKey"],"args":[[],[]]},"expected":["",""]},
+    {"input":{"ctor":[],"ops":["inc","getMinKey","getMaxKey"],"args":[["a"],[],[]]},"expected":[null,"a","a"]},
+    {"input":{"ctor":[],"ops":["inc","inc","getMaxKey","getMinKey"],"args":[["a"],["b"],[],[]]},"expected":[null,null,"a","a"]},
+    {"input":{"ctor":[],"ops":["inc","inc","dec","getMinKey"],"args":[["a"],["a"],["a"],[]]},"expected":[null,null,null,"a"]},
+    {"input":{"ctor":[],"ops":["inc","inc","dec","getMinKey"],"args":[["a"],["b"],["a"],[]]},"expected":[null,null,null,"b"]},
+    {"input":{"ctor":[],"ops":["inc","inc","inc","inc","dec","getMaxKey"],"args":[["a"],["a"],["b"],["b"],["a"],[]]},"expected":[null,null,null,null,null,"b"]},
+    {"input":{"ctor":[],"ops":["inc","dec","inc","getMaxKey"],"args":[["x"],["x"],["y"],[]]},"expected":[null,null,null,"y"]},
+    {"input":{"ctor":[],"ops":["inc","inc","inc","inc","dec","getMinKey","getMaxKey"],"args":[["a"],["a"],["a"],["b"],["a"],[],[]]},"expected":[null,null,null,null,null,"b","a"]}
+  ]
+}

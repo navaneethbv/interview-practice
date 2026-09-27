@@ -1,0 +1,367 @@
+{
+  "kind": "design",
+  "id": "design-a-stack-with-increment-operation",
+  "style": "leetcode",
+  "className": "CustomStack",
+  "ctorParams": [
+    {
+      "name": "maxSize",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "push",
+      "java": "push",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "pop",
+      "java": "pop",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "increment",
+      "java": "increment",
+      "params": [
+        {
+          "name": "k",
+          "type": "int"
+        },
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [
+          3
+        ],
+        "ops": [
+          "push",
+          "push",
+          "increment",
+          "pop",
+          "pop",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            2,
+            10
+          ],
+          [],
+          [],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        12,
+        11,
+        -1
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          1
+        ],
+        "ops": [
+          "push",
+          "push",
+          "pop"
+        ],
+        "args": [
+          [
+            5
+          ],
+          [
+            6
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        5
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          1
+        ],
+        "ops": [
+          "pop"
+        ],
+        "args": [
+          []
+        ]
+      },
+      "expected": [
+        -1
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2
+        ],
+        "ops": [
+          "increment",
+          "push",
+          "pop"
+        ],
+        "args": [
+          [
+            2,
+            10
+          ],
+          [
+            1
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        1
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          3
+        ],
+        "ops": [
+          "push",
+          "push",
+          "push",
+          "increment",
+          "pop",
+          "pop",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            2,
+            10
+          ],
+          [],
+          [],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        3,
+        12,
+        11
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2
+        ],
+        "ops": [
+          "push",
+          "increment",
+          "increment",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        8
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1
+        ],
+        "ops": [
+          "push",
+          "increment",
+          "pop",
+          "push",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            1,
+            5
+          ],
+          [],
+          [
+            2
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        6,
+        null,
+        2
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2
+        ],
+        "ops": [
+          "push",
+          "increment",
+          "pop"
+        ],
+        "args": [
+          [
+            3
+          ],
+          [
+            1,
+            0
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        3
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2
+        ],
+        "ops": [
+          "push",
+          "push",
+          "pop",
+          "increment",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [],
+          [
+            2,
+            10
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        2,
+        null,
+        11
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          3
+        ],
+        "ops": [
+          "push",
+          "push",
+          "increment",
+          "push",
+          "pop"
+        ],
+        "args": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            3
+          ],
+          []
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        3
+      ]
+    }
+  ]
+}

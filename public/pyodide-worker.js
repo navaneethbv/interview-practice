@@ -54,10 +54,11 @@ except SyntaxError as e:
 `;
 
 self.onmessage = async (event) => {
-  const { id, prelude, user, runner } = event.data;
+  const { id, prelude, user, runner, packages = [] } = event.data;
   let py;
   try {
     py = await getPyodide();
+    if (packages.includes("sqlite3")) await py.loadPackage("sqlite3");
   } catch (e) {
     pyodideReady = null;
     self.postMessage({ id, type: "done", error: `Could not load the Python runtime: ${e && e.message ? e.message : e}` });

@@ -1,0 +1,125 @@
+{
+  "id": "pyramid-transition-matrix",
+  "style": "leetcode",
+  "function": {
+    "python": "pyramidTransition",
+    "java": "pyramidTransition"
+  },
+  "params": [
+    {
+      "name": "bottom",
+      "type": "string"
+    },
+    {
+      "name": "allowed",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {
+      "input": [
+        "ABC",
+        [
+          "ABD",
+          "BCE",
+          "DEF"
+        ]
+      ],
+      "expected": true,
+      "sample": true
+    },
+    {
+      "input": [
+        "AB",
+        [
+          "AAA"
+        ]
+      ],
+      "expected": false,
+      "sample": true
+    },
+    {
+      "input": [
+        "AB",
+        [
+          "ABC"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "AA",
+        [
+          "AAA"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "AA",
+        []
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "ABC",
+        [
+          "ABD",
+          "BCE"
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "AAA",
+        [
+          "AAB",
+          "BBC"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "AAAA",
+        [
+          "AAB",
+          "AAC",
+          "BCD",
+          "BBE",
+          "DEF"
+        ]
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "BCD",
+        [
+          "BCC",
+          "CDE",
+          "CEA",
+          "FFF"
+        ]
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "ABC",
+        [
+          "ABD",
+          "ABE",
+          "BCF",
+          "EFA"
+        ]
+      ],
+      "expected": true
+    }
+  ]
+}

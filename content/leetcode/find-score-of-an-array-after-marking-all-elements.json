@@ -1,0 +1,27 @@
+{
+  "id": "find-score-of-an-array-after-marking-all-elements",
+  "style": "leetcode",
+  "function": {
+    "python": "findScore",
+    "java": "findScore"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[2,1,3,4,5,2]],"expected":7,"sample":true},
+    {"input":[[5]],"expected":5,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,2]],"expected":1},
+    {"input":[[2,1]],"expected":1},
+    {"input":[[1,1,1]],"expected":2},
+    {"input":[[2,3,5,1,3,2]],"expected":5},
+    {"input":[[5,4,3,2,1]],"expected":9},
+    {"input":[[1,2,3,4,5]],"expected":9},
+    {"input":[[1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000,1000000]],"expected":10000000}
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "function": {
+    "python": "read",
+    "java": "read"
+  },
+  "params": [
+    {
+      "name": "buf",
+      "type": "char[]"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "output": {
+    "arg": 0,
+    "prefix": true
+  },
+  "environment": {
+    "kind": "read4",
+    "param": {
+      "name": "file",
+      "type": "string"
+    }
+  },
+  "id": "read-n-characters-given-read4",
+  "style": "leetcode",
+  "tests": [
+    {"input":[[" "," "," "],3,"orbit"],"expected":["o","r","b"],"sample":true},
+    {"input":[[" "," "," "," "," "],5,"hi"],"expected":["h","i"],"sample":true},
+    {"input":[[" "],1,""],"expected":[]},
+    {"input":[[" "],1,"a"],"expected":["a"]},
+    {"input":[[" "," "," "," "],4,"abcd"],"expected":["a","b","c","d"]},
+    {"input":[[" "," "," "," "," "],5,"abcde"],"expected":["a","b","c","d","e"]},
+    {"input":[[" "," "," "," "," "," "," "," "],8,"abcdefgh"],"expected":["a","b","c","d","e","f","g","h"]},
+    {"input":[[" "," "," "," "," "," "," "],7,"abcdefgh"],"expected":["a","b","c","d","e","f","g"]},
+    {"input":[[" "," "," "," "," "," "," "," "," "],9,"abcd"],"expected":["a","b","c","d"]},
+    {"input":[[" "," "],2,"abcdefghijk"],"expected":["a","b"]},
+    {"input":[[" "," "," "," "," "," "],6,"ab cd!"],"expected":["a","b"," ","c","d","!"]},
+    {"input":[[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],85,"xyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyzxyz"],"expected":["x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x","y","z","x"]}
+  ]
+}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BookOpen, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import type { CourseIndex } from "@/lib/content-types";
+import { COURSE_SCOPE, type CourseIndex } from "@/lib/content-types";
 import { statusOf, useProgress } from "@/lib/progress";
 import { DifficultyText, StatusIcon } from "./ui";
 
@@ -56,7 +56,7 @@ export function CourseOutline({ course }: { course: CourseIndex }) {
                       className="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors hover:bg-layer-2/60"
                     >
                       {it.type === "problem" ? (
-                        <StatusIcon status={statusOf(progress, it.id)} />
+                        <StatusIcon status={statusOf(progress, it.id, COURSE_SCOPE)} />
                       ) : progress.read[it.id] ? (
                         <StatusIcon status="solved" />
                       ) : (

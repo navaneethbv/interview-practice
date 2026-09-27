@@ -1,0 +1,31 @@
+{
+  "id": "add-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "addStrings",
+    "java": "addStrings"
+  },
+  "params": [
+    {
+      "name": "num1",
+      "type": "string"
+    },
+    {
+      "name": "num2",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["95","17"],"expected":"112","sample":true},
+    {"input":["0","0"],"expected":"0","sample":true},
+    {"input":["1","9"],"expected":"10"},
+    {"input":["9","1"],"expected":"10"},
+    {"input":["123","0"],"expected":"123"},
+    {"input":["0","123"],"expected":"123"},
+    {"input":["999","1"],"expected":"1000"},
+    {"input":["500","500"],"expected":"1000"},
+    {"input":["123456789","987654321"],"expected":"1111111110"},
+    {"input":["9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999","1"],"expected":"10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "repeated-dna-sequences",
+  "style": "leetcode",
+  "function": {
+    "python": "findRepeatedDnaSequences",
+    "java": "findRepeatedDnaSequences"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {
+      "input": [
+        "AAAAAAAAAAA"
+      ],
+      "expected": [
+        "AAAAAAAAAA"
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        "ACGT"
+      ],
+      "expected": [],
+      "sample": true
+    },
+    {
+      "input": [
+        "A"
+      ],
+      "expected": []
+    },
+    {
+      "input": [
+        "ACGTACGTAC"
+      ],
+      "expected": []
+    },
+    {
+      "input": [
+        "AAAAAAAAAA"
+      ],
+      "expected": []
+    },
+    {
+      "input": [
+        "CCCCCCCCCCCC"
+      ],
+      "expected": [
+        "CCCCCCCCCC"
+      ]
+    },
+    {
+      "input": [
+        "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+      ],
+      "expected": [
+        "AAAAACCCCC",
+        "CCCCCAAAAA"
+      ]
+    },
+    {
+      "input": [
+        "ACGTACGTACGTACGTACGT"
+      ],
+      "expected": [
+        "ACGTACGTAC",
+        "CGTACGTACG",
+        "GTACGTACGT",
+        "TACGTACGTA"
+      ]
+    },
+    {
+      "input": [
+        "TTTTTTTTTTGTTTTTTTTTT"
+      ],
+      "expected": [
+        "TTTTTTTTTT"
+      ]
+    },
+    {
+      "input": [
+        "ACGTTGCAACGT"
+      ],
+      "expected": []
+    }
+  ]
+}

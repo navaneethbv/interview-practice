@@ -1,0 +1,32 @@
+{
+  "id": "unique-paths",
+  "style": "leetcode",
+  "function": {
+    "python": "uniquePaths",
+    "java": "uniquePaths"
+  },
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[3,4],"expected":10,"sample":true},
+    {"input":[1,5],"expected":1,"sample":true},
+    {"input":[1,1],"expected":1},
+    {"input":[5,1],"expected":1},
+    {"input":[2,2],"expected":2},
+    {"input":[2,7],"expected":7},
+    {"input":[3,3],"expected":6},
+    {"input":[7,3],"expected":28},
+    {"input":[10,10],"expected":48620},
+    {"input":[17,17],"expected":601080390},
+    {"input":[100,2],"expected":100}
+  ]
+}

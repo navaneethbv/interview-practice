@@ -1,4 +1,4 @@
-import { judgeOutput } from "./compare";
+import { judgeSpecOutput } from "./compare";
 import type { AnyTestCase, CaseResult, ProblemSpec, RawCaseResult, RunOutcome } from "./types";
 import { RESULT_MARKER } from "./types";
 
@@ -40,14 +40,13 @@ export function grade({ spec, tests, stdout, timedOut, compileError, fatal }: Gr
     return { verdict: "Compile Error", compileError, cases: [], passed: 0, total };
   }
   const { results, stray } = parseHarnessOutput(stdout);
-  const compare = spec.kind === "design" ? "exact" : spec.compare;
   const cases: CaseResult[] = tests.map((t, index) => {
     const r = results.get(index);
     if (!r) return { index, passed: false, notRun: true };
     if (r.status === "error") return { index, passed: false, error: r.error, stdout: r.stdout };
     return {
       index,
-      passed: judgeOutput(compare, t.input, r.output, t.expected),
+      passed: judgeSpecOutput(spec, t.input, r.output, t.expected),
       output: r.output,
       stdout: r.stdout,
       ms: r.ms,

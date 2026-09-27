@@ -1,0 +1,35 @@
+{
+  "id": "sentence-similarity-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "areSentencesSimilarTwo",
+    "java": "areSentencesSimilarTwo"
+  },
+  "params": [
+    {
+      "name": "sentence1",
+      "type": "string[]"
+    },
+    {
+      "name": "sentence2",
+      "type": "string[]"
+    },
+    {
+      "name": "similarPairs",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["fast","car"],["quick","auto"],[["fast","rapid"],["rapid","quick"],["car","auto"]]],"expected":true,"sample":true},
+    {"input":[["a"],["a","b"],[]],"expected":false,"sample":true},
+    {"input":[["a"],["a"],[]],"expected":true},
+    {"input":[["a"],["b"],[]],"expected":false},
+    {"input":[["a"],["b"],[["b","a"]]],"expected":true},
+    {"input":[["a","a"],["b","c"],[["a","b"],["b","c"]]],"expected":true},
+    {"input":[["a","x"],["b","y"],[["a","b"]]],"expected":false},
+    {"input":[["a"],["d"],[["a","b"],["c","d"]]],"expected":false},
+    {"input":[["a"],["c"],[["a","b"],["b","c"],["c","a"]]],"expected":true},
+    {"input":[["same","x"],["same","y"],[["x","y"]]],"expected":true}
+  ]
+}

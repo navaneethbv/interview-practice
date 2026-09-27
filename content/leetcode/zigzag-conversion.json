@@ -1,0 +1,31 @@
+{
+  "id": "zigzag-conversion",
+  "style": "leetcode",
+  "function": {
+    "python": "convert",
+    "java": "convert"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "numRows",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["ABCDEFG",3],"expected":"AEBDFCG","sample":true},
+    {"input":["ABCD",1],"expected":"ABCD","sample":true},
+    {"input":["A",1],"expected":"A"},
+    {"input":["A",5],"expected":"A"},
+    {"input":["AB",2],"expected":"AB"},
+    {"input":["ABCDE",2],"expected":"ACEBD"},
+    {"input":["ABCDE",3],"expected":"AEBDC"},
+    {"input":["ABCDE",5],"expected":"ABCDE"},
+    {"input":["ABCDE",9],"expected":"ABCDE"},
+    {"input":["PAYPALISHIRING",4],"expected":"PINALSIGYAHRPI"}
+  ]
+}

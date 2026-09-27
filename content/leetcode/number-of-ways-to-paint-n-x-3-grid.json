@@ -1,0 +1,79 @@
+{
+  "id": "number-of-ways-to-paint-n-x-3-grid",
+  "style": "leetcode",
+  "function": {
+    "python": "numOfWays",
+    "java": "numOfWays"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        1
+      ],
+      "expected": 12,
+      "sample": true
+    },
+    {
+      "input": [
+        2
+      ],
+      "expected": 54,
+      "sample": true
+    },
+    {
+      "input": [
+        3
+      ],
+      "expected": 246
+    },
+    {
+      "input": [
+        4
+      ],
+      "expected": 1122
+    },
+    {
+      "input": [
+        5
+      ],
+      "expected": 5118
+    },
+    {
+      "input": [
+        6
+      ],
+      "expected": 23346
+    },
+    {
+      "input": [
+        10
+      ],
+      "expected": 10107954
+    },
+    {
+      "input": [
+        100
+      ],
+      "expected": 905790447
+    },
+    {
+      "input": [
+        1000
+      ],
+      "expected": 650420578
+    },
+    {
+      "input": [
+        5000
+      ],
+      "expected": 30228214
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "design",
+  "id": "range-sum-query-immutable",
+  "style": "leetcode",
+  "className": "NumArray",
+  "ctorParams": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "sumRange",
+      "java": "sumRange",
+      "params": [
+        {
+          "name": "left",
+          "type": "int"
+        },
+        {
+          "name": "right",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[2,-1,4,3]],"ops":["sumRange","sumRange"],"args":[[0,2],[1,3]]},"expected":[5,6],"sample":true},
+    {"input":{"ctor":[[5]],"ops":["sumRange"],"args":[[0,0]]},"expected":[5],"sample":true},
+    {"input":{"ctor":[[0]],"ops":["sumRange"],"args":[[0,0]]},"expected":[0]},
+    {"input":{"ctor":[[-1,-2,-3]],"ops":["sumRange"],"args":[[0,2]]},"expected":[-6]},
+    {"input":{"ctor":[[1,2,3]],"ops":["sumRange","sumRange"],"args":[[0,0],[2,2]]},"expected":[1,3]},
+    {"input":{"ctor":[[1,-1,1,-1]],"ops":["sumRange"],"args":[[0,3]]},"expected":[0]},
+    {"input":{"ctor":[[100000,100000,100000,100000,100000,100000,100000,100000,100000,100000]],"ops":["sumRange"],"args":[[0,9]]},"expected":[1000000]},
+    {"input":{"ctor":[[1,2,3,4]],"ops":["sumRange","sumRange"],"args":[[1,2],[0,3]]},"expected":[5,10]},
+    {"input":{"ctor":[[0,0,0]],"ops":["sumRange"],"args":[[1,2]]},"expected":[0]},
+    {"input":{"ctor":[[-100000,100000]],"ops":["sumRange","sumRange"],"args":[[0,0],[0,1]]},"expected":[-100000,0]}
+  ]
+}

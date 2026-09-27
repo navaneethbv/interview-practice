@@ -1,0 +1,55 @@
+{
+  "kind": "design",
+  "id": "time-based-key-value-store",
+  "style": "leetcode",
+  "className": "TimeMap",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "set",
+      "java": "set",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["set","get","set","get","get"],"args":[["color","red",2],["color",3],["color","blue",5],["color",4],["color",5]]},"expected":[null,"red",null,"red","blue"],"sample":true},
+    {"input":{"ctor":[],"ops":["get","set","get"],"args":[["missing",1],["x","a",3],["x",2]]},"expected":["",null,""],"sample":true},
+    {"input":{"ctor":[],"ops":["set","get"],"args":[["a","one",1],["a",1]]},"expected":[null,"one"]},
+    {"input":{"ctor":[],"ops":["set","get"],"args":[["a","one",5],["a",4]]},"expected":[null,""]},
+    {"input":{"ctor":[],"ops":["set","get"],"args":[["a","one",5],["a",99]]},"expected":[null,"one"]},
+    {"input":{"ctor":[],"ops":["set","set","get","get"],"args":[["a","x",1],["b","y",2],["a",2],["b",1]]},"expected":[null,null,"x",""]},
+    {"input":{"ctor":[],"ops":["set","set","set","get"],"args":[["a","x",1],["a","y",3],["a","z",7],["a",4]]},"expected":[null,null,null,"y"]},
+    {"input":{"ctor":[],"ops":["set","set","get"],"args":[["a","x",1],["a","x",2],["a",2]]},"expected":[null,null,"x"]},
+    {"input":{"ctor":[],"ops":["get","get"],"args":[["a",1],["b",100]]},"expected":["",""]},
+    {"input":{"ctor":[],"ops":["set","get","get"],"args":[["a","z",10000000],["a",9999999],["a",10000000]]},"expected":[null,"","z"]}
+  ]
+}

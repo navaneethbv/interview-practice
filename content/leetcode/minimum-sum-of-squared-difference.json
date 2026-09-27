@@ -1,0 +1,175 @@
+{
+  "id": "minimum-sum-of-squared-difference",
+  "style": "leetcode",
+  "function": {
+    "python": "minSumSquareDiff",
+    "java": "minSumSquareDiff"
+  },
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int[]"
+    },
+    {
+      "name": "nums2",
+      "type": "int[]"
+    },
+    {
+      "name": "k1",
+      "type": "int"
+    },
+    {
+      "name": "k2",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        1,
+        1
+      ],
+      "expected": 8,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        2,
+        0
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        0,
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          0
+        ],
+        [
+          5
+        ],
+        0,
+        0
+      ],
+      "expected": 25
+    },
+    {
+      "input": [
+        [
+          0
+        ],
+        [
+          5
+        ],
+        2,
+        1
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          3,
+          2,
+          1
+        ],
+        1,
+        1
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        1,
+        0
+      ],
+      "expected": 13
+    },
+    {
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          3
+        ],
+        2,
+        0
+      ],
+      "expected": 8
+    },
+    {
+      "input": [
+        [
+          100000
+        ],
+        [
+          0
+        ],
+        0,
+        0
+      ],
+      "expected": 10000000000
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        100,
+        100
+      ],
+      "expected": 0
+    }
+  ]
+}

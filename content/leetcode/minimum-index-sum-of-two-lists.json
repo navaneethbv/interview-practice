@@ -1,0 +1,32 @@
+{
+  "id": "minimum-index-sum-of-two-lists",
+  "style": "leetcode",
+  "function": {
+    "python": "findRestaurant",
+    "java": "findRestaurant"
+  },
+  "params": [
+    {
+      "name": "list1",
+      "type": "string[]"
+    },
+    {
+      "name": "list2",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string[]",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["a","b","c"],["c","b","a"]],"expected":["a","b","c"],"sample":true},
+    {"input":[["alpha","beta"],["beta","gamma"]],"expected":["beta"],"sample":true},
+    {"input":[["a"],["a"]],"expected":["a"]},
+    {"input":[["a","b"],["a","b"]],"expected":["a"]},
+    {"input":[["a","b"],["b","a"]],"expected":["b","a"]},
+    {"input":[["x","a","b"],["b","a"]],"expected":["b","a"]},
+    {"input":[["one","two","three"],["none","three"]],"expected":["three"]},
+    {"input":[["a","b","c"],["b","c"]],"expected":["b"]},
+    {"input":[["z","x"],["a","z","x"]],"expected":["z"]},
+    {"input":[["a b","c"],["a b"]],"expected":["a b"]}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "find-unique-binary-string",
+  "style": "leetcode",
+  "function": {
+    "python": "findDifferentBinaryString",
+    "java": "findDifferentBinaryString"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "uniqueBinary"
+  },
+  "tests": [
+    {"input":[["01","10"]],"expected":"11","sample":true},
+    {"input":[["0"]],"expected":"1","sample":true},
+    {"input":[["1"]],"expected":"0"},
+    {"input":[["00","11"]],"expected":"10"},
+    {"input":[["000","001","010"]],"expected":"111"},
+    {"input":[["111","110","101"]],"expected":"000"},
+    {"input":[["00","01"]],"expected":"10"},
+    {"input":[["0000","1111","0101","1010"]],"expected":"1011"},
+    {"input":[["000","011","110"]],"expected":"101"},
+    {"input":[["00000","00001","00010","00011","00100"]],"expected":"11101"}
+  ]
+}

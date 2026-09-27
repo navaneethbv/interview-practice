@@ -1,0 +1,49 @@
+{
+  "kind": "sql",
+  "id": "customers-who-never-order",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Customers",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "customerId",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "Customers"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Customers":[[1,"Ana"],[2,"Bo"]],"Orders":[[4,1]]}},"expected":[["Bo"]],"sample":true},
+    {"input":{"tables":{"Customers":[[3,"Cy"]],"Orders":[]}},"expected":[["Cy"]],"sample":true},
+    {"input":{"tables":{"Customers":[],"Orders":[]}},"expected":[]},
+    {"input":{"tables":{"Customers":[[1,"A"]],"Orders":[[1,1]]}},"expected":[]},
+    {"input":{"tables":{"Customers":[[1,"A"],[2,"A"]],"Orders":[[1,1]]}},"expected":[["A"]]},
+    {"input":{"tables":{"Customers":[[1,"A"],[2,"B"]],"Orders":[]}},"expected":[["A"],["B"]]},
+    {"input":{"tables":{"Customers":[[1,"A"]],"Orders":[[1,1],[2,1]]}},"expected":[]},
+    {"input":{"tables":{"Customers":[[1,"A"],[2,"B"]],"Orders":[[1,1],[2,2]]}},"expected":[]},
+    {"input":{"tables":{"Customers":[[2,"B"],[1,"A"],[3,"C"]],"Orders":[[4,2]]}},"expected":[["A"],["C"]]},
+    {"input":{"tables":{"Customers":[[1,"A"],[2,"B"],[3,"C"]],"Orders":[[4,2],[5,2],[6,3]]}},"expected":[["A"]]}
+  ]
+}

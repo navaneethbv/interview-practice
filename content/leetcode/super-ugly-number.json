@@ -1,0 +1,31 @@
+{
+  "id": "super-ugly-number",
+  "style": "leetcode",
+  "function": {
+    "python": "nthSuperUglyNumber",
+    "java": "nthSuperUglyNumber"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "primes",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[6,[2,3]],"expected":8,"sample":true},
+    {"input":[1,[7,13]],"expected":1,"sample":true},
+    {"input":[5,[2]],"expected":16},
+    {"input":[4,[3]],"expected":27},
+    {"input":[12,[2,7,13,19]],"expected":32},
+    {"input":[10,[2,3,5]],"expected":12},
+    {"input":[2,[997]],"expected":997},
+    {"input":[8,[3,5,7]],"expected":25},
+    {"input":[20,[2,3,5,7]],"expected":27},
+    {"input":[6,[5,11]],"expected":121}
+  ]
+}

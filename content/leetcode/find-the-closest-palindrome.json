@@ -1,0 +1,29 @@
+{
+  "id": "find-the-closest-palindrome",
+  "style": "leetcode",
+  "function": {
+    "python": "nearestPalindromic",
+    "java": "nearestPalindromic"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["123"],"expected":"121","sample":true},
+    {"input":["1"],"expected":"0","sample":true},
+    {"input":["9"],"expected":"8"},
+    {"input":["10"],"expected":"9"},
+    {"input":["11"],"expected":"9"},
+    {"input":["99"],"expected":"101"},
+    {"input":["100"],"expected":"99"},
+    {"input":["1000"],"expected":"999"},
+    {"input":["999"],"expected":"1001"},
+    {"input":["12321"],"expected":"12221"},
+    {"input":["999999999999999999"],"expected":"1000000000000000001"},
+    {"input":["100000000000000000"],"expected":"99999999999999999"}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "take-k-of-each-character-from-left-and-right",
+  "style": "leetcode",
+  "function": {
+    "python": "takeCharacters",
+    "java": "takeCharacters"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aabaaaacaabc",2],"expected":8,"sample":true},
+    {"input":["a",1],"expected":-1,"sample":true},
+    {"input":["a",0],"expected":0},
+    {"input":["abc",1],"expected":3},
+    {"input":["abc",0],"expected":0},
+    {"input":["aabbcc",2],"expected":6},
+    {"input":["abccba",1],"expected":3},
+    {"input":["aaabbbccc",2],"expected":7},
+    {"input":["cccc",1],"expected":-1},
+    {"input":["abcabc",1],"expected":3}
+  ]
+}

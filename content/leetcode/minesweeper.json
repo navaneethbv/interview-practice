@@ -1,0 +1,31 @@
+{
+  "id": "minesweeper",
+  "style": "leetcode",
+  "function": {
+    "python": "updateBoard",
+    "java": "updateBoard"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "char[][]"
+    },
+    {
+      "name": "click",
+      "type": "int[]"
+    }
+  ],
+  "returns": "char[][]",
+  "tests": [
+    {"input":[[["E","E"],["E","E"]],[0,0]],"expected":[["B","B"],["B","B"]],"sample":true},
+    {"input":[[["M","E"],["E","E"]],[0,0]],"expected":[["X","E"],["E","E"]],"sample":true},
+    {"input":[[["E"]],[0,0]],"expected":[["B"]]},
+    {"input":[[["M"]],[0,0]],"expected":[["X"]]},
+    {"input":[[["M","E"]],[0,1]],"expected":[["M","1"]]},
+    {"input":[[["M","E"],["E","E"]],[1,1]],"expected":[["M","E"],["E","1"]]},
+    {"input":[[["M","M","M"],["M","E","M"],["M","M","M"]],[1,1]],"expected":[["M","M","M"],["M","8","M"],["M","M","M"]]},
+    {"input":[[["E","E","E"],["E","M","E"],["E","E","E"]],[0,0]],"expected":[["1","E","E"],["E","M","E"],["E","E","E"]]},
+    {"input":[[["E","E","E","E"],["E","E","E","E"],["M","E","E","E"]],[0,3]],"expected":[["B","B","B","B"],["1","1","B","B"],["M","1","B","B"]]},
+    {"input":[[["B","1","M"],["B","1","E"]],[1,2]],"expected":[["B","1","M"],["B","1","1"]]}
+  ]
+}

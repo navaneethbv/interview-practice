@@ -28,10 +28,11 @@ import {
   loadCode,
   loadPrefs,
   loadSubmissions,
-  markAttempted,
-  markSolved,
+  recordSubmission,
   saveCode,
   savePrefs,
+  totalOf,
+  useProgress,
   type Submission,
 } from "@/lib/progress";
 import { ThemeToggle } from "../ThemeProvider";
@@ -42,18 +43,57 @@ import { fieldNames, inputFields, isPristine, parseCase, toEditable, type Editab
 type LeftTab = "description" | "solution" | "submissions";
 type ConsoleTab = "testcase" | "result";
 
-const LANG_LABEL: Record<CodeLang, string> = { python: "Python3", java: "Java" };
+const LANG_LABEL: Record<CodeLang, string> = { python: "Python3", java: "Java", sql: "SQLite" };
 
 interface Props {
   id: string;
   title: string;
   spec: ProblemSpec | null;
   reference: string | null;
-  starters: Record<CodeLang, string>;
-  prev: string | null;
-  next: string | null;
+  starters: Partial<Record<CodeLang, string>>;
+  /** Links for the header; list problems replace them with their list's order when opened with ?set=. */
+  nav: WorkspaceNav;
+  /** Set for list problems so the header can follow the list given in ?set=. */
+  listSlug?: string;
   description: React.ReactNode;
   solution: React.ReactNode;
+}
+
+export interface WorkspaceNav {
+  list: string;
+  prev: string | null;
+  next: string | null;
+}
+
+const SET_ID = /^[a-z0-9-]+$/;
+
+/** Previous/next links within the problem list named in the page's ?set= parameter. */
+function useListNav(initial: WorkspaceNav, slug: string | undefined): WorkspaceNav {
+  const [nav, setNav] = useState(initial);
+  useEffect(() => {
+    const set = new URLSearchParams(window.location.search).get("set");
+    if (!slug || !set || !SET_ID.test(set)) return;
+    let cancelled = false;
+    fetch(`/problems/sets/${set}/order`)
+      .then((r) => (r.ok ? (r.json() as Promise<{ slugs: string[] }>) : null))
+      .then((data) => {
+        if (cancelled || !data) return;
+        const i = data.slugs.indexOf(slug);
+        const href = (s: string) => `/problems/lc/${s}?set=${set}`;
+        setNav({
+          list: `/problems/sets/${set}`,
+          prev: i > 0 ? href(data.slugs[i - 1]) : null,
+          next: i >= 0 && i < data.slugs.length - 1 ? href(data.slugs[i + 1]) : null,
+        });
+      })
+      .catch(() => {
+        // Keep the default links when the list order can't be loaded.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+  return nav;
 }
 
 const subscribeNoop = () => () => {};
@@ -181,14 +221,17 @@ export function Workspace(props: Props) {
   return <WorkspaceInner {...props} />;
 }
 
-function WorkspaceInner({ id, title, spec, reference, starters, prev, next, description, solution }: Props) {
+function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav, listSlug, description, solution }: Props) {
   const isDesktop = useIsDesktop();
+  const nav = useListNav(initialNav, listSlug);
   const [prefs] = useState(loadPrefs);
+  const languages: CodeLang[] = spec?.kind === "sql" ? ["sql"] : ["python", "java"];
+  const initialLang = languages.includes(prefs.lang) ? prefs.lang : languages[0];
   const [leftTab, setLeftTab] = useState<LeftTab>("description");
   const [consoleTab, setConsoleTab] = useState<ConsoleTab>("testcase");
-  const [lang, setLang] = useState<CodeLang>(prefs.lang);
+  const [lang, setLang] = useState<CodeLang>(initialLang);
   const [fontSize, setFontSize] = useState(prefs.fontSize);
-  const [code, setCode] = useState(() => loadCode(id, prefs.lang) ?? starters[prefs.lang]);
+  const [code, setCode] = useState(() => loadCode(id, initialLang) ?? starters[initialLang] ?? "");
   const [cases, setCases] = useState<EditableCase[]>(() =>
     spec ? spec.tests.flatMap((t, i) => (t.sample ? [toEditable(spec, t, i)] : [])) : [],
   );
@@ -203,7 +246,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
 
   // Start loading the Python runtime in the background so the first Run is quick.
   useEffect(() => {
-    if (lang === "python") preloadPython();
+    if (lang === "python" || lang === "sql") preloadPython();
   }, [lang]);
 
   const onCodeChange = useCallback(
@@ -217,7 +260,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
   function switchLang(nextLang: CodeLang) {
     setLang(nextLang);
     savePrefs({ lang: nextLang });
-    setCode(loadCode(id, nextLang) ?? starters[nextLang]);
+    setCode(loadCode(id, nextLang) ?? starters[nextLang] ?? "");
   }
 
   function changeFont(delta: number) {
@@ -228,7 +271,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
 
   function reset() {
     clearCode(id, lang);
-    setCode(starters[lang]);
+    setCode(starters[lang] ?? "");
   }
 
   const names = useMemo(() => (spec ? fieldNames(spec) : []), [spec]);
@@ -295,8 +338,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
         };
         addSubmission(id, sub);
         setSubmissions((s) => [sub, ...s].slice(0, 30));
-        if (outcome.verdict === "Accepted") markSolved(id);
-        else markAttempted(id);
+        recordSubmission(id, outcome.verdict === "Accepted");
       }
     } catch (e) {
       setResult({ mode: "submit", tests: [], inputs: [], outcome: errorOutcome((e as Error).message) });
@@ -340,6 +382,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
         </div>
         {leftTab === "submissions" && (
           <SubmissionList
+            id={id}
             submissions={submissions}
             onLoad={(s) => {
               setLang(s.lang);
@@ -365,7 +408,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
             onChange={(e) => switchLang(e.target.value as CodeLang)}
             className="h-7 rounded-md border-0 bg-transparent px-1.5 text-sm text-fg-2 outline-none hover:bg-layer-2"
           >
-            {(["python", "java"] as const).map((l) => (
+            {languages.map((l) => (
               <option key={l} value={l}>
                 {LANG_LABEL[l]}
               </option>
@@ -462,16 +505,16 @@ function WorkspaceInner({ id, title, spec, reference, starters, prev, next, desc
           <Code2 size={16} strokeWidth={2.5} />
         </Link>
         <Link
-          href="/problems"
+          href={nav.list}
           className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-fg-1 hover:bg-layer-2"
         >
           <List size={16} /> <span className="hidden sm:inline">Problem List</span>
         </Link>
         <div className="flex">
-          <NavArrow href={prev && `/problems/${prev}`} label="Previous problem">
+          <NavArrow href={nav.prev} label="Previous problem">
             <ChevronLeft size={17} />
           </NavArrow>
-          <NavArrow href={next && `/problems/${next}`} label="Next problem">
+          <NavArrow href={nav.next} label="Next problem">
             <ChevronRight size={17} />
           </NavArrow>
         </div>
@@ -544,41 +587,52 @@ function NavArrow({ href, label, children }: { href: string | null; label: strin
   );
 }
 
-function SubmissionList({ submissions, onLoad }: { submissions: Submission[]; onLoad: (s: Submission) => void }) {
+function SubmissionList({ id, submissions, onLoad }: { id: string; submissions: Submission[]; onLoad: (s: Submission) => void }) {
+  const progress = useProgress();
+  const [total, accepted] = totalOf(progress, id);
   if (!submissions.length) {
     return <p className="py-8 text-center text-sm text-fg-3">No submissions yet. Submit your code to see it here.</p>;
   }
   return (
-    <table className="w-full text-sm">
-      <thead className="text-left text-xs text-fg-3">
-        <tr>
-          <th className="pb-2 font-medium">Status</th>
-          <th className="pb-2 font-medium">Language</th>
-          <th className="pb-2 font-medium">Tests</th>
-          <th className="pb-2 font-medium">
-            <span className="sr-only">Actions</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {submissions.map((s) => (
-          <tr key={s.at} className="border-t border-line">
-            <td className="py-2.5">
-              <div className={`font-medium ${s.verdict === "Accepted" ? "text-ok" : "text-bad"}`}>{s.verdict}</div>
-              <div className="text-xs text-fg-3">{new Date(s.at).toLocaleString()}</div>
-            </td>
-            <td className="py-2.5 text-fg-2">{LANG_LABEL[s.lang]}</td>
-            <td className="py-2.5 text-fg-2 tabular-nums">
-              {s.passed}/{s.total}
-            </td>
-            <td className="py-2.5 text-right">
-              <button onClick={() => onLoad(s)} className="rounded-md px-2 py-1 text-xs text-blue hover:bg-layer-2">
-                Load code
-              </button>
-            </td>
+    <>
+      <p className="mb-3 text-sm text-fg-2">
+        Your acceptance on this problem:{" "}
+        <span className="font-medium text-fg-1 tabular-nums">
+          {total ? Math.round((accepted / total) * 1000) / 10 : 0}%
+        </span>{" "}
+        ({accepted} of {total} submissions accepted; showing the latest {submissions.length})
+      </p>
+      <table className="w-full text-sm">
+        <thead className="text-left text-xs text-fg-3">
+          <tr>
+            <th className="pb-2 font-medium">Status</th>
+            <th className="pb-2 font-medium">Language</th>
+            <th className="pb-2 font-medium">Tests</th>
+            <th className="pb-2 font-medium">
+              <span className="sr-only">Actions</span>
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {submissions.map((s) => (
+            <tr key={s.at} className="border-t border-line">
+              <td className="py-2.5">
+                <div className={`font-medium ${s.verdict === "Accepted" ? "text-ok" : "text-bad"}`}>{s.verdict}</div>
+                <div className="text-xs text-fg-3">{new Date(s.at).toLocaleString()}</div>
+              </td>
+              <td className="py-2.5 text-fg-2">{LANG_LABEL[s.lang]}</td>
+              <td className="py-2.5 text-fg-2 tabular-nums">
+                {s.passed}/{s.total}
+              </td>
+              <td className="py-2.5 text-right">
+                <button onClick={() => onLoad(s)} className="rounded-md px-2 py-1 text-xs text-blue hover:bg-layer-2">
+                  Load code
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }

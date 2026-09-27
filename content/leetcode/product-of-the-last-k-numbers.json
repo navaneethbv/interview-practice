@@ -1,0 +1,43 @@
+{
+  "kind": "design",
+  "id": "product-of-the-last-k-numbers",
+  "style": "leetcode",
+  "className": "ProductOfNumbers",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "add",
+      "java": "add",
+      "params": [
+        {
+          "name": "num",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getProduct",
+      "java": "getProduct",
+      "params": [
+        {
+          "name": "k",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["add","add","add","getProduct","getProduct"],"args":[[3],[0],[2],[1],[3]]},"expected":[null,null,null,2,0],"sample":true},
+    {"input":{"ctor":[],"ops":["add","add","getProduct"],"args":[[2],[5],[2]]},"expected":[null,null,10],"sample":true},
+    {"input":{"ctor":[],"ops":["add","getProduct"],"args":[[1],[1]]},"expected":[null,1]},
+    {"input":{"ctor":[],"ops":["add","getProduct"],"args":[[0],[1]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["add","add","add","getProduct","getProduct"],"args":[[2],[3],[4],[2],[3]]},"expected":[null,null,null,12,24]},
+    {"input":{"ctor":[],"ops":["add","add","getProduct"],"args":[[0],[0],[2]]},"expected":[null,null,0]},
+    {"input":{"ctor":[],"ops":["add","add","add","add","getProduct","getProduct"],"args":[[5],[0],[2],[3],[2],[3]]},"expected":[null,null,null,null,6,0]},
+    {"input":{"ctor":[],"ops":["add","getProduct"],"args":[[100],[1]]},"expected":[null,100]},
+    {"input":{"ctor":[],"ops":["add","add","getProduct"],"args":[[1],[1],[2]]},"expected":[null,null,1]},
+    {"input":{"ctor":[],"ops":["add","add","getProduct","add","getProduct"],"args":[[0],[2],[1],[0],[1]]},"expected":[null,null,2,null,0]}
+  ]
+}

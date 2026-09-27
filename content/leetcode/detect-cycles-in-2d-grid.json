@@ -1,0 +1,27 @@
+{
+  "id": "detect-cycles-in-2d-grid",
+  "style": "leetcode",
+  "function": {
+    "python": "containsCycle",
+    "java": "containsCycle"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[["a","a"],["a","a"]]],"expected":true,"sample":true},
+    {"input":[[["a","b"],["b","a"]]],"expected":false,"sample":true},
+    {"input":[[["a"]]],"expected":false},
+    {"input":[[["a","a","a","a"]]],"expected":false},
+    {"input":[[["a","b"],["a","b"]]],"expected":false},
+    {"input":[[["a","a","a"],["a","b","a"],["a","a","a"]]],"expected":true},
+    {"input":[[["a","a","a"],["a","b","b"],["a","a","a"]]],"expected":false},
+    {"input":[[["a","a","a"],["a","a","a"]]],"expected":true},
+    {"input":[[["a","b","c"],["d","e","f"]]],"expected":false},
+    {"input":[[["a","a","a","b"],["a","b","b","b"],["a","a","a","a"]]],"expected":false}
+  ]
+}

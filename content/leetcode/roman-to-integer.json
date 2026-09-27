@@ -1,0 +1,27 @@
+{
+  "id": "roman-to-integer",
+  "style": "leetcode",
+  "function": {
+    "python": "romanToInt",
+    "java": "romanToInt"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["XIV"],"expected":14,"sample":true},
+    {"input":["MCMXCIV"],"expected":1994,"sample":true},
+    {"input":["I"],"expected":1},
+    {"input":["III"],"expected":3},
+    {"input":["IV"],"expected":4},
+    {"input":["IX"],"expected":9},
+    {"input":["LVIII"],"expected":58},
+    {"input":["CDXLIV"],"expected":444},
+    {"input":["MMXXIV"],"expected":2024},
+    {"input":["MMMCMXCIX"],"expected":3999}
+  ]
+}

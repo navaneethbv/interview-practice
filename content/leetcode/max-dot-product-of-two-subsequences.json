@@ -1,0 +1,167 @@
+{
+  "id": "max-dot-product-of-two-subsequences",
+  "style": "leetcode",
+  "function": {
+    "python": "maxDotProduct",
+    "java": "maxDotProduct"
+  },
+  "params": [
+    {
+      "name": "nums1",
+      "type": "int[]"
+    },
+    {
+      "name": "nums2",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          -2,
+          5
+        ],
+        [
+          3,
+          0,
+          -6
+        ]
+      ],
+      "expected": 18,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "expected": -1,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          0
+        ],
+        [
+          0
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          -2
+        ],
+        [
+          -3
+        ]
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "expected": 11
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          -3,
+          -4
+        ]
+      ],
+      "expected": -3
+    },
+    {
+      "input": [
+        [
+          -1,
+          2
+        ],
+        [
+          3,
+          -4
+        ]
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        [
+          3,
+          -2
+        ],
+        [
+          2,
+          -6,
+          7
+        ]
+      ],
+      "expected": 21
+    },
+    {
+      "input": [
+        [
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000
+        ],
+        [
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000,
+          1000
+        ]
+      ],
+      "expected": 10000000
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "design",
+  "id": "kth-largest-element-in-a-stream",
+  "style": "leetcode",
+  "className": "KthLargest",
+  "ctorParams": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "java": "add",
+      "params": [
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3,[4,5,8,2]],"ops":["add","add","add"],"args":[[3],[5],[10]]},"expected":[4,5,5],"sample":true},
+    {"input":{"ctor":[1,[]],"ops":["add","add","add"],"args":[[-2],[-5],[0]]},"expected":[-2,-2,0],"sample":true},
+    {"input":{"ctor":[1,[1]],"ops":["add"],"args":[[2]]},"expected":[2]},
+    {"input":{"ctor":[2,[1]],"ops":["add","add"],"args":[[0],[3]]},"expected":[0,1]},
+    {"input":{"ctor":[3,[1,1,1]],"ops":["add","add"],"args":[[1],[2]]},"expected":[1,1]},
+    {"input":{"ctor":[2,[-3,-2,-1]],"ops":["add"],"args":[[-4]]},"expected":[-2]},
+    {"input":{"ctor":[3,[5,4]],"ops":["add","add"],"args":[[3],[6]]},"expected":[3,4]},
+    {"input":{"ctor":[1,[10000]],"ops":["add"],"args":[[-10000]]},"expected":[10000]},
+    {"input":{"ctor":[4,[1,2,3,4]],"ops":["add","add","add"],"args":[[10],[9],[8]]},"expected":[2,3,4]},
+    {"input":{"ctor":[2,[0,0]],"ops":["add","add","add"],"args":[[0],[-1],[1]]},"expected":[0,0,0]}
+  ]
+}

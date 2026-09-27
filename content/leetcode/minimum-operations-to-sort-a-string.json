@@ -1,0 +1,27 @@
+{
+  "id": "minimum-operations-to-sort-a-string",
+  "style": "leetcode",
+  "function": {
+    "python": "minOperations",
+    "java": "minOperations"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["acb"],"expected":1,"sample":true},
+    {"input":["ba"],"expected":-1,"sample":true},
+    {"input":["a"],"expected":0},
+    {"input":["abc"],"expected":0},
+    {"input":["cba"],"expected":3},
+    {"input":["bac"],"expected":1},
+    {"input":["bca"],"expected":2},
+    {"input":["cbac"],"expected":1},
+    {"input":["zzza"],"expected":2},
+    {"input":["bbabaa"],"expected":2}
+  ]
+}

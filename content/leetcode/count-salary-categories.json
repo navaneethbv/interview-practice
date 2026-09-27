@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "count-salary-categories",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Accounts",
+      "columns": [
+        {
+          "name": "account_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "income",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "category",
+    "accounts_count"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Accounts":[[1,19999],[2,20000],[3,50000],[4,50001]]}},"expected":[["Low Salary",1],["Average Salary",2],["High Salary",1]],"sample":true},
+    {"input":{"tables":{"Accounts":[]}},"expected":[["Low Salary",0],["Average Salary",0],["High Salary",0]],"sample":true},
+    {"input":{"tables":{"Accounts":[[1,0]]}},"expected":[["Low Salary",1],["Average Salary",0],["High Salary",0]]},
+    {"input":{"tables":{"Accounts":[[1,19999]]}},"expected":[["Low Salary",1],["Average Salary",0],["High Salary",0]]},
+    {"input":{"tables":{"Accounts":[[1,20000]]}},"expected":[["Low Salary",0],["Average Salary",1],["High Salary",0]]},
+    {"input":{"tables":{"Accounts":[[1,50000]]}},"expected":[["Low Salary",0],["Average Salary",1],["High Salary",0]]},
+    {"input":{"tables":{"Accounts":[[1,50001]]}},"expected":[["Low Salary",0],["Average Salary",0],["High Salary",1]]},
+    {"input":{"tables":{"Accounts":[[1,100000],[2,200000]]}},"expected":[["Low Salary",0],["Average Salary",0],["High Salary",2]]},
+    {"input":{"tables":{"Accounts":[[1,1],[2,2],[3,3]]}},"expected":[["Low Salary",3],["Average Salary",0],["High Salary",0]]},
+    {"input":{"tables":{"Accounts":[[1,0],[2,20000],[3,30000],[4,50000],[5,100000]]}},"expected":[["Low Salary",1],["Average Salary",3],["High Salary",1]]}
+  ]
+}

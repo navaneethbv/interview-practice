@@ -1,0 +1,27 @@
+{
+  "id": "elimination-game",
+  "style": "leetcode",
+  "function": {
+    "python": "lastRemaining",
+    "java": "lastRemaining"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[9],"expected":6,"sample":true},
+    {"input":[1],"expected":1,"sample":true},
+    {"input":[2],"expected":2},
+    {"input":[3],"expected":2},
+    {"input":[4],"expected":2},
+    {"input":[5],"expected":2},
+    {"input":[6],"expected":4},
+    {"input":[8],"expected":6},
+    {"input":[10],"expected":8},
+    {"input":[1000000000],"expected":534765398}
+  ]
+}

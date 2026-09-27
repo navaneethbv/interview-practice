@@ -1,0 +1,1 @@
+class FirstUnique {Map<Integer,Integer> count=new HashMap<>();ArrayDeque<Integer> q=new ArrayDeque<>();public FirstUnique(int[] nums){for(int x:nums)add(x);}public int showFirstUnique(){while(!q.isEmpty()&&count.get(q.peek())!=1)q.remove();return q.isEmpty()?-1:q.peek();}public void add(int value){count.merge(value,1,Integer::sum);q.add(value);}}

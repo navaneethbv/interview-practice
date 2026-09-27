@@ -1,0 +1,32 @@
+{
+  "id": "wildcard-matching",
+  "style": "leetcode",
+  "function": {
+    "python": "isMatch",
+    "java": "isMatch"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "p",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["adceb","*a*b"],"expected":true,"sample":true},
+    {"input":["acdcb","a*c?b"],"expected":false,"sample":true},
+    {"input":["",""],"expected":true},
+    {"input":["","*"],"expected":true},
+    {"input":["","?"],"expected":false},
+    {"input":["a",""],"expected":false},
+    {"input":["a","?"],"expected":true},
+    {"input":["aa","a"],"expected":false},
+    {"input":["aa","*"],"expected":true},
+    {"input":["abc","a**?c"],"expected":true},
+    {"input":["abcdef","*d*f"],"expected":true}
+  ]
+}

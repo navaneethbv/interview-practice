@@ -1,0 +1,50 @@
+{
+  "kind": "sql",
+  "id": "big-countries",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "World",
+      "columns": [
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "continent",
+          "type": "TEXT"
+        },
+        {
+          "name": "area",
+          "type": "INTEGER"
+        },
+        {
+          "name": "population",
+          "type": "INTEGER"
+        },
+        {
+          "name": "gdp",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "name",
+    "population",
+    "area"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"World":[["A","X",3000000,5,10],["B","X",10,25000000,20],["C","Y",2999999,24999999,1]]}},"expected":[["A",5,3000000],["B",25000000,10]],"sample":true},
+    {"input":{"tables":{"World":[["D","X",4000000,30000000,1]]}},"expected":[["D",30000000,4000000]],"sample":true},
+    {"input":{"tables":{"World":[]}},"expected":[]},
+    {"input":{"tables":{"World":[["0","X",0,0,0]]}},"expected":[]},
+    {"input":{"tables":{"World":[["0","X",3000000,0,0]]}},"expected":[["0",0,3000000]]},
+    {"input":{"tables":{"World":[["0","X",0,25000000,0]]}},"expected":[["0",25000000,0]]},
+    {"input":{"tables":{"World":[["0","X",2999999,25000000,0]]}},"expected":[["0",25000000,2999999]]},
+    {"input":{"tables":{"World":[["0","X",3000000,24999999,0]]}},"expected":[["0",24999999,3000000]]},
+    {"input":{"tables":{"World":[["0","X",2999999,24999999,0]]}},"expected":[]},
+    {"input":{"tables":{"World":[["0","X",1,1,0],["1","X",9000000,90000000,0],["2","X",3000000,25000000,0]]}},"expected":[["1",90000000,9000000],["2",25000000,3000000]]}
+  ]
+}

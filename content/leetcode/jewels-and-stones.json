@@ -1,0 +1,31 @@
+{
+  "id": "jewels-and-stones",
+  "style": "leetcode",
+  "function": {
+    "python": "numJewelsInStones",
+    "java": "numJewelsInStones"
+  },
+  "params": [
+    {
+      "name": "jewels",
+      "type": "string"
+    },
+    {
+      "name": "stones",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aA","aAAbbbb"],"expected":3,"sample":true},
+    {"input":["z","ZZ"],"expected":0,"sample":true},
+    {"input":["a","a"],"expected":1},
+    {"input":["a","b"],"expected":0},
+    {"input":["a","aaaa"],"expected":4},
+    {"input":["ab","baba"],"expected":4},
+    {"input":["A","Aa"],"expected":1},
+    {"input":["abc","xyz"],"expected":0},
+    {"input":["z","zzzz"],"expected":4},
+    {"input":["abAB","aAbBcC"],"expected":4}
+  ]
+}

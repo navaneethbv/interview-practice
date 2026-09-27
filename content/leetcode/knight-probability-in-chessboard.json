@@ -1,0 +1,39 @@
+{
+  "id": "knight-probability-in-chessboard",
+  "style": "leetcode",
+  "function": {
+    "python": "knightProbability",
+    "java": "knightProbability"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "row",
+      "type": "int"
+    },
+    {
+      "name": "column",
+      "type": "int"
+    }
+  ],
+  "returns": "double",
+  "tests": [
+    {"input":[3,1,0,0],"expected":0.25,"sample":true},
+    {"input":[1,0,0,0],"expected":1,"sample":true},
+    {"input":[1,1,0,0],"expected":0},
+    {"input":[2,1,0,0],"expected":0},
+    {"input":[3,2,0,0],"expected":0.0625},
+    {"input":[3,1,1,1],"expected":0},
+    {"input":[8,1,3,3],"expected":1},
+    {"input":[8,2,3,3],"expected":0.875},
+    {"input":[5,3,2,2],"expected":0.25},
+    {"input":[10,5,0,0],"expected":0.08154296875}
+  ]
+}

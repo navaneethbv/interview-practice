@@ -1,0 +1,27 @@
+{
+  "id": "make-array-zero-by-subtracting-equal-amounts",
+  "style": "leetcode",
+  "function": {
+    "python": "minimumOperations",
+    "java": "minimumOperations"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,5,0,3,5]],"expected":3,"sample":true},
+    {"input":[[0]],"expected":0,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,1]],"expected":1},
+    {"input":[[1,2,3]],"expected":3},
+    {"input":[[0,0]],"expected":0},
+    {"input":[[100,100]],"expected":1},
+    {"input":[[0,1,0,1]],"expected":1},
+    {"input":[[2,4,6,8]],"expected":4},
+    {"input":[[5,3,5,3]],"expected":2}
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "consecutive-numbers",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Logs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "num",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "ConsecutiveNums"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Logs":[[1,"4"],[2,"4"],[3,"4"],[4,"2"]]}},"expected":[["4"]],"sample":true},
+    {"input":{"tables":{"Logs":[[1,"1"],[2,"2"],[3,"1"]]}},"expected":[],"sample":true},
+    {"input":{"tables":{"Logs":[]}},"expected":[]},
+    {"input":{"tables":{"Logs":[[1,"1"]]}},"expected":[]},
+    {"input":{"tables":{"Logs":[[1,"1"],[2,"1"]]}},"expected":[]},
+    {"input":{"tables":{"Logs":[[1,"1"],[2,"1"],[3,"1"],[4,"1"]]}},"expected":[["1"]]},
+    {"input":{"tables":{"Logs":[[1,"1"],[2,"1"],[3,"1"],[4,"2"],[5,"2"],[6,"2"]]}},"expected":[["1"],["2"]]},
+    {"input":{"tables":{"Logs":[[1,"1"],[2,"1"],[3,"2"],[4,"1"],[5,"1"]]}},"expected":[]},
+    {"input":{"tables":{"Logs":[[1,"0"],[2,"0"],[3,"0"]]}},"expected":[["0"]]},
+    {"input":{"tables":{"Logs":[[1,"-1"],[2,"-1"],[3,"-1"],[4,"0"],[5,"-1"],[6,"-1"],[7,"-1"]]}},"expected":[["-1"]]}
+  ]
+}

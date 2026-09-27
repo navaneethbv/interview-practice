@@ -1,0 +1,31 @@
+{
+  "id": "greatest-common-divisor-of-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "gcdOfStrings",
+    "java": "gcdOfStrings"
+  },
+  "params": [
+    {
+      "name": "str1",
+      "type": "string"
+    },
+    {
+      "name": "str2",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["ABCABC","ABC"],"expected":"ABC","sample":true},
+    {"input":["ABABAB","ABAB"],"expected":"AB","sample":true},
+    {"input":["A","A"],"expected":"A"},
+    {"input":["A","B"],"expected":""},
+    {"input":["AAAA","AA"],"expected":"AA"},
+    {"input":["ABC","ABC"],"expected":"ABC"},
+    {"input":["LEET","CODE"],"expected":""},
+    {"input":["AB","ABABAB"],"expected":"AB"},
+    {"input":["ABA","ABABA"],"expected":""},
+    {"input":["XYZXYZ","XYZXYZXYZ"],"expected":"XYZ"}
+  ]
+}

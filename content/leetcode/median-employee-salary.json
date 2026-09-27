@@ -1,0 +1,42 @@
+{
+  "kind": "sql",
+  "id": "median-employee-salary",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "company",
+          "type": "TEXT"
+        },
+        {
+          "name": "salary",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "id",
+    "company",
+    "salary"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employee":[[1,"A",10],[2,"A",20],[3,"A",30],[4,"B",5],[5,"B",9]]}},"expected":[[2,"A",20],[4,"B",5],[5,"B",9]],"sample":true},
+    {"input":{"tables":{"Employee":[[7,"X",8],[2,"X",8],[4,"X",8]]}},"expected":[[4,"X",8]],"sample":true},
+    {"input":{"tables":{"Employee":[]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"A",1]]}},"expected":[[1,"A",1]]},
+    {"input":{"tables":{"Employee":[[1,"A",1],[2,"A",2]]}},"expected":[[1,"A",1],[2,"A",2]]},
+    {"input":{"tables":{"Employee":[[1,"A",1],[2,"A",2],[3,"A",3],[4,"A",4]]}},"expected":[[2,"A",2],[3,"A",3]]},
+    {"input":{"tables":{"Employee":[[1,"A",5],[2,"B",5]]}},"expected":[[1,"A",5],[2,"B",5]]},
+    {"input":{"tables":{"Employee":[[8,"A",1],[2,"A",1],[9,"A",1],[4,"A",1]]}},"expected":[[4,"A",1],[8,"A",1]]},
+    {"input":{"tables":{"Employee":[[1,"A",0],[2,"A",100],[3,"A",10000]]}},"expected":[[2,"A",100]]},
+    {"input":{"tables":{"Employee":[[6,"B",6],[1,"A",1],[2,"B",2],[3,"B",3],[4,"A",4]]}},"expected":[[1,"A",1],[4,"A",4],[3,"B",3]]}
+  ]
+}

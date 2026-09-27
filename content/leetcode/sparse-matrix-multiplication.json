@@ -1,0 +1,31 @@
+{
+  "function": {
+    "python": "multiply",
+    "java": "multiply"
+  },
+  "params": [
+    {
+      "name": "mat1",
+      "type": "int[][]"
+    },
+    {
+      "name": "mat2",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[][]",
+  "id": "sparse-matrix-multiplication",
+  "style": "leetcode",
+  "tests": [
+    {"input":[[[1,0,2]],[[3],[4],[5]]],"sample":true,"expected":[[13]]},
+    {"input":[[[1,0],[0,1]],[[2,3],[4,5]]],"sample":true,"expected":[[2,3],[4,5]]},
+    {"input":[[[0]],[[9]]],"expected":[[0]]},
+    {"input":[[[-2]],[[3]]],"expected":[[-6]]},
+    {"input":[[[1,2]],[[0,0],[0,0]]],"expected":[[0,0]]},
+    {"input":[[[1],[2]],[[3,4]]],"expected":[[3,4],[6,8]]},
+    {"input":[[[0,1,0],[0,0,1]],[[1,2],[3,4],[5,6]]],"expected":[[3,4],[5,6]]},
+    {"input":[[[-1,2],[3,-4]],[[5,6],[-7,8]]],"expected":[[-19,10],[43,-14]]},
+    {"input":[[[100,100]],[[100],[100]]],"expected":[[20000]]},
+    {"input":[[[1,0,0],[0,0,0]],[[0,2],[0,0],[3,0]]],"expected":[[0,2],[0,0]]}
+  ]
+}

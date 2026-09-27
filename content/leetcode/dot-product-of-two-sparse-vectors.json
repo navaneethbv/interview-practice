@@ -1,0 +1,37 @@
+{
+  "kind": "design",
+  "id": "dot-product-of-two-sparse-vectors",
+  "style": "leetcode",
+  "className": "SparseVector",
+  "ctorParams": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "dotProduct",
+      "java": "dotProduct",
+      "params": [
+        {
+          "name": "vec",
+          "type": "SparseVector"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[1,0,0,2,3]],"ops":["dotProduct"],"args":[[[0,3,0,4,0]]]},"expected":[8],"sample":true},
+    {"input":{"ctor":[[0,0,0]],"ops":["dotProduct"],"args":[[[1,2,3]]]},"expected":[0],"sample":true},
+    {"input":{"ctor":[[3]],"ops":["dotProduct"],"args":[[[2]]]},"expected":[6]},
+    {"input":{"ctor":[[0]],"ops":["dotProduct"],"args":[[[0]]]},"expected":[0]},
+    {"input":{"ctor":[[1,2]],"ops":["dotProduct"],"args":[[[3,4]]]},"expected":[11]},
+    {"input":{"ctor":[[2,3]],"ops":["dotProduct","dotProduct"],"args":[[[1,0]],[[0,1]]]},"expected":[2,3]},
+    {"input":{"ctor":[[1,0,1]],"ops":["dotProduct"],"args":[[[0,1,0]]]},"expected":[0]},
+    {"input":{"ctor":[[100,100]],"ops":["dotProduct"],"args":[[[100,100]]]},"expected":[20000]},
+    {"input":{"ctor":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"ops":["dotProduct"],"args":[[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]]},"expected":[100]},
+    {"input":{"ctor":[[1,2,3]],"ops":["dotProduct"],"args":[[[1,2,3]]]},"expected":[14]}
+  ]
+}

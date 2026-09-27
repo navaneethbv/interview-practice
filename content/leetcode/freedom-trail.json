@@ -1,0 +1,31 @@
+{
+  "id": "freedom-trail",
+  "style": "leetcode",
+  "function": {
+    "python": "findRotateSteps",
+    "java": "findRotateSteps"
+  },
+  "params": [
+    {
+      "name": "ring",
+      "type": "string"
+    },
+    {
+      "name": "key",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abc","ca"],"expected":4,"sample":true},
+    {"input":["aaa","aa"],"expected":2,"sample":true},
+    {"input":["a","a"],"expected":1},
+    {"input":["abc","abc"],"expected":5},
+    {"input":["godding","gd"],"expected":4},
+    {"input":["ab","bbbb"],"expected":5},
+    {"input":["abcde","edcba"],"expected":10},
+    {"input":["abaca","aaaa"],"expected":4},
+    {"input":["abac","cab"],"expected":6},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":50}
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "kind": "design",
+  "id": "design-linked-list",
+  "style": "leetcode",
+  "className": "MyLinkedList",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "index",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "addAtHead",
+      "java": "addAtHead",
+      "params": [
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "addAtTail",
+      "java": "addAtTail",
+      "params": [
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "addAtIndex",
+      "java": "addAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int"
+        },
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "deleteAtIndex",
+      "java": "deleteAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["addAtHead","addAtTail","addAtIndex","get","deleteAtIndex","get"],"args":[[1],[3],[1,2],[1],[1],[1]]},"expected":[null,null,null,2,null,3],"sample":true},
+    {"input":{"ctor":[],"ops":["get","addAtIndex","get"],"args":[[0],[1,5],[0]]},"expected":[-1,null,-1],"sample":true},
+    {"input":{"ctor":[],"ops":["addAtIndex","get"],"args":[[0,7],[0]]},"expected":[null,7]},
+    {"input":{"ctor":[],"ops":["addAtHead","addAtHead","get"],"args":[[1],[2],[0]]},"expected":[null,null,2]},
+    {"input":{"ctor":[],"ops":["addAtTail","addAtTail","get"],"args":[[1],[2],[1]]},"expected":[null,null,2]},
+    {"input":{"ctor":[],"ops":["deleteAtIndex","get"],"args":[[0],[0]]},"expected":[null,-1]},
+    {"input":{"ctor":[],"ops":["addAtHead","deleteAtIndex","get"],"args":[[1],[0],[0]]},"expected":[null,null,-1]},
+    {"input":{"ctor":[],"ops":["addAtTail","deleteAtIndex","get"],"args":[[3],[1],[0]]},"expected":[null,null,3]},
+    {"input":{"ctor":[],"ops":["addAtTail","addAtIndex","get"],"args":[[1],[1,2],[1]]},"expected":[null,null,2]},
+    {"input":{"ctor":[],"ops":["addAtHead","addAtIndex","get","get"],"args":[[5],[0,6],[0],[1]]},"expected":[null,null,6,5]}
+  ]
+}

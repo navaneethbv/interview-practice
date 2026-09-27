@@ -1,0 +1,3 @@
+class Solution {
+final long MOD=1000000007;String bound;Long[][][] memo;long visit(int i,int prev,int tight){if(i==bound.length())return prev==10?0:1;if(memo[i][prev][tight]!=null)return memo[i][prev][tight];int limit=tight==1?bound.charAt(i)-'0':9;long ans=0;for(int d=0;d<=limit;d++){int nt=tight==1&&d==limit?1:0;if(prev==10&&d==0)ans+=visit(i+1,10,nt);else if(prev==10||Math.abs(prev-d)==1)ans+=visit(i+1,d,nt);}return memo[i][prev][tight]=ans%MOD;}long count(String s){bound=s;memo=new Long[s.length()][11][2];return visit(0,10,1);}public int countSteppingNumbers(String low,String high){long upper=count(high);String lower=new java.math.BigInteger(low).subtract(java.math.BigInteger.ONE).toString();return (int)((upper-count(lower)+MOD)%MOD);}
+}

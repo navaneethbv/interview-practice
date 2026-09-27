@@ -1,0 +1,27 @@
+{
+  "id": "unique-paths-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "uniquePathsIII",
+    "java": "uniquePathsIII"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,0,2]]],"expected":1,"sample":true},
+    {"input":[[[1,0],[0,2]]],"expected":0,"sample":true},
+    {"input":[[[1,2]]],"expected":1},
+    {"input":[[[1],[2]]],"expected":1},
+    {"input":[[[1,-1,2]]],"expected":0},
+    {"input":[[[1,0,0,2]]],"expected":1},
+    {"input":[[[1,0,0],[0,0,2]]],"expected":1},
+    {"input":[[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]],"expected":2},
+    {"input":[[[1,0,0,0],[0,0,0,0],[0,0,0,2]]],"expected":4},
+    {"input":[[[1,0],[2,0]]],"expected":1}
+  ]
+}

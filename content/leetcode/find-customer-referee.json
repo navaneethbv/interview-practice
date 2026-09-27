@@ -1,0 +1,40 @@
+{
+  "kind": "sql",
+  "id": "find-customer-referee",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Customer",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "referee_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "name"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Customer":[[1,"Ana",null],[2,"Bo",null],[3,"Cy",2],[4,"Dee",1]]}},"expected":[["Ana"],["Bo"],["Dee"]],"sample":true},
+    {"input":{"tables":{"Customer":[[1,"Ana",2],[2,"Bo",null]]}},"expected":[["Bo"]],"sample":true},
+    {"input":{"tables":{"Customer":[]}},"expected":[]},
+    {"input":{"tables":{"Customer":[[1,"A",null]]}},"expected":[["A"]]},
+    {"input":{"tables":{"Customer":[[2,"A",null]]}},"expected":[["A"]]},
+    {"input":{"tables":{"Customer":[[1,"A",2],[2,"B",null]]}},"expected":[["B"]]},
+    {"input":{"tables":{"Customer":[[1,"A",null],[2,"B",1]]}},"expected":[["A"],["B"]]},
+    {"input":{"tables":{"Customer":[[1,"A",2],[2,"B",null],[3,"C",2]]}},"expected":[["B"]]},
+    {"input":{"tables":{"Customer":[[1,"A",null],[2,"A",null]]}},"expected":[["A"],["A"]]},
+    {"input":{"tables":{"Customer":[[1,"A",3],[2,"B",null],[3,"C",2]]}},"expected":[["A"],["B"]]}
+  ]
+}
