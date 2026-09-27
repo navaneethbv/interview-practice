@@ -1,9 +1,9 @@
 class Solution:
     def merge(self, intervals):
         result = []
-        for a,b in sorted(intervals):
-            if result and a <= result[-1][1]:
-                result[-1][1] = max(result[-1][1],b)
+        for start, end in sorted(intervals):
+            if result and start <= result[-1][1]:
+                result[-1][1] = max(result[-1][1], end)
             else:
-                result.append([a,b])
+                result.append([start, end])
         return result

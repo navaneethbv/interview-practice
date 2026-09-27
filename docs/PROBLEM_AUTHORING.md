@@ -75,3 +75,29 @@ Use Java for threaded submissions; Python in the browser supports the sequential
 All 872 problems supported by the Python, Java, and SQLite runners are authored.
 The remaining seven require JavaScript, shell, or pandas runners.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
+
+## Solution walkthroughs
+
+Store original solution explanations in `content/leetcode/walkthroughs/<slug>.md`.
+This directory is separate from top-level statements and specs, so explanations do not publish extra problems or enter judge discovery.
+The Solution tab renders the walkthrough when present and otherwise retains the workbook hint and complexity summary.
+Walkthroughs supply their own complexity analysis in place of the workbook summary.
+Coding references display Python and, when present, Java; SQL problems display only their SQLite reference.
+
+Use these level-two headings in order: Intuition, Brute force (optional for trivial problems), Approach, Walkthrough, Complexity, Edge cases, Common mistakes, and Language notes.
+For SQL, replace Language notes with SQLite notes.
+Aim for 250 to 600 words, with each full sentence on its own source line.
+Use Example 1 from the local statement for the dry run and match variable names and complexity claims to the reference code.
+Do not include raw HTML, images, external links, or em dash punctuation.
+Use language-tagged fenced blocks for code examples.
+
+References should use descriptive names, one statement per line, and small methods with cognitive complexity below 15.
+Java references must preserve the spec's contract and use the harness-provided imports and helper classes.
+Python remains the expected-output source of truth; readability edits must preserve all stored expectations.
+Never use `--regen` for solution authoring.
+Run the targeted judge for every touched slug and verify that no problem JSON changed, then run the full judge and production build before opening a PR.
+
+The coverage report includes walkthrough counts, Java counts, and readable-Java counts per list, plus the next missing slug in workbook priority order.
+Readable-Java coverage is a conservative formatting heuristic, not proof of algorithm quality or judge correctness.
+It checks for more than three nonblank lines, a maximum line length of 120 characters, and no inline statements except for-loop headers.
+Manual review must still check names, explanations, complexity, and edge cases.

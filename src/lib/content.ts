@@ -142,6 +142,17 @@ export interface LcProblem {
   spec: ProblemSpec;
   /** Python or SQLite reference; the source of truth for expected outputs. */
   reference: string | null;
+  javaReference: string | null;
+  walkthroughHtml: string | null;
+}
+
+function readOptionalText(file: string): string | null {
+  try {
+    return fs.readFileSync(file, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
 }
 
 export const getLcProblem = cache((slug: string): LcProblem | null => {
@@ -154,7 +165,13 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
   const reference = spec.kind === "sql"
     ? fs.readFileSync(path.join(LC_DIR, `${slug}.sql`), "utf8") // nosemgrep -- repo content directory; slugs are validated
     : fs.readFileSync(path.join(LC_DIR, `${slug}.py`), "utf8"); // nosemgrep -- repo content directory; slugs are validated
-  return { slug, meta, spec, reference, statementHtml: marked.parse(md, { async: false }) };
+  const javaReference = spec.kind === "sql" ? null : readOptionalText(path.join(LC_DIR, `${slug}.java`));
+  const walkthrough = readOptionalText(path.join(LC_DIR, "walkthroughs", `${slug}.md`));
+  return {
+    slug, meta, spec, reference, javaReference,
+    statementHtml: marked.parse(md, { async: false }),
+    walkthroughHtml: walkthrough === null ? null : marked.parse(walkthrough, { async: false }),
+  };
 });
 
 /* ---------------------------------------------------------------- system design */
