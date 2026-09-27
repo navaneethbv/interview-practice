@@ -73,6 +73,7 @@ npm run ingest:doc -- ./article.html --split "High-level design"
 ```
 
 The importer detects headings, paragraphs, lists, code and images.
+For HTML imports, local and data-URL images are limited to PNG, JPEG, GIF and WebP; SVG and other local formats are skipped.
 The prompt ends at the first solution-like heading ("Step 2", "High-level design", "Architecture", and similar) unless `--split` names one.
 Use `--out <dir>` for a dry run.
 
