@@ -1,7 +1,9 @@
 class Solution:
-    def maxChunksToSorted(self,arr):
-        peak=-1;count=0
-        for i,v in enumerate(arr):
-            peak=max(peak,v)
-            if peak==i:count+=1
-        return count
+    def maxChunksToSorted(self, arr):
+        largest_seen = -1
+        chunks = 0
+        for index, value in enumerate(arr):
+            largest_seen = max(largest_seen, value)
+            if largest_seen == index:
+                chunks += 1
+        return chunks

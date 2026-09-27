@@ -1,8 +1,13 @@
 class Solution:
-    def arrayNesting(self,nums):
-        seen=set();best=0
-        for i in range(len(nums)):
-            count=0
-            while i not in seen:seen.add(i);count+=1;i=nums[i]
-            best=max(best,count)
-        return best
+    def arrayNesting(self, nums):
+        visited = set()
+        longest_cycle = 0
+        for start in range(len(nums)):
+            current = start
+            cycle_length = 0
+            while current not in visited:
+                visited.add(current)
+                cycle_length += 1
+                current = nums[current]
+            longest_cycle = max(longest_cycle, cycle_length)
+        return longest_cycle

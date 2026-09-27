@@ -1,4 +1,6 @@
 class Solution:
-    def maximumProduct(self,nums):
-        nums=sorted(nums)
-        return max(nums[-1]*nums[-2]*nums[-3],nums[0]*nums[1]*nums[-1])
+    def maximumProduct(self, nums):
+        ordered = sorted(nums)
+        largest_product = ordered[-1] * ordered[-2] * ordered[-3]
+        negative_pair_product = ordered[0] * ordered[1] * ordered[-1]
+        return max(largest_product, negative_pair_product)

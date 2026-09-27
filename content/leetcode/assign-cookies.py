@@ -1,6 +1,9 @@
 class Solution:
-    def findContentChildren(self,g,s):
-        g=sorted(g);i=0
-        for size in sorted(s):
-            if i<len(g) and size>=g[i]:i+=1
-        return i
+    def findContentChildren(self, g, s):
+        children = sorted(g)
+        cookies = sorted(s)
+        child_index = 0
+        for cookie_size in cookies:
+            if child_index < len(children) and cookie_size >= children[child_index]:
+                child_index += 1
+        return child_index

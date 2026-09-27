@@ -1,3 +1,8 @@
 class Solution:
-    def totalHammingDistance(self,nums):
-        return sum((ones:=sum((x>>bit)&1 for x in nums))*(len(nums)-ones) for bit in range(30))
+    def totalHammingDistance(self, nums):
+        total_distance = 0
+        for bit in range(30):
+            ones = sum((number >> bit) & 1 for number in nums)
+            zeros = len(nums) - ones
+            total_distance += ones * zeros
+        return total_distance
