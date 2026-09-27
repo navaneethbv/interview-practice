@@ -1,5 +1,11 @@
 class Solution:
     def findDisappearedNumbers(self, nums):
-        for x in nums:
-            index=abs(x)-1;nums[index]=-abs(nums[index])
-        return [i+1 for i,x in enumerate(nums) if x>0]
+        for value in nums:
+            index = abs(value) - 1
+            nums[index] = -abs(nums[index])
+
+        return [
+            index + 1
+            for index, value in enumerate(nums)
+            if value > 0
+        ]

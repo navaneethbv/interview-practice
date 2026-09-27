@@ -1,7 +1,11 @@
 class Solution:
     def deleteDuplicates(self, head):
-        node=head
-        while node and node.next:
-            if node.val==node.next.val:node.next=node.next.next
-            else:node=node.next
+        current = head
+
+        while current and current.next:
+            if current.val == current.next.val:
+                current.next = current.next.next
+            else:
+                current = current.next
+
         return head

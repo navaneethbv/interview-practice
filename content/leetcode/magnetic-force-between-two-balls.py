@@ -1,14 +1,22 @@
 class Solution:
-    def maxDistance(self,position,m):
-        position=sorted(position)
+    def maxDistance(self, position, m):
+        positions = sorted(position)
+
         def possible(gap):
-            used=1;last=position[0]
-            for p in position[1:]:
-                if p-last>=gap:used+=1;last=p
-            return used>=m
-        lo,hi=1,position[-1]-position[0]
-        while lo<hi:
-            mid=(lo+hi+1)//2
-            if possible(mid):lo=mid
-            else:hi=mid-1
-        return lo
+            used = 1
+            last = positions[0]
+            for index in range(1, len(positions)):
+                if positions[index] - last >= gap:
+                    used += 1
+                    last = positions[index]
+            return used >= m
+
+        left = 1
+        right = positions[-1] - positions[0]
+        while left < right:
+            middle = (left + right + 1) // 2
+            if possible(middle):
+                left = middle
+            else:
+                right = middle - 1
+        return left

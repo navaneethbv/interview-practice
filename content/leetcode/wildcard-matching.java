@@ -1,3 +1,32 @@
 class Solution {
-public boolean isMatch(String s,String p){int i=0,j=0,star=-1,matched=0;while(i<s.length()){if(j<p.length()&&(p.charAt(j)=='?'||p.charAt(j)==s.charAt(i))){i++;j++;}else if(j<p.length()&&p.charAt(j)=='*'){star=j++;matched=i;}else if(star>=0){i=++matched;j=star+1;}else return false;}while(j<p.length()&&p.charAt(j)=='*')j++;return j==p.length();}
+    public boolean isMatch(String s, String p) {
+        int stringIndex = 0;
+        int patternIndex = 0;
+        int lastStar = -1;
+        int matchedAfterStar = 0;
+
+        while (stringIndex < s.length()) {
+            if (patternIndex < p.length()
+                    && (p.charAt(patternIndex) == '?'
+                    || p.charAt(patternIndex) == s.charAt(stringIndex))) {
+                stringIndex++;
+                patternIndex++;
+            } else if (patternIndex < p.length() && p.charAt(patternIndex) == '*') {
+                lastStar = patternIndex;
+                matchedAfterStar = stringIndex;
+                patternIndex++;
+            } else if (lastStar >= 0) {
+                matchedAfterStar++;
+                stringIndex = matchedAfterStar;
+                patternIndex = lastStar + 1;
+            } else {
+                return false;
+            }
+        }
+
+        while (patternIndex < p.length() && p.charAt(patternIndex) == '*') {
+            patternIndex++;
+        }
+        return patternIndex == p.length();
+    }
 }

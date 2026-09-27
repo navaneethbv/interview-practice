@@ -1,3 +1,27 @@
 class Solution {
-public String reorganizeString(String s){int[]count=new int[26];for(char c:s.toCharArray())count[c-'a']++;PriorityQueue<int[]>q=new PriorityQueue<>((a,b)->Integer.compare(b[1],a[1]));for(int i=0;i<26;i++)if(count[i]>0)q.add(new int[]{i,count[i]});int[]previous=null;StringBuilder out=new StringBuilder();while(!q.isEmpty()){int[]p=q.remove();out.append((char)('a'+p[0]));p[1]--;if(previous!=null&&previous[1]>0)q.add(previous);previous=p;}return out.length()==s.length()?out.toString():"";}
+    public String reorganizeString(String s) {
+        int[] counts = new int[26];
+        for (char character : s.toCharArray()) {
+            counts[character - 'a']++;
+        }
+        PriorityQueue<int[]> heap = new PriorityQueue<>(
+                (first, second) -> Integer.compare(second[1], first[1]));
+        for (int index = 0; index < counts.length; index++) {
+            if (counts[index] > 0) {
+                heap.add(new int[]{index, counts[index]});
+            }
+        }
+        StringBuilder output = new StringBuilder();
+        int[] previous = null;
+        while (!heap.isEmpty()) {
+            int[] current = heap.remove();
+            output.append((char) ('a' + current[0]));
+            current[1]--;
+            if (previous != null && previous[1] > 0) {
+                heap.add(previous);
+            }
+            previous = current;
+        }
+        return output.length() == s.length() ? output.toString() : "";
+    }
 }

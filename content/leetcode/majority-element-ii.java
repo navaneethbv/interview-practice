@@ -1,3 +1,52 @@
 class Solution {
-public List<Integer> majorityElement(int[] nums){int a=0,b=1,ca=0,cb=0;for(int x:nums)if(x==a)ca++;else if(x==b)cb++;else if(ca==0){a=x;ca=1;}else if(cb==0){b=x;cb=1;}else{ca--;cb--;}ca=cb=0;for(int x:nums){if(x==a)ca++;if(x==b)cb++;}List<Integer>out=new ArrayList<>();if(ca>nums.length/3)out.add(a);if(cb>nums.length/3)out.add(b);return out;}
+    public List<Integer> majorityElement(int[] nums) {
+        int[] candidates = selectCandidates(nums);
+        int firstCandidate = candidates[0];
+        int secondCandidate = candidates[1];
+        int firstCount = countOccurrences(nums, firstCandidate);
+        int secondCount = countOccurrences(nums, secondCandidate);
+        int threshold = nums.length / 3;
+        List<Integer> result = new ArrayList<>();
+        if (firstCount > threshold) {
+            result.add(firstCandidate);
+        }
+        if (secondCandidate != firstCandidate && secondCount > threshold) {
+            result.add(secondCandidate);
+        }
+        return result;
+    }
+
+    private int[] selectCandidates(int[] nums) {
+        int firstCandidate = 0;
+        int secondCandidate = 1;
+        int firstCount = 0;
+        int secondCount = 0;
+        for (int value : nums) {
+            if (value == firstCandidate) {
+                firstCount++;
+            } else if (value == secondCandidate) {
+                secondCount++;
+            } else if (firstCount == 0) {
+                firstCandidate = value;
+                firstCount = 1;
+            } else if (secondCount == 0) {
+                secondCandidate = value;
+                secondCount = 1;
+            } else {
+                firstCount--;
+                secondCount--;
+            }
+        }
+        return new int[]{firstCandidate, secondCandidate};
+    }
+
+    private int countOccurrences(int[] nums, int candidate) {
+        int count = 0;
+        for (int value : nums) {
+            if (value == candidate) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

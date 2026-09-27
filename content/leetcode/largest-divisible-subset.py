@@ -1,10 +1,21 @@
 class Solution:
     def largestDivisibleSubset(self, nums):
-        nums.sort();length=[1]*len(nums);parent=[-1]*len(nums);best=0
-        for i in range(len(nums)):
-            for j in range(i):
-                if nums[i]%nums[j]==0 and length[j]+1>length[i]:length[i]=length[j]+1;parent[i]=j
-            if length[i]>length[best]:best=i
-        out=[]
-        while best>=0:out.append(nums[best]);best=parent[best]
-        return out
+        nums.sort()
+        lengths = [1] * len(nums)
+        previous_index = [-1] * len(nums)
+        best_index = 0
+
+        for current in range(len(nums)):
+            for previous in range(current):
+                if (nums[current] % nums[previous] == 0
+                        and lengths[previous] + 1 > lengths[current]):
+                    lengths[current] = lengths[previous] + 1
+                    previous_index[current] = previous
+            if lengths[current] > lengths[best_index]:
+                best_index = current
+
+        subset = []
+        while best_index >= 0:
+            subset.append(nums[best_index])
+            best_index = previous_index[best_index]
+        return subset

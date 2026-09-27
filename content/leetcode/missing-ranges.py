@@ -1,7 +1,11 @@
 class Solution:
-    def findMissingRanges(self,nums,lower,upper):
-        result=[];start=lower
-        for value in nums+[upper+1]:
-            if value>start:result.append([start,value-1])
-            start=value+1
+    def findMissingRanges(self, nums, lower, upper):
+        result = []
+        next_missing = lower
+        for value in nums:
+            if value > next_missing:
+                result.append([next_missing, value - 1])
+            next_missing = value + 1
+        if next_missing <= upper:
+            result.append([next_missing, upper])
         return result

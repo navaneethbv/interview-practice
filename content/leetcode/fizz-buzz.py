@@ -1,3 +1,11 @@
 class Solution:
     def fizzBuzz(self, n):
-        return [('Fizz' if i%3==0 else '')+('Buzz' if i%5==0 else '') or str(i) for i in range(1,n+1)]
+        result = []
+        for value in range(1, n + 1):
+            text = ""
+            if value % 3 == 0:
+                text += "Fizz"
+            if value % 5 == 0:
+                text += "Buzz"
+            result.append(text or str(value))
+        return result

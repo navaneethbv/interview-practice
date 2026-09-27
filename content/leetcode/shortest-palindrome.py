@@ -1,9 +1,15 @@
 class Solution:
     def shortestPalindrome(self, s):
-        combined=s+'#'+s[::-1];prefix=[0]*len(combined)
-        for i in range(1,len(combined)):
-            j=prefix[i-1]
-            while j and combined[i]!=combined[j]:j=prefix[j-1]
-            if combined[i]==combined[j]:j+=1
-            prefix[i]=j
-        return s[prefix[-1]:][::-1]+s
+        combined = s + "#" + s[::-1]
+        prefix_lengths = [0] * len(combined)
+
+        for index in range(1, len(combined)):
+            matched = prefix_lengths[index - 1]
+            while matched and combined[index] != combined[matched]:
+                matched = prefix_lengths[matched - 1]
+            if combined[index] == combined[matched]:
+                matched += 1
+            prefix_lengths[index] = matched
+
+        palindrome_length = prefix_lengths[-1]
+        return s[palindrome_length:][::-1] + s

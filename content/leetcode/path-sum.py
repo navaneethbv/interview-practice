@@ -1,9 +1,17 @@
 class Solution:
     def hasPathSum(self, root, targetSum):
-        stack=[(root,targetSum)] if root else []
+        if root is None:
+            return False
+
+        stack = [(root, targetSum)]
         while stack:
-            node,remaining=stack.pop();remaining-=node.val
-            if not node.left and not node.right and remaining==0:return True
-            if node.left:stack.append((node.left,remaining))
-            if node.right:stack.append((node.right,remaining))
+            node, remaining_sum = stack.pop()
+            remaining_sum -= node.val
+            if node.left is None and node.right is None and remaining_sum == 0:
+                return True
+            if node.right:
+                stack.append((node.right, remaining_sum))
+            if node.left:
+                stack.append((node.left, remaining_sum))
+
         return False

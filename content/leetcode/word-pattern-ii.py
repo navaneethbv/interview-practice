@@ -1,18 +1,40 @@
 class Solution:
-    def wordPatternMatch(self,pattern,s):
-        mapping={};used=set()
-        def search(i,j):
-            if i==len(pattern):return j==len(s)
-            if len(s)-j<len(pattern)-i:return False
-            ch=pattern[i]
-            if ch in mapping:
-                value=mapping[ch]
-                return s.startswith(value,j) and search(i+1,j+len(value))
-            for end in range(j+1,len(s)+1):
-                value=s[j:end]
-                if value in used:continue
-                mapping[ch]=value;used.add(value)
-                if search(i+1,end):return True
-                del mapping[ch];used.remove(value)
+    def wordPatternMatch(self, pattern, s):
+        self.pattern = pattern
+        self.text = s
+        self.mapping = {}
+        self.used_words = set()
+        return self._search(0, 0)
+
+    def _search(self, pattern_index, string_index):
+        remaining_pattern = len(self.pattern) - pattern_index
+        remaining_string = len(self.text) - string_index
+        if remaining_string < remaining_pattern:
             return False
-        return search(0,0)
+        if pattern_index == len(self.pattern):
+            return string_index == len(self.text)
+
+        symbol = self.pattern[pattern_index]
+        if symbol in self.mapping:
+            return self._matches_existing(symbol, pattern_index, string_index)
+        return self._try_new_mapping(symbol, pattern_index, string_index)
+
+    def _matches_existing(self, symbol, pattern_index, string_index):
+        word = self.mapping[symbol]
+        if not self.text.startswith(word, string_index):
+            return False
+        next_index = string_index + len(word)
+        return self._search(pattern_index + 1, next_index)
+
+    def _try_new_mapping(self, symbol, pattern_index, string_index):
+        for end in range(string_index + 1, len(self.text) + 1):
+            word = self.text[string_index:end]
+            if word in self.used_words:
+                continue
+            self.mapping[symbol] = word
+            self.used_words.add(word)
+            if self._search(pattern_index + 1, end):
+                return True
+            self.used_words.remove(word)
+            del self.mapping[symbol]
+        return False

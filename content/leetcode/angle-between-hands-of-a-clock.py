@@ -1,4 +1,6 @@
 class Solution:
-    def angleClock(self,hour,minutes):
-        angle=abs((hour%12)*30+minutes*0.5-minutes*6)
-        return min(angle,360-angle)
+    def angleClock(self, hour, minutes):
+        hour_angle = (hour % 12) * 30 + minutes * 0.5
+        minute_angle = minutes * 6
+        difference = abs(hour_angle - minute_angle)
+        return min(difference, 360 - difference)

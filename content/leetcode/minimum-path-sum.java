@@ -1,3 +1,17 @@
 class Solution {
-public int minPathSum(int[][] grid){int[]dp=new int[grid[0].length];Arrays.fill(dp,1000000000);dp[0]=0;for(int[]row:grid)for(int c=0;c<row.length;c++)dp[c]=row[c]+Math.min(dp[c],c>0?dp[c-1]:1000000000);return dp[dp.length-1];}
+    public int minPathSum(int[][] grid) {
+        int[] minimumCosts = new int[grid[0].length];
+        Arrays.fill(minimumCosts, Integer.MAX_VALUE);
+        minimumCosts[0] = 0;
+
+        for (int[] row : grid) {
+            for (int column = 0; column < row.length; column++) {
+                int fromTop = minimumCosts[column];
+                int fromLeft = column > 0 ? minimumCosts[column - 1] : Integer.MAX_VALUE;
+                minimumCosts[column] = row[column] + Math.min(fromTop, fromLeft);
+            }
+        }
+
+        return minimumCosts[minimumCosts.length - 1];
+    }
 }

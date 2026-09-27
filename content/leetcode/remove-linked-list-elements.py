@@ -1,7 +1,11 @@
 class Solution:
-    def removeElements(self,head,val):
-        dummy=ListNode(0);dummy.next=head;node=dummy
-        while node.next:
-            if node.next.val==val:node.next=node.next.next
-            else:node=node.next
+    def removeElements(self, head, val):
+        dummy = ListNode(0)
+        dummy.next = head
+        previous = dummy
+        while previous.next:
+            if previous.next.val == val:
+                previous.next = previous.next.next
+            else:
+                previous = previous.next
         return dummy.next

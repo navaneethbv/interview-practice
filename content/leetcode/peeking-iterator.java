@@ -1,7 +1,29 @@
 class PeekingIterator implements Iterator<Integer> {
-    private final Iterator<Integer> iterator;private boolean buffered;private Integer value;
-    public PeekingIterator(Iterator<Integer> iterator) {this.iterator=iterator;}
-    public Integer peek() {if(!buffered) {value=iterator.next();buffered=true;}return value;}
-    public Integer next() {if(buffered) {buffered=false;return value;}return iterator.next();}
-    public boolean hasNext() {return buffered||iterator.hasNext();}
+    private final Iterator<Integer> iterator;
+    private boolean hasBuffer;
+    private Integer buffer;
+
+    public PeekingIterator(Iterator<Integer> iterator) {
+        this.iterator = iterator;
+    }
+
+    public Integer peek() {
+        if (!hasBuffer) {
+            buffer = iterator.next();
+            hasBuffer = true;
+        }
+        return buffer;
+    }
+
+    public Integer next() {
+        if (hasBuffer) {
+            hasBuffer = false;
+            return buffer;
+        }
+        return iterator.next();
+    }
+
+    public boolean hasNext() {
+        return hasBuffer || iterator.hasNext();
+    }
 }

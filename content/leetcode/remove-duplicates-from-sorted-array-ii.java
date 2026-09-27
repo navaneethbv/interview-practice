@@ -1,3 +1,13 @@
 class Solution {
-public int removeDuplicates(int[] nums){int write=0;for(int value:nums)if(write<2||value!=nums[write-2])nums[write++]=value;return write;}
+    public int removeDuplicates(int[] nums) {
+        int writeIndex = 0;
+
+        for (int value : nums) {
+            if (writeIndex < 2 || value != nums[writeIndex - 2]) {
+                nums[writeIndex] = value;
+                writeIndex++;
+            }
+        }
+        return writeIndex;
+    }
 }

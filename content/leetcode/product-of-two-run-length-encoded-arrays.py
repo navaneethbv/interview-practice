@@ -1,15 +1,29 @@
 class Solution:
     def findRLEArray(self, encoded1, encoded2):
-        i=j=0;a=encoded1[0][1];b=encoded2[0][1];out=[]
-        while i<len(encoded1):
-            count=min(a,b);value=encoded1[i][0]*encoded2[j][0]
-            if out and out[-1][0]==value:out[-1][1]+=count
-            else:out.append([value,count])
-            a-=count;b-=count
-            if a==0:
-                i+=1
-                if i<len(encoded1):a=encoded1[i][1]
-            if b==0:
-                j+=1
-                if j<len(encoded2):b=encoded2[j][1]
-        return out
+        first_index = 0
+        second_index = 0
+        first_remaining = encoded1[0][1]
+        second_remaining = encoded2[0][1]
+        product_runs = []
+
+        while first_index < len(encoded1):
+            run_length = min(first_remaining, second_remaining)
+            product = encoded1[first_index][0] * encoded2[second_index][0]
+
+            if product_runs and product_runs[-1][0] == product:
+                product_runs[-1][1] += run_length
+            else:
+                product_runs.append([product, run_length])
+
+            first_remaining -= run_length
+            second_remaining -= run_length
+            if first_remaining == 0:
+                first_index += 1
+                if first_index < len(encoded1):
+                    first_remaining = encoded1[first_index][1]
+            if second_remaining == 0:
+                second_index += 1
+                if second_index < len(encoded2):
+                    second_remaining = encoded2[second_index][1]
+
+        return product_runs

@@ -1,8 +1,15 @@
 class Solution:
-    def imageSmoother(self,img):
-        m,n=len(img),len(img[0]);out=[[0]*n for _ in range(m)]
-        for r in range(m):
-            for c in range(n):
-                values=[img[a][b] for a in range(max(0,r-1),min(m,r+2)) for b in range(max(0,c-1),min(n,c+2))]
-                out[r][c]=sum(values)//len(values)
-        return out
+    def imageSmoother(self, img):
+        rows = len(img)
+        columns = len(img[0])
+        smoothed = [[0] * columns for _ in range(rows)]
+        for row in range(rows):
+            for column in range(columns):
+                total = 0
+                count = 0
+                for neighbor_row in range(max(0, row - 1), min(rows, row + 2)):
+                    for neighbor_column in range(max(0, column - 1), min(columns, column + 2)):
+                        total += img[neighbor_row][neighbor_column]
+                        count += 1
+                smoothed[row][column] = total // count
+        return smoothed

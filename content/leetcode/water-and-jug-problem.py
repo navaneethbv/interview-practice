@@ -1,3 +1,8 @@
 from math import gcd
+
+
 class Solution:
-    def canMeasureWater(self,x,y,target):return target<=x+y and target%gcd(x,y)==0
+    def canMeasureWater(self, x, y, target):
+        if target > x + y:
+            return False
+        return target % gcd(x, y) == 0

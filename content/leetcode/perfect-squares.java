@@ -1,3 +1,18 @@
 class Solution {
-public int numSquares(int n){int[]dp=new int[n+1];Arrays.fill(dp,n);dp[0]=0;for(int value=1;value<=n;value++)for(int j=1;j*j<=value;j++)dp[value]=Math.min(dp[value],1+dp[value-j*j]);return dp[n];}
+    public int numSquares(int n) {
+        int[] minimumCounts = new int[n + 1];
+        Arrays.fill(minimumCounts, n);
+        minimumCounts[0] = 0;
+
+        for (int value = 1; value <= n; value++) {
+            for (int squareRoot = 1;
+                    squareRoot * squareRoot <= value;
+                    squareRoot++) {
+                minimumCounts[value] = Math.min(
+                        minimumCounts[value],
+                        1 + minimumCounts[value - squareRoot * squareRoot]);
+            }
+        }
+        return minimumCounts[n];
+    }
 }

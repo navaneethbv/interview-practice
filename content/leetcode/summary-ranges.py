@@ -1,8 +1,17 @@
 class Solution:
     def summaryRanges(self, nums):
-        out=[];i=0
-        while i<len(nums):
-            j=i
-            while j+1<len(nums) and nums[j+1]==nums[j]+1:j+=1
-            out.append(str(nums[i]) if i==j else str(nums[i])+'->'+str(nums[j]));i=j+1
-        return out
+        ranges = []
+        start = 0
+
+        while start < len(nums):
+            end = start
+            while end + 1 < len(nums) and nums[end + 1] == nums[end] + 1:
+                end += 1
+
+            if start == end:
+                ranges.append(str(nums[start]))
+            else:
+                ranges.append(f"{nums[start]}->{nums[end]}")
+            start = end + 1
+
+        return ranges

@@ -1,3 +1,13 @@
 class Solution {
-public int fib(int n){int a=0,b=1;for(int i=0;i<n;i++){int next=a+b;a=b;b=next;}return a;}
+    public int fib(int n) {
+        int previous = 0;
+        int current = 1;
+
+        for (int index = 0; index < n; index++) {
+            int next = previous + current;
+            previous = current;
+            current = next;
+        }
+        return previous;
+    }
 }

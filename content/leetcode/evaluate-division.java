@@ -1,3 +1,44 @@
 class Solution {
-public double[] calcEquation(List<List<String>> equations,double[] values,List<List<String>> queries){Map<String,Map<String,Double>>g=new HashMap<>();for(int i=0;i<values.length;i++){String a=equations.get(i).get(0),b=equations.get(i).get(1);g.computeIfAbsent(a,x->new HashMap<>()).put(b,values[i]);g.computeIfAbsent(b,x->new HashMap<>()).put(a,1/values[i]);}double[]out=new double[queries.size()];for(int i=0;i<out.length;i++){String a=queries.get(i).get(0),b=queries.get(i).get(1);out[i]=g.containsKey(a)&&g.containsKey(b)?dfs(a,b,g,new HashSet<>()):-1;}return out;}private double dfs(String a,String b,Map<String,Map<String,Double>>g,Set<String>seen){if(a.equals(b))return 1;seen.add(a);for(Map.Entry<String,Double>e:g.get(a).entrySet())if(!seen.contains(e.getKey())){double result=dfs(e.getKey(),b,g,seen);if(result>=0)return result*e.getValue();}return -1;}
+    public double[] calcEquation(
+            List<List<String>> equations, double[] values, List<List<String>> queries) {
+        Map<String, Map<String, Double>> graph = new HashMap<>();
+        for (int index = 0; index < values.length; index++) {
+            String first = equations.get(index).get(0);
+            String second = equations.get(index).get(1);
+            graph.computeIfAbsent(first, key -> new HashMap<>()).put(second, values[index]);
+            graph.computeIfAbsent(second, key -> new HashMap<>()).put(first, 1 / values[index]);
+        }
+
+        double[] answers = new double[queries.size()];
+        for (int index = 0; index < queries.size(); index++) {
+            String start = queries.get(index).get(0);
+            String end = queries.get(index).get(1);
+            answers[index] = evaluate(start, end, graph, new HashSet<>());
+        }
+        return answers;
+    }
+
+    private double evaluate(
+            String current,
+            String target,
+            Map<String, Map<String, Double>> graph,
+            Set<String> seen) {
+        if (!graph.containsKey(current) || !graph.containsKey(target)) {
+            return -1.0;
+        }
+        if (current.equals(target)) {
+            return 1.0;
+        }
+
+        seen.add(current);
+        for (Map.Entry<String, Double> edge : graph.get(current).entrySet()) {
+            if (!seen.contains(edge.getKey())) {
+                double suffix = evaluate(edge.getKey(), target, graph, seen);
+                if (suffix >= 0) {
+                    return edge.getValue() * suffix;
+                }
+            }
+        }
+        return -1.0;
+    }
 }

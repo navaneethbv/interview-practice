@@ -1,11 +1,26 @@
 class Solution:
-    def hasPath(self,maze,start,destination):
-        m,n=len(maze),len(maze[0]);stack=[tuple(start)];seen={tuple(start)}
+    def hasPath(self, maze, start, destination):
+        rows = len(maze)
+        columns = len(maze[0])
+        stack = [tuple(start)]
+        visited = {tuple(start)}
+        directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
         while stack:
-            r,c=stack.pop()
-            if [r,c]==destination:return True
-            for dr,dc in [(1,0),(-1,0),(0,1),(0,-1)]:
-                a,b=r,c
-                while 0<=a+dr<m and 0<=b+dc<n and maze[a+dr][b+dc]==0:a+=dr;b+=dc
-                if (a,b) not in seen:seen.add((a,b));stack.append((a,b))
+            row, column = stack.pop()
+            if [row, column] == destination:
+                return True
+            for row_step, column_step in directions:
+                next_row, next_column = row, column
+                while (
+                    0 <= next_row + row_step < rows
+                    and 0 <= next_column + column_step < columns
+                    and maze[next_row + row_step][next_column + column_step] == 0
+                ):
+                    next_row += row_step
+                    next_column += column_step
+                stop = (next_row, next_column)
+                if stop not in visited:
+                    visited.add(stop)
+                    stack.append(stop)
         return False

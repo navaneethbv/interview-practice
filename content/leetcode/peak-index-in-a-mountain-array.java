@@ -1,3 +1,15 @@
 class Solution {
-public int peakIndexInMountainArray(int[] arr){int l=0,r=arr.length-1;while(l<r){int m=(l+r)/2;if(arr[m]<arr[m+1])l=m+1;else r=m;}return l;}
+    public int peakIndexInMountainArray(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        while (left < right) {
+            int middle = (left + right) / 2;
+            if (arr[middle] < arr[middle + 1]) {
+                left = middle + 1;
+            } else {
+                right = middle;
+            }
+        }
+        return left;
+    }
 }

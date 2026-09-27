@@ -1,14 +1,26 @@
 class Solution:
     def restoreIpAddresses(self, s):
-        out=[]
-        def visit(start,parts):
-            if len(parts)==4:
-                if start==len(s):out.append('.'.join(parts))
-                return
-            remaining=4-len(parts)
-            if not remaining<=len(s)-start<=3*remaining:return
-            for size in range(1,4):
-                piece=s[start:start+size]
-                if len(piece)!=size or (size>1 and piece[0]=='0') or int(piece)>255:continue
-                visit(start+size,parts+[piece])
-        visit(0,[]);return out
+        addresses = []
+        self._build_addresses(s, 0, [], addresses)
+        return addresses
+
+    def _build_addresses(self, s, start, parts, addresses):
+        if len(parts) == 4:
+            if start == len(s):
+                addresses.append('.'.join(parts))
+            return
+        remaining_parts = 4 - len(parts)
+        characters_left = len(s) - start
+        if not remaining_parts <= characters_left <= 3 * remaining_parts:
+            return
+        for size in range(1, 4):
+            piece = s[start:start + size]
+            if len(piece) != size:
+                continue
+            if size > 1 and piece[0] == '0':
+                continue
+            if int(piece) > 255:
+                continue
+            parts.append(piece)
+            self._build_addresses(s, start + size, parts, addresses)
+            parts.pop()

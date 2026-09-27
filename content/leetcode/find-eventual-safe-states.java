@@ -1,3 +1,34 @@
 class Solution {
-public List<Integer> eventualSafeNodes(int[][] graph){int n=graph.length;List<List<Integer>>reverse=new ArrayList<>();for(int i=0;i<n;i++)reverse.add(new ArrayList<>());int[]degree=new int[n];Deque<Integer>q=new ArrayDeque<>();for(int i=0;i<n;i++){degree[i]=graph[i].length;if(degree[i]==0)q.add(i);for(int j:graph[i])reverse.get(j).add(i);}List<Integer>out=new ArrayList<>();while(!q.isEmpty()){int v=q.remove();out.add(v);for(int p:reverse.get(v))if(--degree[p]==0)q.add(p);}Collections.sort(out);return out;}
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        List<List<Integer>> reverseEdges = new ArrayList<>();
+        int[] remaining = new int[graph.length];
+        for (int node = 0; node < graph.length; node++) {
+            reverseEdges.add(new ArrayList<>());
+            remaining[node] = graph[node].length;
+        }
+        for (int node = 0; node < graph.length; node++) {
+            for (int neighbor : graph[node]) {
+                reverseEdges.get(neighbor).add(node);
+            }
+        }
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        for (int node = 0; node < graph.length; node++) {
+            if (remaining[node] == 0) {
+                queue.add(node);
+            }
+        }
+        List<Integer> safeNodes = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int node = queue.remove();
+            safeNodes.add(node);
+            for (int predecessor : reverseEdges.get(node)) {
+                remaining[predecessor]--;
+                if (remaining[predecessor] == 0) {
+                    queue.add(predecessor);
+                }
+            }
+        }
+        Collections.sort(safeNodes);
+        return safeNodes;
+    }
 }

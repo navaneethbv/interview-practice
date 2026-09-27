@@ -1,2 +1,3 @@
 class Solution:
-    def getConcatenation(self, nums):return nums+nums
+    def getConcatenation(self, nums):
+        return nums + nums

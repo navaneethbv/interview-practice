@@ -1,3 +1,9 @@
 class Solution {
-public int[] getConcatenation(int[] nums){int[]out=new int[2*nums.length];for(int i=0;i<out.length;i++)out[i]=nums[i%nums.length];return out;}
+    public int[] getConcatenation(int[] nums) {
+        int[] concatenated = new int[2 * nums.length];
+        for (int index = 0; index < concatenated.length; index++) {
+            concatenated[index] = nums[index % nums.length];
+        }
+        return concatenated;
+    }
 }

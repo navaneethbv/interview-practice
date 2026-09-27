@@ -1,3 +1,19 @@
 class Solution {
-public int[] findBuildings(int[] heights){List<Integer>out=new ArrayList<>();int tall=0;for(int i=heights.length-1;i>=0;i--)if(heights[i]>tall){out.add(i);tall=heights[i];}int[]result=new int[out.size()];for(int i=0;i<result.length;i++)result[i]=out.get(result.length-1-i);return result;}
+    public int[] findBuildings(int[] heights) {
+        List<Integer> visibleIndices = new ArrayList<>();
+        int tallestToRight = 0;
+
+        for (int index = heights.length - 1; index >= 0; index--) {
+            if (heights[index] > tallestToRight) {
+                visibleIndices.add(index);
+                tallestToRight = heights[index];
+            }
+        }
+
+        int[] result = new int[visibleIndices.size()];
+        for (int index = 0; index < result.length; index++) {
+            result[index] = visibleIndices.get(result.length - 1 - index);
+        }
+        return result;
+    }
 }

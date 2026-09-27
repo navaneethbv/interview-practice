@@ -1,1 +1,32 @@
-class AutocompleteSystem {Map<String,Integer>counts=new HashMap<>();String prefix="";public AutocompleteSystem(String[] sentences,int[] times){for(int i=0;i<sentences.length;i++)counts.put(sentences[i],times[i]);}public List<String>input(char c){if(c=='#'){counts.merge(prefix,1,Integer::sum);prefix="";return new ArrayList<>();}prefix+=c;List<String>out=new ArrayList<>();for(String s:counts.keySet())if(s.startsWith(prefix))out.add(s);out.sort((a,b)->counts.get(a).equals(counts.get(b))?a.compareTo(b):Integer.compare(counts.get(b),counts.get(a)));return new ArrayList<>(out.subList(0,Math.min(3,out.size())));}}
+class AutocompleteSystem {
+    private final Map<String, Integer> counts = new HashMap<>();
+    private String prefix = "";
+
+    public AutocompleteSystem(String[] sentences, int[] times) {
+        for (int index = 0; index < sentences.length; index++) {
+            counts.put(sentences[index], times[index]);
+        }
+    }
+
+    public List<String> input(char character) {
+        if (character == '#') {
+            counts.put(prefix, counts.getOrDefault(prefix, 0) + 1);
+            prefix = "";
+            return new ArrayList<>();
+        }
+
+        prefix += character;
+        List<String> matches = new ArrayList<>();
+        for (String sentence : counts.keySet()) {
+            if (sentence.startsWith(prefix)) {
+                matches.add(sentence);
+            }
+        }
+        matches.sort((first, second) -> {
+            int byFrequency = Integer.compare(
+                    counts.get(second), counts.get(first));
+            return byFrequency != 0 ? byFrequency : first.compareTo(second);
+        });
+        return new ArrayList<>(matches.subList(0, Math.min(3, matches.size())));
+    }
+}

@@ -1,5 +1,8 @@
-from collections import Counter
 class Solution:
-    def findPairs(self,nums,k):
-        counts=Counter(nums)
-        return sum(v>1 for v in counts.values()) if k==0 else sum(x+k in counts for x in counts)
+    def findPairs(self, nums, k):
+        counts = {}
+        for number in nums:
+            counts[number] = counts.get(number, 0) + 1
+        if k == 0:
+            return sum(count > 1 for count in counts.values())
+        return sum(number + k in counts for number in counts)
