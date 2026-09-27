@@ -11,7 +11,7 @@
     "tests:build": "tsx scripts/judge/build-tests.ts",
     "sandbox:snapshot": "tsx --env-file-if-exists=.env.local scripts/sandbox/create-java-snapshot.ts",
     "ingest:doc": "tsx scripts/ingest/document.ts",
-    "test": "tsx --test src/lib/judge/*.test.ts scripts/ingest/*.test.ts",
+    "test": "tsx --test src/lib/*.test.ts src/lib/judge/*.test.ts scripts/ingest/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
