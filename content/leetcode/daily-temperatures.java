@@ -1,7 +1,14 @@
 class Solution {
-public int[] dailyTemperatures(int[] temperatures) {
-    Deque<Integer> stack=new ArrayDeque<>();int[] result=new int[temperatures.length];
-    for(int i=0;i<temperatures.length;i++) {while(!stack.isEmpty()&&temperatures[stack.peek()]<temperatures[i]) {int previous=stack.pop();result[previous]=i-previous;}stack.push(i);}
-    return result;
-}
+    public int[] dailyTemperatures(int[] temperatures) {
+        Deque<Integer> pending = new ArrayDeque<>();
+        int[] result = new int[temperatures.length];
+        for (int index = 0; index < temperatures.length; index++) {
+            while (!pending.isEmpty() && temperatures[pending.peek()] < temperatures[index]) {
+                int previous = pending.pop();
+                result[previous] = index - previous;
+            }
+            pending.push(index);
+        }
+        return result;
+    }
 }

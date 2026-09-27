@@ -1,9 +1,11 @@
 class Solution:
     def carFleet(self, target, position, speed):
+        cars = sorted(zip(position, speed), reverse=True)
         fleets = 0
         slowest = -1
-        for p,s in sorted(zip(position,speed),reverse=True):
-            arrival = (target-p)/s
+        for start, velocity in cars:
+            arrival = (target - start) / velocity
             if arrival > slowest:
-                fleets += 1; slowest = arrival
+                fleets += 1
+                slowest = arrival
         return fleets

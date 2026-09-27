@@ -1,7 +1,14 @@
 class Solution:
     def rightSideView(self, root):
-        level = [root] if root else []; result = []
+        result = []
+        level = [root] if root else []
         while level:
             result.append(level[-1].val)
-            level = [child for node in level for child in (node.left,node.right) if child]
+            next_level = []
+            for node in level:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            level = next_level
         return result

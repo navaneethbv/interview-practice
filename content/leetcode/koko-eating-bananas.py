@@ -1,8 +1,12 @@
 class Solution:
     def minEatingSpeed(self, piles, h):
-        left,right = 1,max(piles)
+        left = 1
+        right = max(piles)
         while left < right:
-            mid = (left+right)//2
-            if sum((p+mid-1)//mid for p in piles) <= h: right = mid
-            else: left = mid+1
+            speed = left + (right - left) // 2
+            hours = sum((pile + speed - 1) // speed for pile in piles)
+            if hours <= h:
+                right = speed
+            else:
+                left = speed + 1
         return left

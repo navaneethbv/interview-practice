@@ -1,8 +1,13 @@
 class Solution {
     public Node copyRandomList(Node head) {
-        Map<Node,Node> copies=new IdentityHashMap<>();
-        for(Node p=head;p!=null;p=p.next) copies.put(p,new Node(p.val));
-        for(Node p=head;p!=null;p=p.next) {copies.get(p).next=copies.get(p.next);copies.get(p).random=copies.get(p.random);}
+        Map<Node, Node> copies = new IdentityHashMap<>();
+        for (Node current = head; current != null; current = current.next) {
+            copies.put(current, new Node(current.val));
+        }
+        for (Node current = head; current != null; current = current.next) {
+            copies.get(current).next = copies.get(current.next);
+            copies.get(current).random = copies.get(current.random);
+        }
         return copies.get(head);
     }
 }

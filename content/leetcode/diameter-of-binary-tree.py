@@ -1,12 +1,19 @@
 class Solution:
     def diameterOfBinaryTree(self, root):
-        stack = [(root,False)]; height = {None:0}; best = 0
-        while stack:
-            node,ready = stack.pop()
-            if node is None: continue
+        height = {None: 0}
+        pending = [(root, False)]
+        best = 0
+        while pending:
+            node, ready = pending.pop()
+            if node is None:
+                continue
             if not ready:
-                stack.extend([(node,True),(node.left,False),(node.right,False)])
-            else:
-                best = max(best,height[node.left]+height[node.right])
-                height[node] = 1+max(height[node.left],height[node.right])
+                pending.append((node, True))
+                pending.append((node.left, False))
+                pending.append((node.right, False))
+                continue
+            left_height = height[node.left]
+            right_height = height[node.right]
+            best = max(best, left_height + right_height)
+            height[node] = 1 + max(left_height, right_height)
         return best
