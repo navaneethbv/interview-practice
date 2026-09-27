@@ -1,74 +1,68 @@
 class Solution {
-private int find(int[] parent, int node) {
-    while (parent[node] != node) {
-        parent[node] = parent[parent[node]];
-        node = parent[node];
-    }
-    return node;
-}
+    private static class DisjointSet {
+        private final int[] parent;
+        private final int[] componentSize;
+        private int components;
 
-private boolean join(int[] parent, int first, int second) {
-    int firstRoot = find(parent, first);
-    int secondRoot = find(parent, second);
-    if (firstRoot == secondRoot) {
-        return false;
-    }
-    parent[firstRoot] = secondRoot;
-    return true;
-}
+        DisjointSet(int size) {
+            parent = new int[size + 1];
+            componentSize = new int[size + 1];
+            components = size;
+            for (int node = 1; node <= size; node++) {
+                parent[node] = node;
+                componentSize[node] = 1;
+            }
+        }
 
-private int processSharedEdge(
-    int[] edge,
-    int[] aliceParent,
-    int[] bobParent,
-    int[] successfulUnions
-) {
-    boolean joinsAlice = join(aliceParent, edge[1], edge[2]);
-    boolean joinsBob = join(bobParent, edge[1], edge[2]);
-    if (joinsAlice) {
-        successfulUnions[0]++;
-    }
-    if (joinsBob) {
-        successfulUnions[1]++;
-    }
-    return joinsAlice || joinsBob ? 1 : 0;
-}
+        private int find(int node) {
+            while (parent[node] != node) {
+                parent[node] = parent[parent[node]];
+                node = parent[node];
+            }
+            return node;
+        }
 
-private int processExclusiveEdge(
-    int[] edge,
-    int[] parent,
-    int[] successfulUnions,
-    int travelerIndex
-) {
-    if (!join(parent, edge[1], edge[2])) {
-        return 0;
-    }
-    successfulUnions[travelerIndex]++;
-    return 1;
-}
-
-public int maxNumEdgesToRemove(int n, int[][] edges) {
-    int[] aliceParent = new int[n + 1];
-    int[] bobParent = new int[n + 1];
-    for (int node = 1; node <= n; node++) {
-        aliceParent[node] = node;
-        bobParent[node] = node;
-    }
-    Arrays.sort(edges, (first, second) -> Integer.compare(second[0], first[0]));
-    int usedEdges = 0;
-    int[] successfulUnions = new int[2];
-    for (int[] edge : edges) {
-        if (edge[0] == 3) {
-            usedEdges += processSharedEdge(edge, aliceParent, bobParent, successfulUnions);
-        } else if (edge[0] == 1) {
-            usedEdges += processExclusiveEdge(edge, aliceParent, successfulUnions, 0);
-        } else {
-            usedEdges += processExclusiveEdge(edge, bobParent, successfulUnions, 1);
+        boolean union(int first, int second) {
+            int firstRoot = find(first);
+            int secondRoot = find(second);
+            if (firstRoot == secondRoot) {
+                return false;
+            }
+            if (componentSize[firstRoot] < componentSize[secondRoot]) {
+                int temporary = firstRoot;
+                firstRoot = secondRoot;
+                secondRoot = temporary;
+            }
+            parent[secondRoot] = firstRoot;
+            componentSize[firstRoot] += componentSize[secondRoot];
+            components--;
+            return true;
         }
     }
-    if (successfulUnions[0] != n - 1 || successfulUnions[1] != n - 1) {
-        return -1;
+
+    public int maxNumEdgesToRemove(int n, int[][] edges) {
+        DisjointSet alice = new DisjointSet(n);
+        DisjointSet bob = new DisjointSet(n);
+        Arrays.sort(edges, (first, second) -> Integer.compare(second[0], first[0]));
+        int usedEdges = 0;
+        for (int[] edge : edges) {
+            usedEdges += useEdge(edge, alice, bob);
+        }
+        if (alice.components != 1 || bob.components != 1) {
+            return -1;
+        }
+        return edges.length - usedEdges;
     }
-    return edges.length - usedEdges;
-}
+
+    private int useEdge(int[] edge, DisjointSet alice, DisjointSet bob) {
+        if (edge[0] == 1) {
+            return alice.union(edge[1], edge[2]) ? 1 : 0;
+        }
+        if (edge[0] == 2) {
+            return bob.union(edge[1], edge[2]) ? 1 : 0;
+        }
+        boolean joinsAlice = alice.union(edge[1], edge[2]);
+        boolean joinsBob = bob.union(edge[1], edge[2]);
+        return joinsAlice || joinsBob ? 1 : 0;
+    }
 }

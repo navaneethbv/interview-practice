@@ -1,6 +1,5 @@
 class Solution:
     def maxOperations(self, nums):
-        n = len(nums)
         possible_scores = {nums[0] + nums[1], nums[-2] + nums[-1], nums[0] + nums[-1]}
         return max(self._best_for_score(nums, score) for score in possible_scores)
 

@@ -12,7 +12,7 @@ The ordered backtracking state eliminates both by enforcing a smallest allowed f
 2. Try each factor from the smallest allowed value through `sqrt(remaining)`.
 3. When it divides the remainder, add the path plus the factor and quotient as one result.
 4. Recurse on the quotient with the same factor as the new lower bound.
-5. Remove the factor from the path before trying the next candidate.
+5. Keep branches independent: Java removes its appended factor on return, while Python passes a fresh extended path.
 
 ## Walkthrough
 Example 1 uses `n = 12`.
@@ -39,4 +39,6 @@ Continuing trial factors beyond the square root duplicates the complementary pai
 ## Language notes
 Python uses `math.isqrt` for an exact integer square-root bound.
 Java uses `factor * factor <= remaining`, safe because the input is at most ten million.
-Both mutate and restore a backtracking path while copying completed combinations into the result.
+Java mutates and restores one backtracking path, using O(log n) stack and path space beyond its output.
+Python copies the extended path for each recursive call, giving the O(log squared n) live-copy bound above.
+Both copy completed combinations into the result.

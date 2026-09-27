@@ -25,8 +25,8 @@ Four edges are kept from six, so the answer is 2.
 
 ## Complexity
 
-Sorting the copied edge list costs O(e log e), and union-find operations cost O(e alpha(n)) with path compression and union by size.
-The two disjoint sets use O(n) space, while Python's sorted copy adds O(e) temporary edge storage.
+Sorting edges costs O(e log e), and union-find operations cost O(e alpha(n)) with path compression and union by size.
+The disjoint sets use O(n) space; Python's sorted copy and Java's object-array sorting workspace add O(e) space.
 
 ## Edge cases
 
@@ -42,5 +42,7 @@ The final connectivity test must require both union counts to equal `n - 1`.
 
 ## Language notes
 
-Python's `bool` values add naturally to the union counts, while Java increments explicit counters.
+Python's `bool` values add naturally to the successful-union counts.
+Java instead tracks the number of components, reaching one component after n minus one successful unions.
+Python sorts a copied edge list, whereas Java sorts the input edge array in place.
 Both implementations use iterative path compression, so no recursive union-find stack is needed.

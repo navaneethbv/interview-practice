@@ -6,7 +6,7 @@ Checking every distinct pair directly mirrors the definition and is easily withi
 ## Brute force
 The direct nested loop is also the useful baseline here.
 For each first index, try every second index and reject the case where the indices are equal.
-There are N squared index pairs, and each concatenation and comparison can inspect up to the target length.
+There are N squared index pairs, and building each concatenation copies both candidate strings, even when their total length differs from the target.
 
 ## Approach
 1. Set a counter to zero.
@@ -23,8 +23,10 @@ The answer is therefore 2, preserving the fact that equal strings at different p
 
 ## Complexity
 There are O(N squared) ordered index pairs.
-Each comparison can allocate and inspect a concatenated string of length O(T), so the worst-case time is O(N squared times T).
-The loop uses O(T) temporary space for the current concatenation, in addition to language-managed string storage.
+Let L be the maximum input-string length.
+Each candidate copies at most 2L characters, and a same-length comparison also inspects at most 2L characters.
+The total time is O(N squared times L).
+The loop uses O(L) temporary space for the current concatenation.
 
 ## Edge cases
 Duplicate strings count independently when their indices differ.

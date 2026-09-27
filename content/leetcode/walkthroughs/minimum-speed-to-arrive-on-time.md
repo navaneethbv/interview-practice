@@ -9,10 +9,11 @@ That is too slow when the limit is ten million and there are many distances.
 Binary search reduces the number of simulations to logarithmic in the limit.
 
 ## Approach
-1. Return `-1` when the hour budget is no greater than the number of nonfinal legs, since each such leg costs at least one full hour.
-2. Binary search speeds from 1 through 10,000,000.
-3. In the feasibility check, add `ceil(distance / speed)` for every nonfinal leg.
-4. Add the final leg as an exact fractional travel time and compare the total with `hour`.
+1. Return 1 if the budget covers the sum of distances, which is the travel time at speed one.
+2. Convert the two-decimal deadline to integer hundredths and reject budgets no greater than the minimum nonfinal-leg waiting time.
+3. Binary search speeds from 1 through 10,000,000, summing integer ceiling division for every nonfinal leg.
+4. Subtract those whole hours from the deadline to obtain `remaining` hundredths.
+5. Require positive remaining time and test whether the candidate speed is at least `ceil(100 * finalDistance / remaining)`.
 
 ## Walkthrough
 Example 1 is `dist = [1, 3, 2]` and `hour = 2.5`.
@@ -30,6 +31,7 @@ Both references use O(1) extra space besides the input.
 A single distance has no rounded waiting legs.
 An hour budget equal to the number of nonfinal legs is impossible because the final leg needs positive time.
 The final leg remains fractional even when earlier legs were rounded.
+For distances `[1,14]` and budget 1.14, speed 100 must be accepted exactly; adding binary floating-point values could incorrectly reject it.
 
 ## Common mistakes
 Rounding the final leg up incorrectly rejects valid speeds.
@@ -37,6 +39,7 @@ Rounding every leg to a floating value ignores the required integer-hour waits.
 Returning the first feasible speed found by an arbitrary search does not prove minimality.
 
 ## Language notes
-Python uses integer ceiling division for the waiting legs and floating point only for the final fraction.
-Java uses `Math.ceil` for the same rounded legs and a `double` for the total time.
+Both languages round the two-decimal input to integer hundredths once, then perform exact integer feasibility checks.
+Java uses `long` for time totals and ceiling division rather than a potentially overflowing speed-times-budget product.
+The speed-one early return bounds the converted deadline by the maximum possible sum of distances, keeping it within `long`.
 The binary search bounds are inclusive and fit safely in Java's `int` range.
