@@ -26,7 +26,7 @@ export function SetTable({ setId, kind, rows }: { setId: string; kind: SetKind; 
   const byCategory = kind === "curated";
   const groups = useMemo(() => {
     const unique = [...new Set(rows.flatMap((r) => (byCategory ? (r.category ? [r.category] : []) : r.topics)))];
-    return byCategory ? unique : unique.sort();
+    return byCategory ? unique : unique.sort((x, y) => x.localeCompare(y));
   }, [rows, byCategory]);
 
   const visible = useMemo(() => {
@@ -49,7 +49,8 @@ export function SetTable({ setId, kind, rows }: { setId: string; kind: SetKind; 
     const unsolved = visible.filter((r) => r.available && statusOf(progress, lcProgressId(r.slug), setId) !== "solved");
     const pool = unsolved.length ? unsolved : rows.filter((r) => r.available);
     if (!pool.length) return;
-    router.push(`/problems/lc/${pool[Math.floor(Math.random() * pool.length)].slug}?set=${setId}`);
+    const [index] = crypto.getRandomValues(new Uint32Array(1));
+    router.push(`/problems/lc/${pool[index % pool.length].slug}?set=${setId}`);
   }
 
   return (
