@@ -1,6 +1,7 @@
 class Solution:
-    def repeatedCharacter(self,s):
-        seen=set()
-        for ch in s:
-            if ch in seen:return ch
-            seen.add(ch)
+    def repeatedCharacter(self, s):
+        seen = set()
+        for character in s:
+            if character in seen:
+                return character
+            seen.add(character)

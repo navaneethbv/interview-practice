@@ -1,3 +1,5 @@
 from collections import Counter
 class Solution:
-    def canPermutePalindrome(self,s):return sum(c%2 for c in Counter(s).values())<=1
+    def canPermutePalindrome(self, s):
+        odd_counts = sum(count % 2 for count in Counter(s).values())
+        return odd_counts <= 1

@@ -1,6 +1,11 @@
 class Solution:
-    def calculateMinimumHP(self,dungeon):
-        m,n=len(dungeon),len(dungeon[0]);dp=[float('inf')]*(n+1);dp[n-1]=1
-        for r in range(m-1,-1,-1):
-            for c in range(n-1,-1,-1):dp[c]=max(1,min(dp[c],dp[c+1])-dungeon[r][c])
-        return dp[0]
+    def calculateMinimumHP(self, dungeon):
+        rows = len(dungeon)
+        columns = len(dungeon[0])
+        minimum_health = [float("inf")] * (columns + 1)
+        minimum_health[columns - 1] = 1
+        for row in range(rows - 1, -1, -1):
+            for column in range(columns - 1, -1, -1):
+                needed_after_cell = min(minimum_health[column], minimum_health[column + 1])
+                minimum_health[column] = max(1, needed_after_cell - dungeon[row][column])
+        return minimum_health[0]

@@ -1,9 +1,14 @@
 from math import isqrt
 class Solution:
-    def getFactors(self,n):
-        result=[]
-        def visit(value,start,path):
-            for factor in range(start,isqrt(value)+1):
-                if value%factor==0:
-                    result.append(path+[factor,value//factor]);visit(value//factor,factor,path+[factor])
-        visit(n,2,[]);return result
+    def getFactors(self, n):
+        result = []
+
+        def visit(remaining, smallest_factor, path):
+            for factor in range(smallest_factor, isqrt(remaining) + 1):
+                if remaining % factor != 0:
+                    continue
+                result.append(path + [factor, remaining // factor])
+                visit(remaining // factor, factor, path + [factor])
+
+        visit(n, 2, [])
+        return result

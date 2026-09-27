@@ -5,7 +5,9 @@ class Solution {
             int start = 0;
             for (int i = 0; i <= word.length(); i++) {
                 if (i == word.length() || word.charAt(i) == separator) {
-                    if (i > start) result.add(word.substring(start, i));
+                    if (i > start) {
+                        result.add(word.substring(start, i));
+                    }
                     start = i + 1;
                 }
             }

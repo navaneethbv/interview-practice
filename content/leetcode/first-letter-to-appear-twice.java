@@ -2,7 +2,9 @@ class Solution {
     public char repeatedCharacter(String s) {
         boolean[] seen = new boolean[26];
         for (char c : s.toCharArray()) {
-            if (seen[c - 'a']) return c;
+            if (seen[c - 'a']) {
+                return c;
+            }
             seen[c - 'a'] = true;
         }
         throw new IllegalArgumentException("No repeated character");
