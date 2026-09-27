@@ -1,0 +1,3 @@
+class Solution {
+public int numBusesToDestination(int[][] routes,int source,int target){if(source==target)return 0;Map<Integer,List<Integer>>buses=new HashMap<>();for(int i=0;i<routes.length;i++)for(int stop:routes[i])buses.computeIfAbsent(stop,k->new ArrayList<>()).add(i);Deque<int[]>q=new ArrayDeque<>();q.add(new int[]{source,0});Set<Integer>seen=new HashSet<>();seen.add(source);boolean[]used=new boolean[routes.length];while(!q.isEmpty()){int[]p=q.remove();for(int b:buses.getOrDefault(p[0],Collections.emptyList()))if(!used[b]){used[b]=true;for(int stop:routes[b]){if(stop==target)return p[1]+1;if(seen.add(stop))q.add(new int[]{stop,p[1]+1});}}}return -1;}
+}

@@ -1,0 +1,27 @@
+{
+  "id": "recover-a-tree-from-preorder-traversal",
+  "style": "leetcode",
+  "function": {
+    "python": "recoverFromPreorder",
+    "java": "recoverFromPreorder"
+  },
+  "params": [
+    {
+      "name": "traversal",
+      "type": "string"
+    }
+  ],
+  "returns": "TreeNode",
+  "tests": [
+    {"input":["1-2--3--4-5--6--7"],"expected":[1,2,5,3,4,6,7],"sample":true},
+    {"input":["1-2--3"],"expected":[1,2,null,3],"sample":true},
+    {"input":["1"],"expected":[1]},
+    {"input":["10-20"],"expected":[10,20]},
+    {"input":["1-2-3"],"expected":[1,2,3]},
+    {"input":["1-401--349---90--88"],"expected":[1,401,null,349,88,90]},
+    {"input":["10-7--5-20"],"expected":[10,7,20,5]},
+    {"input":["5-5--5"],"expected":[5,5,null,5]},
+    {"input":["1000000000"],"expected":[1000000000]},
+    {"input":["1-2--3---4-5"],"expected":[1,2,5,3,null,null,null,4]}
+  ]
+}

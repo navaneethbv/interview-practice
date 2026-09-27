@@ -1,0 +1,27 @@
+{
+  "id": "maximum-number-of-weeks-for-which-you-can-work",
+  "style": "leetcode",
+  "function": {
+    "python": "numberOfWeeks",
+    "java": "numberOfWeeks"
+  },
+  "params": [
+    {
+      "name": "milestones",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[1,2,3]],"expected":6,"sample":true},
+    {"input":[[5,2,1]],"expected":7,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[5]],"expected":1},
+    {"input":[[1,1]],"expected":2},
+    {"input":[[2,2]],"expected":4},
+    {"input":[[10,1]],"expected":3},
+    {"input":[[3,3,3]],"expected":9},
+    {"input":[[1000000000,1000000000]],"expected":2000000000},
+    {"input":[[7,1,1,1]],"expected":7}
+  ]
+}

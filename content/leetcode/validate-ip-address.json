@@ -1,0 +1,29 @@
+{
+  "id": "validate-ip-address",
+  "style": "leetcode",
+  "function": {
+    "python": "validIPAddress",
+    "java": "validIPAddress"
+  },
+  "params": [
+    {
+      "name": "queryIP",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["192.0.2.1"],"expected":"IPv4","sample":true},
+    {"input":["2001:db8:0:0:0:0:0:1"],"expected":"IPv6","sample":true},
+    {"input":["0.0.0.0"],"expected":"IPv4"},
+    {"input":["255.255.255.255"],"expected":"IPv4"},
+    {"input":["256.1.1.1"],"expected":"Neither"},
+    {"input":["01.2.3.4"],"expected":"Neither"},
+    {"input":["1.2.3"],"expected":"Neither"},
+    {"input":["1.2.3.4."],"expected":"Neither"},
+    {"input":["2001:db8::1"],"expected":"Neither"},
+    {"input":["1:2:3:4:5:6:7:8"],"expected":"IPv6"},
+    {"input":["1:2:3:4:5:6:7:gg"],"expected":"Neither"},
+    {"input":["12345:2:3:4:5:6:7:8"],"expected":"Neither"}
+  ]
+}

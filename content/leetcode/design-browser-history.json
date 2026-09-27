@@ -1,0 +1,59 @@
+{
+  "kind": "design",
+  "id": "design-browser-history",
+  "style": "leetcode",
+  "className": "BrowserHistory",
+  "ctorParams": [
+    {
+      "name": "homepage",
+      "type": "string"
+    }
+  ],
+  "methods": [
+    {
+      "name": "visit",
+      "java": "visit",
+      "params": [
+        {
+          "name": "url",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "back",
+      "java": "back",
+      "params": [
+        {
+          "name": "steps",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "forward",
+      "java": "forward",
+      "params": [
+        {
+          "name": "steps",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":["a.com"],"ops":["visit","visit","back","visit","forward"],"args":[["b.com"],["c.com"],[1],["d.com"],[2]]},"expected":[null,null,"b.com",null,"d.com"],"sample":true},
+    {"input":{"ctor":["home"],"ops":["back","forward"],"args":[[9],[9]]},"expected":["home","home"],"sample":true},
+    {"input":{"ctor":["a"],"ops":["visit","back","forward"],"args":[["b"],[1],[1]]},"expected":[null,"a","b"]},
+    {"input":{"ctor":["a"],"ops":["visit","back"],"args":[["a"],[1]]},"expected":[null,"a"]},
+    {"input":{"ctor":["a"],"ops":["visit","visit","back"],"args":[["b"],["c"],[99]]},"expected":[null,null,"a"]},
+    {"input":{"ctor":["a"],"ops":["visit","back","forward"],"args":[["b"],[1],[99]]},"expected":[null,"a","b"]},
+    {"input":{"ctor":["a"],"ops":["visit","back","visit","forward"],"args":[["b"],[1],["c"],[1]]},"expected":[null,"a",null,"c"]},
+    {"input":{"ctor":["x"],"ops":["back"],"args":[[1]]},"expected":["x"]},
+    {"input":{"ctor":["x"],"ops":["forward"],"args":[[1]]},"expected":["x"]},
+    {"input":{"ctor":["a"],"ops":["visit","visit","back","back","forward"],"args":[["b"],["c"],[1],[1],[1]]},"expected":[null,null,"b","a","b"]}
+  ]
+}

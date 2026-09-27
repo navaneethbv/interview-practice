@@ -1,0 +1,43 @@
+{
+  "kind": "design",
+  "id": "design-hit-counter",
+  "style": "leetcode",
+  "className": "HitCounter",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "hit",
+      "java": "hit",
+      "params": [
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getHits",
+      "java": "getHits",
+      "params": [
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["hit","hit","getHits","getHits"],"args":[[1],[2],[300],[301]]},"expected":[null,null,2,1],"sample":true},
+    {"input":{"ctor":[],"ops":["hit","hit","getHits"],"args":[[10],[10],[10]]},"expected":[null,null,2],"sample":true},
+    {"input":{"ctor":[],"ops":["getHits"],"args":[[1]]},"expected":[0]},
+    {"input":{"ctor":[],"ops":["hit","getHits"],"args":[[1],[301]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["hit","getHits"],"args":[[1],[300]]},"expected":[null,1]},
+    {"input":{"ctor":[],"ops":["hit","getHits","hit","getHits"],"args":[[1],[300],[301],[301]]},"expected":[null,1,null,1]},
+    {"input":{"ctor":[],"ops":["hit","hit","hit","getHits"],"args":[[1],[1],[1],[1]]},"expected":[null,null,null,3]},
+    {"input":{"ctor":[],"ops":["hit","getHits"],"args":[[1],[2147483647]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["hit","hit","getHits"],"args":[[100],[399],[400]]},"expected":[null,null,1]},
+    {"input":{"ctor":[],"ops":["getHits","getHits"],"args":[[300],[301]]},"expected":[0,0]}
+  ]
+}

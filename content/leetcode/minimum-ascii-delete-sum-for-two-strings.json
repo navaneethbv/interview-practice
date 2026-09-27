@@ -1,0 +1,31 @@
+{
+  "id": "minimum-ascii-delete-sum-for-two-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "minimumDeleteSum",
+    "java": "minimumDeleteSum"
+  },
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["ab","ac"],"expected":197,"sample":true},
+    {"input":["same","same"],"expected":0,"sample":true},
+    {"input":["a","b"],"expected":195},
+    {"input":["a","a"],"expected":0},
+    {"input":["sea","eat"],"expected":231},
+    {"input":["delete","leet"],"expected":403},
+    {"input":["aaa","a"],"expected":194},
+    {"input":["a","aaa"],"expected":194},
+    {"input":["abc","def"],"expected":597},
+    {"input":["az","za"],"expected":194}
+  ]
+}

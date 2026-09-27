@@ -1,0 +1,31 @@
+{
+  "id": "apply-discount-to-prices",
+  "style": "leetcode",
+  "function": {
+    "python": "discountPrices",
+    "java": "discountPrices"
+  },
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string"
+    },
+    {
+      "name": "discount",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["pay $100 or $5 today",20],"expected":"pay $80.00 or $4.00 today","sample":true},
+    {"input":["$10 $x 10$ $",100],"expected":"$0.00 $x 10$ $","sample":true},
+    {"input":["$1",0],"expected":"$1.00"},
+    {"input":["$1",33],"expected":"$0.67"},
+    {"input":["hello",50],"expected":"hello"},
+    {"input":["$0",25],"expected":"$0.00"},
+    {"input":["$999",99],"expected":"$9.99"},
+    {"input":["$10000000000",1],"expected":"$9900000000.00"},
+    {"input":["x$10 $10x",10],"expected":"x$10 $10x"},
+    {"input":["$01 $10",5],"expected":"$0.95 $9.50"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "integer-to-roman",
+  "style": "leetcode",
+  "function": {
+    "python": "intToRoman",
+    "java": "intToRoman"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[44],"expected":"XLIV","sample":true},
+    {"input":[2026],"expected":"MMXXVI","sample":true},
+    {"input":[1],"expected":"I"},
+    {"input":[3],"expected":"III"},
+    {"input":[4],"expected":"IV"},
+    {"input":[9],"expected":"IX"},
+    {"input":[58],"expected":"LVIII"},
+    {"input":[90],"expected":"XC"},
+    {"input":[400],"expected":"CD"},
+    {"input":[900],"expected":"CM"},
+    {"input":[1994],"expected":"MCMXCIV"},
+    {"input":[3999],"expected":"MMMCMXCIX"}
+  ]
+}

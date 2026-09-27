@@ -1,0 +1,27 @@
+{
+  "id": "longest-happy-prefix",
+  "style": "leetcode",
+  "function": {
+    "python": "longestPrefix",
+    "java": "longestPrefix"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["level"],"expected":"l","sample":true},
+    {"input":["ababab"],"expected":"abab","sample":true},
+    {"input":["a"],"expected":""},
+    {"input":["aa"],"expected":"a"},
+    {"input":["abc"],"expected":""},
+    {"input":["aaaa"],"expected":"aaa"},
+    {"input":["ababa"],"expected":"aba"},
+    {"input":["abcab"],"expected":"ab"},
+    {"input":["abcdabc"],"expected":"abc"},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+  ]
+}

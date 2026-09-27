@@ -1,8 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
+import { marked } from "marked";
 import { createHighlighter, type Highlighter } from "shiki";
-import type { Block, CourseIndex, CourseItem, Difficulty, Lesson } from "./content-types";
+import type {
+  Block,
+  CourseIndex,
+  CourseItem,
+  Difficulty,
+  LcMeta,
+  Lesson,
+  ProblemSet,
+  SetRow,
+} from "./content-types";
 import type { ProblemSpec } from "./judge/types";
 
 const ROOT = path.join(process.cwd(), "content");
@@ -84,6 +94,67 @@ export const getPythonReference = cache((id: string): string | null => {
   } catch {
     return null;
   }
+});
+
+/* ---------------------------------------------------------------- problem sets */
+
+const LC_DIR = path.join(ROOT, "leetcode");
+const SLUG = /^[a-z0-9-]+$/;
+
+export const listSets = cache((): ProblemSet[] => readJson<ProblemSet[]>(path.join(ROOT, "sets", "sets.json")) ?? []);
+
+export const getSet = cache((id: string): ProblemSet | null => listSets().find((s) => s.id === id) ?? null);
+
+export const lcMetaAll = cache(
+  (): Record<string, LcMeta> => readJson<Record<string, LcMeta>>(path.join(ROOT, "sets", "problems.json")) ?? {},
+);
+
+/** Publish a problem only when its statement, reference, and expected outputs exist. */
+export const lcAuthored = cache((): Set<string> => {
+  if (!fs.existsSync(LC_DIR)) return new Set(); // nosemgrep -- repo content directory; slugs are validated
+  const files = new Set(fs.readdirSync(LC_DIR)); // nosemgrep -- repo content directory; slugs are validated
+  return new Set(
+    [...files].filter((f) => {
+      if (!f.endsWith(".md")) return false;
+      const slug = f.slice(0, -3);
+      const spec = readJson<ProblemSpec>(path.join(LC_DIR, `${slug}.json`));
+      return spec?.id === slug && files.has(`${slug}.${spec.kind === "sql" ? "sql" : "py"}`) &&
+        spec.tests.length > 0 && spec.tests.every((test) => test.expected !== undefined);
+    }).map((f) => f.slice(0, -3)),
+  );
+});
+
+export function setRows(set: ProblemSet): SetRow[] {
+  const meta = lcMetaAll();
+  const authored = lcAuthored();
+  return set.items.map((it) => ({ ...meta[it.slug], slug: it.slug, category: it.category, available: authored.has(it.slug) }));
+}
+
+/** The sets a problem belongs to, in set order. */
+export function setsContaining(slug: string): ProblemSet[] {
+  return listSets().filter((s) => s.items.some((it) => it.slug === slug));
+}
+
+export interface LcProblem {
+  slug: string;
+  meta: LcMeta;
+  statementHtml: string;
+  spec: ProblemSpec;
+  /** Python or SQLite reference; the source of truth for expected outputs. */
+  reference: string | null;
+}
+
+export const getLcProblem = cache((slug: string): LcProblem | null => {
+  if (!SLUG.test(slug) || !lcAuthored().has(slug)) return null;
+  const meta = lcMetaAll()[slug];
+  const spec = readJson<ProblemSpec>(path.join(LC_DIR, `${slug}.json`));
+  if (!meta || !spec) return null;
+  // The page supplies the numbered heading; retain the standalone Markdown title on disk.
+  const md = fs.readFileSync(path.join(LC_DIR, `${slug}.md`), "utf8").replace(/^# [^\n]+\r?\n/, ""); // nosemgrep -- repo content directory; slugs are validated
+  const reference = spec.kind === "sql"
+    ? fs.readFileSync(path.join(LC_DIR, `${slug}.sql`), "utf8") // nosemgrep -- repo content directory; slugs are validated
+    : fs.readFileSync(path.join(LC_DIR, `${slug}.py`), "utf8"); // nosemgrep -- repo content directory; slugs are validated
+  return { slug, meta, spec, reference, statementHtml: marked.parse(md, { async: false }) };
 });
 
 /* ---------------------------------------------------------------- system design */

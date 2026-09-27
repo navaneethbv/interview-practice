@@ -1,0 +1,31 @@
+{
+  "id": "backspace-string-compare",
+  "style": "leetcode",
+  "function": {
+    "python": "backspaceCompare",
+    "java": "backspaceCompare"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["ab#c","ad#c"],"expected":true,"sample":true},
+    {"input":["a#c","b"],"expected":false,"sample":true},
+    {"input":["#","#"],"expected":true},
+    {"input":["a","a"],"expected":true},
+    {"input":["a","b"],"expected":false},
+    {"input":["##a","a"],"expected":true},
+    {"input":["ab##","c#d#"],"expected":true},
+    {"input":["a##","#"],"expected":true},
+    {"input":["xywrrmp","xywrrmu#p"],"expected":true},
+    {"input":["bxj##tw","bxo#j##tw"],"expected":true}
+  ]
+}

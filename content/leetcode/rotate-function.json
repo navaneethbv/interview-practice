@@ -1,0 +1,27 @@
+{
+  "id": "rotate-function",
+  "style": "leetcode",
+  "function": {
+    "python": "maxRotateFunction",
+    "java": "maxRotateFunction"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[4,3,2,6]],"expected":26,"sample":true},
+    {"input":[[-2]],"expected":0,"sample":true},
+    {"input":[[0]],"expected":0},
+    {"input":[[1,2]],"expected":2},
+    {"input":[[2,1]],"expected":2},
+    {"input":[[1,1,1]],"expected":3},
+    {"input":[[-1,-2,-3]],"expected":-5},
+    {"input":[[0,5,0]],"expected":10},
+    {"input":[[100,-100,100,-100]],"expected":200},
+    {"input":[[1,2,3,4,5]],"expected":40}
+  ]
+}

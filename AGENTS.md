@@ -43,6 +43,10 @@ After touching the judge or any spec, run `npm run tests:build -- --java`.
 
 ## Adding a coding problem's tests
 
+Workbook lists use `content/sets/` and their authored problems use `content/leetcode/`.
+See `docs/PROBLEM_AUTHORING.md` for the importer command, SQLite specs, helper types, interactive environments, and progress semantics.
+Run `python3 scripts/judge/content-status.py` to report list coverage and the next missing slug.
+
 1. Write `content/problems/<id>.json` with `function`, `params`, `returns`, optional `output`/`compare`, and `tests` with inputs only.
 2. Write `content/problems/<id>.py` with a correct `class Solution`.
 3. Optionally add `<id>.java` to exercise the Java harness.

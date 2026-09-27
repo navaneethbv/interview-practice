@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "duplicate-emails",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Person",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "email",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "Email"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Person":[[5,"a@x"],[2,"a@x"],[7,"b@x"]]}},"expected":[["a@x"]],"sample":true},
+    {"input":{"tables":{"Person":[[1,"q@x"]]}},"expected":[],"sample":true},
+    {"input":{"tables":{"Person":[]}},"expected":[]},
+    {"input":{"tables":{"Person":[[1,"a@x"]]}},"expected":[]},
+    {"input":{"tables":{"Person":[[1,"a@x"],[2,"a@x"]]}},"expected":[["a@x"]]},
+    {"input":{"tables":{"Person":[[2,"b@x"],[1,"a@x"]]}},"expected":[]},
+    {"input":{"tables":{"Person":[[7,"a@x"],[2,"a@x"],[5,"a@x"]]}},"expected":[["a@x"]]},
+    {"input":{"tables":{"Person":[[1,"a@x"],[2,"b@x"],[3,"a@x"],[4,"b@x"]]}},"expected":[["a@x"],["b@x"]]},
+    {"input":{"tables":{"Person":[[1,"x@y"],[3,"z@y"],[2,"z@y"]]}},"expected":[["z@y"]]},
+    {"input":{"tables":{"Person":[[8,"a@x"],[1,"b@x"],[9,"c@x"],[2,"a@x"]]}},"expected":[["a@x"]]}
+  ]
+}

@@ -1,0 +1,3 @@
+class Solution {
+public int mostBooked(int n,int[][] meetings){Arrays.sort(meetings,Comparator.comparingInt(a->a[0]));PriorityQueue<Integer>free=new PriorityQueue<>();for(int i=0;i<n;i++)free.add(i);PriorityQueue<long[]>busy=new PriorityQueue<>((a,b)->a[0]==b[0]?Long.compare(a[1],b[1]):Long.compare(a[0],b[0]));int[]counts=new int[n];for(int[]m:meetings){while(!busy.isEmpty()&&busy.peek()[0]<=m[0])free.add((int)busy.remove()[1]);int room;long end;if(!free.isEmpty()){room=free.remove();end=m[1];}else{long[]p=busy.remove();room=(int)p[1];end=p[0]+m[1]-m[0];}counts[room]++;busy.add(new long[]{end,room});}int best=0;for(int i=1;i<n;i++)if(counts[i]>counts[best])best=i;return best;}
+}

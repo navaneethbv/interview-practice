@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
-import { HomeStats } from "@/components/HomeStats";
+import { ProgressPanel } from "@/components/ProgressPanel";
 import { getCourse, listDesignArticles, listProblems } from "@/lib/content";
+import { COURSE_SCOPE } from "@/lib/content-types";
 
 export default function Home() {
   const course = getCourse();
@@ -22,7 +23,11 @@ export default function Home() {
           </p>
         </section>
 
-        <HomeStats problemIds={problems.map((p) => p.id)} byDifficulty={problems.map((p) => p.difficulty)} />
+        <ProgressPanel
+          ids={problems.map((p) => p.id)}
+          difficulties={problems.map((p) => p.difficulty)}
+          scope={COURSE_SCOPE}
+        />
 
         <section className="mt-10 grid gap-4 md:grid-cols-3">
           <TrackCard

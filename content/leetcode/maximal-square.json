@@ -1,0 +1,27 @@
+{
+  "id": "maximal-square",
+  "style": "leetcode",
+  "function": {
+    "python": "maximalSquare",
+    "java": "maximalSquare"
+  },
+  "params": [
+    {
+      "name": "matrix",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[["1","1"],["1","1"]]],"expected":4,"sample":true},
+    {"input":[[["1","0"],["0","1"]]],"expected":1,"sample":true},
+    {"input":[[["0"]]],"expected":0},
+    {"input":[[["1"]]],"expected":1},
+    {"input":[[["1","1","1","1"]]],"expected":1},
+    {"input":[[["1","1","1"],["1","1","1"],["1","1","1"]]],"expected":9},
+    {"input":[[["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]],"expected":4},
+    {"input":[[["0","0"],["0","0"]]],"expected":0},
+    {"input":[[["1","1","1"],["1","0","1"],["1","1","1"]]],"expected":1},
+    {"input":[[["0","1","1","1"],["0","1","1","1"],["0","1","1","1"]]],"expected":9}
+  ]
+}

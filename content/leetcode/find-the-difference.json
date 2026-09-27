@@ -1,0 +1,31 @@
+{
+  "id": "find-the-difference",
+  "style": "leetcode",
+  "function": {
+    "python": "findTheDifference",
+    "java": "findTheDifference"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "char",
+  "tests": [
+    {"input":["abcd","abcde"],"expected":"e","sample":true},
+    {"input":["a","aa"],"expected":"a","sample":true},
+    {"input":["","z"],"expected":"z"},
+    {"input":["abc","cabx"],"expected":"x"},
+    {"input":["aa","aaa"],"expected":"a"},
+    {"input":["zz","zzz"],"expected":"z"},
+    {"input":["xyz","zxyx"],"expected":"x"},
+    {"input":["ab","bab"],"expected":"b"},
+    {"input":["abcabc","ccbaaab"],"expected":"a"},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"],"expected":"b"}
+  ]
+}

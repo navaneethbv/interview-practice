@@ -1,0 +1,39 @@
+{
+  "id": "time-needed-to-inform-all-employees",
+  "style": "leetcode",
+  "function": {
+    "python": "numOfMinutes",
+    "java": "numOfMinutes"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "headID",
+      "type": "int"
+    },
+    {
+      "name": "manager",
+      "type": "int[]"
+    },
+    {
+      "name": "informTime",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[4,0,[-1,0,1,1],[2,3,0,0]],"expected":5,"sample":true},
+    {"input":[1,0,[-1],[0]],"expected":0,"sample":true},
+    {"input":[2,1,[1,-1],[0,4]],"expected":4},
+    {"input":[3,0,[-1,0,0],[5,0,0]],"expected":5},
+    {"input":[3,0,[-1,0,1],[2,7,0]],"expected":9},
+    {"input":[4,3,[3,3,3,-1],[0,0,0,0]],"expected":0},
+    {"input":[5,0,[-1,0,0,1,2],[1,2,5,0,0]],"expected":6},
+    {"input":[2,0,[-1,0],[1000,0]],"expected":1000},
+    {"input":[5,4,[1,2,3,4,-1],[0,1,2,3,4]],"expected":10},
+    {"input":[4,0,[-1,0,1,2],[0,0,0,0]],"expected":0}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "put-boxes-into-the-warehouse-i",
+  "style": "leetcode",
+  "function": {
+    "python": "maxBoxesInWarehouse",
+    "java": "maxBoxesInWarehouse"
+  },
+  "params": [
+    {
+      "name": "boxes",
+      "type": "int[]"
+    },
+    {
+      "name": "warehouse",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[4,3,4,1],[5,3,3,4,1]],"expected":3,"sample":true},
+    {"input":[[3,4],[2,2]],"expected":0,"sample":true},
+    {"input":[[1],[1]],"expected":1},
+    {"input":[[2],[1]],"expected":0},
+    {"input":[[1,2,3],[3,3,3]],"expected":3},
+    {"input":[[1,1,1,1],[1,1]],"expected":2},
+    {"input":[[5,4,3],[5,4,3]],"expected":3},
+    {"input":[[3,3],[4,1,4]],"expected":1},
+    {"input":[[9],[10,1,10]],"expected":1},
+    {"input":[[2,5,1],[4,3,2,1]],"expected":2}
+  ]
+}

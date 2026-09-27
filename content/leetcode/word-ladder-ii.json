@@ -1,0 +1,36 @@
+{
+  "id": "word-ladder-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "findLadders",
+    "java": "findLadders"
+  },
+  "params": [
+    {
+      "name": "beginWord",
+      "type": "string"
+    },
+    {
+      "name": "endWord",
+      "type": "string"
+    },
+    {
+      "name": "wordList",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["hit","cog",["hot","dot","dog","lot","log","cog"]],"expected":[["hit","hot","dot","dog","cog"],["hit","hot","lot","log","cog"]],"sample":true},
+    {"input":["a","c",["a","b","c"]],"expected":[["a","c"]],"sample":true},
+    {"input":["a","b",["b"]],"expected":[["a","b"]]},
+    {"input":["a","b",["a"]],"expected":[]},
+    {"input":["abc","xyz",["xyz"]],"expected":[]},
+    {"input":["aaa","bbb",["aab","abb","bbb"]],"expected":[["aaa","aab","abb","bbb"]]},
+    {"input":["ab","ba",["aa","bb","ba"]],"expected":[["ab","aa","ba"],["ab","bb","ba"]]},
+    {"input":["red","tax",["ted","tex","red","tax","tad","den","rex","pee"]],"expected":[["red","ted","tad","tax"],["red","ted","tex","tax"],["red","rex","tex","tax"]]},
+    {"input":["cat","dog",["cot","cog","dog"]],"expected":[["cat","cot","cog","dog"]]},
+    {"input":["aa","bb",["ab","ba","bb"]],"expected":[["aa","ab","bb"],["aa","ba","bb"]]}
+  ]
+}

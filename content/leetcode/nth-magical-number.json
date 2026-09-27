@@ -1,0 +1,107 @@
+{
+  "id": "nth-magical-number",
+  "style": "leetcode",
+  "function": {
+    "python": "nthMagicalNumber",
+    "java": "nthMagicalNumber"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        4,
+        2,
+        3
+      ],
+      "expected": 6,
+      "sample": true
+    },
+    {
+      "input": [
+        3,
+        4,
+        4
+      ],
+      "expected": 12,
+      "sample": true
+    },
+    {
+      "input": [
+        1,
+        2,
+        3
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        2,
+        2,
+        3
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        5,
+        2,
+        4
+      ],
+      "expected": 10
+    },
+    {
+      "input": [
+        10,
+        3,
+        5
+      ],
+      "expected": 21
+    },
+    {
+      "input": [
+        100,
+        7,
+        11
+      ],
+      "expected": 451
+    },
+    {
+      "input": [
+        1000000000,
+        40000,
+        40000
+      ],
+      "expected": 999720007
+    },
+    {
+      "input": [
+        1000000000,
+        39999,
+        40000
+      ],
+      "expected": 999860007
+    },
+    {
+      "input": [
+        20,
+        6,
+        10
+      ],
+      "expected": 84
+    }
+  ]
+}

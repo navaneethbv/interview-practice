@@ -1,0 +1,28 @@
+{
+  "id": "longest-substring-without-repeating-characters",
+  "style": "leetcode",
+  "function": {
+    "python": "lengthOfLongestSubstring",
+    "java": "lengthOfLongestSubstring"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abcaef"],"expected":5,"sample":true},
+    {"input":["zzzz"],"expected":1,"sample":true},
+    {"input":[""],"expected":0},
+    {"input":["a"],"expected":1},
+    {"input":["abba"],"expected":2},
+    {"input":["dvdf"],"expected":3},
+    {"input":["a b!a"],"expected":4},
+    {"input":["abcabcbb"],"expected":3},
+    {"input":["pwwkew"],"expected":3},
+    {"input":["0123456789"],"expected":10},
+    {"input":["abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"],"expected":26}
+  ]
+}

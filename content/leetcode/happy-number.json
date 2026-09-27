@@ -1,0 +1,28 @@
+{
+  "id": "happy-number",
+  "style": "leetcode",
+  "function": {
+    "python": "isHappy",
+    "java": "isHappy"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[7],"expected":true,"sample":true},
+    {"input":[2],"expected":false,"sample":true},
+    {"input":[1],"expected":true},
+    {"input":[4],"expected":false},
+    {"input":[10],"expected":true},
+    {"input":[19],"expected":true},
+    {"input":[20],"expected":false},
+    {"input":[100],"expected":true},
+    {"input":[1111111],"expected":true},
+    {"input":[2147483647],"expected":false},
+    {"input":[99],"expected":false}
+  ]
+}

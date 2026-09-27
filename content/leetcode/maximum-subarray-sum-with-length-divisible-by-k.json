@@ -1,0 +1,135 @@
+{
+  "id": "maximum-subarray-sum-with-length-divisible-by-k",
+  "style": "leetcode",
+  "function": {
+    "python": "maxSubarraySum",
+    "java": "maxSubarraySum"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          -5,
+          4,
+          3
+        ],
+        2
+      ],
+      "expected": 7,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          -3,
+          -2,
+          -5
+        ],
+        2
+      ],
+      "expected": -5,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          -1
+        ],
+        1
+      ],
+      "expected": -1
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        3
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        1
+      ],
+      "expected": 6
+    },
+    {
+      "input": [
+        [
+          5,
+          -10,
+          5,
+          5
+        ],
+        2
+      ],
+      "expected": 10
+    },
+    {
+      "input": [
+        [
+          1,
+          -1,
+          1,
+          -1
+        ],
+        2
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          1000000000,
+          1000000000,
+          1000000000,
+          1000000000
+        ],
+        2
+      ],
+      "expected": 4000000000
+    },
+    {
+      "input": [
+        [
+          -1000000000,
+          -1000000000,
+          -1000000000,
+          -1000000000
+        ],
+        2
+      ],
+      "expected": -2000000000
+    }
+  ]
+}

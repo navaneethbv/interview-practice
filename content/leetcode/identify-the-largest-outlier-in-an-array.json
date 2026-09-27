@@ -1,0 +1,27 @@
+{
+  "id": "identify-the-largest-outlier-in-an-array",
+  "style": "leetcode",
+  "function": {
+    "python": "getLargestOutlier",
+    "java": "getLargestOutlier"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,4,5,20]],"expected":20,"sample":true},
+    {"input":[[2,2,2]],"expected":2,"sample":true},
+    {"input":[[0,0,1]],"expected":1},
+    {"input":[[1,1,0]],"expected":0},
+    {"input":[[-2,-3,-5,7]],"expected":7},
+    {"input":[[5,5,10]],"expected":10},
+    {"input":[[1,2,3,6,9]],"expected":9},
+    {"input":[[0,0,0]],"expected":0},
+    {"input":[[1000,1000,-1000]],"expected":-1000},
+    {"input":[[-1,-1,-2,-9]],"expected":-9}
+  ]
+}

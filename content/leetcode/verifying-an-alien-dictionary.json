@@ -1,0 +1,31 @@
+{
+  "id": "verifying-an-alien-dictionary",
+  "style": "leetcode",
+  "function": {
+    "python": "isAlienSorted",
+    "java": "isAlienSorted"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "order",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["hello","leetcode"],"hlabcdefgijkmnopqrstuvwxyz"],"expected":true,"sample":true},
+    {"input":[["apple","app"],"abcdefghijklmnopqrstuvwxyz"],"expected":false,"sample":true},
+    {"input":[["a"],"abcdefghijklmnopqrstuvwxyz"],"expected":true},
+    {"input":[["a","a"],"abcdefghijklmnopqrstuvwxyz"],"expected":true},
+    {"input":[["a","b"],"abcdefghijklmnopqrstuvwxyz"],"expected":true},
+    {"input":[["b","a"],"abcdefghijklmnopqrstuvwxyz"],"expected":false},
+    {"input":[["b","a"],"zyxwvutsrqponmlkjihgfedcba"],"expected":true},
+    {"input":[["app","apple"],"abcdefghijklmnopqrstuvwxyz"],"expected":true},
+    {"input":[["word","world","row"],"worldabcefghijkmnpqstuvxyz"],"expected":false},
+    {"input":[["ab","aa"],"bacdefghijklmnopqrstuvwxyz"],"expected":true}
+  ]
+}

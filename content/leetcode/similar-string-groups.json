@@ -1,0 +1,27 @@
+{
+  "id": "similar-string-groups",
+  "style": "leetcode",
+  "function": {
+    "python": "numSimilarGroups",
+    "java": "numSimilarGroups"
+  },
+  "params": [
+    {
+      "name": "strs",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["tars","rats","arts","star"]],"expected":2,"sample":true},
+    {"input":[["ab","ba"]],"expected":1,"sample":true},
+    {"input":[["a"]],"expected":1},
+    {"input":[["a","a"]],"expected":1},
+    {"input":[["abc","bca"]],"expected":2},
+    {"input":[["abc","acb","bac"]],"expected":1},
+    {"input":[["abcd","badc"]],"expected":2},
+    {"input":[["ab","ab","ba"]],"expected":1},
+    {"input":[["abc","bca","cab"]],"expected":3},
+    {"input":[["abc","bac","bca","cba","cab","acb"]],"expected":1}
+  ]
+}

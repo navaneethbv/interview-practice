@@ -1,0 +1,33 @@
+{
+  "id": "expression-add-operators",
+  "style": "leetcode",
+  "function": {
+    "python": "addOperators",
+    "java": "addOperators"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["123",6],"expected":["1+2+3","1*2*3"],"sample":true},
+    {"input":["105",5],"expected":["1*0+5","10-5"],"sample":true},
+    {"input":["0",0],"expected":["0"]},
+    {"input":["0",1],"expected":[]},
+    {"input":["00",0],"expected":["0+0","0-0","0*0"]},
+    {"input":["12",12],"expected":["12"]},
+    {"input":["12",3],"expected":["1+2"]},
+    {"input":["232",8],"expected":["2+3*2","2*3+2"]},
+    {"input":["3456237490",9191],"expected":[]},
+    {"input":["100",1],"expected":["1+0+0","1+0-0","1+0*0","1-0+0","1-0-0","1-0*0"]},
+    {"input":["2147483648",-2147483648],"expected":[]}
+  ]
+}

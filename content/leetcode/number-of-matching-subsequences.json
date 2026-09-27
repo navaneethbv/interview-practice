@@ -1,0 +1,134 @@
+{
+  "id": "number-of-matching-subsequences",
+  "style": "leetcode",
+  "function": {
+    "python": "numMatchingSubseq",
+    "java": "numMatchingSubseq"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        "abcde",
+        [
+          "a",
+          "bb",
+          "acd",
+          "ace"
+        ]
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        "aaa",
+        [
+          "a",
+          "a",
+          "aa",
+          "aaaa"
+        ]
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        "a",
+        [
+          "a",
+          "b"
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "abc",
+        [
+          "abc",
+          "acb",
+          "c"
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "aaaa",
+        [
+          "aa",
+          "aaa",
+          "aaaa"
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        "xyz",
+        [
+          "x",
+          "xy",
+          "xyz",
+          "yz"
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "abc",
+        [
+          "d",
+          "dd"
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "abab",
+        [
+          "ab",
+          "ba",
+          "aab",
+          "bba"
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        "abc",
+        [
+          "abc",
+          "abc"
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "b",
+          "a"
+        ]
+      ],
+      "expected": 2
+    }
+  ]
+}

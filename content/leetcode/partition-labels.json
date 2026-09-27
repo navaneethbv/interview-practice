@@ -1,0 +1,28 @@
+{
+  "id": "partition-labels",
+  "style": "leetcode",
+  "function": {
+    "python": "partitionLabels",
+    "java": "partitionLabels"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {"input":["abac"],"expected":[3,1],"sample":true},
+    {"input":["eccbbbbdec"],"expected":[10],"sample":true},
+    {"input":["a"],"expected":[1]},
+    {"input":["abc"],"expected":[1,1,1]},
+    {"input":["aaaa"],"expected":[4]},
+    {"input":["ababcbacadefegdehijhklij"],"expected":[9,7,8]},
+    {"input":["abca"],"expected":[4]},
+    {"input":["abcc"],"expected":[1,1,2]},
+    {"input":["ababbc"],"expected":[5,1]},
+    {"input":["zzxyx"],"expected":[2,3]},
+    {"input":["abcdefghijklmnopqrstuvwxyz"],"expected":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]}
+  ]
+}

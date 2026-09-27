@@ -1,0 +1,40 @@
+{
+  "kind": "sql",
+  "id": "recyclable-and-low-fat-products",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Products",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "low_fats",
+          "type": "TEXT"
+        },
+        {
+          "name": "recyclable",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "product_id"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Products":[[1,"Y","N"],[2,"N","Y"],[3,"Y","Y"]]}},"expected":[[3]],"sample":true},
+    {"input":{"tables":{"Products":[[1,"N","N"]]}},"expected":[],"sample":true},
+    {"input":{"tables":{"Products":[]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,"Y","Y"]]}},"expected":[[1]]},
+    {"input":{"tables":{"Products":[[1,"Y","N"]]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,"N","Y"]]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,"N","N"]]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,"Y","Y"],[2,"Y","Y"]]}},"expected":[[1],[2]]},
+    {"input":{"tables":{"Products":[[0,"Y","Y"],[3,"N","N"]]}},"expected":[[0]]},
+    {"input":{"tables":{"Products":[[4,"Y","N"],[2,"Y","Y"],[1,"N","Y"],[3,"Y","Y"]]}},"expected":[[2],[3]]}
+  ]
+}

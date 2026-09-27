@@ -1,0 +1,27 @@
+{
+  "id": "find-resultant-array-after-removing-anagrams",
+  "style": "leetcode",
+  "function": {
+    "python": "removeAnagrams",
+    "java": "removeAnagrams"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[["abba","baba","bbaa","cd","cd"]],"expected":["abba","cd"],"sample":true},
+    {"input":[["a","b","a"]],"expected":["a","b","a"],"sample":true},
+    {"input":[["a"]],"expected":["a"]},
+    {"input":[["a","a"]],"expected":["a"]},
+    {"input":[["ab","ba"]],"expected":["ab"]},
+    {"input":[["abc","def"]],"expected":["abc","def"]},
+    {"input":[["ab","ba","cd","dc","ab"]],"expected":["ab","cd","ab"]},
+    {"input":[["aa","a"]],"expected":["aa","a"]},
+    {"input":[["abc","bca","cab"]],"expected":["abc"]},
+    {"input":[["x","y","y","z"]],"expected":["x","y","z"]}
+  ]
+}

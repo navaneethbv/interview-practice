@@ -1,0 +1,31 @@
+{
+  "id": "minimized-maximum-of-products-distributed-to-any-store",
+  "style": "leetcode",
+  "function": {
+    "python": "minimizedMaximum",
+    "java": "minimizedMaximum"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "quantities",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[6,[11,6]],"expected":3,"sample":true},
+    {"input":[2,[5,8]],"expected":8,"sample":true},
+    {"input":[1,[1]],"expected":1},
+    {"input":[10,[1]],"expected":1},
+    {"input":[3,[10]],"expected":4},
+    {"input":[3,[2,2,2]],"expected":2},
+    {"input":[7,[15,10,10]],"expected":5},
+    {"input":[100,[100000]],"expected":1000},
+    {"input":[5,[1,1]],"expected":1},
+    {"input":[4,[9,9]],"expected":5}
+  ]
+}

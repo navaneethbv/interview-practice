@@ -1,0 +1,106 @@
+{
+  "id": "maximum-number-of-words-found-in-sentences",
+  "style": "leetcode",
+  "function": {
+    "python": "mostWordsFound",
+    "java": "mostWordsFound"
+  },
+  "params": [
+    {
+      "name": "sentences",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          "one two",
+          "three four five",
+          "six"
+        ]
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "hello"
+        ]
+      ],
+      "expected": 1,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "a",
+          "b"
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          "a b"
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          "a b c",
+          "d e f"
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          "x",
+          "a b"
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          "abc def ghi jkl"
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        [
+          "a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a"
+        ]
+      ],
+      "expected": 50
+    },
+    {
+      "input": [
+        [
+          "longword",
+          "x y"
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          "a b",
+          "c"
+        ]
+      ],
+      "expected": 2
+    }
+  ]
+}

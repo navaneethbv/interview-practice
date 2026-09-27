@@ -1,0 +1,27 @@
+{
+  "id": "split-a-string-in-balanced-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "balancedStringSplit",
+    "java": "balancedStringSplit"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["LRLR"],"expected":2,"sample":true},
+    {"input":["LLRR"],"expected":1,"sample":true},
+    {"input":["LR"],"expected":1},
+    {"input":["RL"],"expected":1},
+    {"input":["RLRRLLRLRL"],"expected":4},
+    {"input":["RLLLLRRRLR"],"expected":3},
+    {"input":["LLLLRRRR"],"expected":1},
+    {"input":["RRLLRRLL"],"expected":2},
+    {"input":["LRRLLR"],"expected":3},
+    {"input":["RLLR"],"expected":2}
+  ]
+}

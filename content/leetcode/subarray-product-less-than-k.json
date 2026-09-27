@@ -1,0 +1,31 @@
+{
+  "id": "subarray-product-less-than-k",
+  "style": "leetcode",
+  "function": {
+    "python": "numSubarrayProductLessThanK",
+    "java": "numSubarrayProductLessThanK"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,3,4],10],"expected":4,"sample":true},
+    {"input":[[1,1],1],"expected":0,"sample":true},
+    {"input":[[1],0],"expected":0},
+    {"input":[[1],2],"expected":1},
+    {"input":[[10],10],"expected":0},
+    {"input":[[10,5,2,6],100],"expected":8},
+    {"input":[[1,1,1],2],"expected":6},
+    {"input":[[1000,1000],1000000],"expected":2},
+    {"input":[[2,2,2],5],"expected":5},
+    {"input":[[1,2,1,2],3],"expected":8}
+  ]
+}

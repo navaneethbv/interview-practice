@@ -1,0 +1,93 @@
+{
+  "id": "rotate-string",
+  "style": "leetcode",
+  "function": {
+    "python": "rotateString",
+    "java": "rotateString"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "goal",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {
+      "input": [
+        "abcde",
+        "cdeab"
+      ],
+      "expected": true,
+      "sample": true
+    },
+    {
+      "input": [
+        "abcde",
+        "abced"
+      ],
+      "expected": false,
+      "sample": true
+    },
+    {
+      "input": [
+        "a",
+        "a"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "a",
+        "b"
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "ab",
+        "ba"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "ab",
+        "ab"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "abc",
+        "ab"
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "aaaa",
+        "aaaa"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "abab",
+        "baba"
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "abc",
+        "cab"
+      ],
+      "expected": true
+    }
+  ]
+}

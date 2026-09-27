@@ -1,0 +1,3 @@
+class Solution {
+boolean possible(int k,int[] tasks,int[] workers,int pills,int strength){ArrayDeque<Integer> q=new ArrayDeque<>();int j=0;for(int i=workers.length-k;i<workers.length;i++){int w=workers[i];while(j<k&&(long)tasks[j]<= (long)w+strength)q.addLast(tasks[j++]);if(q.isEmpty())return false;if(q.peekFirst()<=w)q.removeFirst();else if(pills>0){pills--;q.removeLast();}else return false;}return true;}public int maxTaskAssign(int[] tasks,int[] workers,int pills,int strength){Arrays.sort(tasks);Arrays.sort(workers);int l=0,r=Math.min(tasks.length,workers.length);while(l<r){int m=(l+r+1)/2;if(possible(m,tasks,workers,pills,strength))l=m;else r=m-1;}return l;}
+}

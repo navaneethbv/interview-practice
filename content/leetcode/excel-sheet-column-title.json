@@ -1,0 +1,27 @@
+{
+  "id": "excel-sheet-column-title",
+  "style": "leetcode",
+  "function": {
+    "python": "convertToTitle",
+    "java": "convertToTitle"
+  },
+  "params": [
+    {
+      "name": "columnNumber",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[28],"expected":"AB","sample":true},
+    {"input":[701],"expected":"ZY","sample":true},
+    {"input":[1],"expected":"A"},
+    {"input":[26],"expected":"Z"},
+    {"input":[27],"expected":"AA"},
+    {"input":[52],"expected":"AZ"},
+    {"input":[53],"expected":"BA"},
+    {"input":[702],"expected":"ZZ"},
+    {"input":[703],"expected":"AAA"},
+    {"input":[2147483647],"expected":"FXSHRXW"}
+  ]
+}

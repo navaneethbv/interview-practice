@@ -1,0 +1,32 @@
+{
+  "id": "remove-k-digits",
+  "style": "leetcode",
+  "function": {
+    "python": "removeKdigits",
+    "java": "removeKdigits"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["1432219",3],"expected":"1219","sample":true},
+    {"input":["10200",1],"expected":"200","sample":true},
+    {"input":["10",2],"expected":"0"},
+    {"input":["10",1],"expected":"0"},
+    {"input":["0",1],"expected":"0"},
+    {"input":["12345",2],"expected":"123"},
+    {"input":["54321",2],"expected":"321"},
+    {"input":["1111",2],"expected":"11"},
+    {"input":["1000",1],"expected":"0"},
+    {"input":["112",1],"expected":"11"},
+    {"input":["9",1],"expected":"0"}
+  ]
+}

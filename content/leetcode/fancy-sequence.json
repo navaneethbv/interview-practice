@@ -1,0 +1,65 @@
+{
+  "kind": "design",
+  "id": "fancy-sequence",
+  "style": "leetcode",
+  "className": "Fancy",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "append",
+      "java": "append",
+      "params": [
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "addAll",
+      "java": "addAll",
+      "params": [
+        {
+          "name": "inc",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "multAll",
+      "java": "multAll",
+      "params": [
+        {
+          "name": "m",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getIndex",
+      "java": "getIndex",
+      "params": [
+        {
+          "name": "idx",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["append","addAll","append","multAll","getIndex","getIndex"],"args":[[2],[3],[7],[2],[0],[1]]},"expected":[null,null,null,null,10,14],"sample":true},
+    {"input":{"ctor":[],"ops":["getIndex","addAll","append","getIndex"],"args":[[0],[9],[4],[0]]},"expected":[-1,null,null,4],"sample":true},
+    {"input":{"ctor":[],"ops":["getIndex"],"args":[[10]]},"expected":[-1]},
+    {"input":{"ctor":[],"ops":["append","getIndex"],"args":[[1],[0]]},"expected":[null,1]},
+    {"input":{"ctor":[],"ops":["append","multAll","addAll","getIndex"],"args":[[100],[100],[100],[0]]},"expected":[null,null,null,10100]},
+    {"input":{"ctor":[],"ops":["append","append","getIndex"],"args":[[2],[3],[2]]},"expected":[null,null,-1]},
+    {"input":{"ctor":[],"ops":["multAll","append","getIndex"],"args":[[7],[5],[0]]},"expected":[null,null,5]},
+    {"input":{"ctor":[],"ops":["append","addAll","append","addAll","getIndex","getIndex"],"args":[[1],[2],[3],[4],[0],[1]]},"expected":[null,null,null,null,7,7]},
+    {"input":{"ctor":[],"ops":["append","multAll","multAll","multAll","multAll","multAll","getIndex"],"args":[[100],[100],[100],[100],[100],[100],[0]]},"expected":[null,null,null,null,null,null,999993007]},
+    {"input":{"ctor":[],"ops":["append","append","multAll","getIndex"],"args":[[7],[9],[3],[1]]},"expected":[null,null,null,27]}
+  ]
+}

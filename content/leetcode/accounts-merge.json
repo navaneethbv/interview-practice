@@ -1,0 +1,28 @@
+{
+  "id": "accounts-merge",
+  "style": "leetcode",
+  "function": {
+    "python": "accountsMerge",
+    "java": "accountsMerge"
+  },
+  "params": [
+    {
+      "name": "accounts",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[[["Ana","a@x.com","b@x.com"],["Ana","b@x.com","c@x.com"]]],"expected":[["Ana","a@x.com","b@x.com","c@x.com"]],"sample":true},
+    {"input":[[["Ana","a@x.com"],["Ana","z@x.com"]]],"expected":[["Ana","a@x.com"],["Ana","z@x.com"]],"sample":true},
+    {"input":[[["A","a@x.com"]]],"expected":[["A","a@x.com"]]},
+    {"input":[[["A","a@x.com"],["A","a@x.com"]]],"expected":[["A","a@x.com"]]},
+    {"input":[[["A","a@x.com","a@x.com"]]],"expected":[["A","a@x.com"]]},
+    {"input":[[["A","b@x.com","a@x.com"]]],"expected":[["A","a@x.com","b@x.com"]]},
+    {"input":[[["A","a@x.com","b@x.com"],["A","c@x.com","d@x.com"],["A","b@x.com","c@x.com"]]],"expected":[["A","a@x.com","b@x.com","c@x.com","d@x.com"]]},
+    {"input":[[["A","a@x.com"],["B","b@x.com"]]],"expected":[["A","a@x.com"],["B","b@x.com"]]},
+    {"input":[[["A","c@x.com"],["A","b@x.com"],["A","a@x.com"]]],"expected":[["A","c@x.com"],["A","b@x.com"],["A","a@x.com"]]},
+    {"input":[[["X","z@x.com","a@x.com"],["X","a@x.com","m@x.com"],["Y","y@x.com"]]],"expected":[["X","a@x.com","m@x.com","z@x.com"],["Y","y@x.com"]]}
+  ]
+}

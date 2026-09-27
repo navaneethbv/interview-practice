@@ -1,0 +1,85 @@
+{
+  "id": "next-greater-element-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "nextGreaterElement",
+    "java": "nextGreaterElement"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        1243
+      ],
+      "expected": 1324,
+      "sample": true
+    },
+    {
+      "input": [
+        321
+      ],
+      "expected": -1,
+      "sample": true
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": -1
+    },
+    {
+      "input": [
+        12
+      ],
+      "expected": 21
+    },
+    {
+      "input": [
+        21
+      ],
+      "expected": -1
+    },
+    {
+      "input": [
+        115
+      ],
+      "expected": 151
+    },
+    {
+      "input": [
+        101
+      ],
+      "expected": 110
+    },
+    {
+      "input": [
+        230241
+      ],
+      "expected": 230412
+    },
+    {
+      "input": [
+        2147483476
+      ],
+      "expected": 2147483647
+    },
+    {
+      "input": [
+        2147483647
+      ],
+      "expected": -1
+    },
+    {
+      "input": [
+        1999999999
+      ],
+      "expected": -1
+    }
+  ]
+}

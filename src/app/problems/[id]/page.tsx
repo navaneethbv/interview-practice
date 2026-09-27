@@ -45,8 +45,11 @@ export default async function ProblemPage({ params }: { params: Promise<{ id: st
       spec={spec}
       reference={getPythonReference(id)}
       starters={starters}
-      prev={idx > 0 ? problems[idx - 1].id : null}
-      next={idx < problems.length - 1 ? problems[idx + 1].id : null}
+      nav={{
+        list: "/problems",
+        prev: idx > 0 ? `/problems/${problems[idx - 1].id}` : null,
+        next: idx < problems.length - 1 ? `/problems/${problems[idx + 1].id}` : null,
+      }}
       description={
         <>
           <h1 className="mb-3 text-xl font-semibold tracking-tight">

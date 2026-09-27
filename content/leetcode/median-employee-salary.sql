@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY company ORDER BY salary,id) AS pos,COUNT(*) OVER(PARTITION BY company) AS n FROM Employee) SELECT id,company,salary FROM ranked WHERE pos IN ((n+1)/2,(n+2)/2);

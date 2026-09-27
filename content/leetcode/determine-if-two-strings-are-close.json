@@ -1,0 +1,31 @@
+{
+  "id": "determine-if-two-strings-are-close",
+  "style": "leetcode",
+  "function": {
+    "python": "closeStrings",
+    "java": "closeStrings"
+  },
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["aab","abb"],"expected":true,"sample":true},
+    {"input":["a","b"],"expected":false,"sample":true},
+    {"input":["abc","bca"],"expected":true},
+    {"input":["a","aa"],"expected":false},
+    {"input":["abb","baa"],"expected":true},
+    {"input":["cabbba","abbccc"],"expected":true},
+    {"input":["abc","abd"],"expected":false},
+    {"input":["aabb","abbb"],"expected":false},
+    {"input":["aaa","aaa"],"expected":true},
+    {"input":["aabbcc","abcabc"],"expected":true}
+  ]
+}

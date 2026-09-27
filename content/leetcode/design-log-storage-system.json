@@ -1,0 +1,58 @@
+{
+  "kind": "design",
+  "id": "design-log-storage-system",
+  "style": "leetcode",
+  "className": "LogSystem",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "put",
+      "java": "put",
+      "params": [
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "timestamp",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "retrieve",
+      "java": "retrieve",
+      "params": [
+        {
+          "name": "start",
+          "type": "string"
+        },
+        {
+          "name": "end",
+          "type": "string"
+        },
+        {
+          "name": "granularity",
+          "type": "string"
+        }
+      ],
+      "returns": "List<int>"
+    }
+  ],
+  "compare": {
+    "validator": "logStorage"
+  },
+  "tests": [
+    {"input":{"ctor":[],"ops":["put","put","retrieve"],"args":[[1,"2017:01:01:01:00:00"],[2,"2017:01:02:00:00:00"],["2017:01:01:12:00:00","2017:01:01:13:00:00","Day"]]},"expected":[null,null,[1]],"sample":true},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[3,"2016:12:31:23:59:59"],["2017:01:01:00:00:00","2017:12:31:23:59:59","Year"]]},"expected":[null,[]],"sample":true},
+    {"input":{"ctor":[],"ops":["retrieve"],"args":[["2017:01:01:00:00:00","2017:12:31:23:59:59","Year"]]},"expected":[[]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2017:01:01:00:00:00"],["2017:01:01:00:00:00","2017:01:01:00:00:00","Second"]]},"expected":[null,[1]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2017:01:31:23:59:59"],["2017:01:01:00:00:00","2017:01:01:00:00:00","Month"]]},"expected":[null,[1]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2017:01:01:01:59:59"],["2017:01:01:01:00:00","2017:01:01:01:00:00","Hour"]]},"expected":[null,[1]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2017:01:01:00:01:59"],["2017:01:01:00:01:00","2017:01:01:00:01:00","Minute"]]},"expected":[null,[1]]},
+    {"input":{"ctor":[],"ops":["put","put","retrieve"],"args":[[2,"2017:01:01:00:00:00"],[1,"2017:01:01:00:00:00"],["2017:01:01:00:00:00","2017:01:01:00:00:00","Second"]]},"expected":[null,null,[2,1]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2000:01:01:00:00:00"],["2000:12:31:23:59:59","2017:01:01:00:00:00","Year"]]},"expected":[null,[1]]},
+    {"input":{"ctor":[],"ops":["put","retrieve"],"args":[[1,"2017:02:01:00:00:00"],["2017:01:01:00:00:00","2017:01:31:23:59:59","Day"]]},"expected":[null,[]]}
+  ]
+}

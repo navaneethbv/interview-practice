@@ -1,0 +1,3 @@
+class Solution {
+public int[] minInterval(int[][] intervals,int[] queries){Arrays.sort(intervals,Comparator.comparingInt(a->a[0]));Integer[]order=new Integer[queries.length];for(int i=0;i<order.length;i++)order[i]=i;Arrays.sort(order,Comparator.comparingInt(i->queries[i]));PriorityQueue<int[]>q=new PriorityQueue<>(Comparator.comparingInt(a->a[0]));int[]out=new int[queries.length];Arrays.fill(out,-1);int p=0;for(int i:order){int x=queries[i];while(p<intervals.length&&intervals[p][0]<=x){int[]v=intervals[p++];q.add(new int[]{v[1]-v[0]+1,v[1]});}while(!q.isEmpty()&&q.peek()[1]<x)q.remove();if(!q.isEmpty())out[i]=q.peek()[0];}return out;}
+}

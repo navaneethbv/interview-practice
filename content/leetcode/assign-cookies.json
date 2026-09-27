@@ -1,0 +1,31 @@
+{
+  "id": "assign-cookies",
+  "style": "leetcode",
+  "function": {
+    "python": "findContentChildren",
+    "java": "findContentChildren"
+  },
+  "params": [
+    {
+      "name": "g",
+      "type": "int[]"
+    },
+    {
+      "name": "s",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,3],[1,2,3]],"expected":2,"sample":true},
+    {"input":[[3,4],[1,2]],"expected":0,"sample":true},
+    {"input":[[1],[]],"expected":0},
+    {"input":[[1],[1]],"expected":1},
+    {"input":[[2],[1]],"expected":0},
+    {"input":[[1,1],[1]],"expected":1},
+    {"input":[[1,2,3],[3]],"expected":1},
+    {"input":[[3,2,1],[1,2,3]],"expected":3},
+    {"input":[[2147483647],[2147483647]],"expected":1},
+    {"input":[[1,2],[1,1,1]],"expected":1}
+  ]
+}

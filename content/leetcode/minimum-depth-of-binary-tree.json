@@ -1,0 +1,27 @@
+{
+  "function": {
+    "python": "minDepth",
+    "java": "minDepth"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "int",
+  "id": "minimum-depth-of-binary-tree",
+  "style": "leetcode",
+  "tests": [
+    {"input":[[3,9,20,null,null,15,7]],"sample":true,"expected":2},
+    {"input":[[1,null,2,null,3]],"sample":true,"expected":3},
+    {"input":[[]],"expected":0},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,2]],"expected":2},
+    {"input":[[1,2,3]],"expected":2},
+    {"input":[[1,2,null,3,4]],"expected":3},
+    {"input":[[0,-1,1,null,null,2,3]],"expected":2},
+    {"input":[[1,null,2,3]],"expected":3},
+    {"input":[[1,2,3,4,null,null,5]],"expected":3}
+  ]
+}

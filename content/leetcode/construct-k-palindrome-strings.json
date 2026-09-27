@@ -1,0 +1,100 @@
+{
+  "id": "construct-k-palindrome-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "canConstruct",
+    "java": "canConstruct"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {
+      "input": [
+        "annabelle",
+        2
+      ],
+      "expected": true,
+      "sample": true
+    },
+    {
+      "input": [
+        "abc",
+        2
+      ],
+      "expected": false,
+      "sample": true
+    },
+    {
+      "input": [
+        "a",
+        1
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "a",
+        2
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "aa",
+        1
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "aa",
+        2
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "abc",
+        3
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "aabb",
+        1
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "aabbc",
+        1
+      ],
+      "expected": true
+    },
+    {
+      "input": [
+        "aabbcd",
+        1
+      ],
+      "expected": false
+    },
+    {
+      "input": [
+        "abcabc",
+        4
+      ],
+      "expected": true
+    }
+  ]
+}

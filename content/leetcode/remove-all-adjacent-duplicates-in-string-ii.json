@@ -1,0 +1,100 @@
+{
+  "id": "remove-all-adjacent-duplicates-in-string-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "removeDuplicates",
+    "java": "removeDuplicates"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {
+      "input": [
+        "deeedbbcccbdaa",
+        3
+      ],
+      "expected": "aa",
+      "sample": true
+    },
+    {
+      "input": [
+        "abcd",
+        2
+      ],
+      "expected": "abcd",
+      "sample": true
+    },
+    {
+      "input": [
+        "a",
+        2
+      ],
+      "expected": "a"
+    },
+    {
+      "input": [
+        "aa",
+        2
+      ],
+      "expected": ""
+    },
+    {
+      "input": [
+        "aaa",
+        2
+      ],
+      "expected": "a"
+    },
+    {
+      "input": [
+        "aaaa",
+        2
+      ],
+      "expected": ""
+    },
+    {
+      "input": [
+        "aabbaa",
+        2
+      ],
+      "expected": ""
+    },
+    {
+      "input": [
+        "abbba",
+        3
+      ],
+      "expected": "aa"
+    },
+    {
+      "input": [
+        "pbbcggttciiippooaais",
+        2
+      ],
+      "expected": "ps"
+    },
+    {
+      "input": [
+        "abc",
+        10
+      ],
+      "expected": "abc"
+    },
+    {
+      "input": [
+        "aaabbb",
+        3
+      ],
+      "expected": ""
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "fizz-buzz",
+  "style": "leetcode",
+  "function": {
+    "python": "fizzBuzz",
+    "java": "fizzBuzz"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[5],"expected":["1","2","Fizz","4","Buzz"],"sample":true},
+    {"input":[1],"expected":["1"],"sample":true},
+    {"input":[2],"expected":["1","2"]},
+    {"input":[3],"expected":["1","2","Fizz"]},
+    {"input":[4],"expected":["1","2","Fizz","4"]},
+    {"input":[6],"expected":["1","2","Fizz","4","Buzz","Fizz"]},
+    {"input":[10],"expected":["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz"]},
+    {"input":[15],"expected":["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]},
+    {"input":[16],"expected":["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16"]},
+    {"input":[30],"expected":["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz","16","17","Fizz","19","Buzz","Fizz","22","23","Fizz","Buzz","26","Fizz","28","29","FizzBuzz"]}
+  ]
+}

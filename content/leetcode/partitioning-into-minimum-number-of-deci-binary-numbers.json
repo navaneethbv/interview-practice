@@ -1,0 +1,27 @@
+{
+  "id": "partitioning-into-minimum-number-of-deci-binary-numbers",
+  "style": "leetcode",
+  "function": {
+    "python": "minPartitions",
+    "java": "minPartitions"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["32"],"expected":3,"sample":true},
+    {"input":["11"],"expected":1,"sample":true},
+    {"input":["1"],"expected":1},
+    {"input":["9"],"expected":9},
+    {"input":["10"],"expected":1},
+    {"input":["1000"],"expected":1},
+    {"input":["82734"],"expected":8},
+    {"input":["99999"],"expected":9},
+    {"input":["101010"],"expected":1},
+    {"input":["1234567890"],"expected":9}
+  ]
+}

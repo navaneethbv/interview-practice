@@ -1,0 +1,28 @@
+{
+  "id": "binary-tree-maximum-path-sum",
+  "style": "leetcode",
+  "function": {
+    "python": "maxPathSum",
+    "java": "maxPathSum"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,-1,4]],"expected":6,"sample":true},
+    {"input":[[-8,-2,-5]],"expected":-2,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[-1]],"expected":-1},
+    {"input":[[0]],"expected":0},
+    {"input":[[1,2,3]],"expected":6},
+    {"input":[[-10,9,20,null,null,15,7]],"expected":42},
+    {"input":[[5,4,8,11,null,13,4,7,2,null,null,null,1]],"expected":48},
+    {"input":[[1,-2,3]],"expected":4},
+    {"input":[[0,-1,-2]],"expected":0},
+    {"input":[[-3,-2,-1]],"expected":-1}
+  ]
+}

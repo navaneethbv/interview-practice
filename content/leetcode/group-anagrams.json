@@ -1,0 +1,28 @@
+{
+  "id": "group-anagrams",
+  "style": "leetcode",
+  "function": {
+    "python": "groupAnagrams",
+    "java": "groupAnagrams"
+  },
+  "params": [
+    {
+      "name": "strs",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unorderedDeep",
+  "tests": [
+    {"input":[["ab","ba","cd"]],"expected":[["ab","ba"],["cd"]],"sample":true},
+    {"input":[["",""]],"expected":[["",""]],"sample":true},
+    {"input":[["a"]],"expected":[["a"]]},
+    {"input":[["ab","ac"]],"expected":[["ab"],["ac"]]},
+    {"input":[["a","a","b"]],"expected":[["a","a"],["b"]]},
+    {"input":[["abc","bca","cab","bac"]],"expected":[["abc","bca","cab","bac"]]},
+    {"input":[["","a",""]],"expected":[["",""],["a"]]},
+    {"input":[["aa","a"]],"expected":[["aa"],["a"]]},
+    {"input":[["eat","tea","tan","ate","nat","bat"]],"expected":[["eat","tea","ate"],["tan","nat"],["bat"]]},
+    {"input":[["zzz","zz","z"]],"expected":[["zzz"],["zz"],["z"]]}
+  ]
+}

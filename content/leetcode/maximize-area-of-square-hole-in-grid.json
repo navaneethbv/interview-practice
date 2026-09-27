@@ -1,0 +1,187 @@
+{
+  "id": "maximize-area-of-square-hole-in-grid",
+  "style": "leetcode",
+  "function": {
+    "python": "maximizeSquareHoleArea",
+    "java": "maximizeSquareHoleArea"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "hBars",
+      "type": "int[]"
+    },
+    {
+      "name": "vBars",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        3,
+        3,
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "expected": 9,
+      "sample": true
+    },
+    {
+      "input": [
+        4,
+        4,
+        [
+          2,
+          4
+        ],
+        [
+          2
+        ]
+      ],
+      "expected": 4,
+      "sample": true
+    },
+    {
+      "input": [
+        1,
+        1,
+        [
+          2
+        ],
+        [
+          2
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        4,
+        4,
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          2
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        5,
+        5,
+        [
+          4,
+          2,
+          3
+        ],
+        [
+          5,
+          3,
+          4
+        ]
+      ],
+      "expected": 16
+    },
+    {
+      "input": [
+        5,
+        5,
+        [
+          2,
+          4,
+          6
+        ],
+        [
+          2,
+          4,
+          6
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        2,
+        3,
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": 9
+    },
+    {
+      "input": [
+        10,
+        10,
+        [
+          2,
+          3,
+          7,
+          8,
+          9
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": 16
+    },
+    {
+      "input": [
+        1000000000,
+        1000000000,
+        [
+          1000000000
+        ],
+        [
+          999999999
+        ]
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        3,
+        3,
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2
+        ]
+      ],
+      "expected": 16
+    }
+  ]
+}

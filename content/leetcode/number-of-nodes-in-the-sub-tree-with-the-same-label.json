@@ -1,0 +1,261 @@
+{
+  "id": "number-of-nodes-in-the-sub-tree-with-the-same-label",
+  "style": "leetcode",
+  "function": {
+    "python": "countSubTrees",
+    "java": "countSubTrees"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int[][]"
+    },
+    {
+      "name": "labels",
+      "type": "string"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "abaa"
+      ],
+      "expected": [
+        3,
+        1,
+        1,
+        1
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "aaa"
+      ],
+      "expected": [
+        3,
+        2,
+        1
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        1,
+        [],
+        "z"
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        "ab"
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          [
+            0,
+            1
+          ]
+        ],
+        "aa"
+      ],
+      "expected": [
+        2,
+        1
+      ]
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "aaaa"
+      ],
+      "expected": [
+        4,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        4,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "abab"
+      ],
+      "expected": [
+        2,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "abcba"
+      ],
+      "expected": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        3,
+        [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "aba"
+      ],
+      "expected": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        7,
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "abaedcd"
+      ],
+      "expected": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "id": "next-greater-node-in-linked-list",
+  "style": "leetcode",
+  "function": {
+    "python": "nextLargerNodes",
+    "java": "nextLargerNodes"
+  },
+  "params": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {
+      "input": [
+        [
+          2,
+          1,
+          5
+        ]
+      ],
+      "expected": [
+        5,
+        5,
+        0
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          3,
+          3,
+          2
+        ]
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": [
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ]
+      ],
+      "expected": [
+        2,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          3,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          2,
+          7,
+          4,
+          3,
+          5
+        ]
+      ],
+      "expected": [
+        7,
+        0,
+        5,
+        5,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          2,
+          1
+        ]
+      ],
+      "expected": [
+        2,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        [
+          1000000000,
+          1,
+          1000000000
+        ]
+      ],
+      "expected": [
+        0,
+        1000000000,
+        0
+      ]
+    }
+  ]
+}

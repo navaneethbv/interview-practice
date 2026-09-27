@@ -1,0 +1,27 @@
+{
+  "id": "number-of-squareful-arrays",
+  "style": "leetcode",
+  "function": {
+    "python": "numSquarefulPerms",
+    "java": "numSquarefulPerms"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,17,8]],"expected":2,"sample":true},
+    {"input":[[2,2,2]],"expected":1,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[0,0]],"expected":1},
+    {"input":[[1,1]],"expected":0},
+    {"input":[[1,3]],"expected":2},
+    {"input":[[0,1,0]],"expected":3},
+    {"input":[[2,2]],"expected":1},
+    {"input":[[1,8,8,17]],"expected":6},
+    {"input":[[0,0,1,1]],"expected":3}
+  ]
+}

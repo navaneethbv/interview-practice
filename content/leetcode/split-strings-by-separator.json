@@ -1,0 +1,31 @@
+{
+  "id": "split-strings-by-separator",
+  "style": "leetcode",
+  "function": {
+    "python": "splitWordsBySeparator",
+    "java": "splitWordsBySeparator"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "List<string>"
+    },
+    {
+      "name": "separator",
+      "type": "char"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[["a.b","..c."],"."],"expected":["a","b","c"],"sample":true},
+    {"input":[["abc"],"#"],"expected":["abc"],"sample":true},
+    {"input":[["."],"."],"expected":[]},
+    {"input":[["..."],"."],"expected":[]},
+    {"input":[["a","b"],"."],"expected":["a","b"]},
+    {"input":[["a##b"],"#"],"expected":["a","b"]},
+    {"input":[["#a#"],"#"],"expected":["a"]},
+    {"input":[["a,b","c,d"],","],"expected":["a","b","c","d"]},
+    {"input":[["a|b|c"],"|"],"expected":["a","b","c"]},
+    {"input":[["..a","b.."],"."],"expected":["a","b"]}
+  ]
+}

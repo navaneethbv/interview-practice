@@ -1,0 +1,40 @@
+{
+  "kind": "sql",
+  "id": "rising-temperature",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Weather",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "recordDate",
+          "type": "TEXT"
+        },
+        {
+          "name": "temperature",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "id"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Weather":[[1,"2024-03-01",10],[2,"2024-03-02",12],[3,"2024-03-04",15]]}},"expected":[[2]],"sample":true},
+    {"input":{"tables":{"Weather":[[9,"2024-02-29",5],[8,"2024-03-01",6]]}},"expected":[[8]],"sample":true},
+    {"input":{"tables":{"Weather":[]}},"expected":[]},
+    {"input":{"tables":{"Weather":[[1,"2024-01-01",0]]}},"expected":[]},
+    {"input":{"tables":{"Weather":[[1,"2024-01-01",1],[2,"2024-01-02",1]]}},"expected":[]},
+    {"input":{"tables":{"Weather":[[1,"2024-01-01",2],[2,"2024-01-02",1]]}},"expected":[]},
+    {"input":{"tables":{"Weather":[[1,"2023-12-31",-5],[2,"2024-01-01",-2]]}},"expected":[[2]]},
+    {"input":{"tables":{"Weather":[[3,"2024-01-03",3],[1,"2024-01-01",1],[2,"2024-01-02",2]]}},"expected":[[3],[2]]},
+    {"input":{"tables":{"Weather":[[1,"2024-01-01",0],[2,"2024-01-03",2]]}},"expected":[]},
+    {"input":{"tables":{"Weather":[[1,"2024-01-31",10],[2,"2024-02-01",11],[3,"2024-02-02",9]]}},"expected":[[2]]}
+  ]
+}

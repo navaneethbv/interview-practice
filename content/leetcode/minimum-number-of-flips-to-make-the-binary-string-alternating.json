@@ -1,0 +1,28 @@
+{
+  "id": "minimum-number-of-flips-to-make-the-binary-string-alternating",
+  "style": "leetcode",
+  "function": {
+    "python": "minFlips",
+    "java": "minFlips"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["111000"],"expected":2,"sample":true},
+    {"input":["010"],"expected":0,"sample":true},
+    {"input":["0"],"expected":0},
+    {"input":["1"],"expected":0},
+    {"input":["00"],"expected":1},
+    {"input":["01"],"expected":0},
+    {"input":["1110"],"expected":1},
+    {"input":["001"],"expected":0},
+    {"input":["00000"],"expected":2},
+    {"input":["1001"],"expected":2},
+    {"input":["010101"],"expected":0}
+  ]
+}

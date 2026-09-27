@@ -1,0 +1,27 @@
+{
+  "id": "image-smoother",
+  "style": "leetcode",
+  "function": {
+    "python": "imageSmoother",
+    "java": "imageSmoother"
+  },
+  "params": [
+    {
+      "name": "img",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[][]",
+  "tests": [
+    {"input":[[[1,2],[3,4]]],"expected":[[2,2],[2,2]],"sample":true},
+    {"input":[[[9]]],"expected":[[9]],"sample":true},
+    {"input":[[[0]]],"expected":[[0]]},
+    {"input":[[[0,255]]],"expected":[[127,127]]},
+    {"input":[[[1,2,9]]],"expected":[[1,4,5]]},
+    {"input":[[[0],[255]]],"expected":[[127],[127]]},
+    {"input":[[[1,1,1],[1,0,1],[1,1,1]]],"expected":[[0,0,0],[0,0,0],[0,0,0]]},
+    {"input":[[[100,200,100],[200,50,200],[100,200,100]]],"expected":[[137,141,137],[141,138,141],[137,141,137]]},
+    {"input":[[[0,0],[0,0]]],"expected":[[0,0],[0,0]]},
+    {"input":[[[255,255],[255,255]]],"expected":[[255,255],[255,255]]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "minimum-initial-energy-to-finish-tasks",
+  "style": "leetcode",
+  "function": {
+    "python": "minimumEffort",
+    "java": "minimumEffort"
+  },
+  "params": [
+    {
+      "name": "tasks",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,2],[2,4],[4,8]]],"expected":8,"sample":true},
+    {"input":[[[3,3],[2,2]]],"expected":5,"sample":true},
+    {"input":[[[1,1]]],"expected":1},
+    {"input":[[[1,100]]],"expected":100},
+    {"input":[[[1,2],[1,2]]],"expected":3},
+    {"input":[[[5,9],[2,3],[4,8]]],"expected":13},
+    {"input":[[[1,5],[1,5],[1,5]]],"expected":7},
+    {"input":[[[10,10],[1,100]]],"expected":100},
+    {"input":[[[2,4],[4,7],[3,8]]],"expected":11},
+    {"input":[[[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000],[10000,10000]]],"expected":100000}
+  ]
+}

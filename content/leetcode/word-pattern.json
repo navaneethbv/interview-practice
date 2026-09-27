@@ -1,0 +1,31 @@
+{
+  "id": "word-pattern",
+  "style": "leetcode",
+  "function": {
+    "python": "wordPattern",
+    "java": "wordPattern"
+  },
+  "params": [
+    {
+      "name": "pattern",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["abba","red blue blue red"],"expected":true,"sample":true},
+    {"input":["ab","red red"],"expected":false,"sample":true},
+    {"input":["a","word"],"expected":true},
+    {"input":["aa","word word"],"expected":true},
+    {"input":["aa","word other"],"expected":false},
+    {"input":["ab","one two"],"expected":true},
+    {"input":["abc","one two"],"expected":false},
+    {"input":["a","one two"],"expected":false},
+    {"input":["abba","dog cat cat fish"],"expected":false},
+    {"input":["aaaa","dog dog dog dog"],"expected":true}
+  ]
+}

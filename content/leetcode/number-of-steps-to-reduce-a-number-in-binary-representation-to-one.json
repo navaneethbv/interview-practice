@@ -1,0 +1,27 @@
+{
+  "id": "number-of-steps-to-reduce-a-number-in-binary-representation-to-one",
+  "style": "leetcode",
+  "function": {
+    "python": "numSteps",
+    "java": "numSteps"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["11"],"expected":3,"sample":true},
+    {"input":["1"],"expected":0,"sample":true},
+    {"input":["10"],"expected":1},
+    {"input":["100"],"expected":2},
+    {"input":["101"],"expected":5},
+    {"input":["1101"],"expected":6},
+    {"input":["111"],"expected":4},
+    {"input":["1000"],"expected":3},
+    {"input":["111111"],"expected":7},
+    {"input":["10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"],"expected":100}
+  ]
+}

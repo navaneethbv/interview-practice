@@ -1,0 +1,31 @@
+{
+  "id": "k-diff-pairs-in-an-array",
+  "style": "leetcode",
+  "function": {
+    "python": "findPairs",
+    "java": "findPairs"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,3,1,5],2],"expected":2,"sample":true},
+    {"input":[[2,2,2],0],"expected":1,"sample":true},
+    {"input":[[1],0],"expected":0},
+    {"input":[[1],1],"expected":0},
+    {"input":[[1,2,3],1],"expected":2},
+    {"input":[[1,1,2,2],0],"expected":2},
+    {"input":[[-2,0,2],2],"expected":2},
+    {"input":[[1,3,5],0],"expected":0},
+    {"input":[[1,2,3],10],"expected":0},
+    {"input":[[0,10000000],10000000],"expected":1}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "palindrome-pairs",
+  "style": "leetcode",
+  "function": {
+    "python": "palindromePairs",
+    "java": "palindromePairs"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<List<int>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["bat","tab","cat"]],"expected":[[0,1],[1,0]],"sample":true},
+    {"input":[["a",""]],"expected":[[0,1],[1,0]],"sample":true},
+    {"input":[["a"]],"expected":[]},
+    {"input":[[""]],"expected":[]},
+    {"input":[["ab","ba"]],"expected":[[0,1],[1,0]]},
+    {"input":[["abc","def"]],"expected":[]},
+    {"input":[["abcd","dcba","lls","s","sssll"]],"expected":[[0,1],[1,0],[2,4],[3,2]]},
+    {"input":[["a","b",""]],"expected":[[0,2],[1,2],[2,0],[2,1]]},
+    {"input":[["ab","a"]],"expected":[[0,1]]},
+    {"input":[["aa","aaa","aaaa"]],"expected":[[0,1],[0,2],[1,0],[1,2],[2,0],[2,1]]}
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "kind": "design",
+  "id": "design-task-manager",
+  "style": "leetcode",
+  "className": "TaskManager",
+  "ctorParams": [
+    {
+      "name": "tasks",
+      "type": "List<List<int>>"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add",
+      "java": "add",
+      "params": [
+        {
+          "name": "userId",
+          "type": "int"
+        },
+        {
+          "name": "taskId",
+          "type": "int"
+        },
+        {
+          "name": "priority",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "edit",
+      "java": "edit",
+      "params": [
+        {
+          "name": "taskId",
+          "type": "int"
+        },
+        {
+          "name": "newPriority",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "rmv",
+      "java": "rmv",
+      "params": [
+        {
+          "name": "taskId",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "execTop",
+      "java": "execTop",
+      "params": [],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[[1,10,5],[2,20,5]]],"ops":["execTop","edit","execTop","execTop"],"args":[[],[10,9],[],[]]},"expected":[2,null,1,-1],"sample":true},
+    {"input":{"ctor":[[[3,1,9]]],"ops":["rmv","add","execTop"],"args":[[1],[7,1,2],[]]},"expected":[null,null,7],"sample":true},
+    {"input":{"ctor":[[[0,0,0]]],"ops":["execTop","execTop"],"args":[[],[]]},"expected":[0,-1]},
+    {"input":{"ctor":[[[1,1,9],[2,2,5]]],"ops":["edit","execTop"],"args":[[1,1],[]]},"expected":[null,2]},
+    {"input":{"ctor":[[[1,1,1],[2,2,5]]],"ops":["edit","edit","execTop"],"args":[[1,10],[1,1],[]]},"expected":[null,null,2]},
+    {"input":{"ctor":[[[1,1,2]]],"ops":["add","execTop"],"args":[[4,2,1000000000],[]]},"expected":[null,4]},
+    {"input":{"ctor":[[[1,1,5],[1,2,3]]],"ops":["rmv","execTop"],"args":[[1],[]]},"expected":[null,1]},
+    {"input":{"ctor":[[[7,1,5]]],"ops":["execTop","add","execTop"],"args":[[],[8,1,5],[]]},"expected":[7,null,8]},
+    {"input":{"ctor":[[[1,1,3]]],"ops":["add","edit","rmv","execTop"],"args":[[2,2,4],[2,9],[2],[]]},"expected":[null,null,null,1]},
+    {"input":{"ctor":[[[3,3,7],[1,1,7],[2,2,7]]],"ops":["execTop","execTop","execTop"],"args":[[],[],[]]},"expected":[3,2,1]}
+  ]
+}

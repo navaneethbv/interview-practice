@@ -1,0 +1,27 @@
+{
+  "id": "sum-of-all-subset-xor-totals",
+  "style": "leetcode",
+  "function": {
+    "python": "subsetXORSum",
+    "java": "subsetXORSum"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,3]],"expected":6,"sample":true},
+    {"input":[[5]],"expected":5,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,1]],"expected":2},
+    {"input":[[2,3]],"expected":6},
+    {"input":[[5,1,6]],"expected":28},
+    {"input":[[3,4,5,6,7,8]],"expected":480},
+    {"input":[[20,20,20,20,20,20,20,20,20,20,20,20]],"expected":40960},
+    {"input":[[1,2,4,8]],"expected":120},
+    {"input":[[7,7,7]],"expected":28}
+  ]
+}

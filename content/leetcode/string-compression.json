@@ -1,0 +1,32 @@
+{
+  "id": "string-compression",
+  "style": "leetcode",
+  "function": {
+    "python": "compress",
+    "java": "compress"
+  },
+  "params": [
+    {
+      "name": "chars",
+      "type": "char[]"
+    }
+  ],
+  "returns": "int",
+  "output": {
+    "arg": 0,
+    "prefix": true
+  },
+  "tests": [
+    {"input":[["a","a","b","c","c","c"]],"expected":["a","2","b","c","3"],"sample":true},
+    {"input":[["x","x","x","x","x","x","x","x","x","x","x","x"]],"expected":["x","1","2"],"sample":true},
+    {"input":[["a"]],"expected":["a"]},
+    {"input":[["a","b"]],"expected":["a","b"]},
+    {"input":[["a","a"]],"expected":["a","2"]},
+    {"input":[["a","a","a"]],"expected":["a","3"]},
+    {"input":[["a","a","b","b"]],"expected":["a","2","b","2"]},
+    {"input":[["a","a","a","a","a","a","a","a","a","a","b"]],"expected":["a","1","0","b"]},
+    {"input":[["1","1","1","2","2","3"]],"expected":["1","3","2","2","3"]},
+    {"input":[["!","?","!","?"]],"expected":["!","?","!","?"]},
+    {"input":[["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a"]],"expected":["a","1","0","0"]}
+  ]
+}

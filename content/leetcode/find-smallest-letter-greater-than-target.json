@@ -1,0 +1,31 @@
+{
+  "id": "find-smallest-letter-greater-than-target",
+  "style": "leetcode",
+  "function": {
+    "python": "nextGreatestLetter",
+    "java": "nextGreatestLetter"
+  },
+  "params": [
+    {
+      "name": "letters",
+      "type": "char[]"
+    },
+    {
+      "name": "target",
+      "type": "char"
+    }
+  ],
+  "returns": "char",
+  "tests": [
+    {"input":[["c","f","j"],"f"],"expected":"j","sample":true},
+    {"input":[["c","f","j"],"z"],"expected":"c","sample":true},
+    {"input":[["a","b"],"a"],"expected":"b"},
+    {"input":[["a","b"],"b"],"expected":"a"},
+    {"input":[["c","f"],"a"],"expected":"c"},
+    {"input":[["a","a","b"],"a"],"expected":"b"},
+    {"input":[["a","b","b"],"b"],"expected":"a"},
+    {"input":[["x","z"],"y"],"expected":"z"},
+    {"input":[["a","z"],"z"],"expected":"a"},
+    {"input":[["b","d","f"],"c"],"expected":"d"}
+  ]
+}

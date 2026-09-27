@@ -1,0 +1,85 @@
+{
+  "id": "base-7",
+  "style": "leetcode",
+  "function": {
+    "python": "convertToBase7",
+    "java": "convertToBase7"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {
+      "input": [
+        100
+      ],
+      "expected": "202",
+      "sample": true
+    },
+    {
+      "input": [
+        -8
+      ],
+      "expected": "-11",
+      "sample": true
+    },
+    {
+      "input": [
+        0
+      ],
+      "expected": "0"
+    },
+    {
+      "input": [
+        1
+      ],
+      "expected": "1"
+    },
+    {
+      "input": [
+        6
+      ],
+      "expected": "6"
+    },
+    {
+      "input": [
+        7
+      ],
+      "expected": "10"
+    },
+    {
+      "input": [
+        49
+      ],
+      "expected": "100"
+    },
+    {
+      "input": [
+        -1
+      ],
+      "expected": "-1"
+    },
+    {
+      "input": [
+        -7
+      ],
+      "expected": "-10"
+    },
+    {
+      "input": [
+        10000000
+      ],
+      "expected": "150666343"
+    },
+    {
+      "input": [
+        -10000000
+      ],
+      "expected": "-150666343"
+    }
+  ]
+}

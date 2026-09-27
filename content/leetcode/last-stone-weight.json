@@ -1,0 +1,28 @@
+{
+  "id": "last-stone-weight",
+  "style": "leetcode",
+  "function": {
+    "python": "lastStoneWeight",
+    "java": "lastStoneWeight"
+  },
+  "params": [
+    {
+      "name": "stones",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,5,9]],"expected":2,"sample":true},
+    {"input":[[4,4]],"expected":0,"sample":true},
+    {"input":[[1]],"expected":1},
+    {"input":[[1,2]],"expected":1},
+    {"input":[[1,1,1]],"expected":1},
+    {"input":[[2,7,4,1,8,1]],"expected":1},
+    {"input":[[10,1,1,1]],"expected":7},
+    {"input":[[1000,999]],"expected":1},
+    {"input":[[3,3,3,3]],"expected":0},
+    {"input":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"expected":0},
+    {"input":[[9,3,2,10]],"expected":0}
+  ]
+}

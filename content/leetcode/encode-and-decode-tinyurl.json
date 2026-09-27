@@ -1,0 +1,33 @@
+{
+  "function": {
+    "python": "encode",
+    "java": "encode"
+  },
+  "params": [
+    {
+      "name": "longUrl",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "roundTrip": {
+    "className": "Codec",
+    "encode": "encode",
+    "decode": "decode",
+    "sameInstance": true
+  },
+  "id": "encode-and-decode-tinyurl",
+  "style": "leetcode",
+  "tests": [
+    {"input":["https://example.org/articles/trees"],"sample":true,"expected":"https://example.org/articles/trees"},
+    {"input":["https://a.test/x?tag=one&tag=two"],"sample":true,"expected":"https://a.test/x?tag=one&tag=two"},
+    {"input":["http://localhost/a"],"expected":"http://localhost/a"},
+    {"input":["https://example.com/"],"expected":"https://example.com/"},
+    {"input":["https://example.com/a/b/c"],"expected":"https://example.com/a/b/c"},
+    {"input":["https://example.com/?q=hello%20world"],"expected":"https://example.com/?q=hello%20world"},
+    {"input":["https://example.com/#part-2"],"expected":"https://example.com/#part-2"},
+    {"input":["https://x.test:8443/p"],"expected":"https://x.test:8443/p"},
+    {"input":["https://example.org/UPPER_case-42"],"expected":"https://example.org/UPPER_case-42"},
+    {"input":["https://example.com/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/"],"expected":"https://example.com/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/long/"}
+  ]
+}

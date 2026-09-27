@@ -1,0 +1,27 @@
+{
+  "id": "rotated-digits",
+  "style": "leetcode",
+  "function": {
+    "python": "rotatedDigits",
+    "java": "rotatedDigits"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[10],"expected":4,"sample":true},
+    {"input":[1],"expected":0,"sample":true},
+    {"input":[2],"expected":1},
+    {"input":[5],"expected":2},
+    {"input":[9],"expected":4},
+    {"input":[20],"expected":9},
+    {"input":[100],"expected":40},
+    {"input":[10000],"expected":2320},
+    {"input":[857],"expected":247},
+    {"input":[888],"expected":259}
+  ]
+}

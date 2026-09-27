@@ -1,0 +1,134 @@
+{
+  "id": "boats-to-save-people",
+  "style": "leetcode",
+  "function": {
+    "python": "numRescueBoats",
+    "java": "numRescueBoats"
+  },
+  "params": [
+    {
+      "name": "people",
+      "type": "int[]"
+    },
+    {
+      "name": "limit",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          2,
+          2,
+          3
+        ],
+        3
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        2
+      ],
+      "expected": 2,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        1
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        3
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          2,
+          2
+        ],
+        3
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          3,
+          2,
+          2,
+          1
+        ],
+        3
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          3,
+          5,
+          3,
+          4
+        ],
+        5
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        [
+          2,
+          2,
+          2
+        ],
+        4
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          1,
+          1,
+          2,
+          2,
+          3
+        ],
+        4
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          30000,
+          1
+        ],
+        30000
+      ],
+      "expected": 2
+    }
+  ]
+}

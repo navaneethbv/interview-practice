@@ -1,0 +1,27 @@
+{
+  "id": "check-if-binary-string-has-at-most-one-segment-of-ones",
+  "style": "leetcode",
+  "function": {
+    "python": "checkOnesSegment",
+    "java": "checkOnesSegment"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["1100"],"expected":true,"sample":true},
+    {"input":["1001"],"expected":false,"sample":true},
+    {"input":["1"],"expected":true},
+    {"input":["10"],"expected":true},
+    {"input":["11"],"expected":true},
+    {"input":["111"],"expected":true},
+    {"input":["101"],"expected":false},
+    {"input":["111000"],"expected":true},
+    {"input":["10101"],"expected":false},
+    {"input":["100000"],"expected":true}
+  ]
+}

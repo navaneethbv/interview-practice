@@ -1,0 +1,31 @@
+{
+  "id": "3sum-closest",
+  "style": "leetcode",
+  "function": {
+    "python": "threeSumClosest",
+    "java": "threeSumClosest"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[-1,2,1,-4],1],"expected":2,"sample":true},
+    {"input":[[0,0,0],1],"expected":0,"sample":true},
+    {"input":[[1,2,3],6],"expected":6},
+    {"input":[[1,2,3],100],"expected":6},
+    {"input":[[1,1,1,0],100],"expected":3},
+    {"input":[[0,1,2,3],3],"expected":3},
+    {"input":[[-5,-4,-3],-1],"expected":-12},
+    {"input":[[-1000,0,1000],10000],"expected":0},
+    {"input":[[2,2,2,2],1],"expected":6},
+    {"input":[[1,2,4,8,16],13],"expected":13}
+  ]
+}

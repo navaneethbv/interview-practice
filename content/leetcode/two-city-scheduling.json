@@ -1,0 +1,27 @@
+{
+  "id": "two-city-scheduling",
+  "style": "leetcode",
+  "function": {
+    "python": "twoCitySchedCost",
+    "java": "twoCitySchedCost"
+  },
+  "params": [
+    {
+      "name": "costs",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[10,20],[30,200],[400,50],[30,20]]],"expected":110,"sample":true},
+    {"input":[[[5,5],[7,7]]],"expected":12,"sample":true},
+    {"input":[[[1,2],[2,1]]],"expected":2},
+    {"input":[[[1,1000],[1,1000]]],"expected":1001},
+    {"input":[[[1000,1],[1000,1]]],"expected":1001},
+    {"input":[[[1,1],[1,1],[1,1],[1,1]]],"expected":4},
+    {"input":[[[2,3],[3,2],[4,1],[1,4]]],"expected":6},
+    {"input":[[[100,20],[30,200]]],"expected":50},
+    {"input":[[[10,10],[20,5],[5,20],[10,10]]],"expected":30},
+    {"input":[[[1,100],[2,100],[3,100],[4,100]]],"expected":203}
+  ]
+}

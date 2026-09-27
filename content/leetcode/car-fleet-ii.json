@@ -1,0 +1,27 @@
+{
+  "id": "car-fleet-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "getCollisionTimes",
+    "java": "getCollisionTimes"
+  },
+  "params": [
+    {
+      "name": "cars",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "double[]",
+  "tests": [
+    {"input":[[[1,2],[2,1],[4,3],[7,2]]],"expected":[1,-1,3,-1],"sample":true},
+    {"input":[[[1,1],[3,2]]],"expected":[-1,-1],"sample":true},
+    {"input":[[[1,1]]],"expected":[-1]},
+    {"input":[[[1,2],[3,1]]],"expected":[2,-1]},
+    {"input":[[[1,3],[3,2],[5,1]]],"expected":[2,2,-1]},
+    {"input":[[[1,4],[2,3],[10,1]]],"expected":[1,4,-1]},
+    {"input":[[[1,1],[2,1],[3,1]]],"expected":[-1,-1,-1]},
+    {"input":[[[1,10],[2,1],[3,9],[20,1]]],"expected":[0.1111111111111111,-1,2.125,-1]},
+    {"input":[[[3,4],[5,4],[6,3],[9,1]]],"expected":[2,1,1.5,-1]},
+    {"input":[[[1,1000000],[1000000,1]]],"expected":[1,-1]}
+  ]
+}

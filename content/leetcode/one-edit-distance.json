@@ -1,0 +1,32 @@
+{
+  "id": "one-edit-distance",
+  "style": "leetcode",
+  "function": {
+    "python": "isOneEditDistance",
+    "java": "isOneEditDistance"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["cat","cart"],"expected":true,"sample":true},
+    {"input":["same","same"],"expected":false,"sample":true},
+    {"input":["",""],"expected":false},
+    {"input":["","a"],"expected":true},
+    {"input":["a",""],"expected":true},
+    {"input":["a","b"],"expected":true},
+    {"input":["ab","ba"],"expected":false},
+    {"input":["abc","ab"],"expected":true},
+    {"input":["abc","xbc"],"expected":true},
+    {"input":["abc","abde"],"expected":false},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"],"expected":true}
+  ]
+}

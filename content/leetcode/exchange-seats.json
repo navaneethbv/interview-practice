@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "exchange-seats",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Seat",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "student",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "id",
+    "student"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Seat":[[1,"Ana"],[2,"Bo"],[3,"Cy"]]}},"expected":[[1,"Bo"],[2,"Ana"],[3,"Cy"]],"sample":true},
+    {"input":{"tables":{"Seat":[[1,"Dee"],[2,"Eli"]]}},"expected":[[1,"Eli"],[2,"Dee"]],"sample":true},
+    {"input":{"tables":{"Seat":[]}},"expected":[]},
+    {"input":{"tables":{"Seat":[[1,"A"]]}},"expected":[[1,"A"]]},
+    {"input":{"tables":{"Seat":[[1,"A"],[2,"A"]]}},"expected":[[1,"A"],[2,"A"]]},
+    {"input":{"tables":{"Seat":[[1,"A"],[2,"B"],[3,"C"],[4,"D"]]}},"expected":[[1,"B"],[2,"A"],[3,"D"],[4,"C"]]},
+    {"input":{"tables":{"Seat":[[1,"A"],[2,"B"],[3,"C"],[4,"D"],[5,"E"]]}},"expected":[[1,"B"],[2,"A"],[3,"D"],[4,"C"],[5,"E"]]},
+    {"input":{"tables":{"Seat":[[1,"A"],[2,"B"],[3,"C"],[4,"D"],[5,"E"],[6,"F"]]}},"expected":[[1,"B"],[2,"A"],[3,"D"],[4,"C"],[5,"F"],[6,"E"]]},
+    {"input":{"tables":{"Seat":[[1,"X"],[2,"X"],[3,"X"],[4,"X"],[5,"X"],[6,"X"],[7,"X"]]}},"expected":[[1,"X"],[2,"X"],[3,"X"],[4,"X"],[5,"X"],[6,"X"],[7,"X"]]},
+    {"input":{"tables":{"Seat":[[1,"Z"],[2,"Y"],[3,"X"],[4,"W"],[5,"V"],[6,"U"],[7,"T"],[8,"S"]]}},"expected":[[1,"Y"],[2,"Z"],[3,"W"],[4,"X"],[5,"U"],[6,"V"],[7,"S"],[8,"T"]]}
+  ]
+}

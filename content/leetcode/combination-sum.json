@@ -1,0 +1,33 @@
+{
+  "id": "combination-sum",
+  "style": "leetcode",
+  "function": {
+    "python": "combinationSum",
+    "java": "combinationSum"
+  },
+  "params": [
+    {
+      "name": "candidates",
+      "type": "int[]"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "List<List<int>>",
+  "compare": "unorderedDeep",
+  "tests": [
+    {"input":[[2,5,7],7],"expected":[[2,5],[7]],"sample":true},
+    {"input":[[4,6],5],"expected":[],"sample":true},
+    {"input":[[2],1],"expected":[]},
+    {"input":[[2],2],"expected":[[2]]},
+    {"input":[[2],8],"expected":[[2,2,2,2]]},
+    {"input":[[2,3],6],"expected":[[2,2,2],[3,3]]},
+    {"input":[[3,2,5],8],"expected":[[2,2,2,2],[2,3,3],[3,5]]},
+    {"input":[[7,3],9],"expected":[[3,3,3]]},
+    {"input":[[4,5],20],"expected":[[4,4,4,4,4],[5,5,5,5]]},
+    {"input":[[40],40],"expected":[[40]]},
+    {"input":[[2,3,6,7],7],"expected":[[2,2,3],[7]]}
+  ]
+}

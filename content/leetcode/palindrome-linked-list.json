@@ -1,0 +1,27 @@
+{
+  "id": "palindrome-linked-list",
+  "style": "leetcode",
+  "function": {
+    "python": "isPalindrome",
+    "java": "isPalindrome"
+  },
+  "params": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[1,2,2,1]],"expected":true,"sample":true},
+    {"input":[[1,2]],"expected":false,"sample":true},
+    {"input":[[1]],"expected":true},
+    {"input":[[1,1]],"expected":true},
+    {"input":[[1,2,1]],"expected":true},
+    {"input":[[1,2,3]],"expected":false},
+    {"input":[[0,0,0]],"expected":true},
+    {"input":[[1,2,3,2,1]],"expected":true},
+    {"input":[[1,1,2,1]],"expected":false},
+    {"input":[[9,8,8,9]],"expected":true}
+  ]
+}

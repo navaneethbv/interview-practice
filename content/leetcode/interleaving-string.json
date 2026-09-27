@@ -1,0 +1,36 @@
+{
+  "id": "interleaving-string",
+  "style": "leetcode",
+  "function": {
+    "python": "isInterleave",
+    "java": "isInterleave"
+  },
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    },
+    {
+      "name": "s3",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["ab","cd","acbd"],"expected":true,"sample":true},
+    {"input":["ab","cd","adbc"],"expected":false,"sample":true},
+    {"input":["","",""],"expected":true},
+    {"input":["a","","a"],"expected":true},
+    {"input":["","a","a"],"expected":true},
+    {"input":["a","b","a"],"expected":false},
+    {"input":["a","b","ba"],"expected":true},
+    {"input":["aa","ab","aaba"],"expected":true},
+    {"input":["aabcc","dbbca","aadbbcbcac"],"expected":true},
+    {"input":["aabcc","dbbca","aadbbbaccc"],"expected":false},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":true}
+  ]
+}

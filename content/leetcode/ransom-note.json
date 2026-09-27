@@ -1,0 +1,31 @@
+{
+  "id": "ransom-note",
+  "style": "leetcode",
+  "function": {
+    "python": "canConstruct",
+    "java": "canConstruct"
+  },
+  "params": [
+    {
+      "name": "ransomNote",
+      "type": "string"
+    },
+    {
+      "name": "magazine",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["aab","baa"],"expected":true,"sample":true},
+    {"input":["aa","ab"],"expected":false,"sample":true},
+    {"input":["a","a"],"expected":true},
+    {"input":["a","b"],"expected":false},
+    {"input":["abc","cba"],"expected":true},
+    {"input":["abc","ab"],"expected":false},
+    {"input":["zzz","zzzz"],"expected":true},
+    {"input":["ab","aaaa"],"expected":false},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":false},
+    {"input":["abc","abcabc"],"expected":true}
+  ]
+}

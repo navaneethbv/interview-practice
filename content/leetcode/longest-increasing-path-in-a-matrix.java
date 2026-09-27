@@ -1,0 +1,3 @@
+class Solution {
+public int longestIncreasingPath(int[][] matrix){int m=matrix.length,n=matrix[0].length;int[][]degree=new int[m][n];int[]ds={-1,0,1,0,-1};Deque<int[]>q=new ArrayDeque<>();for(int r=0;r<m;r++)for(int c=0;c<n;c++){for(int d=0;d<4;d++){int a=r+ds[d],b=c+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&matrix[a][b]<matrix[r][c])degree[r][c]++;}if(degree[r][c]==0)q.add(new int[]{r,c});}int length=0;while(!q.isEmpty()){length++;for(int k=q.size();k>0;k--){int[]p=q.remove();for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&matrix[a][b]>matrix[p[0]][p[1]]&&--degree[a][b]==0)q.add(new int[]{a,b});}}}return length;}
+}

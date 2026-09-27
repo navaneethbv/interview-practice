@@ -1,0 +1,28 @@
+{
+  "id": "reverse-vowels-of-a-string",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseVowels",
+    "java": "reverseVowels"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["hello"],"expected":"holle","sample":true},
+    {"input":["aA"],"expected":"Aa","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["b"],"expected":"b"},
+    {"input":["aeiou"],"expected":"uoiea"},
+    {"input":["AEIOU"],"expected":"UOIEA"},
+    {"input":["leetcode"],"expected":"leotcede"},
+    {"input":["rhythm"],"expected":"rhythm"},
+    {"input":["a.b,e!"],"expected":"e.b,a!"},
+    {"input":["race car"],"expected":"race car"},
+    {"input":["UuEe"],"expected":"eEuU"}
+  ]
+}

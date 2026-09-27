@@ -1,0 +1,27 @@
+{
+  "id": "symmetric-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "isSymmetric",
+    "java": "isSymmetric"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[1,2,2,3,4,4,3]],"expected":true,"sample":true},
+    {"input":[[1,2,2,null,3,null,3]],"expected":false,"sample":true},
+    {"input":[[1]],"expected":true},
+    {"input":[[1,2,2]],"expected":true},
+    {"input":[[1,2,3]],"expected":false},
+    {"input":[[1,2]],"expected":false},
+    {"input":[[1,null,2]],"expected":false},
+    {"input":[[0,-1,-1]],"expected":true},
+    {"input":[[1,2,2,3,null,null,3]],"expected":true},
+    {"input":[[1,2,2,3,null,null,4]],"expected":false}
+  ]
+}

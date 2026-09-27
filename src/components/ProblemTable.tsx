@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Search, Shuffle } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Difficulty } from "@/lib/content-types";
+import { COURSE_SCOPE, type Difficulty } from "@/lib/content-types";
 import type { ProblemListItem } from "@/lib/content";
 import { statusOf, useProgress } from "@/lib/progress";
 import { DifficultyText, StatusIcon } from "./ui";
@@ -31,7 +31,7 @@ export function ProblemTable({
       if (q && !p.title.toLowerCase().includes(q) && !String(p.number).startsWith(q)) return false;
       if (difficulty !== "all" && p.difficulty !== difficulty) return false;
       if (pattern !== "all" && p.chapterId !== pattern) return false;
-      const s = statusOf(progress, p.id);
+      const s = statusOf(progress, p.id, COURSE_SCOPE);
       if (status === "solved" && s !== "solved") return false;
       if (status === "attempted" && s !== "attempted") return false;
       if (status === "todo" && s === "solved") return false;
@@ -39,7 +39,7 @@ export function ProblemTable({
     });
   }, [problems, query, difficulty, pattern, status, progress]);
 
-  const solved = problems.filter((p) => progress.solved[p.id]).length;
+  const solved = problems.filter((p) => statusOf(progress, p.id, COURSE_SCOPE) === "solved").length;
 
   function pickRandom() {
     const pool = rows.length ? rows : problems;
@@ -120,7 +120,7 @@ export function ProblemTable({
             {rows.map((p, i) => (
               <tr key={p.id} className={`transition-colors hover:bg-layer-2 ${i % 2 ? "bg-layer-2/40" : ""}`}>
                 <td className="py-3 pl-4 align-middle">
-                  <StatusIcon status={statusOf(progress, p.id)} />
+                  <StatusIcon status={statusOf(progress, p.id, COURSE_SCOPE)} />
                 </td>
                 <td className="py-3 pr-3">
                   <Link href={`/problems/${p.id}`} className="font-medium text-fg-1 hover:text-blue">

@@ -1,0 +1,27 @@
+{
+  "id": "first-unique-character-in-a-string",
+  "style": "leetcode",
+  "function": {
+    "python": "firstUniqChar",
+    "java": "firstUniqChar"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["swiss"],"expected":1,"sample":true},
+    {"input":["aabb"],"expected":-1,"sample":true},
+    {"input":["a"],"expected":0},
+    {"input":["aa"],"expected":-1},
+    {"input":["abc"],"expected":0},
+    {"input":["aab"],"expected":2},
+    {"input":["abac"],"expected":1},
+    {"input":["loveleetcode"],"expected":2},
+    {"input":["zzxyy"],"expected":2},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"],"expected":100}
+  ]
+}

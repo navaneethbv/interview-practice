@@ -1,0 +1,27 @@
+{
+  "id": "count-good-numbers",
+  "style": "leetcode",
+  "function": {
+    "python": "countGoodNumbers",
+    "java": "countGoodNumbers"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "long"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[1],"expected":5,"sample":true},
+    {"input":[2],"expected":20,"sample":true},
+    {"input":[3],"expected":100},
+    {"input":[4],"expected":400},
+    {"input":[5],"expected":2000},
+    {"input":[10],"expected":3200000},
+    {"input":[50],"expected":564908303},
+    {"input":[1000],"expected":36020987},
+    {"input":[1000000000000000],"expected":711414395},
+    {"input":[999999999999999],"expected":927853604}
+  ]
+}

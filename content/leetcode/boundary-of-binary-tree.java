@@ -1,0 +1,3 @@
+class Solution {
+public List<Integer> boundaryOfBinaryTree(TreeNode root){List<Integer>out=new ArrayList<>();out.add(root.val);if(leaf(root))return out;for(TreeNode n=root.left;n!=null;n=n.left!=null?n.left:n.right)if(!leaf(n))out.add(n.val);Deque<TreeNode>stack=new ArrayDeque<>();stack.push(root);while(!stack.isEmpty()){TreeNode n=stack.pop();if(leaf(n))out.add(n.val);if(n.right!=null)stack.push(n.right);if(n.left!=null)stack.push(n.left);}List<Integer>right=new ArrayList<>();for(TreeNode n=root.right;n!=null;n=n.right!=null?n.right:n.left)if(!leaf(n))right.add(n.val);Collections.reverse(right);out.addAll(right);return out;}private boolean leaf(TreeNode n){return n.left==null&&n.right==null;}
+}

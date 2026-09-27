@@ -1,0 +1,28 @@
+{
+  "id": "group-shifted-strings",
+  "style": "leetcode",
+  "function": {
+    "python": "groupStrings",
+    "java": "groupStrings"
+  },
+  "params": [
+    {
+      "name": "strings",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unorderedDeep",
+  "tests": [
+    {"input":[["ab","bc","az","ba","a"]],"expected":[["ab","bc"],["az","ba"],["a"]],"sample":true},
+    {"input":[["a","z"]],"expected":[["a","z"]],"sample":true},
+    {"input":[["abc"]],"expected":[["abc"]]},
+    {"input":[["abc","bcd","xyz"]],"expected":[["abc","bcd","xyz"]]},
+    {"input":[["abc","acb"]],"expected":[["abc"],["acb"]]},
+    {"input":[["aa","bb","zz"]],"expected":[["aa","bb","zz"]]},
+    {"input":[["a","ab","abc"]],"expected":[["a"],["ab"],["abc"]]},
+    {"input":[["az","za"]],"expected":[["az"],["za"]]},
+    {"input":[["abc","abc","bcd"]],"expected":[["abc","abc","bcd"]]},
+    {"input":[["acef","bdfg","xyz"]],"expected":[["acef","bdfg"],["xyz"]]}
+  ]
+}

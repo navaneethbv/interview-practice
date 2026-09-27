@@ -1,0 +1,27 @@
+{
+  "id": "find-winner-on-a-tic-tac-toe-game",
+  "style": "leetcode",
+  "function": {
+    "python": "tictactoe",
+    "java": "tictactoe"
+  },
+  "params": [
+    {
+      "name": "moves",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[[[0,0],[1,0],[0,1],[1,1],[0,2]]],"expected":"A","sample":true},
+    {"input":[[[1,1]]],"expected":"Pending","sample":true},
+    {"input":[[[0,0]]],"expected":"Pending"},
+    {"input":[[[0,0],[1,1]]],"expected":"Pending"},
+    {"input":[[[0,0],[1,0],[0,1],[1,1],[2,2],[1,2]]],"expected":"B"},
+    {"input":[[[0,0],[0,1],[1,1],[0,2],[2,2]]],"expected":"A"},
+    {"input":[[[0,0],[0,1],[1,0],[1,1],[2,0]]],"expected":"A"},
+    {"input":[[[0,0],[1,1],[0,1],[0,2],[2,0],[1,0],[1,2],[2,1],[2,2]]],"expected":"Draw"},
+    {"input":[[[0,2],[0,0],[1,1],[1,0],[2,0]]],"expected":"A"},
+    {"input":[[[0,0],[2,0],[1,1],[2,1],[0,2],[2,2]]],"expected":"B"}
+  ]
+}

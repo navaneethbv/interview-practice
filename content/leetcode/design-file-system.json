@@ -1,0 +1,281 @@
+{
+  "kind": "design",
+  "id": "design-file-system",
+  "style": "leetcode",
+  "className": "FileSystem",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "createPath",
+      "java": "createPath",
+      "params": [
+        {
+          "name": "path",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "path",
+          "type": "string"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath",
+          "get"
+        ],
+        "args": [
+          [
+            "/a",
+            1
+          ],
+          [
+            "/a/b",
+            2
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        2
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "get"
+        ],
+        "args": [
+          [
+            "/a/b",
+            1
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        false,
+        -1
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "get"
+        ],
+        "args": [
+          [
+            "/missing"
+          ]
+        ]
+      },
+      "expected": [
+        -1
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath",
+          "get"
+        ],
+        "args": [
+          [
+            "/a",
+            1
+          ],
+          [
+            "/a",
+            2
+          ],
+          [
+            "/a"
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        1
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath"
+        ],
+        "args": [
+          [
+            "/a",
+            1
+          ],
+          [
+            "/b",
+            2
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath",
+          "createPath"
+        ],
+        "args": [
+          [
+            "/a",
+            1
+          ],
+          [
+            "/a/b",
+            2
+          ],
+          [
+            "/a/b/c",
+            3
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath"
+        ],
+        "args": [
+          [
+            "/abc",
+            1
+          ],
+          [
+            "/ab/c",
+            2
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "get"
+        ],
+        "args": [
+          [
+            "/a",
+            1000000000
+          ],
+          [
+            "/a"
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        1000000000
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "get"
+        ],
+        "args": [
+          [
+            "/a",
+            1
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        -1
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "createPath",
+          "createPath",
+          "createPath"
+        ],
+        "args": [
+          [
+            "/a/b",
+            1
+          ],
+          [
+            "/a",
+            2
+          ],
+          [
+            "/a/b",
+            3
+          ]
+        ]
+      },
+      "expected": [
+        false,
+        true,
+        true
+      ]
+    }
+  ]
+}

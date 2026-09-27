@@ -1,0 +1,31 @@
+{
+  "id": "determine-whether-matrix-can-be-obtained-by-rotation",
+  "style": "leetcode",
+  "function": {
+    "python": "findRotation",
+    "java": "findRotation"
+  },
+  "params": [
+    {
+      "name": "mat",
+      "type": "int[][]"
+    },
+    {
+      "name": "target",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[[1,0],[1,1]],[[1,1],[1,0]]],"expected":true,"sample":true},
+    {"input":[[[1]],[[0]]],"expected":false,"sample":true},
+    {"input":[[[0]],[[0]]],"expected":true},
+    {"input":[[[1,0],[0,1]],[[1,0],[0,1]]],"expected":true},
+    {"input":[[[1,0],[0,0]],[[0,0],[0,1]]],"expected":true},
+    {"input":[[[1,0],[0,0]],[[0,0],[1,0]]],"expected":true},
+    {"input":[[[1,1],[1,1]],[[1,1],[1,0]]],"expected":false},
+    {"input":[[[0,0],[0,0]],[[0,0],[0,0]]],"expected":true},
+    {"input":[[[1,0,0],[0,1,0],[1,1,0]],[[1,0,1],[1,1,0],[0,0,0]]],"expected":true},
+    {"input":[[[1,0],[1,0]],[[1,1],[0,0]]],"expected":true}
+  ]
+}

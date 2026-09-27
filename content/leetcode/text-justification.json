@@ -1,0 +1,31 @@
+{
+  "id": "text-justification",
+  "style": "leetcode",
+  "function": {
+    "python": "fullJustify",
+    "java": "fullJustify"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "maxWidth",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[["Pack","a","small","bag"],10],"expected":["Pack     a","small bag "],"sample":true},
+    {"input":[["one"],5],"expected":["one  "],"sample":true},
+    {"input":[["a"],1],"expected":["a"]},
+    {"input":[["a","b","c"],3],"expected":["a b","c  "]},
+    {"input":[["a","b","c","d"],4],"expected":["a  b","c d "]},
+    {"input":[["abc","def"],3],"expected":["abc","def"]},
+    {"input":[["a","bb","ccc","d"],6],"expected":["a   bb","ccc d "]},
+    {"input":[["hello","world"],11],"expected":["hello world"]},
+    {"input":[["a","b","c","d","e"],6],"expected":["a  b c","d e   "]},
+    {"input":[["longword","x"],8],"expected":["longword","x       "]}
+  ]
+}

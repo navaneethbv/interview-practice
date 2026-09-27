@@ -1,0 +1,27 @@
+{
+  "id": "find-pivot-index",
+  "style": "leetcode",
+  "function": {
+    "python": "pivotIndex",
+    "java": "pivotIndex"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,7,3,6,5,6]],"expected":3,"sample":true},
+    {"input":[[2,1,-1]],"expected":0,"sample":true},
+    {"input":[[1]],"expected":0},
+    {"input":[[0,0]],"expected":0},
+    {"input":[[1,2,3]],"expected":-1},
+    {"input":[[1,-1,0]],"expected":2},
+    {"input":[[0,1]],"expected":1},
+    {"input":[[1,0]],"expected":0},
+    {"input":[[1,-1,1,-1,1]],"expected":0},
+    {"input":[[-1,-1,-1,-1,-1,-1]],"expected":-1}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "maximum-width-ramp",
+  "style": "leetcode",
+  "function": {
+    "python": "maxWidthRamp",
+    "java": "maxWidthRamp"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[6,0,8,2,1,5]],"expected":4,"sample":true},
+    {"input":[[5,4,3]],"expected":0,"sample":true},
+    {"input":[[1,2]],"expected":1},
+    {"input":[[2,1]],"expected":0},
+    {"input":[[1,1]],"expected":1},
+    {"input":[[1,2,3,4]],"expected":3},
+    {"input":[[9,8,1,0,1,9,4,0,4,1]],"expected":7},
+    {"input":[[0,0,0]],"expected":2},
+    {"input":[[5,1,2,3,4]],"expected":3},
+    {"input":[[50000,0,50000]],"expected":2}
+  ]
+}

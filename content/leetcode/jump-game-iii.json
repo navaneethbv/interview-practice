@@ -1,0 +1,31 @@
+{
+  "id": "jump-game-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "canReach",
+    "java": "canReach"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    },
+    {
+      "name": "start",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[4,2,3,0,3,1,2],5],"expected":true,"sample":true},
+    {"input":[[3,0,2,1,2],2],"expected":false,"sample":true},
+    {"input":[[0],0],"expected":true},
+    {"input":[[1,0],0],"expected":true},
+    {"input":[[1,1],0],"expected":false},
+    {"input":[[0,1],1],"expected":true},
+    {"input":[[2,1,0],0],"expected":true},
+    {"input":[[2,0,2],2],"expected":false},
+    {"input":[[1,1,1,1,0],0],"expected":true},
+    {"input":[[0,3,0,3],1],"expected":false}
+  ]
+}

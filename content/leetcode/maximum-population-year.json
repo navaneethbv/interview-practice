@@ -1,0 +1,27 @@
+{
+  "id": "maximum-population-year",
+  "style": "leetcode",
+  "function": {
+    "python": "maximumPopulation",
+    "java": "maximumPopulation"
+  },
+  "params": [
+    {
+      "name": "logs",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1950,1960],[1955,1965]]],"expected":1955,"sample":true},
+    {"input":[[[1950,1951],[1951,1952]]],"expected":1950,"sample":true},
+    {"input":[[[1950,2050]]],"expected":1950},
+    {"input":[[[2000,2001]]],"expected":2000},
+    {"input":[[[1950,1960],[1960,1970]]],"expected":1950},
+    {"input":[[[1950,1952],[1951,1953],[1952,1954]]],"expected":1951},
+    {"input":[[[2000,2010],[2000,2010]]],"expected":2000},
+    {"input":[[[1950,2000],[1999,2050]]],"expected":1999},
+    {"input":[[[2049,2050],[1950,1951]]],"expected":1950},
+    {"input":[[[1980,1990],[1970,1985],[1984,1986]]],"expected":1984}
+  ]
+}

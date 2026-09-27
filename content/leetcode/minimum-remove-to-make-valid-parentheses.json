@@ -1,0 +1,30 @@
+{
+  "id": "minimum-remove-to-make-valid-parentheses",
+  "style": "leetcode",
+  "function": {
+    "python": "minRemoveToMakeValid",
+    "java": "minRemoveToMakeValid"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "minimalParentheses"
+  },
+  "tests": [
+    {"input":["a)b(c)d"],"expected":"ab(c)d","sample":true},
+    {"input":["))(("],"expected":"","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["()"],"expected":"()"},
+    {"input":["("],"expected":""},
+    {"input":[")"],"expected":""},
+    {"input":["lee(t(c)o)de)"],"expected":"lee(t(c)o)de"},
+    {"input":["(a(b(c)d)"],"expected":"a(b(c)d)"},
+    {"input":["a((b)c"],"expected":"a(b)c"},
+    {"input":["())(()"],"expected":"()()"}
+  ]
+}

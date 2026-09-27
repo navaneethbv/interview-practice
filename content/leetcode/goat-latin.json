@@ -1,0 +1,27 @@
+{
+  "id": "goat-latin",
+  "style": "leetcode",
+  "function": {
+    "python": "toGoatLatin",
+    "java": "toGoatLatin"
+  },
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["I speak"],"expected":"Imaa peaksmaaa","sample":true},
+    {"input":["Apple"],"expected":"Applemaa","sample":true},
+    {"input":["a"],"expected":"amaa"},
+    {"input":["B"],"expected":"Bmaa"},
+    {"input":["one two three"],"expected":"onemaa wotmaaa hreetmaaaa"},
+    {"input":["Each word"],"expected":"Eachmaa ordwmaaa"},
+    {"input":["the quick brown fox"],"expected":"hetmaa uickqmaaa rownbmaaaa oxfmaaaaa"},
+    {"input":["AEIOU"],"expected":"AEIOUmaa"},
+    {"input":["x y z"],"expected":"xmaa ymaaa zmaaaa"},
+    {"input":["Umbrella is useful"],"expected":"Umbrellamaa ismaaa usefulmaaaa"}
+  ]
+}

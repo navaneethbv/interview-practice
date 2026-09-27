@@ -1,0 +1,9403 @@
+[
+ {
+  "id": "blind-75",
+  "title": "Blind 75",
+  "kind": "curated",
+  "description": "The classic 75 problems that cover every core interview pattern.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Array"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Array"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Array"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Array"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Array"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "Array"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Array"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Array"
+   },
+   {
+    "slug": "3sum",
+    "category": "Array"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Array"
+   },
+   {
+    "slug": "sum-of-two-integers",
+    "category": "Binary"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Binary"
+   },
+   {
+    "slug": "counting-bits",
+    "category": "Binary"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Binary"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Binary"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "coin-change",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "word-break",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "combination-sum-iv",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "house-robber",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Graph"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow",
+    "category": "Graph"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "Graph"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Graph"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Graph"
+   },
+   {
+    "slug": "graph-valid-tree",
+    "category": "Graph"
+   },
+   {
+    "slug": "number-of-connected-components-in-an-undirected-graph",
+    "category": "Graph"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Interval"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Interval"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Interval"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Interval"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Interval"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Linked List"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "word-search",
+    "category": "Matrix"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "String"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "String"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "String"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "String"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "String"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "String"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "String"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "String"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "String"
+   },
+   {
+    "slug": "encode-and-decode-strings",
+    "category": "String"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "subtree-of-another-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Tree"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Tree"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Tree"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Heap"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Heap"
+   }
+  ]
+ },
+ {
+  "id": "grind-75",
+  "title": "Grind 75",
+  "kind": "curated",
+  "description": "A modernized, ordered take on Blind 75.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Around Center"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "ransom-note",
+    "category": "Hashing"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "BFS / Multi-source"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Hashing"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "K-way Merge / Heap"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "longest-palindrome",
+    "category": "Hashing / Greedy"
+   },
+   {
+    "slug": "binary-search",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "01-matrix",
+    "category": "BFS / Multi-source"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "DP / 0-1 Knapsack"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Array / Boyer-Moore"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree BFS/DFS"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix / Simulation"
+   },
+   {
+    "slug": "minimum-height-trees",
+    "category": "Topological Sort / BFS"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP / 2D"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Two Pointers / Dutch Flag"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "subsets",
+    "category": "Backtracking / Subsets"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List / In-place Reversal"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "accounts-merge",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Array / Prefix-Suffix"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "k-closest-points-to-origin",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Array / Greedy"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   }
+  ]
+ },
+ {
+  "id": "neetcode-150",
+  "title": "NeetCode 150",
+  "kind": "curated",
+  "description": "Blind 75 plus more practice per pattern, grouped by topic.",
+  "items": [
+   {
+    "slug": "contains-duplicate",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "two-sum",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "encode-and-decode-strings",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "two-sum-ii-input-array-is-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "permutation-in-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Stack"
+   },
+   {
+    "slug": "car-fleet",
+    "category": "Stack"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Stack"
+   },
+   {
+    "slug": "binary-search",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Linked List"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "Linked List"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "subtree-of-another-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Trees"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Trees"
+   },
+   {
+    "slug": "count-good-nodes-in-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Trees"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Trees"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Trees"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Trees"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Tries"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Tries"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Tries"
+   },
+   {
+    "slug": "kth-largest-element-in-a-stream",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "last-stone-weight",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "k-closest-points-to-origin",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Heap / Priority Queue"
+   },
+   {
+    "slug": "subsets",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "subsets-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "palindrome-partitioning",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "Graphs"
+   },
+   {
+    "slug": "max-area-of-island",
+    "category": "Graphs"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graphs"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Graphs"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Graphs"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow",
+    "category": "Graphs"
+   },
+   {
+    "slug": "surrounded-regions",
+    "category": "Graphs"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Graphs"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Graphs"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Graphs"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "Graphs"
+   },
+   {
+    "slug": "network-delay-time",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "min-cost-to-connect-all-points",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "swim-in-rising-water",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "reconstruct-itinerary",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "1D DP"
+   },
+   {
+    "slug": "min-cost-climbing-stairs",
+    "category": "1D DP"
+   },
+   {
+    "slug": "house-robber",
+    "category": "1D DP"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "1D DP"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "1D DP"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "1D DP"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "1D DP"
+   },
+   {
+    "slug": "coin-change",
+    "category": "1D DP"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "1D DP"
+   },
+   {
+    "slug": "word-break",
+    "category": "1D DP"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "1D DP"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "2D DP"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "2D DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
+    "category": "2D DP"
+   },
+   {
+    "slug": "coin-change-ii",
+    "category": "2D DP"
+   },
+   {
+    "slug": "target-sum",
+    "category": "2D DP"
+   },
+   {
+    "slug": "interleaving-string",
+    "category": "2D DP"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "2D DP"
+   },
+   {
+    "slug": "distinct-subsequences",
+    "category": "2D DP"
+   },
+   {
+    "slug": "edit-distance",
+    "category": "2D DP"
+   },
+   {
+    "slug": "burst-balloons",
+    "category": "2D DP"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "2D DP"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Greedy"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "jump-game-ii",
+    "category": "Greedy"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "hand-of-straights",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-triplets-to-form-target-triplet",
+    "category": "Greedy"
+   },
+   {
+    "slug": "partition-labels",
+    "category": "Greedy"
+   },
+   {
+    "slug": "valid-parenthesis-string",
+    "category": "Greedy"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Intervals"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Intervals"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Intervals"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Intervals"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Intervals"
+   },
+   {
+    "slug": "minimum-interval-to-include-each-query",
+    "category": "Intervals"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "detect-squares",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "single-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "counting-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "sum-of-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Bit Manipulation"
+   }
+  ]
+ },
+ {
+  "id": "grind-169",
+  "title": "Grind 169",
+  "kind": "curated",
+  "description": "The full Grind list for a longer study plan.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Around Center"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "palindrome-number",
+    "category": "Math"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "BFS / Multi-source"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math / String"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "3sum-closest",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "contiguous-array",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "K-way Merge / Heap"
+   },
+   {
+    "slug": "swap-nodes-in-pairs",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "Linked List / In-place Reversal"
+   },
+   {
+    "slug": "01-matrix",
+    "category": "BFS / Multi-source"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Array / Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Hashing / Matrix"
+   },
+   {
+    "slug": "sudoku-solver",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "shortest-path-to-get-food",
+    "category": "BFS"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Binary Search / Fast Power"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix / Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "subtree-of-another-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "rotate-list"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP / 2D"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Two Pointers / Dutch Flag"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "design-in-memory-file-system",
+    "category": "Trie / Design"
+   },
+   {
+    "slug": "subsets",
+    "category": "Backtracking / Subsets"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "binary-tree-zigzag-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "convert-sorted-array-to-binary-search-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "path-sum-ii",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "minimum-knight-moves",
+    "category": "BFS"
+   },
+   {
+    "slug": "smallest-range-covering-elements-from-k-lists",
+    "category": "K-way Merge / Heap"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Array / Greedy"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "single-number",
+    "category": "Bit Manipulation / XOR"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List / In-place Reversal"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-list",
+    "category": "Merge Sort / Linked List"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "maximum-width-of-binary-tree",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Array / Boyer-Moore"
+   },
+   {
+    "slug": "largest-number",
+    "category": "Sorting / Custom Comparator"
+   },
+   {
+    "slug": "top-k-frequent-words",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Two Pointers"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP / 1D"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List / In-place Reversal"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "accounts-merge",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Trie"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "DP / 2D"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Array / Prefix-Suffix"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Stack/Deque"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "employee-free-time",
+    "category": "Merge Intervals / Heap"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "graph-valid-tree",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Bit Manipulation / Math"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "encode-and-decode-strings",
+    "category": "String Encoding"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "binary-search",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "inorder-successor-in-bst",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / Bellman-Ford"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree BFS/DFS"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "minimum-height-trees",
+    "category": "Topological Sort / BFS"
+   },
+   {
+    "slug": "bus-routes",
+    "category": "BFS"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "number-of-connected-components-in-an-undirected-graph",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "odd-even-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "palindrome-pairs",
+    "category": "Trie"
+   },
+   {
+    "slug": "counting-bits",
+    "category": "Bit Manipulation / DP"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "backspace-string-compare",
+    "category": "Two Pointers / Stack"
+   },
+   {
+    "slug": "combination-sum-iv",
+    "category": "DP / Combination"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Hashing"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Tree BFS/DFS"
+   },
+   {
+    "slug": "ransom-note",
+    "category": "Hashing"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Binary Search / Prefix Sum"
+   },
+   {
+    "slug": "longest-palindrome",
+    "category": "Hashing / Greedy"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "DP / 0-1 Knapsack"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "maximum-frequency-stack",
+    "category": "Heap / Hashing"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Greedy / Intervals"
+   },
+   {
+    "slug": "path-sum-iii",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "k-closest-points-to-origin",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "squares-of-a-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search"
+   }
+  ]
+ },
+ {
+  "id": "meta",
+  "title": "Meta",
+  "kind": "company",
+  "description": "Problems frequently asked at Meta in the last six months.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "zigzag-conversion",
+    "category": "String"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "palindrome-number",
+    "category": "Math"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "integer-to-roman",
+    "category": "Math"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "3sum-closest",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "4sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Array"
+   },
+   {
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "category": "Two Pointers / KMP"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack / DP"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-insert-position",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Fast Power / Binary Search"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "length-of-last-word",
+    "category": "String"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP"
+   },
+   {
+    "slug": "valid-number",
+    "category": "String"
+   },
+   {
+    "slug": "plus-one",
+    "category": "Math"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Stack"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Dutch Flag / Two Pointers"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "subsets",
+    "category": "Subsets / Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "maximal-rectangle",
+    "category": "Monotonic Stack / DP"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "unique-binary-search-trees",
+    "category": "Tree DP"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "populating-next-right-pointers-in-each-node",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "populating-next-right-pointers-in-each-node-ii",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "pascals-triangle",
+    "category": "Math / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-iii",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "sum-root-to-leaf-numbers",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "palindrome-partitioning",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "candy",
+    "category": "Greedy"
+   },
+   {
+    "slug": "single-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "sort-list",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "String / Two Pointers"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "intersection-of-two-linked-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "two-sum-ii-input-array-is-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Boyer-Moore"
+   },
+   {
+    "slug": "binary-search-tree-iterator",
+    "category": "Tree DFS / Stack"
+   },
+   {
+    "slug": "second-highest-salary"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "isomorphic-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "contains-duplicate-ii",
+    "category": "Hashing / Sliding Window"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "implement-stack-using-queues",
+    "category": "Stack / Queue"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "power-of-two",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "delete-node-in-a-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "strobogrammatic-number",
+    "category": "Hashing"
+   },
+   {
+    "slug": "group-shifted-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "closest-binary-search-tree-value",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "expression-add-operators",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "remove-invalid-parentheses"
+   },
+   {
+    "slug": "range-sum-query-immutable",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "binary-tree-vertical-order-traversal",
+    "category": "Tree BFS / Hashing"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "increasing-triplet-subsequence",
+    "category": "Greedy"
+   },
+   {
+    "slug": "nested-list-weight-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "reverse-vowels-of-a-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "moving-average-from-data-stream",
+    "category": "Sliding Window / Queue"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "design-tic-tac-toe",
+    "category": "Design"
+   },
+   {
+    "slug": "intersection-of-two-arrays",
+    "category": "Hashing"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-sorted-matrix",
+    "category": "Heap / Binary Search"
+   },
+   {
+    "slug": "valid-word-abbreviation",
+    "category": "String"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "category": "Binary Search / DP"
+   },
+   {
+    "slug": "add-strings",
+    "category": "String / Math"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "0-1 Knapsack DP"
+   },
+   {
+    "slug": "battleships-in-a-board",
+    "category": "Array / Matrix"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "convert-binary-search-tree-to-sorted-doubly-linked-list",
+    "category": "Tree / Linked List"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Greedy / Intervals"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "string-compression",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "sliding-window-median",
+    "category": "Two Heaps / Sliding Window"
+   },
+   {
+    "slug": "max-consecutive-ones",
+    "category": "Array"
+   },
+   {
+    "slug": "robot-room-cleaner",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "reverse-pairs",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "next-greater-element-i",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "diagonal-traverse"
+   },
+   {
+    "slug": "coin-change-ii",
+    "category": "Unbounded Knapsack DP"
+   },
+   {
+    "slug": "continuous-subarray-sum",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "contiguous-array",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Prefix Sum / Binary Search"
+   },
+   {
+    "slug": "minesweeper"
+   },
+   {
+    "slug": "single-element-in-a-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "boundary-of-binary-tree",
+    "category": "Tree DFS / BFS"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "can-place-flowers",
+    "category": "Greedy"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "maximum-swap",
+    "category": "Math / Greedy"
+   },
+   {
+    "slug": "valid-parenthesis-string"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "max-area-of-island",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "binary-search"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "insert-into-a-sorted-circular-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "accounts-merge",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "find-pivot-index"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "toeplitz-matrix"
+   },
+   {
+    "slug": "swim-in-rising-water",
+    "category": "Binary Search / BFS"
+   },
+   {
+    "slug": "custom-sort-string",
+    "category": "Hashing / Sorting"
+   },
+   {
+    "slug": "goat-latin",
+    "category": "String"
+   },
+   {
+    "slug": "friends-of-appropriate-ages",
+    "category": "Math / Two Pointers"
+   },
+   {
+    "slug": "making-a-large-island",
+    "category": "DFS / Union-Find"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Tree BFS / DFS"
+   },
+   {
+    "slug": "smallest-subtree-with-all-the-deepest-nodes",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "minimum-add-to-make-parentheses-valid",
+    "category": "Stack / Greedy"
+   },
+   {
+    "slug": "shortest-bridge",
+    "category": "BFS / DFS"
+   },
+   {
+    "slug": "range-sum-of-bst",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "k-closest-points-to-origin",
+    "category": "Heap / Math"
+   },
+   {
+    "slug": "squares-of-a-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "interval-list-intersections",
+    "category": "Two Pointers / Intervals"
+   },
+   {
+    "slug": "vertical-order-traversal-of-a-binary-tree",
+    "category": "Tree BFS / Sorting"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "max-consecutive-ones-iii",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "remove-all-adjacent-duplicates-in-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "shortest-path-in-binary-matrix",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "DP / LCS"
+   },
+   {
+    "slug": "valid-palindrome-iii"
+   },
+   {
+    "slug": "minimum-remove-to-make-valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "diagonal-traverse-ii",
+    "category": "Matrix / Sorting"
+   },
+   {
+    "slug": "kth-missing-positive-number",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "dot-product-of-two-sparse-vectors",
+    "category": "Array / Hashing / Design"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree-iii",
+    "category": "Tree DFS / Hashing"
+   },
+   {
+    "slug": "recyclable-and-low-fat-products"
+   },
+   {
+    "slug": "buildings-with-an-ocean-view",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "product-of-two-run-length-encoded-arrays",
+    "category": "Two Pointers"
+   }
+  ]
+ },
+ {
+  "id": "google",
+  "title": "Google",
+  "kind": "company",
+  "description": "Problems frequently asked at Google.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP"
+   },
+   {
+    "slug": "zigzag-conversion",
+    "category": "String"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "palindrome-number",
+    "category": "Math"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "integer-to-roman",
+    "category": "Math"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "3sum-closest",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "4sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "swap-nodes-in-pairs",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "In-place LL Reversal"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "divide-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack / DP"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-insert-position",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Matrix / Hashing"
+   },
+   {
+    "slug": "sudoku-solver",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "count-and-say",
+    "category": "String"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "multiply-strings",
+    "category": "Math / String"
+   },
+   {
+    "slug": "wildcard-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "jump-game-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Fast Power / Binary Search"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "length-of-last-word",
+    "category": "String"
+   },
+   {
+    "slug": "permutation-sequence",
+    "category": "Math / Backtracking"
+   },
+   {
+    "slug": "rotate-list"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-path-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "plus-one",
+    "category": "Math"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "text-justification",
+    "category": "String / Array"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Stack"
+   },
+   {
+    "slug": "edit-distance",
+    "category": "DP / Edit Distance"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Dutch Flag / Two Pointers"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "subsets",
+    "category": "Subsets / Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "maximal-rectangle",
+    "category": "Monotonic Stack / DP"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "subsets-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "binary-tree-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "interleaving-string",
+    "category": "DP"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "recover-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "binary-tree-zigzag-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "convert-sorted-array-to-binary-search-tree",
+    "category": "Tree / Binary Search"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "distinct-subsequences",
+    "category": "DP"
+   },
+   {
+    "slug": "populating-next-right-pointers-in-each-node",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "pascals-triangle",
+    "category": "Math / DP"
+   },
+   {
+    "slug": "triangle",
+    "category": "DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-ii",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-iii",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder-ii",
+    "category": "BFS / Backtracking"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "sum-root-to-leaf-numbers",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "surrounded-regions",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "palindrome-partitioning",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "candy",
+    "category": "Greedy"
+   },
+   {
+    "slug": "single-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "single-number-ii",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "linked-list-cycle-ii",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "sort-list",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "max-points-on-a-line",
+    "category": "Math / Hashing"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "String / Two Pointers"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "intersection-of-two-linked-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "two-sum-ii-input-array-is-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "excel-sheet-column-title"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Boyer-Moore"
+   },
+   {
+    "slug": "second-highest-salary"
+   },
+   {
+    "slug": "employees-earning-more-than-their-managers"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "rising-temperature"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "count-primes",
+    "category": "Sieve of Eratosthenes"
+   },
+   {
+    "slug": "isomorphic-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "minimum-size-subarray-sum",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie / Backtracking"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "shortest-palindrome",
+    "category": "KMP / String"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "the-skyline-problem",
+    "category": "Heap / Sweep Line"
+   },
+   {
+    "slug": "contains-duplicate-ii",
+    "category": "Hashing / Sliding Window"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "DP"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "implement-stack-using-queues",
+    "category": "Stack / Queue"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "summary-ranges",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "majority-element-ii",
+    "category": "Hashing"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "power-of-two",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "delete-node-in-a-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "search-a-2d-matrix-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "group-shifted-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "binary-tree-paths"
+   },
+   {
+    "slug": "add-digits",
+    "category": "Math"
+   },
+   {
+    "slug": "ugly-number",
+    "category": "Math"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "encode-and-decode-strings",
+    "category": "String Design"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "perfect-squares",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "expression-add-operators",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "burst-balloons",
+    "category": "Interval DP"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "odd-even-linked-list"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "house-robber-iii",
+    "category": "Tree DP"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "reverse-vowels-of-a-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "intersection-of-two-arrays",
+    "category": "Hashing"
+   },
+   {
+    "slug": "russian-doll-envelopes",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "logger-rate-limiter"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Sliding Window / Queue"
+   },
+   {
+    "slug": "largest-divisible-subset",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "sum-of-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "find-k-pairs-with-smallest-sums",
+    "category": "Heap / K-way"
+   },
+   {
+    "slug": "combination-sum-iv",
+    "category": "DP"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "first-unique-character-in-a-string",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-the-difference",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "is-subsequence"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "evaluate-division",
+    "category": "Union-Find / BFS"
+   },
+   {
+    "slug": "remove-k-digits",
+    "category": "Greedy / Stack"
+   },
+   {
+    "slug": "trapping-rain-water-ii",
+    "category": "BFS / Heap"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "category": "Binary Search / DP"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Math"
+   },
+   {
+    "slug": "add-strings",
+    "category": "String / Math"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "0-1 Knapsack DP"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "non-overlapping-intervals"
+   },
+   {
+    "slug": "path-sum-iii"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "find-all-duplicates-in-an-array",
+    "category": "Hashing / Array"
+   },
+   {
+    "slug": "string-compression",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "find-all-numbers-disappeared-in-an-array",
+    "category": "Hashing / Cyclic Sort"
+   },
+   {
+    "slug": "delete-node-in-a-bst",
+    "category": "BST"
+   },
+   {
+    "slug": "sliding-window-median",
+    "category": "Two Heaps / Sliding Window"
+   },
+   {
+    "slug": "max-consecutive-ones",
+    "category": "Array"
+   },
+   {
+    "slug": "reverse-pairs",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "target-sum",
+    "category": "DP / Backtracking"
+   },
+   {
+    "slug": "next-greater-element-i",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "diagonal-traverse"
+   },
+   {
+    "slug": "next-greater-element-ii",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "fibonacci-number",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "coin-change-ii",
+    "category": "Unbounded Knapsack DP"
+   },
+   {
+    "slug": "contiguous-array",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Prefix Sum / Binary Search"
+   },
+   {
+    "slug": "single-element-in-a-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "reverse-string-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "number-of-provinces",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "permutation-in-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "managers-with-at-least-5-direct-reports",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-customer-referee",
+    "category": "Hashing"
+   },
+   {
+    "slug": "big-countries",
+    "category": "SQL"
+   },
+   {
+    "slug": "can-place-flowers",
+    "category": "Greedy"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Stack"
+   },
+   {
+    "slug": "design-search-autocomplete-system",
+    "category": "Trie / Design"
+   },
+   {
+    "slug": "maximum-average-subarray-i",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "maximum-width-of-binary-tree"
+   },
+   {
+    "slug": "valid-parenthesis-string"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "top-k-frequent-words",
+    "category": "Heap"
+   },
+   {
+    "slug": "max-area-of-island",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "binary-search",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "design-linked-list",
+    "category": "Design"
+   },
+   {
+    "slug": "range-module",
+    "category": "Sorted Set"
+   },
+   {
+    "slug": "accounts-merge",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "network-delay-time",
+    "category": "Dijkstra"
+   },
+   {
+    "slug": "employee-free-time",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "reorganize-string",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "jewels-and-stones",
+    "category": "Hashing"
+   },
+   {
+    "slug": "swap-adjacent-in-lr-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "swim-in-rising-water"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "find-eventual-safe-states",
+    "category": "DFS / Graph"
+   },
+   {
+    "slug": "guess-the-word",
+    "category": "Minimax / Hashing"
+   },
+   {
+    "slug": "backspace-string-compare",
+    "category": "Two Pointers / Stack"
+   },
+   {
+    "slug": "peak-index-in-a-mountain-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "transpose-matrix",
+    "category": "Matrix"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "online-stock-span",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "fruit-into-baskets",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "sum-of-subarray-minimums",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "sort-an-array",
+    "category": "Sorting"
+   },
+   {
+    "slug": "shortest-bridge",
+    "category": "BFS / DFS"
+   },
+   {
+    "slug": "maximum-width-ramp",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "squares-of-a-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search / Design"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "max-consecutive-ones-iii",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "greatest-common-divisor-of-strings"
+   },
+   {
+    "slug": "shortest-path-in-binary-matrix",
+    "category": "BFS"
+   },
+   {
+    "slug": "car-pooling",
+    "category": "Prefix Sum / Difference Array"
+   },
+   {
+    "slug": "the-earliest-moment-when-everyone-become-friends",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "DP / LCS"
+   },
+   {
+    "slug": "unique-number-of-occurrences",
+    "category": "Hashing"
+   },
+   {
+    "slug": "count-square-submatrices-with-all-ones",
+    "category": "DP / 2D Matrix"
+   },
+   {
+    "slug": "replace-employee-id-with-the-unique-identifier",
+    "category": "Hashing"
+   },
+   {
+    "slug": "running-sum-of-1d-array",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "minimum-number-of-days-to-make-m-bouquets",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "min-cost-to-connect-all-points",
+    "category": "MST / Kruskal"
+   },
+   {
+    "slug": "average-time-of-process-per-machine",
+    "category": "SQL"
+   },
+   {
+    "slug": "recyclable-and-low-fat-products",
+    "category": "SQL"
+   },
+   {
+    "slug": "merge-strings-alternately",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "frequency-of-the-most-frequent-element",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "count-good-numbers",
+    "category": "Math / Modular Exponentiation"
+   },
+   {
+    "slug": "concatenation-of-array"
+   },
+   {
+    "slug": "add-two-integers",
+    "category": "Math"
+   },
+   {
+    "slug": "meeting-rooms-iii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "create-hello-world-function",
+    "category": "Closure"
+   },
+   {
+    "slug": "to-be-or-not-to-be",
+    "category": "Closure"
+   }
+  ]
+ },
+ {
+  "id": "amazon",
+  "title": "Amazon",
+  "kind": "company",
+  "description": "Problems frequently asked at Amazon in the last six months.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "palindrome-number",
+    "category": "Math"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "integer-to-roman",
+    "category": "Math"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "3sum-closest",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "4sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "swap-nodes-in-pairs",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "In-place LL Reversal"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Array"
+   },
+   {
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "category": "Two Pointers / KMP"
+   },
+   {
+    "slug": "divide-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack / DP"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-insert-position",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Matrix / Hashing"
+   },
+   {
+    "slug": "sudoku-solver",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "jump-game-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "permutations-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Fast Power / Binary Search"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "rotate-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-path-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "plus-one",
+    "category": "Math"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Stack"
+   },
+   {
+    "slug": "edit-distance",
+    "category": "DP / Edit Distance"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Dutch Flag / Two Pointers"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "subsets",
+    "category": "Subsets / Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "maximal-rectangle",
+    "category": "Monotonic Stack / DP"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "subsets-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "binary-tree-zigzag-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "pascals-triangle",
+    "category": "Math / DP"
+   },
+   {
+    "slug": "triangle",
+    "category": "DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-iii",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "surrounded-regions",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "palindrome-partitioning",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "candy",
+    "category": "Greedy"
+   },
+   {
+    "slug": "single-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "word-break-ii",
+    "category": "DP / Backtracking"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "linked-list-cycle-ii",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "sort-list",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "String / Two Pointers"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "two-sum-ii-input-array-is-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Boyer-Moore"
+   },
+   {
+    "slug": "largest-number",
+    "category": "Sorting / Custom Comparator"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "count-primes",
+    "category": "Sieve"
+   },
+   {
+    "slug": "isomorphic-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Trie / DFS"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie / Backtracking"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "shortest-palindrome",
+    "category": "KMP / String"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "contains-duplicate-ii",
+    "category": "Hashing / Sliding Window"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "DP"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "power-of-two",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "delete-node-in-a-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "search-a-2d-matrix-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "integer-to-english-words",
+    "category": "String / Math"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "burst-balloons",
+    "category": "Interval DP"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "odd-even-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "reconstruct-itinerary",
+    "category": "DFS / Eulerian Path"
+   },
+   {
+    "slug": "house-robber-iii",
+    "category": "Tree DP"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "reverse-vowels-of-a-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "intersection-of-two-arrays",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-k-pairs-with-smallest-sums",
+    "category": "Heap / K-way"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "ransom-note",
+    "category": "Hashing"
+   },
+   {
+    "slug": "first-unique-character-in-a-string",
+    "category": "Hashing"
+   },
+   {
+    "slug": "is-subsequence"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "evaluate-division",
+    "category": "Union-Find / BFS"
+   },
+   {
+    "slug": "remove-k-digits",
+    "category": "Greedy / Stack"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "category": "Binary Search / DP"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Math"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "0-1 Knapsack DP"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Greedy / Intervals"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "string-compression",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "sort-characters-by-frequency"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Design / Hashing / Heap"
+   },
+   {
+    "slug": "max-consecutive-ones",
+    "category": "Array"
+   },
+   {
+    "slug": "reverse-pairs",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "target-sum",
+    "category": "DP / Backtracking"
+   },
+   {
+    "slug": "next-greater-element-i",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "next-greater-element-ii",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "fibonacci-number",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "coin-change-ii",
+    "category": "Unbounded Knapsack DP"
+   },
+   {
+    "slug": "contiguous-array",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Prefix Sum / Binary Search"
+   },
+   {
+    "slug": "single-element-in-a-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "number-of-provinces",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "permutation-in-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "top-k-frequent-words",
+    "category": "Heap"
+   },
+   {
+    "slug": "max-area-of-island",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "binary-search"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "subarray-product-less-than-k",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "accounts-merge",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "network-delay-time",
+    "category": "Dijkstra"
+   },
+   {
+    "slug": "min-cost-climbing-stairs"
+   },
+   {
+    "slug": "open-the-lock",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "partition-labels"
+   },
+   {
+    "slug": "reorganize-string"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "bus-routes",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "making-a-large-island",
+    "category": "DFS / Union-Find"
+   },
+   {
+    "slug": "car-fleet"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Tree BFS / DFS"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "boats-to-save-people"
+   },
+   {
+    "slug": "maximum-frequency-stack",
+    "category": "Design / Heap / Stack"
+   },
+   {
+    "slug": "online-stock-span"
+   },
+   {
+    "slug": "fruit-into-baskets",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "sum-of-subarray-minimums",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "minimum-add-to-make-parentheses-valid",
+    "category": "Stack / Greedy"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search / Design"
+   },
+   {
+    "slug": "interval-list-intersections",
+    "category": "Two Pointers / Intervals"
+   },
+   {
+    "slug": "subarrays-with-k-different-integers",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "max-consecutive-ones-iii",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "shortest-path-in-binary-matrix",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "DP / LCS"
+   },
+   {
+    "slug": "critical-connections-in-a-network",
+    "category": "DFS / Tarjan"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "search-suggestions-system",
+    "category": "Trie / Binary Search"
+   },
+   {
+    "slug": "minimum-number-of-days-to-make-m-bouquets"
+   },
+   {
+    "slug": "kth-missing-positive-number",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-cost-to-connect-all-points",
+    "category": "MST / Kruskal"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree-iii",
+    "category": "Tree DFS / Hashing"
+   },
+   {
+    "slug": "meeting-rooms-iii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "count-good-numbers",
+    "category": "Math"
+   },
+   {
+    "slug": "zigzag-conversion",
+    "category": "String"
+   },
+   {
+    "slug": "second-highest-salary",
+    "category": "SQL"
+   },
+   {
+    "slug": "rising-temperature",
+    "category": "SQL"
+   },
+   {
+    "slug": "rearrange-array-elements-by-sign",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "add-two-integers",
+    "category": "Math"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "next-greater-element-iii"
+   },
+   {
+    "slug": "managers-with-at-least-5-direct-reports"
+   },
+   {
+    "slug": "create-hello-world-function",
+    "category": "Closure"
+   },
+   {
+    "slug": "rotate-string"
+   },
+   {
+    "slug": "peak-index-in-a-mountain-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "analyze-user-website-visit-pattern",
+    "category": "Hashing/Sorting"
+   },
+   {
+    "slug": "article-views-i",
+    "category": "SQL"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "average-time-of-process-per-machine",
+    "category": "SQL"
+   },
+   {
+    "slug": "merge-strings-alternately",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "recyclable-and-low-fat-products",
+    "category": "SQL"
+   },
+   {
+    "slug": "big-countries",
+    "category": "SQL"
+   },
+   {
+    "slug": "maximum-width-of-binary-tree",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "compare-version-numbers",
+    "category": "String"
+   },
+   {
+    "slug": "combine-two-tables",
+    "category": "SQL"
+   },
+   {
+    "slug": "minimum-size-subarray-sum",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "greatest-common-divisor-of-strings",
+    "category": "String/Math"
+   },
+   {
+    "slug": "intersection-of-two-linked-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "maximum-sum-of-distinct-subarrays-with-length-k",
+    "category": "Sliding Window/Hashing"
+   },
+   {
+    "slug": "find-the-smallest-divisor-given-a-threshold",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "find-eventual-safe-states"
+   },
+   {
+    "slug": "flatten-binary-tree-to-linked-list",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Stack"
+   },
+   {
+    "slug": "vertical-order-traversal-of-a-binary-tree"
+   },
+   {
+    "slug": "sum-of-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "magnetic-force-between-two-balls"
+   },
+   {
+    "slug": "confirmation-rate",
+    "category": "SQL"
+   },
+   {
+    "slug": "design-circular-queue"
+   },
+   {
+    "slug": "frequency-of-the-most-frequent-element"
+   },
+   {
+    "slug": "russian-doll-envelopes",
+    "category": "DP/Binary Search"
+   },
+   {
+    "slug": "count-and-say",
+    "category": "String"
+   },
+   {
+    "slug": "remove-all-adjacent-duplicates-in-string-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "recover-binary-search-tree",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "length-of-last-word",
+    "category": "String"
+   },
+   {
+    "slug": "furthest-building-you-can-reach",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "design-file-system",
+    "category": "Trie/Design"
+   },
+   {
+    "slug": "check-if-array-is-sorted-and-rotated",
+    "category": "Array"
+   },
+   {
+    "slug": "valid-number",
+    "category": "String"
+   },
+   {
+    "slug": "maximum-average-subarray-i",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "unique-paths-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "excel-sheet-column-title",
+    "category": "Math"
+   },
+   {
+    "slug": "trapping-rain-water-ii"
+   },
+   {
+    "slug": "average-selling-price",
+    "category": "SQL"
+   },
+   {
+    "slug": "department-top-three-salaries",
+    "category": "SQL"
+   },
+   {
+    "slug": "multiply-strings",
+    "category": "Math/String"
+   },
+   {
+    "slug": "binary-tree-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "remove-all-adjacent-duplicates-in-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "arranging-coins",
+    "category": "Math"
+   },
+   {
+    "slug": "base-7",
+    "category": "Math"
+   },
+   {
+    "slug": "valid-parenthesis-string",
+    "category": "Stack/Greedy"
+   },
+   {
+    "slug": "implement-stack-using-queues",
+    "category": "Stack/Queue"
+   },
+   {
+    "slug": "assign-cookies",
+    "category": "Greedy"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "count-binary-substrings",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "logger-rate-limiter",
+    "category": "Design/Hashing"
+   },
+   {
+    "slug": "swapping-nodes-in-a-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "array-partition",
+    "category": "Array"
+   },
+   {
+    "slug": "spiral-matrix-ii",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "binary-subarrays-with-sum",
+    "category": "Hashing/Prefix Sum"
+   },
+   {
+    "slug": "how-many-numbers-are-smaller-than-the-current-number",
+    "category": "Sorting"
+   },
+   {
+    "slug": "product-sales-analysis-iii",
+    "category": "SQL"
+   },
+   {
+    "slug": "maximum-frequency-after-subarray-operation",
+    "category": "Sliding Window/Hashing"
+   },
+   {
+    "slug": "nth-highest-salary",
+    "category": "SQL"
+   },
+   {
+    "slug": "count-square-submatrices-with-all-ones",
+    "category": "2D DP"
+   },
+   {
+    "slug": "employees-earning-more-than-their-managers",
+    "category": "SQL"
+   },
+   {
+    "slug": "next-greater-node-in-linked-list",
+    "category": "Linked List/Stack"
+   },
+   {
+    "slug": "lemonade-change",
+    "category": "Greedy"
+   },
+   {
+    "slug": "maximum-points-you-can-obtain-from-cards",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "customer-who-visited-but-did-not-make-any-transactions",
+    "category": "SQL"
+   },
+   {
+    "slug": "monthly-transactions-i",
+    "category": "SQL"
+   },
+   {
+    "slug": "last-stone-weight",
+    "category": "Heap"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "single-number-ii",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "most-stones-removed-with-same-row-or-column"
+   },
+   {
+    "slug": "minimum-falling-path-sum"
+   },
+   {
+    "slug": "find-the-difference",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "dungeon-game",
+    "category": "DP"
+   },
+   {
+    "slug": "maximum-number-of-events-that-can-be-attended",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "rank-scores",
+    "category": "SQL"
+   },
+   {
+    "slug": "reverse-words-in-a-string-iii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "h-index",
+    "category": "Sorting"
+   },
+   {
+    "slug": "maximum-sum-bst-in-binary-tree",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "exchange-seats",
+    "category": "SQL"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "set-mismatch",
+    "category": "Hashing/Array"
+   },
+   {
+    "slug": "ugly-number",
+    "category": "Math"
+   },
+   {
+    "slug": "count-subarrays-with-median-k",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "construct-binary-tree-from-inorder-and-postorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "count-number-of-nice-subarrays",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "factorial-trailing-zeroes",
+    "category": "Math"
+   },
+   {
+    "slug": "running-sum-of-1d-array",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "power-of-three",
+    "category": "Math"
+   },
+   {
+    "slug": "nth-magical-number",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "remove-linked-list-elements",
+    "category": "Linked List"
+   },
+   {
+    "slug": "department-highest-salary",
+    "category": "SQL"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Design/Heap"
+   },
+   {
+    "slug": "fix-names-in-a-table",
+    "category": "SQL"
+   },
+   {
+    "slug": "number-of-operations-to-make-network-connected",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "find-a-peak-element-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "maximum-number-of-words-found-in-sentences",
+    "category": "String"
+   },
+   {
+    "slug": "bulb-switcher",
+    "category": "Math"
+   },
+   {
+    "slug": "immediate-food-delivery-ii",
+    "category": "SQL"
+   },
+   {
+    "slug": "consecutive-numbers",
+    "category": "SQL"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "add-two-numbers-ii",
+    "category": "Linked List/Stack"
+   },
+   {
+    "slug": "minimum-time-to-complete-all-deliveries",
+    "category": "Math"
+   },
+   {
+    "slug": "concatenation-of-array",
+    "category": "Array"
+   },
+   {
+    "slug": "two-sum-iv-input-is-a-bst",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "minimum-number-of-groups-to-create-a-valid-assignment",
+    "category": "Hashing"
+   },
+   {
+    "slug": "customers-who-never-order",
+    "category": "SQL"
+   },
+   {
+    "slug": "greatest-sum-divisible-by-three",
+    "category": "DP"
+   },
+   {
+    "slug": "interleaving-string",
+    "category": "DP"
+   },
+   {
+    "slug": "sell-diminishing-valued-colored-balls",
+    "category": "Math"
+   },
+   {
+    "slug": "maximum-number-of-vowels-in-a-substring-of-given-length",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "lexicographically-smallest-negated-permutation-that-sums-to-target",
+    "category": "Math"
+   },
+   {
+    "slug": "maximum-subarray-sum-with-length-divisible-by-k",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "permutation-sequence",
+    "category": "Math/Backtracking"
+   },
+   {
+    "slug": "maximum-running-time-of-n-computers",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "minimum-number-of-refueling-stops",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "count-partitions-with-even-sum-difference",
+    "category": "Math"
+   },
+   {
+    "slug": "design-a-stack-with-increment-operation",
+    "category": "Stack/Design"
+   },
+   {
+    "slug": "sign-of-the-product-of-an-array",
+    "category": "Array/Math"
+   },
+   {
+    "slug": "employee-bonus",
+    "category": "SQL"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-using-strategy",
+    "category": "DP"
+   },
+   {
+    "slug": "final-prices-with-a-special-discount-in-a-shop",
+    "category": "Stack"
+   },
+   {
+    "slug": "delete-columns-to-make-sorted-ii",
+    "category": "Greedy"
+   },
+   {
+    "slug": "minimum-swaps-to-avoid-forbidden-values",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "remove-outermost-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "unique-3-digit-even-numbers",
+    "category": "Math"
+   },
+   {
+    "slug": "two-best-non-overlapping-events",
+    "category": "Greedy/Heap"
+   },
+   {
+    "slug": "number-of-recent-calls",
+    "category": "Queue/Design"
+   },
+   {
+    "slug": "minimum-sum-of-squared-difference",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "perfect-squares",
+    "category": "DP/BFS"
+   },
+   {
+    "slug": "minimum-penalty-for-a-shop",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "subarray-sums-divisible-by-k",
+    "category": "Hashing/Prefix Sum"
+   },
+   {
+    "slug": "delete-columns-to-make-sorted-iii",
+    "category": "DP"
+   },
+   {
+    "slug": "maximize-happiness-of-selected-children",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "count-of-smaller-numbers-after-self"
+   },
+   {
+    "slug": "design-parking-system",
+    "category": "Design"
+   },
+   {
+    "slug": "pyramid-transition-matrix",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "magic-squares-in-grid",
+    "category": "Matrix"
+   },
+   {
+    "slug": "count-salary-categories",
+    "category": "SQL"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "n-repeated-element-in-size-2n-array",
+    "category": "Array"
+   },
+   {
+    "slug": "domino-and-tromino-tiling"
+   },
+   {
+    "slug": "number-of-ways-to-paint-n-x-3-grid",
+    "category": "DP"
+   },
+   {
+    "slug": "flatten-a-multilevel-doubly-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "maximum-matrix-sum",
+    "category": "Matrix"
+   },
+   {
+    "slug": "maximum-level-sum-of-a-binary-tree",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-product-of-splitted-binary-tree",
+    "category": "Tree DP"
+   },
+   {
+    "slug": "max-dot-product-of-two-subsequences",
+    "category": "DP"
+   },
+   {
+    "slug": "summary-ranges",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "arithmetic-slices",
+    "category": "DP"
+   },
+   {
+    "slug": "similar-string-groups",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "design-browser-history",
+    "category": "Design/Linked List"
+   },
+   {
+    "slug": "shuffle-the-array",
+    "category": "Array"
+   },
+   {
+    "slug": "separate-squares-i",
+    "category": "Math"
+   },
+   {
+    "slug": "count-negative-numbers-in-a-sorted-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "perfect-rectangle",
+    "category": "Geometry/Math"
+   },
+   {
+    "slug": "partition-to-k-equal-sum-subsets",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "restore-ip-addresses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "separate-squares-ii",
+    "category": "Math"
+   },
+   {
+    "slug": "maximize-area-of-square-hole-in-grid",
+    "category": "Matrix"
+   },
+   {
+    "slug": "max-number-of-k-sum-pairs"
+   },
+   {
+    "slug": "maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold",
+    "category": "2D Prefix Sum"
+   },
+   {
+    "slug": "maximum-population-year",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "longest-arithmetic-subsequence",
+    "category": "DP"
+   },
+   {
+    "slug": "serialize-and-deserialize-bst",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "construct-the-minimum-bitwise-array-i",
+    "category": "Math"
+   },
+   {
+    "slug": "construct-the-minimum-bitwise-array-ii",
+    "category": "Math"
+   },
+   {
+    "slug": "add-digits",
+    "category": "Math"
+   },
+   {
+    "slug": "minimum-pair-removal-to-sort-array-i",
+    "category": "Greedy"
+   },
+   {
+    "slug": "longest-nice-subarray",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "minimum-pair-removal-to-sort-array-ii",
+    "category": "Greedy"
+   },
+   {
+    "slug": "paint-house",
+    "category": "DP"
+   },
+   {
+    "slug": "find-the-maximum-length-of-valid-subsequence-i",
+    "category": "DP"
+   },
+   {
+    "slug": "unique-binary-search-trees",
+    "category": "Tree/Math"
+   },
+   {
+    "slug": "monotonic-array",
+    "category": "Array"
+   },
+   {
+    "slug": "elimination-game",
+    "category": "Math"
+   },
+   {
+    "slug": "minimum-cost-path-with-edge-reversals",
+    "category": "BFS"
+   },
+   {
+    "slug": "snapshot-array",
+    "category": "Binary Search/Design"
+   },
+   {
+    "slug": "construct-binary-search-tree-from-preorder-traversal",
+    "category": "Tree/Binary Search"
+   },
+   {
+    "slug": "minimum-cost-path-with-teleportations",
+    "category": "BFS"
+   },
+   {
+    "slug": "strictly-palindromic-number",
+    "category": "Math"
+   },
+   {
+    "slug": "minimum-cost-to-convert-string-i",
+    "category": "Dijkstra"
+   },
+   {
+    "slug": "smallest-even-multiple",
+    "category": "Math"
+   },
+   {
+    "slug": "132-pattern",
+    "category": "Stack"
+   },
+   {
+    "slug": "find-missing-and-repeated-values",
+    "category": "Matrix"
+   },
+   {
+    "slug": "amount-of-time-for-binary-tree-to-be-infected",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "divide-an-array-into-subarrays-with-minimum-cost-i",
+    "category": "Greedy"
+   },
+   {
+    "slug": "divide-an-array-into-subarrays-with-minimum-cost-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "trionic-array-i",
+    "category": "Math"
+   },
+   {
+    "slug": "maximum-number-of-tasks-you-can-assign",
+    "category": "Greedy"
+   },
+   {
+    "slug": "max-sum-of-rectangle-no-larger-than-k",
+    "category": "Binary Search/2D"
+   },
+   {
+    "slug": "battleships-in-a-board",
+    "category": "Matrix"
+   },
+   {
+    "slug": "sum-of-all-subset-xor-totals",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "transformed-array",
+    "category": "Array/Math"
+   },
+   {
+    "slug": "find-followers-count",
+    "category": "SQL"
+   },
+   {
+    "slug": "minimum-index-sum-of-two-lists",
+    "category": "Hashing"
+   },
+   {
+    "slug": "largest-magic-square",
+    "category": "Matrix"
+   },
+   {
+    "slug": "balance-a-binary-search-tree",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "longest-substring-with-at-least-k-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "minimum-removals-to-balance-array",
+    "category": "Stack"
+   },
+   {
+    "slug": "longest-balanced-subarray-i",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "number-of-atoms",
+    "category": "Stack/Hashing"
+   },
+   {
+    "slug": "partition-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "partition-array-for-maximum-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "number-of-students-unable-to-eat-lunch",
+    "category": "Stack"
+   },
+   {
+    "slug": "longest-balanced-subarray-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "minimum-absolute-difference-in-bst",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "squares-of-a-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "sort-an-array",
+    "category": "Sorting"
+   },
+   {
+    "slug": "longest-balanced-substring-i",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-balanced-substring-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "champagne-tower",
+    "category": "DP"
+   },
+   {
+    "slug": "range-sum-query-2d-immutable",
+    "category": "2D Prefix Sum"
+   },
+   {
+    "slug": "max-points-on-a-line",
+    "category": "Math/Hashing"
+   },
+   {
+    "slug": "unique-morse-code-words",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-maximum-value-in-a-constrained-sequence",
+    "category": "DP"
+   },
+   {
+    "slug": "happy-students",
+    "category": "Math"
+   },
+   {
+    "slug": "frog-jump",
+    "category": "DP"
+   },
+   {
+    "slug": "gray-code",
+    "category": "Array/Math"
+   },
+   {
+    "slug": "binary-number-with-alternating-bits",
+    "category": "Math/Bit"
+   },
+   {
+    "slug": "count-of-range-sum",
+    "category": "Binary Search/Merge Sort"
+   },
+   {
+    "slug": "find-if-path-exists-in-graph",
+    "category": "BFS/DFS"
+   },
+   {
+    "slug": "concatenated-words",
+    "category": "Trie/DP"
+   },
+   {
+    "slug": "special-binary-string",
+    "category": "String/Recursion"
+   },
+   {
+    "slug": "number-of-steps-to-reduce-a-number-to-zero",
+    "category": "Math"
+   },
+   {
+    "slug": "binary-gap",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "minimum-edge-reversals-so-every-node-is-reachable",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "maximum-width-ramp",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "check-if-a-string-contains-all-binary-codes-of-size-k",
+    "category": "Hashing"
+   },
+   {
+    "slug": "all-paths-from-source-to-target",
+    "category": "DFS"
+   },
+   {
+    "slug": "satisfiability-of-equality-equations",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "intersection-of-two-arrays-ii",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-all-duplicates-in-an-array",
+    "category": "Hashing/Array"
+   },
+   {
+    "slug": "sort-integers-by-the-number-of-1-bits",
+    "category": "Bit Manipulation/Sorting"
+   },
+   {
+    "slug": "matrix-diagonal-sum",
+    "category": "Matrix"
+   },
+   {
+    "slug": "display-the-first-three-rows",
+    "category": "SQL"
+   },
+   {
+    "slug": "as-far-from-land-as-possible",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "find-resultant-array-after-removing-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "can-place-flowers",
+    "category": "Greedy"
+   },
+   {
+    "slug": "longest-happy-prefix",
+    "category": "KMP"
+   },
+   {
+    "slug": "concatenation-of-consecutive-binary-numbers",
+    "category": "Math"
+   },
+   {
+    "slug": "detect-cycles-in-2d-grid",
+    "category": "DFS/Matrix"
+   },
+   {
+    "slug": "minimum-swaps-to-arrange-a-binary-grid",
+    "category": "Greedy"
+   },
+   {
+    "slug": "duplicate-emails",
+    "category": "SQL"
+   },
+   {
+    "slug": "minimum-operations-to-equalize-binary-string",
+    "category": "Greedy"
+   },
+   {
+    "slug": "find-kth-bit-in-nth-binary-string",
+    "category": "Recursion"
+   },
+   {
+    "slug": "find-score-of-an-array-after-marking-all-elements",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "median-employee-salary",
+    "category": "SQL"
+   },
+   {
+    "slug": "partitioning-into-minimum-number-of-deci-binary-numbers",
+    "category": "Greedy"
+   },
+   {
+    "slug": "check-if-binary-string-has-at-most-one-segment-of-ones",
+    "category": "String"
+   },
+   {
+    "slug": "minimum-number-of-flips-to-make-the-binary-string-alternating",
+    "category": "Greedy"
+   },
+   {
+    "slug": "find-unique-binary-string",
+    "category": "Hashing"
+   },
+   {
+    "slug": "missing-number-in-arithmetic-progression",
+    "category": "Array/Math"
+   },
+   {
+    "slug": "maximum-product-of-three-numbers",
+    "category": "Array/Sorting"
+   },
+   {
+    "slug": "find-all-possible-stable-binary-arrays-i",
+    "category": "DP"
+   },
+   {
+    "slug": "mini-parser",
+    "category": "Stack"
+   },
+   {
+    "slug": "text-justification",
+    "category": "String/Array"
+   },
+   {
+    "slug": "find-all-possible-stable-binary-arrays-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-subarray-length-with-distinct-sum-at-least-k",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "minimum-operations-to-reduce-x-to-zero",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "island-perimeter",
+    "category": "Matrix"
+   },
+   {
+    "slug": "make-array-zero-by-subtracting-equal-amounts",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-customer-referee",
+    "category": "SQL"
+   },
+   {
+    "slug": "maximize-spanning-tree-stability-with-upgrades",
+    "category": "MST"
+   },
+   {
+    "slug": "minimum-cost-for-tickets",
+    "category": "DP"
+   },
+   {
+    "slug": "backspace-string-compare",
+    "category": "Two Pointers/Stack"
+   },
+   {
+    "slug": "design-tic-tac-toe",
+    "category": "Design/Hashing"
+   },
+   {
+    "slug": "return-length-of-arguments-passed",
+    "category": "Math"
+   },
+   {
+    "slug": "rearranging-fruits",
+    "category": "Greedy"
+   },
+   {
+    "slug": "minimum-operations-to-sort-a-string",
+    "category": "Greedy"
+   },
+   {
+    "slug": "fancy-sequence",
+    "category": "Design"
+   },
+   {
+    "slug": "longest-arithmetic-sequence-after-changing-at-most-one-element",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-number-of-seconds-to-make-mountain-height-zero",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "count-stepping-numbers-in-range",
+    "category": "DP/Math"
+   },
+   {
+    "slug": "maximum-number-of-weeks-for-which-you-can-work",
+    "category": "Greedy"
+   },
+   {
+    "slug": "largest-submatrix-with-rearrangements",
+    "category": "Matrix/Greedy"
+   },
+   {
+    "slug": "largest-odd-number-in-string",
+    "category": "String/Math"
+   },
+   {
+    "slug": "number-of-pairs-satisfying-inequality",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "binary-tree-cameras",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "reverse-string-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "minimum-absolute-difference-in-sliding-submatrix",
+    "category": "Matrix"
+   },
+   {
+    "slug": "counter",
+    "category": "Math"
+   },
+   {
+    "slug": "triangle-judgement",
+    "category": "SQL"
+   },
+   {
+    "slug": "number-of-good-pairs",
+    "category": "Hashing"
+   },
+   {
+    "slug": "kth-largest-sum-in-a-binary-tree",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "wildcard-matching"
+   },
+   {
+    "slug": "actors-and-directors-who-cooperated-at-least-three-times",
+    "category": "SQL"
+   },
+   {
+    "slug": "maximum-non-negative-product-in-a-matrix",
+    "category": "DP"
+   },
+   {
+    "slug": "first-unique-number",
+    "category": "Queue/Hashing"
+   },
+   {
+    "slug": "construct-product-matrix",
+    "category": "Matrix"
+   },
+   {
+    "slug": "exam-room",
+    "category": "Sorted Set"
+   },
+   {
+    "slug": "remove-duplicate-letters",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "binary-search-tree-iterator",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "add-strings",
+    "category": "String/Math"
+   },
+   {
+    "slug": "possible-bipartition",
+    "category": "BFS/Union-Find"
+   },
+   {
+    "slug": "count-submatrices-with-equal-frequency-of-x-and-y",
+    "category": "Matrix"
+   },
+   {
+    "slug": "convert-sorted-list-to-binary-search-tree",
+    "category": "Tree/Linked List"
+   },
+   {
+    "slug": "valid-phone-numbers",
+    "category": "String"
+   },
+   {
+    "slug": "matrix-similarity-after-cyclic-shifts",
+    "category": "Matrix"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal-ii",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "sum-root-to-leaf-numbers",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "check-if-strings-can-be-made-equal-with-operations-ii",
+    "category": "String"
+   },
+   {
+    "slug": "daily-leads-and-partners",
+    "category": "SQL"
+   },
+   {
+    "slug": "maximum-subarray-min-product",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "split-linked-list-in-parts",
+    "category": "Linked List"
+   },
+   {
+    "slug": "find-k-th-smallest-pair-distance",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "counting-bits",
+    "category": "Bit Manipulation/DP"
+   },
+   {
+    "slug": "maximum-amount-of-money-robot-can-earn",
+    "category": "Hashing"
+   },
+   {
+    "slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+    "category": "Sliding Window/Heap"
+   },
+   {
+    "slug": "partition-array-into-three-parts-with-equal-sum",
+    "category": "Array"
+   },
+   {
+    "slug": "bulls-and-cows",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-walls-destroyed-by-robots",
+    "category": "Greedy"
+   },
+   {
+    "slug": "combination-sum-iii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "substring-with-concatenation-of-all-words"
+   },
+   {
+    "slug": "number-of-visible-people-in-a-queue",
+    "category": "Stack"
+   },
+   {
+    "slug": "parallel-courses-iii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "take-k-of-each-character-from-left-and-right",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "walking-robot-simulation",
+    "category": "Simulation"
+   },
+   {
+    "slug": "sum-of-square-numbers",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "final-element-after-subarray-deletions",
+    "category": "Stack/Greedy"
+   },
+   {
+    "slug": "word-pattern",
+    "category": "Hashing"
+   },
+   {
+    "slug": "find-center-of-star-graph",
+    "category": "Graph"
+   },
+   {
+    "slug": "distribute-coins-in-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "maximum-good-subarray-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "apply-discount-to-prices",
+    "category": "String/Math"
+   },
+   {
+    "slug": "xor-after-range-multiplication-queries-ii",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "minimum-distance-between-three-equal-elements-i",
+    "category": "Hashing"
+   },
+   {
+    "slug": "students-and-examinations",
+    "category": "SQL"
+   },
+   {
+    "slug": "binary-tree-paths",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "car-fleet-ii",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "robot-collisions",
+    "category": "Stack"
+   },
+   {
+    "slug": "minimum-deletions-to-make-array-divisible",
+    "category": "Math"
+   },
+   {
+    "slug": "linked-list-components",
+    "category": "Linked List/Hashing"
+   },
+   {
+    "slug": "minimum-cost-to-make-array-equal",
+    "category": "Math/Binary Search"
+   },
+   {
+    "slug": "find-mode-in-binary-search-tree",
+    "category": "Tree DFS/BST"
+   },
+   {
+    "slug": "ipo",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "minimum-increment-to-make-array-unique",
+    "category": "Sorting"
+   },
+   {
+    "slug": "word-ladder-ii",
+    "category": "BFS/Backtracking"
+   },
+   {
+    "slug": "minimum-distance-to-the-target-element",
+    "category": "Array/Binary Search"
+   },
+   {
+    "slug": "queries-quality-and-percentage",
+    "category": "SQL"
+   },
+   {
+    "slug": "recover-a-tree-from-preorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "minimum-cost-to-cut-a-stick",
+    "category": "DP"
+   },
+   {
+    "slug": "web-crawler",
+    "category": "BFS"
+   },
+   {
+    "slug": "closest-equal-element-queries",
+    "category": "Hashing"
+   },
+   {
+    "slug": "shortest-path-in-a-grid-with-obstacles-elimination"
+   },
+   {
+    "slug": "two-city-scheduling",
+    "category": "Greedy"
+   },
+   {
+    "slug": "identify-the-largest-outlier-in-an-array",
+    "category": "Hashing"
+   },
+   {
+    "slug": "minimum-absolute-distance-between-mirror-pairs"
+   },
+   {
+    "slug": "shortest-subarray-to-be-removed-to-make-array-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "path-with-maximum-gold",
+    "category": "DFS/Backtracking"
+   },
+   {
+    "slug": "unique-number-of-occurrences",
+    "category": "Hashing"
+   },
+   {
+    "slug": "rectangle-area",
+    "category": "Math"
+   },
+   {
+    "slug": "brick-wall",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-candies-allocated-to-k-children",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "two-furthest-houses-with-different-colors",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "count-good-nodes-in-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "maximum-bitwise-and-after-increment-operations",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "smallest-string-starting-from-leaf",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "replace-elements-with-greatest-element-on-right-side",
+    "category": "Array"
+   },
+   {
+    "slug": "sum-of-absolute-differences-in-a-sorted-array"
+   },
+   {
+    "slug": "minimized-maximum-of-products-distributed-to-any-store",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "determine-whether-matrix-can-be-obtained-by-rotation"
+   },
+   {
+    "slug": "sum-of-distances",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Intervals/Sorting"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Design/Sorted Set"
+   },
+   {
+    "slug": "diagonal-traverse",
+    "category": "Matrix"
+   },
+   {
+    "slug": "put-boxes-into-the-warehouse-i",
+    "category": "Greedy"
+   },
+   {
+    "slug": "design-task-manager",
+    "category": "Design/Heap"
+   },
+   {
+    "slug": "design-linked-list",
+    "category": "Design"
+   },
+   {
+    "slug": "minimum-operations-to-make-array-non-decreasing",
+    "category": "Greedy"
+   },
+   {
+    "slug": "build-array-from-permutation",
+    "category": "Array"
+   },
+   {
+    "slug": "path-sum-ii",
+    "category": "Tree DFS/Backtracking"
+   },
+   {
+    "slug": "time-needed-to-inform-all-employees",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "minimum-operations-to-make-a-uni-value-grid",
+    "category": "Math"
+   },
+   {
+    "slug": "ones-and-zeroes",
+    "category": "DP"
+   },
+   {
+    "slug": "sliding-subarray-beauty",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "minimum-cost-to-split-into-ones",
+    "category": "Greedy"
+   },
+   {
+    "slug": "maximum-score-from-grid-operations",
+    "category": "DP"
+   },
+   {
+    "slug": "largest-palindromic-number",
+    "category": "String/Greedy"
+   },
+   {
+    "slug": "rotate-function",
+    "category": "Array/Math"
+   },
+   {
+    "slug": "super-ugly-number",
+    "category": "Math/Heap"
+   },
+   {
+    "slug": "redundant-connection",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "maximize-fixed-points-after-deletions",
+    "category": "Math"
+   },
+   {
+    "slug": "delete-nodes-and-return-forest",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "is-graph-bipartite",
+    "category": "BFS"
+   },
+   {
+    "slug": "repeated-dna-sequences"
+   },
+   {
+    "slug": "rotating-the-box",
+    "category": "Matrix"
+   },
+   {
+    "slug": "majority-element-ii",
+    "category": "Hashing"
+   },
+   {
+    "slug": "detonate-the-maximum-bombs",
+    "category": "BFS"
+   },
+   {
+    "slug": "jump-game-ix",
+    "category": "Greedy"
+   },
+   {
+    "slug": "minimum-jumps-to-reach-end-via-prime-teleportation",
+    "category": "BFS"
+   },
+   {
+    "slug": "cyclically-rotating-a-grid"
+   },
+   {
+    "slug": "first-completely-painted-row-or-column",
+    "category": "Matrix"
+   },
+   {
+    "slug": "maximum-number-of-jumps-to-reach-the-last-index",
+    "category": "DP"
+   },
+   {
+    "slug": "rotated-digits",
+    "category": "Math"
+   },
+   {
+    "slug": "minimum-initial-energy-to-finish-tasks",
+    "category": "Greedy"
+   },
+   {
+    "slug": "continuous-subarray-sum",
+    "category": "Hashing/Prefix Sum"
+   },
+   {
+    "slug": "minimum-cost-to-buy-apples-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "minimum-moves-to-make-array-complementary",
+    "category": "DP/Difference Array"
+   },
+   {
+    "slug": "populating-next-right-pointers-in-each-node",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "flatten-nested-list-iterator",
+    "category": "Stack/Design"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "lexicographically-smallest-permutation-greater-than-target",
+    "category": "Math"
+   },
+   {
+    "slug": "maximum-sum-with-at-most-k-elements",
+    "category": "Heap/Greedy"
+   },
+   {
+    "slug": "sort-array-by-increasing-frequency",
+    "category": "Sorting/Hashing"
+   },
+   {
+    "slug": "find-closest-node-to-given-two-nodes",
+    "category": "DFS"
+   },
+   {
+    "slug": "jump-game-iii",
+    "category": "BFS/DFS"
+   },
+   {
+    "slug": "find-numbers-with-even-number-of-digits",
+    "category": "Array"
+   },
+   {
+    "slug": "maximum-height-by-stacking-cuboids",
+    "category": "DP"
+   }
+  ]
+ },
+ {
+  "id": "apple",
+  "title": "Apple",
+  "kind": "company",
+  "description": "Problems frequently asked at Apple in the last six months.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "zigzag-conversion",
+    "category": "String"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "4sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "In-place LL Reversal"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Array"
+   },
+   {
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "category": "Two Pointers / KMP"
+   },
+   {
+    "slug": "substring-with-concatenation-of-all-words",
+    "category": "Sliding Window / Hashing"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Matrix / Hashing"
+   },
+   {
+    "slug": "sudoku-solver",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "jump-game-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "permutations-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "text-justification",
+    "category": "String / Array"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Stack"
+   },
+   {
+    "slug": "edit-distance",
+    "category": "DP / Edit Distance"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Dutch Flag / Two Pointers"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "subsets-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "interleaving-string",
+    "category": "DP"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "binary-tree-zigzag-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "convert-sorted-array-to-binary-search-tree",
+    "category": "Tree / Binary Search"
+   },
+   {
+    "slug": "convert-sorted-list-to-binary-search-tree",
+    "category": "Tree / Linked List"
+   },
+   {
+    "slug": "path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "pascals-triangle",
+    "category": "Math / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-iii",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder-ii",
+    "category": "BFS / Backtracking"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "gas-station",
+    "category": "Greedy"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "max-points-on-a-line",
+    "category": "Math / Hashing"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "String / Two Pointers"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "read-n-characters-given-read4",
+    "category": "Design"
+   },
+   {
+    "slug": "read-n-characters-given-read4-ii-call-multiple-times",
+    "category": "Design"
+   },
+   {
+    "slug": "intersection-of-two-linked-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "one-edit-distance",
+    "category": "String"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "missing-ranges",
+    "category": "Array"
+   },
+   {
+    "slug": "compare-version-numbers",
+    "category": "String"
+   },
+   {
+    "slug": "two-sum-ii-input-array-is-sorted",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "binary-search-tree-iterator",
+    "category": "Tree DFS / Stack"
+   },
+   {
+    "slug": "second-highest-salary"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-iv",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "remove-linked-list-elements",
+    "category": "Linked List"
+   },
+   {
+    "slug": "count-primes",
+    "category": "Sieve"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "minimum-size-subarray-sum",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Trie / DFS"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie / Backtracking"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Hashing"
+   },
+   {
+    "slug": "the-skyline-problem",
+    "category": "Heap / Sweep Line"
+   },
+   {
+    "slug": "contains-duplicate-ii",
+    "category": "Hashing / Sliding Window"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "DP"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "implement-stack-using-queues",
+    "category": "Stack / Queue"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "delete-node-in-a-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "search-a-2d-matrix-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "shortest-word-distance",
+    "category": "Array"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Intervals / Sorting"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "binary-tree-paths",
+    "category": "Tree DFS / Backtracking"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "integer-to-english-words",
+    "category": "String / Math"
+   },
+   {
+    "slug": "h-index",
+    "category": "Sorting"
+   },
+   {
+    "slug": "find-the-celebrity",
+    "category": "Graph / Design"
+   },
+   {
+    "slug": "first-bad-version",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "peeking-iterator",
+    "category": "Design / Array"
+   },
+   {
+    "slug": "word-pattern-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
+    "category": "State Machine DP"
+   },
+   {
+    "slug": "binary-tree-vertical-order-traversal",
+    "category": "Tree BFS / Hashing"
+   },
+   {
+    "slug": "shortest-distance-from-all-buildings",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "odd-even-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "reconstruct-itinerary",
+    "category": "DFS / Eulerian Path"
+   },
+   {
+    "slug": "counting-bits"
+   },
+   {
+    "slug": "nested-list-weight-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "longest-substring-with-at-most-k-distinct-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "flatten-nested-list-iterator",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "reverse-vowels-of-a-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "moving-average-from-data-stream",
+    "category": "Sliding Window / Queue"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "design-tic-tac-toe",
+    "category": "Design"
+   },
+   {
+    "slug": "intersection-of-two-arrays",
+    "category": "Hashing"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Design / Heap"
+   },
+   {
+    "slug": "logger-rate-limiter"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Sliding Window / Queue"
+   },
+   {
+    "slug": "water-and-jug-problem",
+    "category": "BFS / Math"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-sorted-matrix",
+    "category": "Heap / Binary Search"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "ransom-note",
+    "category": "Hashing"
+   },
+   {
+    "slug": "first-unique-character-in-a-string",
+    "category": "Hashing"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "evaluate-division",
+    "category": "Union-Find / BFS"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "serialize-and-deserialize-n-ary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "all-oone-data-structure",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "non-overlapping-intervals",
+    "category": "Greedy / Intervals"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "string-compression",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "assign-cookies",
+    "category": "Greedy"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Design / Hashing / Heap"
+   },
+   {
+    "slug": "island-perimeter",
+    "category": "Array / Matrix"
+   },
+   {
+    "slug": "validate-ip-address",
+    "category": "String"
+   },
+   {
+    "slug": "total-hamming-distance",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "sliding-window-median",
+    "category": "Two Heaps / Sliding Window"
+   },
+   {
+    "slug": "max-consecutive-ones",
+    "category": "Array"
+   },
+   {
+    "slug": "the-maze",
+    "category": "BFS / DFS"
+   },
+   {
+    "slug": "reverse-pairs",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "next-greater-element-ii",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "fibonacci-number",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "find-largest-value-in-each-tree-row",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "continuous-subarray-sum",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Prefix Sum / Binary Search"
+   },
+   {
+    "slug": "k-diff-pairs-in-an-array",
+    "category": "Hashing / Two Pointers"
+   },
+   {
+    "slug": "encode-and-decode-tinyurl",
+    "category": "Hashing / Design"
+   },
+   {
+    "slug": "01-matrix",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "array-nesting",
+    "category": "Array / DFS"
+   },
+   {
+    "slug": "permutation-in-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "can-place-flowers",
+    "category": "Greedy"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "design-circular-queue",
+    "category": "Design / Queue"
+   },
+   {
+    "slug": "maximum-product-of-three-numbers",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "sum-of-square-numbers",
+    "category": "Math / Two Pointers"
+   },
+   {
+    "slug": "design-log-storage-system",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Stack"
+   },
+   {
+    "slug": "design-search-autocomplete-system",
+    "category": "Trie / Design / Heap"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "image-smoother"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "knight-probability-in-chessboard",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "top-k-frequent-words",
+    "category": "Heap"
+   },
+   {
+    "slug": "max-area-of-island",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "design-linked-list",
+    "category": "Design / Linked List"
+   },
+   {
+    "slug": "subarray-product-less-than-k",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-with-transaction-fee",
+    "category": "DP"
+   },
+   {
+    "slug": "find-pivot-index"
+   },
+   {
+    "slug": "my-calendar-ii",
+    "category": "Design / Sorted Set"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "sentence-similarity-ii",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "employee-free-time",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "max-chunks-to-make-sorted",
+    "category": "Array / Stack"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "short-encoding-of-words",
+    "category": "Trie / Hashing"
+   },
+   {
+    "slug": "goat-latin",
+    "category": "String"
+   },
+   {
+    "slug": "similar-string-groups",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "keys-and-rooms",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "guess-the-word",
+    "category": "Minimax / Hashing"
+   },
+   {
+    "slug": "maximize-distance-to-closest-person",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "exam-room",
+    "category": "Design / Sorted Set"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Tree BFS / DFS"
+   },
+   {
+    "slug": "transpose-matrix",
+    "category": "Matrix"
+   },
+   {
+    "slug": "walking-robot-simulation",
+    "category": "Array / Hashing"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "spiral-matrix-iii",
+    "category": "Matrix / Math"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-postorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "maximum-frequency-stack",
+    "category": "Design / Heap / Stack"
+   },
+   {
+    "slug": "sum-of-subarray-minimums",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "snakes-and-ladders",
+    "category": "BFS"
+   },
+   {
+    "slug": "sort-an-array",
+    "category": "Sorting"
+   },
+   {
+    "slug": "maximum-sum-circular-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-falling-path-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "number-of-recent-calls",
+    "category": "Queue / Design"
+   },
+   {
+    "slug": "verifying-an-alien-dictionary",
+    "category": "Hashing"
+   },
+   {
+    "slug": "k-closest-points-to-origin",
+    "category": "Heap / Math"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search / Design"
+   },
+   {
+    "slug": "interval-list-intersections",
+    "category": "Two Pointers / Intervals"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "number-of-squareful-arrays",
+    "category": "Backtracking / Math"
+   },
+   {
+    "slug": "max-consecutive-ones-iii",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "robot-bounded-in-circle",
+    "category": "Math / Simulation"
+   },
+   {
+    "slug": "remove-all-adjacent-duplicates-in-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "brace-expansion",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "shortest-path-in-binary-matrix",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "DP / LCS"
+   },
+   {
+    "slug": "snapshot-array",
+    "category": "Design / Binary Search"
+   },
+   {
+    "slug": "optimize-water-distribution-in-a-village",
+    "category": "Union-Find / Greedy"
+   },
+   {
+    "slug": "minimum-knight-moves",
+    "category": "BFS"
+   },
+   {
+    "slug": "intersection-of-three-sorted-arrays",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "meeting-scheduler",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "web-crawler-multithreaded",
+    "category": "BFS"
+   },
+   {
+    "slug": "minimum-remove-to-make-valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "average-selling-price"
+   },
+   {
+    "slug": "find-winner-on-a-tic-tac-toe-game",
+    "category": "Array / Matrix"
+   },
+   {
+    "slug": "angle-between-hands-of-a-clock",
+    "category": "Math"
+   },
+   {
+    "slug": "product-of-the-last-k-numbers",
+    "category": "Array / Design"
+   },
+   {
+    "slug": "design-browser-history",
+    "category": "Design / Linked List"
+   },
+   {
+    "slug": "magnetic-force-between-two-balls",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "dot-product-of-two-sparse-vectors",
+    "category": "Array / Hashing / Design"
+   },
+   {
+    "slug": "find-servers-that-handled-most-number-of-requests",
+    "category": "Heap / Sorted Set"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree-iii",
+    "category": "Tree DFS / Hashing"
+   },
+   {
+    "slug": "determine-if-two-strings-are-close",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-population-year",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "minimum-speed-to-arrive-on-time",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "number-of-pairs-of-strings-with-concatenation-equal-to-target",
+    "category": "Hashing / String"
+   },
+   {
+    "slug": "maximum-path-quality-of-a-graph",
+    "category": "DFS / Backtracking"
+   },
+   {
+    "slug": "sum-of-subarray-ranges",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "find-all-lonely-numbers-in-the-array",
+    "category": "Hashing"
+   },
+   {
+    "slug": "best-poker-hand"
+   },
+   {
+    "slug": "first-letter-to-appear-twice",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-rows-covered-by-columns",
+    "category": "Matrix / Bit Manipulation"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Design / Array"
+   },
+   {
+    "slug": "distribute-money-to-maximum-children"
+   },
+   {
+    "slug": "split-strings-by-separator",
+    "category": "String"
+   },
+   {
+    "slug": "count-the-number-of-incremovable-subarrays-i",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "count-the-number-of-incremovable-subarrays-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "find-the-grid-of-region-average",
+    "category": "Matrix / Array"
+   },
+   {
+    "slug": "maximum-number-of-operations-with-the-same-score-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "apple-redistribution-into-boxes",
+    "category": "Greedy / Math"
+   },
+   {
+    "slug": "string-compression-iii",
+    "category": "String"
+   }
+  ]
+ },
+ {
+  "id": "microsoft",
+  "title": "Microsoft",
+  "kind": "company",
+  "description": "Problems frequently asked at Microsoft in the last six months.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "palindrome-number",
+    "category": "Math"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "integer-to-roman",
+    "category": "Math"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "3sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "4sum",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Linked List"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "In-place LL Reversal"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Array"
+   },
+   {
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "category": "Two Pointers / KMP"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack / DP"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "search-insert-position",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "combination-sum-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "first-missing-positive",
+    "category": "Cyclic Sort"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "wildcard-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "jump-game-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "permutations-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Fast Power / Binary Search"
+   },
+   {
+    "slug": "n-queens",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Greedy"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "length-of-last-word",
+    "category": "String"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "DP"
+   },
+   {
+    "slug": "minimum-path-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "plus-one",
+    "category": "Math"
+   },
+   {
+    "slug": "add-binary",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Stack"
+   },
+   {
+    "slug": "edit-distance",
+    "category": "DP / Edit Distance"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "search-a-2d-matrix",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Dutch Flag / Two Pointers"
+   },
+   {
+    "slug": "subsets",
+    "category": "Subsets / Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "maximal-rectangle",
+    "category": "Monotonic Stack / DP"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Linked List"
+   },
+   {
+    "slug": "restore-ip-addresses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "interleaving-string",
+    "category": "DP"
+   },
+   {
+    "slug": "validate-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "recover-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "same-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "symmetric-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "binary-tree-zigzag-level-order-traversal",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "flatten-binary-tree-to-linked-list",
+    "category": "Tree DFS / Linked List"
+   },
+   {
+    "slug": "distinct-subsequences",
+    "category": "DP"
+   },
+   {
+    "slug": "populating-next-right-pointers-in-each-node",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "pascals-triangle",
+    "category": "Math / DP"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock-ii",
+    "category": "Greedy / DP"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "palindrome-partitioning",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "candy",
+    "category": "Greedy"
+   },
+   {
+    "slug": "single-number-ii",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "reorder-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "sort-list",
+    "category": "Merge Sort"
+   },
+   {
+    "slug": "evaluate-reverse-polish-notation",
+    "category": "Stack"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "String / Two Pointers"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "DP"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "majority-element",
+    "category": "Boyer-Moore"
+   },
+   {
+    "slug": "binary-search-tree-iterator",
+    "category": "Tree DFS / Stack"
+   },
+   {
+    "slug": "largest-number",
+    "category": "Sorting / Custom Comparator"
+   },
+   {
+    "slug": "rotate-array",
+    "category": "Array / Math"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "isomorphic-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "minimum-size-subarray-sum",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Trie / DFS"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie / Backtracking"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "DP"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "implement-stack-using-queues",
+    "category": "Stack / Queue"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "category": "Stack"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+    "category": "Tree DFS / BST"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "search-a-2d-matrix-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "integer-to-english-words",
+    "category": "String / Math"
+   },
+   {
+    "slug": "h-index",
+    "category": "Sorting"
+   },
+   {
+    "slug": "perfect-squares",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "minimum-height-trees"
+   },
+   {
+    "slug": "burst-balloons",
+    "category": "Interval DP"
+   },
+   {
+    "slug": "count-of-smaller-numbers-after-self"
+   },
+   {
+    "slug": "shortest-distance-from-all-buildings",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "odd-even-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "increasing-triplet-subsequence",
+    "category": "Greedy"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "intersection-of-two-arrays",
+    "category": "Hashing"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Design / Heap"
+   },
+   {
+    "slug": "sum-of-two-integers",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-sorted-matrix",
+    "category": "Heap / Binary Search"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "first-unique-character-in-a-string",
+    "category": "Hashing"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Stack"
+   },
+   {
+    "slug": "evaluate-division",
+    "category": "Union-Find / BFS"
+   },
+   {
+    "slug": "longest-palindrome",
+    "category": "Hashing / Greedy"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "category": "Binary Search / DP"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Math"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "path-sum-iii"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "add-two-numbers-ii"
+   },
+   {
+    "slug": "sort-characters-by-frequency"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Design / Hashing / Heap"
+   },
+   {
+    "slug": "sliding-window-median",
+    "category": "Two Heaps / Sliding Window"
+   },
+   {
+    "slug": "max-consecutive-ones",
+    "category": "Array"
+   },
+   {
+    "slug": "target-sum",
+    "category": "DP / Backtracking"
+   },
+   {
+    "slug": "next-greater-element-i",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "diagonal-traverse"
+   },
+   {
+    "slug": "next-greater-element-ii",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "fibonacci-number",
+    "category": "DP / Math"
+   },
+   {
+    "slug": "longest-palindromic-subsequence",
+    "category": "DP / Palindrome"
+   },
+   {
+    "slug": "continuous-subarray-sum",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "contiguous-array",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "single-element-in-a-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "number-of-provinces",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "permutation-in-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "design-in-memory-file-system",
+    "category": "Trie / Design"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "design-circular-queue",
+    "category": "Design / Queue"
+   },
+   {
+    "slug": "palindromic-substrings",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "maximum-width-of-binary-tree"
+   },
+   {
+    "slug": "valid-parenthesis-string"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "binary-search"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "design-linked-list",
+    "category": "Design / Linked List"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "open-the-lock",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "employee-free-time",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "reorganize-string"
+   },
+   {
+    "slug": "swim-in-rising-water",
+    "category": "Binary Search / BFS"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "find-eventual-safe-states",
+    "category": "DFS / Graph"
+   },
+   {
+    "slug": "making-a-large-island",
+    "category": "DFS / Union-Find"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Tree BFS / DFS"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "online-stock-span"
+   },
+   {
+    "slug": "most-stones-removed-with-same-row-or-column",
+    "category": "Union-Find / DFS"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search / Design"
+   },
+   {
+    "slug": "interval-list-intersections",
+    "category": "Two Pointers / Intervals"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "car-pooling",
+    "category": "Prefix Sum / Difference Array"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "category": "DP / LCS"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "DP / Binary Search"
+   }
+  ]
+ },
+ {
+  "id": "uber",
+  "title": "Uber",
+  "kind": "company",
+  "description": "Problems frequently asked at Uber in the last six months.",
+  "items": [
+   {
+    "slug": "two-sum",
+    "category": "Hashing"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "DP / Expand Center"
+   },
+   {
+    "slug": "reverse-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "String Parsing"
+   },
+   {
+    "slug": "regular-expression-matching",
+    "category": "DP"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "roman-to-integer",
+    "category": "Math"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "String"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Stack"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Heap / K-way Merge"
+   },
+   {
+    "slug": "swap-nodes-in-pairs",
+    "category": "Linked List"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "category": "In-place LL Reversal"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-element",
+    "category": "Array"
+   },
+   {
+    "slug": "next-permutation",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "longest-valid-parentheses",
+    "category": "Stack / DP"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "find-first-and-last-position-of-element-in-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-sudoku",
+    "category": "Matrix / Hashing"
+   },
+   {
+    "slug": "sudoku-solver",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "combination-sum",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Two Pointers / Monotonic Stack"
+   },
+   {
+    "slug": "permutations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Matrix"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Hashing"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Kadane / DP"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Matrix Simulation"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "insert-interval",
+    "category": "Merge Intervals"
+   },
+   {
+    "slug": "minimum-path-sum",
+    "category": "DP"
+   },
+   {
+    "slug": "text-justification",
+    "category": "String / Array"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "DP / Fibonacci"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Matrix"
+   },
+   {
+    "slug": "minimum-window-substring",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "subsets",
+    "category": "Subsets / Backtracking"
+   },
+   {
+    "slug": "word-search",
+    "category": "Backtracking / DFS"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array-ii",
+    "category": "Modified Binary Search"
+   },
+   {
+    "slug": "largest-rectangle-in-histogram",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "decode-ways",
+    "category": "DP"
+   },
+   {
+    "slug": "maximum-depth-of-binary-tree",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Greedy"
+   },
+   {
+    "slug": "binary-tree-maximum-path-sum",
+    "category": "Tree DFS"
+   },
+   {
+    "slug": "valid-palindrome",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "word-ladder",
+    "category": "BFS"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Hashing / Union-Find"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Graph DFS/BFS"
+   },
+   {
+    "slug": "candy",
+    "category": "Greedy"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "word-break",
+    "category": "DP"
+   },
+   {
+    "slug": "word-break-ii",
+    "category": "DP / Backtracking"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "find-minimum-in-rotated-sorted-array",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Stack / Design"
+   },
+   {
+    "slug": "one-edit-distance",
+    "category": "String"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "excel-sheet-column-number",
+    "category": "String / Math"
+   },
+   {
+    "slug": "dungeon-game",
+    "category": "DP"
+   },
+   {
+    "slug": "reverse-words-in-a-string-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "house-robber",
+    "category": "DP"
+   },
+   {
+    "slug": "binary-tree-right-side-view",
+    "category": "Tree BFS"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "DFS / BFS / Union-Find"
+   },
+   {
+    "slug": "happy-number",
+    "category": "Fast & Slow Pointers"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Linked List"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Trie"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Trie / Backtracking"
+   },
+   {
+    "slug": "house-robber-ii",
+    "category": "DP"
+   },
+   {
+    "slug": "shortest-palindrome",
+    "category": "KMP / String"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Heap / QuickSelect"
+   },
+   {
+    "slug": "the-skyline-problem",
+    "category": "Heap / Sweep Line"
+   },
+   {
+    "slug": "basic-calculator",
+    "category": "Stack"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "category": "Stack"
+   },
+   {
+    "slug": "kth-smallest-element-in-a-bst",
+    "category": "Tree DFS / In-order"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Prefix Sum"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Monotonic Deque"
+   },
+   {
+    "slug": "search-a-2d-matrix-ii",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Hashing"
+   },
+   {
+    "slug": "group-shifted-strings",
+    "category": "Hashing"
+   },
+   {
+    "slug": "meeting-rooms",
+    "category": "Intervals / Sorting"
+   },
+   {
+    "slug": "meeting-rooms-ii",
+    "category": "Heap / Intervals"
+   },
+   {
+    "slug": "factor-combinations",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "add-digits",
+    "category": "Math"
+   },
+   {
+    "slug": "palindrome-permutation",
+    "category": "Hashing"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "word-pattern",
+    "category": "Hashing"
+   },
+   {
+    "slug": "word-pattern-ii",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Two Heaps"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Tree Serialization"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "number-of-islands-ii",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "burst-balloons",
+    "category": "Interval DP"
+   },
+   {
+    "slug": "coin-change",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "longest-increasing-path-in-a-matrix",
+    "category": "DFS / Memoization"
+   },
+   {
+    "slug": "patching-array",
+    "category": "Greedy"
+   },
+   {
+    "slug": "reconstruct-itinerary",
+    "category": "DFS / Eulerian Path"
+   },
+   {
+    "slug": "house-robber-iii",
+    "category": "Tree DP"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Top-K / Heap"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Sliding Window / Queue"
+   },
+   {
+    "slug": "find-k-pairs-with-smallest-sums",
+    "category": "Heap / K-way"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "shuffle-an-array",
+    "category": "Math / Fisher-Yates"
+   },
+   {
+    "slug": "evaluate-division",
+    "category": "Union-Find / BFS"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "category": "Binary Search / DP"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Math"
+   },
+   {
+    "slug": "pacific-atlantic-water-flow"
+   },
+   {
+    "slug": "longest-repeating-character-replacement",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "all-oone-data-structure",
+    "category": "Design / Hashing"
+   },
+   {
+    "slug": "find-all-anagrams-in-a-string",
+    "category": "Sliding Window"
+   },
+   {
+    "slug": "delete-node-in-a-bst",
+    "category": "BST"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Design / Hashing / Heap"
+   },
+   {
+    "slug": "optimal-account-balancing",
+    "category": "Graph / Math"
+   },
+   {
+    "slug": "matchsticks-to-square",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "predict-the-winner",
+    "category": "DP / Game Theory"
+   },
+   {
+    "slug": "the-maze",
+    "category": "BFS / DFS"
+   },
+   {
+    "slug": "next-greater-element-i",
+    "category": "Monotonic Stack"
+   },
+   {
+    "slug": "freedom-trail",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "longest-palindromic-subsequence",
+    "category": "DP / Palindrome"
+   },
+   {
+    "slug": "random-pick-with-weight",
+    "category": "Prefix Sum / Binary Search"
+   },
+   {
+    "slug": "encode-and-decode-tinyurl",
+    "category": "Hashing / Design"
+   },
+   {
+    "slug": "01-matrix",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "number-of-provinces",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Hashing / Prefix Sum"
+   },
+   {
+    "slug": "find-the-closest-palindrome",
+    "category": "String / Binary Search"
+   },
+   {
+    "slug": "design-in-memory-file-system",
+    "category": "Trie / Design"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Stack"
+   },
+   {
+    "slug": "design-search-autocomplete-system",
+    "category": "Trie / Design / Heap"
+   },
+   {
+    "slug": "replace-words",
+    "category": "Trie / Hashing"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "valid-palindrome-ii",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "employee-importance",
+    "category": "Graph / DFS / Hashing"
+   },
+   {
+    "slug": "top-k-frequent-words",
+    "category": "Heap"
+   },
+   {
+    "slug": "falling-squares",
+    "category": "Array / Sorted Set"
+   },
+   {
+    "slug": "candy-crush",
+    "category": "Array / Matrix"
+   },
+   {
+    "slug": "my-calendar-i",
+    "category": "Design / Sorted Set"
+   },
+   {
+    "slug": "flood-fill",
+    "category": "DFS / BFS"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Stack"
+   },
+   {
+    "slug": "cherry-pickup",
+    "category": "DP / DFS"
+   },
+   {
+    "slug": "open-the-lock",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "sliding-puzzle",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "swim-in-rising-water",
+    "category": "Binary Search / BFS"
+   },
+   {
+    "slug": "is-graph-bipartite",
+    "category": "Graph DFS / BFS"
+   },
+   {
+    "slug": "cheapest-flights-within-k-stops",
+    "category": "DP / BFS"
+   },
+   {
+    "slug": "custom-sort-string",
+    "category": "Hashing / Sorting"
+   },
+   {
+    "slug": "number-of-matching-subsequences",
+    "category": "Hashing / Binary Search"
+   },
+   {
+    "slug": "find-eventual-safe-states",
+    "category": "DFS / Graph"
+   },
+   {
+    "slug": "bus-routes",
+    "category": "BFS / Hashing"
+   },
+   {
+    "slug": "making-a-large-island",
+    "category": "DFS / Union-Find"
+   },
+   {
+    "slug": "exam-room",
+    "category": "Design / Sorted Set"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "possible-bipartition",
+    "category": "Graph / Union-Find"
+   },
+   {
+    "slug": "maximum-frequency-stack",
+    "category": "Design / Heap / Stack"
+   },
+   {
+    "slug": "shortest-bridge",
+    "category": "BFS / DFS"
+   },
+   {
+    "slug": "verifying-an-alien-dictionary",
+    "category": "Hashing"
+   },
+   {
+    "slug": "squares-of-a-sorted-array",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Binary Search / Design"
+   },
+   {
+    "slug": "minimum-cost-for-tickets",
+    "category": "DP"
+   },
+   {
+    "slug": "interval-list-intersections",
+    "category": "Two Pointers / Intervals"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Multi-source BFS"
+   },
+   {
+    "slug": "capacity-to-ship-packages-within-d-days",
+    "category": "Binary Search on Answer"
+   },
+   {
+    "slug": "parallel-courses",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "remove-zero-sum-consecutive-nodes-from-linked-list",
+    "category": "Linked List / Hashing"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "DP / Binary Search"
+   },
+   {
+    "slug": "minimum-number-of-taps-to-open-to-water-a-garden",
+    "category": "Greedy / Sliding Window"
+   },
+   {
+    "slug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
+    "category": "Dijkstra / DP"
+   },
+   {
+    "slug": "construct-k-palindrome-strings",
+    "category": "Hashing / Greedy"
+   },
+   {
+    "slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+    "category": "Sliding Window / Heap"
+   },
+   {
+    "slug": "course-schedule-iv",
+    "category": "Topological Sort / BFS"
+   },
+   {
+    "slug": "number-of-nodes-in-the-sub-tree-with-the-same-label",
+    "category": "Tree DFS / Hashing"
+   },
+   {
+    "slug": "remove-max-number-of-edges-to-keep-graph-fully-traversable",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "min-cost-to-connect-all-points",
+    "category": "MST / Kruskal"
+   },
+   {
+    "slug": "furthest-building-you-can-reach",
+    "category": "Heap / Greedy"
+   },
+   {
+    "slug": "merge-strings-alternately",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "frequency-of-the-most-frequent-element",
+    "category": "Sliding Window"
+   }
+  ]
+ }
+]

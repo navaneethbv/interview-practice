@@ -1,0 +1,36 @@
+{
+  "kind": "design",
+  "id": "my-calendar-i",
+  "style": "leetcode",
+  "className": "MyCalendar",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "book",
+      "java": "book",
+      "params": [
+        {
+          "name": "startTime",
+          "type": "int"
+        },
+        {
+          "name": "endTime",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["book","book","book"],"args":[[10,20],[15,25],[20,30]]},"expected":[true,false,true],"sample":true},
+    {"input":{"ctor":[],"ops":["book","book"],"args":[[1,5],[1,5]]},"expected":[true,false],"sample":true},
+    {"input":{"ctor":[],"ops":["book"],"args":[[0,1]]},"expected":[true]},
+    {"input":{"ctor":[],"ops":["book","book","book"],"args":[[0,1],[1,2],[2,3]]},"expected":[true,true,true]},
+    {"input":{"ctor":[],"ops":["book","book"],"args":[[0,10],[2,3]]},"expected":[true,false]},
+    {"input":{"ctor":[],"ops":["book","book"],"args":[[2,3],[0,10]]},"expected":[true,false]},
+    {"input":{"ctor":[],"ops":["book","book"],"args":[[10,20],[0,10]]},"expected":[true,true]},
+    {"input":{"ctor":[],"ops":["book","book","book","book"],"args":[[10,20],[0,5],[5,10],[20,25]]},"expected":[true,true,true,true]},
+    {"input":{"ctor":[],"ops":["book","book"],"args":[[0,1000000000],[1,2]]},"expected":[true,false]},
+    {"input":{"ctor":[],"ops":["book","book","book"],"args":[[5,10],[0,6],[0,5]]},"expected":[true,false,true]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "squares-of-a-sorted-array",
+  "style": "leetcode",
+  "function": {
+    "python": "sortedSquares",
+    "java": "sortedSquares"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[-4,-1,0,3,10]],"expected":[0,1,9,16,100],"sample":true},
+    {"input":[[-3,-2,-1]],"expected":[1,4,9],"sample":true},
+    {"input":[[0]],"expected":[0]},
+    {"input":[[1]],"expected":[1]},
+    {"input":[[-1]],"expected":[1]},
+    {"input":[[-2,2]],"expected":[4,4]},
+    {"input":[[-1,0,1]],"expected":[0,1,1]},
+    {"input":[[1,2,3]],"expected":[1,4,9]},
+    {"input":[[-10000,10000]],"expected":[100000000,100000000]},
+    {"input":[[-5,-5,0,2,2]],"expected":[0,4,4,25,25]}
+  ]
+}

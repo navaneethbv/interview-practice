@@ -1,0 +1,27 @@
+{
+  "id": "max-points-on-a-line",
+  "style": "leetcode",
+  "function": {
+    "python": "maxPoints",
+    "java": "maxPoints"
+  },
+  "params": [
+    {
+      "name": "points",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,1],[2,2],[3,3]]],"expected":3,"sample":true},
+    {"input":[[[0,0],[1,1],[1,0],[2,0]]],"expected":3,"sample":true},
+    {"input":[[[0,0]]],"expected":1},
+    {"input":[[[0,0],[1,2]]],"expected":2},
+    {"input":[[[1,0],[1,1],[1,2]]],"expected":3},
+    {"input":[[[0,1],[1,1],[2,1]]],"expected":3},
+    {"input":[[[0,0],[1,1],[2,0]]],"expected":2},
+    {"input":[[[-1,-1],[0,0],[1,1],[1,-1]]],"expected":3},
+    {"input":[[[-10000,-10000],[0,0],[10000,10000]]],"expected":3},
+    {"input":[[[0,0],[1,1],[2,4],[3,9],[4,16],[5,25],[6,36],[7,49],[8,64],[9,81]]],"expected":2}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "concatenated-words",
+  "style": "leetcode",
+  "function": {
+    "python": "findAllConcatenatedWordsInADict",
+    "java": "findAllConcatenatedWordsInADict"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["cat","dog","catdog"]],"expected":["catdog"],"sample":true},
+    {"input":[["a","aa","aaa"]],"expected":["aa","aaa"],"sample":true},
+    {"input":[["a"]],"expected":[]},
+    {"input":[["cat","dog"]],"expected":[]},
+    {"input":[["a","b","ab","ba"]],"expected":["ab","ba"]},
+    {"input":[["cat","cats","dog","catsdog"]],"expected":["catsdog"]},
+    {"input":[["abc","abcabc"]],"expected":["abcabc"]},
+    {"input":[["a","ab","aba"]],"expected":["aba"]},
+    {"input":[["ab","cd","abcd","cdab","abcdab"]],"expected":["abcd","cdab","abcdab"]},
+    {"input":[["x","xx","xxx","xxxx"]],"expected":["xx","xxx","xxxx"]}
+  ]
+}

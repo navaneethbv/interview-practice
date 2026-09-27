@@ -1,0 +1,3 @@
+class Solution {
+public List<Integer> survivedRobotsHealths(int[] positions,int[] healths,String directions){Integer[] ids=new Integer[positions.length];for(int i=0;i<ids.length;i++)ids[i]=i;Arrays.sort(ids,Comparator.comparingInt(i->positions[i]));ArrayDeque<Integer> st=new ArrayDeque<>();for(int i:ids){if(directions.charAt(i)=='R'){st.push(i);continue;}while(!st.isEmpty()&&healths[i]>0){int j=st.peek();if(healths[j]<healths[i]){healths[j]=0;healths[i]--;st.pop();}else if(healths[j]>healths[i]){healths[j]--;healths[i]=0;}else{healths[j]=healths[i]=0;st.pop();}}}List<Integer> a=new ArrayList<>();for(int h:healths)if(h>0)a.add(h);return a;}
+}

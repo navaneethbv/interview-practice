@@ -1,0 +1,27 @@
+{
+  "id": "longest-balanced-substring-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "longestBalanced",
+    "java": "longestBalanced"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aabbc"],"expected":4,"sample":true},
+    {"input":["cccc"],"expected":4,"sample":true},
+    {"input":["a"],"expected":1},
+    {"input":["abc"],"expected":3},
+    {"input":["abac"],"expected":3},
+    {"input":["aaaab"],"expected":4},
+    {"input":["aabbcc"],"expected":6},
+    {"input":["abbbcc"],"expected":4},
+    {"input":["acbacbacb"],"expected":9},
+    {"input":["aaabbbcccaa"],"expected":9}
+  ]
+}

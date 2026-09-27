@@ -1,0 +1,31 @@
+{
+  "id": "add-two-numbers-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "addTwoNumbers",
+    "java": "addTwoNumbers"
+  },
+  "params": [
+    {
+      "name": "l1",
+      "type": "ListNode"
+    },
+    {
+      "name": "l2",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "ListNode",
+  "tests": [
+    {"input":[[1,2,3],[7,7]],"expected":[2,0,0],"sample":true},
+    {"input":[[0],[0]],"expected":[0],"sample":true},
+    {"input":[[1],[9]],"expected":[1,0]},
+    {"input":[[9,9],[1]],"expected":[1,0,0]},
+    {"input":[[1],[1]],"expected":[2]},
+    {"input":[[1,0,0],[9,9]],"expected":[1,9,9]},
+    {"input":[[9],[9]],"expected":[1,8]},
+    {"input":[[7,2,4,3],[5,6,4]],"expected":[7,8,0,7]},
+    {"input":[[1,0],[0]],"expected":[1,0]},
+    {"input":[[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],[1]],"expected":[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+  ]
+}

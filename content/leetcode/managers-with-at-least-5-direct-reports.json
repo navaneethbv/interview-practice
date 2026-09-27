@@ -1,0 +1,44 @@
+{
+  "kind": "sql",
+  "id": "managers-with-at-least-5-direct-reports",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "department",
+          "type": "TEXT"
+        },
+        {
+          "name": "managerId",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "name"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1],[6,"E4","A",1]]}},"expected":[["Boss"]],"sample":true},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1]]}},"expected":[],"sample":true},
+    {"input":{"tables":{"Employee":[]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1],[6,"E4","A",1],[7,"E5","B",1]]}},"expected":[["Boss"]]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1],[6,"E4","A",1],[7,"E5","B",1],[8,"E6","A",1],[9,"E7","B",1],[10,"E8","A",1],[11,"E9","B",1]]}},"expected":[["Boss"]]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1],[6,"E4","A",1],[20,"Boss","A",null],[21,"E0","A",20],[22,"E1","B",20],[23,"E2","A",20],[24,"E3","B",20],[25,"E4","A",20]]}},"expected":[["Boss"],["Boss"]]},
+    {"input":{"tables":{"Employee":[[1,"Boss","A",null],[2,"E0","A",1],[3,"E1","B",1],[4,"E2","A",1],[5,"E3","B",1],[10,"Junior","A",2],[11,"New","B",2]]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[10,"Lead","A",null],[1,"E0","A",10],[2,"E1","B",10],[3,"E2","A",10],[4,"E3","B",10],[5,"E4","A",10]]}},"expected":[["Lead"]]}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "surrounded-regions",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[[["X","X","X"],["X","O","X"],["X","X","X"]]],"expected":[["X","X","X"],["X","X","X"],["X","X","X"]],"sample":true},
+    {"input":[[["X","O","X"],["X","O","X"],["X","X","X"]]],"expected":[["X","O","X"],["X","O","X"],["X","X","X"]],"sample":true},
+    {"input":[[["O"]]],"expected":[["O"]]},
+    {"input":[[["X"]]],"expected":[["X"]]},
+    {"input":[[["O","O","O"]]],"expected":[["O","O","O"]]},
+    {"input":[[["O","O"],["O","O"]]],"expected":[["O","O"],["O","O"]]},
+    {"input":[[["X","X","X"],["X","X","X"],["X","X","X"]]],"expected":[["X","X","X"],["X","X","X"],["X","X","X"]]},
+    {"input":[[["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]],"expected":[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]},
+    {"input":[[["O","X","O"],["X","O","X"],["O","X","O"]]],"expected":[["O","X","O"],["X","X","X"],["O","X","O"]]},
+    {"input":[[["X","X","X","X","X"],["X","O","O","O","X"],["X","O","X","X","X"],["X","O","O","O","X"],["X","X","O","X","X"]]],"expected":[["X","X","X","X","X"],["X","O","O","O","X"],["X","O","X","X","X"],["X","O","O","O","X"],["X","X","O","X","X"]]}
+  ]
+}

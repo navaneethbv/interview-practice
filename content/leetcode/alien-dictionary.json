@@ -1,0 +1,32 @@
+{
+  "id": "alien-dictionary",
+  "style": "leetcode",
+  "function": {
+    "python": "alienOrder",
+    "java": "alienOrder"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "alienOrder"
+  },
+  "tests": [
+    {"input":[["za","zb","ca","cb"]],"expected":"abzc","sample":true},
+    {"input":[["abc","ab"]],"expected":"","sample":true},
+    {"input":[["a"]],"expected":"a"},
+    {"input":[["z","x"]],"expected":"zx"},
+    {"input":[["z","x","z"]],"expected":""},
+    {"input":[["abc","abc"]],"expected":"abc"},
+    {"input":[["a","ab","abc"]],"expected":"abc"},
+    {"input":[["wrt","wrf","er","ett","rftt"]],"expected":"wertf"},
+    {"input":[["ab","ac","bb","bc"]],"expected":"abc"},
+    {"input":[["ac","ab","zc","zb"]],"expected":"aczb"},
+    {"input":[["a","b","c"]],"expected":"abc"},
+    {"input":[["ab","ba","aa"]],"expected":""}
+  ]
+}

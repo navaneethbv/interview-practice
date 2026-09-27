@@ -66,6 +66,15 @@ function escapeHtml(s: string) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+function escapeAttribute(s: string) {
+  return escapeHtml(s).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
+}
+
+function isWithin(parent: string, child: string) {
+  const relative = path.relative(parent, child);
+  return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
+}
+
 function saveAsset(buf: Buffer, ext: string): string {
   const hash = crypto.createHash("sha1").update(buf).digest("hex").slice(0, 16);
   fs.mkdirSync(ASSET_DIR, { recursive: true });
@@ -137,19 +146,24 @@ const ALLOWED = new Set([
 ]);
 
 function resolveImage(src: string, baseDir: string): string | null {
-  const data = src.match(/^data:image\/(png|jpe?g|gif|webp|svg\+xml);base64,([\s\S]*)$/i);
+  const data = /^data:image\/(png|jpe?g|gif|webp);base64,([\s\S]*)$/i.exec(src);
   if (data) {
-    const ext = data[1].toLowerCase().replace("jpeg", "jpg").replace("svg+xml", "svg");
+    const ext = data[1].toLowerCase().replace("jpeg", "jpg");
     return saveAsset(Buffer.from(data[2], "base64"), ext);
   }
   if (/^https:\/\//i.test(src)) return src;
   if (!src) return null;
-  const local = path.resolve(baseDir, decodeURIComponent(src.split(/[?#]/)[0]));
-  if (fs.existsSync(local)) {
-    const ext = path.extname(local).slice(1).toLowerCase() || "png";
-    return saveAsset(fs.readFileSync(local), ext);
+  let local: string;
+  try {
+    const base = fs.realpathSync(baseDir); // nosemgrep -- resolved path is checked against the source directory
+    local = fs.realpathSync(path.resolve(base, decodeURIComponent(src.split(/[?#]/)[0]))); // nosemgrep -- resolved path is checked against the source directory
+    if (!isWithin(base, local) || !fs.statSync(local).isFile()) return null; // nosemgrep -- resolved path is checked against the source directory
+  } catch {
+    return null;
   }
-  return null;
+  const ext = path.extname(local).slice(1).toLowerCase() || "png";
+  if (!["png", "jpg", "jpeg", "gif", "webp"].includes(ext)) return null;
+  return saveAsset(fs.readFileSync(local), ext);
 }
 
 /** Rebuilds HTML from an allowlist of tags; drops every attribute except safe links and images. */
@@ -166,7 +180,7 @@ function sanitize($: cheerio.CheerioAPI, el: Element, baseDir: string): string {
       const tag = (child as Element).tagName.toLowerCase();
       if (tag === "img") {
         const url = resolveImage($(child).attr("src") ?? "", baseDir);
-        if (url) out += `<img src="${escapeHtml(url)}" alt="${escapeHtml($(child).attr("alt") ?? "")}">`;
+        if (url) out += `<img src="${escapeAttribute(url)}" alt="${escapeAttribute($(child).attr("alt") ?? "")}">`;
         return;
       }
       const inner = sanitize($, child as Element, baseDir);
@@ -177,7 +191,7 @@ function sanitize($: cheerio.CheerioAPI, el: Element, baseDir: string): string {
       let attrs = "";
       if (tag === "a") {
         const href = $(child).attr("href") ?? "";
-        if (/^https?:\/\//i.test(href)) attrs = ` href="${escapeHtml(href)}" target="_blank" rel="noreferrer"`;
+        if (/^https?:\/\//i.test(href)) attrs = ` href="${escapeAttribute(href)}" target="_blank" rel="noreferrer"`;
       }
       out += `<${tag}${attrs}>${inner}</${tag}>`;
     });

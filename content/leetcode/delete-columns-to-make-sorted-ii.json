@@ -1,0 +1,114 @@
+{
+  "id": "delete-columns-to-make-sorted-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "minDeletionSize",
+    "java": "minDeletionSize"
+  },
+  "params": [
+    {
+      "name": "strs",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          "ca",
+          "bb",
+          "ac"
+        ]
+      ],
+      "expected": 1,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "xc",
+          "yb",
+          "za"
+        ]
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          "a"
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          "z",
+          "y",
+          "x"
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          "abc",
+          "abc"
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          "zyx",
+          "wvu",
+          "tsr"
+        ]
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          "ab",
+          "aa"
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          "aa",
+          "ab"
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          "xga",
+          "xfb",
+          "yfa"
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          "az",
+          "ba",
+          "bb"
+        ]
+      ],
+      "expected": 0
+    }
+  ]
+}

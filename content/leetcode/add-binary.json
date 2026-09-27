@@ -1,0 +1,31 @@
+{
+  "id": "add-binary",
+  "style": "leetcode",
+  "function": {
+    "python": "addBinary",
+    "java": "addBinary"
+  },
+  "params": [
+    {
+      "name": "a",
+      "type": "string"
+    },
+    {
+      "name": "b",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["11","1"],"expected":"100","sample":true},
+    {"input":["101","11"],"expected":"1000","sample":true},
+    {"input":["0","0"],"expected":"0"},
+    {"input":["0","1"],"expected":"1"},
+    {"input":["1","1"],"expected":"10"},
+    {"input":["10","10"],"expected":"100"},
+    {"input":["111","1"],"expected":"1000"},
+    {"input":["1000","1"],"expected":"1001"},
+    {"input":["1010","1011"],"expected":"10101"},
+    {"input":["1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111","1"],"expected":"10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

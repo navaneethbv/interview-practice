@@ -1,0 +1,31 @@
+{
+  "id": "swap-adjacent-in-lr-string",
+  "style": "leetcode",
+  "function": {
+    "python": "canTransform",
+    "java": "canTransform"
+  },
+  "params": [
+    {
+      "name": "start",
+      "type": "string"
+    },
+    {
+      "name": "result",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["RXXLRXRXL","XRLXXRRLX"],"expected":true,"sample":true},
+    {"input":["X","L"],"expected":false,"sample":true},
+    {"input":["L","L"],"expected":true},
+    {"input":["XL","LX"],"expected":true},
+    {"input":["LX","XL"],"expected":false},
+    {"input":["RX","XR"],"expected":true},
+    {"input":["XR","RX"],"expected":false},
+    {"input":["XX","XX"],"expected":true},
+    {"input":["RL","LR"],"expected":false},
+    {"input":["RXXL","XRLX"],"expected":true}
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "kind": "sql",
+  "id": "game-play-analysis-iv",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Activity",
+      "columns": [
+        {
+          "name": "player_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "device_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "event_date",
+          "type": "TEXT"
+        },
+        {
+          "name": "games_played",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "fraction"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",0],[1,2,"2024-01-02",3],[2,1,"2024-01-01",2]]}},"expected":[[0.5]],"sample":true},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",2],[1,1,"2024-01-03",2],[1,1,"2024-01-04",2]]}},"expected":[[0]],"sample":true},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",0]]}},"expected":[[0]]},
+    {"input":{"tables":{"Activity":[[1,1,"2023-12-31",1],[1,1,"2024-01-01",1]]}},"expected":[[1]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-02-28",1],[1,1,"2024-02-29",1]]}},"expected":[[1]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-02",1],[1,1,"2024-01-01",1]]}},"expected":[[1]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",1],[2,1,"2024-01-01",1]]}},"expected":[[0]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",1],[1,1,"2024-01-02",1],[2,1,"2024-01-01",1],[3,1,"2024-01-01",1]]}},"expected":[[0.33]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",1],[1,1,"2024-01-02",1],[2,1,"2024-01-02",1],[2,2,"2024-01-03",1]]}},"expected":[[1]]},
+    {"input":{"tables":{"Activity":[[1,1,"2024-01-01",0],[1,1,"2024-01-03",0],[2,1,"2024-01-03",0],[2,1,"2024-01-04",0]]}},"expected":[[0.5]]}
+  ]
+}

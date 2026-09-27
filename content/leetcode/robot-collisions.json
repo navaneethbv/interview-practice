@@ -1,0 +1,197 @@
+{
+  "id": "robot-collisions",
+  "style": "leetcode",
+  "function": {
+    "python": "survivedRobotsHealths",
+    "java": "survivedRobotsHealths"
+  },
+  "params": [
+    {
+      "name": "positions",
+      "type": "int[]"
+    },
+    {
+      "name": "healths",
+      "type": "int[]"
+    },
+    {
+      "name": "directions",
+      "type": "string"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        "RL"
+      ],
+      "expected": [
+        4
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        "RL"
+      ],
+      "expected": [],
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        "L"
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        "RRR"
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          1
+        ],
+        "LR"
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          5
+        ],
+        "LR"
+      ],
+      "expected": [
+        4
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        "RRL"
+      ],
+      "expected": [
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          5,
+          1,
+          2
+        ],
+        "RLL"
+      ],
+      "expected": [
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          5,
+          3,
+          1
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        "LLR"
+      ],
+      "expected": [
+        4,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          4,
+          8,
+          10
+        ],
+        [
+          5,
+          2,
+          2,
+          5
+        ],
+        "RLRL"
+      ],
+      "expected": []
+    }
+  ]
+}

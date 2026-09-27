@@ -1,0 +1,27 @@
+{
+  "id": "best-time-to-buy-and-sell-stock-iii",
+  "style": "leetcode",
+  "function": {
+    "python": "maxProfit",
+    "java": "maxProfit"
+  },
+  "params": [
+    {
+      "name": "prices",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,5,1,6]],"expected":8,"sample":true},
+    {"input":[[6,4,2]],"expected":0,"sample":true},
+    {"input":[[1]],"expected":0},
+    {"input":[[1,2,3]],"expected":2},
+    {"input":[[3,3,5,0,0,3,1,4]],"expected":6},
+    {"input":[[1,4,2,7,3,9]],"expected":12},
+    {"input":[[1,1,1]],"expected":0},
+    {"input":[[0,100000,0,100000]],"expected":200000},
+    {"input":[[5,2,4,0,1]],"expected":3},
+    {"input":[[2,1,2,0,1]],"expected":2}
+  ]
+}

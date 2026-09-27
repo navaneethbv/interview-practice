@@ -1,0 +1,3 @@
+class Solution {
+public int maxFixedPoints(int[] nums){List<int[]> a=new ArrayList<>();for(int i=0;i<nums.length;i++)if(nums[i]<=i)a.add(new int[]{nums[i],i-nums[i]});a.sort(Comparator.comparingInt(v->v[0]));int[] bit=new int[nums.length+1];int ans=0;for(int i=0;i<a.size();){int j=i;List<int[]> updates=new ArrayList<>();while(j<a.size()&&a.get(j)[0]==a.get(i)[0]){int d=a.get(j)[1],best=0;for(int p=d+1;p>0;p-=p&-p)best=Math.max(best,bit[p]);updates.add(new int[]{d+1,best+1});ans=Math.max(ans,best+1);j++;}for(int[] u:updates)for(int p=u[0];p<bit.length;p+=p&-p)bit[p]=Math.max(bit[p],u[1]);i=j;}return ans;}
+}

@@ -1,0 +1,67 @@
+{
+  "kind": "design",
+  "id": "design-circular-queue",
+  "style": "leetcode",
+  "className": "MyCircularQueue",
+  "ctorParams": [
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "enQueue",
+      "java": "enQueue",
+      "params": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    },
+    {
+      "name": "deQueue",
+      "java": "deQueue",
+      "params": [],
+      "returns": "boolean"
+    },
+    {
+      "name": "Front",
+      "java": "Front",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "Rear",
+      "java": "Rear",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "isEmpty",
+      "java": "isEmpty",
+      "params": [],
+      "returns": "boolean"
+    },
+    {
+      "name": "isFull",
+      "java": "isFull",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[2],"ops":["enQueue","enQueue","enQueue","Front","Rear","deQueue","enQueue","Rear"],"args":[[1],[2],[3],[],[],[],[3],[]]},"expected":[true,true,false,1,2,true,true,3],"sample":true},
+    {"input":{"ctor":[1],"ops":["Front","Rear","deQueue","isEmpty"],"args":[[],[],[],[]]},"expected":[-1,-1,false,true],"sample":true},
+    {"input":{"ctor":[1],"ops":["isFull","enQueue","isFull","Rear"],"args":[[],[0],[],[]]},"expected":[false,true,true,0]},
+    {"input":{"ctor":[1],"ops":["enQueue","deQueue","enQueue","Front"],"args":[[1],[],[2],[]]},"expected":[true,true,true,2]},
+    {"input":{"ctor":[2],"ops":["enQueue","deQueue","deQueue"],"args":[[1],[],[]]},"expected":[true,true,false]},
+    {"input":{"ctor":[3],"ops":["enQueue","enQueue","deQueue","Front","Rear"],"args":[[1],[2],[],[],[]]},"expected":[true,true,true,2,2]},
+    {"input":{"ctor":[2],"ops":["isEmpty","isFull"],"args":[[],[]]},"expected":[true,false]},
+    {"input":{"ctor":[1],"ops":["enQueue","enQueue","Front"],"args":[[1000],[1],[]]},"expected":[true,false,1000]},
+    {"input":{"ctor":[2],"ops":["enQueue","enQueue","deQueue","deQueue","isEmpty"],"args":[[1],[1],[],[],[]]},"expected":[true,true,true,true,true]},
+    {"input":{"ctor":[2],"ops":["enQueue","enQueue","deQueue","enQueue","deQueue","enQueue","Front","Rear"],"args":[[1],[2],[],[3],[],[4],[],[]]},"expected":[true,true,true,true,true,true,3,4]}
+  ]
+}

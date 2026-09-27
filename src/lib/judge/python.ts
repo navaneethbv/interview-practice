@@ -1,5 +1,11 @@
-import type { AnyTestCase, ProblemSpec } from "./types";
+import { PYTHON_COLLECTION_HELPERS, usesCollectionHelpers } from "./helpers";
+import { PYTHON_INTERACTIVE, usesInteractive } from "./interactive";
+import type { AnyTestCase, DesignSpec, FunctionSpec, ProblemSpec } from "./types";
 import { RESULT_MARKER } from "./types";
+import { PYTHON_GRAPH, usesGraph } from "./graph";
+import { buildSqlProgram } from "./sql";
+import { nodeType, PYTHON_NARY, PYTHON_RANDOM, PYTHON_NEXT, PYTHON_MULTI } from "./nodes";
+import { pythonEnvironment } from "./environment";
 
 /** Helper classes available to user code, mirroring the course's definitions. */
 export const PYTHON_PRELUDE = `
@@ -10,11 +16,18 @@ from heapq import heappush, heappop, heapify
 from functools import lru_cache, cmp_to_key
 
 class ListNode:
-    def __init__(self, value=0, next=None):
-        self.value = value
+    # LeetCode names the field "val" and the course names it "value"; both work.
+    def __init__(self, val=0, next=None, *, value=None):
+        self.val = val if value is None else value
         self.next = next
+    @property
+    def value(self):
+        return self.val
+    @value.setter
+    def value(self, v):
+        self.val = v
     def __repr__(self):
-        return f"ListNode({self.value})"
+        return f"ListNode({self.val})"
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -39,6 +52,17 @@ class ArrayReader:
         if index >= len(self.arr):
             return math.inf
         return self.arr[index]
+
+class NestedInteger:
+    def __init__(self, value=None):
+        self._value = value if value is not None else []
+    def isInteger(self): return isinstance(self._value, int)
+    def getInteger(self): return self._value if self.isInteger() else None
+    def getList(self): return None if self.isInteger() else self._value
+    def setInteger(self, value): self._value = value
+    def add(self, elem):
+        if self.isInteger(): self._value = []
+        self._value.append(elem)
 `;
 
 const PYTHON_RUNNER = String.raw`
@@ -63,19 +87,19 @@ def __judge_main():
             nodes[-1].next = nodes[pos]
         return nodes[0]
 
-    def build_tree(v):
+    def build_tree(v, cls=TreeNode):
         if not v or v[0] is None:
             return None
-        root = TreeNode(v[0])
+        root = cls(v[0])
         q = deque([root])
         i = 1
         while q and i < len(v):
             node = q.popleft()
             if i < len(v) and v[i] is not None:
-                node.left = TreeNode(v[i]); q.append(node.left)
+                node.left = cls(v[i]); node.left.parent = node; q.append(node.left)
             i += 1
             if i < len(v) and v[i] is not None:
-                node.right = TreeNode(v[i]); q.append(node.right)
+                node.right = cls(v[i]); node.right.parent = node; q.append(node.right)
             i += 1
         return root
 
@@ -88,6 +112,37 @@ def __judge_main():
             return [build_list(x) for x in v]
         if t == "TreeNode":
             return build_tree(v)
+        if t == "GraphNode":
+            return __graph_build(v)
+        if t == "RandomNode":
+            return __random_build(v)
+        if t == "NaryNode":
+            return __nary_build(v)
+        if t == "NextNode":
+            return build_tree(v, Node)
+        if t == "MultiNode": return __multi_build(v)
+        if t == "DoublyNode":
+            return build_tree(v, Node)
+        if t == "ParentNode":
+            for node in __binary_nodes(globals()["__parent_root"]).values():
+                if node.val == v: return node
+            raise ValueError("Unknown node value")
+        if t == "CircularNode":
+            return __circular_build(v)
+        if t == "NestedInteger":
+            if isinstance(v, int): return NestedInteger(v)
+            node = NestedInteger()
+            for x in v: node.add(conv("NestedInteger", x))
+            return node
+        if t == "List<NestedInteger>":
+            return [conv("NestedInteger", x) for x in v]
+        if t == "IntIterator": return Iterator(v)
+        if t == "List<Employee>": return [Employee(*row) for row in v]
+        if t == "HtmlParser": return HtmlParser(v)
+        if t == "Robot": return Robot(v)
+        if t == "Master": return Master(v)
+        if t == "SparseVector":
+            return SparseVector(v)
         if t == "Interval":
             return Interval(v[0], v[1])
         if t in ("Interval[]", "List<Interval>"):
@@ -133,14 +188,24 @@ def __judge_main():
         if t == "ListNode":
             return ser_list(v)
         if t == "ListNode[]":
-            return [ser_list(x) for x in v]
+            return [ser_list(x) if x is not None else None for x in v]
         if t == "TreeNode":
             return ser_tree(v)
+        if t == "GraphNode":
+            return __graph_values(v)
+        if t == "RandomNode":
+            return __random_values(v)
+        if t == "NaryNode":
+            return __nary_values(v)
+        if t == "NextNode":
+            return special("nextLevels", v)
         if t == "List<TreeNode>":
-            return [ser_tree(x) for x in v]
+            return [ser_tree(x) if x is not None else None for x in v]
         return plain(v)
 
     def plain(v):
+        if isinstance(v, NestedInteger):
+            return v.getInteger() if v.isInteger() else plain(v.getList())
         if isinstance(v, (list, tuple, set, frozenset, deque)):
             return [plain(x) for x in v]
         if isinstance(v, ListNode):
@@ -156,15 +221,19 @@ def __judge_main():
         return v
 
     def special(kind, v):
+        if kind == "unsigned32":
+            return v & 0xffffffff
         if kind == "value":
             if v is None:
                 return None
             return getattr(v, "value", getattr(v, "val", None))
         if kind == "nextLevels":
-            levels, head = [], v
+            levels, head, seen = [], v, set()
             while head is not None and len(levels) < _LIMIT:
                 level, n, nxt = [], head, None
                 while n is not None and len(level) < _LIMIT:
+                    if id(n) in seen: raise ValueError("The next pointers contain a cycle")
+                    seen.add(id(n))
                     level.append(n.val)
                     if nxt is None:
                         nxt = n.left or n.right
@@ -185,21 +254,115 @@ def __judge_main():
         _out.flush()
 
     def run_function(args):
+        if _SPEC.get("environment"):
+            globals()["__environment"] = args[len(_SPEC["params"])]
+            globals()["__read_position"] = 0
+            if _SPEC["environment"]["kind"] == "parentTree":
+                globals()["__parent_root"] = build_tree(globals()["__environment"], Node)
         params = _SPEC["params"]
-        conv_args = [conv(p["type"], a) for p, a in zip(params, args)]
-        fn = getattr(Solution(), _SPEC["function"]["python"])
-        ret = fn(*conv_args)
+        conv_args, original_args = [], []
+        tree_nodes = {}
+        list_nodes = {}
+        originals = {}
+        for p, a in zip(params, args):
+            if "fromTree" in p:
+                root = conv_args[p["fromTree"]]
+                pending = [root] if root is not None else []
+                found = None
+                while pending:
+                    node = pending.pop()
+                    tree_nodes[id(node)] = node
+                    if node.val == a:
+                        found = node
+                    if node.left: pending.append(node.left)
+                    if node.right: pending.append(node.right)
+                if found is None: raise ValueError("Node value is absent from the tree")
+                conv_args.append(found)
+                original_args.append(found)
+            else:
+                value = conv(p["type"], a)
+                if p["type"] == "ListNode" and "fromList" in p and a.get("tail") is not None:
+                    tail = original_args[p["fromList"]]
+                    for _ in range(a["tail"]): tail = tail.next
+                    if value is None: value = tail
+                    else:
+                        end = value
+                        while end.next is not None: end = end.next
+                        end.next = tail
+                original_args.append(value)
+                if p["type"] == "ListNode":
+                    n = value
+                    while n is not None and id(n) not in list_nodes:
+                        list_nodes[id(n)] = n; n = n.next
+                    if isinstance(a, dict) and "at" in a:
+                        for _ in range(a["at"]): value = value.next
+                conv_args.append(value)
+                if p["type"] == "GraphNode": originals.update(__graph_nodes(value))
+                if p["type"] == "RandomNode": originals.update(__random_nodes(value))
+                if p["type"] == "CircularNode": originals.update(__circular_nodes(value))
+                if p["type"] == "MultiNode": originals.update(__multi_nodes(value))
+                if p["type"] == "DoublyNode": originals.update(__binary_nodes(value))
+        if "returnTree" in _SPEC:
+            tree_nodes = {}
+            pending = [conv_args[_SPEC["returnTree"]]]
+            while pending:
+                node = pending.pop()
+                if node is None: continue
+                tree_nodes[id(node)] = node
+                pending.extend([node.left, node.right])
+        codec = _SPEC.get("roundTrip")
+        if codec:
+            obj = globals()[codec["className"]]()
+            encoded = getattr(obj, codec["encode"])(*conv_args)
+            decoder = obj if codec.get("sameInstance") else globals()[codec["className"]]()
+            ret = getattr(decoder, codec["decode"])(encoded)
+        else:
+            ret = getattr(Solution(), _SPEC["function"]["python"])(*conv_args)
+        if (tree_nodes or "returnTree" in _SPEC) and _SPEC["returns"] == "TreeNode" and ret is not None and id(ret) not in tree_nodes:
+            raise ValueError("Return a node from the original tree")
+        if any("fromList" in p for p in params) and _SPEC["returns"] == "ListNode" and ret is not None and id(ret) not in list_nodes:
+            raise ValueError("Return a node from the original lists")
+        if _SPEC["returns"] == "GraphNode":
+            return __graph_values(ret, originals)
+        if _SPEC["returns"] == "RandomNode":
+            return __random_values(ret, originals)
+        if _SPEC["returns"] == "NaryNode":
+            return __nary_values(ret)
+        if _SPEC["returns"] == "NextNode":
+            return special("nextLevels", ret)
+        if _SPEC["returns"] == "MultiNode": return __multi_values(ret, originals)
+        if _SPEC["returns"] == "DoublyNode":
+            return __circular_values(ret, "right", originals)
+        if _SPEC["returns"] == "CircularNode":
+            return __circular_values(ret, originals=originals, insertion=True)
+        if _SPEC["returns"] == "ParentNode":
+            if ret is None: return None
+            if conv("ParentNode", ret.val) is not ret: raise ValueError("Return an original node")
+            return ret.val
         output = _SPEC.get("output") or {}
         if "arg" in output:
             idx = output["arg"]
-            val, t = conv_args[idx], params[idx]["type"]
+            val, t = (original_args[idx] if output.get("root") else conv_args[idx]), params[idx]["type"]
         else:
             val, t = ret, _SPEC["returns"]
+        if output.get("as") == "interaction": return val._result()
+        if output.get("as") == "listIndex":
+            if ret is None: return -1
+            for index, node in enumerate(list_nodes.values()):
+                if node is ret: return index
+            raise ValueError("Return an original list node")
         if output.get("as"):
             return special(output["as"], val)
+        if output.get("prefix"):
+            if not isinstance(ret, int) or ret < 0 or ret > len(val):
+                raise ValueError("The returned length is outside the output buffer")
+            return plain(val[:ret])
         return ser(t, val)
 
     def run_design(inp):
+        if _SPEC.get("environment"):
+            globals()["__environment"] = inp["environment"]
+            globals()["__read_position"] = 0
         cls = globals()[_SPEC["className"]]
         ctor = [conv(p["type"], a) for p, a in zip(_SPEC["ctorParams"], inp["ctor"])]
         obj = cls(*ctor)
@@ -209,7 +372,13 @@ def __judge_main():
             m = methods[op]
             ca = [conv(p["type"], x) for p, x in zip(m["params"], a)]
             r = getattr(obj, op)(*ca)
-            results.append(None if m["returns"] == "void" else ser(m["returns"], r))
+            output = m.get("output") or {}
+            value = ca[output["arg"]] if "arg" in output else (None if m["returns"] == "void" else r)
+            t = m["params"][output["arg"]]["type"] if "arg" in output else m["returns"]
+            if output.get("prefix"):
+                if not isinstance(r, int) or r < 0 or r > len(value): raise ValueError("Invalid output length")
+                value = value[:r]
+            results.append(special(output["as"], value) if output.get("as") else ser(t, value))
         return results
 
     design = _SPEC.get("kind") == "design"
@@ -249,10 +418,37 @@ function b64(s: string) {
  * filename "<solution>" so tracebacks report the user's own line numbers.
  */
 export function buildPythonProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]) {
+  if (spec.kind === "sql") return buildSqlProgram(spec, userCode, tests);
   const runner = PYTHON_RUNNER.replace("__JUDGE_SPEC__", JSON.stringify(b64(JSON.stringify(spec))))
     .replace("__JUDGE_TESTS__", JSON.stringify(b64(JSON.stringify(tests))))
     .replace("__JUDGE_MARKER__", JSON.stringify(RESULT_MARKER));
-  return { prelude: PYTHON_PRELUDE, user: userCode, runner };
+  const prelude = [
+    PYTHON_PRELUDE,
+    pythonNodeHelper(spec),
+    usesCollectionHelpers(spec) ? PYTHON_COLLECTION_HELPERS : "",
+    usesInteractive(spec) ? PYTHON_INTERACTIVE : "",
+    pythonEnvironment(spec),
+  ].join("");
+  return { prelude, user: userCode, runner };
+}
+
+function pythonNodeHelper(spec: FunctionSpec | DesignSpec) {
+  switch (nodeType(spec)) {
+    case "MultiNode": return PYTHON_MULTI;
+    case "RandomNode": return PYTHON_RANDOM;
+    case "NaryNode": return PYTHON_NARY;
+    // LeetCode's circular list Node takes `next` as its second constructor argument.
+    case "CircularNode":
+      return PYTHON_NEXT.replace(
+        "def __init__(self, val=0, left=None, right=None, next=None):",
+        "def __init__(self, val=0, next=None, left=None, right=None):",
+      );
+    case "NextNode":
+    case "ParentNode":
+    case "DoublyNode":
+      return PYTHON_NEXT;
+    default: return usesGraph(spec) ? PYTHON_GRAPH : "";
+  }
 }
 
 /** Single-file program for CPython (used by the expected-output generator and tests). */

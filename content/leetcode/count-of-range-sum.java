@@ -1,0 +1,3 @@
+class Solution {
+public int countRangeSum(int[] nums,int lower,int upper){long[]p=new long[nums.length+1];for(int i=0;i<nums.length;i++)p[i+1]=p[i]+nums[i];return (int)solve(p,0,p.length,lower,upper);}private long solve(long[]p,int l,int r,int lower,int upper){if(r-l<2)return 0;int m=(l+r)/2;long count=solve(p,l,m,lower,upper)+solve(p,m,r,lower,upper);int lo=m,hi=m;for(int i=l;i<m;i++){while(lo<r&&p[lo]-p[i]<lower)lo++;while(hi<r&&p[hi]-p[i]<=upper)hi++;count+=hi-lo;}long[]temp=new long[r-l];int i=l,j=m,k=0;while(i<m||j<r)temp[k++]=j==r||(i<m&&p[i]<=p[j])?p[i++]:p[j++];System.arraycopy(temp,0,p,l,temp.length);return count;}
+}

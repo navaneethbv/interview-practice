@@ -1,0 +1,174 @@
+{
+  "id": "serialize-and-deserialize-binary-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "serialize",
+    "java": "serialize"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "TreeNode",
+  "roundTrip": {
+    "className": "Codec",
+    "encode": "serialize",
+    "decode": "deserialize"
+  },
+  "tests": [
+    {
+      "input": [
+        [
+          8,
+          3,
+          10,
+          null,
+          6
+        ]
+      ],
+      "expected": [
+        8,
+        3,
+        10,
+        null,
+        6
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        []
+      ],
+      "expected": null,
+      "sample": true
+    },
+    {
+      "input": [
+        []
+      ],
+      "expected": null
+    },
+    {
+      "input": [
+        [
+          1
+        ]
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ]
+      ],
+      "expected": [
+        1,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2
+        ]
+      ],
+      "expected": [
+        1,
+        null,
+        2
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          null,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        null,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          null,
+          2,
+          null,
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        null,
+        2,
+        null,
+        3
+      ]
+    },
+    {
+      "input": [
+        [
+          -1,
+          -2,
+          -3
+        ]
+      ],
+      "expected": [
+        -1,
+        -2,
+        -3
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4,
+          null,
+          null,
+          5
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3,
+        4,
+        null,
+        null,
+        5
+      ]
+    }
+  ]
+}

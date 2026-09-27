@@ -1,0 +1,27 @@
+{
+  "id": "satisfiability-of-equality-equations",
+  "style": "leetcode",
+  "function": {
+    "python": "equationsPossible",
+    "java": "equationsPossible"
+  },
+  "params": [
+    {
+      "name": "equations",
+      "type": "string[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["a==b","b!=a"]],"expected":false,"sample":true},
+    {"input":[["a==b","b==c","a!=d"]],"expected":true,"sample":true},
+    {"input":[["a==a"]],"expected":true},
+    {"input":[["a!=a"]],"expected":false},
+    {"input":[["a!=b"]],"expected":true},
+    {"input":[["a==b","b==c","a!=c"]],"expected":false},
+    {"input":[["a!=b","b!=c","a!=c"]],"expected":true},
+    {"input":[["z==a","a==b","z==b"]],"expected":true},
+    {"input":[["a==b","c==d","a!=c"]],"expected":true},
+    {"input":[["a==b","b==a"]],"expected":true}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "integer-to-english-words",
+  "style": "leetcode",
+  "function": {
+    "python": "numberToWords",
+    "java": "numberToWords"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[42],"expected":"Forty Two","sample":true},
+    {"input":[1005],"expected":"One Thousand Five","sample":true},
+    {"input":[0],"expected":"Zero"},
+    {"input":[1],"expected":"One"},
+    {"input":[19],"expected":"Nineteen"},
+    {"input":[20],"expected":"Twenty"},
+    {"input":[100],"expected":"One Hundred"},
+    {"input":[101],"expected":"One Hundred One"},
+    {"input":[1000],"expected":"One Thousand"},
+    {"input":[1000000],"expected":"One Million"},
+    {"input":[1000000000],"expected":"One Billion"},
+    {"input":[2147483647],"expected":"Two Billion One Hundred Forty Seven Million Four Hundred Eighty Three Thousand Six Hundred Forty Seven"}
+  ]
+}

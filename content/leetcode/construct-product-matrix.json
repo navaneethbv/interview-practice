@@ -1,0 +1,27 @@
+{
+  "id": "construct-product-matrix",
+  "style": "leetcode",
+  "function": {
+    "python": "constructProductMatrix",
+    "java": "constructProductMatrix"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[][]",
+  "tests": [
+    {"input":[[[2,3],[4,5]]],"expected":[[60,40],[30,24]],"sample":true},
+    {"input":[[[12345,7]]],"expected":[[7,0]],"sample":true},
+    {"input":[[[1,1]]],"expected":[[1,1]]},
+    {"input":[[[2,2,2]]],"expected":[[4,4,4]]},
+    {"input":[[[12345,12345]]],"expected":[[0,0]]},
+    {"input":[[[1000000000,1]]],"expected":[[1,5620]]},
+    {"input":[[[3],[5],[7]]],"expected":[[35],[21],[15]]},
+    {"input":[[[5,2469,2]]],"expected":[[4938,10,0]]},
+    {"input":[[[1,2,3],[4,5,6]]],"expected":[[720,360,240],[180,144,120]]},
+    {"input":[[[12346,12347,12348]]],"expected":[[6,3,2]]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "remove-duplicate-letters",
+  "style": "leetcode",
+  "function": {
+    "python": "removeDuplicateLetters",
+    "java": "removeDuplicateLetters"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["bcabc"],"expected":"abc","sample":true},
+    {"input":["cbacdcbc"],"expected":"acdb","sample":true},
+    {"input":["a"],"expected":"a"},
+    {"input":["aaaa"],"expected":"a"},
+    {"input":["abc"],"expected":"abc"},
+    {"input":["cba"],"expected":"cba"},
+    {"input":["abacb"],"expected":"abc"},
+    {"input":["bbcaac"],"expected":"bac"},
+    {"input":["cdadabcc"],"expected":"adbc"},
+    {"input":["ecbacba"],"expected":"eacb"}
+  ]
+}

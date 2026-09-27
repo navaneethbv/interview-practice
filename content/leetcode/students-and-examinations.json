@@ -1,0 +1,61 @@
+{
+  "kind": "sql",
+  "id": "students-and-examinations",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Students",
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "student_name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Subjects",
+      "columns": [
+        {
+          "name": "subject_name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Examinations",
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "subject_name",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "student_id",
+    "student_name",
+    "subject_name",
+    "attended_exams"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Students":[[1,"Ana"],[2,"Bo"]],"Subjects":[["Math"]],"Examinations":[[1,"Math"],[1,"Math"]]}},"expected":[[1,"Ana","Math",2],[2,"Bo","Math",0]],"sample":true},
+    {"input":{"tables":{"Students":[[1,"Ana"]],"Subjects":[["Zoology"],["Art"]],"Examinations":[]}},"expected":[[1,"Ana","Art",0],[1,"Ana","Zoology",0]],"sample":true},
+    {"input":{"tables":{"Students":[],"Subjects":[],"Examinations":[]}},"expected":[]},
+    {"input":{"tables":{"Students":[[1,"A"]],"Subjects":[],"Examinations":[]}},"expected":[]},
+    {"input":{"tables":{"Students":[],"Subjects":[["X"]],"Examinations":[]}},"expected":[]},
+    {"input":{"tables":{"Students":[[1,"A"]],"Subjects":[["X"]],"Examinations":[]}},"expected":[[1,"A","X",0]]},
+    {"input":{"tables":{"Students":[[1,"A"]],"Subjects":[["X"]],"Examinations":[[1,"X"]]}},"expected":[[1,"A","X",1]]},
+    {"input":{"tables":{"Students":[[2,"A"],[1,"A"]],"Subjects":[["Y"],["X"]],"Examinations":[[2,"Y"]]}},"expected":[[1,"A","X",0],[1,"A","Y",0],[2,"A","X",0],[2,"A","Y",1]]},
+    {"input":{"tables":{"Students":[[1,"A"]],"Subjects":[["X"]],"Examinations":[[1,"X"],[1,"X"],[1,"X"],[1,"X"],[1,"X"]]}},"expected":[[1,"A","X",5]]},
+    {"input":{"tables":{"Students":[[1,"A"],[3,"B"]],"Subjects":[["X"],["Y"]],"Examinations":[[1,"X"],[3,"Y"],[3,"Y"]]}},"expected":[[1,"A","X",1],[1,"A","Y",0],[3,"B","X",0],[3,"B","Y",2]]}
+  ]
+}

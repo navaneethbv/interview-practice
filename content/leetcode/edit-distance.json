@@ -1,0 +1,33 @@
+{
+  "id": "edit-distance",
+  "style": "leetcode",
+  "function": {
+    "python": "minDistance",
+    "java": "minDistance"
+  },
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["cat","cut"],"expected":1,"sample":true},
+    {"input":["horse","ros"],"expected":3,"sample":true},
+    {"input":["",""],"expected":0},
+    {"input":["","abc"],"expected":3},
+    {"input":["abc",""],"expected":3},
+    {"input":["same","same"],"expected":0},
+    {"input":["a","b"],"expected":1},
+    {"input":["intention","execution"],"expected":5},
+    {"input":["abc","cba"],"expected":2},
+    {"input":["kitten","sitting"],"expected":3},
+    {"input":["aaaa","aa"],"expected":2},
+    {"input":["ab","ba"],"expected":2}
+  ]
+}

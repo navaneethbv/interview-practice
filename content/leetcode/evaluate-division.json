@@ -1,0 +1,35 @@
+{
+  "id": "evaluate-division",
+  "style": "leetcode",
+  "function": {
+    "python": "calcEquation",
+    "java": "calcEquation"
+  },
+  "params": [
+    {
+      "name": "equations",
+      "type": "List<List<string>>"
+    },
+    {
+      "name": "values",
+      "type": "double[]"
+    },
+    {
+      "name": "queries",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "double[]",
+  "tests": [
+    {"input":[[["a","b"],["b","c"]],[2,3],[["a","c"],["b","a"],["x","x"]]],"expected":[6,0.5,-1],"sample":true},
+    {"input":[[["a","b"]],[4],[["a","a"],["b","b"]]],"expected":[1,1],"sample":true},
+    {"input":[[["a","b"]],[2],[["a","b"]]],"expected":[2]},
+    {"input":[[["a","b"]],[2],[["b","a"]]],"expected":[0.5]},
+    {"input":[[["a","b"]],[2],[["a","x"]]],"expected":[-1]},
+    {"input":[[["a","b"],["c","d"]],[2,3],[["a","d"]]],"expected":[-1]},
+    {"input":[[["a","b"],["b","c"],["a","c"]],[2,3,6],[["c","a"]]],"expected":[0.16666666666666666]},
+    {"input":[[["x","y"]],[0.5],[["y","x"]]],"expected":[2]},
+    {"input":[[["a","b"],["b","c"]],[1,1],[["a","c"]]],"expected":[1]},
+    {"input":[[["a1","b2"],["b2","c3"]],[20,20],[["c3","a1"],["a1","c3"]]],"expected":[0.0025000000000000005,400]}
+  ]
+}

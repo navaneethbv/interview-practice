@@ -1,0 +1,30 @@
+{
+  "id": "decode-ways",
+  "style": "leetcode",
+  "function": {
+    "python": "numDecodings",
+    "java": "numDecodings"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["121"],"expected":3,"sample":true},
+    {"input":["100"],"expected":0,"sample":true},
+    {"input":["0"],"expected":0},
+    {"input":["1"],"expected":1},
+    {"input":["10"],"expected":1},
+    {"input":["20"],"expected":1},
+    {"input":["30"],"expected":0},
+    {"input":["06"],"expected":0},
+    {"input":["226"],"expected":3},
+    {"input":["11106"],"expected":2},
+    {"input":["27"],"expected":1},
+    {"input":["2101"],"expected":1},
+    {"input":["111111111111111111111111111111111111111111111"],"expected":1836311903}
+  ]
+}

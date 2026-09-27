@@ -1,0 +1,35 @@
+{
+  "function": {
+    "python": "findSecretWord",
+    "java": "findSecretWord"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "master",
+      "type": "Master"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 1,
+    "as": "interaction"
+  },
+  "id": "guess-the-word",
+  "style": "leetcode",
+  "tests": [
+    {"input":[["acckzz","ccbazz","eiowzz","abcczz"],{"words":["acckzz","ccbazz","eiowzz","abcczz"],"secret":"acckzz","allowedGuesses":10}],"sample":true,"expected":true},
+    {"input":[["aaaaaa","bbbbbb","cccccc"],{"words":["aaaaaa","bbbbbb","cccccc"],"secret":"bbbbbb","allowedGuesses":10}],"sample":true,"expected":true},
+    {"input":[["zzzzzz"],{"words":["zzzzzz"],"secret":"zzzzzz","allowedGuesses":10}],"expected":true},
+    {"input":[["aaaaaa","aaaaab","aaaabb","aaabbb"],{"words":["aaaaaa","aaaaab","aaaabb","aaabbb"],"secret":"aaabbb","allowedGuesses":10}],"expected":true},
+    {"input":[["abcdef","abzzef","azcdez","zzzzzz"],{"words":["abcdef","abzzef","azcdez","zzzzzz"],"secret":"azcdez","allowedGuesses":10}],"expected":true},
+    {"input":[["aabbcc","abcabc","ccbbaa","bbccaa"],{"words":["aabbcc","abcabc","ccbbaa","bbccaa"],"secret":"ccbbaa","allowedGuesses":10}],"expected":true},
+    {"input":[["python","javava","golang","kotlin"],{"words":["python","javava","golang","kotlin"],"secret":"python","allowedGuesses":10}],"expected":true},
+    {"input":[["abcdef","fedcba"],{"words":["abcdef","fedcba"],"secret":"fedcba","allowedGuesses":10}],"expected":true},
+    {"input":[["aaaaaa","baaaaa","bbaaaa","bbbaaa","bbbbaa","bbbbba","bbbbbb"],{"words":["aaaaaa","baaaaa","bbaaaa","bbbaaa","bbbbaa","bbbbba","bbbbbb"],"secret":"bbbbba","allowedGuesses":10}],"expected":true},
+    {"input":[["abcdef","abcdeg","abcdeh","abcdei"],{"words":["abcdef","abcdeg","abcdeh","abcdei"],"secret":"abcdei","allowedGuesses":10}],"expected":true}
+  ]
+}

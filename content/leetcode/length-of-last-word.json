@@ -1,0 +1,27 @@
+{
+  "id": "length-of-last-word",
+  "style": "leetcode",
+  "function": {
+    "python": "lengthOfLastWord",
+    "java": "lengthOfLastWord"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["learn every day  "],"expected":3,"sample":true},
+    {"input":["one"],"expected":3,"sample":true},
+    {"input":[" a"],"expected":1},
+    {"input":["a "],"expected":1},
+    {"input":["a b"],"expected":1},
+    {"input":["ab   cdef"],"expected":4},
+    {"input":["   hello   "],"expected":5},
+    {"input":["A B C"],"expected":1},
+    {"input":["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"],"expected":100},
+    {"input":["word    end"],"expected":3}
+  ]
+}

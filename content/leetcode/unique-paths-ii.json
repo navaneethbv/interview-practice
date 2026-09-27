@@ -1,0 +1,202 @@
+{
+  "id": "unique-paths-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "uniquePathsWithObstacles",
+    "java": "uniquePathsWithObstacles"
+  },
+  "params": [
+    {
+      "name": "obstacleGrid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expected": 2,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          [
+            1
+          ]
+        ]
+      ],
+      "expected": 0,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          [
+            0
+          ]
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          [
+            0
+          ],
+          [
+            0
+          ],
+          [
+            0
+          ]
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            0
+          ]
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expected": 2
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      ],
+      "expected": 70
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "function": {
+    "python": "checkPerfectNumber",
+    "java": "checkPerfectNumber"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "id": "perfect-number",
+  "style": "leetcode",
+  "tests": [
+    {"input":[28],"sample":true,"expected":true},
+    {"input":[12],"sample":true,"expected":false},
+    {"input":[1],"expected":false},
+    {"input":[2],"expected":false},
+    {"input":[6],"expected":true},
+    {"input":[496],"expected":true},
+    {"input":[8128],"expected":true},
+    {"input":[33550336],"expected":true},
+    {"input":[100000000],"expected":false},
+    {"input":[99991],"expected":false}
+  ]
+}

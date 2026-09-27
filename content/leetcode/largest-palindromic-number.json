@@ -1,0 +1,27 @@
+{
+  "id": "largest-palindromic-number",
+  "style": "leetcode",
+  "function": {
+    "python": "largestPalindromic",
+    "java": "largestPalindromic"
+  },
+  "params": [
+    {
+      "name": "num",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["444947137"],"expected":"7449447","sample":true},
+    {"input":["00009"],"expected":"9","sample":true},
+    {"input":["0"],"expected":"0"},
+    {"input":["0000"],"expected":"0"},
+    {"input":["12345"],"expected":"5"},
+    {"input":["11"],"expected":"11"},
+    {"input":["10001"],"expected":"10001"},
+    {"input":["998877"],"expected":"987789"},
+    {"input":["01010"],"expected":"10001"},
+    {"input":["99999"],"expected":"99999"}
+  ]
+}

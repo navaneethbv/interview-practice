@@ -1,0 +1,32 @@
+{
+  "id": "find-all-anagrams-in-a-string",
+  "style": "leetcode",
+  "function": {
+    "python": "findAnagrams",
+    "java": "findAnagrams"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "p",
+      "type": "string"
+    }
+  ],
+  "returns": "List<int>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["cbaebabacd","abc"],"expected":[0,6],"sample":true},
+    {"input":["abab","ab"],"expected":[0,1,2],"sample":true},
+    {"input":["a","a"],"expected":[0]},
+    {"input":["a","b"],"expected":[]},
+    {"input":["ab","abc"],"expected":[]},
+    {"input":["aaaa","aa"],"expected":[0,1,2]},
+    {"input":["abc","cba"],"expected":[0]},
+    {"input":["abac","aa"],"expected":[]},
+    {"input":["baa","aa"],"expected":[1]},
+    {"input":["abcabc","abc"],"expected":[0,1,2,3]}
+  ]
+}

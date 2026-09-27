@@ -1,0 +1,64 @@
+{
+  "kind": "sql",
+  "id": "combine-two-tables",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Person",
+      "columns": [
+        {
+          "name": "personId",
+          "type": "INTEGER"
+        },
+        {
+          "name": "lastName",
+          "type": "TEXT"
+        },
+        {
+          "name": "firstName",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "columns": [
+        {
+          "name": "addressId",
+          "type": "INTEGER"
+        },
+        {
+          "name": "personId",
+          "type": "INTEGER"
+        },
+        {
+          "name": "city",
+          "type": "TEXT"
+        },
+        {
+          "name": "state",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "firstName",
+    "lastName",
+    "city",
+    "state"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Person":[[1,"Park","Mina"],[2,"Lee","Jae"]],"Address":[[5,2,"Seattle","WA"]]}},"expected":[["Mina","Park",null,null],["Jae","Lee","Seattle","WA"]],"sample":true},
+    {"input":{"tables":{"Person":[[4,"Li","Bo"]],"Address":[[1,4,"Austin","TX"],[2,4,"Dallas","TX"]]}},"expected":[["Bo","Li","Austin","TX"],["Bo","Li","Dallas","TX"]],"sample":true},
+    {"input":{"tables":{"Person":[],"Address":[]}},"expected":[]},
+    {"input":{"tables":{"Person":[[1,"A","B"]],"Address":[]}},"expected":[["B","A",null,null]]},
+    {"input":{"tables":{"Person":[],"Address":[[1,9,"X","Y"]]}},"expected":[]},
+    {"input":{"tables":{"Person":[[2,"A","B"]],"Address":[[1,2,"X","Y"]]}},"expected":[["B","A","X","Y"]]},
+    {"input":{"tables":{"Person":[[1,"A","B"],[2,"A","B"]],"Address":[]}},"expected":[["B","A",null,null],["B","A",null,null]]},
+    {"input":{"tables":{"Person":[[1,"A","B"]],"Address":[[1,9,"X","Y"]]}},"expected":[["B","A",null,null]]},
+    {"input":{"tables":{"Person":[[2,"B","C"],[1,"A","D"]],"Address":[[2,1,"X","Y"]]}},"expected":[["C","B",null,null],["D","A","X","Y"]]},
+    {"input":{"tables":{"Person":[[1,"A","B"]],"Address":[[3,1,"X","Y"],[4,1,"X","Y"]]}},"expected":[["B","A","X","Y"],["B","A","X","Y"]]}
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "kind": "sql",
+  "id": "confirmation-rate",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Signups",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "time_stamp",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Confirmations",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "time_stamp",
+          "type": "TEXT"
+        },
+        {
+          "name": "action",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "user_id",
+    "confirmation_rate"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"],[2,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","confirmed"],[1,"2024-01-03 00:00:00","timeout"]]}},"expected":[[1,0.5],[2,0]],"sample":true},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","timeout"]]}},"expected":[[1,0]],"sample":true},
+    {"input":{"tables":{"Signups":[],"Confirmations":[]}},"expected":[]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[]}},"expected":[[1,0]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","confirmed"]]}},"expected":[[1,1]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","timeout"],[1,"2024-01-03 00:00:00","timeout"],[1,"2024-01-04 00:00:00","timeout"]]}},"expected":[[1,0]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","confirmed"],[1,"2024-01-03 00:00:00","confirmed"],[1,"2024-01-04 00:00:00","confirmed"]]}},"expected":[[1,1]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","confirmed"],[1,"2024-01-03 00:00:00","timeout"],[1,"2024-01-04 00:00:00","timeout"]]}},"expected":[[1,0.33]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"],[2,"2024-01-01 00:00:00"]],"Confirmations":[[1,"2024-01-02 00:00:00","confirmed"],[2,"2024-01-03 00:00:00","timeout"]]}},"expected":[[1,1],[2,0]]},
+    {"input":{"tables":{"Signups":[[1,"2024-01-01 00:00:00"],[2,"2024-01-01 00:00:00"],[3,"2024-01-01 00:00:00"]],"Confirmations":[[2,"2024-01-02 00:00:00","confirmed"],[2,"2024-01-03 00:00:00","confirmed"],[2,"2024-01-04 00:00:00","timeout"],[3,"2024-01-05 00:00:00","confirmed"]]}},"expected":[[1,0],[2,0.67],[3,1]]}
+  ]
+}

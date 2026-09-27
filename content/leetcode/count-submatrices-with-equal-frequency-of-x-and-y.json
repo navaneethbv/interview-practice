@@ -1,0 +1,27 @@
+{
+  "id": "count-submatrices-with-equal-frequency-of-x-and-y",
+  "style": "leetcode",
+  "function": {
+    "python": "numberOfSubmatrices",
+    "java": "numberOfSubmatrices"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "char[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[["X","Y"],[".","."]]],"expected":2,"sample":true},
+    {"input":[[[".","."]]],"expected":0,"sample":true},
+    {"input":[[["X"]]],"expected":0},
+    {"input":[[["Y"]]],"expected":0},
+    {"input":[[["X"],["Y"]]],"expected":1},
+    {"input":[[["Y","X","Y","X"]]],"expected":2},
+    {"input":[[["X","X"],["X","Y"]]],"expected":0},
+    {"input":[[[".","X"],["Y","."]]],"expected":1},
+    {"input":[[[".","."],[".","."]]],"expected":0},
+    {"input":[[["X","Y","X"],["Y","X","Y"]]],"expected":4}
+  ]
+}

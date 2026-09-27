@@ -1,0 +1,3 @@
+class Solution {
+public int trapRainWater(int[][] heightMap){int m=heightMap.length,n=heightMap[0].length,water=0;boolean[][]seen=new boolean[m][n];PriorityQueue<int[]>q=new PriorityQueue<>(Comparator.comparingInt(a->a[0]));for(int r=0;r<m;r++)for(int c=0;c<n;c++)if(r==0||r==m-1||c==0||c==n-1){seen[r][c]=true;q.add(new int[]{heightMap[r][c],r,c});}int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();for(int d=0;d<4;d++){int a=p[1]+ds[d],b=p[2]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&!seen[a][b]){seen[a][b]=true;water+=Math.max(0,p[0]-heightMap[a][b]);q.add(new int[]{Math.max(p[0],heightMap[a][b]),a,b});}}}return water;}
+}

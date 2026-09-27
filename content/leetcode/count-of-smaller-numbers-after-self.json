@@ -1,0 +1,27 @@
+{
+  "id": "count-of-smaller-numbers-after-self",
+  "style": "leetcode",
+  "function": {
+    "python": "countSmaller",
+    "java": "countSmaller"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {"input":[[4,1,3,1]],"expected":[3,0,1,0],"sample":true},
+    {"input":[[-1,-1]],"expected":[0,0],"sample":true},
+    {"input":[[0]],"expected":[0]},
+    {"input":[[1,2,3]],"expected":[0,0,0]},
+    {"input":[[3,2,1]],"expected":[2,1,0]},
+    {"input":[[2,2,1]],"expected":[1,1,0]},
+    {"input":[[0,-1,1,-2]],"expected":[2,1,1,0]},
+    {"input":[[-10000,10000]],"expected":[0,0]},
+    {"input":[[5,2,6,1]],"expected":[2,1,1,0]},
+    {"input":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"expected":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "kind": "design",
+  "id": "flatten-nested-list-iterator",
+  "style": "leetcode",
+  "className": "NestedIterator",
+  "ctorParams": [
+    {
+      "name": "nestedList",
+      "type": "List<NestedInteger>"
+    }
+  ],
+  "methods": [
+    {
+      "name": "next",
+      "java": "next",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "hasNext",
+      "java": "hasNext",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[[1,1],2,[1,1]]],"ops":["next","next","next","next","next","hasNext"],"args":[[],[],[],[],[],[]]},"expected":[1,1,2,1,1,false],"sample":true},
+    {"input":{"ctor":[[[],[3,[]],[]]],"ops":["hasNext","hasNext","next","hasNext"],"args":[[],[],[],[]]},"expected":[true,true,3,false],"sample":true},
+    {"input":{"ctor":[[]],"ops":["hasNext"],"args":[[]]},"expected":[false]},
+    {"input":{"ctor":[[[]]],"ops":["hasNext"],"args":[[]]},"expected":[false]},
+    {"input":{"ctor":[[1]],"ops":["next","hasNext"],"args":[[],[]]},"expected":[1,false]},
+    {"input":{"ctor":[[[[[2]]]]],"ops":["hasNext","next","hasNext"],"args":[[],[],[]]},"expected":[true,2,false]},
+    {"input":{"ctor":[[-1,[0,1]]],"ops":["next","next","next"],"args":[[],[],[]]},"expected":[-1,0,1]},
+    {"input":{"ctor":[[[],[],[[]]]],"ops":["hasNext"],"args":[[]]},"expected":[false]},
+    {"input":{"ctor":[[1,[],2]],"ops":["next","hasNext","next","hasNext"],"args":[[],[],[],[]]},"expected":[1,true,2,false]},
+    {"input":{"ctor":[[[1],[2],[3]]],"ops":["hasNext","next","hasNext","next"],"args":[[],[],[],[]]},"expected":[true,1,true,2]}
+  ]
+}

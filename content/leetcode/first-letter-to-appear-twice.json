@@ -1,0 +1,27 @@
+{
+  "id": "first-letter-to-appear-twice",
+  "style": "leetcode",
+  "function": {
+    "python": "repeatedCharacter",
+    "java": "repeatedCharacter"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "char",
+  "tests": [
+    {"input":["abcbad"],"expected":"b","sample":true},
+    {"input":["zz"],"expected":"z","sample":true},
+    {"input":["aa"],"expected":"a"},
+    {"input":["aba"],"expected":"a"},
+    {"input":["abccba"],"expected":"c"},
+    {"input":["abcda"],"expected":"a"},
+    {"input":["abcdefghijklmnopqrstuvwxyzq"],"expected":"q"},
+    {"input":["abab"],"expected":"a"},
+    {"input":["abcabc"],"expected":"a"},
+    {"input":["xyyx"],"expected":"y"}
+  ]
+}

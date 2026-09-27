@@ -1,0 +1,32 @@
+{
+  "id": "longest-common-subsequence",
+  "style": "leetcode",
+  "function": {
+    "python": "longestCommonSubsequence",
+    "java": "longestCommonSubsequence"
+  },
+  "params": [
+    {
+      "name": "text1",
+      "type": "string"
+    },
+    {
+      "name": "text2",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abcde","ace"],"expected":3,"sample":true},
+    {"input":["abc","def"],"expected":0,"sample":true},
+    {"input":["a","a"],"expected":1},
+    {"input":["a","b"],"expected":0},
+    {"input":["abc","abc"],"expected":3},
+    {"input":["aaaa","aa"],"expected":2},
+    {"input":["abc","cba"],"expected":1},
+    {"input":["abac","cab"],"expected":2},
+    {"input":["abcbdab","bdcaba"],"expected":4},
+    {"input":["abc","zabcx"],"expected":3},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":150}
+  ]
+}

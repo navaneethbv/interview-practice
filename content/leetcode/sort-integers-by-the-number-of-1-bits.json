@@ -1,0 +1,27 @@
+{
+  "id": "sort-integers-by-the-number-of-1-bits",
+  "style": "leetcode",
+  "function": {
+    "python": "sortByBits",
+    "java": "sortByBits"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[0,1,2,3,4]],"expected":[0,1,2,4,3],"sample":true},
+    {"input":[[7,3,1]],"expected":[1,3,7],"sample":true},
+    {"input":[[0]],"expected":[0]},
+    {"input":[[1,1]],"expected":[1,1]},
+    {"input":[[8,4,2,1]],"expected":[1,2,4,8]},
+    {"input":[[1023,1024]],"expected":[1024,1023]},
+    {"input":[[5,6,3]],"expected":[3,5,6]},
+    {"input":[[10000,0,1]],"expected":[0,1,10000]},
+    {"input":[[9,10,12]],"expected":[9,10,12]},
+    {"input":[[15,7,3,1,0]],"expected":[0,1,3,7,15]}
+  ]
+}

@@ -1,0 +1,1 @@
+WITH ranked AS (SELECT *,DENSE_RANK() OVER(PARTITION BY departmentId ORDER BY salary DESC) AS r FROM Employee) SELECT d.name AS Department,e.name AS Employee,e.salary AS Salary FROM ranked e JOIN Department d ON e.departmentId=d.id WHERE e.r<=3;

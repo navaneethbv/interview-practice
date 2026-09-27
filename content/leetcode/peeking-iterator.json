@@ -1,0 +1,44 @@
+{
+  "kind": "design",
+  "id": "peeking-iterator",
+  "style": "leetcode",
+  "className": "PeekingIterator",
+  "ctorParams": [
+    {
+      "name": "iterator",
+      "type": "IntIterator"
+    }
+  ],
+  "methods": [
+    {
+      "name": "peek",
+      "java": "peek",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "next",
+      "java": "next",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "hasNext",
+      "java": "hasNext",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[1,2,3]],"ops":["peek","peek","next","next","hasNext","next","hasNext"],"args":[[],[],[],[],[],[],[]]},"expected":[1,1,1,2,true,3,false],"sample":true},
+    {"input":{"ctor":[[7]],"ops":["hasNext","peek","hasNext","next","hasNext"],"args":[[],[],[],[],[]]},"expected":[true,7,true,7,false],"sample":true},
+    {"input":{"ctor":[[1]],"ops":["next","hasNext"],"args":[[],[]]},"expected":[1,false]},
+    {"input":{"ctor":[[1,1]],"ops":["peek","next","peek","next"],"args":[[],[],[],[]]},"expected":[1,1,1,1]},
+    {"input":{"ctor":[[2,3]],"ops":["hasNext","hasNext","next"],"args":[[],[],[]]},"expected":[true,true,2]},
+    {"input":{"ctor":[[1,2,3]],"ops":["next","peek","next","peek"],"args":[[],[],[],[]]},"expected":[1,2,2,3]},
+    {"input":{"ctor":[[1000]],"ops":["peek","peek","next"],"args":[[],[],[]]},"expected":[1000,1000,1000]},
+    {"input":{"ctor":[[1,2]],"ops":["next","next","hasNext","hasNext"],"args":[[],[],[],[]]},"expected":[1,2,false,false]},
+    {"input":{"ctor":[[3,2,1]],"ops":["next","next","next"],"args":[[],[],[]]},"expected":[3,2,1]},
+    {"input":{"ctor":[[4,5]],"ops":["peek","hasNext","peek","next"],"args":[[],[],[],[]]},"expected":[4,true,4,4]}
+  ]
+}

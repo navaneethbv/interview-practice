@@ -1,0 +1,27 @@
+{
+  "id": "unique-binary-search-trees",
+  "style": "leetcode",
+  "function": {
+    "python": "numTrees",
+    "java": "numTrees"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[1],"expected":1,"sample":true},
+    {"input":[3],"expected":5,"sample":true},
+    {"input":[2],"expected":2},
+    {"input":[4],"expected":14},
+    {"input":[5],"expected":42},
+    {"input":[6],"expected":132},
+    {"input":[7],"expected":429},
+    {"input":[10],"expected":16796},
+    {"input":[15],"expected":9694845},
+    {"input":[19],"expected":1767263190}
+  ]
+}

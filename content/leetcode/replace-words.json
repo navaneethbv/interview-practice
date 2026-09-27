@@ -1,0 +1,31 @@
+{
+  "id": "replace-words",
+  "style": "leetcode",
+  "function": {
+    "python": "replaceWords",
+    "java": "replaceWords"
+  },
+  "params": [
+    {
+      "name": "dictionary",
+      "type": "List<string>"
+    },
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["cat","bat"],"the cattle met bats"],"expected":"the cat met bat","sample":true},
+    {"input":[["a","ab"],"abc able"],"expected":"a a","sample":true},
+    {"input":[["a"],"a"],"expected":"a"},
+    {"input":[["x"],"abc"],"expected":"abc"},
+    {"input":[["cat"],"cat cattle cater"],"expected":"cat cat cat"},
+    {"input":[["b","a"],"apple banana"],"expected":"a b"},
+    {"input":[["ab","abc"],"abcd"],"expected":"ab"},
+    {"input":[["a"],"b c d"],"expected":"b c d"},
+    {"input":[["root"],"rooted rooting root"],"expected":"root root root"},
+    {"input":[["c","cat","bat"],"cattle battery"],"expected":"c bat"}
+  ]
+}

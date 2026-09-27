@@ -1,0 +1,27 @@
+{
+  "id": "excel-sheet-column-number",
+  "style": "leetcode",
+  "function": {
+    "python": "titleToNumber",
+    "java": "titleToNumber"
+  },
+  "params": [
+    {
+      "name": "columnTitle",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["AZ"],"expected":52,"sample":true},
+    {"input":["BA"],"expected":53,"sample":true},
+    {"input":["A"],"expected":1},
+    {"input":["Z"],"expected":26},
+    {"input":["AA"],"expected":27},
+    {"input":["ZZ"],"expected":702},
+    {"input":["AAA"],"expected":703},
+    {"input":["ABC"],"expected":731},
+    {"input":["FXSHRXW"],"expected":2147483647},
+    {"input":["XFD"],"expected":16384}
+  ]
+}

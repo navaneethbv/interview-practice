@@ -1,0 +1,29 @@
+{
+  "id": "palindrome-partitioning",
+  "style": "leetcode",
+  "function": {
+    "python": "partition",
+    "java": "partition"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["aab"],"expected":[["a","a","b"],["aa","b"]],"sample":true},
+    {"input":["aba"],"expected":[["a","b","a"],["aba"]],"sample":true},
+    {"input":["a"],"expected":[["a"]]},
+    {"input":["ab"],"expected":[["a","b"]]},
+    {"input":["aa"],"expected":[["a","a"],["aa"]]},
+    {"input":["abba"],"expected":[["a","b","b","a"],["a","bb","a"],["abba"]]},
+    {"input":["abc"],"expected":[["a","b","c"]]},
+    {"input":["aaa"],"expected":[["a","a","a"],["a","aa"],["aa","a"],["aaa"]]},
+    {"input":["racecar"],"expected":[["r","a","c","e","c","a","r"],["r","a","cec","a","r"],["r","aceca","r"],["racecar"]]},
+    {"input":["abab"],"expected":[["a","b","a","b"],["a","bab"],["aba","b"]]},
+    {"input":["aabb"],"expected":[["a","a","b","b"],["a","a","bb"],["aa","b","b"],["aa","bb"]]}
+  ]
+}

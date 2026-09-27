@@ -1,0 +1,35 @@
+{
+  "id": "number-of-islands-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "numIslands2",
+    "java": "numIslands2"
+  },
+  "params": [
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "positions",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {"input":[2,2,[[0,0],[1,1],[0,1]]],"expected":[1,2,1],"sample":true},
+    {"input":[1,1,[[0,0],[0,0]]],"expected":[1,1],"sample":true},
+    {"input":[1,2,[[0,0],[0,1]]],"expected":[1,1]},
+    {"input":[2,1,[[0,0],[1,0]]],"expected":[1,1]},
+    {"input":[3,3,[[0,0],[0,1],[1,2],[2,1],[1,1]]],"expected":[1,1,2,3,1]},
+    {"input":[3,3,[[0,0],[2,2]]],"expected":[1,2]},
+    {"input":[2,2,[[1,1],[0,1],[0,0],[1,0]]],"expected":[1,1,1,1]},
+    {"input":[2,2,[[0,0],[0,0],[1,1],[1,1]]],"expected":[1,1,2,2]},
+    {"input":[10000,10000,[[9999,9999]]],"expected":[1]},
+    {"input":[3,3,[[1,0],[1,2],[0,1],[2,1],[1,1]]],"expected":[1,2,3,4,1]}
+  ]
+}

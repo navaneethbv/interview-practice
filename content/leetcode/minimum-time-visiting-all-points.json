@@ -1,0 +1,27 @@
+{
+  "id": "minimum-time-visiting-all-points",
+  "style": "leetcode",
+  "function": {
+    "python": "minTimeToVisitAllPoints",
+    "java": "minTimeToVisitAllPoints"
+  },
+  "params": [
+    {
+      "name": "points",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[0,0],[3,2],[3,5]]],"expected":6,"sample":true},
+    {"input":[[[2,2]]],"expected":0,"sample":true},
+    {"input":[[[0,0]]],"expected":0},
+    {"input":[[[0,0],[0,0]]],"expected":0},
+    {"input":[[[0,0],[1,1]]],"expected":1},
+    {"input":[[[0,0],[3,0]]],"expected":3},
+    {"input":[[[0,0],[0,-3]]],"expected":3},
+    {"input":[[[1,1],[3,4],[-1,0]]],"expected":7},
+    {"input":[[[-1000,-1000],[1000,1000]]],"expected":2000},
+    {"input":[[[0,0],[2,2],[1,1]]],"expected":3}
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "brace-expansion",
+  "style": "leetcode",
+  "function": {
+    "python": "expand",
+    "java": "expand"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string[]",
+  "tests": [
+    {
+      "input": [
+        "{b,a}x{d,c}"
+      ],
+      "expected": [
+        "axc",
+        "axd",
+        "bxc",
+        "bxd"
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        "abc"
+      ],
+      "expected": [
+        "abc"
+      ],
+      "sample": true
+    },
+    {
+      "input": [
+        "a"
+      ],
+      "expected": [
+        "a"
+      ]
+    },
+    {
+      "input": [
+        "{a,b}"
+      ],
+      "expected": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "input": [
+        "{z,a}a"
+      ],
+      "expected": [
+        "aa",
+        "za"
+      ]
+    },
+    {
+      "input": [
+        "a{b,c}d"
+      ],
+      "expected": [
+        "abd",
+        "acd"
+      ]
+    },
+    {
+      "input": [
+        "{a,b}{c,d}"
+      ],
+      "expected": [
+        "ac",
+        "ad",
+        "bc",
+        "bd"
+      ]
+    },
+    {
+      "input": [
+        "{a}"
+      ],
+      "expected": [
+        "a"
+      ]
+    },
+    {
+      "input": [
+        "x{a,b,c}y"
+      ],
+      "expected": [
+        "xay",
+        "xby",
+        "xcy"
+      ]
+    },
+    {
+      "input": [
+        "{c,b,a}{z,y}"
+      ],
+      "expected": [
+        "ay",
+        "az",
+        "by",
+        "bz",
+        "cy",
+        "cz"
+      ]
+    }
+  ]
+}

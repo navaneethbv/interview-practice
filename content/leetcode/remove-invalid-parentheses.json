@@ -1,0 +1,29 @@
+{
+  "id": "remove-invalid-parentheses",
+  "style": "leetcode",
+  "function": {
+    "python": "removeInvalidParentheses",
+    "java": "removeInvalidParentheses"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["()())()"],"expected":["(())()","()()()"],"sample":true},
+    {"input":[")("],"expected":[""],"sample":true},
+    {"input":["a"],"expected":["a"]},
+    {"input":["()"],"expected":["()"]},
+    {"input":["("],"expected":[""]},
+    {"input":[")"],"expected":[""]},
+    {"input":["((("],"expected":[""]},
+    {"input":["a)b(c)d"],"expected":["ab(c)d"]},
+    {"input":["(a)())()"],"expected":["(a())()","(a)()()"]},
+    {"input":["(()"],"expected":["()"]},
+    {"input":["())(()"],"expected":["()()"]}
+  ]
+}

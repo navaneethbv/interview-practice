@@ -1,0 +1,28 @@
+{
+  "id": "palindrome-number",
+  "style": "leetcode",
+  "function": {
+    "python": "isPalindrome",
+    "java": "isPalindrome"
+  },
+  "params": [
+    {
+      "name": "x",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[121],"expected":true,"sample":true},
+    {"input":[-121],"expected":false,"sample":true},
+    {"input":[0],"expected":true},
+    {"input":[1],"expected":true},
+    {"input":[10],"expected":false},
+    {"input":[11],"expected":true},
+    {"input":[1001],"expected":true},
+    {"input":[12321],"expected":true},
+    {"input":[12345],"expected":false},
+    {"input":[2147447412],"expected":true},
+    {"input":[2147483647],"expected":false}
+  ]
+}

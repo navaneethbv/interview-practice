@@ -1,0 +1,27 @@
+{
+  "id": "maximum-length-of-a-concatenated-string-with-unique-characters",
+  "style": "leetcode",
+  "function": {
+    "python": "maxLength",
+    "java": "maxLength"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "List<string>"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["ab","cd","aa"]],"expected":4,"sample":true},
+    {"input":[["aa","bb"]],"expected":0,"sample":true},
+    {"input":[["a"]],"expected":1},
+    {"input":[["abc"]],"expected":3},
+    {"input":[["ab","bc"]],"expected":2},
+    {"input":[["un","iq","ue"]],"expected":4},
+    {"input":[["cha","r","act","ers"]],"expected":6},
+    {"input":[["abcdefghijklmnopqrstuvwxyz"]],"expected":26},
+    {"input":[["a","a","b"]],"expected":2},
+    {"input":[["ab","cd","ef","ace"]],"expected":6}
+  ]
+}

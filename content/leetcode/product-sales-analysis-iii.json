@@ -1,0 +1,51 @@
+{
+  "kind": "sql",
+  "id": "product-sales-analysis-iii",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Sales",
+      "columns": [
+        {
+          "name": "sale_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "year",
+          "type": "INTEGER"
+        },
+        {
+          "name": "quantity",
+          "type": "INTEGER"
+        },
+        {
+          "name": "price",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "product_id",
+    "first_year",
+    "quantity",
+    "price"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Sales":[[1,10,2020,2,5],[2,10,2021,3,6],[3,10,2020,4,7]]}},"expected":[[10,2020,2,5],[10,2020,4,7]],"sample":true},
+    {"input":{"tables":{"Sales":[[1,10,2020,2,5],[2,20,2019,1,8]]}},"expected":[[10,2020,2,5],[20,2019,1,8]],"sample":true},
+    {"input":{"tables":{"Sales":[]}},"expected":[]},
+    {"input":{"tables":{"Sales":[[1,1,2000,1,1]]}},"expected":[[1,2000,1,1]]},
+    {"input":{"tables":{"Sales":[[1,1,2001,1,1],[2,1,2000,2,2]]}},"expected":[[1,2000,2,2]]},
+    {"input":{"tables":{"Sales":[[1,1,2000,1,1],[2,1,2000,1,1]]}},"expected":[[1,2000,1,1],[1,2000,1,1]]},
+    {"input":{"tables":{"Sales":[[1,1,2000,1,1],[1,1,2001,2,2]]}},"expected":[[1,2000,1,1]]},
+    {"input":{"tables":{"Sales":[[1,1,2000,1,1],[2,2,2000,2,2]]}},"expected":[[1,2000,1,1],[2,2000,2,2]]},
+    {"input":{"tables":{"Sales":[[1,1,2000,1,5],[2,1,1999,2,6],[3,1,1998,3,7]]}},"expected":[[1,1998,3,7]]},
+    {"input":{"tables":{"Sales":[[1,2,2024,5,10],[2,1,2023,2,9],[3,2,2023,3,7],[4,1,2023,4,8]]}},"expected":[[1,2023,2,9],[2,2023,3,7],[1,2023,4,8]]}
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "kind": "design",
+  "id": "find-median-from-data-stream",
+  "style": "leetcode",
+  "className": "MedianFinder",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "addNum",
+      "java": "addNum",
+      "params": [
+        {
+          "name": "num",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "findMedian",
+      "java": "findMedian",
+      "params": [],
+      "returns": "double"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian"],"args":[[4],[],[9],[]]},"expected":[null,4,null,6.5],"sample":true},
+    {"input":{"ctor":[],"ops":["addNum","addNum","addNum","findMedian"],"args":[[-3],[2],[1],[]]},"expected":[null,null,null,1],"sample":true},
+    {"input":{"ctor":[],"ops":["addNum","findMedian"],"args":[[0],[]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[1],[],[1],[],[1],[]]},"expected":[null,1,null,1,null,1]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[-1],[],[-2],[],[-3],[],[-4],[]]},"expected":[null,-1,null,-1.5,null,-2,null,-2.5]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[1],[],[2],[],[3],[],[4],[],[5],[]]},"expected":[null,1,null,1.5,null,2,null,2.5,null,3]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[5],[],[4],[],[3],[],[2],[],[1],[]]},"expected":[null,5,null,4.5,null,4,null,3.5,null,3]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian"],"args":[[-100000],[],[100000],[]]},"expected":[null,-100000,null,0]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[0],[],[100],[],[0],[],[-100],[]]},"expected":[null,0,null,50,null,0,null,0]},
+    {"input":{"ctor":[],"ops":["addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"],"args":[[2],[],[1],[],[8],[],[3],[],[7],[],[4],[],[6],[],[5],[]]},"expected":[null,2,null,1.5,null,2,null,2.5,null,3,null,3.5,null,4,null,4.5]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "valid-palindrome-ii",
+  "style": "leetcode",
+  "function": {
+    "python": "validPalindrome",
+    "java": "validPalindrome"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["abca"],"expected":true,"sample":true},
+    {"input":["abc"],"expected":false,"sample":true},
+    {"input":["a"],"expected":true},
+    {"input":["ab"],"expected":true},
+    {"input":["aba"],"expected":true},
+    {"input":["abb"],"expected":true},
+    {"input":["deeee"],"expected":true},
+    {"input":["abcdef"],"expected":false},
+    {"input":["racecar"],"expected":true},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":true}
+  ]
+}

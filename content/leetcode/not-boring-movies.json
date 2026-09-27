@@ -1,0 +1,47 @@
+{
+  "kind": "sql",
+  "id": "not-boring-movies",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Cinema",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "movie",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "TEXT"
+        },
+        {
+          "name": "rating",
+          "type": "REAL"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "id",
+    "movie",
+    "description",
+    "rating"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Cinema":[[1,"A","fun",8],[2,"B","fun",9],[3,"C","boring",10],[5,"D","drama",9.5]]}},"expected":[[5,"D","drama",9.5],[1,"A","fun",8]],"sample":true},
+    {"input":{"tables":{"Cinema":[[1,"A","boring",7]]}},"expected":[],"sample":true},
+    {"input":{"tables":{"Cinema":[]}},"expected":[]},
+    {"input":{"tables":{"Cinema":[[1,"A","fun",0]]}},"expected":[[1,"A","fun",0]]},
+    {"input":{"tables":{"Cinema":[[2,"A","fun",10]]}},"expected":[]},
+    {"input":{"tables":{"Cinema":[[3,"A","boring",0]]}},"expected":[]},
+    {"input":{"tables":{"Cinema":[[1,"A","fun",1],[3,"B","fun",2]]}},"expected":[[3,"B","fun",2],[1,"A","fun",1]]},
+    {"input":{"tables":{"Cinema":[[5,"A","drama",10],[1,"B","fun",9]]}},"expected":[[5,"A","drama",10],[1,"B","fun",9]]},
+    {"input":{"tables":{"Cinema":[[1,"A","not boring",5]]}},"expected":[[1,"A","not boring",5]]},
+    {"input":{"tables":{"Cinema":[[1,"A","fun",8.25],[2,"B","fun",8.5],[3,"C","sad",8.75]]}},"expected":[[3,"C","sad",8.75],[1,"A","fun",8.25]]}
+  ]
+}

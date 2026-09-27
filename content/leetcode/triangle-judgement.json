@@ -1,0 +1,43 @@
+{
+  "kind": "sql",
+  "id": "triangle-judgement",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Triangle",
+      "columns": [
+        {
+          "name": "x",
+          "type": "INTEGER"
+        },
+        {
+          "name": "y",
+          "type": "INTEGER"
+        },
+        {
+          "name": "z",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "x",
+    "y",
+    "z",
+    "triangle"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Triangle":[[3,4,5],[2,3,5]]}},"expected":[[3,4,5,"Yes"],[2,3,5,"No"]],"sample":true},
+    {"input":{"tables":{"Triangle":[[2,2,2]]}},"expected":[[2,2,2,"Yes"]],"sample":true},
+    {"input":{"tables":{"Triangle":[]}},"expected":[]},
+    {"input":{"tables":{"Triangle":[[1,1,1]]}},"expected":[[1,1,1,"Yes"]]},
+    {"input":{"tables":{"Triangle":[[1,1,2]]}},"expected":[[1,1,2,"No"]]},
+    {"input":{"tables":{"Triangle":[[1,3,1]]}},"expected":[[1,3,1,"No"]]},
+    {"input":{"tables":{"Triangle":[[3,1,1]]}},"expected":[[3,1,1,"No"]]},
+    {"input":{"tables":{"Triangle":[[2,3,4]]}},"expected":[[2,3,4,"Yes"]]},
+    {"input":{"tables":{"Triangle":[[100000,100000,100000]]}},"expected":[[100000,100000,100000,"Yes"]]},
+    {"input":{"tables":{"Triangle":[[4,5,8],[4,5,9],[4,5,10]]}},"expected":[[4,5,8,"Yes"],[4,5,9,"No"],[4,5,10,"No"]]}
+  ]
+}

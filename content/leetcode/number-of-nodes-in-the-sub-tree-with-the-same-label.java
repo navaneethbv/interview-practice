@@ -1,0 +1,3 @@
+class Solution {
+public int[] countSubTrees(int n,int[][] edges,String labels) {List<List<Integer>> adj=new ArrayList<>();for(int i=0;i<n;i++) adj.add(new ArrayList<>());for(int[] e:edges) {adj.get(e[0]).add(e[1]);adj.get(e[1]).add(e[0]);}int[] parent=new int[n],order=new int[n],result=new int[n];Arrays.fill(parent,-1);int size=1;for(int i=0;i<size;i++) {int node=order[i];for(int child:adj.get(node)) if(child!=parent[node]) {parent[child]=node;order[size++]=child;}}int[][] counts=new int[n][26];for(int i=n-1;i>=0;i--) {int node=order[i],c=labels.charAt(node)-'a';counts[node][c]++;result[node]=counts[node][c];if(parent[node]>=0) for(int j=0;j<26;j++) counts[parent[node]][j]+=counts[node][j];}return result;}
+}

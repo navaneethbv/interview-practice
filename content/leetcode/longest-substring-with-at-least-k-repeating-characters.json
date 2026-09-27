@@ -1,0 +1,31 @@
+{
+  "id": "longest-substring-with-at-least-k-repeating-characters",
+  "style": "leetcode",
+  "function": {
+    "python": "longestSubstring",
+    "java": "longestSubstring"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aaabb",3],"expected":3,"sample":true},
+    {"input":["ababbc",2],"expected":5,"sample":true},
+    {"input":["a",1],"expected":1},
+    {"input":["a",2],"expected":0},
+    {"input":["aaaa",3],"expected":4},
+    {"input":["abc",1],"expected":3},
+    {"input":["abc",2],"expected":0},
+    {"input":["aaabbb",3],"expected":6},
+    {"input":["abaccc",2],"expected":3},
+    {"input":["bbaaacbd",3],"expected":3}
+  ]
+}

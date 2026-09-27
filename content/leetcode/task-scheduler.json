@@ -1,0 +1,33 @@
+{
+  "id": "task-scheduler",
+  "style": "leetcode",
+  "function": {
+    "python": "leastInterval",
+    "java": "leastInterval"
+  },
+  "params": [
+    {
+      "name": "tasks",
+      "type": "char[]"
+    },
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["A","A","A","B","B"],2],"expected":7,"sample":true},
+    {"input":[["A","A","A","B"],0],"expected":4,"sample":true},
+    {"input":[["A"],100],"expected":1},
+    {"input":[["A","A","A"],2],"expected":7},
+    {"input":[["A","B","C"],10],"expected":3},
+    {"input":[["A","A","B","B"],2],"expected":5},
+    {"input":[["A","A","A","B","B","B"],2],"expected":8},
+    {"input":[["A","A","A","A","A","A","B","C","D","E","F","G"],2],"expected":16},
+    {"input":[["A","A","B","B","C","C"],2],"expected":6},
+    {"input":[["A","A","A","A"],0],"expected":4},
+    {"input":[["A","B","A","B","A","B"],1],"expected":6},
+    {"input":[["Z","Z","Z"],100],"expected":203}
+  ]
+}
