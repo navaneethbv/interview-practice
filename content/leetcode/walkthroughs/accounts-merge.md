@@ -15,7 +15,7 @@ Union-find records the same connectivity with less repeated comparison.
 
 1. Create `parent[email] = email` the first time an email appears and remember its account name in `account_names`.
 2. For every account, union each email with its first email, attaching the smaller component to the larger one.
-3. Apply iterative path compression through `find` while collecting every email under its final root in `groups`.
+3. Apply iterative path compression through `_find` (Java: `find`) while collecting every email under its final root in `groups`.
 4. Sort each group's emails and prepend the name stored for the root.
 
 ## Walkthrough
@@ -50,6 +50,6 @@ Connections through several intermediate accounts are handled transitively.
 
 ## Language notes
 
-Python uses dictionaries and `defaultdict(list)` for the parent, component-size, and group maps.
+Python uses dictionaries and `defaultdict(list)` for the parent, component-size, and group maps, with `_find` and `_union` helpers.
 Java uses `HashMap`, `ArrayList`, and `Collections.sort`, with iterative `find` and a private union-by-size helper.
 The result order between distinct groups is intentionally unspecified by the spec.

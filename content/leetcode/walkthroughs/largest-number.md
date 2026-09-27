@@ -6,7 +6,8 @@ Sorting with that comparator globally maximizes the concatenated result.
 
 ## Brute force
 
-Trying every permutation of n numbers takes O(n!) time and stores many candidate strings.
+Trying every permutation of n numbers and building each candidate string takes O(n! × nL) time, where L is the maximum number-string length.
+Retaining only the best candidate limits temporary string storage to O(nL).
 Sorting by ordinary numeric or lexicographic value is not sufficient because concatenation changes the comparison, as 2 and 10 demonstrate.
 
 ## Approach

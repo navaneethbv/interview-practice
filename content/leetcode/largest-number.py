@@ -3,7 +3,7 @@ class Solution:
     def largestNumber(self, nums):
         strings = list(map(str, nums))
 
-        def compare(first, second):
+        def compare(first: str, second: str) -> int:
             if first + second > second + first:
                 return -1
             if first + second < second + first:
