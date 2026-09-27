@@ -1,41 +1,36 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        int[] parent = new int[n];
-        int[] size = new int[n];
-        for (int vertex = 0; vertex < n; vertex++) {
-            parent[vertex] = vertex;
-            size[vertex] = 1;
-        }
-        int components = n;
-        for (int[] edge : edges) {
-            if (unite(parent, size, edge[0], edge[1])) {
-                components--;
-            }
-        }
-        return components == 1 && edges.length == n - 1;
-    }
-
-    private int find(int[] parent, int vertex) {
-        while (parent[vertex] != vertex) {
-            parent[vertex] = parent[parent[vertex]];
-            vertex = parent[vertex];
-        }
-        return vertex;
-    }
-
-    private boolean unite(int[] parent, int[] size, int first, int second) {
-        int firstRoot = find(parent, first);
-        int secondRoot = find(parent, second);
-        if (firstRoot == secondRoot) {
+        if (edges.length != n - 1) {
             return false;
         }
-        if (size[firstRoot] < size[secondRoot]) {
-            int saved = firstRoot;
-            firstRoot = secondRoot;
-            secondRoot = saved;
+        List<List<Integer>> neighbors = adjacency(n, edges);
+        boolean[] seen = new boolean[n];
+        Deque<Integer> pending = new ArrayDeque<>();
+        seen[0] = true;
+        pending.push(0);
+        int reached = 1;
+        while (!pending.isEmpty()) {
+            int vertex = pending.pop();
+            for (int neighbor : neighbors.get(vertex)) {
+                if (!seen[neighbor]) {
+                    seen[neighbor] = true;
+                    reached++;
+                    pending.push(neighbor);
+                }
+            }
         }
-        parent[secondRoot] = firstRoot;
-        size[firstRoot] += size[secondRoot];
-        return true;
+        return reached == n;
+    }
+
+    private List<List<Integer>> adjacency(int n, int[][] edges) {
+        List<List<Integer>> neighbors = new ArrayList<>();
+        for (int vertex = 0; vertex < n; vertex++) {
+            neighbors.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            neighbors.get(edge[0]).add(edge[1]);
+            neighbors.get(edge[1]).add(edge[0]);
+        }
+        return neighbors;
     }
 }

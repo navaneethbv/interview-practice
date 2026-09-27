@@ -8,10 +8,10 @@ class Solution:
         while left <= right:
             cut1 = left + (right - left) // 2
             cut2 = (total + 1) // 2 - cut1
-            left1 = nums1[cut1 - 1] if cut1 else float("-inf")
-            right1 = nums1[cut1] if cut1 < len(nums1) else float("inf")
-            left2 = nums2[cut2 - 1] if cut2 else float("-inf")
-            right2 = nums2[cut2] if cut2 < len(nums2) else float("inf")
+            left1 = self._before(nums1, cut1)
+            right1 = self._after(nums1, cut1)
+            left2 = self._before(nums2, cut2)
+            right2 = self._after(nums2, cut2)
             if left1 <= right2 and left2 <= right1:
                 if total % 2:
                     return max(left1, left2)
@@ -21,3 +21,9 @@ class Solution:
             else:
                 left = cut1 + 1
         raise ValueError("Inputs must be sorted")
+
+    def _before(self, values, cut):
+        return values[cut - 1] if cut else float("-inf")
+
+    def _after(self, values, cut):
+        return values[cut] if cut < len(values) else float("inf")

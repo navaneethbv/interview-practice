@@ -1,61 +1,64 @@
 ## Intuition
 
 An undirected graph is a tree exactly when it is connected and has n minus one edges.
-A disjoint-set structure tracks connectivity as edges arrive.
-Combining those two checks avoids separately traversing the graph to detect cycles.
+Check the edge count first, then visit every vertex reachable from vertex zero.
+Reaching all vertices proves connectivity, and the edge count then rules out a cycle.
 
 ## Brute force
 
-Check connectivity from every vertex and separately test edge removals to look for cycles.
-Those repeated traversals do much more work than necessary.
-A single graph traversal is also linear, but union-find is convenient when the input is already an edge list.
+Run a connectivity search from every vertex and independently try removing edges to test for cycles.
+Repeated full traversals can cost O(n(n + E)) time even for just the connectivity checks.
+One traversal, combined with the tree edge-count property, avoids this repeated work.
 
 ## Approach
 
-1. Initialize each vertex as its own component with `parent[vertex] = vertex` and `size[vertex] = 1`.
-2. For each edge, find both endpoint roots using path halving.
-3. If the roots differ, attach the smaller component beneath the larger and decrement `components`.
-4. If the roots match, leave the component count unchanged.
-5. Return true only when `components == 1` and the edge count equals n minus one.
+1. Use iterative depth-first search, first rejecting any graph whose edge count differs from n minus one.
+2. Build `neighbors`, adding both directions for every undirected edge.
+3. Mark vertex zero in `seen` and put it in the `pending` stack.
+4. Pop a vertex and examine each neighbor.
+5. Mark and push only neighbors not previously seen.
+6. Return true if every vertex was reached.
 
-A connected undirected graph needs at least n minus one edges.
-Having exactly that many leaves no extra edge to form a cycle.
-Union by size and path halving keep root lookups efficient without altering the connectivity result.
+A connected undirected graph needs at least n minus one edges to connect its vertices.
+If it also contained a cycle, removing a cycle edge would leave it connected with fewer than that many edges, a contradiction.
+This proves why no separate cycle detector is needed after the edge-count check.
+Marking on insertion prevents the two directions of an edge from repeatedly scheduling the same vertex.
 
 ## Walkthrough
 
-Example 1 has n equal to 4 and edges `[[0, 1], [1, 2], [1, 3]]`.
+Example 1 has `n = 4` and edges `[[0, 1], [1, 2], [1, 3]]`.
+The three edges pass the required edge count.
 
-| Edge | Components after union | `components` |
-| --- | --- | --- |
-| Initially | `{0}`, `{1}`, `{2}`, `{3}` | 4 |
-| 0, 1 | `{0,1}`, `{2}`, `{3}` | 3 |
-| 1, 2 | `{0,1,2}`, `{3}` | 2 |
-| 1, 3 | `{0,1,2,3}` | 1 |
+| Popped vertex | Newly reached vertices | `pending` afterward | Reached count |
+| --- | --- | --- | --- |
+| 0 | 1 | `[1]` | 2 |
+| 1 | 2, 3 | `[2, 3]` | 4 |
+| 3 | None | `[2]` | 4 |
+| 2 | None | `[]` | 4 |
 
-There is one component and three edges, matching n minus one.
-Return true.
+Vertex zero was marked before the loop.
+All four vertices are reached, so the result is true.
 
 ## Complexity
 
-- Time: O(n + E α(n)) amortized for E edges, using union by size and path compression; α grows extremely slowly.
-- Space: O(n), for the parent and component-size arrays.
+- Time: O(n + E) when the edge count passes, which is O(n) because E = n - 1; an incorrect edge count returns immediately.
+- Space: O(n + E), for the adjacency lists, visited state, and stack, also O(n) after the edge-count check.
 
 ## Edge cases
 
 One vertex with no edges is a tree.
-Multiple isolated vertices fail connectivity.
-A connected cycle fails the edge-count check even though it has one component.
-The input contract excludes duplicate undirected edges and self-loops.
+Multiple isolated vertices fail the edge-count check.
+A disconnected graph can have exactly n minus one edges if one component contains a cycle; the traversal correctly rejects it.
+The input excludes duplicate edges and self-loops.
 
 ## Common mistakes
 
-- Checking only n minus one edges can accept a disconnected graph containing a cycle.
-- Decrementing the count for an edge within one component undercounts components.
-- Linking arbitrary vertices instead of component roots corrupts the union structure.
+- Checking only the edge count can accept a disconnected graph containing a cycle.
+- Adding only one direction makes reachability depend on the order of edge endpoints.
+- Marking vertices too late can schedule the same vertex repeatedly.
 
 ## Language notes
 
-Both references use iterative root finding, avoiding recursion on parent chains.
-Python returns a boolean from `_unite`; Java does the same from `unite`.
-The caller decrements `components` only when that result indicates a real merge.
+Python uses a set for `seen` and returns its size comparison.
+Java uses a boolean array and an explicit `reached` counter; its `adjacency` helper builds the same neighbor lists.
+Both traverse iteratively and preserve the input edge collection.

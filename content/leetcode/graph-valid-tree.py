@@ -1,26 +1,17 @@
 class Solution:
     def validTree(self, n, edges):
-        parent = list(range(n))
-        size = [1] * n
-        components = n
-        for first, second in edges:
-            if self._unite(parent, size, first, second):
-                components -= 1
-        return components == 1 and len(edges) == n - 1
-
-    def _find(self, parent, vertex):
-        while parent[vertex] != vertex:
-            parent[vertex] = parent[parent[vertex]]
-            vertex = parent[vertex]
-        return vertex
-
-    def _unite(self, parent, size, first, second):
-        first_root = self._find(parent, first)
-        second_root = self._find(parent, second)
-        if first_root == second_root:
+        if len(edges) != n - 1:
             return False
-        if size[first_root] < size[second_root]:
-            first_root, second_root = second_root, first_root
-        parent[second_root] = first_root
-        size[first_root] += size[second_root]
-        return True
+        neighbors = [[] for _ in range(n)]
+        for first, second in edges:
+            neighbors[first].append(second)
+            neighbors[second].append(first)
+        seen = {0}
+        pending = [0]
+        while pending:
+            vertex = pending.pop()
+            for neighbor in neighbors[vertex]:
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    pending.append(neighbor)
+        return len(seen) == n

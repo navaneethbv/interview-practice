@@ -56,6 +56,6 @@ The matrix itself is not modified.
 
 ## Language notes
 
-Python uses explicit range loops and does not create row slices.
+Python passes constant-size `range` objects to row and column helpers, without creating row slices.
 Java extracts row and column appends into helpers with `step` equal to 1 or -1.
 Those helpers use a direction-aware inclusive comparison, so an exhausted edge performs no reads.
