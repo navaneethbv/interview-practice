@@ -1,10 +1,14 @@
 class Solution:
     def goodNodes(self, root):
-        stack = [(root,root.val)]; count = 0
-        while stack:
-            node,maximum = stack.pop()
-            count += node.val >= maximum
-            maximum = max(maximum,node.val)
-            if node.left: stack.append((node.left,maximum))
-            if node.right: stack.append((node.right,maximum))
+        pending = [(root, root.val)]
+        count = 0
+        while pending:
+            node, maximum = pending.pop()
+            if node.val >= maximum:
+                count += 1
+            maximum = max(maximum, node.val)
+            if node.left:
+                pending.append((node.left, maximum))
+            if node.right:
+                pending.append((node.right, maximum))
         return count

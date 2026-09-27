@@ -1,29 +1,42 @@
 class Trie {
-    private static class Node {
-        Node[] children = new Node[26];
+    private static class TrieNode {
+        final TrieNode[] children = new TrieNode[26];
         boolean word;
     }
-    private final Node root = new Node();
+
+    private final TrieNode root = new TrieNode();
+
     public Trie() {}
+
     public void insert(String word) {
-        Node node = root;
-        for (char c : word.toCharArray()) {
-            if (node.children[c - 'a'] == null) node.children[c - 'a'] = new Node();
-            node = node.children[c - 'a'];
+        TrieNode node = root;
+        for (int index = 0; index < word.length(); index++) {
+            int letter = word.charAt(index) - 'a';
+            if (node.children[letter] == null) {
+                node.children[letter] = new TrieNode();
+            }
+            node = node.children[letter];
         }
         node.word = true;
     }
-    private Node walk(String word) {
-        Node node = root;
-        for (char c : word.toCharArray()) {
-            node = node.children[c - 'a'];
-            if (node == null) return null;
+
+    private TrieNode walk(String word) {
+        TrieNode node = root;
+        for (int index = 0; index < word.length(); index++) {
+            node = node.children[word.charAt(index) - 'a'];
+            if (node == null) {
+                return null;
+            }
         }
         return node;
     }
+
     public boolean search(String word) {
-        Node node = walk(word);
+        TrieNode node = walk(word);
         return node != null && node.word;
     }
-    public boolean startsWith(String prefix) { return walk(prefix) != null; }
+
+    public boolean startsWith(String prefix) {
+        return walk(prefix) != null;
+    }
 }

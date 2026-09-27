@@ -1,8 +1,8 @@
 class Solution:
     def rotate(self, matrix):
-        n = len(matrix)
-        for r in range(n):
-            for c in range(r+1,n):
-                matrix[r][c],matrix[c][r] = matrix[c][r],matrix[r][c]
+        size = len(matrix)
+        for row in range(size):
+            for column in range(row + 1, size):
+                matrix[row][column], matrix[column][row] = matrix[column][row], matrix[row][column]
         for row in matrix:
             row.reverse()

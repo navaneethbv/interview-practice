@@ -1,12 +1,19 @@
 class Solution:
     def isBalanced(self, root):
-        stack = [(root,False)]; height = {None:0}
-        while stack:
-            node,ready = stack.pop()
-            if node is None: continue
-            if not ready: stack.extend([(node,True),(node.left,False),(node.right,False)])
-            else:
-                left,right = height[node.left],height[node.right]
-                if abs(left-right) > 1: return False
-                height[node] = max(left,right)+1
+        height = {None: 0}
+        pending = [(root, False)]
+        while pending:
+            node, ready = pending.pop()
+            if node is None:
+                continue
+            if not ready:
+                pending.append((node, True))
+                pending.append((node.left, False))
+                pending.append((node.right, False))
+                continue
+            left_height = height[node.left]
+            right_height = height[node.right]
+            if abs(left_height - right_height) > 1:
+                return False
+            height[node] = 1 + max(left_height, right_height)
         return True

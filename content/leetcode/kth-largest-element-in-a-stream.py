@@ -1,9 +1,18 @@
 import heapq
+
+
 class KthLargest:
     def __init__(self, k, nums):
-        self.k = k; self.heap = nums[:]; heapq.heapify(self.heap)
-        while len(self.heap)>k: heapq.heappop(self.heap)
+        self.k = k
+        self.heap = []
+        for value in nums:
+            self._retain(value)
+
+    def _retain(self, value):
+        heapq.heappush(self.heap, value)
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+
     def add(self, val):
-        heapq.heappush(self.heap,val)
-        if len(self.heap)>self.k: heapq.heappop(self.heap)
+        self._retain(val)
         return self.heap[0]

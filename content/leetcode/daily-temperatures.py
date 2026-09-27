@@ -1,8 +1,10 @@
 class Solution:
     def dailyTemperatures(self, temperatures):
-        stack = []; result = [0]*len(temperatures)
-        for i,temp in enumerate(temperatures):
-            while stack and temperatures[stack[-1]] < temp:
-                previous = stack.pop(); result[previous] = i-previous
-            stack.append(i)
+        pending = []
+        result = [0] * len(temperatures)
+        for index, temperature in enumerate(temperatures):
+            while pending and temperatures[pending[-1]] < temperature:
+                previous = pending.pop()
+                result[previous] = index - previous
+            pending.append(index)
         return result

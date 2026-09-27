@@ -2,8 +2,8 @@ class Solution:
     def eraseOverlapIntervals(self, intervals):
         kept = 0
         end = float('-inf')
-        for a,b in sorted(intervals,key=lambda x:x[1]):
-            if a >= end:
-                end = b
+        for start, finish in sorted(intervals, key=lambda interval: interval[1]):
+            if start >= end:
+                end = finish
                 kept += 1
         return len(intervals) - kept

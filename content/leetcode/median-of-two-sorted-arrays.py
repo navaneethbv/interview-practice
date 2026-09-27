@@ -1,20 +1,29 @@
 class Solution:
     def findMedianSortedArrays(self, nums1, nums2):
-        if len(nums1) > len(nums2): nums1,nums2 = nums2,nums1
-        m,n = len(nums1),len(nums2); left,right = 0,m
+        if len(nums1) > len(nums2):
+            return self.findMedianSortedArrays(nums2, nums1)
+        total = len(nums1) + len(nums2)
+        left = 0
+        right = len(nums1)
         while left <= right:
-            i = (left+right)//2; j = (m+n+1)//2-i
-            a,b = self._around(nums1,i)
-            c,d = self._around(nums2,j)
-            if a <= d and c <= b:
-                if (m+n)%2: return float(max(a,c))
-                return (max(a,c)+min(b,d))/2
-            if a > d: right = i-1
-            else: left = i+1
+            cut1 = left + (right - left) // 2
+            cut2 = (total + 1) // 2 - cut1
+            left1 = self._before(nums1, cut1)
+            right1 = self._after(nums1, cut1)
+            left2 = self._before(nums2, cut2)
+            right2 = self._after(nums2, cut2)
+            if left1 <= right2 and left2 <= right1:
+                if total % 2:
+                    return max(left1, left2)
+                return (max(left1, left2) + min(right1, right2)) / 2
+            if left1 > right2:
+                right = cut1 - 1
+            else:
+                left = cut1 + 1
+        raise ValueError("Inputs must be sorted")
 
-    @staticmethod
-    def _around(nums, cut):
-        """The values just left and right of a cut, padded with infinities at the ends."""
-        before = nums[cut-1] if cut else float('-inf')
-        after = nums[cut] if cut < len(nums) else float('inf')
-        return before, after
+    def _before(self, values, cut):
+        return values[cut - 1] if cut else float("-inf")
+
+    def _after(self, values, cut):
+        return values[cut] if cut < len(values) else float("inf")

@@ -1,11 +1,13 @@
 class Solution:
-    def isSameTree(self,p,q):
-        stack=[(p,q)]
+    def isSameTree(self, p, q):
+        stack = [(p, q)]
         while stack:
-            a,b=stack.pop()
-            if not a or not b:
-                if a is not b: return False
+            first, second = stack.pop()
+            if not first or not second:
+                if first is not second:
+                    return False
                 continue
-            if a.val!=b.val: return False
-            stack.extend([(a.left,b.left),(a.right,b.right)])
+            if first.val != second.val:
+                return False
+            stack.extend([(first.left, second.left), (first.right, second.right)])
         return True

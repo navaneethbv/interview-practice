@@ -1,7 +1,27 @@
 class Solution {
     public void rotate(int[][] matrix) {
-        int n=matrix.length;
-        for(int r=0;r<n;r++) for(int c=r+1;c<n;c++) {int t=matrix[r][c];matrix[r][c]=matrix[c][r];matrix[c][r]=t;}
-        for(int[] row:matrix) for(int l=0,r=n-1;l<r;l++,r--) {int t=row[l];row[l]=row[r];row[r]=t;}
+        int size = matrix.length;
+        for (int row = 0; row < size; row++) {
+            for (int column = row + 1; column < size; column++) {
+                int saved = matrix[row][column];
+                matrix[row][column] = matrix[column][row];
+                matrix[column][row] = saved;
+            }
+        }
+        for (int[] row : matrix) {
+            reverse(row);
+        }
+    }
+
+    private void reverse(int[] row) {
+        int left = 0;
+        int right = row.length - 1;
+        while (left < right) {
+            int saved = row[left];
+            row[left] = row[right];
+            row[right] = saved;
+            left++;
+            right--;
+        }
     }
 }

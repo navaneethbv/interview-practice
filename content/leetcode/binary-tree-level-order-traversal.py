@@ -1,8 +1,8 @@
 class Solution:
-    def levelOrder(self,root):
-        queue=[root] if root else []
-        result=[]
+    def levelOrder(self, root):
+        queue = [root] if root else []
+        result = []
         while queue:
-            result.append([n.val for n in queue])
-            queue=[c for n in queue for c in (n.left,n.right) if c]
+            result.append([node.val for node in queue])
+            queue = [child for node in queue for child in (node.left, node.right) if child]
         return result

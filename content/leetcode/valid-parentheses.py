@@ -1,9 +1,11 @@
 class Solution:
-    def isValid(self,s):
-        stack=[]
-        pairs={')':'(',']':'[','}':'{'}
-        for ch in s:
-            if ch in pairs:
-                if not stack or stack.pop()!=pairs[ch]: return False
-            else: stack.append(ch)
+    def isValid(self, s):
+        stack = []
+        pairs = {')': '(', ']': '[', '}': '{'}
+        for character in s:
+            if character in pairs:
+                if not stack or stack.pop() != pairs[character]:
+                    return False
+            else:
+                stack.append(character)
         return not stack

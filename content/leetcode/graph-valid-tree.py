@@ -1,15 +1,17 @@
 class Solution:
     def validTree(self, n, edges):
-        parent = list(range(n))
-        def find(x):
-            while parent[x] != x:
-                parent[x] = parent[parent[x]]
-                x = parent[x]
-            return x
-        count = n
-        for a,b in edges:
-            a,b = find(a),find(b)
-            if a != b:
-                parent[a] = b
-                count -= 1
-        return count == 1 and len(edges) == n - 1
+        if len(edges) != n - 1:
+            return False
+        neighbors = [[] for _ in range(n)]
+        for first, second in edges:
+            neighbors[first].append(second)
+            neighbors[second].append(first)
+        seen = {0}
+        pending = [0]
+        while pending:
+            vertex = pending.pop()
+            for neighbor in neighbors[vertex]:
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    pending.append(neighbor)
+        return len(seen) == n

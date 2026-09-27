@@ -1,13 +1,35 @@
 class Solution {
-    private boolean search(char[][] b,String w,int r,int c,int i,boolean[][] seen) {
-        if(r<0||r>=b.length||c<0||c>=b[0].length||seen[r][c]||b[r][c]!=w.charAt(i)) return false;
-        if(i==w.length()-1) return true;seen[r][c]=true;
-        boolean found=search(b,w,r-1,c,i+1,seen)||search(b,w,r+1,c,i+1,seen)||search(b,w,r,c-1,i+1,seen)||search(b,w,r,c+1,i+1,seen);
-        seen[r][c]=false;return found;
-    }
-    public boolean exist(char[][] board,String word) {
-        if(word.length()>board.length*board[0].length) return false;boolean[][] seen=new boolean[board.length][board[0].length];
-        for(int r=0;r<board.length;r++) for(int c=0;c<board[0].length;c++) if(search(board,word,r,c,0,seen)) return true;
+    public boolean exist(char[][] board, String word) {
+        if (word.length() > board.length * board[0].length) {
+            return false;
+        }
+        boolean[][] seen = new boolean[board.length][board[0].length];
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                if (search(board, word, row, column, 0, seen)) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    private boolean search(char[][] board, String word, int row, int column, int index, boolean[][] seen) {
+        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length) {
+            return false;
+        }
+        if (seen[row][column] || board[row][column] != word.charAt(index)) {
+            return false;
+        }
+        if (index == word.length() - 1) {
+            return true;
+        }
+        seen[row][column] = true;
+        boolean found = search(board, word, row - 1, column, index + 1, seen)
+            || search(board, word, row + 1, column, index + 1, seen)
+            || search(board, word, row, column - 1, index + 1, seen)
+            || search(board, word, row, column + 1, index + 1, seen);
+        seen[row][column] = false;
+        return found;
     }
 }

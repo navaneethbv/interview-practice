@@ -1,16 +1,57 @@
 class Solution {
-    private boolean[][] reach(int[][] h, boolean pacific) {
-        int m=h.length,n=h[0].length;
-        boolean[][] seen=new boolean[m][n]; ArrayDeque<int[]> q=new ArrayDeque<>();
-        for(int r=0;r<m;r++) {int c=pacific?0:n-1; seen[r][c]=true;q.add(new int[]{r,c});}
-        for(int c=0;c<n;c++) {int r=pacific?0:m-1;if(!seen[r][c]) {seen[r][c]=true;q.add(new int[]{r,c});}}
-        int[][] dirs={{1,0},{-1,0},{0,1},{0,-1}};
-        while(!q.isEmpty()) {int[] x=q.remove();for(int[] d:dirs) {int r=x[0]+d[0],c=x[1]+d[1];if(r>=0&&r<m&&c>=0&&c<n&&!seen[r][c]&&h[r][c]>=h[x[0]][x[1]]) {seen[r][c]=true;q.add(new int[]{r,c});}}}
+    private static final int[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        boolean[][] pacific = reach(heights, true);
+        boolean[][] atlantic = reach(heights, false);
+        List<List<Integer>> result = new ArrayList<>();
+        for (int row = 0; row < heights.length; row++) {
+            for (int column = 0; column < heights[0].length; column++) {
+                if (pacific[row][column] && atlantic[row][column]) {
+                    result.add(Arrays.asList(row, column));
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean[][] reach(int[][] heights, boolean pacific) {
+        int rows = heights.length;
+        int columns = heights[0].length;
+        boolean[][] seen = new boolean[rows][columns];
+        Deque<int[]> queue = new ArrayDeque<>();
+        for (int row = 0; row < rows; row++) {
+            addCell(row, pacific ? 0 : columns - 1, seen, queue);
+        }
+        for (int column = 0; column < columns; column++) {
+            addCell(pacific ? 0 : rows - 1, column, seen, queue);
+        }
+        flood(heights, seen, queue);
         return seen;
     }
-    public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        boolean[][] p=reach(heights,true),a=reach(heights,false);List<List<Integer>> result=new ArrayList<>();
-        for(int r=0;r<heights.length;r++) for(int c=0;c<heights[0].length;c++) if(p[r][c]&&a[r][c]) result.add(Arrays.asList(r,c));
-        return result;
+
+    private void flood(int[][] heights, boolean[][] seen, Deque<int[]> queue) {
+        while (!queue.isEmpty()) {
+            int[] cell = queue.removeFirst();
+            for (int[] direction : DIRECTIONS) {
+                int row = cell[0] + direction[0];
+                int column = cell[1] + direction[1];
+                if (canClimb(heights, cell, row, column)) {
+                    addCell(row, column, seen, queue);
+                }
+            }
+        }
+    }
+
+    private boolean canClimb(int[][] heights, int[] cell, int row, int column) {
+        return row >= 0 && row < heights.length && column >= 0 && column < heights[0].length
+            && heights[row][column] >= heights[cell[0]][cell[1]];
+    }
+
+    private void addCell(int row, int column, boolean[][] seen, Deque<int[]> queue) {
+        if (!seen[row][column]) {
+            seen[row][column] = true;
+            queue.addLast(new int[] {row, column});
+        }
     }
 }

@@ -1,8 +1,25 @@
 class Solution {
-public int goodNodes(TreeNode root) {
-    Deque<TreeNode> nodes=new ArrayDeque<>();Deque<Integer> maxima=new ArrayDeque<>();nodes.push(root);maxima.push(root.val);int count=0;
-    while(!nodes.isEmpty()) {TreeNode node=nodes.pop();int maximum=maxima.pop();if(node.val>=maximum) count++;maximum=Math.max(maximum,node.val);
-        if(node.left!=null) {nodes.push(node.left);maxima.push(maximum);}if(node.right!=null) {nodes.push(node.right);maxima.push(maximum);}}
-    return count;
-}
+    private record Frame(TreeNode node, int maximum) {}
+
+    public int goodNodes(TreeNode root) {
+        Deque<Frame> pending = new ArrayDeque<>();
+        pending.push(new Frame(root, root.val));
+        int count = 0;
+        while (!pending.isEmpty()) {
+            Frame frame = pending.pop();
+            TreeNode node = frame.node();
+            int maximum = frame.maximum();
+            if (node.val >= maximum) {
+                count++;
+            }
+            maximum = Math.max(maximum, node.val);
+            if (node.left != null) {
+                pending.push(new Frame(node.left, maximum));
+            }
+            if (node.right != null) {
+                pending.push(new Frame(node.right, maximum));
+            }
+        }
+        return count;
+    }
 }

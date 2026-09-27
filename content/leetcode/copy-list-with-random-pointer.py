@@ -1,6 +1,6 @@
 class Solution:
     def copyRandomList(self, head):
-        copies = {None:None}
+        copies = {None: None}
         current = head
         while current:
             copies[current] = Node(current.val)

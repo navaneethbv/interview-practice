@@ -1,6 +1,16 @@
 class Solution {
-public int lastStoneWeight(int[] stones) {
-    PriorityQueue<Integer> heap=new PriorityQueue<>(Comparator.reverseOrder());for(int s:stones) heap.add(s);
-    while(heap.size()>1) {int a=heap.remove(),b=heap.remove();if(a!=b) heap.add(a-b);}return heap.isEmpty()?0:heap.peek();
-}
+    public int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.reverseOrder());
+        for (int weight : stones) {
+            heap.add(weight);
+        }
+        while (heap.size() > 1) {
+            int heaviest = heap.remove();
+            int second = heap.remove();
+            if (heaviest != second) {
+                heap.add(heaviest - second);
+            }
+        }
+        return heap.isEmpty() ? 0 : heap.peek();
+    }
 }
