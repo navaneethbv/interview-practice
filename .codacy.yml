@@ -1,0 +1,5 @@
+---
+# Problem statements and reference solutions are data verified by `npm run tests:build -- --java`.
+exclude_paths:
+  - "content/leetcode/**"
+  - "content/problems/**"
