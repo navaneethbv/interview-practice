@@ -22,6 +22,8 @@ class Codec:
         while token_index < len(tokens):
             while parents and parents[-1][1] == 0:
                 parents.pop()
+            if not parents:
+                raise ValueError("Unexpected node after all child slots were filled")
             parent, remaining = parents[-1]
             value = int(tokens[token_index])
             count = int(tokens[token_index + 1])
