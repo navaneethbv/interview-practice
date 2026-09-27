@@ -1,4 +1,15 @@
 class Solution:
     def maxMatrixSum(self, matrix):
-        values=[value for row in matrix for value in row]; total=sum(abs(value) for value in values)
-        return total-(2*min(abs(value) for value in values) if sum(value<0 for value in values)%2 else 0)
+        total = 0
+        negative_count = 0
+        minimum_magnitude = None
+        for row in matrix:
+            for value in row:
+                magnitude = abs(value)
+                total += magnitude
+                negative_count += value < 0
+                if minimum_magnitude is None or magnitude < minimum_magnitude:
+                    minimum_magnitude = magnitude
+        if negative_count % 2 == 0:
+            return total
+        return total - 2 * minimum_magnitude
