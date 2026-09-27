@@ -4,9 +4,11 @@ class Solution:
         strings = list(map(str, nums))
 
         def compare(first: str, second: str) -> int:
-            if first + second > second + first:
+            first_then_second = f"{first}{second}"
+            second_then_first = f"{second}{first}"
+            if first_then_second > second_then_first:
                 return -1
-            if first + second < second + first:
+            if first_then_second < second_then_first:
                 return 1
             return 0
 
