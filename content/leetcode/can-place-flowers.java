@@ -1,3 +1,18 @@
 class Solution {
-public boolean canPlaceFlowers(int[] flowerbed,int n){for(int i=0;i<flowerbed.length;i++)if(flowerbed[i]==0&&(i==0||flowerbed[i-1]==0)&&(i+1==flowerbed.length||flowerbed[i+1]==0)){flowerbed[i]=1;n--;}return n<=0;}
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        for (int index = 0; index < flowerbed.length; index++) {
+            if (flowerbed[index] != 0) {
+                continue;
+            }
+            boolean leftIsEmpty = index == 0 || flowerbed[index - 1] == 0;
+            boolean rightIsEmpty = index == flowerbed.length - 1
+                    || flowerbed[index + 1] == 0;
+            if (leftIsEmpty && rightIsEmpty) {
+                flowerbed[index] = 1;
+                n--;
+            }
+        }
+
+        return n <= 0;
+    }
 }

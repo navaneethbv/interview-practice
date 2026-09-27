@@ -1,9 +1,18 @@
 class Solution:
     def decodeString(self, s):
-        stack=[];current='';number=0
-        for c in s:
-            if c.isdigit():number=number*10+int(c)
-            elif c=='[':stack.append((current,number));current='';number=0
-            elif c==']':prefix,count=stack.pop();current=prefix+current*count
-            else:current+=c
-        return current
+        frames = []
+        current_text = []
+        repeat_count = 0
+        for character in s:
+            if character.isdigit():
+                repeat_count = repeat_count * 10 + int(character)
+            elif character == "[":
+                frames.append((current_text, repeat_count))
+                current_text = []
+                repeat_count = 0
+            elif character == "]":
+                previous_text, count = frames.pop()
+                current_text = previous_text + current_text * count
+            else:
+                current_text.append(character)
+        return "".join(current_text)

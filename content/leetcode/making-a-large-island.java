@@ -1,3 +1,71 @@
 class Solution {
-public int largestIsland(int[][] grid){int n=grid.length,id=2,best=0;Map<Integer,Integer>sizes=new HashMap<>();sizes.put(0,0);int[]ds={-1,0,1,0,-1};for(int r=0;r<n;r++)for(int c=0;c<n;c++)if(grid[r][c]==1){Deque<int[]>q=new ArrayDeque<>();q.add(new int[]{r,c});grid[r][c]=id;int size=0;while(!q.isEmpty()){int[]p=q.remove();size++;for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<n&&b>=0&&b<n&&grid[a][b]==1){grid[a][b]=id;q.add(new int[]{a,b});}}}sizes.put(id++,size);best=Math.max(best,size);}for(int r=0;r<n;r++)for(int c=0;c<n;c++)if(grid[r][c]==0){Set<Integer>near=new HashSet<>();for(int d=0;d<4;d++){int a=r+ds[d],b=c+ds[d+1];if(a>=0&&a<n&&b>=0&&b<n)near.add(grid[a][b]);}int size=1;for(int label:near)size+=sizes.get(label);best=Math.max(best,size);}return best;}
+    private static final int[] DIRECTIONS = {-1, 0, 1, 0, -1};
+
+    public int largestIsland(int[][] grid) {
+        Map<Integer, Integer> sizes = labelIslands(grid);
+        int best = Collections.max(sizes.values());
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid.length; column++) {
+                if (grid[row][column] == 0) {
+                    best = Math.max(best, joinedSize(grid, sizes, row, column));
+                }
+            }
+        }
+        return best;
+    }
+
+    private Map<Integer, Integer> labelIslands(int[][] grid) {
+        Map<Integer, Integer> sizes = new HashMap<>();
+        sizes.put(0, 0);
+        int label = 2;
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid.length; column++) {
+                if (grid[row][column] == 1) {
+                    sizes.put(label, labelIsland(grid, row, column, label));
+                    label++;
+                }
+            }
+        }
+        return sizes;
+    }
+
+    private int labelIsland(int[][] grid, int row, int column, int label) {
+        Deque<int[]> stack = new ArrayDeque<>();
+        stack.push(new int[]{row, column});
+        grid[row][column] = label;
+        int size = 0;
+        while (!stack.isEmpty()) {
+            int[] cell = stack.pop();
+            size++;
+            for (int direction = 0; direction < 4; direction++) {
+                int nextRow = cell[0] + DIRECTIONS[direction];
+                int nextColumn = cell[1] + DIRECTIONS[direction + 1];
+                if (inside(grid, nextRow, nextColumn) && grid[nextRow][nextColumn] == 1) {
+                    grid[nextRow][nextColumn] = label;
+                    stack.push(new int[]{nextRow, nextColumn});
+                }
+            }
+        }
+        return size;
+    }
+
+    private int joinedSize(int[][] grid, Map<Integer, Integer> sizes, int row, int column) {
+        Set<Integer> nearby = new HashSet<>();
+        for (int direction = 0; direction < 4; direction++) {
+            int nextRow = row + DIRECTIONS[direction];
+            int nextColumn = column + DIRECTIONS[direction + 1];
+            if (inside(grid, nextRow, nextColumn)) {
+                nearby.add(grid[nextRow][nextColumn]);
+            }
+        }
+        int size = 1;
+        for (int label : nearby) {
+            size += sizes.get(label);
+        }
+        return size;
+    }
+
+    private boolean inside(int[][] grid, int row, int column) {
+        return row >= 0 && row < grid.length && column >= 0 && column < grid.length;
+    }
 }

@@ -1,6 +1,12 @@
 from collections import Counter
+
+
 class Solution:
     def customSortString(self, order, s):
-        count=Counter(s);out=''
-        for c in order:out+=c*count.pop(c,0)
-        return out+''.join(c*n for c,n in count.items())
+        counts = Counter(s)
+        parts = []
+        for character in order:
+            parts.append(character * counts.pop(character, 0))
+        for character, count in counts.items():
+            parts.append(character * count)
+        return ''.join(parts)

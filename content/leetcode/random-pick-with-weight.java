@@ -1,5 +1,26 @@
 class Solution {
-    int[] prefix; Random random=new Random(0);
-    public Solution(int[] w) { prefix=w.clone();for(int i=1;i<w.length;i++)prefix[i]+=prefix[i-1]; }
-    public int pickIndex() { int value=random.nextInt(prefix[prefix.length-1]),lo=0,hi=prefix.length-1;while(lo<hi){int mid=lo+(hi-lo)/2;if(prefix[mid]>value)hi=mid;else lo=mid+1;}return lo; }
+    private final int[] prefixSums;
+    private final Random random = new Random(0);
+
+    public Solution(int[] w) {
+        prefixSums = w.clone();
+        for (int index = 1; index < prefixSums.length; index++) {
+            prefixSums[index] += prefixSums[index - 1];
+        }
+    }
+
+    public int pickIndex() {
+        int target = random.nextInt(prefixSums[prefixSums.length - 1]);
+        int left = 0;
+        int right = prefixSums.length - 1;
+        while (left < right) {
+            int middle = left + (right - left) / 2;
+            if (prefixSums[middle] > target) {
+                right = middle;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return left;
+    }
 }

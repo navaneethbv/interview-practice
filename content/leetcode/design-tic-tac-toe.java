@@ -1,5 +1,32 @@
 class TicTacToe {
-    private final int n;private final int[] rows,cols;private int diag,anti;
-    public TicTacToe(int n) {this.n=n;rows=new int[n];cols=new int[n];}
-    public int move(int row,int col,int player) {int value=player==1?1:-1;rows[row]+=value;cols[col]+=value;if(row==col) diag+=value;if(row+col==n-1) anti+=value;return Math.abs(rows[row])==n||Math.abs(cols[col])==n||Math.abs(diag)==n||Math.abs(anti)==n?player:0;}
+    private final int size;
+    private final int[] rows;
+    private final int[] columns;
+    private int diagonal;
+    private int antiDiagonal;
+
+    public TicTacToe(int n) {
+        size = n;
+        rows = new int[n];
+        columns = new int[n];
+    }
+
+    public int move(int row, int col, int player) {
+        int mark = player == 1 ? 1 : -1;
+        rows[row] += mark;
+        columns[col] += mark;
+
+        if (row == col) {
+            diagonal += mark;
+        }
+        if (row + col == size - 1) {
+            antiDiagonal += mark;
+        }
+
+        boolean hasLine = Math.abs(rows[row]) == size
+                || Math.abs(columns[col]) == size
+                || Math.abs(diagonal) == size
+                || Math.abs(antiDiagonal) == size;
+        return hasLine ? player : 0;
+    }
 }

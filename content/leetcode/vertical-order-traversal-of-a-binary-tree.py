@@ -1,12 +1,21 @@
 class Solution:
     def verticalTraversal(self, root):
-        nodes=[];stack=[(root,0,0)]
+        positions = []
+        stack = [(root, 0, 0)]
         while stack:
-            n,r,c=stack.pop();nodes.append((c,r,n.val))
-            if n.left:stack.append((n.left,r+1,c-1))
-            if n.right:stack.append((n.right,r+1,c+1))
-        out=[];previous=None
-        for c,r,v in sorted(nodes):
-            if c!=previous:out.append([]);previous=c
-            out[-1].append(v)
-        return out
+            node, row, column = stack.pop()
+            positions.append((column, row, node.val))
+            if node.left:
+                stack.append((node.left, row + 1, column - 1))
+            if node.right:
+                stack.append((node.right, row + 1, column + 1))
+
+        positions.sort()
+        columns = []
+        previous_column = None
+        for column, row, value in positions:
+            if column != previous_column:
+                columns.append([])
+                previous_column = column
+            columns[-1].append(value)
+        return columns

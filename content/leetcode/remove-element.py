@@ -1,6 +1,8 @@
 class Solution:
     def removeElement(self, nums, val):
-        k=0
+        write_index = 0
         for value in nums:
-            if value!=val: nums[k]=value; k+=1
-        return k
+            if value != val:
+                nums[write_index] = value
+                write_index += 1
+        return write_index

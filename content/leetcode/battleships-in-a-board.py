@@ -1,3 +1,14 @@
 class Solution:
     def countBattleships(self, board):
-        return sum(board[r][c]=='X' and (r==0 or board[r-1][c]!='X') and (c==0 or board[r][c-1]!='X') for r in range(len(board)) for c in range(len(board[0])))
+        ship_count = 0
+
+        for row in range(len(board)):
+            for column in range(len(board[0])):
+                if board[row][column] != "X":
+                    continue
+                has_ship_above = row > 0 and board[row - 1][column] == "X"
+                has_ship_left = column > 0 and board[row][column - 1] == "X"
+                if not has_ship_above and not has_ship_left:
+                    ship_count += 1
+
+        return ship_count

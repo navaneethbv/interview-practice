@@ -1,7 +1,12 @@
 class Solution:
     def isIsomorphic(self, s, t):
-        forward={}; backward={}
-        for a,b in zip(s,t):
-            if a in forward and forward[a]!=b or b in backward and backward[b]!=a: return False
-            forward[a]=b; backward[b]=a
+        source_to_target = {}
+        target_to_source = {}
+        for source, target in zip(s, t):
+            if source in source_to_target and source_to_target[source] != target:
+                return False
+            if target in target_to_source and target_to_source[target] != source:
+                return False
+            source_to_target[source] = target
+            target_to_source[target] = source
         return True

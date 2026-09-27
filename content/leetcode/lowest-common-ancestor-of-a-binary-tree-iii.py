@@ -1,7 +1,8 @@
 class Solution:
     def lowestCommonAncestor(self, p, q):
-        a,b=p,q
-        while a is not b:
-            a=a.parent if a else q
-            b=b.parent if b else p
-        return a
+        first = p
+        second = q
+        while first is not second:
+            first = first.parent if first is not None else q
+            second = second.parent if second is not None else p
+        return first

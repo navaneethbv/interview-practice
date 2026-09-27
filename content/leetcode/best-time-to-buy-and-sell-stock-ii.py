@@ -1,3 +1,8 @@
 class Solution:
     def maxProfit(self, prices):
-        return sum(max(0,b-a) for a,b in zip(prices,prices[1:]))
+        total_profit = 0
+        for day in range(1, len(prices)):
+            price_change = prices[day] - prices[day - 1]
+            if price_change > 0:
+                total_profit += price_change
+        return total_profit

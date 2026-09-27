@@ -1,7 +1,16 @@
 class Solution:
     def closestValue(self, root, target):
-        best=root.val
-        while root:
-            if (abs(root.val-target),root.val)<(abs(best-target),best): best=root.val
-            root=root.left if target<root.val else root.right
-        return best
+        best_value = root.val
+        current = root
+        while current is not None:
+            current_distance = abs(current.val - target)
+            best_distance = abs(best_value - target)
+            if current_distance < best_distance or (
+                current_distance == best_distance and current.val < best_value
+            ):
+                best_value = current.val
+            if target < current.val:
+                current = current.left
+            else:
+                current = current.right
+        return best_value

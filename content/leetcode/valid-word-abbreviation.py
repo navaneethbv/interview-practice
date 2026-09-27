@@ -1,20 +1,35 @@
 class Solution:
     def validWordAbbreviation(self, word, abbr):
-        i=j=0
-        while j<len(abbr):
-            if abbr[j]=='0': return False
-            if abbr[j].isdigit():
-                count,j=self._number(abbr,j); i+=count
-            elif i>=len(word) or word[i]!=abbr[j]:
+        word_index = 0
+        abbreviation_index = 0
+
+        while abbreviation_index < len(abbr):
+            character = abbr[abbreviation_index]
+            if character == "0":
                 return False
+
+            if character.isdigit():
+                skipped, abbreviation_index = self._read_number(
+                    abbr,
+                    abbreviation_index,
+                )
+                word_index += skipped
             else:
-                i+=1; j+=1
-            if i>len(word): return False
-        return i==len(word)
+                if word_index >= len(word) or word[word_index] != character:
+                    return False
+                word_index += 1
+                abbreviation_index += 1
+
+            if word_index > len(word):
+                return False
+
+        return word_index == len(word)
 
     @staticmethod
-    def _number(abbr, j):
-        """Reads the skip count starting at j; returns it and the index after it."""
-        count=0
-        while j<len(abbr) and abbr[j].isdigit(): count=count*10+int(abbr[j]); j+=1
-        return count,j
+    def _read_number(abbr, start):
+        count = 0
+        index = start
+        while index < len(abbr) and abbr[index].isdigit():
+            count = count * 10 + int(abbr[index])
+            index += 1
+        return count, index

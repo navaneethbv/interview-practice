@@ -1,8 +1,17 @@
 from collections import Counter
+
+
 class Solution:
     def numFriendRequests(self, ages):
-        counts=Counter(ages);out=0
-        for a,na in counts.items():
-            for b,nb in counts.items():
-                if b>a/2+7 and b<=a and not(b>100 and a<100):out+=na*(nb-(a==b))
-        return out
+        counts = Counter(ages)
+        total = 0
+        for sender_age, sender_count in counts.items():
+            for recipient_age, recipient_count in counts.items():
+                if self._can_request(sender_age, recipient_age):
+                    eligible = recipient_count - (sender_age == recipient_age)
+                    total += sender_count * eligible
+        return total
+
+    @staticmethod
+    def _can_request(sender_age, recipient_age):
+        return 2 * recipient_age > sender_age + 14 and recipient_age <= sender_age

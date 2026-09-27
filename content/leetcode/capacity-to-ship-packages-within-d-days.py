@@ -1,11 +1,22 @@
 class Solution:
     def shipWithinDays(self, weights, days):
-        low,high=max(weights),sum(weights)
-        while low<high:
-            cap=(low+high)//2;used=1;load=0
-            for weight in weights:
-                if load+weight>cap:used+=1;load=0
-                load+=weight
-            if used<=days:high=cap
-            else:low=cap+1
+        low = max(weights)
+        high = sum(weights)
+        while low < high:
+            capacity = (low + high) // 2
+            if self._days_needed(weights, capacity) <= days:
+                high = capacity
+            else:
+                low = capacity + 1
         return low
+
+    @staticmethod
+    def _days_needed(weights, capacity):
+        used = 1
+        load = 0
+        for weight in weights:
+            if load + weight > capacity:
+                used += 1
+                load = 0
+            load += weight
+        return used

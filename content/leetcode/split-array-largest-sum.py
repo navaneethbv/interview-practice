@@ -1,11 +1,28 @@
 class Solution:
     def splitArray(self, nums, k):
-        left,right=max(nums),sum(nums)
-        while left<right:
-            middle=(left+right)//2; parts=1; total=0
-            for value in nums:
-                if total+value>middle: parts+=1; total=0
-                total+=value
-            if parts<=k: right=middle
-            else: left=middle+1
+        left = max(nums)
+        right = sum(nums)
+
+        while left < right:
+            limit = (left + right) // 2
+            parts = self._required_parts(nums, limit)
+
+            if parts <= k:
+                right = limit
+            else:
+                left = limit + 1
+
         return left
+
+    @staticmethod
+    def _required_parts(nums, limit):
+        parts = 1
+        current_sum = 0
+
+        for value in nums:
+            if current_sum + value > limit:
+                parts += 1
+                current_sum = 0
+            current_sum += value
+
+        return parts

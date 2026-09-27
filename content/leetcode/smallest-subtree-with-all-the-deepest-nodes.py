@@ -1,8 +1,14 @@
 class Solution:
     def subtreeWithAllDeepest(self, root):
-        def visit(node):
-            if not node:return 0,None
-            a,left=visit(node.left);b,right=visit(node.right)
-            if a==b:return a+1,node
-            return (a+1,left) if a>b else (b+1,right)
-        return visit(root)[1]
+        return self._visit(root)[1]
+
+    def _visit(self, node):
+        if node is None:
+            return 0, None
+        left_depth, left_root = self._visit(node.left)
+        right_depth, right_root = self._visit(node.right)
+        if left_depth == right_depth:
+            return left_depth + 1, node
+        if left_depth > right_depth:
+            return left_depth + 1, left_root
+        return right_depth + 1, right_root

@@ -1,10 +1,21 @@
 class Solution:
     def exclusiveTime(self, n, logs):
-        out=[0]*n;stack=[];previous=0
+        durations = [0] * n
+        call_stack = []
+        previous_time = 0
+
         for log in logs:
-            identity,event,time=log.split(':');identity,time=int(identity),int(time)
-            if event=='start':
-                if stack:out[stack[-1]]+=time-previous
-                stack.append(identity);previous=time
-            else:out[stack.pop()]+=time-previous+1;previous=time+1
-        return out
+            function_id, event, timestamp = log.split(":")
+            function_id = int(function_id)
+            timestamp = int(timestamp)
+
+            if event == "start":
+                if call_stack:
+                    durations[call_stack[-1]] += timestamp - previous_time
+                call_stack.append(function_id)
+                previous_time = timestamp
+            else:
+                durations[call_stack.pop()] += timestamp - previous_time + 1
+                previous_time = timestamp + 1
+
+        return durations

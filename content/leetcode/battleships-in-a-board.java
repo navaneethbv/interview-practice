@@ -1,3 +1,20 @@
 class Solution {
-public int countBattleships(char[][] board) {int count=0;for(int r=0;r<board.length;r++) for(int c=0;c<board[0].length;c++) if(board[r][c]=='X'&&(r==0||board[r-1][c]!='X')&&(c==0||board[r][c-1]!='X')) count++;return count;}
+    public int countBattleships(char[][] board) {
+        int shipCount = 0;
+
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                if (board[row][column] != 'X') {
+                    continue;
+                }
+                boolean hasShipAbove = row > 0 && board[row - 1][column] == 'X';
+                boolean hasShipLeft = column > 0 && board[row][column - 1] == 'X';
+                if (!hasShipAbove && !hasShipLeft) {
+                    shipCount++;
+                }
+            }
+        }
+
+        return shipCount;
+    }
 }

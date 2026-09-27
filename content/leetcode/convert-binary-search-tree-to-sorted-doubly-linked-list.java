@@ -1,13 +1,34 @@
 class Solution {
     public Node treeToDoublyList(Node root) {
-        if(root==null)return null;
-        Deque<Node> stack=new ArrayDeque<>();Node node=root,first=null,previous=null;
-        while(node!=null || !stack.isEmpty()){
-            while(node!=null){stack.push(node);node=node.left;}
-            node=stack.pop();Node right=node.right;
-            if(previous!=null){previous.right=node;node.left=previous;}else first=node;
-            previous=node;node=right;
+        if (root == null) {
+            return null;
         }
-        previous.right=first;first.left=previous;return first;
+
+        Deque<Node> stack = new ArrayDeque<>();
+        Node current = root;
+        Node first = null;
+        Node previous = null;
+
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+            Node nextTreeNode = current.right;
+            if (previous == null) {
+                first = current;
+            } else {
+                previous.right = current;
+                current.left = previous;
+            }
+            previous = current;
+            current = nextTreeNode;
+        }
+
+        previous.right = first;
+        first.left = previous;
+        return first;
     }
 }

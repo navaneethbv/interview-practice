@@ -1,7 +1,14 @@
 class Solution:
     def maxProfit(self, prices):
-        buy1=buy2=float('-inf'); sell1=sell2=0
+        first_buy = float("-inf")
+        first_sell = 0
+        second_buy = float("-inf")
+        second_sell = 0
+
         for price in prices:
-            buy1=max(buy1,-price); sell1=max(sell1,buy1+price)
-            buy2=max(buy2,sell1-price); sell2=max(sell2,buy2+price)
-        return sell2
+            first_buy = max(first_buy, -price)
+            first_sell = max(first_sell, first_buy + price)
+            second_buy = max(second_buy, first_sell - price)
+            second_sell = max(second_sell, second_buy + price)
+
+        return second_sell

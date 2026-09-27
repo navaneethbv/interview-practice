@@ -1,7 +1,8 @@
 class Solution:
     def getIntersectionNode(self, headA, headB):
-        a,b=headA,headB
-        while a is not b:
-            a=a.next if a else headB
-            b=b.next if b else headA
-        return a
+        pointer_a = headA
+        pointer_b = headB
+        while pointer_a is not pointer_b:
+            pointer_a = headB if pointer_a is None else pointer_a.next
+            pointer_b = headA if pointer_b is None else pointer_b.next
+        return pointer_a

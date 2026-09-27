@@ -1,4 +1,53 @@
 class Solution {
-private int sort(int[] a,int l,int r) {if(r-l<2) return 0;int m=(l+r)/2,count=sort(a,l,m)+sort(a,m,r),j=m;for(int i=l;i<m;i++) {while(j<r&&(long)a[i]>2L*a[j]) j++;count+=j-m;}int[] out=new int[r-l];int i=l,k=0;j=m;while(i<m&&j<r) out[k++]=a[i]<=a[j]?a[i++]:a[j++];while(i<m) out[k++]=a[i++];while(j<r) out[k++]=a[j++];System.arraycopy(out,0,a,l,out.length);return count;}
-public int reversePairs(int[] nums) {return sort(nums,0,nums.length);}
+    public int reversePairs(int[] nums) {
+        return sortAndCount(nums, 0, nums.length);
+    }
+
+    private int sortAndCount(int[] nums, int start, int end) {
+        if (end - start < 2) {
+            return 0;
+        }
+
+        int middle = start + (end - start) / 2;
+        int count = sortAndCount(nums, start, middle)
+                + sortAndCount(nums, middle, end);
+        count += countCrossPairs(nums, start, middle, end);
+        merge(nums, start, middle, end);
+        return count;
+    }
+
+    private int countCrossPairs(int[] nums, int start, int middle, int end) {
+        int count = 0;
+        int rightIndex = middle;
+        for (int leftIndex = start; leftIndex < middle; leftIndex++) {
+            while (rightIndex < end
+                    && (long) nums[leftIndex] > 2L * nums[rightIndex]) {
+                rightIndex++;
+            }
+            count += rightIndex - middle;
+        }
+        return count;
+    }
+
+    private void merge(int[] nums, int start, int middle, int end) {
+        int[] merged = new int[end - start];
+        int leftIndex = start;
+        int rightIndex = middle;
+        int outputIndex = 0;
+
+        while (leftIndex < middle && rightIndex < end) {
+            if (nums[leftIndex] <= nums[rightIndex]) {
+                merged[outputIndex++] = nums[leftIndex++];
+            } else {
+                merged[outputIndex++] = nums[rightIndex++];
+            }
+        }
+        while (leftIndex < middle) {
+            merged[outputIndex++] = nums[leftIndex++];
+        }
+        while (rightIndex < end) {
+            merged[outputIndex++] = nums[rightIndex++];
+        }
+        System.arraycopy(merged, 0, nums, start, merged.length);
+    }
 }

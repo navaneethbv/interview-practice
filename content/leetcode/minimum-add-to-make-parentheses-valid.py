@@ -1,8 +1,12 @@
 class Solution:
     def minAddToMakeValid(self, s):
-        opening=missing=0
-        for c in s:
-            if c=='(':opening+=1
-            elif opening:opening-=1
-            else:missing+=1
-        return opening+missing
+        unmatched_open = 0
+        missing_open = 0
+        for character in s:
+            if character == '(':
+                unmatched_open += 1
+            elif unmatched_open:
+                unmatched_open -= 1
+            else:
+                missing_open += 1
+        return unmatched_open + missing_open

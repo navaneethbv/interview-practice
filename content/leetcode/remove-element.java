@@ -1,3 +1,12 @@
 class Solution {
-public int removeElement(int[] nums,int val) {int k=0;for(int n:nums) if(n!=val) nums[k++]=n;return k;}
+    public int removeElement(int[] nums, int val) {
+        int writeIndex = 0;
+        for (int value : nums) {
+            if (value != val) {
+                nums[writeIndex] = value;
+                writeIndex++;
+            }
+        }
+        return writeIndex;
+    }
 }

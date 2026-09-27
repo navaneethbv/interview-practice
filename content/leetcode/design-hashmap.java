@@ -1,1 +1,40 @@
-class MyHashMap {List<List<int[]>>buckets=new ArrayList<>();public MyHashMap(){for(int i=0;i<1009;i++)buckets.add(new ArrayList<>());}public void put(int key,int value){List<int[]>b=buckets.get(key%1009);for(int[]p:b)if(p[0]==key){p[1]=value;return;}b.add(new int[]{key,value});}public int get(int key){for(int[]p:buckets.get(key%1009))if(p[0]==key)return p[1];return -1;}public void remove(int key){List<int[]>b=buckets.get(key%1009);for(int i=0;i<b.size();i++)if(b.get(i)[0]==key){b.remove(i);return;}}}
+class MyHashMap {
+    private static final int BUCKET_COUNT = 1009;
+    private final List<List<int[]>> buckets = new ArrayList<>();
+
+    public MyHashMap() {
+        for (int index = 0; index < BUCKET_COUNT; index++) {
+            buckets.add(new ArrayList<>());
+        }
+    }
+
+    public void put(int key, int value) {
+        List<int[]> bucket = buckets.get(key % BUCKET_COUNT);
+        for (int[] pair : bucket) {
+            if (pair[0] == key) {
+                pair[1] = value;
+                return;
+            }
+        }
+        bucket.add(new int[]{key, value});
+    }
+
+    public int get(int key) {
+        for (int[] pair : buckets.get(key % BUCKET_COUNT)) {
+            if (pair[0] == key) {
+                return pair[1];
+            }
+        }
+        return -1;
+    }
+
+    public void remove(int key) {
+        List<int[]> bucket = buckets.get(key % BUCKET_COUNT);
+        for (int index = 0; index < bucket.size(); index++) {
+            if (bucket.get(index)[0] == key) {
+                bucket.remove(index);
+                return;
+            }
+        }
+    }
+}

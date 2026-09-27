@@ -1,14 +1,32 @@
 class Solution {
     public Node connect(Node root) {
-        Queue<Node> q=new ArrayDeque<>();if(root!=null)q.add(root);
-        while(!q.isEmpty()) {
-            Node previous=null;int size=q.size();
-            for(int i=0;i<size;i++) {
-                Node node=q.remove();if(previous!=null)previous.next=node;previous=node;
-                if(node.left!=null)q.add(node.left);if(node.right!=null)q.add(node.right);
-            }
-            previous.next=null;
+        if (root == null) {
+            return null;
+        }
+        root.next = null;
+        Node levelStart = root;
+        while (levelStart != null) {
+            levelStart = connectLevel(levelStart);
         }
         return root;
+    }
+
+    private Node connectLevel(Node levelStart) {
+        Node dummy = new Node(0);
+        Node tail = dummy;
+        Node current = levelStart;
+        while (current != null) {
+            if (current.left != null) {
+                tail.next = current.left;
+                tail = tail.next;
+            }
+            if (current.right != null) {
+                tail.next = current.right;
+                tail = tail.next;
+            }
+            current = current.next;
+        }
+        tail.next = null;
+        return dummy.next;
     }
 }
