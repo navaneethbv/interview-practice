@@ -1,13 +1,23 @@
 from collections import deque
+
+
 class Solution:
     def levelOrderBottom(self, root):
-        if not root:return []
-        q=deque([root]);out=[]
-        while q:
-            row=[]
-            for _ in range(len(q)):
-                node=q.popleft();row.append(node.val)
-                if node.left:q.append(node.left)
-                if node.right:q.append(node.right)
-            out.append(row)
-        return out[::-1]
+        if root is None:
+            return []
+        queue = deque([root])
+        levels = []
+        while queue:
+            levels.append(self._next_level(queue))
+        return levels[::-1]
+
+    def _next_level(self, queue):
+        values = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            values.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return values

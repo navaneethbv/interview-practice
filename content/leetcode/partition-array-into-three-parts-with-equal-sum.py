@@ -1,9 +1,14 @@
 class Solution:
     def canThreePartsEqualSum(self, arr):
-        total=sum(arr)
-        if total%3:return False
-        target=total//3;partial=parts=0
+        total = sum(arr)
+        if total % 3 != 0:
+            return False
+        target = total // 3
+        parts = 0
+        partial = 0
         for value in arr:
-            partial+=value
-            if partial==target:parts+=1;partial=0
-        return parts>=3
+            partial += value
+            if partial == target:
+                parts += 1
+                partial = 0
+        return parts >= 3

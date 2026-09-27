@@ -1,3 +1,11 @@
 class Solution {
-public String largestOddNumber(String num){for(int i=num.length()-1;i>=0;i--)if((num.charAt(i)-'0')%2==1)return num.substring(0,i+1);return "";}
+    public String largestOddNumber(String num) {
+        for (int index = num.length() - 1; index >= 0; index--) {
+            int digit = num.charAt(index) - '0';
+            if (digit % 2 == 1) {
+                return num.substring(0, index + 1);
+            }
+        }
+        return "";
+    }
 }

@@ -1,20 +1,34 @@
-NEG=-10**15
+NEGATIVE = -10**15
+
+
 class Solution:
- def maximumAmount(self,coins):
-  m,n=len(coins),len(coins[0]);dp=[[[NEG]*3 for _ in range(n)] for _ in range(m)]
-  for i in range(m):
-   for j in range(n):
-    for used in range(3):self._enter(coins,dp,i,j,used)
-  return max(dp[-1][-1])
+    def maximumAmount(self, coins):
+        rows = len(coins)
+        columns = len(coins[0])
+        dp = [[[NEGATIVE] * 3 for _ in range(columns)] for _ in range(rows)]
+        for row in range(rows):
+            for column in range(columns):
+                for skipped in range(3):
+                    self._enter_cell(coins, dp, row, column, skipped)
+        return max(dp[-1][-1])
 
- def _enter(self,coins,dp,i,j,used):
-  """Enters (i,j) having neutralized `used` robbers; a robber here may be neutralized too."""
-  v=coins[i][j];prev=self._best_before(dp,i,j,used)
-  dp[i][j][used]=max(dp[i][j][used],prev+v)
-  if v<0 and used<2:dp[i][j][used+1]=max(dp[i][j][used+1],prev)
+    def _enter_cell(self, coins, dp, row, column, skipped):
+        previous = self._best_previous(dp, row, column, skipped)
+        value = coins[row][column]
+        dp[row][column][skipped] = max(
+            dp[row][column][skipped], previous + value
+        )
+        if value < 0 and skipped < 2:
+            dp[row][column][skipped + 1] = max(
+                dp[row][column][skipped + 1], previous
+            )
 
- def _best_before(self,dp,i,j,used):
-  if i==j==0:return 0 if used==0 else NEG
-  up=dp[i-1][j][used] if i else NEG
-  left=dp[i][j-1][used] if j else NEG
-  return max(up,left)
+    def _best_previous(self, dp, row, column, skipped):
+        if row == 0 and column == 0:
+            return 0 if skipped == 0 else NEGATIVE
+        best = NEGATIVE
+        if row > 0:
+            best = max(best, dp[row - 1][column][skipped])
+        if column > 0:
+            best = max(best, dp[row][column - 1][skipped])
+        return best

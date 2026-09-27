@@ -1,3 +1,55 @@
 class Solution {
-public int maximumAmount(int[][] coins){int m=coins.length,n=coins[0].length,neg=-1000000000;int[][][] d=new int[m][n][3];for(int[][] row:d)for(int[] cell:row)Arrays.fill(cell,neg);for(int i=0;i<m;i++)for(int j=0;j<n;j++)for(int u=0;u<3;u++){int p=i==0&&j==0&&u==0?0:Math.max(i>0?d[i-1][j][u]:neg,j>0?d[i][j-1][u]:neg);d[i][j][u]=Math.max(d[i][j][u],p+coins[i][j]);if(coins[i][j]<0&&u<2)d[i][j][u+1]=Math.max(d[i][j][u+1],p);}return Arrays.stream(d[m-1][n-1]).max().getAsInt();}
+    private static final int NEGATIVE = -1_000_000_000;
+
+    public int maximumAmount(int[][] coins) {
+        int rows = coins.length;
+        int columns = coins[0].length;
+        int[][][] dp = new int[rows][columns][3];
+        fillWithNegative(dp);
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                for (int skipped = 0; skipped < 3; skipped++) {
+                    enterCell(coins, dp, row, column, skipped);
+                }
+            }
+        }
+        return maximum(dp[rows - 1][columns - 1]);
+    }
+
+    private void fillWithNegative(int[][][] dp) {
+        for (int[][] row : dp) {
+            for (int[] cell : row) {
+                Arrays.fill(cell, NEGATIVE);
+            }
+        }
+    }
+
+    private void enterCell(int[][] coins, int[][][] dp, int row, int column,
+            int skipped) {
+        int previous = bestPrevious(dp, row, column, skipped);
+        int value = coins[row][column];
+        dp[row][column][skipped] = Math.max(dp[row][column][skipped], previous + value);
+        if (value < 0 && skipped < 2) {
+            dp[row][column][skipped + 1] = Math.max(
+                    dp[row][column][skipped + 1], previous);
+        }
+    }
+
+    private int bestPrevious(int[][][] dp, int row, int column, int skipped) {
+        if (row == 0 && column == 0) {
+            return skipped == 0 ? 0 : NEGATIVE;
+        }
+        int best = NEGATIVE;
+        if (row > 0) {
+            best = Math.max(best, dp[row - 1][column][skipped]);
+        }
+        if (column > 0) {
+            best = Math.max(best, dp[row][column - 1][skipped]);
+        }
+        return best;
+    }
+
+    private int maximum(int[] values) {
+        return Math.max(values[0], Math.max(values[1], values[2]));
+    }
 }

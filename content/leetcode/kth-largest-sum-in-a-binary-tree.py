@@ -1,12 +1,23 @@
 from collections import deque
+
+
 class Solution:
     def kthLargestLevelSum(self, root, k):
-        q=deque([root]);sums=[]
-        while q:
-            total=0
-            for _ in range(len(q)):
-                node=q.popleft();total+=node.val
-                if node.left:q.append(node.left)
-                if node.right:q.append(node.right)
-            sums.append(total)
-        return sorted(sums,reverse=True)[k-1] if len(sums)>=k else -1
+        queue = deque([root])
+        level_sums = []
+        while queue:
+            level_sums.append(self._next_level(queue))
+        if len(level_sums) < k:
+            return -1
+        return sorted(level_sums, reverse=True)[k - 1]
+
+    def _next_level(self, queue):
+        total = 0
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            total += node.val
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return total
