@@ -1,3 +1,16 @@
 class Solution {
-public int minimumCost(int[] nums){int first=Integer.MAX_VALUE,second=Integer.MAX_VALUE;for(int i=1;i<nums.length;i++){int x=nums[i];if(x<first){second=first;first=x;}else if(x<second)second=x;}return nums[0]+first+second;}
+    public int minimumCost(int[] nums) {
+        int smallest = Integer.MAX_VALUE;
+        int secondSmallest = Integer.MAX_VALUE;
+        for (int index = 1; index < nums.length; index++) {
+            int value = nums[index];
+            if (value < smallest) {
+                secondSmallest = smallest;
+                smallest = value;
+            } else if (value < secondSmallest) {
+                secondSmallest = value;
+            }
+        }
+        return nums[0] + smallest + secondSmallest;
+    }
 }

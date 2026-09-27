@@ -1,3 +1,41 @@
 class Solution {
-boolean possible(int k,int[] tasks,int[] workers,int pills,int strength){ArrayDeque<Integer> q=new ArrayDeque<>();int j=0;for(int i=workers.length-k;i<workers.length;i++){int w=workers[i];while(j<k&&(long)tasks[j]<= (long)w+strength)q.addLast(tasks[j++]);if(q.isEmpty())return false;if(q.peekFirst()<=w)q.removeFirst();else if(pills>0){pills--;q.removeLast();}else return false;}return true;}public int maxTaskAssign(int[] tasks,int[] workers,int pills,int strength){Arrays.sort(tasks);Arrays.sort(workers);int l=0,r=Math.min(tasks.length,workers.length);while(l<r){int m=(l+r+1)/2;if(possible(m,tasks,workers,pills,strength))l=m;else r=m-1;}return l;}
+    private boolean possible(int taskCount, int[] tasks, int[] workers, int pills, int strength) {
+        ArrayDeque<Integer> candidates = new ArrayDeque<>();
+        int taskIndex = 0;
+        for (int workerIndex = workers.length - taskCount; workerIndex < workers.length; workerIndex++) {
+            int worker = workers[workerIndex];
+            while (taskIndex < taskCount && (long) tasks[taskIndex] <= (long) worker + strength) {
+                candidates.addLast(tasks[taskIndex]);
+                taskIndex++;
+            }
+            if (candidates.isEmpty()) {
+                return false;
+            }
+            if (candidates.peekFirst() <= worker) {
+                candidates.removeFirst();
+            } else if (pills > 0) {
+                pills--;
+                candidates.removeLast();
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int maxTaskAssign(int[] tasks, int[] workers, int pills, int strength) {
+        Arrays.sort(tasks);
+        Arrays.sort(workers);
+        int low = 0;
+        int high = Math.min(tasks.length, workers.length);
+        while (low < high) {
+            int middle = (low + high + 1) / 2;
+            if (possible(middle, tasks, workers, pills, strength)) {
+                low = middle;
+            } else {
+                high = middle - 1;
+            }
+        }
+        return low;
+    }
 }

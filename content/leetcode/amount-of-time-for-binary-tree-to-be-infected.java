@@ -1,3 +1,43 @@
 class Solution {
-public int amountOfTime(TreeNode root,int start){Map<Integer,List<Integer>> g=new HashMap<>();Deque<TreeNode> stack=new ArrayDeque<>();stack.push(root);while(!stack.isEmpty()){TreeNode node=stack.pop();g.computeIfAbsent(node.val,k->new ArrayList<>());for(TreeNode child:new TreeNode[]{node.left,node.right})if(child!=null){g.get(node.val).add(child.val);g.computeIfAbsent(child.val,k->new ArrayList<>()).add(node.val);stack.push(child);}}Set<Integer> seen=new HashSet<>();Deque<int[]> q=new ArrayDeque<>();q.add(new int[]{start,0});seen.add(start);int answer=0;while(!q.isEmpty()){int[] p=q.remove();answer=Math.max(answer,p[1]);for(int v:g.get(p[0]))if(seen.add(v))q.add(new int[]{v,p[1]+1});}return answer;}
+    public int amountOfTime(TreeNode root, int start) {
+        Map<Integer, List<Integer>> graph = buildGraph(root);
+        Set<Integer> seen = new HashSet<>();
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{start, 0});
+        seen.add(start);
+        int minutes = 0;
+        while (!queue.isEmpty()) {
+            int[] state = queue.remove();
+            minutes = Math.max(minutes, state[1]);
+            for (int neighbor : graph.get(state[0])) {
+                if (seen.add(neighbor)) {
+                    queue.add(new int[]{neighbor, state[1] + 1});
+                }
+            }
+        }
+        return minutes;
+    }
+
+    private Map<Integer, List<Integer>> buildGraph(TreeNode root) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            graph.computeIfAbsent(node.val, value -> new ArrayList<>());
+            addChild(graph, stack, node.val, node.left);
+            addChild(graph, stack, node.val, node.right);
+        }
+        return graph;
+    }
+
+    private void addChild(Map<Integer, List<Integer>> graph, Deque<TreeNode> stack,
+            int parent, TreeNode child) {
+        if (child == null) {
+            return;
+        }
+        graph.get(parent).add(child.val);
+        graph.computeIfAbsent(child.val, value -> new ArrayList<>()).add(parent);
+        stack.push(child);
+    }
 }

@@ -1,34 +1,61 @@
 class _RangeAddTree:
-    """Range add over positions 0..n-1, tracking min and max to find the leftmost zero."""
-    def __init__(self, n):
-        self.n=n;self.mn=[0]*(4*n);self.mx=[0]*(4*n);self.lazy=[0]*(4*n)
+    def __init__(self, size):
+        self.size = size
+        self.minimum = [0] * (4 * size)
+        self.maximum = [0] * (4 * size)
+        self.lazy = [0] * (4 * size)
 
-    def _apply(self, v, x):
-        self.mn[v]+=x;self.mx[v]+=x;self.lazy[v]+=x
+    def _apply(self, node, change):
+        self.minimum[node] += change
+        self.maximum[node] += change
+        self.lazy[node] += change
 
-    def _push(self, v):
-        if self.lazy[v]:self._apply(v*2,self.lazy[v]);self._apply(v*2+1,self.lazy[v]);self.lazy[v]=0
+    def _push(self, node):
+        if self.lazy[node] == 0:
+            return
+        change = self.lazy[node]
+        self._apply(node * 2, change)
+        self._apply(node * 2 + 1, change)
+        self.lazy[node] = 0
 
-    def update(self, v, l, r, a, b, x):
-        if a<=l and r<=b:self._apply(v,x);return
-        self._push(v);m=(l+r)//2
-        if a<=m:self.update(v*2,l,m,a,b,x)
-        if b>m:self.update(v*2+1,m+1,r,a,b,x)
-        self.mn[v]=min(self.mn[v*2],self.mn[v*2+1]);self.mx[v]=max(self.mx[v*2],self.mx[v*2+1])
+    def update(self, node, left, right, update_left, update_right, change):
+        if update_left <= left and right <= update_right:
+            self._apply(node, change)
+            return
+        self._push(node)
+        middle = (left + right) // 2
+        if update_left <= middle:
+            self.update(node * 2, left, middle, update_left, update_right, change)
+        if update_right > middle:
+            self.update(node * 2 + 1, middle + 1, right, update_left, update_right, change)
+        self.minimum[node] = min(self.minimum[node * 2], self.minimum[node * 2 + 1])
+        self.maximum[node] = max(self.maximum[node * 2], self.maximum[node * 2 + 1])
 
-    def first_zero(self, v, l, r, end):
-        """Leftmost index at or before end holding zero, or n."""
-        if l>end or self.mn[v]>0 or self.mx[v]<0:return self.n
-        if l==r:return l
-        self._push(v);m=(l+r)//2;ans=self.first_zero(v*2,l,m,end)
-        return ans if ans<self.n else self.first_zero(v*2+1,m+1,r,end)
+    def first_zero(self, node, left, right, end):
+        if left > end or self.minimum[node] > 0 or self.maximum[node] < 0:
+            return self.size
+        if left == right:
+            return left
+        self._push(node)
+        middle = (left + right) // 2
+        candidate = self.first_zero(node * 2, left, middle, end)
+        if candidate < self.size:
+            return candidate
+        return self.first_zero(node * 2 + 1, middle + 1, right, end)
+
 
 class Solution:
- def longestBalanced(self,nums):
-  n=len(nums);tree=_RangeAddTree(n);last={};ans=0
-  for i,x in enumerate(nums):
-   # Each distinct value counts once per start: adjust starts since its previous occurrence.
-   tree.update(1,0,n-1,last.get(x,-1)+1,i,1 if x%2==0 else -1);last[x]=i
-   start=tree.first_zero(1,0,n-1,i)
-   if start<=i:ans=max(ans,i-start+1)
-  return ans
+    def longestBalanced(self, nums):
+        size = len(nums)
+        tree = _RangeAddTree(size)
+        last_seen = {}
+        answer = 0
+        for index, value in enumerate(nums):
+            change = 1 if value % 2 == 0 else -1
+            first_start = last_seen.get(value, -1) + 1
+            tree.update(1, 0, size - 1, first_start, index, change)
+            last_seen[value] = index
+            start = tree.first_zero(1, 0, size - 1, index)
+            if start <= index:
+                answer = max(answer, index - start + 1)
+        return answer

@@ -1,3 +1,75 @@
 class Solution {
-int[] mn,mx,lazy;int n;void apply(int v,int x){mn[v]+=x;mx[v]+=x;lazy[v]+=x;}void push(int v){if(lazy[v]!=0){apply(v*2,lazy[v]);apply(v*2+1,lazy[v]);lazy[v]=0;}}void update(int v,int l,int r,int a,int b,int x){if(a<=l&&r<=b){apply(v,x);return;}push(v);int m=(l+r)/2;if(a<=m)update(v*2,l,m,a,b,x);if(b>m)update(v*2+1,m+1,r,a,b,x);mn[v]=Math.min(mn[v*2],mn[v*2+1]);mx[v]=Math.max(mx[v*2],mx[v*2+1]);}int first(int v,int l,int r,int end){if(l>end||mn[v]>0||mx[v]<0)return n;if(l==r)return l;push(v);int m=(l+r)/2,a=first(v*2,l,m,end);return a<n?a:first(v*2+1,m+1,r,end);}public int longestBalanced(int[] nums){n=nums.length;mn=new int[4*n];mx=new int[4*n];lazy=new int[4*n];Map<Integer,Integer> last=new HashMap<>();int ans=0;for(int i=0;i<n;i++){int x=nums[i];update(1,0,n-1,last.getOrDefault(x,-1)+1,i,x%2==0?1:-1);last.put(x,i);int start=first(1,0,n-1,i);if(start<=i)ans=Math.max(ans,i-start+1);}return ans;}
+    private int[] minimum;
+    private int[] maximum;
+    private int[] lazy;
+    private int size;
+
+    private void apply(int node, int change) {
+        minimum[node] += change;
+        maximum[node] += change;
+        lazy[node] += change;
+    }
+
+    private void push(int node) {
+        if (lazy[node] == 0) {
+            return;
+        }
+        apply(node * 2, lazy[node]);
+        apply(node * 2 + 1, lazy[node]);
+        lazy[node] = 0;
+    }
+
+    private void update(int node, int left, int right, int updateLeft, int updateRight, int change) {
+        if (updateLeft <= left && right <= updateRight) {
+            apply(node, change);
+            return;
+        }
+        push(node);
+        int middle = (left + right) / 2;
+        if (updateLeft <= middle) {
+            update(node * 2, left, middle, updateLeft, updateRight, change);
+        }
+        if (updateRight > middle) {
+            update(node * 2 + 1, middle + 1, right, updateLeft, updateRight, change);
+        }
+        minimum[node] = Math.min(minimum[node * 2], minimum[node * 2 + 1]);
+        maximum[node] = Math.max(maximum[node * 2], maximum[node * 2 + 1]);
+    }
+
+    private int firstZero(int node, int left, int right, int end) {
+        if (left > end || minimum[node] > 0 || maximum[node] < 0) {
+            return size;
+        }
+        if (left == right) {
+            return left;
+        }
+        push(node);
+        int middle = (left + right) / 2;
+        int candidate = firstZero(node * 2, left, middle, end);
+        if (candidate < size) {
+            return candidate;
+        }
+        return firstZero(node * 2 + 1, middle + 1, right, end);
+    }
+
+    public int longestBalanced(int[] nums) {
+        size = nums.length;
+        minimum = new int[4 * size];
+        maximum = new int[4 * size];
+        lazy = new int[4 * size];
+        Map<Integer, Integer> lastSeen = new HashMap<>();
+        int answer = 0;
+        for (int index = 0; index < size; index++) {
+            int value = nums[index];
+            int change = value % 2 == 0 ? 1 : -1;
+            int firstStart = lastSeen.getOrDefault(value, -1) + 1;
+            update(1, 0, size - 1, firstStart, index, change);
+            lastSeen.put(value, index);
+            int start = firstZero(1, 0, size - 1, index);
+            if (start <= index) {
+                answer = Math.max(answer, index - start + 1);
+            }
+        }
+        return answer;
+    }
 }
