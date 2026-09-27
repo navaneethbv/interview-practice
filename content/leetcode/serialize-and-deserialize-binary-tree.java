@@ -1,13 +1,16 @@
 class Codec {
     public String serialize(TreeNode root) {
-        if (root == null) return "#";
+        if (root == null) {
+            return "#";
+        }
         StringBuilder result = new StringBuilder();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             TreeNode node = queue.remove();
-            if (node == null) result.append("#,");
-            else {
+            if (node == null) {
+                result.append("#,");
+            } else {
                 result.append(node.val).append(',');
                 queue.add(node.left);
                 queue.add(node.right);
@@ -17,23 +20,25 @@ class Codec {
     }
     public TreeNode deserialize(String data) {
         String[] values = data.split(",");
-        if (values[0].equals("#")) return null;
+        if (values[0].equals("#")) {
+            return null;
+        }
         TreeNode root = new TreeNode(Integer.parseInt(values[0]));
         Queue<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
-        int i = 1;
+        int position = 1;
         while (!queue.isEmpty()) {
             TreeNode node = queue.remove();
-            if (!values[i].equals("#")) {
-                node.left = new TreeNode(Integer.parseInt(values[i]));
+            if (!values[position].equals("#")) {
+                node.left = new TreeNode(Integer.parseInt(values[position]));
                 queue.add(node.left);
             }
-            i++;
-            if (!values[i].equals("#")) {
-                node.right = new TreeNode(Integer.parseInt(values[i]));
+            position++;
+            if (!values[position].equals("#")) {
+                node.right = new TreeNode(Integer.parseInt(values[position]));
                 queue.add(node.right);
             }
-            i++;
+            position++;
         }
         return root;
     }

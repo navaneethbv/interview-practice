@@ -1,11 +1,22 @@
 class Solution:
-    def isSubtree(self,root,subRoot):
-        def same(a,b):
-            if not a or not b: return a is b
-            return a.val==b.val and same(a.left,b.left) and same(a.right,b.right)
-        stack=[root]
+    def isSubtree(self, root, subRoot):
+        stack = [root]
         while stack:
-            n=stack.pop()
-            if same(n,subRoot): return True
-            stack.extend(c for c in (n.left,n.right) if c)
+            node = stack.pop()
+            if self._same(node, subRoot):
+                return True
+            stack.extend(child for child in (node.left, node.right) if child)
         return False
+
+    def _same(self, first, second):
+        pairs = [(first, second)]
+        while pairs:
+            first, second = pairs.pop()
+            if not first or not second:
+                if first is not second:
+                    return False
+                continue
+            if first.val != second.val:
+                return False
+            pairs.extend([(first.left, second.left), (first.right, second.right)])
+        return True

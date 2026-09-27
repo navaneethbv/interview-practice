@@ -1,25 +1,58 @@
 class WordDictionary {
-    private static class Node {
-        Node[] children = new Node[26];
+    private static class TrieNode {
+        final TrieNode[] children = new TrieNode[26];
         boolean word;
     }
-    private final Node root = new Node();
+
+    private final TrieNode root = new TrieNode();
+
     public WordDictionary() {}
+
     public void addWord(String word) {
-        Node node = root;
-        for (char c : word.toCharArray()) {
-            if (node.children[c - 'a'] == null) node.children[c - 'a'] = new Node();
-            node = node.children[c - 'a'];
+        TrieNode node = root;
+        for (int index = 0; index < word.length(); index++) {
+            int letter = word.charAt(index) - 'a';
+            if (node.children[letter] == null) {
+                node.children[letter] = new TrieNode();
+            }
+            node = node.children[letter];
         }
         node.word = true;
     }
-    private boolean match(Node node, String word, int i) {
-        if (node == null) return false;
-        if (i == word.length()) return node.word;
-        char c = word.charAt(i);
-        if (c != '.') return match(node.children[c - 'a'], word, i + 1);
-        for (Node child : node.children) if (match(child, word, i + 1)) return true;
+
+    public boolean search(String word) {
+        List<TrieNode> nodes = List.of(root);
+        for (int index = 0; index < word.length(); index++) {
+            nodes = advance(nodes, word.charAt(index));
+        }
+        for (TrieNode node : nodes) {
+            if (node.word) {
+                return true;
+            }
+        }
         return false;
     }
-    public boolean search(String word) { return match(root, word, 0); }
+
+    private List<TrieNode> advance(List<TrieNode> nodes, char character) {
+        List<TrieNode> following = new ArrayList<>();
+        for (TrieNode node : nodes) {
+            if (character == '.') {
+                addChildren(node, following);
+            } else {
+                TrieNode child = node.children[character - 'a'];
+                if (child != null) {
+                    following.add(child);
+                }
+            }
+        }
+        return following;
+    }
+
+    private void addChildren(TrieNode node, List<TrieNode> following) {
+        for (TrieNode child : node.children) {
+            if (child != null) {
+                following.add(child);
+            }
+        }
+    }
 }
