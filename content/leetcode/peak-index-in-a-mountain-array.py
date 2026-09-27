@@ -1,8 +1,11 @@
 class Solution:
     def peakIndexInMountainArray(self, arr):
-        l,r=0,len(arr)-1
-        while l<r:
-            m=(l+r)//2
-            if arr[m]<arr[m+1]:l=m+1
-            else:r=m
-        return l
+        left = 0
+        right = len(arr) - 1
+        while left < right:
+            middle = (left + right) // 2
+            if arr[middle] < arr[middle + 1]:
+                left = middle + 1
+            else:
+                right = middle
+        return left

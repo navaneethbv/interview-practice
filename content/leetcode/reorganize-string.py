@@ -1,10 +1,20 @@
 from collections import Counter
 import heapq
+
+
 class Solution:
     def reorganizeString(self, s):
-        heap=[(-n,c) for c,n in Counter(s).items()];heapq.heapify(heap);previous=(0,'');out=[]
+        heap = [(-count, character) for character, count in Counter(s).items()]
+        heapq.heapify(heap)
+        previous_count = 0
+        previous_character = ""
+        output = []
         while heap:
-            count,c=heapq.heappop(heap);out.append(c)
-            if previous[0]<0:heapq.heappush(heap,previous)
-            previous=(count+1,c)
-        return ''.join(out) if len(out)==len(s) else ''
+            count, character = heapq.heappop(heap)
+            output.append(character)
+            if previous_count < 0:
+                heapq.heappush(heap, (previous_count, previous_character))
+            previous_count = count + 1
+            previous_character = character
+        result = "".join(output)
+        return result if len(result) == len(s) else ""

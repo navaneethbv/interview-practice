@@ -1,18 +1,32 @@
 class RangeModule:
-    def __init__(self):self.ranges=[]
-    def addRange(self,left,right):
-        out=[]
-        for a,b in self.ranges:
-            if b<left:out.append((a,b))
-            elif a>right:out.append((left,right));left,right=a,b
-            else:left=min(left,a);right=max(right,b)
-        out.append((left,right));self.ranges=out
-    def queryRange(self,left,right):return any(a<=left and right<=b for a,b in self.ranges)
-    def removeRange(self,left,right):
-        out=[]
-        for a,b in self.ranges:
-            if b<=left or a>=right:out.append((a,b))
+    def __init__(self):
+        self.ranges = []
+
+    def addRange(self, left, right):
+        merged = []
+        for start, end in self.ranges:
+            if end < left:
+                merged.append((start, end))
+            elif start > right:
+                merged.append((left, right))
+                left, right = start, end
             else:
-                if a<left:out.append((a,left))
-                if b>right:out.append((right,b))
-        self.ranges=out
+                left = min(left, start)
+                right = max(right, end)
+        merged.append((left, right))
+        self.ranges = merged
+
+    def queryRange(self, left, right):
+        return any(start <= left and right <= end for start, end in self.ranges)
+
+    def removeRange(self, left, right):
+        remaining = []
+        for start, end in self.ranges:
+            if end <= left or start >= right:
+                remaining.append((start, end))
+                continue
+            if start < left:
+                remaining.append((start, left))
+            if end > right:
+                remaining.append((right, end))
+        self.ranges = remaining

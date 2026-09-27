@@ -1,12 +1,49 @@
 class Solution {
-    private int matches(String a,String b){int n=0;for(int i=0;i<6;i++)if(a.charAt(i)==b.charAt(i))n++;return n;}
-    public void findSecretWord(String[] words,Master master){
-        List<String> possible=new ArrayList<>(Arrays.asList(words));
-        while(!possible.isEmpty()){
-            String chosen=possible.get(0);int best=Integer.MAX_VALUE;
-            for(String word:possible){int[] buckets=new int[7];for(String other:possible)buckets[matches(word,other)]++;int worst=0;for(int n:buckets)worst=Math.max(worst,n);if(worst<best){best=worst;chosen=word;}}
-            int count=master.guess(chosen);if(count==6)return;
-            List<String> next=new ArrayList<>();for(String other:possible)if(matches(chosen,other)==count)next.add(other);possible=next;
+    public void findSecretWord(String[] words, Master master) {
+        List<String> candidates = new ArrayList<>(Arrays.asList(words));
+        for (int attempt = 0; attempt < 10 && !candidates.isEmpty(); attempt++) {
+            String guess = chooseGuess(candidates);
+            int matches = master.guess(guess);
+            if (matches == 6) {
+                return;
+            }
+            List<String> nextCandidates = new ArrayList<>();
+            for (String candidate : candidates) {
+                if (countMatches(guess, candidate) == matches) {
+                    nextCandidates.add(candidate);
+                }
+            }
+            candidates = nextCandidates;
         }
+    }
+
+    private String chooseGuess(List<String> candidates) {
+        String bestGuess = candidates.get(0);
+        int smallestWorstGroup = candidates.size();
+        for (String guess : candidates) {
+            int[] groups = new int[7];
+            for (String candidate : candidates) {
+                groups[countMatches(guess, candidate)]++;
+            }
+            int worstGroup = 0;
+            for (int groupSize : groups) {
+                worstGroup = Math.max(worstGroup, groupSize);
+            }
+            if (worstGroup < smallestWorstGroup) {
+                smallestWorstGroup = worstGroup;
+                bestGuess = guess;
+            }
+        }
+        return bestGuess;
+    }
+
+    private int countMatches(String first, String second) {
+        int matches = 0;
+        for (int index = 0; index < first.length(); index++) {
+            if (first.charAt(index) == second.charAt(index)) {
+                matches++;
+            }
+        }
+        return matches;
     }
 }

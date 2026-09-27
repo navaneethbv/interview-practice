@@ -1,19 +1,21 @@
 class Solution:
     def findSecretWord(self, words, master):
-        possible=list(words)
-        while possible:
-            # Guess the word whose worst-case response leaves the fewest candidates.
-            worst={word:self._worst_bucket(word,possible) for word in possible}
-            word=min(possible,key=worst.__getitem__)
-            count=master.guess(word)
-            if count==6: return
-            possible=[other for other in possible if self._matches(word,other)==count]
+        candidates = words[:]
+        for _ in range(10):
+            best_word = candidates[0]
+            best_worst_group = len(candidates)
+            for word in candidates:
+                groups = [0] * 7
+                for candidate in candidates:
+                    groups[self._matches(word, candidate)] += 1
+                worst_group = max(groups)
+                if worst_group < best_worst_group:
+                    best_worst_group = worst_group
+                    best_word = word
+            matches = master.guess(best_word)
+            if matches == 6:
+                return
+            candidates = [word for word in candidates if self._matches(best_word, word) == matches]
 
-    @staticmethod
-    def _matches(a,b):
-        return sum(x==y for x,y in zip(a,b))
-
-    def _worst_bucket(self, word, candidates):
-        buckets=[0]*7
-        for other in candidates: buckets[self._matches(word,other)]+=1
-        return max(buckets)
+    def _matches(self, first, second):
+        return sum(left == right for left, right in zip(first, second))

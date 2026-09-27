@@ -1,11 +1,15 @@
-from collections import Counter
 class Solution:
     def totalFruit(self, fruits):
-        count=Counter();left=best=0
-        for right,x in enumerate(fruits):
-            count[x]+=1
-            while len(count)>2:
-                value=fruits[left];count[value]-=1;left+=1
-                if count[value]==0:del count[value]
-            best=max(best,right-left+1)
+        counts = {}
+        left = 0
+        best = 0
+        for right, fruit in enumerate(fruits):
+            counts[fruit] = counts.get(fruit, 0) + 1
+            while len(counts) > 2:
+                leaving = fruits[left]
+                counts[leaving] -= 1
+                left += 1
+                if counts[leaving] == 0:
+                    del counts[leaving]
+            best = max(best, right - left + 1)
         return best
