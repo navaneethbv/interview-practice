@@ -1,17 +1,19 @@
 class Solution:
     def insert(self, intervals, newInterval):
         result = []
-        start,end = newInterval
+        start, end = newInterval
         placed = False
-        for a,b in intervals:
-            if b < start:
-                result.append([a,b])
-            elif a > end:
+        for interval_start, interval_end in intervals:
+            if interval_end < start:
+                result.append([interval_start, interval_end])
+            elif interval_start > end:
                 if not placed:
-                    result.append([start,end]); placed = True
-                result.append([a,b])
+                    result.append([start, end])
+                    placed = True
+                result.append([interval_start, interval_end])
             else:
-                start,end = min(start,a),max(end,b)
+                start = min(start, interval_start)
+                end = max(end, interval_end)
         if not placed:
-            result.append([start,end])
+            result.append([start, end])
         return result

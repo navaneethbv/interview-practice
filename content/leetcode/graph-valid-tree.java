@@ -1,8 +1,41 @@
 class Solution {
-    private int find(int[] parent,int x) {while(parent[x]!=x) {parent[x]=parent[parent[x]];x=parent[x];}return x;}
-    public boolean validTree(int n,int[][] edges) {
-        int[] parent=new int[n];for(int i=0;i<n;i++) parent[i]=i;int count=n;
-        for(int[] edge:edges) {int a=find(parent,edge[0]),b=find(parent,edge[1]);if(a!=b) {parent[a]=b;count--;}}
-        return count==1 && edges.length==n-1;
+    public boolean validTree(int n, int[][] edges) {
+        int[] parent = new int[n];
+        int[] size = new int[n];
+        for (int vertex = 0; vertex < n; vertex++) {
+            parent[vertex] = vertex;
+            size[vertex] = 1;
+        }
+        int components = n;
+        for (int[] edge : edges) {
+            if (unite(parent, size, edge[0], edge[1])) {
+                components--;
+            }
+        }
+        return components == 1 && edges.length == n - 1;
+    }
+
+    private int find(int[] parent, int vertex) {
+        while (parent[vertex] != vertex) {
+            parent[vertex] = parent[parent[vertex]];
+            vertex = parent[vertex];
+        }
+        return vertex;
+    }
+
+    private boolean unite(int[] parent, int[] size, int first, int second) {
+        int firstRoot = find(parent, first);
+        int secondRoot = find(parent, second);
+        if (firstRoot == secondRoot) {
+            return false;
+        }
+        if (size[firstRoot] < size[secondRoot]) {
+            int saved = firstRoot;
+            firstRoot = secondRoot;
+            secondRoot = saved;
+        }
+        parent[secondRoot] = firstRoot;
+        size[firstRoot] += size[secondRoot];
+        return true;
     }
 }

@@ -4,5 +4,6 @@ class Solution:
         while head:
             following = head.next
             head.next = previous
-            previous,head = head,following
+            previous = head
+            head = following
         return previous
