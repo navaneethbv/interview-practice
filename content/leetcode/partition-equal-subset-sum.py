@@ -1,9 +1,11 @@
 class Solution:
     def canPartition(self, nums):
         total = sum(nums)
-        if total%2:
+        if total % 2:
             return False
-        bits = 1
+
+        target = total // 2
+        reachable_sums = 1
         for value in nums:
-            bits |= bits<<value
-        return bool(bits & (1<<(total//2)))
+            reachable_sums |= reachable_sums << value
+        return bool(reachable_sums & (1 << target))

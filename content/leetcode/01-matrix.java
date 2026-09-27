@@ -1,3 +1,45 @@
 class Solution {
-public int[][] updateMatrix(int[][] mat){int m=mat.length,n=mat[0].length;int[][]d=new int[m][n];Deque<int[]>q=new ArrayDeque<>();for(int r=0;r<m;r++)for(int c=0;c<n;c++){d[r][c]=mat[r][c]==0?0:-1;if(d[r][c]==0)q.add(new int[]{r,c});}int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();for(int k=0;k<4;k++){int a=p[0]+ds[k],b=p[1]+ds[k+1];if(a>=0&&a<m&&b>=0&&b<n&&d[a][b]<0){d[a][b]=d[p[0]][p[1]]+1;q.add(new int[]{a,b});}}}return d;}
+    public int[][] updateMatrix(int[][] mat) {
+        int rows = mat.length;
+        int columns = mat[0].length;
+        int[][] distance = new int[rows][columns];
+        Deque<int[]> queue = new ArrayDeque<>();
+
+        seedZeroCells(mat, distance, queue);
+
+        int[] rowSteps = {-1, 0, 1, 0};
+        int[] columnSteps = {0, 1, 0, -1};
+        while (!queue.isEmpty()) {
+            int[] cell = queue.remove();
+            for (int direction = 0; direction < 4; direction++) {
+                int neighborRow = cell[0] + rowSteps[direction];
+                int neighborColumn = cell[1] + columnSteps[direction];
+                if (isInside(neighborRow, neighborColumn, rows, columns)
+                        && distance[neighborRow][neighborColumn] == -1) {
+                    distance[neighborRow][neighborColumn] =
+                            distance[cell[0]][cell[1]] + 1;
+                    queue.add(new int[]{neighborRow, neighborColumn});
+                }
+            }
+        }
+        return distance;
+    }
+
+    private void seedZeroCells(int[][] mat, int[][] distance, Deque<int[]> queue) {
+        int rows = mat.length;
+        int columns = mat[0].length;
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                distance[row][column] = mat[row][column] == 0 ? 0 : -1;
+                if (distance[row][column] == 0) {
+                    queue.add(new int[]{row, column});
+                }
+            }
+        }
+
+    }
+
+    private boolean isInside(int row, int column, int rows, int columns) {
+        return row >= 0 && row < rows && column >= 0 && column < columns;
+    }
 }

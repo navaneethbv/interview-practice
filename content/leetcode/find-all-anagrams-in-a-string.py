@@ -1,16 +1,16 @@
-from collections import Counter
 class Solution:
     def findAnagrams(self, s, p):
-        need = Counter(p)
-        window = Counter()
-        result = []
-        for i,c in enumerate(s):
-            window[c] += 1
-            if i >= len(p):
-                old = s[i-len(p)]
-                window[old] -= 1
-                if window[old] == 0:
-                    del window[old]
-            if window == need:
-                result.append(i-len(p)+1)
-        return result
+        target_counts = [0] * 26
+        window_counts = [0] * 26
+        for character in p:
+            target_counts[ord(character) - ord("a")] += 1
+
+        matches = []
+        for index, character in enumerate(s):
+            window_counts[ord(character) - ord("a")] += 1
+            if index >= len(p):
+                removed = s[index - len(p)]
+                window_counts[ord(removed) - ord("a")] -= 1
+            if window_counts == target_counts:
+                matches.append(index - len(p) + 1)
+        return matches

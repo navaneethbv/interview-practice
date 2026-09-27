@@ -1,3 +1,42 @@
 class Solution {
-public List<Integer> findMinHeightTrees(int n,int[][] edges){if(n==1)return Arrays.asList(0);List<List<Integer>>g=new ArrayList<>();for(int i=0;i<n;i++)g.add(new ArrayList<>());int[]d=new int[n];for(int[]e:edges){g.get(e[0]).add(e[1]);g.get(e[1]).add(e[0]);d[e[0]]++;d[e[1]]++;}Deque<Integer>q=new ArrayDeque<>();for(int i=0;i<n;i++)if(d[i]==1)q.add(i);int left=n;while(left>2){int size=q.size();left-=size;while(size-->0){int v=q.remove();for(int w:g.get(v))if(--d[w]==1)q.add(w);}}return new ArrayList<>(q);}
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        if (n == 1) {
+            return Arrays.asList(0);
+        }
+
+        List<List<Integer>> neighbors = new ArrayList<>();
+        int[] degrees = new int[n];
+        for (int vertex = 0; vertex < n; vertex++) {
+            neighbors.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            neighbors.get(edge[0]).add(edge[1]);
+            neighbors.get(edge[1]).add(edge[0]);
+            degrees[edge[0]]++;
+            degrees[edge[1]]++;
+        }
+
+        Deque<Integer> leaves = new ArrayDeque<>();
+        for (int vertex = 0; vertex < n; vertex++) {
+            if (degrees[vertex] == 1) {
+                leaves.add(vertex);
+            }
+        }
+
+        int remainingVertices = n;
+        while (remainingVertices > 2) {
+            int leafCount = leaves.size();
+            remainingVertices -= leafCount;
+            for (int count = 0; count < leafCount; count++) {
+                int leaf = leaves.remove();
+                for (int neighbor : neighbors.get(leaf)) {
+                    degrees[neighbor]--;
+                    if (degrees[neighbor] == 1) {
+                        leaves.add(neighbor);
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(leaves);
+    }
 }

@@ -1,27 +1,61 @@
 from collections import deque
+
 class Solution:
     def longestIncreasingPath(self, matrix):
-        rows, cols = len(matrix), len(matrix[0])
-        degree = [[sum(matrix[a][b] < matrix[r][c] for a,b in self._neighbors(r,c,rows,cols)) for c in range(cols)] for r in range(rows)]
-        queue = deque((r,c) for r in range(rows) for c in range(cols) if degree[r][c] == 0)
-        length = 0
-        while queue:
-            length += 1
-            for _ in range(len(queue)):
-                r,c = queue.popleft()
-                self._release(matrix, degree, queue, r, c)
-        return length
+        rows = len(matrix)
+        columns = len(matrix[0])
+        indegree = self._build_indegree(matrix, rows, columns)
+        queue = self._initial_sources(indegree, rows, columns)
 
-    def _release(self, matrix, degree, queue, r, c):
-        """Removes (r,c) from its larger neighbours' in-degrees, queueing any that become sources."""
-        for a,b in self._neighbors(r,c,len(matrix),len(matrix[0])):
-            if matrix[a][b] > matrix[r][c]:
-                degree[a][b] -= 1
-                if degree[a][b] == 0:
-                    queue.append((a,b))
+        path_length = 0
+        while queue:
+            path_length += 1
+            for _ in range(len(queue)):
+                row, column = queue.popleft()
+                self._release_larger_neighbors(
+                    matrix, indegree, queue, row, column
+                )
+        return path_length
+
+    def _build_indegree(self, matrix, rows, columns):
+        indegree = [[0] * columns for _ in range(rows)]
+        for row in range(rows):
+            for column in range(columns):
+                indegree[row][column] = sum(
+                    matrix[neighbor_row][neighbor_column] < matrix[row][column]
+                    for neighbor_row, neighbor_column in self._neighbors(
+                        row, column, rows, columns
+                    )
+                )
+        return indegree
 
     @staticmethod
-    def _neighbors(r, c, rows, cols):
-        for a,b in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
-            if 0 <= a < rows and 0 <= b < cols:
-                yield a,b
+    def _initial_sources(indegree, rows, columns):
+        queue = deque()
+        for row in range(rows):
+            for column in range(columns):
+                if indegree[row][column] == 0:
+                    queue.append((row, column))
+        return queue
+
+    def _release_larger_neighbors(self, matrix, indegree, queue, row, column):
+        rows = len(matrix)
+        columns = len(matrix[0])
+        for neighbor_row, neighbor_column in self._neighbors(
+            row, column, rows, columns
+        ):
+            if matrix[neighbor_row][neighbor_column] > matrix[row][column]:
+                indegree[neighbor_row][neighbor_column] -= 1
+                if indegree[neighbor_row][neighbor_column] == 0:
+                    queue.append((neighbor_row, neighbor_column))
+
+    @staticmethod
+    def _neighbors(row, column, rows, columns):
+        for neighbor_row, neighbor_column in (
+            (row - 1, column),
+            (row + 1, column),
+            (row, column - 1),
+            (row, column + 1),
+        ):
+            if 0 <= neighbor_row < rows and 0 <= neighbor_column < columns:
+                yield neighbor_row, neighbor_column

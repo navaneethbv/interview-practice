@@ -1,3 +1,23 @@
 class Solution {
-public List<Integer> partitionLabels(String s){int[]last=new int[26];for(int i=0;i<s.length();i++)last[s.charAt(i)-'a']=i;List<Integer>out=new ArrayList<>();int end=0,start=0;for(int i=0;i<s.length();i++){end=Math.max(end,last[s.charAt(i)-'a']);if(i==end){out.add(end-start+1);start=i+1;}}return out;}
+    public List<Integer> partitionLabels(String s) {
+        int[] lastPosition = new int[26];
+        for (int index = 0; index < s.length(); index++) {
+            lastPosition[s.charAt(index) - 'a'] = index;
+        }
+
+        List<Integer> lengths = new ArrayList<>();
+        int partitionStart = 0;
+        int partitionEnd = 0;
+        for (int index = 0; index < s.length(); index++) {
+            partitionEnd = Math.max(
+                    partitionEnd,
+                    lastPosition[s.charAt(index) - 'a']
+            );
+            if (index == partitionEnd) {
+                lengths.add(index - partitionStart + 1);
+                partitionStart = index + 1;
+            }
+        }
+        return lengths;
+    }
 }

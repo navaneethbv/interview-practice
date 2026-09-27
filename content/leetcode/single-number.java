@@ -1,3 +1,9 @@
 class Solution {
-public int singleNumber(int[] nums){int out=0;for(int x:nums)out^=x;return out;}
+    public int singleNumber(int[] nums) {
+        int uniqueValue = 0;
+        for (int value : nums) {
+            uniqueValue ^= value;
+        }
+        return uniqueValue;
+    }
 }

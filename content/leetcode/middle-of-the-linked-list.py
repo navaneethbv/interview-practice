@@ -1,6 +1,8 @@
 class Solution:
     def middleNode(self, head):
-        slow = fast = head
+        slow = head
+        fast = head
         while fast and fast.next:
-            slow, fast = slow.next, fast.next.next
+            slow = slow.next
+            fast = fast.next.next
         return slow

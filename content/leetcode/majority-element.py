@@ -1,8 +1,9 @@
 class Solution:
     def majorityElement(self, nums):
-        candidate = count = 0
+        candidate = 0
+        vote_count = 0
         for value in nums:
-            if count == 0:
+            if vote_count == 0:
                 candidate = value
-            count += 1 if candidate == value else -1
+            vote_count += 1 if value == candidate else -1
         return candidate

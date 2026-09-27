@@ -1,15 +1,34 @@
 class DetectSquares {
-    private final Map<Integer,Integer> points = new HashMap<>();
-    public DetectSquares() {}
-    private int key(int x,int y){return x*1001+y;}
-    public void add(int[] point){points.merge(key(point[0],point[1]),1,Integer::sum);}
-    public int count(int[] point){
-        int x=point[0],y=point[1],answer=0;
-        for(Map.Entry<Integer,Integer> entry:points.entrySet()){
-            int a=entry.getKey()/1001,b=entry.getKey()%1001;
-            if(a!=x&&Math.abs(a-x)==Math.abs(b-y))
-                answer+=entry.getValue()*points.getOrDefault(key(a,y),0)*points.getOrDefault(key(x,b),0);
+    private final Map<Integer, Integer> points = new HashMap<>();
+
+    public DetectSquares() {
+    }
+
+    private int key(int x, int y) {
+        return x * 1001 + y;
+    }
+
+    public void add(int[] point) {
+        int pointKey = key(point[0], point[1]);
+        points.merge(pointKey, 1, Integer::sum);
+    }
+
+    public int count(int[] point) {
+        int queryX = point[0];
+        int queryY = point[1];
+        int totalSquares = 0;
+        for (Map.Entry<Integer, Integer> entry : points.entrySet()) {
+            int candidateX = entry.getKey() / 1001;
+            int candidateY = entry.getKey() % 1001;
+            int side = Math.abs(candidateX - queryX);
+            boolean isOppositeCorner = candidateX != queryX
+                    && side == Math.abs(candidateY - queryY);
+            if (isOppositeCorner) {
+                totalSquares += entry.getValue()
+                        * points.getOrDefault(key(candidateX, queryY), 0)
+                        * points.getOrDefault(key(queryX, candidateY), 0);
+            }
         }
-        return answer;
+        return totalSquares;
     }
 }
