@@ -1,7 +1,8 @@
 class Solution {
     public boolean canConstruct(String s, int k) {
         int[] counts = new int[26];
-        for (char character : s.toCharArray()) {
+        for (int index = 0; index < s.length(); index++) {
+            char character = s.charAt(index);
             counts[character - 'a']++;
         }
 

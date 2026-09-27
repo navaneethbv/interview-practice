@@ -1,7 +1,8 @@
 class Solution {
     public int bestClosingTime(String customers) {
         int penalty = 0;
-        for (char customer : customers.toCharArray()) {
+        for (int index = 0; index < customers.length(); index++) {
+            char customer = customers.charAt(index);
             if (customer == 'Y') {
                 penalty++;
             }
