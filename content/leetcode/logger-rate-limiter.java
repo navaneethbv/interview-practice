@@ -1,1 +1,15 @@
-class Logger {Map<String,Integer>last=new HashMap<>();public Logger(){}public boolean shouldPrintMessage(int timestamp,String message){if(last.containsKey(message)&&timestamp-last.get(message)<10)return false;last.put(message,timestamp);return true;}}
+class Logger {
+    private final Map<String, Integer> lastPrintedAt = new HashMap<>();
+
+    public Logger() {
+    }
+
+    public boolean shouldPrintMessage(int timestamp, String message) {
+        Integer lastTime = lastPrintedAt.get(message);
+        if (lastTime != null && timestamp - lastTime < 10) {
+            return false;
+        }
+        lastPrintedAt.put(message, timestamp);
+        return true;
+    }
+}

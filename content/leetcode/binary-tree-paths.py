@@ -1,9 +1,17 @@
 class Solution:
     def binaryTreePaths(self, root):
-        out=[];stack=[(root,str(root.val))]
+        if root is None:
+            return []
+
+        paths = []
+        stack = [(root, str(root.val))]
         while stack:
-            node,path=stack.pop()
-            if not node.left and not node.right:out.append(path)
-            for child in (node.left,node.right):
-                if child:stack.append((child,path+'->'+str(child.val)))
-        return out
+            node, path = stack.pop()
+            if node.left is None and node.right is None:
+                paths.append(path)
+                continue
+            if node.right:
+                stack.append((node.right, path + "->" + str(node.right.val)))
+            if node.left:
+                stack.append((node.left, path + "->" + str(node.left.val)))
+        return paths

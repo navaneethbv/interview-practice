@@ -1,3 +1,20 @@
 class Solution {
-public int[] nextGreaterElements(int[] nums){int n=nums.length;int[]out=new int[n];Arrays.fill(out,-1);Deque<Integer>stack=new ArrayDeque<>();for(int i=0;i<2*n;i++){while(!stack.isEmpty()&&nums[stack.peek()]<nums[i%n])out[stack.pop()]=nums[i%n];if(i<n)stack.push(i);}return out;}
+    public int[] nextGreaterElements(int[] nums) {
+        int length = nums.length;
+        int[] result = new int[length];
+        Arrays.fill(result, -1);
+        Deque<Integer> decreasingIndices = new ArrayDeque<>();
+
+        for (int index = 0; index < 2 * length; index++) {
+            int valueIndex = index % length;
+            while (!decreasingIndices.isEmpty()
+                    && nums[decreasingIndices.peek()] < nums[valueIndex]) {
+                result[decreasingIndices.pop()] = nums[valueIndex];
+            }
+            if (index < length) {
+                decreasingIndices.push(valueIndex);
+            }
+        }
+        return result;
+    }
 }

@@ -1,3 +1,15 @@
 class Solution {
-public List<Integer> findDuplicates(int[] nums){List<Integer>out=new ArrayList<>();for(int x:nums){int v=Math.abs(x);if(nums[v-1]<0)out.add(v);else nums[v-1]=-nums[v-1];}return out;}
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> duplicates = new ArrayList<>();
+
+        for (int value : nums) {
+            int index = Math.abs(value) - 1;
+            if (nums[index] < 0) {
+                duplicates.add(index + 1);
+            } else {
+                nums[index] = -nums[index];
+            }
+        }
+        return duplicates;
+    }
 }
