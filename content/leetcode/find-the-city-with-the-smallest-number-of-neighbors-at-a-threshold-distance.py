@@ -1,9 +1,28 @@
 class Solution:
     def findTheCity(self, n, edges, distanceThreshold):
-        distance=[[float('inf')]*n for _ in range(n)]
-        for i in range(n): distance[i][i]=0
-        for a,b,w in edges: distance[a][b]=distance[b][a]=w
+        distances = [[float("inf")] * n for _ in range(n)]
+        for city in range(n):
+            distances[city][city] = 0
+        for first, second, weight in edges:
+            distances[first][second] = weight
+            distances[second][first] = weight
+
         for middle in range(n):
-            for a in range(n):
-                for b in range(n): distance[a][b]=min(distance[a][b],distance[a][middle]+distance[middle][b])
-        return min(range(n),key=lambda i:(sum(j!=i and distance[i][j]<=distanceThreshold for j in range(n)),-i))
+            for first in range(n):
+                for second in range(n):
+                    distances[first][second] = min(
+                        distances[first][second],
+                        distances[first][middle] + distances[middle][second],
+                    )
+
+        fewest_neighbors = n
+        answer = -1
+        for city in range(n):
+            reachable = sum(
+                other != city and distances[city][other] <= distanceThreshold
+                for other in range(n)
+            )
+            if reachable <= fewest_neighbors:
+                fewest_neighbors = reachable
+                answer = city
+        return answer
