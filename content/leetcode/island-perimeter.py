@@ -1,10 +1,7 @@
 class Solution:
     def islandPerimeter(self,grid):
-        total=0
-        for r,row in enumerate(grid):
-            for c,v in enumerate(row):
-                if v:
-                    total+=4
-                    if r and grid[r-1][c]:total-=2
-                    if c and grid[r][c-1]:total-=2
-        return total
+        # Each land cell adds four sides; each shared edge hides two of them.
+        cells=sum(map(sum,grid))
+        across=sum(a and b for row in grid for a,b in zip(row,row[1:]))
+        down=sum(a and b for upper,lower in zip(grid,grid[1:]) for a,b in zip(upper,lower))
+        return 4*cells-2*(across+down)

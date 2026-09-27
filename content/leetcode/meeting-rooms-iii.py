@@ -4,7 +4,7 @@ class Solution:
         free=list(range(n));busy=[];counts=[0]*n
         for start,end in sorted(meetings):
             while busy and busy[0][0]<=start:
-                finished,room=heapq.heappop(busy);heapq.heappush(free,room)
+                _,room=heapq.heappop(busy);heapq.heappush(free,room)
             if free:room=heapq.heappop(free);finish=end
             else:
                 available,room=heapq.heappop(busy);finish=available+end-start

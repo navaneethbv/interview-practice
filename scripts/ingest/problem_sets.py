@@ -76,14 +76,13 @@ def col(header, row, *names):
 
 def section_title(cell: str) -> str:
     """'  ARRAYS & HASHING  —  9 problems' -> 'Arrays & Hashing'."""
-    name = re.split(r"\s+—\s+", cell.strip())[0]
+    name = cell.partition("—")[0]
     words = " ".join(w if w in {"&", "/"} else w.capitalize() for w in name.split())
     return words.replace("1d Dp", "1D DP").replace("2d Dp", "2D DP")
 
 
-def main(workbook: str):
-    wb = openpyxl.load_workbook(workbook, data_only=True, read_only=True)
-
+def read_problems(wb) -> tuple[dict[str, dict], dict[int, str]]:
+    """Reads per-problem metadata from the tracker sheet, keyed by slug."""
     problems: dict[str, dict] = {}
     by_number: dict[int, str] = {}
     for header, row in header_rows(wb["📊 Problem Tracker"]):
@@ -107,34 +106,49 @@ def main(workbook: str):
             "space": text(col(header, row, "Space Complexity")),
         }
         by_number[number] = slug
+    return problems, by_number
 
-    sets = []
-    for set_id, sheet, title, kind, description in SETS:
-        items, seen, section = [], set(), None
-        for header, row in header_rows(wb[sheet]):
-            first = row[0]
-            if isinstance(first, str) and first.strip() and row[1] is None:
-                section = section_title(first)
-                continue
-            if not isinstance(first, int):
-                continue
-            number = col(header, row, "LC #")
-            number = ALIASES.get(number, number)
-            slug = by_number.get(number)
-            if slug is None:
-                raise ValueError(f"{sheet}: LC {number} is not in the Problem Tracker")
-            if slug in seen:
-                continue
-            seen.add(slug)
-            meta = problems[slug]
-            acceptance = text(col(header, row, "Acceptance"))
-            if acceptance and "acceptance" not in meta:
-                meta["acceptance"] = float(acceptance.rstrip("%"))
-            if col(header, row, "Premium?"):
-                meta["premium"] = True
-            category = text(col(header, row, "Category")) or section or text(col(header, row, "Primary Pattern"))
-            items.append({"slug": slug, "category": category} if category else {"slug": slug})
-        sets.append({"id": set_id, "title": title, "kind": kind, "description": description, "items": items})
+
+def add_list_metadata(meta: dict, header, row):
+    """Copies acceptance and premium flags that only the list sheets carry."""
+    acceptance = text(col(header, row, "Acceptance"))
+    if acceptance and "acceptance" not in meta:
+        meta["acceptance"] = float(acceptance.rstrip("%"))
+    if col(header, row, "Premium?"):
+        meta["premium"] = True
+
+
+def read_set(wb, sheet: str, problems: dict[str, dict], by_number: dict[int, str]) -> list[dict]:
+    """Reads one list sheet in order, tagging each problem with its section or category."""
+    items, seen, section = [], set(), None
+    for header, row in header_rows(wb[sheet]):
+        first = row[0]
+        if isinstance(first, str) and first.strip() and row[1] is None:
+            section = section_title(first)
+            continue
+        if not isinstance(first, int):
+            continue
+        number = col(header, row, "LC #")
+        slug = by_number.get(ALIASES.get(number, number))
+        if slug is None:
+            raise ValueError(f"{sheet}: LC {number} is not in the Problem Tracker")
+        if slug in seen:
+            continue
+        seen.add(slug)
+        add_list_metadata(problems[slug], header, row)
+        category = text(col(header, row, "Category")) or section or text(col(header, row, "Primary Pattern"))
+        items.append({"slug": slug, "category": category} if category else {"slug": slug})
+    return items
+
+
+def main(workbook: str):
+    wb = openpyxl.load_workbook(workbook, data_only=True, read_only=True)
+    problems, by_number = read_problems(wb)
+    sets = [
+        {"id": set_id, "title": title, "kind": kind, "description": description,
+         "items": read_set(wb, sheet, problems, by_number)}
+        for set_id, sheet, title, kind, description in SETS
+    ]
 
     OUT.mkdir(parents=True, exist_ok=True)
     ordered = dict(sorted(problems.items(), key=lambda kv: kv[1]["number"]))

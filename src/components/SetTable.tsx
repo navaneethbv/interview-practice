@@ -14,7 +14,7 @@ const select =
   "h-9 rounded-lg border border-line bg-layer-1 px-2.5 text-sm text-fg-1 outline-none hover:border-line-strong focus-visible:border-blue";
 
 /** Problems of one list with filters; statuses count only submissions since the list's last reset. */
-export function SetTable({ setId, kind, rows }: { setId: string; kind: SetKind; rows: SetRow[] }) {
+export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: SetKind; rows: SetRow[] }>) {
   const progress = useProgress();
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -25,7 +25,11 @@ export function SetTable({ setId, kind, rows }: { setId: string; kind: SetKind; 
   // Curated lists come with categories; company lists are filtered by topic.
   const byCategory = kind === "curated";
   const groups = useMemo(() => {
-    const unique = [...new Set(rows.flatMap((r) => (byCategory ? (r.category ? [r.category] : []) : r.topics)))];
+    const groupsOf = (r: SetRow) => {
+      if (!byCategory) return r.topics;
+      return r.category ? [r.category] : [];
+    };
+    const unique = [...new Set(rows.flatMap(groupsOf))];
     return byCategory ? unique : unique.sort((x, y) => x.localeCompare(y));
   }, [rows, byCategory]);
 

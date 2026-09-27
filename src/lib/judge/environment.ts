@@ -20,21 +20,34 @@ def read4(buf4):
 `;
 }
 
-export function javaEnvironment(spec: FunctionSpec | DesignSpec): string {
-  const kind = spec.environment?.kind;
-  if (!kind || kind === "parentTree") return "";
-  const base = kind === "badVersion" ? "VersionControl" : kind === "guess" ? "GuessGame" : kind === "celebrity" ? "Relation" : "Reader4";
-  const method = kind === "badVersion"
-    ? "boolean isBadVersion(int version) { return version >= J.toInt(JudgeEnvironment.value); }"
-    : kind === "guess"
-      ? "int guess(int number) { return Integer.compare(J.toInt(JudgeEnvironment.value), number); }"
-      : kind === "celebrity"
-        ? "boolean knows(int a, int b) { return J.toInt(J.L(J.L(JudgeEnvironment.value).get(a)).get(b)) != 0; }"
-        : `int read4(char[] buf4) {
+/** Java base class and API method for each environment kind. */
+const JAVA_ENVIRONMENTS = {
+  badVersion: {
+    base: "VersionControl",
+    method: "boolean isBadVersion(int version) { return version >= J.toInt(JudgeEnvironment.value); }",
+  },
+  guess: {
+    base: "GuessGame",
+    method: "int guess(int number) { return Integer.compare(J.toInt(JudgeEnvironment.value), number); }",
+  },
+  celebrity: {
+    base: "Relation",
+    method: "boolean knows(int a, int b) { return J.toInt(J.L(J.L(JudgeEnvironment.value).get(a)).get(b)) != 0; }",
+  },
+  read4: {
+    base: "Reader4",
+    method: `int read4(char[] buf4) {
             String file = (String) JudgeEnvironment.value; int count = 0;
             while (count < 4 && JudgeEnvironment.position < file.length()) buf4[count++] = file.charAt(JudgeEnvironment.position++);
             return count;
-          }`;
+          }`,
+  },
+};
+
+export function javaEnvironment(spec: FunctionSpec | DesignSpec): string {
+  const kind = spec.environment?.kind;
+  if (!kind || kind === "parentTree") return "";
+  const { base, method } = JAVA_ENVIRONMENTS[kind];
   return `final class JudgeEnvironment { static Object value; static int position; }
 class ${base} { ${method} }`;
 }

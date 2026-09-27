@@ -136,7 +136,7 @@ export interface DesignSpec {
   className: string;
   ctorParams: Param[];
   methods: DesignMethod[];
-  environment?: FunctionSpec["environment"];
+  environment?: NonNullable<FunctionSpec["environment"]>;
   compare?: Compare;
   tests: DesignTestCase[];
 }

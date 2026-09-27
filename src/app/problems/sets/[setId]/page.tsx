@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ setId: st
   return { title: getSet((await params).setId)?.title ?? "Problems" };
 }
 
-export default async function SetPage({ params }: { params: Promise<{ setId: string }> }) {
+export default async function SetPage({ params }: Readonly<{ params: Promise<{ setId: string }> }>) {
   const { setId } = await params;
   const set = getSet(setId);
   if (!set) notFound();

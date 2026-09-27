@@ -1,5 +1,5 @@
 class Solution:
-    def maximizeSquareHoleArea(self, n, m, hBars, vBars):
+    def maximizeSquareHoleArea(self, _n, _m, hBars, vBars):
         def opening(bars):
             best=current=1; previous=None
             for bar in sorted(bars):

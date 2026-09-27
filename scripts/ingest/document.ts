@@ -67,7 +67,7 @@ function escapeHtml(s: string) {
 }
 
 function escapeAttribute(s: string) {
-  return escapeHtml(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  return escapeHtml(s).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 }
 
 function isWithin(parent: string, child: string) {
@@ -146,7 +146,7 @@ const ALLOWED = new Set([
 ]);
 
 function resolveImage(src: string, baseDir: string): string | null {
-  const data = src.match(/^data:image\/(png|jpe?g|gif|webp);base64,([\s\S]*)$/i);
+  const data = /^data:image\/(png|jpe?g|gif|webp);base64,([\s\S]*)$/i.exec(src);
   if (data) {
     const ext = data[1].toLowerCase().replace("jpeg", "jpg");
     return saveAsset(Buffer.from(data[2], "base64"), ext);

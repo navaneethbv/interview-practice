@@ -7,7 +7,7 @@ export function usesCollectionHelpers(spec: ProblemSpec): boolean {
 }
 
 /** Deterministic local stand-ins for the collection and crawl interfaces. */
-export const PYTHON_COLLECTION_HELPERS = String.raw`
+export const PYTHON_COLLECTION_HELPERS = `
 class Iterator:
     def __init__(self, values):
         self.__values = tuple(values)
@@ -42,7 +42,7 @@ class HtmlParser:
         return list(self.__pages.get(url, ()))
 `;
 
-export const JAVA_COLLECTION_HELPERS = String.raw`
+export const JAVA_COLLECTION_HELPERS = `
 class Employee {
   public int id;
   public int importance;

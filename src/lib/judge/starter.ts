@@ -142,21 +142,22 @@ const HELPER_DOCS: Record<string, { python: string; java: string }> = {
   },
 };
 
+/** Types documented under their own name. */
+const EXACT_HELPERS = new Set<string>([
+  "IntIterator", "List<Employee>", "HtmlParser", "Robot", "Master", "ArrayReader",
+  "GraphNode", "RandomNode", "NaryNode", "NextNode", "ParentNode", "DoublyNode", "CircularNode", "MultiNode",
+]);
+
+/** Helpers documented for any type that contains them, such as `List<ListNode>`. */
+const CONTAINED_HELPERS = ["ListNode", "TreeNode", "Interval", "NestedInteger"];
+
+function helperFor(t: ValueType): string | undefined {
+  if (EXACT_HELPERS.has(t)) return t;
+  return CONTAINED_HELPERS.find((name) => t.includes(name));
+}
+
 function usedHelpers(types: ValueType[]) {
-  const names = new Set<string>();
-  for (const t of types) {
-    if (t.includes("ListNode")) names.add("ListNode");
-    if (t.includes("TreeNode")) names.add("TreeNode");
-    if (t.includes("Interval")) names.add("Interval");
-    if (["IntIterator", "List<Employee>", "HtmlParser"].includes(t)) names.add(t);
-    if (t === "Robot" || t === "Master") names.add(t);
-    if (t === "ArrayReader") names.add("ArrayReader");
-    if (t === "GraphNode") names.add("GraphNode");
-    if (t === "RandomNode" || t === "NaryNode" || t === "NextNode") names.add(t);
-    if (t.includes("NestedInteger")) names.add("NestedInteger");
-    if (["ParentNode", "DoublyNode", "CircularNode", "MultiNode"].includes(t)) names.add(t);
-  }
-  return [...names];
+  return [...new Set(types.map(helperFor).filter((name): name is string => name !== undefined))];
 }
 
 function allTypes(spec: ProblemSpec): ValueType[] {

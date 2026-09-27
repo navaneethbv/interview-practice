@@ -50,7 +50,7 @@ test("local images stay inside the source folder while sibling assets still impo
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "document-import-test-"));
   const inputDir = path.join(root, "input");
   const outputDir = path.join(root, "output");
-  fs.mkdirSync(inputDir);
+  fs.mkdirSync(inputDir); // nosemgrep -- test fixture in a temp directory
   fs.writeFileSync(path.join(root, "outside.png"), "outside image bytes"); // nosemgrep -- test fixture in a temp directory
   fs.writeFileSync(path.join(inputDir, "inside.png"), "inside image bytes"); // nosemgrep -- test fixture in a temp directory
   const input = path.join(inputDir, "source.html");

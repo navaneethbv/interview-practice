@@ -221,7 +221,7 @@ export function Workspace(props: Props) {
   return <WorkspaceInner {...props} />;
 }
 
-function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav, listSlug, description, solution }: Props) {
+function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav, listSlug, description, solution }: Readonly<Props>) {
   const isDesktop = useIsDesktop();
   const nav = useListNav(initialNav, listSlug);
   const [prefs] = useState(loadPrefs);
@@ -587,7 +587,7 @@ function NavArrow({ href, label, children }: { href: string | null; label: strin
   );
 }
 
-function SubmissionList({ id, submissions, onLoad }: { id: string; submissions: Submission[]; onLoad: (s: Submission) => void }) {
+function SubmissionList({ id, submissions, onLoad }: Readonly<{ id: string; submissions: Submission[]; onLoad: (s: Submission) => void }>) {
   const progress = useProgress();
   const [total, accepted] = totalOf(progress, id);
   if (!submissions.length) {

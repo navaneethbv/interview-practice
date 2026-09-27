@@ -1,4 +1,4 @@
-import type { AnyTestCase, DesignTestCase, ProblemSpec, SqlTestCase, TestCase } from "@/lib/judge/types";
+import type { AnyTestCase, DesignSpec, DesignTestCase, ProblemSpec, SqlSpec, SqlTestCase, TestCase } from "@/lib/judge/types";
 
 /** A test case as shown in the Testcase panel: one JSON text field per parameter. */
 export interface EditableCase {
@@ -44,24 +44,35 @@ export function parseCase(spec: ProblemSpec, c: EditableCase): { input: AnyTestC
       return { error: `"${names[i]}" is not valid JSON.` };
     }
   }
-  if (spec.kind === "sql") {
-    const [tables, params] = values;
-    if (!tables || typeof tables !== "object" || Array.isArray(tables) || !params || typeof params !== "object" || Array.isArray(params)) return { error: "Tables and query parameters must be JSON objects." };
-    for (const table of spec.tables) {
-      const rows = (tables as Record<string, unknown>)[table.name];
-      if (!Array.isArray(rows) || rows.some((row) => !Array.isArray(row) || row.length !== table.columns.length)) return { error: `${table.name} must contain rows with ${table.columns.length} cells.` };
-    }
-    return { input: { tables, params } as SqlTestCase["input"] };
-  }
-  if (spec.kind === "design") {
-    const [ctor, ops, args, environment] = spec.ctorParams.length ? values : [[], ...values];
-    if (!Array.isArray(ops) || !Array.isArray(args) || ops.length !== args.length) {
-      return { error: "operations and arguments must be arrays of the same length." };
-    }
-    if (!Array.isArray(ctor)) return { error: "constructor must be an array of arguments." };
-    return { input: { ctor, ops: ops as string[], args: args as unknown[][], ...(spec.environment ? { environment } : {}) } };
-  }
+  if (spec.kind === "sql") return parseSqlInput(spec, values);
+  if (spec.kind === "design") return parseDesignInput(spec, values);
   return { input: values };
+}
+
+type ParsedCase = { input: AnyTestCase["input"] } | { error: string };
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function parseSqlInput(spec: SqlSpec, [tables, params]: unknown[]): ParsedCase {
+  if (!isPlainObject(tables) || !isPlainObject(params)) return { error: "Tables and query parameters must be JSON objects." };
+  for (const table of spec.tables) {
+    const rows = tables[table.name];
+    if (!Array.isArray(rows) || rows.some((row) => !Array.isArray(row) || row.length !== table.columns.length)) {
+      return { error: `${table.name} must contain rows with ${table.columns.length} cells.` };
+    }
+  }
+  return { input: { tables, params } as SqlTestCase["input"] };
+}
+
+function parseDesignInput(spec: DesignSpec, values: unknown[]): ParsedCase {
+  const [ctor, ops, args, environment] = spec.ctorParams.length ? values : [[], ...values];
+  if (!Array.isArray(ops) || !Array.isArray(args) || ops.length !== args.length) {
+    return { error: "operations and arguments must be arrays of the same length." };
+  }
+  if (!Array.isArray(ctor)) return { error: "constructor must be an array of arguments." };
+  return { input: { ctor, ops: ops as string[], args: args as unknown[][], ...(spec.environment ? { environment } : {}) } };
 }
 
 /** True when a case is unchanged from the spec test it was copied from. */

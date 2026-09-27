@@ -21,13 +21,13 @@ export function ProgressPanel({
   scope,
   scopeLabel,
   resettable = false,
-}: {
+}: Readonly<{
   ids: string[];
   difficulties: Difficulty[];
   scope: string;
   scopeLabel?: string;
   resettable?: boolean;
-}) {
+}>) {
   const progress = useProgress();
   const summary = summarize(progress, ids, scope);
   const pct = ids.length ? (summary.solved / ids.length) * 100 : 0;
@@ -86,7 +86,7 @@ export function ProgressPanel({
   );
 }
 
-function ResetControl({ scope, ids, resetAt, label }: { scope: string; ids: string[]; resetAt?: number; label?: string }) {
+function ResetControl({ scope, ids, resetAt, label }: Readonly<{ scope: string; ids: string[]; resetAt?: number; label?: string }>) {
   const [confirming, setConfirming] = useState(false);
   const [clearCode, setClearCode] = useState(false);
   const confirmRef = useRef<HTMLButtonElement>(null);
@@ -98,6 +98,15 @@ function ResetControl({ scope, ids, resetAt, label }: { scope: string; ids: stri
     if (confirming) confirmRef.current?.focus();
     else if (wasConfirming.current) openRef.current?.focus();
     wasConfirming.current = confirming;
+  }, [confirming]);
+
+  useEffect(() => {
+    if (!confirming) return;
+    const cancelOnEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setConfirming(false);
+    };
+    document.addEventListener("keydown", cancelOnEscape);
+    return () => document.removeEventListener("keydown", cancelOnEscape);
   }, [confirming]);
 
   if (!confirming) {
@@ -116,18 +125,14 @@ function ResetControl({ scope, ids, resetAt, label }: { scope: string; ids: stri
   }
 
   return (
-    <div
-      role="group"
-      aria-label="Confirm reset"
-      className="max-w-72 rounded-lg border border-line bg-layer-2 p-3 text-sm"
-      onKeyDown={(e) => e.key === "Escape" && setConfirming(false)}
-    >
+    <fieldset className="max-w-72 min-w-0 rounded-lg border border-line bg-layer-2 p-3 text-sm">
+      <legend className="sr-only">Confirm reset</legend>
       <p className="mb-2 text-fg-1">
         Start {label ?? "this list"} over? Solved marks and accuracy restart from zero. Other lists keep their progress.
       </p>
       <label className="mb-3 flex items-center gap-2 text-fg-2">
         <input type="checkbox" checked={clearCode} onChange={(e) => setClearCode(e.target.checked)} className="size-4" />
-        Also clear my saved code
+        <span>Also clear my saved code</span>
       </label>
       {clearCode ? <p className="mb-3 text-xs text-fg-2">Saved code is shared across lists. This also clears it wherever these problems appear.</p> : null}
       <div className="flex gap-2">
@@ -145,6 +150,6 @@ function ResetControl({ scope, ids, resetAt, label }: { scope: string; ids: stri
           Cancel
         </button>
       </div>
-    </div>
+    </fieldset>
   );
 }

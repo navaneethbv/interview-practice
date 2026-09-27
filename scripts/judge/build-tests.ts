@@ -32,6 +32,30 @@ function formatSpec(spec: ProblemSpec): string {
   return `${head},\n  "tests": [\n${lines.join(",\n")}\n  ]\n}\n`;
 }
 
+type HarnessResult = ReturnType<typeof parseHarnessOutput>["results"] extends Map<number, infer R> ? R : never;
+
+/** Checks one reference result, filling `expected` when missing or regenerating; returns true when the test changed. */
+function applyReference(spec: ProblemSpec, t: AnyTestCase, i: number, r: HarnessResult | undefined, errors: string[]): boolean {
+  const label = `${spec.id}#${i}`;
+  if (r?.status !== "ok") {
+    errors.push(`${label}: reference failed: ${r?.error ?? "no result"}`);
+    return false;
+  }
+  if (!judgeSpecOutput(spec, t.input, r.output, r.output)) {
+    errors.push(`${label}: reference output violates its declared result contract`);
+    return false;
+  }
+  if (t.expected !== undefined && !regen) {
+    if (!judgeSpecOutput(spec, t.input, r.output, t.expected)) {
+      errors.push(`${label}: expected ${JSON.stringify(t.expected)} but reference gave ${JSON.stringify(r.output)}`);
+    }
+    return false;
+  }
+  if (JSON.stringify(t.expected) === JSON.stringify(r.output)) return false;
+  (t as { expected?: unknown }).expected = r.output;
+  return true;
+}
+
 async function processSpec(file: string): Promise<string[]> {
   const errors: string[] = [];
   const spec = JSON.parse(fs.readFileSync(file, "utf8")) as ProblemSpec;
@@ -50,26 +74,7 @@ async function processSpec(file: string): Promise<string[]> {
   if (py.stderr.trim()) errors.push(`${id}: python stderr: ${py.stderr.trim().slice(0, 500)}`);
   if (stray) errors.push(`${id}: python printed: ${stray.slice(0, 200)}`);
 
-  let changed = false;
-  tests.forEach((t, i) => {
-    const r = results.get(i);
-    if (!r || r.status !== "ok") {
-      errors.push(`${id}#${i}: reference failed: ${r?.error ?? "no result"}`);
-      return;
-    }
-    if (!judgeSpecOutput(spec, t.input, r.output, r.output)) {
-      errors.push(`${id}#${i}: reference output violates its declared result contract`);
-      return;
-    }
-    if (t.expected === undefined || regen) {
-      if (JSON.stringify(t.expected) !== JSON.stringify(r.output)) {
-        (t as { expected?: unknown }).expected = r.output;
-        changed = true;
-      }
-    } else if (!judgeSpecOutput(spec, t.input, r.output, t.expected)) {
-      errors.push(`${id}#${i}: expected ${JSON.stringify(t.expected)} but reference gave ${JSON.stringify(r.output)}`);
-    }
-  });
+  const changed = tests.map((t, i) => applyReference(spec, t, i, results.get(i), errors)).some(Boolean);
   if (changed) fs.writeFileSync(file, formatSpec(spec));
 
   const javaRef = path.join(dir, `${id}.java`);

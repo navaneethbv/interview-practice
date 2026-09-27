@@ -33,7 +33,7 @@ function defaultNav(slug: string): WorkspaceNav {
   };
 }
 
-export default async function LcProblemPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function LcProblemPage({ params }: Readonly<{ params: Promise<{ slug: string }> }>) {
   const { slug } = await params;
   const problem = getLcProblem(slug);
   if (!problem) notFound();

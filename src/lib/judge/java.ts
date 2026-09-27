@@ -341,39 +341,130 @@ function defaultFor(javaT: string) {
   return "null";
 }
 
-function functionBody(spec: FunctionSpec) {
+function javaCall(spec: FunctionSpec, args: string) {
   const codec = spec.roundTrip;
-  const args = spec.params.map((_, k) => `p${k}`).join(", ");
-  const call = codec ? `${codec.sameInstance ? "sol" : `new ${codec.className}()`}.${codec.decode}(sol.${codec.encode}(${args}))` : `sol.${spec.function.java}(${args})`;
+  if (!codec) return `sol.${spec.function.java}(${args})`;
+  const decoder = codec.sameInstance ? "sol" : `new ${codec.className}()`;
+  return `${decoder}.${codec.decode}(sol.${codec.encode}(${args}))`;
+}
+
+function javaEnvironmentSetup(spec: FunctionSpec) {
+  const inputIndex = spec.params.length;
+  if (spec.environment?.kind === "parentTree") return `NextSupport.parentRoot = NextSupport.build(a.get(${inputIndex}));`;
+  if (spec.environment) return `JudgeEnvironment.value = a.get(${inputIndex}); JudgeEnvironment.position = 0;`;
+  return "";
+}
+
+/** Support class that clones and serializes graph-like results, checking they reuse no input node. */
+function cloneSupportFor(returns: ValueType) {
+  if (returns === "GraphNode") return "GraphSupport";
+  if (returns === "RandomNode") return "RandomSupport";
+  return undefined;
+}
+
+const ORIGINAL_NODE_SETS: Partial<Record<ValueType, string>> = {
+  CircularNode: "Set<Node> originalCircular = NextSupport.circularNodes(p0);",
+  MultiNode: "Set<Node> originalMulti = MultiSupport.nodes(p0);",
+  DoublyNode: "Set<Node> originalDoubly = NextSupport.nodes(p0);",
+};
+
+const NODE_OUTPUT: Partial<Record<ValueType, (val: string) => string>> = {
+  MultiNode: (val) => `MultiSupport.values((Node) ${val}, originalMulti)`,
+  NaryNode: (val) => `NarySupport.values((Node) ${val})`,
+  NextNode: (val) => `NextSupport.levels((Node) ${val})`,
+  ParentNode: (val) => `NextSupport.parentValue((Node) ${val})`,
+  DoublyNode: (val) => `NextSupport.circular((Node) ${val}, true, originalDoubly)`,
+  CircularNode: (val) => `NextSupport.insertion((Node) ${val}, p0, originalCircular)`,
+};
+
+/** The tree argument whose nodes a TreeNode result must come from, if any. */
+function treeSourceFor(spec: FunctionSpec) {
+  if (spec.returns !== "TreeNode") return undefined;
+  return spec.returnTree ?? spec.params.find((p) => p.fromTree !== undefined)?.fromTree;
+}
+
+function checksListIdentity(spec: FunctionSpec) {
+  return spec.returns === "ListNode" && spec.params.some((p) => p.fromList !== undefined);
+}
+
+function identitySetup(spec: FunctionSpec, cloneSupport: string | undefined) {
+  const lines = [ORIGINAL_NODE_SETS[spec.returns] ?? ""];
+  if (cloneSupport) {
+    const inputs = spec.params.flatMap((p, k) => (p.type === spec.returns ? [`originals.addAll(${cloneSupport}.nodes(p${k}));`] : []));
+    lines.push(["Set<Node> originals = Collections.newSetFromMap(new IdentityHashMap<>());", ...inputs].join(" "));
+  }
+  const treeSource = treeSourceFor(spec);
+  if (treeSource !== undefined) lines.push(`Set<TreeNode> originalTree = J.treeNodes(p${treeSource});`);
+  if (checksListIdentity(spec)) {
+    const inputs = spec.params.flatMap((p, k) => (p.type === "ListNode" ? [`originalLists.addAll(J.listNodes(originalp${k}));`] : []));
+    lines.push(["Set<ListNode> originalLists = Collections.newSetFromMap(new IdentityHashMap<>());", ...inputs].join(" "));
+  }
+  return lines.join("\n    ");
+}
+
+function identityChecks(spec: FunctionSpec) {
+  const lines: string[] = [];
+  if (treeSourceFor(spec) !== undefined) {
+    lines.push('if (ret != null && !originalTree.contains(ret)) throw new IllegalArgumentException("Return a node from the original tree");');
+  }
+  if (checksListIdentity(spec)) {
+    lines.push('if (ret != null && !originalLists.contains(ret)) throw new IllegalArgumentException("Return a node from the original lists");');
+  }
+  return lines.join("\n    ");
+}
+
+function outputExpression(spec: FunctionSpec, cloneSupport: string | undefined) {
+  const output = spec.output;
+  const val = output?.arg === undefined ? "ret" : `${output.root ? "originalp" : "p"}${output.arg}`;
+  if (output?.as === "interaction") return `${val}.result()`;
+  if (output?.as === "listIndex") return "J.listIndex(originalp0, (ListNode) ret)";
+  if (cloneSupport) return `${cloneSupport}.values((Node) ${val}, originals)`;
+  const nodeOutput = NODE_OUTPUT[spec.returns];
+  if (nodeOutput) return nodeOutput(val);
+  return specialOutput(output, val, "ret");
+}
+
+function specialOutput(output: FunctionSpec["output"], val: string, ret: string) {
+  if (output?.as) return `J.special(${JSON.stringify(output.as)}, ${val})`;
+  if (output?.prefix) return `J.prefix(${val}, ${ret})`;
+  return val;
+}
+
+/** Design methods apply a prefix adapter before any special conversion. */
+function methodOutput(output: FunctionSpec["output"], val: string) {
+  if (output?.prefix) return `J.prefix(${val}, r)`;
+  return specialOutput(output, val, "r");
+}
+
+function nodeHelpers(node: ValueType | undefined) {
+  switch (node) {
+    case "MultiNode": return JAVA_MULTI;
+    case "RandomNode": return JAVA_RANDOM;
+    case "NaryNode": return JAVA_NARY;
+    case "NextNode":
+    case "ParentNode":
+    case "DoublyNode":
+    case "CircularNode":
+      return JAVA_NEXT;
+    default: return "";
+  }
+}
+
+function functionBody(spec: FunctionSpec) {
+  const call = javaCall(spec, spec.params.map((_, k) => `p${k}`).join(", "));
   const invoke = spec.returns === "void" ? `${call}; Object ret = null;` : `Object ret = ${call};`;
-  const val = spec.output?.arg !== undefined ? `${spec.output.root ? "originalp" : "p"}${spec.output.arg}` : "ret";
-  const cloneSupport = spec.returns === "GraphNode" ? "GraphSupport" : spec.returns === "RandomNode" ? "RandomSupport" : undefined;
-  const nodeOutput: Partial<Record<ValueType, string>> = {
-    MultiNode: `MultiSupport.values((Node) ${val}, originalMulti)`,
-    NaryNode: `NarySupport.values((Node) ${val})`, NextNode: `NextSupport.levels((Node) ${val})`,
-    ParentNode: `NextSupport.parentValue((Node) ${val})`, DoublyNode: `NextSupport.circular((Node) ${val}, true, originalDoubly)`,
-    CircularNode: `NextSupport.insertion((Node) ${val}, p0, originalCircular)`,
-  };
-  const out = spec.output?.as === "interaction" ? `${val}.result()` : spec.output?.as === "listIndex" ? `J.listIndex(originalp0, (ListNode) ret)` : cloneSupport ? `${cloneSupport}.values((Node) ${val}, originals)` : nodeOutput[spec.returns] ?? (spec.output?.as ? `J.special(${JSON.stringify(spec.output.as)}, ${val})` : spec.output?.prefix ? `J.prefix(${val}, ret)` : val);
-  const graphInputs = spec.params.flatMap((p, k) => p.type === spec.returns && cloneSupport ? [`originals.addAll(${cloneSupport}.nodes(p${k}));`] : []);
-  const treeSource = spec.returnTree ?? spec.params.find((p) => p.fromTree !== undefined)?.fromTree;
-  const checkList = spec.returns === "ListNode" && spec.params.some((p) => p.fromList !== undefined);
+  const cloneSupport = cloneSupportFor(spec.returns);
+  const className = spec.roundTrip?.className ?? "Solution";
   return `
   static String runCase(Object input) throws Exception {
     List<Object> a = J.L(input);
-    ${spec.environment?.kind === "parentTree" ? `NextSupport.parentRoot = NextSupport.build(a.get(${spec.params.length}));` : spec.environment ? `JudgeEnvironment.value = a.get(${spec.params.length}); JudgeEnvironment.position = 0;` : ""}
-    ${codec?.className ?? "Solution"} sol = new ${codec?.className ?? "Solution"}();
+    ${javaEnvironmentSetup(spec)}
+    ${className} sol = new ${className}();
     ${declareParams(spec.params, "a")}
-    ${spec.returns === "CircularNode" ? "Set<Node> originalCircular = NextSupport.circularNodes(p0);" : ""}
-    ${spec.returns === "MultiNode" ? "Set<Node> originalMulti = MultiSupport.nodes(p0);" : ""}
-    ${spec.returns === "DoublyNode" ? "Set<Node> originalDoubly = NextSupport.nodes(p0);" : ""}
-    ${cloneSupport ? `Set<Node> originals = Collections.newSetFromMap(new IdentityHashMap<>()); ${graphInputs.join(" ")}` : ""}
-    ${treeSource !== undefined && spec.returns === "TreeNode" ? `Set<TreeNode> originalTree = J.treeNodes(p${treeSource});` : ""}
-    ${checkList ? `Set<ListNode> originalLists = Collections.newSetFromMap(new IdentityHashMap<>()); ${spec.params.flatMap((p, k) => p.type === "ListNode" ? [`originalLists.addAll(J.listNodes(originalp${k}));`] : []).join(" ")}` : ""}
+    ${identitySetup(spec, cloneSupport)}
     ${invoke}
-    ${treeSource !== undefined && spec.returns === "TreeNode" ? 'if (ret != null && !originalTree.contains(ret)) throw new IllegalArgumentException("Return a node from the original tree");' : ""}
-    ${checkList ? 'if (ret != null && !originalLists.contains(ret)) throw new IllegalArgumentException("Return a node from the original lists");' : ""}
-    return J.json(${out});
+    ${identityChecks(spec)}
+    return J.json(${outputExpression(spec, cloneSupport)});
   }`;
 }
 
@@ -383,8 +474,7 @@ function designBody(spec: DesignSpec) {
       const call = `obj.${m.java}(${m.params.map((_, k) => `p${k}`).join(", ")})`;
       const invoke = m.returns === "void" ? `${call}; r = null;` : `r = ${call};`;
       const val = m.output?.arg !== undefined ? `p${m.output.arg}` : "r";
-      const out = m.output?.prefix ? `J.prefix(${val}, r)` : m.output?.as ? `J.special(${JSON.stringify(m.output.as)}, ${val})` : val;
-      return `case ${JSON.stringify(m.name)}: { ${declareParams(m.params, "args")} ${invoke} r = ${out}; break; }`;
+      return `case ${JSON.stringify(m.name)}: { ${declareParams(m.params, "args")} ${invoke} r = ${methodOutput(m.output, val)}; break; }`;
     })
     .join("\n        ");
   return `
@@ -438,7 +528,7 @@ export function buildJavaProgram(spec: ProblemSpec, userCode: string, tests: Any
 ${prepareJavaUserCode(userCode)}
 ${JAVA_HELPERS.replaceAll(LIST_FIELD, listField)}
 ${usesGraph(spec) ? JAVA_GRAPH : ""}
-${node === "MultiNode" ? JAVA_MULTI : node === "RandomNode" ? JAVA_RANDOM : node === "NaryNode" ? JAVA_NARY : ["NextNode", "ParentNode", "DoublyNode", "CircularNode"].includes(node ?? "") ? JAVA_NEXT : ""}
+${nodeHelpers(node)}
 ${usesCollectionHelpers(spec) ? JAVA_COLLECTION_HELPERS : ""}
 ${usesInteractive(spec) ? JAVA_INTERACTIVE : ""}
 ${javaEnvironment(spec)}

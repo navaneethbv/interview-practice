@@ -51,6 +51,115 @@ function checkTopo(n: number, edges: number[][], order: unknown): boolean {
   return edges.every(([p, c]) => (pos.get(p) ?? -1) < (pos.get(c) ?? -1));
 }
 
+/** Frequency check for randomized outputs: generous enough that a fair generator never fails. */
+function withinTolerance(actual: number, expected: number) {
+  return Math.abs(actual - expected) <= 10 * Math.sqrt(expected) + 20;
+}
+
+type LevelNode = { value: unknown; left?: LevelNode; right?: LevelNode };
+
+/** Builds a tree from a LeetCode level-order array; returns its nodes in BFS order, or null when entries lack a parent. */
+function levelOrderNodes(values: unknown[]): LevelNode[] | null {
+  const nodes: LevelNode[] = [{ value: values[0] }];
+  let index = 1;
+  for (const node of nodes) {
+    for (const side of ["left", "right"] as const) {
+      if (index >= values.length) break;
+      const value = values[index++];
+      if (value !== null) {
+        const child: LevelNode = { value };
+        node[side] = child;
+        nodes.push(child);
+      }
+    }
+  }
+  return index === values.length ? nodes : null;
+}
+
+function inorderValues(root: LevelNode): unknown[] {
+  const values: unknown[] = [], stack: LevelNode[] = [];
+  let node: LevelNode | undefined = root;
+  while (node || stack.length) {
+    while (node) { stack.push(node); node = node.left; }
+    node = stack.pop()!;
+    values.push(node.value);
+    node = node.right;
+  }
+  return values;
+}
+
+function prePostOrder(root: LevelNode): [unknown[], unknown[]] {
+  const pre: unknown[] = [], post: unknown[] = [], pending: [LevelNode, boolean][] = [[root, false]];
+  while (pending.length) {
+    const [node, visited] = pending.pop()!;
+    if (visited) { post.push(node.value); continue; }
+    pre.push(node.value);
+    pending.push([node, true]);
+    if (node.right) pending.push([node.right, false]);
+    if (node.left) pending.push([node.left, false]);
+  }
+  return [pre, post];
+}
+
+/** Children follow their parent in BFS order, so a reverse pass sees each subtree before its root. */
+function isHeightBalanced(nodes: LevelNode[]): boolean {
+  const heights = new Map<LevelNode, number>();
+  for (const node of [...nodes].reverse()) {
+    const left = node.left ? heights.get(node.left)! : 0;
+    const right = node.right ? heights.get(node.right)! : 0;
+    if (Math.abs(left - right) > 1) return false;
+    heights.set(node, 1 + Math.max(left, right));
+  }
+  return true;
+}
+
+function shuffleLooksUniform(
+  original: unknown[],
+  permutations: Map<string, number>,
+  positions: Map<unknown, number>[],
+  draws: number,
+): boolean {
+  if (draws >= 100 && original.length > 1 && permutations.size < 2) return false;
+  if (draws < 500) return true;
+  if (original.length <= 4) {
+    const possibilities = original.reduce<number>((count, _, i) => count * (i + 1), 1);
+    const expectedCount = draws / possibilities;
+    if (permutations.size !== possibilities) return false;
+    if (![...permutations.values()].every((count) => withinTolerance(count, expectedCount))) return false;
+  }
+  const expected = draws / original.length;
+  return positions.every((counts) => original.every((value) => withinTolerance(counts.get(value) ?? 0, expected)));
+}
+
+function applyAllOneUpdate(counts: Map<string, number>, key: string, op: string, result: unknown): boolean {
+  if (result !== null) return false;
+  const count = (counts.get(key) ?? 0) + (op === "inc" ? 1 : -1);
+  if (count <= 0) counts.delete(key);
+  else counts.set(key, count);
+  return true;
+}
+
+function allOneQueryValid(counts: Map<string, number>, op: string, result: unknown): boolean {
+  if (!counts.size) return result === "";
+  const values = [...counts.values()];
+  const target = op === "getMaxKey" ? Math.max(...values) : Math.min(...values);
+  return counts.get(result as string) === target;
+}
+
+/** getRandom draws made since the last update should cover the set evenly. */
+function samplesUniform(samples: number[], set: Set<number>): boolean {
+  if (samples.length < 500 || set.size < 2) return true;
+  const expected = samples.length / set.size;
+  return [...set].every((value) => withinTolerance(samples.filter((x) => x === value).length, expected));
+}
+
+function applyRandomizedSetUpdate(set: Set<number>, op: string, value: number, result: unknown): boolean {
+  if (op === "remove") return result === set.delete(value);
+  if (op !== "insert" || result !== !set.has(value)) return false;
+  set.add(value);
+  return true;
+}
+
 const VALIDATORS: Record<ValidatorName, Validator> = {
   fairCandySwap: (input,output) => {
     const [alice,bob]=input as number[][];
@@ -96,7 +205,9 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
         if(candidate===value && before===resultSum){found=true;break;}
       }
       if(!found)return false;
-      resultSum+=value;if(seen.has(resultSum))return false;seen.add(resultSum);
+      resultSum+=value;
+      if(seen.has(resultSum))return false;
+      seen.add(resultSum);
     }
     return resultSum===source.reduce((sum,n)=>sum+n,0);
   },
@@ -125,72 +236,36 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     const positions = original.map(() => new Map<unknown, number>());
     let draws=0;
     for(let i=0;i<ops.length;i++) {
-      if (ops[i] === "reset") {if (!deepEqual(output[i],original)) return false;}
-      else {
-        if (!deepEqual(sortTop(output[i]),sortTop(original))) return false;
-        output[i].forEach((value: unknown, position: number) => {
-          const counts = positions[position];
-          counts.set(value, (counts.get(value) ?? 0) + 1);
-        });
-        const permutation = JSON.stringify(output[i]);
-        permutations.set(permutation, (permutations.get(permutation) ?? 0) + 1); draws++;
+      if (ops[i] === "reset") {
+        if (!deepEqual(output[i],original)) return false;
+        continue;
       }
+      if (!deepEqual(sortTop(output[i]),sortTop(original))) return false;
+      output[i].forEach((value: unknown, position: number) => {
+        const counts = positions[position];
+        counts.set(value, (counts.get(value) ?? 0) + 1);
+      });
+      const permutation = JSON.stringify(output[i]);
+      permutations.set(permutation, (permutations.get(permutation) ?? 0) + 1);
+      draws++;
     }
-    if (draws >= 100 && original.length > 1 && permutations.size < 2) return false;
-    if (draws < 500) return true;
-    if (original.length <= 4) {
-      const possibilities = original.reduce((count, _, i) => count * (i + 1), 1);
-      if (permutations.size !== possibilities) return false;
-      const expectedCount = draws / possibilities;
-      if ([...permutations.values()].some((count) => Math.abs(count - expectedCount) > 10 * Math.sqrt(expectedCount) + 20)) return false;
-    }
-    const expected = draws / original.length;
-    return positions.every((counts) => original.every((value) =>
-      Math.abs((counts.get(value) ?? 0) - expected) <= 10 * Math.sqrt(expected) + 20,
-    ));
+    return shuffleLooksUniform(original, permutations, positions, draws);
   },
   allOne: (input, output) => {
     const { ops, args } = input as unknown as DesignTestCase["input"];
     if (!Array.isArray(output) || output.length !== ops.length) return false;
     const counts = new Map<string, number>();
-    for (let i = 0; i < ops.length; i++) {
-      const key = args[i][0] as string;
-      if (ops[i] === "inc" || ops[i] === "dec") {
-        if (output[i] !== null) return false;
-        const count = (counts.get(key) ?? 0) + (ops[i] === "inc" ? 1 : -1);
-        if (count <= 0) counts.delete(key); else counts.set(key, count);
-      } else {
-        if (!counts.size) { if (output[i] !== "") return false; continue; }
-        const value = counts.get(output[i]);
-        const target = ops[i] === "getMaxKey" ? Math.max(...counts.values()) : Math.min(...counts.values());
-        if (value !== target) return false;
-      }
-    }
-    return true;
+    return ops.every((op, i) => op === "inc" || op === "dec"
+      ? applyAllOneUpdate(counts, args[i][0] as string, op, output[i])
+      : allOneQueryValid(counts, op, output[i]));
   },
   prePostTree: (input, output) => {
     const [preorder, postorder] = input as number[][];
     if (!preorder.length) return output === null || (Array.isArray(output) && !output.length);
     if (!Array.isArray(output) || !output.length || output[0] === null || output.length > preorder.length * 2 + 1) return false;
-    type Node = { value: unknown; left?: Node; right?: Node };
-    const root: Node = { value: output[0] }, queue = [root];
-    let index = 1;
-    for (let i = 0; i < queue.length; i++) {
-      for (const side of ["left", "right"] as const) {
-        if (index >= output.length) break;
-        const value = output[index++];
-        if (value !== null) { const child = { value }; queue[i][side] = child; queue.push(child); }
-      }
-    }
-    if (index !== output.length || queue.length !== preorder.length) return false;
-    const pre: unknown[] = [], post: unknown[] = [], pending: [Node, boolean][] = [[root, false]];
-    while (pending.length) {
-      const [node, visited] = pending.pop()!;
-      if (visited) { post.push(node.value); continue; }
-      pre.push(node.value); pending.push([node, true]);
-      if (node.right) pending.push([node.right, false]);
-      if (node.left) pending.push([node.left, false]);
-    }
+    const nodes = levelOrderNodes(output);
+    if (!nodes || nodes.length !== preorder.length) return false;
+    const [pre, post] = prePostOrder(nodes[0]);
     return deepEqual(pre, preorder) && deepEqual(post, postorder);
   },
   customSort: (input, output) => {
@@ -209,7 +284,10 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     if (typeof output !== "string" || typeof expected !== "string" || output.length !== expected.length) return false;
     let index = 0, balance = 0;
     for (const c of input[0] as string) {
-      if (c !== output[index]) { if (c !== "(" && c !== ")") return false; continue; }
+      if (c !== output[index]) {
+        if (c !== "(" && c !== ")") return false;
+        continue;
+      }
       index++;
       if (c === "(") balance++;
       if (c === ")" && --balance < 0) return false;
@@ -240,54 +318,26 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     const remaining = (input[0] as (number | null)[]).filter((x): x is number => x !== null && x !== input[1]).sort((a, b) => a - b);
     if (output === null || (Array.isArray(output) && !output.length)) return !remaining.length;
     if (!Array.isArray(output) || output[0] === null || output.length > remaining.length * 2 + 1) return false;
-    const nodes: { value: number; left?: number; right?: number }[] = [{ value: output[0] }];
-    let next = 1;
-    for (let i = 0; i < nodes.length; i++) {
-      for (const side of ["left", "right"] as const) {
-        if (next >= output.length) break;
-        const value = output[next++];
-        if (value !== null) { if (!Number.isInteger(value)) return false; nodes[i][side] = nodes.length; nodes.push({ value }); }
-      }
-    }
-    if (next !== output.length || nodes.length !== remaining.length) return false;
-    const values: number[] = [], stack: number[] = [];
-    let index: number | undefined = 0;
-    while (index !== undefined || stack.length) {
-      while (index !== undefined) { stack.push(index); index = nodes[index].left; }
-      index = stack.pop()!; values.push(nodes[index].value); index = nodes[index].right;
-    }
-    return deepEqual(values, remaining);
+    const nodes = levelOrderNodes(output);
+    if (!nodes || nodes.length !== remaining.length || !nodes.every((node) => Number.isInteger(node.value))) return false;
+    return deepEqual(inorderValues(nodes[0]), remaining);
   },
   randomizedSet: (input, output) => {
     const { ops, args } = input as unknown as DesignTestCase["input"];
     if (!Array.isArray(output) || output.length !== ops.length) return false;
     const set = new Set<number>();
     let samples: number[] = [];
-    function checkSamples() {
-      if (samples.length >= 500 && set.size > 1) {
-        const expected = samples.length / set.size;
-        const tolerance = 10 * Math.sqrt(expected) + 20;
-        for (const value of set) if (Math.abs(samples.filter((x) => x === value).length - expected) > tolerance) return false;
-      }
-      samples = [];
-      return true;
-    }
     for (let i = 0; i < ops.length; i++) {
-      const value = args[i][0] as number;
       if (ops[i] === "getRandom") {
         if (typeof output[i] !== "number" || !set.has(output[i])) return false;
         samples.push(output[i]);
-      } else {
-        if (!checkSamples()) return false;
-        if (ops[i] === "insert") {
-          if (output[i] !== !set.has(value)) return false;
-          set.add(value);
-        } else if (ops[i] === "remove") {
-          if (output[i] !== set.delete(value)) return false;
-        } else return false;
+        continue;
       }
+      if (!samplesUniform(samples, set)) return false;
+      samples = [];
+      if (!applyRandomizedSetUpdate(set, ops[i], args[i][0] as number, output[i])) return false;
     }
-    return checkSamples();
+    return samplesUniform(samples, set);
   },
   weightedPick: (input, output) => {
     const { ctor, ops } = input as unknown as DesignTestCase["input"];
@@ -300,10 +350,7 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     }
     if (output.length < 500) return true;
     const total = weights.reduce((sum, w) => sum + w, 0);
-    return weights.every((weight, i) => {
-      const expected = output.length * weight / total;
-      return Math.abs(counts[i] - expected) <= 10 * Math.sqrt(expected) + 20;
-    });
+    return weights.every((weight, i) => withinTolerance(counts[i], output.length * weight / total));
   },
   peakIndex: (input, output) => {
     const nums = input[0];
@@ -315,33 +362,9 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     if (!Array.isArray(nums)) return false;
     if (!nums.length) return output === null || (Array.isArray(output) && !output.length);
     if (!Array.isArray(output) || !output.length || output[0] === null || output.length > nums.length * 2 + 1) return false;
-    type Node = { value: unknown; left?: Node; right?: Node };
-    const root: Node = { value: output[0] };
-    const queue = [root];
-    let index = 1;
-    for (let i = 0; i < queue.length; i++) {
-      for (const side of ["left", "right"] as const) {
-        if (index >= output.length) break;
-        const value = output[index++];
-        if (value !== null) { const child: Node = { value }; queue[i][side] = child; queue.push(child); }
-      }
-    }
-    if (index !== output.length || queue.length !== nums.length) return false;
-    const heights = new Map<Node, number>();
-    for (let i = queue.length - 1; i >= 0; i--) {
-      const node = queue[i];
-      const left = node.left ? heights.get(node.left)! : 0;
-      const right = node.right ? heights.get(node.right)! : 0;
-      if (Math.abs(left - right) > 1) return false;
-      heights.set(node, 1 + Math.max(left, right));
-    }
-    const values: unknown[] = [], stack: Node[] = [];
-    let node: Node | undefined = root;
-    while (node || stack.length) {
-      while (node) { stack.push(node); node = node.left; }
-      node = stack.pop()!; values.push(node.value); node = node.right;
-    }
-    return deepEqual(values, nums);
+    const nodes = levelOrderNodes(output);
+    if (!nodes || nodes.length !== nums.length || !isHeightBalanced(nodes)) return false;
+    return deepEqual(inorderValues(nodes[0]), nums);
   },
   courseOrder: (input, output, expected) => {
     if (Array.isArray(expected) && expected.length === 0) return Array.isArray(output) && output.length === 0;

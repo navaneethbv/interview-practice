@@ -1,6 +1,6 @@
 import { PYTHON_COLLECTION_HELPERS, usesCollectionHelpers } from "./helpers";
 import { PYTHON_INTERACTIVE, usesInteractive } from "./interactive";
-import type { AnyTestCase, ProblemSpec } from "./types";
+import type { AnyTestCase, DesignSpec, FunctionSpec, ProblemSpec } from "./types";
 import { RESULT_MARKER } from "./types";
 import { PYTHON_GRAPH, usesGraph } from "./graph";
 import { buildSqlProgram } from "./sql";
@@ -422,10 +422,33 @@ export function buildPythonProgram(spec: ProblemSpec, userCode: string, tests: A
   const runner = PYTHON_RUNNER.replace("__JUDGE_SPEC__", JSON.stringify(b64(JSON.stringify(spec))))
     .replace("__JUDGE_TESTS__", JSON.stringify(b64(JSON.stringify(tests))))
     .replace("__JUDGE_MARKER__", JSON.stringify(RESULT_MARKER));
-  const node = nodeType(spec);
-  const binaryHelper = node === "CircularNode" ? PYTHON_NEXT.replace("def __init__(self, val=0, left=None, right=None, next=None):", "def __init__(self, val=0, next=None, left=None, right=None):") : PYTHON_NEXT;
-  const helper = node === "MultiNode" ? PYTHON_MULTI : node === "RandomNode" ? PYTHON_RANDOM : node === "NaryNode" ? PYTHON_NARY : ["NextNode", "ParentNode", "DoublyNode", "CircularNode"].includes(node ?? "") ? binaryHelper : usesGraph(spec) ? PYTHON_GRAPH : "";
-  return { prelude: PYTHON_PRELUDE + helper + (usesCollectionHelpers(spec) ? PYTHON_COLLECTION_HELPERS : "") + (usesInteractive(spec) ? PYTHON_INTERACTIVE : "") + pythonEnvironment(spec), user: userCode, runner };
+  const prelude = [
+    PYTHON_PRELUDE,
+    pythonNodeHelper(spec),
+    usesCollectionHelpers(spec) ? PYTHON_COLLECTION_HELPERS : "",
+    usesInteractive(spec) ? PYTHON_INTERACTIVE : "",
+    pythonEnvironment(spec),
+  ].join("");
+  return { prelude, user: userCode, runner };
+}
+
+function pythonNodeHelper(spec: FunctionSpec | DesignSpec) {
+  switch (nodeType(spec)) {
+    case "MultiNode": return PYTHON_MULTI;
+    case "RandomNode": return PYTHON_RANDOM;
+    case "NaryNode": return PYTHON_NARY;
+    // LeetCode's circular list Node takes `next` as its second constructor argument.
+    case "CircularNode":
+      return PYTHON_NEXT.replace(
+        "def __init__(self, val=0, left=None, right=None, next=None):",
+        "def __init__(self, val=0, next=None, left=None, right=None):",
+      );
+    case "NextNode":
+    case "ParentNode":
+    case "DoublyNode":
+      return PYTHON_NEXT;
+    default: return usesGraph(spec) ? PYTHON_GRAPH : "";
+  }
 }
 
 /** Single-file program for CPython (used by the expected-output generator and tests). */

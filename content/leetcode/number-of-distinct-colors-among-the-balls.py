@@ -1,6 +1,6 @@
 from collections import Counter
 class Solution:
-    def queryResults(self,limit,queries):
+    def queryResults(self,_limit,queries):
         balls={};counts=Counter();result=[]
         for ball,color in queries:
             if ball in balls:

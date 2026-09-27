@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ProblemSet } from "@/lib/content-types";
 
 /** Switches between the course's problems and the imported problem lists. */
-export function SetTabs({ sets, active }: { sets: ProblemSet[]; active: string }) {
+export function SetTabs({ sets, active }: Readonly<{ sets: ProblemSet[]; active: string }>) {
   const tabs = [
     { id: "grokking", href: "/problems", title: "Grokking Patterns" },
     ...sets.map((s) => ({ id: s.id, href: `/problems/sets/${s.id}`, title: s.title })),
