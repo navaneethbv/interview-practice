@@ -1,3 +1,6 @@
 class Solution:
     def mostWordsFound(self, sentences):
-        return max(sentence.count(' ')+1 for sentence in sentences)
+        maximum = 0
+        for sentence in sentences:
+            maximum = max(maximum, sentence.count(" ") + 1)
+        return maximum

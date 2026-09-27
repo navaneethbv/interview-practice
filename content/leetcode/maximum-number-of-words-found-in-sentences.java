@@ -1,3 +1,16 @@
 class Solution {
-public int mostWordsFound(String[] sentences) {int best=0;for(String s:sentences) {int count=1;for(char c:s.toCharArray()) if(c==' ') count++;best=Math.max(best,count);}return best;}
+    public int mostWordsFound(String[] sentences) {
+        int maximum = 0;
+        for (String sentence : sentences) {
+            int wordCount = 1;
+            for (int index = 0; index < sentence.length(); index++) {
+                char character = sentence.charAt(index);
+                if (character == ' ') {
+                    wordCount++;
+                }
+            }
+            maximum = Math.max(maximum, wordCount);
+        }
+        return maximum;
+    }
 }

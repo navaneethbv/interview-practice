@@ -1,3 +1,18 @@
 class Solution {
-public long maxSubarraySum(int[] nums,int k) {long[] minimum=new long[k];Arrays.fill(minimum,Long.MAX_VALUE);minimum[0]=0;long prefix=0,best=Long.MIN_VALUE;for(int i=0;i<nums.length;i++) {prefix+=nums[i];int r=(i+1)%k;if(minimum[r]!=Long.MAX_VALUE) best=Math.max(best,prefix-minimum[r]);minimum[r]=Math.min(minimum[r],prefix);}return best;}
+    public long maxSubarraySum(int[] nums, int k) {
+        long[] minimumPrefix = new long[k];
+        Arrays.fill(minimumPrefix, Long.MAX_VALUE);
+        minimumPrefix[0] = 0;
+        long prefix = 0;
+        long best = Long.MIN_VALUE;
+        for (int index = 0; index < nums.length; index++) {
+            prefix += nums[index];
+            int remainder = (index + 1) % k;
+            if (minimumPrefix[remainder] != Long.MAX_VALUE) {
+                best = Math.max(best, prefix - minimumPrefix[remainder]);
+            }
+            minimumPrefix[remainder] = Math.min(minimumPrefix[remainder], prefix);
+        }
+        return best;
+    }
 }

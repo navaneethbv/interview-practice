@@ -1,3 +1,27 @@
 class Solution {
-public int maxProfit(int[] inventory,int orders) {Arrays.sort(inventory);long remaining=orders,profit=0,mod=1000000007;int n=inventory.length;for(int i=n-1;i>=0;i--) {long width=n-i,high=inventory[i],low=i>0?inventory[i-1]:0,available=(high-low)*width;if(remaining>=available) {profit=(profit+(high+low+1)*(high-low)/2%mod*width)%mod;remaining-=available;}else {long levels=remaining/width,extra=remaining%width,bottom=high-levels;profit=(profit+(high+bottom+1)*levels/2%mod*width+extra*bottom)%mod;break;}}return (int)profit;}
+    public int maxProfit(int[] inventory, int orders) {
+        Arrays.sort(inventory);
+        long remaining = orders;
+        long profit = 0;
+        long modulo = 1000000007L;
+        for (int index = inventory.length - 1; index >= 0; index--) {
+            long width = inventory.length - index;
+            long high = inventory[index];
+            long low = index > 0 ? inventory[index - 1] : 0;
+            long available = (high - low) * width;
+            if (remaining >= available) {
+                long levelProfit = (high + low + 1) * (high - low) / 2;
+                profit = (profit + levelProfit * width) % modulo;
+                remaining -= available;
+                continue;
+            }
+            long levels = remaining / width;
+            long extra = remaining % width;
+            long bottom = high - levels;
+            long levelProfit = (high + bottom + 1) * levels / 2 * width + extra * bottom;
+            profit = (profit + levelProfit) % modulo;
+            break;
+        }
+        return (int) profit;
+    }
 }
