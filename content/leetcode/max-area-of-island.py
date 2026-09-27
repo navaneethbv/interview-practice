@@ -1,22 +1,40 @@
 class Solution:
     def maxAreaOfIsland(self, grid):
-        best = 0
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if grid[r][c] == 1:
-                    best = max(best, self._sink(grid, r, c))
-        return best
+        if not grid or not grid[0]:
+            return 0
 
-    def _sink(self, grid, r, c):
-        """Clears one island and returns its area."""
-        rows, cols = len(grid), len(grid[0])
-        stack, area = [(r,c)], 0
-        grid[r][c] = 0
+        best_area = 0
+        rows, columns = len(grid), len(grid[0])
+        for row in range(rows):
+            for column in range(columns):
+                if grid[row][column] == 1:
+                    best_area = max(
+                        best_area,
+                        self._collect_island(grid, row, column),
+                    )
+        return best_area
+
+    def _collect_island(self, grid, start_row, start_column):
+        rows, columns = len(grid), len(grid[0])
+        stack = [(start_row, start_column)]
+        grid[start_row][start_column] = 0
+        area = 0
+
         while stack:
-            x,y = stack.pop()
+            row, column = stack.pop()
             area += 1
-            for a,b in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
-                if 0 <= a < rows and 0 <= b < cols and grid[a][b] == 1:
-                    grid[a][b] = 0
-                    stack.append((a,b))
+            for next_row, next_column in (
+                (row - 1, column),
+                (row + 1, column),
+                (row, column - 1),
+                (row, column + 1),
+            ):
+                if (
+                    0 <= next_row < rows
+                    and 0 <= next_column < columns
+                    and grid[next_row][next_column] == 1
+                ):
+                    grid[next_row][next_column] = 0
+                    stack.append((next_row, next_column))
+
         return area

@@ -1,10 +1,19 @@
 class Solution:
     def checkValidString(self, s):
-        low = high = 0
-        for c in s:
-            low += 1 if c == '(' else -1
-            high += -1 if c == ')' else 1
-            if high < 0:
+        minimum_open = 0
+        maximum_open = 0
+        for character in s:
+            if character == "(":
+                minimum_open += 1
+                maximum_open += 1
+            elif character == ")":
+                minimum_open -= 1
+                maximum_open -= 1
+            else:
+                minimum_open -= 1
+                maximum_open += 1
+
+            if maximum_open < 0:
                 return False
-            low = max(low,0)
-        return low == 0
+            minimum_open = max(minimum_open, 0)
+        return minimum_open == 0

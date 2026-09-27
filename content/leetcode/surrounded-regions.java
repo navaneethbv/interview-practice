@@ -1,3 +1,66 @@
 class Solution {
-public void solve(char[][] board){int m=board.length,n=board[0].length;Deque<int[]>q=new ArrayDeque<>();for(int r=0;r<m;r++)for(int c=0;c<n;c++)if((r==0||r==m-1||c==0||c==n-1)&&board[r][c]=='O'){board[r][c]='#';q.add(new int[]{r,c});}int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&board[a][b]=='O'){board[a][b]='#';q.add(new int[]{a,b});}}}for(int r=0;r<m;r++)for(int c=0;c<n;c++)board[r][c]=board[r][c]=='#'?'O':'X';}
+    private void markSafeCells(char[][] board, Deque<int[]> queue) {
+        int rows = board.length;
+        int columns = board[0].length;
+
+        while (!queue.isEmpty()) {
+            int[] cell = queue.remove();
+            int row = cell[0];
+            int column = cell[1];
+
+            addSafeCell(board, queue, row - 1, column);
+            addSafeCell(board, queue, row + 1, column);
+            addSafeCell(board, queue, row, column - 1);
+            addSafeCell(board, queue, row, column + 1);
+        }
+    }
+
+    private void addSafeCell(
+            char[][] board,
+            Deque<int[]> queue,
+            int row,
+            int column) {
+        if (row >= 0
+                && row < board.length
+                && column >= 0
+                && column < board[0].length
+                && board[row][column] == 'O') {
+            board[row][column] = '#';
+            queue.add(new int[]{row, column});
+        }
+    }
+
+    public void solve(char[][] board) {
+        if (board.length == 0 || board[0].length == 0) {
+            return;
+        }
+
+        Deque<int[]> queue = new ArrayDeque<>();
+        for (int row = 0; row < board.length; row++) {
+            addBoundaryCell(board, queue, row, 0);
+            addBoundaryCell(board, queue, row, board[0].length - 1);
+        }
+        for (int column = 0; column < board[0].length; column++) {
+            addBoundaryCell(board, queue, 0, column);
+            addBoundaryCell(board, queue, board.length - 1, column);
+        }
+
+        markSafeCells(board, queue);
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                board[row][column] = board[row][column] == '#' ? 'O' : 'X';
+            }
+        }
+    }
+
+    private void addBoundaryCell(
+            char[][] board,
+            Deque<int[]> queue,
+            int row,
+            int column) {
+        if (board[row][column] == 'O') {
+            board[row][column] = '#';
+            queue.add(new int[]{row, column});
+        }
+    }
 }

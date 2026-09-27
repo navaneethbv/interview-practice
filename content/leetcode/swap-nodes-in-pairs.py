@@ -1,6 +1,6 @@
 class Solution:
     def swapPairs(self, head):
-        dummy = ListNode(0,head)
+        dummy = ListNode(0, head)
         previous = dummy
         while previous.next and previous.next.next:
             first = previous.next

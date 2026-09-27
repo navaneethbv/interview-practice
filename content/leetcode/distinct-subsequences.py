@@ -1,8 +1,8 @@
 class Solution:
     def numDistinct(self, s, t):
-        dp = [1]+[0]*len(t)
-        for char in s:
-            for j in range(len(t)-1,-1,-1):
-                if char == t[j]:
-                    dp[j+1] += dp[j]
-        return dp[-1]
+        ways = [1] + [0] * len(t)
+        for source_character in s:
+            for target_index in range(len(t) - 1, -1, -1):
+                if source_character == t[target_index]:
+                    ways[target_index + 1] += ways[target_index]
+        return ways[-1]

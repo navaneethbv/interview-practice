@@ -1,7 +1,8 @@
 class Solution:
     def longestCommonPrefix(self, strs):
         prefix = strs[0]
-        for s in strs[1:]:
-            while not s.startswith(prefix):
+        for index in range(1, len(strs)):
+            word = strs[index]
+            while not word.startswith(prefix):
                 prefix = prefix[:-1]
         return prefix

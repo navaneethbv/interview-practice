@@ -1,3 +1,16 @@
 class Solution {
-public int change(int amount,int[] coins){long[]dp=new long[amount+1];dp[0]=1;for(int c:coins)for(int v=c;v<=amount;v++)dp[v]=Math.min(Integer.MAX_VALUE,dp[v]+dp[v-c]);return (int)dp[amount];}
+    public int change(int amount, int[] coins) {
+        long[] ways = new long[amount + 1];
+        ways[0] = 1;
+
+        for (int coin : coins) {
+            for (int value = coin; value <= amount; value++) {
+                ways[value] = Math.min(
+                        Integer.MAX_VALUE,
+                        ways[value] + ways[value - coin]);
+            }
+        }
+
+        return (int) ways[amount];
+    }
 }

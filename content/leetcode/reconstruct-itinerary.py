@@ -1,13 +1,19 @@
 from collections import defaultdict
+
+
 class Solution:
     def findItinerary(self, tickets):
         graph = defaultdict(list)
-        for a,b in sorted(tickets, reverse=True):
-            graph[a].append(b)
-        stack, route = ['JFK'], []
+        for source, destination in sorted(tickets, reverse=True):
+            graph[source].append(destination)
+
+        stack = ['JFK']
+        route = []
         while stack:
-            if graph[stack[-1]]:
-                stack.append(graph[stack[-1]].pop())
+            airport = stack[-1]
+            if graph[airport]:
+                stack.append(graph[airport].pop())
             else:
                 route.append(stack.pop())
+
         return route[::-1]

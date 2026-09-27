@@ -1,11 +1,14 @@
 class Solution:
     def isSymmetric(self, root):
-        stack=[(root.left,root.right)]
+        stack = [(root.left, root.right)]
         while stack:
-            a,b=stack.pop()
-            if not a or not b:
-                if a is not b:return False
+            left_node, right_node = stack.pop()
+            if not left_node or not right_node:
+                if left_node is not right_node:
+                    return False
                 continue
-            if a.val!=b.val:return False
-            stack.extend(((a.left,b.right),(a.right,b.left)))
+            if left_node.val != right_node.val:
+                return False
+            stack.append((left_node.left, right_node.right))
+            stack.append((left_node.right, right_node.left))
         return True

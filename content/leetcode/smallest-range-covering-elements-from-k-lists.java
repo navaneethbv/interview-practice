@@ -1,3 +1,33 @@
 class Solution {
-public int[] smallestRange(List<List<Integer>> nums){PriorityQueue<int[]>q=new PriorityQueue<>(Comparator.comparingInt(a->a[0]));int high=Integer.MIN_VALUE;for(int i=0;i<nums.size();i++){int v=nums.get(i).get(0);q.add(new int[]{v,i,0});high=Math.max(high,v);}int lo=q.peek()[0],hi=high;while(true){int[]p=q.remove();int low=p[0];if(high-low<hi-lo||(high-low==hi-lo&&low<lo)){lo=low;hi=high;}if(p[2]+1==nums.get(p[1]).size())break;int v=nums.get(p[1]).get(p[2]+1);high=Math.max(high,v);q.add(new int[]{v,p[1],p[2]+1});}return new int[]{lo,hi};}
+    public int[] smallestRange(List<List<Integer>> nums) {
+        PriorityQueue<int[]> pending = new PriorityQueue<>(
+                Comparator.comparingInt(value -> value[0]));
+        int high = Integer.MIN_VALUE;
+        for (int rowIndex = 0; rowIndex < nums.size(); rowIndex++) {
+            int firstValue = nums.get(rowIndex).get(0);
+            pending.add(new int[] {firstValue, rowIndex, 0});
+            high = Math.max(high, firstValue);
+        }
+        int lowAnswer = pending.peek()[0];
+        int highAnswer = high;
+        while (true) {
+            int[] current = pending.remove();
+            int low = current[0];
+            int currentLength = high - low;
+            int answerLength = highAnswer - lowAnswer;
+            if (currentLength < answerLength
+                    || (currentLength == answerLength && low < lowAnswer)) {
+                lowAnswer = low;
+                highAnswer = high;
+            }
+            int nextIndex = current[2] + 1;
+            if (nextIndex == nums.get(current[1]).size()) {
+                break;
+            }
+            int nextValue = nums.get(current[1]).get(nextIndex);
+            high = Math.max(high, nextValue);
+            pending.add(new int[] {nextValue, current[1], nextIndex});
+        }
+        return new int[] {lowAnswer, highAnswer};
+    }
 }

@@ -1,9 +1,23 @@
 class Solution:
     def pathSum(self, root, targetSum):
-        out=[];stack=[(root,[],0)] if root else []
-        while stack:
-            node,path,total=stack.pop();path=path+[node.val];total+=node.val
-            if not node.left and not node.right and total==targetSum:out.append(path)
-            if node.left:stack.append((node.left,path,total))
-            if node.right:stack.append((node.right,path,total))
-        return out
+        paths = []
+        current_path = []
+        pending = [(root, targetSum, False)] if root else []
+
+        while pending:
+            node, remaining_sum, leaving = pending.pop()
+            if leaving:
+                current_path.pop()
+                continue
+
+            current_path.append(node.val)
+            remaining_sum -= node.val
+            if not node.left and not node.right and remaining_sum == 0:
+                paths.append(current_path.copy())
+
+            pending.append((node, remaining_sum, True))
+            if node.right:
+                pending.append((node.right, remaining_sum, False))
+            if node.left:
+                pending.append((node.left, remaining_sum, False))
+        return paths

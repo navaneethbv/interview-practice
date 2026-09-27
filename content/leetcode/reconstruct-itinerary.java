@@ -1,3 +1,25 @@
 class Solution {
-public List<String> findItinerary(List<List<String>> tickets){Map<String,PriorityQueue<String>>g=new HashMap<>();for(List<String>t:tickets)g.computeIfAbsent(t.get(0),x->new PriorityQueue<>()).add(t.get(1));Deque<String>stack=new ArrayDeque<>();LinkedList<String>out=new LinkedList<>();stack.push("JFK");while(!stack.isEmpty()){PriorityQueue<String>q=g.get(stack.peek());if(q!=null&&!q.isEmpty())stack.push(q.remove());else out.addFirst(stack.pop());}return out;}
+    public List<String> findItinerary(List<List<String>> tickets) {
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        for (List<String> ticket : tickets) {
+            graph.computeIfAbsent(ticket.get(0), ignored -> new PriorityQueue<>())
+                    .add(ticket.get(1));
+        }
+
+        Deque<String> stack = new ArrayDeque<>();
+        LinkedList<String> route = new LinkedList<>();
+        stack.push("JFK");
+
+        while (!stack.isEmpty()) {
+            String airport = stack.peek();
+            PriorityQueue<String> destinations = graph.get(airport);
+            if (destinations != null && !destinations.isEmpty()) {
+                stack.push(destinations.remove());
+            } else {
+                route.addFirst(stack.pop());
+            }
+        }
+
+        return route;
+    }
 }

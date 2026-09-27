@@ -1,14 +1,26 @@
 class Solution:
     def palindromePairs(self, words):
-        index={word:i for i,word in enumerate(words)};out=set()
-        for i,word in enumerate(words):
-            for split in range(len(word)+1):
-                left,right=word[:split],word[split:]
-                # A palindromic prefix can follow the reversed suffix; a palindromic suffix can precede the reversed prefix.
-                if left==left[::-1]:self._record(out,index.get(right[::-1]),i,True)
-                if right==right[::-1]:self._record(out,index.get(left[::-1]),i,False)
-        return [list(pair) for pair in sorted(out)]
+        word_index = {
+            word: index for index, word in enumerate(words)
+        }
+        pairs = set()
+        for word_index_in_list, word in enumerate(words):
+            for split in range(len(word) + 1):
+                left = word[:split]
+                right = word[split:]
+                # A palindrome on one side determines the needed reverse on the other.
+                if left == left[::-1]:
+                    self._record(pairs, word_index.get(right[::-1]),
+                                 word_index_in_list, True)
+                if right == right[::-1]:
+                    self._record(pairs, word_index.get(left[::-1]),
+                                 word_index_in_list, False)
+        return [list(pair) for pair in sorted(pairs)]
 
     @staticmethod
-    def _record(out, j, i, j_first):
-        if j is not None and j!=i:out.add((j,i) if j_first else (i,j))
+    def _record(pairs, other_index, current_index, other_first):
+        if other_index is not None and other_index != current_index:
+            if other_first:
+                pairs.add((other_index, current_index))
+            else:
+                pairs.add((current_index, other_index))

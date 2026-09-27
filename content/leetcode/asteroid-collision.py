@@ -1,12 +1,15 @@
 class Solution:
     def asteroidCollision(self, asteroids):
-        stack=[]
+        survivors = []
         for value in asteroids:
-            alive=True
-            while alive and value<0 and stack and stack[-1]>0:
-                if stack[-1]<-value:stack.pop()
+            survives = True
+            while survives and value < 0 and survivors and survivors[-1] > 0:
+                if survivors[-1] < -value:
+                    survivors.pop()
                 else:
-                    if stack[-1]==-value:stack.pop()
-                    alive=False
-            if alive:stack.append(value)
-        return stack
+                    if survivors[-1] == -value:
+                        survivors.pop()
+                    survives = False
+            if survives:
+                survivors.append(value)
+        return survivors

@@ -1,3 +1,55 @@
 class Solution {
-public int maxAreaOfIsland(int[][] grid){int best=0,m=grid.length,n=grid[0].length;int[] ds={-1,0,1,0,-1};for(int r=0;r<m;r++)for(int c=0;c<n;c++)if(grid[r][c]==1){Deque<int[]> q=new ArrayDeque<>();q.add(new int[]{r,c});grid[r][c]=0;int area=0;while(!q.isEmpty()){int[] p=q.remove();area++;for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&grid[a][b]==1){grid[a][b]=0;q.add(new int[]{a,b});}}}best=Math.max(best,area);}return best;}
+    private int collectIsland(int[][] grid, int startRow, int startColumn) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        int area = 0;
+        Deque<int[]> stack = new ArrayDeque<>();
+        stack.push(new int[]{startRow, startColumn});
+        grid[startRow][startColumn] = 0;
+
+        while (!stack.isEmpty()) {
+            int[] cell = stack.pop();
+            area++;
+            int row = cell[0];
+            int column = cell[1];
+
+            addLandNeighbor(grid, stack, row - 1, column);
+            addLandNeighbor(grid, stack, row + 1, column);
+            addLandNeighbor(grid, stack, row, column - 1);
+            addLandNeighbor(grid, stack, row, column + 1);
+        }
+
+        return area;
+    }
+
+    private void addLandNeighbor(
+            int[][] grid,
+            Deque<int[]> stack,
+            int row,
+            int column) {
+        if (row >= 0
+                && row < grid.length
+                && column >= 0
+                && column < grid[0].length
+                && grid[row][column] == 1) {
+            grid[row][column] = 0;
+            stack.push(new int[]{row, column});
+        }
+    }
+
+    public int maxAreaOfIsland(int[][] grid) {
+        if (grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+
+        int bestArea = 0;
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid[0].length; column++) {
+                if (grid[row][column] == 1) {
+                    bestArea = Math.max(bestArea, collectIsland(grid, row, column));
+                }
+            }
+        }
+        return bestArea;
+    }
 }

@@ -1,10 +1,16 @@
 class Solution:
     def maximalSquare(self, matrix):
-        previous=[0]*(len(matrix[0])+1);best=0
+        previous_row = [0] * (len(matrix[0]) + 1)
+        largest_side = 0
         for row in matrix:
-            current=[0]
-            for j,c in enumerate(row):
-                value=1+min(previous[j],previous[j+1],current[-1]) if c=='1' else 0
-                current.append(value);best=max(best,value)
-            previous=current
-        return best*best
+            current_row = [0]
+            for column, cell in enumerate(row):
+                if cell == '1':
+                    side = 1 + min(previous_row[column], previous_row[column + 1],
+                                    current_row[-1])
+                else:
+                    side = 0
+                current_row.append(side)
+                largest_side = max(largest_side, side)
+            previous_row = current_row
+        return largest_side * largest_side

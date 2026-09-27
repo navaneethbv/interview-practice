@@ -1,6 +1,14 @@
 class Solution:
     def maxProfit(self, prices):
-        holding, sold, resting = -prices[0], float('-inf'), 0
-        for price in prices[1:]:
-            holding, sold, resting = max(holding,resting-price), holding+price, max(resting,sold)
-        return max(sold,resting)
+        holding = -prices[0]
+        sold = float('-inf')
+        resting = 0
+
+        for day in range(1, len(prices)):
+            price = prices[day]
+            next_holding = max(holding, resting - price)
+            next_sold = holding + price
+            next_resting = max(resting, sold)
+            holding, sold, resting = next_holding, next_sold, next_resting
+
+        return max(sold, resting)

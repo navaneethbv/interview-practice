@@ -1,3 +1,13 @@
 class Solution {
-public String largestNumber(int[] nums){String[]s=Arrays.stream(nums).mapToObj(String::valueOf).toArray(String[]::new);Arrays.sort(s,(a,b)->(b+a).compareTo(a+b));return s[0].equals("0")?"0":String.join("",s);}
+    public String largestNumber(int[] nums) {
+        String[] values = new String[nums.length];
+        for (int index = 0; index < nums.length; index++) {
+            values[index] = String.valueOf(nums[index]);
+        }
+        Arrays.sort(values, (first, second) -> (second + first).compareTo(first + second));
+        if (values[0].equals("0")) {
+            return "0";
+        }
+        return String.join("", values);
+    }
 }

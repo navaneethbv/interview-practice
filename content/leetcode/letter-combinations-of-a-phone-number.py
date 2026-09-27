@@ -1,7 +1,23 @@
 class Solution:
     def letterCombinations(self, digits):
-        keys = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
-        result = [''] if digits else []
+        key_to_letters = {
+            '2': 'abc',
+            '3': 'def',
+            '4': 'ghi',
+            '5': 'jkl',
+            '6': 'mno',
+            '7': 'pqrs',
+            '8': 'tuv',
+            '9': 'wxyz',
+        }
+        if not digits:
+            return []
+
+        combinations = ['']
         for digit in digits:
-            result = [prefix+c for prefix in result for c in keys[digit]]
-        return result
+            combinations = [
+                prefix + letter
+                for prefix in combinations
+                for letter in key_to_letters[digit]
+            ]
+        return combinations

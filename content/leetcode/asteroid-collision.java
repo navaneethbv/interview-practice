@@ -1,3 +1,24 @@
 class Solution {
-public int[] asteroidCollision(int[] asteroids){int[]stack=new int[asteroids.length];int n=0;for(int x:asteroids){boolean alive=true;while(alive&&x<0&&n>0&&stack[n-1]>0){if(stack[n-1]<-x)n--;else{if(stack[n-1]==-x)n--;alive=false;}}if(alive)stack[n++]=x;}return Arrays.copyOf(stack,n);}
+    public int[] asteroidCollision(int[] asteroids) {
+        int[] survivors = new int[asteroids.length];
+        int survivorCount = 0;
+        for (int value : asteroids) {
+            boolean survives = true;
+            while (survives && value < 0 && survivorCount > 0
+                    && survivors[survivorCount - 1] > 0) {
+                if (survivors[survivorCount - 1] < -value) {
+                    survivorCount--;
+                } else {
+                    if (survivors[survivorCount - 1] == -value) {
+                        survivorCount--;
+                    }
+                    survives = false;
+                }
+            }
+            if (survives) {
+                survivors[survivorCount++] = value;
+            }
+        }
+        return Arrays.copyOf(survivors, survivorCount);
+    }
 }

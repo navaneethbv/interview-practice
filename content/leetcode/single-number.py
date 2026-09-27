@@ -1,6 +1,6 @@
 class Solution:
     def singleNumber(self, nums):
-        result = 0
+        unique_value = 0
         for value in nums:
-            result ^= value
-        return result
+            unique_value ^= value
+        return unique_value

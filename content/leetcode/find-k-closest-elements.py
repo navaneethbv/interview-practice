@@ -1,8 +1,13 @@
 class Solution:
     def findClosestElements(self, arr, k, x):
-        left,right=0,len(arr)-k
-        while left<right:
-            mid=(left+right)//2
-            if x-arr[mid]>arr[mid+k]-x:left=mid+1
-            else:right=mid
-        return arr[left:left+k]
+        left = 0
+        right = len(arr) - k
+        while left < right:
+            middle = (left + right) // 2
+            left_distance = x - arr[middle]
+            right_distance = arr[middle + k] - x
+            if left_distance > right_distance:
+                left = middle + 1
+            else:
+                right = middle
+        return arr[left:left + k]

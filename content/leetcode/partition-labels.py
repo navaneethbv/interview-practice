@@ -1,11 +1,18 @@
 class Solution:
     def partitionLabels(self, s):
-        last = {c:i for i,c in enumerate(s)}
-        end = start = 0
-        result = []
-        for i,c in enumerate(s):
-            end = max(end,last[c])
-            if i == end:
-                result.append(end-start+1)
-                start = i+1
-        return result
+        last_position = {
+            character: index
+            for index, character in enumerate(s)
+        }
+        partition_start = 0
+        partition_end = 0
+        lengths = []
+
+        for index, character in enumerate(s):
+            partition_end = max(
+                partition_end, last_position[character]
+            )
+            if index == partition_end:
+                lengths.append(index - partition_start + 1)
+                partition_start = index + 1
+        return lengths

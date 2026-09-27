@@ -1,9 +1,14 @@
 class Solution:
     def jump(self, nums):
-        jumps = end = farthest = 0
-        for i in range(len(nums)-1):
-            farthest = max(farthest,i+nums[i])
-            if i == end:
+        jumps = 0
+        current_end = 0
+        farthest_reachable = 0
+
+        for index in range(len(nums) - 1):
+            farthest_reachable = max(
+                farthest_reachable, index + nums[index]
+            )
+            if index == current_end:
                 jumps += 1
-                end = farthest
+                current_end = farthest_reachable
         return jumps

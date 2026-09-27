@@ -1,3 +1,29 @@
 class Solution {
-public void nextPermutation(int[] nums){int i=nums.length-2;while(i>=0&&nums[i]>=nums[i+1])i--;if(i>=0){int j=nums.length-1;while(nums[j]<=nums[i])j--;int t=nums[i];nums[i]=nums[j];nums[j]=t;}for(int l=i+1,r=nums.length-1;l<r;l++,r--){int t=nums[l];nums[l]=nums[r];nums[r]=t;}}
+    public void nextPermutation(int[] nums) {
+        int pivot = nums.length - 2;
+        while (pivot >= 0 && nums[pivot] >= nums[pivot + 1]) {
+            pivot--;
+        }
+        if (pivot >= 0) {
+            int successor = nums.length - 1;
+            while (nums[successor] <= nums[pivot]) {
+                successor--;
+            }
+            swap(nums, pivot, successor);
+        }
+        reverseSuffix(nums, pivot + 1);
+    }
+
+    private void swap(int[] nums, int first, int second) {
+        int temporary = nums[first];
+        nums[first] = nums[second];
+        nums[second] = temporary;
+    }
+
+    private void reverseSuffix(int[] nums, int left) {
+        int right = nums.length - 1;
+        while (left < right) {
+            swap(nums, left++, right--);
+        }
+    }
 }

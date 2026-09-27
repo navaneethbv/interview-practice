@@ -1,3 +1,20 @@
 class Solution {
-public String addBinary(String a,String b){int i=a.length()-1,j=b.length()-1,carry=0;StringBuilder out=new StringBuilder();while(i>=0||j>=0||carry>0){if(i>=0)carry+=a.charAt(i--)-'0';if(j>=0)carry+=b.charAt(j--)-'0';out.append(carry%2);carry/=2;}return out.reverse().toString();}
+    public String addBinary(String a, String b) {
+        int leftIndex = a.length() - 1;
+        int rightIndex = b.length() - 1;
+        int carry = 0;
+        StringBuilder digits = new StringBuilder();
+        while (leftIndex >= 0 || rightIndex >= 0 || carry > 0) {
+            int columnTotal = carry;
+            if (leftIndex >= 0) {
+                columnTotal += a.charAt(leftIndex--) - '0';
+            }
+            if (rightIndex >= 0) {
+                columnTotal += b.charAt(rightIndex--) - '0';
+            }
+            digits.append(columnTotal % 2);
+            carry = columnTotal / 2;
+        }
+        return digits.reverse().toString();
+    }
 }

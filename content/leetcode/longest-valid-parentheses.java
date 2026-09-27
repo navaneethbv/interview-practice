@@ -1,3 +1,20 @@
 class Solution {
-public int longestValidParentheses(String s){Deque<Integer>stack=new ArrayDeque<>();stack.push(-1);int best=0;for(int i=0;i<s.length();i++)if(s.charAt(i)=='(')stack.push(i);else{stack.pop();if(stack.isEmpty())stack.push(i);else best=Math.max(best,i-stack.peek());}return best;}
+    public int longestValidParentheses(String s) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(-1);
+        int longest = 0;
+        for (int index = 0; index < s.length(); index++) {
+            if (s.charAt(index) == '(') {
+                stack.push(index);
+                continue;
+            }
+            stack.pop();
+            if (stack.isEmpty()) {
+                stack.push(index);
+            } else {
+                longest = Math.max(longest, index - stack.peek());
+            }
+        }
+        return longest;
+    }
 }

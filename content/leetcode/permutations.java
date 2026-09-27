@@ -1,3 +1,30 @@
 class Solution {
-public List<List<Integer>> permute(int[] nums){List<List<Integer>> out=new ArrayList<>();go(nums,new boolean[nums.length],new ArrayList<>(),out);return out;} private void go(int[] a,boolean[] used,List<Integer> path,List<List<Integer>> out){if(path.size()==a.length){out.add(new ArrayList<>(path));return;}for(int i=0;i<a.length;i++)if(!used[i]){used[i]=true;path.add(a[i]);go(a,used,path,out);path.remove(path.size()-1);used[i]=false;}}
+    private void buildPermutations(
+            int[] nums,
+            boolean[] used,
+            List<Integer> path,
+            List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int index = 0; index < nums.length; index++) {
+            if (used[index]) {
+                continue;
+            }
+
+            used[index] = true;
+            path.add(nums[index]);
+            buildPermutations(nums, used, path, result);
+            path.remove(path.size() - 1);
+            used[index] = false;
+        }
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        buildPermutations(nums, new boolean[nums.length], new ArrayList<>(), result);
+        return result;
+    }
 }

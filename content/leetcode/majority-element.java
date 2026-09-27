@@ -1,3 +1,13 @@
 class Solution {
-public int majorityElement(int[] nums){int value=0,count=0;for(int x:nums){if(count==0)value=x;count+=x==value?1:-1;}return value;}
+    public int majorityElement(int[] nums) {
+        int candidate = 0;
+        int voteCount = 0;
+        for (int value : nums) {
+            if (voteCount == 0) {
+                candidate = value;
+            }
+            voteCount += value == candidate ? 1 : -1;
+        }
+        return candidate;
+    }
 }
