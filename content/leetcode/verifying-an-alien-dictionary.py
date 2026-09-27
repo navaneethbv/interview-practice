@@ -1,5 +1,15 @@
 class Solution:
-    def isAlienSorted(self,words,order):
-        rank={c:i for i,c in enumerate(order)}
-        keys=[tuple(rank[c] for c in w) for w in words]
-        return all(a<=b for a,b in zip(keys,keys[1:]))
+    def isAlienSorted(self, words, order):
+        rank = {character: index for index, character in enumerate(order)}
+        for index in range(len(words) - 1):
+            first = words[index]
+            second = words[index + 1]
+            if not self._in_order(first, second, rank):
+                return False
+        return True
+
+    def _in_order(self, first, second, rank):
+        for left, right in zip(first, second):
+            if left != right:
+                return rank[left] < rank[right]
+        return len(first) <= len(second)

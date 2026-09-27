@@ -15,7 +15,9 @@ class Solution {
         double[][] next = new double[size][size];
         for (int row = 0; row < size; row++) {
             for (int column = 0; column < size; column++) {
-                if (current[row][column] == 0.0) continue;
+                if (current[row][column] == 0.0) {
+                    continue;
+                }
                 for (int[] move : moves) {
                     int nextRow = row + move[0];
                     int nextColumn = column + move[1];
@@ -31,7 +33,9 @@ class Solution {
     private double sum(double[][] probabilities) {
         double total = 0.0;
         for (double[] row : probabilities) {
-            for (double probability : row) total += probability;
+            for (double probability : row) {
+                total += probability;
+            }
         }
         return total;
     }

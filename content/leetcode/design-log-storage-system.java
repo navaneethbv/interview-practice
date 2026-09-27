@@ -23,11 +23,21 @@ class LogSystem {
     }
 
     private int prefixLength(String granularity) {
-        if (granularity.equals("Year")) return 4;
-        if (granularity.equals("Month")) return 7;
-        if (granularity.equals("Day")) return 10;
-        if (granularity.equals("Hour")) return 13;
-        if (granularity.equals("Minute")) return 16;
+        if (granularity.equals("Year")) {
+            return 4;
+        }
+        if (granularity.equals("Month")) {
+            return 7;
+        }
+        if (granularity.equals("Day")) {
+            return 10;
+        }
+        if (granularity.equals("Hour")) {
+            return 13;
+        }
+        if (granularity.equals("Minute")) {
+            return 16;
+        }
         return 19;
     }
 }

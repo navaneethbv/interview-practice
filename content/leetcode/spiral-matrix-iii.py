@@ -1,12 +1,19 @@
 class Solution:
-    def spiralMatrixIII(self,rows,cols,rStart,cStart):
-        r,c=rStart,cStart;result=[[r,c]];length=1;direction=0;dirs=[(0,1),(1,0),(0,-1),(-1,0)]
-        while len(result)<rows*cols:
+    def spiralMatrixIII(self, rows, cols, rStart, cStart):
+        row = rStart
+        column = cStart
+        coordinates = [[row, column]]
+        directions = ((0, 1), (1, 0), (0, -1), (-1, 0))
+        direction_index = 0
+        step_length = 1
+        while len(coordinates) < rows * cols:
             for _ in range(2):
-                dr,dc=dirs[direction%4]
-                for _ in range(length):
-                    r+=dr;c+=dc
-                    if 0<=r<rows and 0<=c<cols:result.append([r,c])
-                direction+=1
-            length+=1
-        return result
+                row_step, column_step = directions[direction_index % 4]
+                for _ in range(step_length):
+                    row += row_step
+                    column += column_step
+                    if 0 <= row < rows and 0 <= column < cols:
+                        coordinates.append([row, column])
+                direction_index += 1
+            step_length += 1
+        return coordinates

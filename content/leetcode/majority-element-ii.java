@@ -1,10 +1,26 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
+        int[] candidates = selectCandidates(nums);
+        int firstCandidate = candidates[0];
+        int secondCandidate = candidates[1];
+        int firstCount = countOccurrences(nums, firstCandidate);
+        int secondCount = countOccurrences(nums, secondCandidate);
+        int threshold = nums.length / 3;
+        List<Integer> result = new ArrayList<>();
+        if (firstCount > threshold) {
+            result.add(firstCandidate);
+        }
+        if (secondCandidate != firstCandidate && secondCount > threshold) {
+            result.add(secondCandidate);
+        }
+        return result;
+    }
+
+    private int[] selectCandidates(int[] nums) {
         int firstCandidate = 0;
         int secondCandidate = 1;
         int firstCount = 0;
         int secondCount = 0;
-
         for (int value : nums) {
             if (value == firstCandidate) {
                 firstCount++;
@@ -21,26 +37,16 @@ class Solution {
                 secondCount--;
             }
         }
+        return new int[]{firstCandidate, secondCandidate};
+    }
 
-        firstCount = 0;
-        secondCount = 0;
+    private int countOccurrences(int[] nums, int candidate) {
+        int count = 0;
         for (int value : nums) {
-            if (value == firstCandidate) {
-                firstCount++;
-            }
-            if (value == secondCandidate) {
-                secondCount++;
+            if (value == candidate) {
+                count++;
             }
         }
-
-        List<Integer> result = new ArrayList<>();
-        if (firstCount > nums.length / 3) {
-            result.add(firstCandidate);
-        }
-        if (secondCandidate != firstCandidate
-                && secondCount > nums.length / 3) {
-            result.add(secondCandidate);
-        }
-        return result;
+        return count;
     }
 }

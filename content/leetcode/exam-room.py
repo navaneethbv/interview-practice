@@ -1,12 +1,27 @@
 from bisect import insort
+
+
 class ExamRoom:
-    def __init__(self,n):self.n=n;self.used=[]
+    def __init__(self, n):
+        self.capacity = n
+        self.occupied = []
+
     def seat(self):
-        if not self.used:best=0
+        if not self.occupied:
+            chosen_seat = 0
         else:
-            best=0;distance=self.used[0]
-            for a,b in zip(self.used,self.used[1:]):
-                if (b-a)//2>distance:distance=(b-a)//2;best=(a+b)//2
-            if self.n-1-self.used[-1]>distance:best=self.n-1
-        insort(self.used,best);return best
-    def leave(self,p):self.used.remove(p)
+            chosen_seat = 0
+            best_distance = self.occupied[0]
+            for left, right in zip(self.occupied, self.occupied[1:]):
+                distance = (right - left) // 2
+                if distance > best_distance:
+                    best_distance = distance
+                    chosen_seat = (left + right) // 2
+            right_distance = self.capacity - 1 - self.occupied[-1]
+            if right_distance > best_distance:
+                chosen_seat = self.capacity - 1
+        insort(self.occupied, chosen_seat)
+        return chosen_seat
+
+    def leave(self, p):
+        self.occupied.remove(p)

@@ -3,7 +3,9 @@ class Solution {
         int[] parent = new int[strs.length];
         int[] size = new int[strs.length];
         Arrays.fill(size, 1);
-        for (int index = 0; index < parent.length; index++) parent[index] = index;
+        for (int index = 0; index < parent.length; index++) {
+            parent[index] = index;
+        }
         for (int right = 0; right < strs.length; right++) {
             for (int left = 0; left < right; left++) {
                 if (differenceCount(strs[left], strs[right]) <= 2) {
@@ -12,7 +14,9 @@ class Solution {
             }
         }
         Set<Integer> roots = new HashSet<>();
-        for (int index = 0; index < parent.length; index++) roots.add(find(parent, index));
+        for (int index = 0; index < parent.length; index++) {
+            roots.add(find(parent, index));
+        }
         return roots.size();
     }
 
@@ -34,7 +38,9 @@ class Solution {
     private int differenceCount(String first, String second) {
         int differences = 0;
         for (int index = 0; index < first.length(); index++) {
-            if (first.charAt(index) != second.charAt(index)) differences++;
+            if (first.charAt(index) != second.charAt(index)) {
+                differences++;
+            }
         }
         return differences;
     }

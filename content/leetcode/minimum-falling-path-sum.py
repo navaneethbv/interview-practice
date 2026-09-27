@@ -1,5 +1,14 @@
 class Solution:
-    def minFallingPathSum(self,matrix):
-        dp=matrix[0][:]
-        for row in matrix[1:]:dp=[v+min(dp[max(0,c-1):min(len(dp),c+2)]) for c,v in enumerate(row)]
-        return min(dp)
+    def minFallingPathSum(self, matrix):
+        previous = matrix[0][:]
+        for row in matrix[1:]:
+            current = []
+            for column, value in enumerate(row):
+                best_above = previous[column]
+                if column > 0:
+                    best_above = min(best_above, previous[column - 1])
+                if column + 1 < len(previous):
+                    best_above = min(best_above, previous[column + 1])
+                current.append(value + best_above)
+            previous = current
+        return min(previous)

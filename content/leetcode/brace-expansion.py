@@ -1,8 +1,27 @@
-from itertools import product
 class Solution:
-    def expand(self,s):
-        groups=[];i=0
-        while i<len(s):
-            if s[i]=='{':j=s.index('}',i);groups.append(s[i+1:j].split(','));i=j+1
-            else:groups.append([s[i]]);i+=1
-        return sorted(''.join(parts) for parts in product(*groups))
+    def expand(self, s):
+        groups = []
+        index = 0
+        while index < len(s):
+            if s[index] == '{':
+                end = s.index('}', index)
+                groups.append(sorted(s[index + 1:end].split(',')))
+                index = end + 1
+            else:
+                groups.append([s[index]])
+                index += 1
+
+        result = []
+        path = []
+
+        def generate(group_index):
+            if group_index == len(groups):
+                result.append(''.join(path))
+                return
+            for letter in groups[group_index]:
+                path.append(letter)
+                generate(group_index + 1)
+                path.pop()
+
+        generate(0)
+        return result
