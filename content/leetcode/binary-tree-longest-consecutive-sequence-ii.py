@@ -9,11 +9,16 @@ class Solution:
                 if node.left: stack.append((node.left,False))
                 if node.right: stack.append((node.right,False))
                 continue
-            increasing=decreasing=1
-            for child in (node.left,node.right):
-                if not child: continue
-                inc,dec=lengths[child]
-                if child.val==node.val+1: increasing=max(increasing,inc+1)
-                if child.val==node.val-1: decreasing=max(decreasing,dec+1)
-            lengths[node]=(increasing,decreasing); best=max(best,increasing+decreasing-1)
+            lengths[node]=self._runs(node,lengths)
+            best=max(best,sum(lengths[node])-1)
         return best
+
+    def _runs(self, node, lengths):
+        """Longest increasing and decreasing downward runs starting at node."""
+        increasing=decreasing=1
+        for child in (node.left,node.right):
+            if not child: continue
+            inc,dec=lengths[child]
+            if child.val==node.val+1: increasing=max(increasing,inc+1)
+            if child.val==node.val-1: decreasing=max(decreasing,dec+1)
+        return increasing,decreasing

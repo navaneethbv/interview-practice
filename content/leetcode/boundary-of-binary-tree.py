@@ -1,19 +1,24 @@
+def _leaf(node):
+    return not node.left and not node.right
+
 class Solution:
     def boundaryOfBinaryTree(self, root):
-        leaf=lambda n:not n.left and not n.right
-        if leaf(root):return [root.val]
-        out=[root.val];node=root.left
+        if _leaf(root):return [root.val]
+        return [root.val]+self._edge(root.left,True)+self._leaves(root)+self._edge(root.right,False)[::-1]
+
+    def _edge(self, node, left):
+        """Non-leaf nodes along the left (or right) boundary, top to bottom."""
+        out=[]
         while node:
-            if not leaf(node):out.append(node.val)
-            node=node.left or node.right
-        stack=[root]
+            if not _leaf(node):out.append(node.val)
+            node=(node.left or node.right) if left else (node.right or node.left)
+        return out
+
+    def _leaves(self, root):
+        out=[];stack=[root]
         while stack:
             node=stack.pop()
-            if leaf(node):out.append(node.val)
+            if _leaf(node):out.append(node.val)
             if node.right:stack.append(node.right)
             if node.left:stack.append(node.left)
-        right=[];node=root.right
-        while node:
-            if not leaf(node):right.append(node.val)
-            node=node.right or node.left
-        return out+right[::-1]
+        return out

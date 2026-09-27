@@ -6,15 +6,20 @@ class Solution:
         stack=[(0,iter(adj[0]))]
         while stack:
             node,neighbors=stack[-1]
-            try: child=next(neighbors)
-            except StopIteration:
-                stack.pop(); p=parent[node]
-                if p!=-1:
-                    if low[node]>discovery[p]: bridges.append([p,node])
-                    low[p]=min(low[p],low[node])
+            child=next(neighbors,None)
+            if child is None:
+                stack.pop(); self._finish(node,parent,discovery,low,bridges)
+            elif child==parent[node]:
                 continue
-            if child==parent[node]: continue
-            if discovery[child]==-1:
+            elif discovery[child]==-1:
                 parent[child]=node; discovery[child]=low[child]=timer; timer+=1; stack.append((child,iter(adj[child])))
-            else: low[node]=min(low[node],discovery[child])
+            else:
+                low[node]=min(low[node],discovery[child])
         return bridges
+
+    def _finish(self, node, parent, discovery, low, bridges):
+        """Propagates a finished node's low link to its parent and records a bridge."""
+        p=parent[node]
+        if p==-1: return
+        if low[node]>discovery[p]: bridges.append([p,node])
+        low[p]=min(low[p],low[node])
