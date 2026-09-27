@@ -368,14 +368,24 @@ const ORIGINAL_NODE_SETS: Partial<Record<ValueType, string>> = {
   DoublyNode: "Set<Node> originalDoubly = NextSupport.nodes(p0);",
 };
 
-const NODE_OUTPUT: Partial<Record<ValueType, (val: string) => string>> = {
-  MultiNode: (val) => `MultiSupport.values((Node) ${val}, originalMulti)`,
-  NaryNode: (val) => `NarySupport.values((Node) ${val})`,
-  NextNode: (val) => `NextSupport.levels((Node) ${val})`,
-  ParentNode: (val) => `NextSupport.parentValue((Node) ${val})`,
-  DoublyNode: (val) => `NextSupport.circular((Node) ${val}, true, originalDoubly)`,
-  CircularNode: (val) => `NextSupport.insertion((Node) ${val}, p0, originalCircular)`,
-};
+/** Serializes a node-helper result, comparing against the original nodes where identity matters. */
+function nodeOutput(returns: ValueType, val: string): string | undefined {
+  switch (returns) {
+    case "MultiNode": return `MultiSupport.values((Node) ${val}, originalMulti)`;
+    case "NaryNode": return `NarySupport.values((Node) ${val})`;
+    case "NextNode": return `NextSupport.levels((Node) ${val})`;
+    case "ParentNode": return `NextSupport.parentValue((Node) ${val})`;
+    case "DoublyNode": return `NextSupport.circular((Node) ${val}, true, originalDoubly)`;
+    case "CircularNode": return `NextSupport.insertion((Node) ${val}, p0, originalCircular)`;
+    default: return undefined;
+  }
+}
+
+function outputSource(output: FunctionSpec["output"]) {
+  if (output?.arg === undefined) return "ret";
+  const prefix = output.root ? "originalp" : "p";
+  return `${prefix}${output.arg}`;
+}
 
 /** The tree argument whose nodes a TreeNode result must come from, if any. */
 function treeSourceFor(spec: FunctionSpec) {
@@ -415,13 +425,11 @@ function identityChecks(spec: FunctionSpec) {
 
 function outputExpression(spec: FunctionSpec, cloneSupport: string | undefined) {
   const output = spec.output;
-  const val = output?.arg === undefined ? "ret" : `${output.root ? "originalp" : "p"}${output.arg}`;
+  const val = outputSource(output);
   if (output?.as === "interaction") return `${val}.result()`;
   if (output?.as === "listIndex") return "J.listIndex(originalp0, (ListNode) ret)";
   if (cloneSupport) return `${cloneSupport}.values((Node) ${val}, originals)`;
-  const nodeOutput = NODE_OUTPUT[spec.returns];
-  if (nodeOutput) return nodeOutput(val);
-  return specialOutput(output, val, "ret");
+  return nodeOutput(spec.returns, val) ?? specialOutput(output, val, "ret");
 }
 
 function specialOutput(output: FunctionSpec["output"], val: string, ret: string) {

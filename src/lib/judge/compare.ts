@@ -264,7 +264,7 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     if (!preorder.length) return output === null || (Array.isArray(output) && !output.length);
     if (!Array.isArray(output) || !output.length || output[0] === null || output.length > preorder.length * 2 + 1) return false;
     const nodes = levelOrderNodes(output);
-    if (!nodes || nodes.length !== preorder.length) return false;
+    if (nodes?.length !== preorder.length) return false;
     const [pre, post] = prePostOrder(nodes[0]);
     return deepEqual(pre, preorder) && deepEqual(post, postorder);
   },
@@ -319,7 +319,7 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     if (output === null || (Array.isArray(output) && !output.length)) return !remaining.length;
     if (!Array.isArray(output) || output[0] === null || output.length > remaining.length * 2 + 1) return false;
     const nodes = levelOrderNodes(output);
-    if (!nodes || nodes.length !== remaining.length || !nodes.every((node) => Number.isInteger(node.value))) return false;
+    if (nodes?.length !== remaining.length || !nodes.every((node) => Number.isInteger(node.value))) return false;
     return deepEqual(inorderValues(nodes[0]), remaining);
   },
   randomizedSet: (input, output) => {
@@ -363,7 +363,7 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     if (!nums.length) return output === null || (Array.isArray(output) && !output.length);
     if (!Array.isArray(output) || !output.length || output[0] === null || output.length > nums.length * 2 + 1) return false;
     const nodes = levelOrderNodes(output);
-    if (!nodes || nodes.length !== nums.length || !isHeightBalanced(nodes)) return false;
+    if (nodes?.length !== nums.length || !isHeightBalanced(nodes)) return false;
     return deepEqual(inorderValues(nodes[0]), nums);
   },
   courseOrder: (input, output, expected) => {

@@ -79,24 +79,28 @@ async function processSpec(file: string): Promise<string[]> {
 
   const javaRef = path.join(dir, `${id}.java`);
   if (withJava && spec.kind !== "sql" && fs.existsSync(javaRef)) { // nosemgrep -- build script reading repo problem files
-    const program = buildJavaProgram(spec, fs.readFileSync(javaRef, "utf8"), tests);
-    const run = await runJavaLocally(program, 20_000);
-    executions.java++;
-    const outcome = grade({
-      spec,
-      tests,
-      stdout: run.stdout,
-      timedOut: run.timedOut,
-      compileError: run.compileError && mapJavaCompileErrors(run.compileError),
-      fatal: run.stderr,
-    });
-    if (outcome.verdict !== "Accepted") {
-      const bad = outcome.cases.find((c) => !c.passed);
-      const detail = bad ? `case ${bad.index}: ${bad.error ?? JSON.stringify(bad.output)}` : "";
-      errors.push(`${id}: Java reference ${outcome.verdict} ${outcome.compileError ?? ""} ${detail} ${outcome.message ?? ""}`);
-    }
+    const javaError = await verifyJava(spec, fs.readFileSync(javaRef, "utf8"), tests); // nosemgrep -- build script reading repo problem files
+    if (javaError) errors.push(javaError);
   }
   return errors;
+}
+
+/** Runs the optional Java reference against the now-complete tests; returns an error line on failure. */
+async function verifyJava(spec: ProblemSpec, reference: string, tests: AnyTestCase[]): Promise<string | undefined> {
+  const run = await runJavaLocally(buildJavaProgram(spec, reference, tests), 20_000);
+  executions.java++;
+  const outcome = grade({
+    spec,
+    tests,
+    stdout: run.stdout,
+    timedOut: run.timedOut,
+    compileError: run.compileError && mapJavaCompileErrors(run.compileError),
+    fatal: run.stderr,
+  });
+  if (outcome.verdict === "Accepted") return undefined;
+  const bad = outcome.cases.find((c) => !c.passed);
+  const detail = bad ? `case ${bad.index}: ${bad.error ?? JSON.stringify(bad.output)}` : "";
+  return `${spec.id}: Java reference ${outcome.verdict} ${outcome.compileError ?? ""} ${detail} ${outcome.message ?? ""}`;
 }
 
 async function main() {

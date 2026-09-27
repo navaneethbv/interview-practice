@@ -33,7 +33,7 @@ export function usePreferredLang(): CodeLang {
 /** Raw source used by the copy button for each rendered language. */
 const SOURCE_PROP = { java: "javaSrc", python: "pythonSrc", sql: "sqlSrc" } as const;
 
-export function CodeTabs(props: { java?: string; python?: string; sql?: string; javaSrc?: string; pythonSrc?: string; sqlSrc?: string }) {
+export function CodeTabs(props: Readonly<{ java?: string; python?: string; sql?: string; javaSrc?: string; pythonSrc?: string; sqlSrc?: string }>) {
   const preferred = usePreferredLang();
   const [copied, setCopied] = useState(false);
   const available = (["python", "java", "sql"] as const).filter((l) => props[l]);
