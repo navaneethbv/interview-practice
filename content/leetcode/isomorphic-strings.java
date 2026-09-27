@@ -1,3 +1,19 @@
 class Solution {
-public boolean isIsomorphic(String s,String t) {Map<Character,Character> a=new HashMap<>(),b=new HashMap<>();for(int i=0;i<s.length();i++) {char x=s.charAt(i),y=t.charAt(i);if(a.containsKey(x)&&a.get(x)!=y||b.containsKey(y)&&b.get(y)!=x) return false;a.put(x,y);b.put(y,x);}return true;}
+    public boolean isIsomorphic(String s, String t) {
+        Map<Character, Character> sourceToTarget = new HashMap<>();
+        Map<Character, Character> targetToSource = new HashMap<>();
+        for (int index = 0; index < s.length(); index++) {
+            char source = s.charAt(index);
+            char target = t.charAt(index);
+            if (sourceToTarget.containsKey(source) && sourceToTarget.get(source) != target) {
+                return false;
+            }
+            if (targetToSource.containsKey(target) && targetToSource.get(target) != source) {
+                return false;
+            }
+            sourceToTarget.put(source, target);
+            targetToSource.put(target, source);
+        }
+        return true;
+    }
 }

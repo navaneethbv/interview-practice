@@ -1,10 +1,35 @@
 class Solution {
-private void search(String num,int target,int i,String expression,long value,long last,List<String> out) {
-    if(i==num.length()) {if(value==target) out.add(expression);return;}
-    for(int end=i+1;end<=num.length();end++) {if(end>i+1&&num.charAt(i)=='0') break;String token=num.substring(i,end);long operand=Long.parseLong(token);
-        if(i==0) search(num,target,end,token,operand,operand,out);
-        else {search(num,target,end,expression+"+"+token,value+operand,operand,out);search(num,target,end,expression+"-"+token,value-operand,-operand,out);search(num,target,end,expression+"*"+token,value-last+last*operand,last*operand,out);}
+    private void search(String num, int target, int index, String expression,
+            long value, long lastOperand, List<String> expressions) {
+        if (index == num.length()) {
+            if (value == target) {
+                expressions.add(expression);
+            }
+            return;
+        }
+        for (int end = index + 1; end <= num.length(); end++) {
+            if (end > index + 1 && num.charAt(index) == '0') {
+                break;
+            }
+            String token = num.substring(index, end);
+            long operand = Long.parseLong(token);
+            if (index == 0) {
+                search(num, target, end, token, operand, operand, expressions);
+                continue;
+            }
+            search(num, target, end, expression + "+" + token,
+                    value + operand, operand, expressions);
+            search(num, target, end, expression + "-" + token,
+                    value - operand, -operand, expressions);
+            long multipliedValue = value - lastOperand + lastOperand * operand;
+            search(num, target, end, expression + "*" + token,
+                    multipliedValue, lastOperand * operand, expressions);
+        }
     }
-}
-public List<String> addOperators(String num,int target) {List<String> out=new ArrayList<>();search(num,target,0,"",0,0,out);return out;}
+
+    public List<String> addOperators(String num, int target) {
+        List<String> expressions = new ArrayList<>();
+        search(num, target, 0, "", 0, 0, expressions);
+        return expressions;
+    }
 }

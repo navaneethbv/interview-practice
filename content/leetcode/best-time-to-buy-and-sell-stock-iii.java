@@ -1,3 +1,16 @@
 class Solution {
-public int maxProfit(int[] prices) {int b1=Integer.MIN_VALUE,b2=Integer.MIN_VALUE,s1=0,s2=0;for(int p:prices) {b1=Math.max(b1,-p);s1=Math.max(s1,b1+p);b2=Math.max(b2,s1-p);s2=Math.max(s2,b2+p);}return s2;}
+    public int maxProfit(int[] prices) {
+        int firstBuy = Integer.MIN_VALUE;
+        int firstSell = 0;
+        int secondBuy = Integer.MIN_VALUE;
+        int secondSell = 0;
+
+        for (int price : prices) {
+            firstBuy = Math.max(firstBuy, -price);
+            firstSell = Math.max(firstSell, firstBuy + price);
+            secondBuy = Math.max(secondBuy, firstSell - price);
+            secondSell = Math.max(secondSell, secondBuy + price);
+        }
+        return secondSell;
+    }
 }
