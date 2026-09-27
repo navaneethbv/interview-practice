@@ -1,3 +1,14 @@
 class Solution {
-public int numSubarraysWithSum(int[] nums,int goal) {Map<Integer,Integer> counts=new HashMap<>();counts.put(0,1);int prefix=0,total=0;for(int n:nums) {prefix+=n;total+=counts.getOrDefault(prefix-goal,0);counts.merge(prefix,1,Integer::sum);}return total;}
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        Map<Integer, Integer> prefixCounts = new HashMap<>();
+        prefixCounts.put(0, 1);
+        int prefixSum = 0;
+        int total = 0;
+        for (int value : nums) {
+            prefixSum += value;
+            total += prefixCounts.getOrDefault(prefixSum - goal, 0);
+            prefixCounts.put(prefixSum, prefixCounts.getOrDefault(prefixSum, 0) + 1);
+        }
+        return total;
+    }
 }

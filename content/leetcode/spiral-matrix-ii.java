@@ -1,3 +1,53 @@
 class Solution {
-public int[][] generateMatrix(int n) {int[][] a=new int[n][n];int top=0,left=0,bottom=n-1,right=n-1,value=1;while(top<=bottom) {for(int c=left;c<=right;c++) a[top][c]=value++;top++;for(int r=top;r<=bottom;r++) a[r][right]=value++;right--;if(top<=bottom) {for(int c=right;c>=left;c--) a[bottom][c]=value++;bottom--;}if(left<=right) {for(int r=bottom;r>=top;r--) a[r][left]=value++;left++;}}return a;}
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int top = 0;
+        int left = 0;
+        int bottom = n - 1;
+        int right = n - 1;
+        int value = 1;
+        while (top <= bottom) {
+            value = fillTop(matrix, top, left, right, value);
+            top++;
+            value = fillRight(matrix, right, top, bottom, value);
+            right--;
+            if (top <= bottom) {
+                value = fillBottom(matrix, bottom, right, left, value);
+                bottom--;
+            }
+            if (left <= right) {
+                value = fillLeft(matrix, left, bottom, top, value);
+                left++;
+            }
+        }
+        return matrix;
+    }
+
+    private int fillTop(int[][] matrix, int row, int left, int right, int value) {
+        for (int column = left; column <= right; column++) {
+            matrix[row][column] = value++;
+        }
+        return value;
+    }
+
+    private int fillRight(int[][] matrix, int column, int top, int bottom, int value) {
+        for (int row = top; row <= bottom; row++) {
+            matrix[row][column] = value++;
+        }
+        return value;
+    }
+
+    private int fillBottom(int[][] matrix, int row, int right, int left, int value) {
+        for (int column = right; column >= left; column--) {
+            matrix[row][column] = value++;
+        }
+        return value;
+    }
+
+    private int fillLeft(int[][] matrix, int column, int bottom, int top, int value) {
+        for (int row = bottom; row >= top; row--) {
+            matrix[row][column] = value++;
+        }
+        return value;
+    }
 }

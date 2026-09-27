@@ -1,3 +1,16 @@
 class Solution {
-public int numberOfSubarrays(int[] nums,int k) {int[] counts=new int[nums.length+1];counts[0]=1;int odd=0,total=0;for(int n:nums) {odd+=n%2;if(odd>=k) total+=counts[odd-k];counts[odd]++;}return total;}
+    public int numberOfSubarrays(int[] nums, int k) {
+        int[] prefixCounts = new int[nums.length + 1];
+        prefixCounts[0] = 1;
+        int oddCount = 0;
+        int total = 0;
+        for (int value : nums) {
+            oddCount += value % 2;
+            if (oddCount >= k) {
+                total += prefixCounts[oddCount - k];
+            }
+            prefixCounts[oddCount]++;
+        }
+        return total;
+    }
 }

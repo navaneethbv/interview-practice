@@ -1,8 +1,11 @@
 class Solution:
     def maxFrequency(self, nums, k):
-        baseline=nums.count(k); best=0
-        for source in set(nums)-{k}:
-            gain=0
+        baseline = nums.count(k)
+        best_gain = 0
+        for source in set(nums) - {k}:
+            current_gain = 0
             for value in nums:
-                gain=max(0,gain+(value==source)-(value==k)); best=max(best,gain)
-        return baseline+best
+                current_gain += (value == source) - (value == k)
+                current_gain = max(0, current_gain)
+                best_gain = max(best_gain, current_gain)
+        return baseline + best_gain

@@ -1,3 +1,7 @@
 class Solution:
     def arrayPairSum(self, nums):
-        return sum(sorted(nums)[::2])
+        sorted_values = sorted(nums)
+        pair_sum = 0
+        for index in range(0, len(sorted_values), 2):
+            pair_sum += sorted_values[index]
+        return pair_sum
