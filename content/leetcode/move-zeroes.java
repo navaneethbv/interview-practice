@@ -1,3 +1,12 @@
 class Solution {
-public void moveZeroes(int[] nums){int write=0;for(int read=0;read<nums.length;read++)if(nums[read]!=0){int t=nums[write];nums[write++]=nums[read];nums[read]=t;}}
+    public void moveZeroes(int[] nums) {
+        int writeIndex = 0;
+        for (int readIndex = 0; readIndex < nums.length; readIndex++) {
+            if (nums[readIndex] != 0) {
+                int temporary = nums[writeIndex];
+                nums[writeIndex++] = nums[readIndex];
+                nums[readIndex] = temporary;
+            }
+        }
+    }
 }

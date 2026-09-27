@@ -1,3 +1,49 @@
 class Solution {
-public List<Integer> distanceK(TreeNode root,TreeNode target,int k){Map<TreeNode,TreeNode>parent=new HashMap<>();Deque<TreeNode>stack=new ArrayDeque<>();stack.push(root);parent.put(root,null);while(!stack.isEmpty()){TreeNode v=stack.pop();if(v.left!=null){parent.put(v.left,v);stack.push(v.left);}if(v.right!=null){parent.put(v.right,v);stack.push(v.right);}}Set<TreeNode>seen=new HashSet<>();seen.add(target);Deque<TreeNode>q=new ArrayDeque<>();q.add(target);while(k-->0&&!q.isEmpty())for(int size=q.size();size>0;size--){TreeNode v=q.remove();for(TreeNode next:new TreeNode[]{v.left,v.right,parent.get(v)})if(next!=null&&seen.add(next))q.add(next);}List<Integer>out=new ArrayList<>();for(TreeNode v:q)out.add(v.val);return out;}
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        Map<TreeNode, TreeNode> parents = new HashMap<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        parents.put(root, null);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            addChild(parents, stack, node, node.left);
+            addChild(parents, stack, node, node.right);
+        }
+        Set<TreeNode> seen = new HashSet<>();
+        seen.add(target);
+        Deque<TreeNode> pending = new ArrayDeque<>();
+        pending.add(target);
+        for (int distance = 0; distance < k && !pending.isEmpty(); distance++) {
+            int levelSize = pending.size();
+            for (int count = 0; count < levelSize; count++) {
+                addNeighbors(pending, seen, parents, pending.remove());
+            }
+        }
+        List<Integer> values = new ArrayList<>();
+        for (TreeNode node : pending) {
+            values.add(node.val);
+        }
+        return values;
+    }
+
+    private void addChild(Map<TreeNode, TreeNode> parents, Deque<TreeNode> stack,
+                          TreeNode parent, TreeNode child) {
+        if (child != null) {
+            parents.put(child, parent);
+            stack.push(child);
+        }
+    }
+
+    private void addNeighbors(Deque<TreeNode> pending, Set<TreeNode> seen,
+                              Map<TreeNode, TreeNode> parents, TreeNode node) {
+        addNeighbor(pending, seen, node.left);
+        addNeighbor(pending, seen, node.right);
+        addNeighbor(pending, seen, parents.get(node));
+    }
+
+    private void addNeighbor(Deque<TreeNode> pending, Set<TreeNode> seen, TreeNode neighbor) {
+        if (neighbor != null && seen.add(neighbor)) {
+            pending.add(neighbor);
+        }
+    }
 }

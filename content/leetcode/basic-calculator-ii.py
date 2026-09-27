@@ -1,13 +1,21 @@
 class Solution:
     def calculate(self, s):
-        stack=[];number=0;operator='+'
-        for c in s+'+':
-            if c.isdigit():number=number*10+int(c)
-            elif c!=' ':
-                if operator=='+':stack.append(number)
-                elif operator=='-':stack.append(-number)
-                elif operator=='*':stack[-1]*=number
+        terms = []
+        number = 0
+        operator = '+'
+        for character in s + '+':
+            if character.isdigit():
+                number = number * 10 + int(character)
+            elif character != ' ':
+                if operator == '+':
+                    terms.append(number)
+                elif operator == '-':
+                    terms.append(-number)
+                elif operator == '*':
+                    terms[-1] *= number
                 else:
-                    value=stack[-1];stack[-1]=(abs(value)//number)*(-1 if value<0 else 1)
-                number=0;operator=c
-        return sum(stack)
+                    previous = terms[-1]
+                    terms[-1] = (abs(previous) // number) * (-1 if previous < 0 else 1)
+                number = 0
+                operator = character
+        return sum(terms)

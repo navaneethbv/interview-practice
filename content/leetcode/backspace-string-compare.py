@@ -1,10 +1,13 @@
 class Solution:
     def backspaceCompare(self, s, t):
         def typed(text):
-            out=[]
-            for c in text:
-                if c=='#':
-                    if out:out.pop()
-                else:out.append(c)
-            return out
+            typed_characters = []
+            for character in text:
+                if character == '#':
+                    if typed_characters:
+                        typed_characters.pop()
+                else:
+                    typed_characters.append(character)
+            return typed_characters
+
         return typed(s)==typed(t)

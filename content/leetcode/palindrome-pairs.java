@@ -1,3 +1,50 @@
 class Solution {
-public List<List<Integer>> palindromePairs(String[] words){Map<String,Integer>index=new HashMap<>();for(int i=0;i<words.length;i++)index.put(words[i],i);Set<List<Integer>>out=new HashSet<>();for(int i=0;i<words.length;i++)for(int cut=0;cut<=words[i].length();cut++){String a=words[i].substring(0,cut),b=words[i].substring(cut);if(pal(a)){Integer j=index.get(new StringBuilder(b).reverse().toString());if(j!=null&&j!=i)out.add(Arrays.asList(j,i));}if(pal(b)){Integer j=index.get(new StringBuilder(a).reverse().toString());if(j!=null&&j!=i)out.add(Arrays.asList(i,j));}}return new ArrayList<>(out);}private boolean pal(String s){for(int l=0,r=s.length()-1;l<r;l++,r--)if(s.charAt(l)!=s.charAt(r))return false;return true;}
+    public List<List<Integer>> palindromePairs(String[] words) {
+        Map<String, Integer> wordIndex = new HashMap<>();
+        for (int index = 0; index < words.length; index++) {
+            wordIndex.put(words[index], index);
+        }
+        Set<List<Integer>> pairs = new HashSet<>();
+        for (int currentIndex = 0; currentIndex < words.length; currentIndex++) {
+            String word = words[currentIndex];
+            for (int split = 0; split <= word.length(); split++) {
+                String left = word.substring(0, split);
+                String right = word.substring(split);
+                if (isPalindrome(left)) {
+                    addPair(pairs, wordIndex.get(reverse(right)), currentIndex, true);
+                }
+                if (isPalindrome(right)) {
+                    addPair(pairs, wordIndex.get(reverse(left)), currentIndex, false);
+                }
+            }
+        }
+        return new ArrayList<>(pairs);
+    }
+
+    private void addPair(Set<List<Integer>> pairs, Integer otherIndex,
+                         int currentIndex, boolean otherFirst) {
+        if (otherIndex == null || otherIndex == currentIndex) {
+            return;
+        }
+        if (otherFirst) {
+            pairs.add(Arrays.asList(otherIndex, currentIndex));
+        } else {
+            pairs.add(Arrays.asList(currentIndex, otherIndex));
+        }
+    }
+
+    private String reverse(String value) {
+        return new StringBuilder(value).reverse().toString();
+    }
+
+    private boolean isPalindrome(String value) {
+        int left = 0;
+        int right = value.length() - 1;
+        while (left < right) {
+            if (value.charAt(left++) != value.charAt(right--)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

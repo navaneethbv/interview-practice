@@ -1,13 +1,20 @@
 from collections import deque
 class Solution:
     def zigzagLevelOrder(self, root):
-        if not root:return []
-        q=deque([root]);out=[]
-        while q:
-            row=[]
-            for _ in range(len(q)):
-                node=q.popleft();row.append(node.val)
-                if node.left:q.append(node.left)
-                if node.right:q.append(node.right)
-            out.append(row[::-1] if len(out)%2 else row)
-        return out
+        if not root:
+            return []
+        pending = deque([root])
+        levels = []
+        while pending:
+            level_values = []
+            for _ in range(len(pending)):
+                node = pending.popleft()
+                level_values.append(node.val)
+                if node.left:
+                    pending.append(node.left)
+                if node.right:
+                    pending.append(node.right)
+            if len(levels) % 2 == 1:
+                level_values.reverse()
+            levels.append(level_values)
+        return levels
