@@ -1,10 +1,15 @@
 class Solution:
     def convert(self, s, numRows):
-        if numRows == 1 or numRows >= len(s): return s
-        rows = ['']*numRows; row = 0; step = 1
-        for c in s:
-            rows[row] += c
-            if row == 0: step = 1
-            elif row == numRows-1: step = -1
-            row += step
-        return ''.join(rows)
+        if numRows == 1 or numRows >= len(s):
+            return s
+        rows = [[] for _ in range(numRows)]
+        current_row = 0
+        direction = 1
+        for character in s:
+            rows[current_row].append(character)
+            if current_row == 0:
+                direction = 1
+            elif current_row == numRows - 1:
+                direction = -1
+            current_row += direction
+        return "".join("".join(row) for row in rows)

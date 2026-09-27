@@ -1,6 +1,8 @@
 class Solution:
     def removeDuplicates(self, nums):
-        k=0
+        write_index = 0
         for value in nums:
-            if k==0 or value!=nums[k-1]: nums[k]=value; k+=1
-        return k
+            if write_index == 0 or value != nums[write_index - 1]:
+                nums[write_index] = value
+                write_index += 1
+        return write_index

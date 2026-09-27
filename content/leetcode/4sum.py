@@ -1,20 +1,30 @@
 class Solution:
     def fourSum(self, nums, target):
-        nums.sort(); result = []
-        for a in range(len(nums)-3):
-            if a and nums[a] == nums[a-1]: continue
-            for b in range(a+1,len(nums)-2):
-                if b == a+1 or nums[b] != nums[b-1]:
-                    self._collect_pairs(nums, a, b, target, result)
-        return result
+        nums.sort()
+        quadruplets = []
+        for first in range(len(nums) - 3):
+            if first > 0 and nums[first] == nums[first - 1]:
+                continue
+            for second in range(first + 1, len(nums) - 2):
+                if second > first + 1 and nums[second] == nums[second - 1]:
+                    continue
+                self._collect_pairs(nums, first, second, target, quadruplets)
+        return quadruplets
 
-    def _collect_pairs(self, nums, a, b, target, result):
-        l,r = b+1,len(nums)-1
-        while l<r:
-            total = nums[a]+nums[b]+nums[l]+nums[r]
-            if total<target: l+=1
-            elif total>target: r-=1
+    def _collect_pairs(self, nums, first, second, target, quadruplets):
+        left = second + 1
+        right = len(nums) - 1
+        while left < right:
+            total = nums[first] + nums[second] + nums[left] + nums[right]
+            if total < target:
+                left += 1
+            elif total > target:
+                right -= 1
             else:
-                result.append([nums[a],nums[b],nums[l],nums[r]]); l+=1; r-=1
-                while l<r and nums[l]==nums[l-1]: l+=1
-                while l<r and nums[r]==nums[r+1]: r-=1
+                quadruplets.append([nums[first], nums[second], nums[left], nums[right]])
+                left += 1
+                right -= 1
+                while left < right and nums[left] == nums[left - 1]:
+                    left += 1
+                while left < right and nums[right] == nums[right + 1]:
+                    right -= 1

@@ -1,6 +1,18 @@
 class Solution:
     def searchRange(self, nums, target):
-        import bisect
-        left = bisect.bisect_left(nums,target)
-        if left==len(nums) or nums[left]!=target: return [-1,-1]
-        return [left,bisect.bisect_right(nums,target)-1]
+        first = self._bound(nums, target, False)
+        if first == len(nums) or nums[first] != target:
+            return [-1, -1]
+        last = self._bound(nums, target, True) - 1
+        return [first, last]
+
+    def _bound(self, nums, target, upper):
+        left = 0
+        right = len(nums)
+        while left < right:
+            middle = (left + right) // 2
+            if nums[middle] < target or (upper and nums[middle] == target):
+                left = middle + 1
+            else:
+                right = middle
+        return left

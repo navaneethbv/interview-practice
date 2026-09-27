@@ -1,3 +1,14 @@
 class Solution {
-public int[] plusOne(int[] digits) {for(int i=digits.length-1;i>=0;i--) {if(digits[i]<9) {digits[i]++;return digits;}digits[i]=0;}int[] out=new int[digits.length+1];out[0]=1;return out;}
+    public int[] plusOne(int[] digits) {
+        for (int index = digits.length - 1; index >= 0; index--) {
+            if (digits[index] < 9) {
+                digits[index]++;
+                return digits;
+            }
+            digits[index] = 0;
+        }
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
+    }
 }
