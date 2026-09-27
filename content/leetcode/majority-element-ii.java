@@ -1,3 +1,46 @@
 class Solution {
-public List<Integer> majorityElement(int[] nums){int a=0,b=1,ca=0,cb=0;for(int x:nums)if(x==a)ca++;else if(x==b)cb++;else if(ca==0){a=x;ca=1;}else if(cb==0){b=x;cb=1;}else{ca--;cb--;}ca=cb=0;for(int x:nums){if(x==a)ca++;if(x==b)cb++;}List<Integer>out=new ArrayList<>();if(ca>nums.length/3)out.add(a);if(cb>nums.length/3)out.add(b);return out;}
+    public List<Integer> majorityElement(int[] nums) {
+        int firstCandidate = 0;
+        int secondCandidate = 1;
+        int firstCount = 0;
+        int secondCount = 0;
+
+        for (int value : nums) {
+            if (value == firstCandidate) {
+                firstCount++;
+            } else if (value == secondCandidate) {
+                secondCount++;
+            } else if (firstCount == 0) {
+                firstCandidate = value;
+                firstCount = 1;
+            } else if (secondCount == 0) {
+                secondCandidate = value;
+                secondCount = 1;
+            } else {
+                firstCount--;
+                secondCount--;
+            }
+        }
+
+        firstCount = 0;
+        secondCount = 0;
+        for (int value : nums) {
+            if (value == firstCandidate) {
+                firstCount++;
+            }
+            if (value == secondCandidate) {
+                secondCount++;
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        if (firstCount > nums.length / 3) {
+            result.add(firstCandidate);
+        }
+        if (secondCandidate != firstCandidate
+                && secondCount > nums.length / 3) {
+            result.add(secondCandidate);
+        }
+        return result;
+    }
 }

@@ -1,18 +1,22 @@
 class Solution:
     def recoverTree(self, root):
         stack = []
-        previous = first = second = None
-        node = root
-        while node or stack:
-            while node:
-                stack.append(node)
-                node = node.left
-            node = stack.pop()
-            if previous and previous.val > node.val:
-                if first is None:
-                    first = previous
-                second = node
-            previous = node
-            node = node.right
-        if first is not None and second is not None:
-            first.val, second.val = second.val, first.val
+        previous = None
+        first_wrong = None
+        second_wrong = None
+        current = root
+
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.left
+            current = stack.pop()
+            if previous and previous.val > current.val:
+                if first_wrong is None:
+                    first_wrong = previous
+                second_wrong = current
+            previous = current
+            current = current.right
+
+        if first_wrong is not None and second_wrong is not None:
+            first_wrong.val, second_wrong.val = second_wrong.val, first_wrong.val

@@ -1,6 +1,11 @@
 class Solution:
     def minimumTotal(self, triangle):
-        dp=triangle[-1][:]
+        minimum_totals = triangle[-1][:]
+
         for row in reversed(triangle[:-1]):
-            for i,v in enumerate(row):dp[i]=v+min(dp[i],dp[i+1])
-        return dp[0]
+            for index, value in enumerate(row):
+                minimum_totals[index] = value + min(
+                    minimum_totals[index], minimum_totals[index + 1]
+                )
+
+        return minimum_totals[0]

@@ -1,9 +1,26 @@
 class Solution:
     def isMatch(self, s, p):
-        i=j=0;star=-1;matched=0
-        while i<len(s):
-            if j<len(p) and p[j] in ('?',s[i]):i+=1;j+=1
-            elif j<len(p) and p[j]=='*':star=j;matched=i;j+=1
-            elif star>=0:matched+=1;i=matched;j=star+1
-            else:return False
-        return all(c=='*' for c in p[j:])
+        string_index = 0
+        pattern_index = 0
+        last_star = -1
+        matched_after_star = 0
+
+        while string_index < len(s):
+            if pattern_index < len(p) and (
+                    p[pattern_index] == "?" or p[pattern_index] == s[string_index]):
+                string_index += 1
+                pattern_index += 1
+            elif pattern_index < len(p) and p[pattern_index] == "*":
+                last_star = pattern_index
+                matched_after_star = string_index
+                pattern_index += 1
+            elif last_star >= 0:
+                matched_after_star += 1
+                string_index = matched_after_star
+                pattern_index = last_star + 1
+            else:
+                return False
+
+        while pattern_index < len(p) and p[pattern_index] == "*":
+            pattern_index += 1
+        return pattern_index == len(p)
