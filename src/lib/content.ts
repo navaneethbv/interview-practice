@@ -148,7 +148,7 @@ export interface LcProblem {
 
 function readOptionalText(file: string): string | null {
   try {
-    return fs.readFileSync(file, "utf8");
+    return fs.readFileSync(file, "utf8"); // nosemgrep -- private helper called only with repo paths after SLUG validation
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw error;

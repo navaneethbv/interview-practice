@@ -9,26 +9,26 @@ test("loads optional solution content without publishing walkthroughs as problem
   const originalCwd = process.cwd();
   const content = path.join(directory, "content");
   const problems = path.join(content, "leetcode");
-  fs.mkdirSync(path.join(problems, "walkthroughs"), { recursive: true });
-  fs.mkdirSync(path.join(content, "sets"));
+  fs.mkdirSync(path.join(problems, "walkthroughs"), { recursive: true }); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
+  fs.mkdirSync(path.join(content, "sets")); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
   const metadata: Record<string, { title: string }> = {};
   for (const slug of ["both", "java-only", "walkthrough-only", "neither", "sql-example"]) {
     metadata[slug] = { title: slug };
     const sql = slug === "sql-example";
-    fs.writeFileSync(path.join(problems, `${slug}.json`), JSON.stringify({
+    fs.writeFileSync(path.join(problems, `${slug}.json`), JSON.stringify({ // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
       id: slug, kind: sql ? "sql" : "function", tests: [{ input: [], expected: 1 }],
     }));
-    fs.writeFileSync(path.join(problems, `${slug}.md`), "# Title\n\nStatement.");
-    fs.writeFileSync(path.join(problems, `${slug}.${sql ? "sql" : "py"}`), sql ? "SELECT 1;" : "class Solution: pass");
+    fs.writeFileSync(path.join(problems, `${slug}.md`), "# Title\n\nStatement."); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
+    fs.writeFileSync(path.join(problems, `${slug}.${sql ? "sql" : "py"}`), sql ? "SELECT 1;" : "class Solution: pass"); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
     if (["both", "java-only", "sql-example"].includes(slug)) {
-      fs.writeFileSync(path.join(problems, `${slug}.java`), "class Solution {}");
+      fs.writeFileSync(path.join(problems, `${slug}.java`), "class Solution {}"); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
     }
     if (["both", "walkthrough-only", "sql-example"].includes(slug)) {
-      fs.writeFileSync(path.join(problems, "walkthroughs", `${slug}.md`), "## Intuition\n\nUse **state**.");
+      fs.writeFileSync(path.join(problems, "walkthroughs", `${slug}.md`), "## Intuition\n\nUse **state**."); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
     }
   }
-  fs.writeFileSync(path.join(content, "sets", "problems.json"), JSON.stringify(metadata));
-  fs.writeFileSync(path.join(problems, "walkthroughs", "orphan.md"), "## Intuition\n");
+  fs.writeFileSync(path.join(content, "sets", "problems.json"), JSON.stringify(metadata)); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
+  fs.writeFileSync(path.join(problems, "walkthroughs", "orphan.md"), "## Intuition\n"); // nosemgrep -- fixed fixture names inside this test's fresh temporary directory
   try {
     process.chdir(directory);
     const { getLcProblem, lcAuthored } = await import("./content");
