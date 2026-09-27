@@ -40,7 +40,7 @@ async function processSpec(file: string): Promise<string[]> {
   if (id !== path.basename(file, ".json")) return [`${id}: spec id does not match its file name ${path.basename(file)}`];
   const extension = spec.kind === "sql" ? "sql" : "py";
   const pyRef = path.join(dir, `${id}.${extension}`);
-  if (!fs.existsSync(pyRef)) return [`${id}: missing reference ${id}.${extension}`];
+  if (!fs.existsSync(pyRef)) return [`${id}: missing reference ${id}.${extension}`]; // nosemgrep -- build script reading repo problem files
   const tests = spec.tests as AnyTestCase[];
 
   const py = await runPythonLocally(buildPythonScript(spec, fs.readFileSync(pyRef, "utf8"), tests));
@@ -73,7 +73,7 @@ async function processSpec(file: string): Promise<string[]> {
   if (changed) fs.writeFileSync(file, formatSpec(spec));
 
   const javaRef = path.join(dir, `${id}.java`);
-  if (withJava && spec.kind !== "sql" && fs.existsSync(javaRef)) {
+  if (withJava && spec.kind !== "sql" && fs.existsSync(javaRef)) { // nosemgrep -- build script reading repo problem files
     const program = buildJavaProgram(spec, fs.readFileSync(javaRef, "utf8"), tests);
     const run = await runJavaLocally(program, 20_000);
     executions.java++;
@@ -95,8 +95,8 @@ async function processSpec(file: string): Promise<string[]> {
 }
 
 async function main() {
-  const files = DIRS.filter((d) => fs.existsSync(d)).flatMap((dir) =>
-    fs
+  const files = DIRS.filter((d) => fs.existsSync(d)).flatMap((dir) => // nosemgrep -- build script reading repo problem files
+    fs // nosemgrep -- build script reading repo problem files
       .readdirSync(dir)
       .filter((f) => f.endsWith(".json"))
       .filter((f) => !only.size || only.has(f.replace(/\.json$/, "")))

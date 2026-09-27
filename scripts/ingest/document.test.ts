@@ -14,12 +14,12 @@ function importHtml(html: string) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "document-import-test-"));
   const inputDir = path.join(root, "input");
   const outputDir = path.join(root, "output");
-  fs.mkdirSync(inputDir);
+  fs.mkdirSync(inputDir); // nosemgrep -- test fixture in a temp directory
   const input = path.join(inputDir, "source.html");
-  fs.writeFileSync(input, html);
+  fs.writeFileSync(input, html); // nosemgrep -- test fixture in a temp directory
   execFileSync(process.execPath, [tsx, importer, input, "--out", outputDir], { cwd: project });
-  const articleFile = path.join(outputDir, fs.readdirSync(outputDir).find((file) => file.endsWith(".json"))!);
-  const article = JSON.parse(fs.readFileSync(articleFile, "utf8")) as {
+  const articleFile = path.join(outputDir, fs.readdirSync(outputDir).find((file) => file.endsWith(".json"))!); // nosemgrep -- test fixture in a temp directory
+  const article = JSON.parse(fs.readFileSync(articleFile, "utf8")) as { // nosemgrep -- test fixture in a temp directory
     prompt: Array<{ t: string; html?: string; src?: string }>;
   };
   return { root, inputDir, outputDir, article };
@@ -51,24 +51,24 @@ test("local images stay inside the source folder while sibling assets still impo
   const inputDir = path.join(root, "input");
   const outputDir = path.join(root, "output");
   fs.mkdirSync(inputDir);
-  fs.writeFileSync(path.join(root, "outside.png"), "outside image bytes");
-  fs.writeFileSync(path.join(inputDir, "inside.png"), "inside image bytes");
+  fs.writeFileSync(path.join(root, "outside.png"), "outside image bytes"); // nosemgrep -- test fixture in a temp directory
+  fs.writeFileSync(path.join(inputDir, "inside.png"), "inside image bytes"); // nosemgrep -- test fixture in a temp directory
   const input = path.join(inputDir, "source.html");
-  fs.writeFileSync(
+  fs.writeFileSync( // nosemgrep -- test fixture in a temp directory
     input,
     '<article><h1>Images</h1><img src="../outside.png"><img src="inside.png"><img src="active.svg"></article>',
   );
-  fs.writeFileSync(path.join(inputDir, "active.svg"), "<svg><script>alert(1)</script></svg>");
+  fs.writeFileSync(path.join(inputDir, "active.svg"), "<svg><script>alert(1)</script></svg>"); // nosemgrep -- test fixture in a temp directory
   execFileSync(process.execPath, [tsx, importer, input, "--out", outputDir], { cwd: project });
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
 
-  const article = JSON.parse(fs.readFileSync(path.join(outputDir, "images.json"), "utf8")) as {
+  const article = JSON.parse(fs.readFileSync(path.join(outputDir, "images.json"), "utf8")) as { // nosemgrep -- test fixture in a temp directory
     prompt: Array<{ t: string; src?: string }>;
   };
   const images = article.prompt.filter((block) => block.t === "img");
   assert.equal(images.length, 1);
   assert.ok(images[0].src?.includes("/course-assets/system-design/"));
-  assert.equal(fs.readdirSync(path.join(outputDir, "assets")).length, 1);
+  assert.equal(fs.readdirSync(path.join(outputDir, "assets")).length, 1); // nosemgrep -- test fixture in a temp directory
 });
 
 test("HTML data URLs cannot publish active SVG content", (t) => {
@@ -77,5 +77,5 @@ test("HTML data URLs cannot publish active SVG content", (t) => {
   );
   t.after(() => fs.rmSync(result.root, { recursive: true, force: true }));
   assert.equal(result.article.prompt.some((block) => block.t === "img"), false);
-  assert.equal(fs.existsSync(path.join(result.outputDir, "assets")), false);
+  assert.equal(fs.existsSync(path.join(result.outputDir, "assets")), false); // nosemgrep -- test fixture in a temp directory
 });

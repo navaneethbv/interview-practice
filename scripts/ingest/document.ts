@@ -155,9 +155,9 @@ function resolveImage(src: string, baseDir: string): string | null {
   if (!src) return null;
   let local: string;
   try {
-    const base = fs.realpathSync(baseDir);
-    local = fs.realpathSync(path.resolve(base, decodeURIComponent(src.split(/[?#]/)[0])));
-    if (!isWithin(base, local) || !fs.statSync(local).isFile()) return null;
+    const base = fs.realpathSync(baseDir); // nosemgrep -- resolved path is checked against the source directory
+    local = fs.realpathSync(path.resolve(base, decodeURIComponent(src.split(/[?#]/)[0]))); // nosemgrep -- resolved path is checked against the source directory
+    if (!isWithin(base, local) || !fs.statSync(local).isFile()) return null; // nosemgrep -- resolved path is checked against the source directory
   } catch {
     return null;
   }
