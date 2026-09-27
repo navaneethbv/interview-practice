@@ -1,11 +1,12 @@
 class Solution:
     def findMaxLength(self, nums):
-        first = {0:-1}
-        balance = best = 0
-        for i,value in enumerate(nums):
-            balance += 1 if value else -1
-            if balance in first:
-                best = max(best,i-first[balance])
+        first_index = {0: -1}
+        balance = 0
+        longest = 0
+        for index, value in enumerate(nums):
+            balance += 1 if value == 1 else -1
+            if balance in first_index:
+                longest = max(longest, index - first_index[balance])
             else:
-                first[balance] = i
-        return best
+                first_index[balance] = index
+        return longest

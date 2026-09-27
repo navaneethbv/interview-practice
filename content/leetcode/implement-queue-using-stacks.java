@@ -1,1 +1,34 @@
-class MyQueue {Deque<Integer>in=new ArrayDeque<>(),out=new ArrayDeque<>();public MyQueue(){}public void push(int x){in.push(x);}private void transfer(){if(out.isEmpty())while(!in.isEmpty())out.push(in.pop());}public int pop(){transfer();return out.pop();}public int peek(){transfer();return out.peek();}public boolean empty(){return in.isEmpty()&&out.isEmpty();}}
+class MyQueue {
+    private Deque<Integer> incoming = new ArrayDeque<>();
+    private Deque<Integer> outgoing = new ArrayDeque<>();
+
+    public MyQueue() {
+    }
+
+    public void push(int x) {
+        incoming.push(x);
+    }
+
+    private void transferIfNeeded() {
+        if (!outgoing.isEmpty()) {
+            return;
+        }
+        while (!incoming.isEmpty()) {
+            outgoing.push(incoming.pop());
+        }
+    }
+
+    public int pop() {
+        transferIfNeeded();
+        return outgoing.pop();
+    }
+
+    public int peek() {
+        transferIfNeeded();
+        return outgoing.peek();
+    }
+
+    public boolean empty() {
+        return incoming.isEmpty() && outgoing.isEmpty();
+    }
+}

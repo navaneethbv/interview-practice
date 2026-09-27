@@ -1,20 +1,23 @@
 class Solution:
     def calculate(self, s):
-        total, sign, number = 0,1,0
+        total = 0
+        sign = 1
+        number = 0
         stack = []
-        for c in s:
-            if c.isdigit():
-                number = number*10+int(c)
-            elif c in '+-':
-                total += sign*number
+        for character in s:
+            if character.isdigit():
+                number = number * 10 + int(character)
+            elif character in '+-':
+                total += sign * number
                 number = 0
-                sign = 1 if c == '+' else -1
-            elif c == '(':
-                stack.append((total,sign))
-                total,sign = 0,1
-            elif c == ')':
-                total += sign*number
+                sign = 1 if character == '+' else -1
+            elif character == '(':
+                stack.append((total, sign))
+                total = 0
+                sign = 1
+            elif character == ')':
+                total += sign * number
                 number = 0
-                previous,outer = stack.pop()
-                total = previous+outer*total
-        return total+sign*number
+                previous_total, outer_sign = stack.pop()
+                total = previous_total + outer_sign * total
+        return total + sign * number

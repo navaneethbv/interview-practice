@@ -1,3 +1,62 @@
 class Solution {
-public List<List<String>> accountsMerge(List<List<String>> accounts){Map<String,String>p=new HashMap<>(),names=new HashMap<>();for(List<String>a:accounts)for(int i=1;i<a.size();i++){String e=a.get(i);p.putIfAbsent(e,e);names.put(e,a.get(0));p.put(find(p,e),find(p,a.get(1)));}Map<String,List<String>>g=new HashMap<>();for(String e:p.keySet())g.computeIfAbsent(find(p,e),x->new ArrayList<>()).add(e);List<List<String>>out=new ArrayList<>();for(Map.Entry<String,List<String>>e:g.entrySet()){Collections.sort(e.getValue());List<String>row=new ArrayList<>();row.add(names.get(e.getKey()));row.addAll(e.getValue());out.add(row);}return out;}private String find(Map<String,String>p,String x){if(!p.get(x).equals(x))p.put(x,find(p,p.get(x)));return p.get(x);}
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        Map<String, String> parent = new HashMap<>();
+        Map<String, Integer> componentSize = new HashMap<>();
+        Map<String, String> accountNames = new HashMap<>();
+        for (List<String> account : accounts) {
+            String name = account.get(0);
+            for (int index = 1; index < account.size(); index++) {
+                String email = account.get(index);
+                parent.putIfAbsent(email, email);
+                componentSize.putIfAbsent(email, 1);
+                accountNames.put(email, name);
+                String firstEmail = account.get(1);
+                union(parent, componentSize, email, firstEmail);
+            }
+        }
+        Map<String, List<String>> groups = new HashMap<>();
+        for (String email : parent.keySet()) {
+            String root = find(parent, email);
+            groups.computeIfAbsent(root, ignored -> new ArrayList<>()).add(email);
+        }
+        List<List<String>> mergedAccounts = new ArrayList<>();
+        for (Map.Entry<String, List<String>> group : groups.entrySet()) {
+            List<String> emails = group.getValue();
+            Collections.sort(emails);
+            List<String> account = new ArrayList<>();
+            account.add(accountNames.get(group.getKey()));
+            account.addAll(emails);
+            mergedAccounts.add(account);
+        }
+        return mergedAccounts;
+    }
+
+    private void union(Map<String, String> parent, Map<String, Integer> componentSize,
+                       String firstEmail, String secondEmail) {
+        String firstRoot = find(parent, firstEmail);
+        String secondRoot = find(parent, secondEmail);
+        if (firstRoot.equals(secondRoot)) {
+            return;
+        }
+        if (componentSize.get(firstRoot) > componentSize.get(secondRoot)) {
+            String temporary = firstRoot;
+            firstRoot = secondRoot;
+            secondRoot = temporary;
+        }
+        parent.put(firstRoot, secondRoot);
+        componentSize.put(secondRoot, componentSize.get(firstRoot) + componentSize.get(secondRoot));
+    }
+
+    private String find(Map<String, String> parent, String email) {
+        String root = email;
+        while (!parent.get(root).equals(root)) {
+            root = parent.get(root);
+        }
+        while (!parent.get(email).equals(email)) {
+            String nextEmail = parent.get(email);
+            parent.put(email, root);
+            email = nextEmail;
+        }
+        return root;
+    }
 }

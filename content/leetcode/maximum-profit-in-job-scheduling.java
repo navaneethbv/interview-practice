@@ -1,3 +1,31 @@
 class Solution {
-public int jobScheduling(int[] startTime,int[] endTime,int[] profit){int n=profit.length;int[][]jobs=new int[n][3];for(int i=0;i<n;i++)jobs[i]=new int[]{endTime[i],startTime[i],profit[i]};Arrays.sort(jobs,Comparator.comparingInt(a->a[0]));int[]dp=new int[n+1];for(int i=0;i<n;i++){int l=0,r=i;while(l<r){int m=(l+r)/2;if(jobs[m][0]<=jobs[i][1])l=m+1;else r=m;}dp[i+1]=Math.max(dp[i],dp[l]+jobs[i][2]);}return dp[n];}
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int jobCount = profit.length;
+        int[][] jobs = new int[jobCount][3];
+        for (int index = 0; index < jobCount; index++) {
+            jobs[index] = new int[] {endTime[index], startTime[index], profit[index]};
+        }
+        Arrays.sort(jobs, Comparator.comparingInt(job -> job[0]));
+        int[] bestProfit = new int[jobCount + 1];
+        for (int index = 0; index < jobCount; index++) {
+            int compatibleCount = findCompatibleCount(jobs, index, jobs[index][1]);
+            int takeProfit = bestProfit[compatibleCount] + jobs[index][2];
+            bestProfit[index + 1] = Math.max(bestProfit[index], takeProfit);
+        }
+        return bestProfit[jobCount];
+    }
+
+    private int findCompatibleCount(int[][] jobs, int currentIndex, int startTime) {
+        int left = 0;
+        int right = currentIndex;
+        while (left < right) {
+            int middle = left + (right - left) / 2;
+            if (jobs[middle][0] <= startTime) {
+                left = middle + 1;
+            } else {
+                right = middle;
+            }
+        }
+        return left;
+    }
 }

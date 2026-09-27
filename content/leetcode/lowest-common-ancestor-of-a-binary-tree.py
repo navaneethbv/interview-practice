@@ -1,10 +1,10 @@
 class Solution:
     def lowestCommonAncestor(self, root, p, q):
-        parents = {root:None}
+        parents = {root: None}
         stack = [root]
         while p not in parents or q not in parents:
             node = stack.pop()
-            for child in (node.left,node.right):
+            for child in (node.left, node.right):
                 if child:
                     parents[child] = node
                     stack.append(child)

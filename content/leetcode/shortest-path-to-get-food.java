@@ -1,3 +1,42 @@
 class Solution {
-public int getFood(char[][] grid){int m=grid.length,n=grid[0].length;Deque<int[]>q=new ArrayDeque<>();boolean[][]seen=new boolean[m][n];for(int r=0;r<m;r++)for(int c=0;c<n;c++)if(grid[r][c]=='*'){q.add(new int[]{r,c,0});seen[r][c]=true;}int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();if(grid[p[0]][p[1]]=='#')return p[2];for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&!seen[a][b]&&grid[a][b]!='X'){seen[a][b]=true;q.add(new int[]{a,b,p[2]+1});}}}return -1;}
+    public int getFood(char[][] grid) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        Deque<int[]> pending = new ArrayDeque<>();
+        boolean[][] seen = new boolean[rows][columns];
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                if (grid[row][column] == '*') {
+                    pending.add(new int[] {row, column, 0});
+                    seen[row][column] = true;
+                }
+            }
+        }
+        int[] rowDirections = {-1, 0, 1, 0};
+        int[] columnDirections = {0, 1, 0, -1};
+        while (!pending.isEmpty()) {
+            int[] cell = pending.remove();
+            if (grid[cell[0]][cell[1]] == '#') {
+                return cell[2];
+            }
+            addReachableNeighbors(grid, pending, seen, cell, rowDirections,
+                    columnDirections);
+        }
+        return -1;
+    }
+
+    private void addReachableNeighbors(char[][] grid, Deque<int[]> pending,
+                                       boolean[][] seen, int[] cell,
+                                       int[] rowDirections, int[] columnDirections) {
+        for (int direction = 0; direction < 4; direction++) {
+            int nextRow = cell[0] + rowDirections[direction];
+            int nextColumn = cell[1] + columnDirections[direction];
+            if (nextRow >= 0 && nextRow < grid.length && nextColumn >= 0
+                    && nextColumn < grid[0].length && !seen[nextRow][nextColumn]
+                    && grid[nextRow][nextColumn] != 'X') {
+                seen[nextRow][nextColumn] = true;
+                pending.add(new int[] {nextRow, nextColumn, cell[2] + 1});
+            }
+        }
+    }
 }

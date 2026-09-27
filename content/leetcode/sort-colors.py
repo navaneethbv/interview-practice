@@ -1,14 +1,15 @@
 class Solution:
     def sortColors(self, nums):
-        left = i = 0
-        right = len(nums)-1
-        while i <= right:
-            if nums[i] == 0:
-                nums[left],nums[i] = nums[i],nums[left]
-                left += 1
-                i += 1
-            elif nums[i] == 2:
-                nums[right],nums[i] = nums[i],nums[right]
-                right -= 1
+        next_zero = 0
+        current = 0
+        next_two = len(nums) - 1
+        while current <= next_two:
+            if nums[current] == 0:
+                nums[next_zero], nums[current] = nums[current], nums[next_zero]
+                next_zero += 1
+                current += 1
+            elif nums[current] == 2:
+                nums[current], nums[next_two] = nums[next_two], nums[current]
+                next_two -= 1
             else:
-                i += 1
+                current += 1

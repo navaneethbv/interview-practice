@@ -1,7 +1,11 @@
 from collections import Counter
 class Solution:
     def subarraySum(self, nums, k):
-        counts=Counter({0:1});total=answer=0
+        counts = Counter({0: 1})
+        running_sum = 0
+        answer = 0
         for value in nums:
-            total+=value;answer+=counts[total-k];counts[total]+=1
+            running_sum += value
+            answer += counts[running_sum - k]
+            counts[running_sum] += 1
         return answer
