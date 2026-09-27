@@ -1,13 +1,25 @@
-from heapq import heappush,heappop
+from heapq import heappop, heappush
+
+
 class Solution:
- def minCost(self,n,edges):
-  graph=[[] for _ in range(n)]
-  for u,v,w in edges:graph[u].append((v,w));graph[v].append((u,2*w))
-  dist=[float('inf')]*n;dist[0]=0;heap=[(0,0)]
-  while heap:
-   d,u=heappop(heap)
-   if d!=dist[u]:continue
-   if u==n-1:return d
-   for v,w in graph[u]:
-    if d+w<dist[v]:dist[v]=d+w;heappush(heap,(d+w,v))
-  return -1
+    def minCost(self, n, edges):
+        graph = [[] for _ in range(n)]
+        for start, end, weight in edges:
+            graph[start].append((end, weight))
+            graph[end].append((start, 2 * weight))
+
+        distance = [float("inf")] * n
+        distance[0] = 0
+        pending = [(0, 0)]
+        while pending:
+            current_cost, node = heappop(pending)
+            if current_cost != distance[node]:
+                continue
+            if node == n - 1:
+                return current_cost
+            for neighbor, edge_cost in graph[node]:
+                next_cost = current_cost + edge_cost
+                if next_cost < distance[neighbor]:
+                    distance[neighbor] = next_cost
+                    heappush(pending, (next_cost, neighbor))
+        return -1

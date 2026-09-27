@@ -1,3 +1,40 @@
 class Solution {
-public int maxSideLength(int[][] mat,int threshold) {int rows=mat.length,cols=mat[0].length;int[][] p=new int[rows+1][cols+1];for(int r=0;r<rows;r++) for(int c=0;c<cols;c++) p[r+1][c+1]=mat[r][c]+p[r][c+1]+p[r+1][c]-p[r][c];int l=0,right=Math.min(rows,cols);while(l<right) {int size=(l+right+1)/2;boolean valid=false;for(int r=0;r+size<=rows&&!valid;r++) for(int c=0;c+size<=cols;c++) if(p[r+size][c+size]-p[r][c+size]-p[r+size][c]+p[r][c]<=threshold) {valid=true;break;}if(valid) l=size;else right=size-1;}return l;}
+    public int maxSideLength(int[][] mat, int threshold) {
+        int rows = mat.length;
+        int columns = mat[0].length;
+        int[][] prefix = new int[rows + 1][columns + 1];
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                prefix[row + 1][column + 1] = mat[row][column]
+                        + prefix[row][column + 1] + prefix[row + 1][column]
+                        - prefix[row][column];
+            }
+        }
+        int low = 0;
+        int high = Math.min(rows, columns);
+        while (low < high) {
+            int size = (low + high + 1) / 2;
+            if (hasValidSquare(prefix, rows, columns, size, threshold)) {
+                low = size;
+            } else {
+                high = size - 1;
+            }
+        }
+        return low;
+    }
+
+    private boolean hasValidSquare(int[][] prefix, int rows, int columns,
+                                   int size, int threshold) {
+        for (int row = 0; row + size <= rows; row++) {
+            for (int column = 0; column + size <= columns; column++) {
+                int sum = prefix[row + size][column + size]
+                        - prefix[row][column + size] - prefix[row + size][column]
+                        + prefix[row][column];
+                if (sum <= threshold) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

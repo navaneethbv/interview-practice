@@ -1,3 +1,18 @@
 class Solution {
-public int maximumLength(int[] nums) {int even=0,alternating=1;for(int n:nums) if(n%2==0) even++;for(int i=1;i<nums.length;i++) if(nums[i]%2!=nums[i-1]%2) alternating++;return Math.max(alternating,Math.max(even,nums.length-even));}
+    public int maximumLength(int[] nums) {
+        int evenCount = 0;
+        int alternatingLength = 1;
+        for (int value : nums) {
+            if (value % 2 == 0) {
+                evenCount++;
+            }
+        }
+        for (int index = 1; index < nums.length; index++) {
+            if (nums[index] % 2 != nums[index - 1] % 2) {
+                alternatingLength++;
+            }
+        }
+        int oddCount = nums.length - evenCount;
+        return Math.max(alternatingLength, Math.max(evenCount, oddCount));
+    }
 }
