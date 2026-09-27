@@ -1,3 +1,18 @@
 class Solution {
-public int maxProfit(int[] prices){int hold=-prices[0],sold=-1000000000,rest=0;for(int i=1;i<prices.length;i++){int h=Math.max(hold,rest-prices[i]),s=hold+prices[i],r=Math.max(rest,sold);hold=h;sold=s;rest=r;}return Math.max(sold,rest);}
+    public int maxProfit(int[] prices) {
+        int holding = -prices[0];
+        int sold = Integer.MIN_VALUE;
+        int resting = 0;
+
+        for (int index = 1; index < prices.length; index++) {
+            int nextHolding = Math.max(holding, resting - prices[index]);
+            int nextSold = holding + prices[index];
+            int nextResting = Math.max(resting, sold);
+            holding = nextHolding;
+            sold = nextSold;
+            resting = nextResting;
+        }
+
+        return Math.max(sold, resting);
+    }
 }

@@ -1,3 +1,36 @@
 class Solution {
-public int[] findOrder(int numCourses,int[][] prerequisites){List<List<Integer>>next=new ArrayList<>();for(int i=0;i<numCourses;i++)next.add(new ArrayList<>());int[]deg=new int[numCourses];for(int[]p:prerequisites){next.get(p[1]).add(p[0]);deg[p[0]]++;}Deque<Integer>q=new ArrayDeque<>();for(int i=0;i<numCourses;i++)if(deg[i]==0)q.add(i);int[]out=new int[numCourses];int k=0;while(!q.isEmpty()){int c=q.remove();out[k++]=c;for(int child:next.get(c))if(--deg[child]==0)q.add(child);}return k==numCourses?out:new int[0];}
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> following = new ArrayList<>();
+        int[] indegree = new int[numCourses];
+
+        for (int course = 0; course < numCourses; course++) {
+            following.add(new ArrayList<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            following.get(prerequisite[1]).add(prerequisite[0]);
+            indegree[prerequisite[0]]++;
+        }
+
+        Deque<Integer> available = new ArrayDeque<>();
+        for (int course = 0; course < numCourses; course++) {
+            if (indegree[course] == 0) {
+                available.add(course);
+            }
+        }
+
+        int[] order = new int[numCourses];
+        int orderSize = 0;
+        while (!available.isEmpty()) {
+            int course = available.remove();
+            order[orderSize++] = course;
+            for (int nextCourse : following.get(course)) {
+                indegree[nextCourse]--;
+                if (indegree[nextCourse] == 0) {
+                    available.add(nextCourse);
+                }
+            }
+        }
+
+        return orderSize == numCourses ? order : new int[0];
+    }
 }

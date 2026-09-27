@@ -1,3 +1,67 @@
 class Solution {
-public int orangesRotting(int[][] grid){int m=grid.length,n=grid[0].length,fresh=0,time=0;Deque<int[]>q=new ArrayDeque<>();for(int r=0;r<m;r++)for(int c=0;c<n;c++){if(grid[r][c]==1)fresh++;if(grid[r][c]==2)q.add(new int[]{r,c,0});}int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();time=p[2];for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n&&grid[a][b]==1){grid[a][b]=2;fresh--;q.add(new int[]{a,b,time+1});}}}return fresh==0?time:-1;}
+    public int orangesRotting(int[][] grid) {
+        int freshOranges = 0;
+        Deque<int[]> queue = new ArrayDeque<>();
+
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid[0].length; column++) {
+                if (grid[row][column] == 2) {
+                    queue.add(new int[]{row, column, 0});
+                } else if (grid[row][column] == 1) {
+                    freshOranges++;
+                }
+            }
+        }
+
+        int minutes = 0;
+        while (!queue.isEmpty()) {
+            int[] orange = queue.remove();
+            int row = orange[0];
+            int column = orange[1];
+            minutes = orange[2];
+
+            int rotted = rotNeighbors(grid, queue, row, column, minutes);
+            freshOranges -= rotted;
+            minutes = Math.max(minutes, orange[2]);
+        }
+
+        return freshOranges == 0 ? minutes : -1;
+    }
+
+    private int rotNeighbors(
+            int[][] grid,
+            Deque<int[]> queue,
+            int row,
+            int column,
+            int minutes) {
+        int nextMinutes = minutes + 1;
+        int rotted = 0;
+        rotted += addFreshOrange(grid, queue, row - 1, column, nextMinutes);
+        rotted += addFreshOrange(grid, queue, row + 1, column, nextMinutes);
+        rotted += addFreshOrange(grid, queue, row, column - 1, nextMinutes);
+        rotted += addFreshOrange(grid, queue, row, column + 1, nextMinutes);
+        return rotted;
+    }
+
+    private boolean isFresh(int[][] grid, int row, int column) {
+        return row >= 0
+                && row < grid.length
+                && column >= 0
+                && column < grid[0].length
+                && grid[row][column] == 1;
+    }
+
+    private int addFreshOrange(
+            int[][] grid,
+            Deque<int[]> queue,
+            int row,
+            int column,
+            int minutes) {
+        if (isFresh(grid, row, column)) {
+            grid[row][column] = 2;
+            queue.add(new int[]{row, column, minutes});
+            return 1;
+        }
+        return 0;
+    }
 }

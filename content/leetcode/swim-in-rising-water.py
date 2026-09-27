@@ -1,15 +1,33 @@
 import heapq
+
+
 class Solution:
     def swimInWater(self, grid):
-        n = len(grid)
-        queue, seen = [(grid[0][0],0,0)], set()
+        size = len(grid)
+        queue = [(grid[0][0], 0, 0)]
+        visited = set()
+
         while queue:
-            level,r,c = heapq.heappop(queue)
-            if (r,c) in seen:
+            water_level, row, column = heapq.heappop(queue)
+            if (row, column) in visited:
                 continue
-            seen.add((r,c))
-            if r == c == n-1:
-                return level
-            for a,b in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
-                if 0 <= a < n and 0 <= b < n and (a,b) not in seen:
-                    heapq.heappush(queue,(max(level,grid[a][b]),a,b))
+            visited.add((row, column))
+
+            if row == size - 1 and column == size - 1:
+                return water_level
+
+            for next_row, next_column in (
+                (row - 1, column),
+                (row + 1, column),
+                (row, column - 1),
+                (row, column + 1),
+            ):
+                if (
+                    0 <= next_row < size
+                    and 0 <= next_column < size
+                    and (next_row, next_column) not in visited
+                ):
+                    next_level = max(water_level, grid[next_row][next_column])
+                    heapq.heappush(queue, (next_level, next_row, next_column))
+
+        return -1

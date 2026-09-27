@@ -1,3 +1,31 @@
 class Solution {
-public boolean isInterleave(String s1,String s2,String s3){int m=s1.length(),n=s2.length();if(m+n!=s3.length())return false;boolean[][]dp=new boolean[m+1][n+1];dp[0][0]=true;for(int i=0;i<=m;i++)for(int j=0;j<=n;j++){if(i>0)dp[i][j]|=dp[i-1][j]&&s1.charAt(i-1)==s3.charAt(i+j-1);if(j>0)dp[i][j]|=dp[i][j-1]&&s2.charAt(j-1)==s3.charAt(i+j-1);}return dp[m][n];}
+    public boolean isInterleave(String s1, String s2, String s3) {
+        int firstLength = s1.length();
+        int secondLength = s2.length();
+        if (firstLength + secondLength != s3.length()) {
+            return false;
+        }
+
+        boolean[] reachable = new boolean[secondLength + 1];
+        reachable[0] = true;
+
+        for (int firstIndex = 0; firstIndex <= firstLength; firstIndex++) {
+            for (int secondIndex = 0; secondIndex <= secondLength; secondIndex++) {
+                if (firstIndex == 0 && secondIndex == 0) {
+                    continue;
+                }
+
+                int outputIndex = firstIndex + secondIndex - 1;
+                boolean fromFirst = firstIndex > 0
+                        && reachable[secondIndex]
+                        && s1.charAt(firstIndex - 1) == s3.charAt(outputIndex);
+                boolean fromSecond = secondIndex > 0
+                        && reachable[secondIndex - 1]
+                        && s2.charAt(secondIndex - 1) == s3.charAt(outputIndex);
+                reachable[secondIndex] = fromFirst || fromSecond;
+            }
+        }
+
+        return reachable[secondLength];
+    }
 }

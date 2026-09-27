@@ -1,11 +1,15 @@
 from collections import Counter
+
+
 class Solution:
     def findTargetSumWays(self, nums, target):
-        ways = Counter({0:1})
+        ways = Counter({0: 1})
+
         for value in nums:
-            updated = Counter()
-            for total,count in ways.items():
-                updated[total+value] += count
-                updated[total-value] += count
-            ways = updated
+            next_ways = Counter()
+            for total, count in ways.items():
+                next_ways[total + value] += count
+                next_ways[total - value] += count
+            ways = next_ways
+
         return ways[target]

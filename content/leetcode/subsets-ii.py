@@ -1,12 +1,16 @@
 class Solution:
     def subsetsWithDup(self, nums):
-        nums.sort()
+        sorted_nums = sorted(nums)
         result = []
-        def visit(start, path):
-            result.append(path)
-            for i in range(start, len(nums)):
-                if i > start and nums[i] == nums[i-1]:
+
+        def visit(start_index, path):
+            result.append(path[:])
+            for index in range(start_index, len(sorted_nums)):
+                if index > start_index and sorted_nums[index] == sorted_nums[index - 1]:
                     continue
-                visit(i+1, path+[nums[i]])
+                path.append(sorted_nums[index])
+                visit(index + 1, path)
+                path.pop()
+
         visit(0, [])
         return result
