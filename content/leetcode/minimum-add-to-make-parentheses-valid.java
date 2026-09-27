@@ -1,3 +1,16 @@
 class Solution {
-public int minAddToMakeValid(String s){int open=0,missing=0;for(char c:s.toCharArray())if(c=='(')open++;else if(open>0)open--;else missing++;return open+missing;}
+    public int minAddToMakeValid(String s) {
+        int unmatchedOpen = 0;
+        int missingOpen = 0;
+        for (int index = 0; index < s.length(); index++) {
+            if (s.charAt(index) == '(') {
+                unmatchedOpen++;
+            } else if (unmatchedOpen > 0) {
+                unmatchedOpen--;
+            } else {
+                missingOpen++;
+            }
+        }
+        return unmatchedOpen + missingOpen;
+    }
 }

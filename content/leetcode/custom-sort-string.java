@@ -1,3 +1,24 @@
 class Solution {
-public String customSortString(String order,String s){int[]count=new int[26];for(char c:s.toCharArray())count[c-'a']++;StringBuilder out=new StringBuilder();for(char c:order.toCharArray()){while(count[c-'a']>0){out.append(c);count[c-'a']--;}}for(int i=0;i<26;i++)while(count[i]-->0)out.append((char)('a'+i));return out.toString();}
+    public String customSortString(String order, String s) {
+        int[] counts = new int[26];
+        for (int index = 0; index < s.length(); index++) {
+            counts[s.charAt(index) - 'a']++;
+        }
+        StringBuilder result = new StringBuilder();
+        for (int index = 0; index < order.length(); index++) {
+            char character = order.charAt(index);
+            appendCopies(result, character, counts[character - 'a']);
+            counts[character - 'a'] = 0;
+        }
+        for (int index = 0; index < counts.length; index++) {
+            appendCopies(result, (char) ('a' + index), counts[index]);
+        }
+        return result.toString();
+    }
+
+    private void appendCopies(StringBuilder result, char character, int count) {
+        for (int copy = 0; copy < count; copy++) {
+            result.append(character);
+        }
+    }
 }

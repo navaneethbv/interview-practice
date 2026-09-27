@@ -1,20 +1,40 @@
 from collections import deque
+
+
 class Solution:
     def shortestBridge(self, grid):
-        n=len(grid);start=next((r,c) for r in range(n) for c in range(n) if grid[r][c])
-        island=self._island(grid,start);seen=set(island);q=deque((r,c,0) for r,c in island)
-        while q:
-            r,c,d=q.popleft()
-            for a,b in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
-                if not(0<=a<n and 0<=b<n) or (a,b) in seen:continue
-                if grid[a][b]:return d
-                seen.add((a,b));q.append((a,b,d+1))
+        start = next((row, column) for row in range(len(grid))
+                     for column in range(len(grid)) if grid[row][column] == 1)
+        island = self._island(grid, start)
+        seen = set(island)
+        queue = deque((row, column, 0) for row, column in island)
+        while queue:
+            row, column, distance = queue.popleft()
+            for next_row, next_column in self._neighbors(grid, row, column):
+                if (next_row, next_column) in seen:
+                    continue
+                if grid[next_row][next_column] == 1:
+                    return distance
+                seen.add((next_row, next_column))
+                queue.append((next_row, next_column, distance + 1))
+        return -1
+
+    @staticmethod
+    def _neighbors(grid, row, column):
+        for next_row, next_column in ((row - 1, column), (row + 1, column),
+                                      (row, column - 1), (row, column + 1)):
+            if 0 <= next_row < len(grid) and 0 <= next_column < len(grid):
+                yield next_row, next_column
 
     def _island(self, grid, start):
-        """Cells of the island containing start, in discovery order."""
-        n=len(grid);stack=[start];seen={start};order=[]
+        stack = [start]
+        seen = {start}
+        island = []
         while stack:
-            r,c=stack.pop();order.append((r,c))
-            for a,b in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
-                if 0<=a<n and 0<=b<n and grid[a][b] and (a,b) not in seen:seen.add((a,b));stack.append((a,b))
-        return order
+            row, column = stack.pop()
+            island.append((row, column))
+            for neighbor in self._neighbors(grid, row, column):
+                if grid[neighbor[0]][neighbor[1]] == 1 and neighbor not in seen:
+                    seen.add(neighbor)
+                    stack.append(neighbor)
+        return island

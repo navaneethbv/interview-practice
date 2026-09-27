@@ -1,25 +1,40 @@
 class Solution:
     def largestIsland(self, grid):
-        n=len(grid);sizes={0:0};label=2
-        for r in range(n):
-            for c in range(n):
-                if grid[r][c]==1:sizes[label]=self._label(grid,r,c,label);label+=1
-        best=max(sizes.values())
-        for r in range(n):
-            for c in range(n):
-                if grid[r][c]==0:best=max(best,self._joined(grid,sizes,r,c))
+        sizes = {0: 0}
+        label = 2
+        for row in range(len(grid)):
+            for column in range(len(grid)):
+                if grid[row][column] == 1:
+                    sizes[label] = self._label(grid, row, column, label)
+                    label += 1
+
+        best = max(sizes.values())
+        for row in range(len(grid)):
+            for column in range(len(grid)):
+                if grid[row][column] == 0:
+                    best = max(best, self._joined(grid, sizes, row, column))
         return best
 
-    def _label(self, grid, r, c, label):
-        """Marks one island with its label and returns its size."""
-        n=len(grid);stack=[(r,c)];grid[r][c]=label;size=0
+    @staticmethod
+    def _neighbors(grid, row, column):
+        for next_row, next_column in ((row - 1, column), (row + 1, column),
+                                      (row, column - 1), (row, column + 1)):
+            if 0 <= next_row < len(grid) and 0 <= next_column < len(grid):
+                yield next_row, next_column
+
+    def _label(self, grid, row, column, label):
+        stack = [(row, column)]
+        grid[row][column] = label
+        size = 0
         while stack:
-            a,b=stack.pop();size+=1
-            for x,y in ((a-1,b),(a+1,b),(a,b-1),(a,b+1)):
-                if 0<=x<n and 0<=y<n and grid[x][y]==1:grid[x][y]=label;stack.append((x,y))
+            row, column = stack.pop()
+            size += 1
+            for next_row, next_column in self._neighbors(grid, row, column):
+                if grid[next_row][next_column] == 1:
+                    grid[next_row][next_column] = label
+                    stack.append((next_row, next_column))
         return size
 
-    def _joined(self, grid, sizes, r, c):
-        n=len(grid)
-        nearby={grid[a][b] for a,b in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)) if 0<=a<n and 0<=b<n}
-        return 1+sum(sizes[i] for i in nearby)
+    def _joined(self, grid, sizes, row, column):
+        nearby = {grid[r][c] for r, c in self._neighbors(grid, row, column)}
+        return 1 + sum(sizes[label] for label in nearby)

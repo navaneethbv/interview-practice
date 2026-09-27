@@ -1,3 +1,47 @@
 class Solution {
-public List<List<Integer>> verticalTraversal(TreeNode root){List<int[]>nodes=new ArrayList<>();visit(root,0,0,nodes);nodes.sort((a,b)->a[0]!=b[0]?Integer.compare(a[0],b[0]):a[1]!=b[1]?Integer.compare(a[1],b[1]):Integer.compare(a[2],b[2]));List<List<Integer>>out=new ArrayList<>();Integer prev=null;for(int[]p:nodes){if(prev==null||p[0]!=prev){out.add(new ArrayList<>());prev=p[0];}out.get(out.size()-1).add(p[2]);}return out;}private void visit(TreeNode n,int r,int c,List<int[]>out){if(n==null)return;out.add(new int[]{c,r,n.val});visit(n.left,r+1,c-1,out);visit(n.right,r+1,c+1,out);}
+    private static class Position {
+        final TreeNode node;
+        final int row;
+        final int column;
+
+        Position(TreeNode node, int row, int column) {
+            this.node = node;
+            this.row = row;
+            this.column = column;
+        }
+    }
+
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<int[]> positions = collectPositions(root);
+        positions.sort(Comparator.comparingInt((int[] position) -> position[0])
+                .thenComparingInt(position -> position[1])
+                .thenComparingInt(position -> position[2]));
+        List<List<Integer>> columns = new ArrayList<>();
+        Integer previousColumn = null;
+        for (int[] position : positions) {
+            if (previousColumn == null || position[0] != previousColumn) {
+                columns.add(new ArrayList<>());
+                previousColumn = position[0];
+            }
+            columns.get(columns.size() - 1).add(position[2]);
+        }
+        return columns;
+    }
+
+    private List<int[]> collectPositions(TreeNode root) {
+        List<int[]> positions = new ArrayList<>();
+        Deque<Position> stack = new ArrayDeque<>();
+        stack.push(new Position(root, 0, 0));
+        while (!stack.isEmpty()) {
+            Position current = stack.pop();
+            positions.add(new int[]{current.column, current.row, current.node.val});
+            if (current.node.left != null) {
+                stack.push(new Position(current.node.left, current.row + 1, current.column - 1));
+            }
+            if (current.node.right != null) {
+                stack.push(new Position(current.node.right, current.row + 1, current.column + 1));
+            }
+        }
+        return positions;
+    }
 }

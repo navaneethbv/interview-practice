@@ -1,13 +1,26 @@
 from collections import deque
+
+
 class Solution:
     def shortestPathBinaryMatrix(self, grid):
-        n=len(grid)
-        if grid[0][0] or grid[-1][-1]:return -1
-        q=deque([(0,0,1)]);seen={(0,0)}
-        while q:
-            r,c,d=q.popleft()
-            if r==c==n-1:return d
-            for a in range(r-1,r+2):
-                for b in range(c-1,c+2):
-                    if 0<=a<n and 0<=b<n and grid[a][b]==0 and (a,b) not in seen:seen.add((a,b));q.append((a,b,d+1))
+        size = len(grid)
+        if grid[0][0] or grid[-1][-1]:
+            return -1
+        queue = deque([(0, 0, 1)])
+        seen = {(0, 0)}
+        while queue:
+            row, column, distance = queue.popleft()
+            if row == size - 1 and column == size - 1:
+                return distance
+            for neighbor in self._open_neighbors(grid, row, column):
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    queue.append((*neighbor, distance + 1))
         return -1
+
+    @staticmethod
+    def _open_neighbors(grid, row, column):
+        for next_row in range(max(0, row - 1), min(len(grid), row + 2)):
+            for next_column in range(max(0, column - 1), min(len(grid), column + 2)):
+                if grid[next_row][next_column] == 0:
+                    yield next_row, next_column

@@ -1,3 +1,32 @@
 class Solution {
-public int shipWithinDays(int[] weights,int days){int l=0,r=0;for(int w:weights){l=Math.max(l,w);r+=w;}while(l<r){int m=(l+r)/2,used=1,load=0;for(int w:weights){if(load+w>m){used++;load=0;}load+=w;}if(used<=days)r=m;else l=m+1;}return l;}
+    public int shipWithinDays(int[] weights, int days) {
+        int low = 0;
+        int high = 0;
+        for (int weight : weights) {
+            low = Math.max(low, weight);
+            high += weight;
+        }
+        while (low < high) {
+            int capacity = low + (high - low) / 2;
+            if (daysNeeded(weights, capacity) <= days) {
+                high = capacity;
+            } else {
+                low = capacity + 1;
+            }
+        }
+        return low;
+    }
+
+    private int daysNeeded(int[] weights, int capacity) {
+        int used = 1;
+        int load = 0;
+        for (int weight : weights) {
+            if (load + weight > capacity) {
+                used++;
+                load = 0;
+            }
+            load += weight;
+        }
+        return used;
+    }
 }
