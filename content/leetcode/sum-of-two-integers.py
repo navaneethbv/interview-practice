@@ -1,7 +1,10 @@
 class Solution:
     def getSum(self, a, b):
         mask = 0xffffffff
-        a, b = a & mask, b & mask
+        a &= mask
+        b &= mask
         while b:
-            a, b = (a ^ b) & mask, ((a & b) << 1) & mask
+            carry = ((a & b) << 1) & mask
+            a = (a ^ b) & mask
+            b = carry
         return a if a < 0x80000000 else ~(a ^ mask)

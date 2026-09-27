@@ -1,3 +1,16 @@
 class Solution {
-public int maxProduct(int[] nums){int lo=nums[0],hi=lo,best=lo;for(int i=1;i<nums.length;i++){int x=nums[i],a=x*lo,b=x*hi;lo=Math.min(x,Math.min(a,b));hi=Math.max(x,Math.max(a,b));best=Math.max(best,hi);}return best;}
+    public int maxProduct(int[] nums) {
+        int low = nums[0];
+        int high = nums[0];
+        int best = nums[0];
+        for (int index = 1; index < nums.length; index++) {
+            int value = nums[index];
+            int extendLow = value * low;
+            int extendHigh = value * high;
+            low = Math.min(value, Math.min(extendLow, extendHigh));
+            high = Math.max(value, Math.max(extendLow, extendHigh));
+            best = Math.max(best, high);
+        }
+        return best;
+    }
 }

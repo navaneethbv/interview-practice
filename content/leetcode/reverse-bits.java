@@ -1,3 +1,10 @@
 class Solution {
-public int reverseBits(int n){int out=0;for(int i=0;i<32;i++){out=(out<<1)|(n&1);n>>>=1;}return out;}
+    public int reverseBits(int n) {
+        int result = 0;
+        for (int bit = 0; bit < 32; bit++) {
+            result = (result << 1) | (n & 1);
+            n >>>= 1;
+        }
+        return result;
+    }
 }

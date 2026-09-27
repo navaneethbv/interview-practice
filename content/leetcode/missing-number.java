@@ -1,3 +1,9 @@
 class Solution {
-public int missingNumber(int[] nums){int result=nums.length;for(int i=0;i<nums.length;i++)result^=i^nums[i];return result;}
+    public int missingNumber(int[] nums) {
+        int answer = nums.length;
+        for (int index = 0; index < nums.length; index++) {
+            answer ^= index ^ nums[index];
+        }
+        return answer;
+    }
 }
