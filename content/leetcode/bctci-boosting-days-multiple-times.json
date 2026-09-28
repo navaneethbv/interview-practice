@@ -1,0 +1,28 @@
+{
+  "id": "bctci-boosting-days-multiple-times",
+  "style": "leetcode",
+  "function": {
+    "python": "longestWithUnitBoosts",
+    "java": "longestWithUnitBoosts"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[5,5,15,0,10],12],"sample":true,"expected":3},
+    {"input":[[0,0,0],29],"sample":true,"expected":2},
+    {"input":[[5,5,15,0,10],15],"expected":4},
+    {"input":[[],5],"expected":0},
+    {"input":[[9,9,9],0],"expected":0},
+    {"input":[[10,10],0],"expected":2},
+    {"input":[[0,0,0],10000000],"expected":3}
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "bctci-graph-path",
+  "style": "leetcode",
+  "function": {
+    "python": "findPath",
+    "java": "findPath"
+  },
+  "params": [
+    {
+      "name": "graph",
+      "type": "int[][]"
+    },
+    {
+      "name": "node1",
+      "type": "int"
+    },
+    {
+      "name": "node2",
+      "type": "int"
+    }
+  ],
+  "returns": "List<int>",
+  "compare": {
+    "validator": "graphPath"
+  },
+  "tests": [
+    {"input":[[[1],[0,2,5,4],[1,4,5],[],[5,2,1],[1,2,4]],0,4],"sample":true,"expected":[0,1,4]},
+    {"input":[[[1],[0,2,5,4],[1,4,5],[],[5,2,1],[1,2,4]],0,3],"sample":true,"expected":[]},
+    {"input":[[[1],[0,2],[1]],0,2],"expected":[0,1,2]},
+    {"input":[[[1],[0,2],[1]],2,0],"expected":[2,1,0]},
+    {"input":[[[1],[0,2,5,4],[1,4,5],[],[5,2,1],[1,2,4]],5,0],"expected":[5,1,0]},
+    {"input":[[[],[]],0,1],"expected":[]},
+    {"input":[[[1,2],[0,3],[0,3],[1,2]],0,3],"expected":[0,1,3]}
+  ]
+}

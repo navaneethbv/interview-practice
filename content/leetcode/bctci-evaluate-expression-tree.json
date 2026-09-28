@@ -1,0 +1,31 @@
+{
+  "id": "bctci-evaluate-expression-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "evaluate",
+    "java": "evaluate"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "NaryNode"
+    },
+    {
+      "name": "kinds",
+      "type": "string[]"
+    },
+    {
+      "name": "nums",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[0,null,1,2,null,3,4,5,null,6,null,null,null,7,8,null,9,10],["min","max","sum","num","num","sum","product","num","num","num","num"],[0,0,0,4,6,0,0,5,7,6,8]],"sample":true,"expected":12},
+    {"input":[[0],["num"],[-5]],"sample":true,"expected":-5},
+    {"input":[[0,null,1],["product","num"],[0,7]],"expected":7},
+    {"input":[[0,null,1,2,3],["sum","num","num","num"],[0,1,-2,3]],"expected":2},
+    {"input":[[0,null,1,2,null,3,4,null,5],["max","min","sum","num","num","num"],[0,0,0,-3,9,4]],"expected":4},
+    {"input":[[0,null,1,2],["product","num","num"],[0,-20,30]],"expected":-600}
+  ]
+}

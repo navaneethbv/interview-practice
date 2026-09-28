@@ -1,0 +1,34 @@
+{
+  "id": "bctci-action-log-anomalies",
+  "style": "leetcode",
+  "function": {
+    "python": "findAnomalies",
+    "java": "findAnomalies"
+  },
+  "params": [
+    {
+      "name": "agents",
+      "type": "string[]"
+    },
+    {
+      "name": "actions",
+      "type": "string[]"
+    },
+    {
+      "name": "tickets",
+      "type": "int[]"
+    }
+  ],
+  "returns": "List<int>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["Drew","Drew","Drew"],["open","close","close"],[32,2,32]],"sample":true,"expected":[2,32]},
+    {"input":[["Alice","Alice"],["open","close"],[1,1]],"sample":true,"expected":[]},
+    {"input":[["Dwight","Dwight","Drew","Drew","Drew","Drew","Susa","Jo","Susa","Jo","Jo","Jo","Susa"],["close","open","open","close","open","close","open","close","open","open","open","close","close"],[2,2,32,32,32,32,7,7,33,8,36,8,33]],"expected":[32,2,36,7,8]},
+    {"input":[["Alice","Alice"],["open","open"],[1,1]],"expected":[1]},
+    {"input":[["Dwight","Dwight","Drew","Drew","Drew"],["close","open","open","open","close"],[2,2,32,2,32]],"expected":[32,2]},
+    {"input":[[],[],[]],"expected":[]},
+    {"input":[["A","B","B","A"],["open","open","close","close"],[1,2,2,1]],"expected":[]},
+    {"input":[["A"],["open"],[5]],"expected":[5]}
+  ]
+}

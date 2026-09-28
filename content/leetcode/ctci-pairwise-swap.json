@@ -1,0 +1,27 @@
+{
+  "id": "ctci-pairwise-swap",
+  "style": "leetcode",
+  "function": {
+    "python": "swapOddEvenBits",
+    "java": "swapOddEvenBits"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[10],"sample":true,"expected":5},
+    {"input":[1],"sample":true,"expected":2},
+    {"input":[0],"expected":0},
+    {"input":[-1],"expected":-1},
+    {"input":[3],"expected":3},
+    {"input":[1073741824],"expected":-2147483648},
+    {"input":[-2147483648],"expected":1073741824},
+    {"input":[2147483647],"expected":-1073741825},
+    {"input":[-1431655766],"expected":1431655765},
+    {"input":[123456789],"expected":195546666}
+  ]
+}

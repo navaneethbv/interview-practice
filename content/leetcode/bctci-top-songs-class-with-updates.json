@@ -1,0 +1,41 @@
+{
+  "kind": "design",
+  "id": "bctci-top-songs-class-with-updates",
+  "style": "leetcode",
+  "className": "TopSongs",
+  "ctorParams": [
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "register_plays",
+      "java": "registerPlays",
+      "params": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "plays",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "top_k",
+      "java": "topK",
+      "params": [],
+      "returns": "List<string>"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[2],"ops":["register_plays","register_plays","register_plays","register_plays","top_k"],"args":[["a",5],["b",7],["a",4],["c",8],[]]},"sample":true,"expected":[null,null,null,null,["a","c"]]},
+    {"input":{"ctor":[1],"ops":["register_plays","register_plays","top_k"],"args":[["x",1],["x",1],[]]},"sample":true,"expected":[null,null,["x"]]},
+    {"input":{"ctor":[3],"ops":["register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","top_k"],"args":[["Boolean Rhapsody",100],["Boolean Rhapsody",193],["Coding In The Deep",75],["Coding In The Deep",75],["All About That Base Case",200],["All About That Base Case",90],["All About That Base Case",1],["Here Comes The Bug",223],["Oops! I Broke Prod Again",274],["All the Single Brackets",132],[]]},"expected":[null,null,null,null,null,null,null,null,null,null,["Boolean Rhapsody","All About That Base Case","Oops! I Broke Prod Again"]]},
+    {"input":{"ctor":[2],"ops":["top_k","register_plays","register_plays","top_k","register_plays","top_k"],"args":[[],["b",3],["a",3],[],["b",1],[]]},"expected":[[],null,null,["a","b"],null,["b","a"]]}
+  ]
+}

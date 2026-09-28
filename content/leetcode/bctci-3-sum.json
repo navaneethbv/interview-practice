@@ -1,0 +1,31 @@
+{
+  "id": "bctci-3-sum",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    },
+    {
+      "name": "w",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[2,2,-1,8],3],"expected":true,"sample":true},
+    {"input":[[2,0,1],4],"expected":false,"sample":true},
+    {"input":[[],0],"expected":false},
+    {"input":[[0],0],"expected":false},
+    {"input":[[0,0],0],"expected":false},
+    {"input":[[0,0,0],0],"expected":true},
+    {"input":[[1,2,3],7],"expected":false},
+    {"input":[[-5,1,4],0],"expected":true},
+    {"input":[[10000000,-10000000,1],1],"expected":true},
+    {"input":[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],6],"expected":true}
+  ]
+}

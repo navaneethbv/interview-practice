@@ -1,0 +1,22 @@
+{
+  "id": "bctci-current-url",
+  "style": "leetcode",
+  "function": {
+    "python": "currentUrl",
+    "java": "currentUrl"
+  },
+  "params": [
+    {
+      "name": "actions",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[[["go","google.com"],["go","wikipedia.com"],["go","amazon.com"],["back","4"],["go","youtube.com"],["go","netflix.com"],["back","1"]]],"sample":true,"expected":"youtube.com"},
+    {"input":[[["go","a.com"]]],"sample":true,"expected":"a.com"},
+    {"input":[[["go","a.com"],["go","b.com"],["back","1"]]],"expected":"a.com"},
+    {"input":[[["go","a.com"],["back","100"]]],"expected":"a.com"},
+    {"input":[[["go","a.com"],["go","b.com"],["go","c.com"],["back","1"],["back","1"],["go","d.com"]]],"expected":"d.com"}
+  ]
+}

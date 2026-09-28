@@ -1,0 +1,52 @@
+{
+  "kind": "design",
+  "id": "ctci-animal-shelter",
+  "style": "leetcode",
+  "className": "AnimalShelter",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "enqueue",
+      "java": "enqueue",
+      "params": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "species",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "dequeueAny",
+      "java": "dequeueAny",
+      "params": [],
+      "returns": "string"
+    },
+    {
+      "name": "dequeueDog",
+      "java": "dequeueDog",
+      "params": [],
+      "returns": "string"
+    },
+    {
+      "name": "dequeueCat",
+      "java": "dequeueCat",
+      "params": [],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["enqueue","enqueue","enqueue","dequeueCat","dequeueAny","dequeueAny"],"args":[["Rex","dog"],["Tom","cat"],["Kit","cat"],[],[],[]]},"sample":true,"expected":[null,null,null,"Tom","Rex","Kit"]},
+    {"input":{"ctor":[],"ops":["dequeueAny","enqueue","dequeueCat"],"args":[[],["Ace","dog"],[]]},"sample":true,"expected":["",null,""]},
+    {"input":{"ctor":[],"ops":["dequeueDog","dequeueCat","dequeueAny"],"args":[[],[],[]]},"expected":["","",""]},
+    {"input":{"ctor":[],"ops":["enqueue","enqueue","enqueue","dequeueDog","dequeueDog","dequeueAny"],"args":[["A","cat"],["B","dog"],["C","dog"],[],[],[]]},"expected":[null,null,null,"B","C","A"]},
+    {"input":{"ctor":[],"ops":["enqueue","dequeueAny","enqueue","enqueue","dequeueAny","dequeueAny","dequeueAny"],"args":[["A","cat"],[],["B","cat"],["C","dog"],[],[],[]]},"expected":[null,"A",null,null,"B","C",""]},
+    {"input":{"ctor":[],"ops":["enqueue","enqueue","enqueue","enqueue","dequeueCat","dequeueCat","dequeueCat","dequeueDog"],"args":[["Max","dog"],["Max","cat"],["Bo","cat"],["Zed","dog"],[],[],[],[]]},"expected":[null,null,null,null,"Max","Bo","","Max"]},
+    {"input":{"ctor":[],"ops":["enqueue","enqueue","dequeueDog","enqueue","dequeueAny","dequeueAny"],"args":[["A","dog"],["B","dog"],[],["C","cat"],[],[]]},"expected":[null,null,"A",null,"B","C"]},
+    {"input":{"ctor":[],"ops":["enqueue","enqueue","enqueue","dequeueAny","dequeueAny","dequeueAny","dequeueAny"],"args":[["P","cat"],["Q","dog"],["R","cat"],[],[],[],[]]},"expected":[null,null,null,"P","Q","R",""]}
+  ]
+}

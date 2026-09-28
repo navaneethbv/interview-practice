@@ -1,0 +1,33 @@
+{
+  "kind": "design",
+  "id": "ctci-word-frequencies",
+  "style": "leetcode",
+  "className": "WordFrequencies",
+  "ctorParams": [
+    {
+      "name": "book",
+      "type": "string[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "getFrequency",
+      "java": "getFrequency",
+      "params": [
+        {
+          "name": "word",
+          "type": "string"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[["The","cat","saw","the","dog"]],"ops":["getFrequency","getFrequency","getFrequency"],"args":[["the"],["DOG"],["bird"]]},"sample":true,"expected":[2,1,0]},
+    {"input":{"ctor":[[]],"ops":["getFrequency"],"args":[["a"]]},"sample":true,"expected":[0]},
+    {"input":{"ctor":[["a","A","a"]],"ops":["getFrequency","getFrequency"],"args":[["a"],["A"]]},"expected":[3,3]},
+    {"input":{"ctor":[["Hello"]],"ops":["getFrequency","getFrequency","getFrequency"],"args":[["hello"],["HELLO"],["hell"]]},"expected":[1,1,0]},
+    {"input":{"ctor":[["to","be","or","not","to","be"]],"ops":["getFrequency","getFrequency","getFrequency","getFrequency"],"args":[["to"],["be"],["or"],["question"]]},"expected":[2,2,1,0]},
+    {"input":{"ctor":[["xYz","XyZ","xyz","XYZ"]],"ops":["getFrequency"],"args":[["xyz"]]},"expected":[4]}
+  ]
+}

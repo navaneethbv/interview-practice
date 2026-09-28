@@ -1,0 +1,28 @@
+{
+  "id": "ctci-tic-tac-win",
+  "style": "leetcode",
+  "function": {
+    "python": "hasWon",
+    "java": "hasWon"
+  },
+  "params": [
+    {
+      "name": "board",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["XO ","XO ","X  "]],"sample":true,"expected":"X"},
+    {"input":[["XOX","OXO","OXO"]],"sample":true,"expected":""},
+    {"input":[["X"]],"expected":"X"},
+    {"input":[[" "]],"expected":""},
+    {"input":[["OOO","XX ","   "]],"expected":"O"},
+    {"input":[["O X"," OX","X O"]],"expected":"O"},
+    {"input":[["X O","XO ","O X"]],"expected":"O"},
+    {"input":[["    ","    ","    ","    "]],"expected":""},
+    {"input":[["XOXX","OXOO","OOXX","XOOX"]],"expected":"X"},
+    {"input":[["XXXO","OOXX","XXOO","OOXX"]],"expected":""},
+    {"input":[["O  X","O X ","OX  ","X   "]],"expected":"X"}
+  ]
+}

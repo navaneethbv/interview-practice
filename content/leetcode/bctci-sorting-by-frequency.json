@@ -1,0 +1,23 @@
+{
+  "id": "bctci-sorting-by-frequency",
+  "style": "leetcode",
+  "function": {
+    "python": "sortByFrequency",
+    "java": "sortByFrequency"
+  },
+  "params": [
+    {
+      "name": "word",
+      "type": "string"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":["aabbbcccc"],"sample":true,"expected":["c","b","a"]},
+    {"input":["abc"],"sample":true,"expected":["a","b","c"]},
+    {"input":["supercalifragilisticexpialidocious"],"expected":["i","a","c","l","s","e","o","p","r","u","d","f","g","t","x"]},
+    {"input":[""],"expected":[]},
+    {"input":["zzzy"],"expected":["z","y"]},
+    {"input":["banana"],"expected":["a","n","b"]}
+  ]
+}

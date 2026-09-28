@@ -1,0 +1,27 @@
+{
+  "id": "ctci-pond-sizes",
+  "style": "leetcode",
+  "function": {
+    "python": "pondSizes",
+    "java": "pondSizes"
+  },
+  "params": [
+    {
+      "name": "land",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {"input":[[[0,2,1,0],[0,1,0,1],[1,1,0,1],[0,1,0,1]]],"sample":true,"expected":[1,2,4]},
+    {"input":[[[5]]],"sample":true,"expected":[]},
+    {"input":[[[0]]],"expected":[1]},
+    {"input":[[[0,0],[0,0]]],"expected":[4]},
+    {"input":[[[0,1],[1,0]]],"expected":[2]},
+    {"input":[[[0,1,0],[1,1,1],[0,1,0]]],"expected":[1,1,1,1]},
+    {"input":[[[0,0,0,0,0]]],"expected":[5]},
+    {"input":[[[0],[1],[0],[0]]],"expected":[1,2]},
+    {"input":[[[1,0,1,0,1],[0,1,0,1,0],[1,0,1,0,1]]],"expected":[7]},
+    {"input":[[[3,3,3],[3,3,3]]],"expected":[]}
+  ]
+}

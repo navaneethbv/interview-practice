@@ -1,0 +1,32 @@
+{
+  "id": "bctci-k-most-played",
+  "style": "leetcode",
+  "function": {
+    "python": "kMostPlayed",
+    "java": "kMostPlayed"
+  },
+  "params": [
+    {
+      "name": "titles",
+      "type": "string[]"
+    },
+    {
+      "name": "plays",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["All the Single Brackets","Oops! I Broke Prod Again","Coding In The Deep","Boolean Rhapsody","Here Comes The Bug","All About That Base Case"],[132,274,146,193,291,291],3],"sample":true,"expected":["All About That Base Case","Here Comes The Bug","Oops! I Broke Prod Again"]},
+    {"input":[["a"],[5],4],"sample":true,"expected":["a"]},
+    {"input":[[],[],2],"expected":[]},
+    {"input":[["b","a","c"],[1,1,1],2],"expected":["b","a"]},
+    {"input":[["All the Single Brackets","Oops! I Broke Prod Again","Coding In The Deep","Boolean Rhapsody","Here Comes The Bug","All About That Base Case"],[132,274,146,193,291,291],1],"expected":["All About That Base Case"]},
+    {"input":[["All the Single Brackets","Oops! I Broke Prod Again","Coding In The Deep","Boolean Rhapsody","Here Comes The Bug","All About That Base Case"],[132,274,146,193,291,291],6],"expected":["All the Single Brackets","Boolean Rhapsody","Coding In The Deep","Oops! I Broke Prod Again","Here Comes The Bug","All About That Base Case"]}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "bctci-strong-start-and-ending",
+  "style": "leetcode",
+  "function": {
+    "python": "strongStartAndEnd",
+    "java": "strongStartAndEnd"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[10,0,0,0,10,0,0,10],2],"sample":true,"expected":5},
+    {"input":[[5,5,5],2],"sample":true,"expected":2},
+    {"input":[[0,10,0,10],1],"expected":3},
+    {"input":[[],3],"expected":0},
+    {"input":[[5,5],5],"expected":2},
+    {"input":[[10,10,0,10],0],"expected":3},
+    {"input":[[0,0,0],0],"expected":0}
+  ]
+}

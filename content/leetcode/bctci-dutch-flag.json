@@ -1,0 +1,27 @@
+{
+  "id": "bctci-dutch-flag",
+  "style": "leetcode",
+  "function": {
+    "python": "dutchFlagSort",
+    "java": "dutchFlagSort"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "char[]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[["R","W","B","B","W","R","W"]],"sample":true,"expected":["R","R","W","W","W","B","B"]},
+    {"input":[["B","R"]],"sample":true,"expected":["R","B"]},
+    {"input":[[]],"expected":[]},
+    {"input":[["W"]],"expected":["W"]},
+    {"input":[["B","B","B"]],"expected":["B","B","B"]},
+    {"input":[["B","W","R"]],"expected":["R","W","B"]},
+    {"input":[["W","R","W","R","B","W"]],"expected":["R","R","W","W","W","B"]}
+  ]
+}

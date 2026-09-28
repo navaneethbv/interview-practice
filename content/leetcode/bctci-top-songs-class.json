@@ -1,0 +1,42 @@
+{
+  "kind": "design",
+  "id": "bctci-top-songs-class",
+  "style": "leetcode",
+  "className": "TopSongs",
+  "ctorParams": [
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "register_plays",
+      "java": "registerPlays",
+      "params": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "plays",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "top_k",
+      "java": "topK",
+      "params": [],
+      "returns": "List<string>"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[2],"ops":["register_plays","register_plays","register_plays","top_k"],"args":[["Boolean Rhapsody",193],["Coding In The Deep",146],["Here Comes The Bug",223],[]]},"sample":true,"expected":[null,null,null,["Here Comes The Bug","Boolean Rhapsody"]]},
+    {"input":{"ctor":[3],"ops":["top_k"],"args":[[]]},"sample":true,"expected":[[]]},
+    {"input":{"ctor":[3],"ops":["register_plays","register_plays","top_k","register_plays","register_plays","register_plays","register_plays","top_k"],"args":[["Boolean Rhapsody",193],["Coding In The Deep",146],[],["All About That Base Case",291],["Here Comes The Bug",223],["Oops! I Broke Prod Again",274],["All the Single Brackets",132],[]]},"expected":[null,null,["Boolean Rhapsody","Coding In The Deep"],null,null,null,null,["All About That Base Case","Oops! I Broke Prod Again","Here Comes The Bug"]]},
+    {"input":{"ctor":[2],"ops":["register_plays","register_plays","register_plays","top_k"],"args":[["b",5],["a",5],["c",5],[]]},"expected":[null,null,null,["a","b"]]},
+    {"input":{"ctor":[1],"ops":["register_plays","top_k","register_plays","top_k"],"args":[["x",1],[],["y",2],[]]},"expected":[null,["x"],null,["y"]]}
+  ]
+}

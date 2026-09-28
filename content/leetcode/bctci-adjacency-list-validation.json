@@ -1,0 +1,26 @@
+{
+  "id": "bctci-adjacency-list-validation",
+  "style": "leetcode",
+  "function": {
+    "python": "isValidUndirected",
+    "java": "isValidUndirected"
+  },
+  "params": [
+    {
+      "name": "graph",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[[1],[0]]],"sample":true,"expected":true},
+    {"input":[[[1,1],[0,0]]],"sample":true,"expected":false},
+    {"input":[[[2],[0]]],"expected":false},
+    {"input":[[[0],[]]],"expected":false},
+    {"input":[[[1],[]]],"expected":false},
+    {"input":[[]],"expected":true},
+    {"input":[[[]]],"expected":true},
+    {"input":[[[1],[0,2,5,4],[1,4,5],[],[5,2,1],[1,2,4]]],"expected":true},
+    {"input":[[[1,2],[0],[0,-1]]],"expected":false}
+  ]
+}

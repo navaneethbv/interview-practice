@@ -1,0 +1,26 @@
+{
+  "id": "ctci-longest-word",
+  "style": "leetcode",
+  "function": {
+    "python": "longestWord",
+    "java": "longestWord"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["cat","banana","dog","nana","walk","walker","dogwalker"]],"sample":true,"expected":"dogwalker"},
+    {"input":[["a","b"]],"sample":true,"expected":""},
+    {"input":[[]],"expected":""},
+    {"input":[["a","aa","aaa"]],"expected":"aaa"},
+    {"input":[["ab","cd","abcd","cdab"]],"expected":"abcd"},
+    {"input":[["x"]],"expected":""},
+    {"input":[["cat","cats","catsdog","dog","catsdogcats"]],"expected":"catsdogcats"},
+    {"input":[["b","ab","abb","a"]],"expected":"abb"},
+    {"input":[["rat","ratcatdog","cat","dog","ratcat"]],"expected":"ratcatdog"}
+  ]
+}

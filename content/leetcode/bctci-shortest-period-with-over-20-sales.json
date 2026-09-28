@@ -1,0 +1,24 @@
+{
+  "id": "bctci-shortest-period-with-over-20-sales",
+  "style": "leetcode",
+  "function": {
+    "python": "shortestOver20",
+    "java": "shortestOver20"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[5,10,15,5,10]],"sample":true,"expected":2},
+    {"input":[[5,5,5,5]],"sample":true,"expected":-1},
+    {"input":[[5,10,4,5,10]],"expected":4},
+    {"input":[[]],"expected":-1},
+    {"input":[[21]],"expected":1},
+    {"input":[[20]],"expected":-1},
+    {"input":[[0,0,11,10,0]],"expected":2}
+  ]
+}

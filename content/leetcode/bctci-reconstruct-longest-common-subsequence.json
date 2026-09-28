@@ -1,0 +1,30 @@
+{
+  "id": "bctci-reconstruct-longest-common-subsequence",
+  "style": "leetcode",
+  "function": {
+    "python": "longestCommonSubsequence",
+    "java": "longestCommonSubsequence"
+  },
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "compare": {
+    "validator": "commonSubsequence"
+  },
+  "tests": [
+    {"input":["HAHAH","AAAAHH"],"sample":true,"expected":"AAH"},
+    {"input":["ABCD","ACBAD"],"sample":true,"expected":"ACD"},
+    {"input":["","AA"],"expected":""},
+    {"input":["ABC","BCA"],"expected":"BC"},
+    {"input":["XYZ","ABC"],"expected":""},
+    {"input":["AGGTAB","GXTXAYB"],"expected":"GTAB"}
+  ]
+}

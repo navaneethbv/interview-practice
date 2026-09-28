@@ -1,0 +1,26 @@
+{
+  "id": "bctci-palindromic-sentence",
+  "style": "leetcode",
+  "function": {
+    "python": "isPalindromicSentence",
+    "java": "isPalindromicSentence"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["Bob wondered, 'Now, Bob?'"],"sample":true,"expected":true},
+    {"input":["race a car"],"sample":true,"expected":false},
+    {"input":[""],"expected":true},
+    {"input":["!!"],"expected":true},
+    {"input":["A man, a plan, a canal: Panama"],"expected":true},
+    {"input":["ab1a"],"expected":true},
+    {"input":["a1b"],"expected":false},
+    {"input":["Zz"],"expected":true},
+    {"input":[".a."],"expected":true}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "bctci-bst-validation",
+  "style": "leetcode",
+  "function": {
+    "python": "isValidBst",
+    "java": "isValidBst"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[5,2,9,null,4,9,11,null,null,null,9]],"sample":true,"expected":true},
+    {"input":[[5,2,12,null,4,10,13,null,null,null,9]],"sample":true,"expected":false},
+    {"input":[[]],"expected":true},
+    {"input":[[1]],"expected":true},
+    {"input":[[2,2,2]],"expected":true},
+    {"input":[[5,1,7,null,null,4,8]],"expected":false},
+    {"input":[[5,1,7,null,null,5,8]],"expected":true},
+    {"input":[[3,1,5,0,4]],"expected":false}
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "kind": "design",
+  "id": "bctci-spreadsheet",
+  "style": "leetcode",
+  "className": "Spreadsheet",
+  "ctorParams": [
+    {
+      "name": "rows",
+      "type": "int"
+    },
+    {
+      "name": "cols",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "set",
+      "java": "set",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        },
+        {
+          "name": "col",
+          "type": "int"
+        },
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        },
+        {
+          "name": "col",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "sort_columns_by_row",
+      "java": "sortColumnsByRow",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "sort_rows_by_column",
+      "java": "sortRowsByColumn",
+      "params": [
+        {
+          "name": "col",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3,3],"ops":["set","set","set","set","set","sort_columns_by_row","sort_rows_by_column","get"],"args":[[0,0,5],[0,1,3],[0,2,8],[1,0,6],[2,1,1],[0],[1],[1,1]]},"sample":true,"expected":[null,null,null,null,null,null,null,5]},
+    {"input":{"ctor":[3,2],"ops":["sort_rows_by_column","get"],"args":[[0],[0,0]]},"sample":true,"expected":[null,0]},
+    {"input":{"ctor":[1,1],"ops":["set","get"],"args":[[0,0,42],[0,0]]},"expected":[null,42]},
+    {"input":{"ctor":[2,3],"ops":["set","set","set","set","set","set","sort_columns_by_row","get","get","get"],"args":[[0,0,3],[0,1,1],[0,2,2],[1,0,30],[1,1,10],[1,2,20],[0],[1,0],[1,1],[1,2]]},"expected":[null,null,null,null,null,null,null,10,20,30]},
+    {"input":{"ctor":[3,2],"ops":["set","set","set","set","set","set","sort_rows_by_column","get","get","get"],"args":[[0,1,7],[1,1,7],[2,1,-1],[0,0,1],[1,0,2],[2,0,3],[1],[0,0],[1,0],[2,0]]},"expected":[null,null,null,null,null,null,null,3,1,2]}
+  ]
+}

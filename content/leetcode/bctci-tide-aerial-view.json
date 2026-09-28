@@ -1,0 +1,23 @@
+{
+  "id": "bctci-tide-aerial-view",
+  "style": "leetcode",
+  "function": {
+    "python": "mostBalanced",
+    "java": "mostBalanced"
+  },
+  "params": [
+    {
+      "name": "pictures",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[["000","000","000"],["100","000","100"],["110","000","100"],["110","111","100"],["111","111","110"]]],"sample":true,"expected":2},
+    {"input":[[["11","11"]]],"sample":true,"expected":0},
+    {"input":[[["0"],["1"]]],"expected":0},
+    {"input":[[["00","00"],["10","00"],["10","10"],["11","10"],["11","11"]]],"expected":2},
+    {"input":[[["000","000","000"],["111","111","111"]]],"expected":0},
+    {"input":[[["100","000","000"],["110","100","100"],["111","110","110"]]],"expected":1}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "bctci-longest-period-at-most-k-distinct",
+  "style": "leetcode",
+  "function": {
+    "python": "longestAtMostKDistinct",
+    "java": "longestAtMostKDistinct"
+  },
+  "params": [
+    {
+      "name": "bestSeller",
+      "type": "string[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["book1","book1","book2","book1","book3","book1"],2],"sample":true,"expected":4},
+    {"input":[["book1","book2","book3"],1],"sample":true,"expected":1},
+    {"input":[["book1","book1","book1"],2],"expected":3},
+    {"input":[[],1],"expected":0},
+    {"input":[["a","b","a","c","c","c","b"],2],"expected":4}
+  ]
+}

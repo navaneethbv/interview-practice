@@ -1,0 +1,25 @@
+{
+  "id": "bctci-number-of-palindromic-splits",
+  "style": "leetcode",
+  "function": {
+    "python": "countPalindromicSplits",
+    "java": "countPalindromicSplits"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["abbaab"],"sample":true,"expected":6},
+    {"input":["aaaaa"],"sample":true,"expected":16},
+    {"input":["aabaa"],"expected":6},
+    {"input":[""],"expected":0},
+    {"input":["a"],"expected":1},
+    {"input":["ab"],"expected":1},
+    {"input":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],"expected":268198252},
+    {"input":["abcbaabcbaabcbaabcbaabcbaabcbaabcbaabcbaabcbaabcbaabcbaabcba"],"expected":89085503}
+  ]
+}

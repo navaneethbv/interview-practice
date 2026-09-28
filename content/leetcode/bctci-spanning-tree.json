@@ -1,0 +1,26 @@
+{
+  "id": "bctci-spanning-tree",
+  "style": "leetcode",
+  "function": {
+    "python": "spanningTree",
+    "java": "spanningTree"
+  },
+  "params": [
+    {
+      "name": "graph",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "List<List<int>>",
+  "compare": {
+    "validator": "spanningTree"
+  },
+  "tests": [
+    {"input":[[[1],[0,2,5],[1,3,4],[2],[2,5],[1,4]]],"sample":true,"expected":[[0,1],[1,2],[1,5],[2,3],[2,4]]},
+    {"input":[[[]]],"sample":true,"expected":[]},
+    {"input":[[[1],[0]]],"expected":[[0,1]]},
+    {"input":[[[1,2],[0,2],[0,1]]],"expected":[[0,1],[0,2]]},
+    {"input":[[[1,2,3],[0,2,3],[0,1,3],[0,1,2]]],"expected":[[0,1],[0,2],[0,3]]},
+    {"input":[[[2],[2,5],[0,1,3,4],[2],[2],[1]]],"expected":[[0,2],[2,1],[2,3],[2,4],[1,5]]}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "bctci-longest-good-day-streak",
+  "style": "leetcode",
+  "function": {
+    "python": "longestGoodStreak",
+    "java": "longestGoodStreak"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[0,14,7,12,10,20]],"sample":true,"expected":3},
+    {"input":[[5,5,5]],"sample":true,"expected":0},
+    {"input":[[10,10,10]],"expected":3},
+    {"input":[[]],"expected":0},
+    {"input":[[9,10,9,10,10]],"expected":2}
+  ]
+}

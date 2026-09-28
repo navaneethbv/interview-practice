@@ -1,0 +1,30 @@
+{
+  "id": "bctci-most-listened-across-genres",
+  "style": "leetcode",
+  "function": {
+    "python": "mostListened",
+    "java": "mostListened"
+  },
+  "params": [
+    {
+      "name": "titles",
+      "type": "List<List<string>>"
+    },
+    {
+      "name": "plays",
+      "type": "int[][]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":[[["Coding In The Deep","Someone Like GNU","Hello World"],["Ring Of Firewalls"],["Boolean Rhapsody","Merge Together","Hey Queue"]],[[123,99,98],[217],[184,119,102]],5],"sample":true,"expected":["Ring Of Firewalls","Boolean Rhapsody","Coding In The Deep","Merge Together","Hey Queue"]},
+    {"input":[[["a"]],[[1]],1],"sample":true,"expected":["a"]},
+    {"input":[[["Coding In The Deep","Someone Like GNU","Hello World"],["Ring Of Firewalls"],["Boolean Rhapsody","Merge Together","Hey Queue"]],[[123,99,98],[217],[184,119,102]],7],"expected":["Ring Of Firewalls","Boolean Rhapsody","Coding In The Deep","Merge Together","Hey Queue","Someone Like GNU","Hello World"]},
+    {"input":[[["a","b"],["c","d"]],[[5,5],[5,1]],3],"expected":["a","b","c"]},
+    {"input":[[["x","y","z"]],[[3,2,1]],2],"expected":["x","y"]}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "bctci-channel-views",
+  "style": "leetcode",
+  "function": {
+    "python": "periodViews",
+    "java": "periodViews"
+  },
+  "params": [
+    {
+      "name": "views",
+      "type": "int[]"
+    },
+    {
+      "name": "periods",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[3,5,4,8,7,2,5,3,2,3],[[0,1],[0,5],[5,8],[3,3]]],"sample":true,"expected":[8,29,12,8]},
+    {"input":[[7],[[0,0]]],"sample":true,"expected":[7]},
+    {"input":[[0,0,0],[[0,2],[1,1]]],"expected":[0,0]},
+    {"input":[[9999,9999,9999],[[0,2],[2,2],[0,0]]],"expected":[29997,9999,9999]}
+  ]
+}

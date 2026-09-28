@@ -1,0 +1,30 @@
+{
+  "id": "bctci-product-of-alphabetical-sums",
+  "style": "leetcode",
+  "function": {
+    "python": "hasProductTriplet",
+    "java": "hasProductTriplet"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["abc","fg","hij","klm","nop","qrs","vwx"],1620],"sample":true,"expected":true},
+    {"input":[["a","b","c"],7],"sample":true,"expected":false},
+    {"input":[["a","b"],2],"expected":true},
+    {"input":[[],1],"expected":false},
+    {"input":[["a"],1],"expected":true},
+    {"input":[["zzz"],474552],"expected":true},
+    {"input":[["zzz"],474553],"expected":false},
+    {"input":[["b","c","d"],24],"expected":true},
+    {"input":[["b","c","d"],30],"expected":false}
+  ]
+}

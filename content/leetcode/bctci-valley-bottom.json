@@ -1,0 +1,25 @@
+{
+  "id": "bctci-valley-bottom",
+  "style": "leetcode",
+  "function": {
+    "python": "valleyBottom",
+    "java": "valleyBottom"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[6,5,4,7,9]],"sample":true,"expected":4},
+    {"input":[[7,6,5]],"sample":true,"expected":5},
+    {"input":[[5,6,7]],"expected":5},
+    {"input":[[2,1]],"expected":1},
+    {"input":[[1,2]],"expected":1},
+    {"input":[[10,8,6,4,2,3]],"expected":2},
+    {"input":[[9,1,2,3,4,5,6]],"expected":1},
+    {"input":[[-1000000000,1000000000]],"expected":-1000000000}
+  ]
+}

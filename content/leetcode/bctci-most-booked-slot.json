@@ -1,0 +1,26 @@
+{
+  "id": "bctci-most-booked-slot",
+  "style": "leetcode",
+  "function": {
+    "python": "mostBookedSlot",
+    "java": "mostBookedSlot"
+  },
+  "params": [
+    {
+      "name": "slots",
+      "type": "int[]"
+    },
+    {
+      "name": "bookings",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[0,0,0,0,0,0],[[0,3,4],[2,5,1],[4,4,3]]],"sample":true,"expected":2},
+    {"input":[[1,1,0,0,2,3],[[0,3,4],[2,5,1],[4,4,3]]],"sample":true,"expected":4},
+    {"input":[[5],[]],"expected":0},
+    {"input":[[0,7,7],[]],"expected":1},
+    {"input":[[0,0,0],[[0,2,100000]]],"expected":0}
+  ]
+}

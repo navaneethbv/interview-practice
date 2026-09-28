@@ -1,0 +1,26 @@
+{
+  "id": "bctci-youtube-video-unusual-days",
+  "style": "leetcode",
+  "function": {
+    "python": "maxDeviation",
+    "java": "maxDeviation"
+  },
+  "params": [
+    {
+      "name": "likes",
+      "type": "int[]"
+    },
+    {
+      "name": "dislikes",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[3,6,1],[0,1,9]],"sample":true,"expected":24},
+    {"input":[[4],[2]],"sample":true,"expected":0},
+    {"input":[[],[]],"expected":0},
+    {"input":[[1,1,1],[1,1,1]],"expected":0},
+    {"input":[[9999,0,5000,20],[0,9999,5000,3]],"expected":40013}
+  ]
+}

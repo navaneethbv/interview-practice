@@ -1,0 +1,41 @@
+{
+  "kind": "design",
+  "id": "ctci-rank-from-stream",
+  "style": "leetcode",
+  "className": "StreamRank",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "track",
+      "java": "track",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getRankOfNumber",
+      "java": "getRankOfNumber",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["track","track","track","track","getRankOfNumber","getRankOfNumber","getRankOfNumber"],"args":[[5],[1],[4],[4],[1],[4],[5]]},"sample":true,"expected":[null,null,null,null,0,2,3]},
+    {"input":{"ctor":[],"ops":["getRankOfNumber","track","getRankOfNumber"],"args":[[3],[9],[3]]},"sample":true,"expected":[-1,null,-1]},
+    {"input":{"ctor":[],"ops":["track","getRankOfNumber"],"args":[[0],[0]]},"expected":[null,0]},
+    {"input":{"ctor":[],"ops":["track","track","track","getRankOfNumber","getRankOfNumber"],"args":[[100000],[0],[50000],[100000],[0]]},"expected":[null,null,null,2,0]},
+    {"input":{"ctor":[],"ops":["track","track","track","getRankOfNumber","track","getRankOfNumber"],"args":[[7],[7],[7],[7],[3],[7]]},"expected":[null,null,null,2,null,3]},
+    {"input":{"ctor":[],"ops":["track","track","track","track","track","track","track","track","track","getRankOfNumber","getRankOfNumber","getRankOfNumber","getRankOfNumber"],"args":[[5],[1],[4],[4],[5],[9],[7],[13],[3],[1],[3],[4],[13]]},"expected":[null,null,null,null,null,null,null,null,null,0,1,3,8]},
+    {"input":{"ctor":[],"ops":["track","getRankOfNumber","getRankOfNumber"],"args":[[10],[11],[9]]},"expected":[null,-1,-1]},
+    {"input":{"ctor":[],"ops":["track","track","getRankOfNumber","track","getRankOfNumber","getRankOfNumber"],"args":[[2],[8],[8],[5],[8],[5]]},"expected":[null,null,1,null,2,1]}
+  ]
+}

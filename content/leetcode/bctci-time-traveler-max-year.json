@@ -1,0 +1,31 @@
+{
+  "id": "bctci-time-traveler-max-year",
+  "style": "leetcode",
+  "function": {
+    "python": "latestYear",
+    "java": "latestYear"
+  },
+  "params": [
+    {
+      "name": "points",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "maxAging",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[2020,2024],1,1],"sample":true,"expected":2025},
+    {"input":[[1,3,6,7,11,16,17,19],2,4],"sample":true,"expected":12},
+    {"input":[[2020,2024],0,2],"expected":2022},
+    {"input":[[1803,1861,1863,1865,1920,1929,1941,1964,2001,2021],4,45],"expected":2021},
+    {"input":[[1,10,30],1,5],"expected":15},
+    {"input":[[0,5,6],2,1000000000],"expected":1000000006}
+  ]
+}

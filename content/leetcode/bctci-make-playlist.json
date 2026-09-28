@@ -1,0 +1,27 @@
+{
+  "id": "bctci-make-playlist",
+  "style": "leetcode",
+  "function": {
+    "python": "makePlaylist",
+    "java": "makePlaylist"
+  },
+  "params": [
+    {
+      "name": "songs",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": {
+    "validator": "artistPlaylist"
+  },
+  "tests": [
+    {"input":[[["a","X"],["b","X"],["c","Y"]]],"sample":true,"expected":["a","c","b"]},
+    {"input":[[["a","X"],["b","X"]]],"sample":true,"expected":[]},
+    {"input":[[["Coding In The Deep","A Dell"],["Hello World","A Dell"],["Someone Like GNU","A Dell"],["Make You Read My Logs","A Dell"],["Hey Queue","The Bugs"],["Here Comes the Bug","The Bugs"],["Merge Together","The Bugs"],["Dirty Data","Michael JSON"],["Man in the Middle Attack","Michael JSON"],["Ring Of Firewalls","Johnny Cache"]]],"expected":["Make You Read My Logs","Merge Together","Someone Like GNU","Man in the Middle Attack","Hello World","Here Comes the Bug","Coding In The Deep","Ring Of Firewalls","Dirty Data","Hey Queue"]},
+    {"input":[[]],"expected":[]},
+    {"input":[[["solo","Z"]]],"expected":["solo"]},
+    {"input":[[["a","X"],["b","Y"],["c","X"],["d","Y"]]],"expected":["c","d","a","b"]},
+    {"input":[[["a","X"],["b","X"],["c","X"],["d","Y"]]],"expected":[]}
+  ]
+}

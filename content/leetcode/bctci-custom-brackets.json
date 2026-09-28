@@ -1,0 +1,30 @@
+{
+  "id": "bctci-custom-brackets",
+  "style": "leetcode",
+  "function": {
+    "python": "isBalanced",
+    "java": "isBalanced"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "brackets",
+      "type": "string[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["((a+b)*[c-d]-{e/f})",["()","[]","{}"]],"sample":true,"expected":true},
+    {"input":["([)]",["()","[]","{}"]],"sample":true,"expected":false},
+    {"input":["()[}",["()","[]","{}"]],"expected":false},
+    {"input":["<div> hello :) </div>",["<>","()"]],"expected":false},
+    {"input":[")))(()((",[")("]],"expected":true},
+    {"input":["",["()"]],"expected":true},
+    {"input":["abc",[]],"expected":true},
+    {"input":["(",["()"]],"expected":false},
+    {"input":["ab",["ab"]],"expected":true}
+  ]
+}

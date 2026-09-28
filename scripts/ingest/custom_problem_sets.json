@@ -4,7 +4,7 @@
    "id": "ctci",
    "title": "Cracking the Coding Interview",
    "kind": "curated",
-   "description": "An original practice track inspired by the coding chapters of Cracking the Coding Interview, with Python and Java references and hidden edge-case tests. This is a private study aid, not a reproduction of the book.",
+   "description": "An original practice track covering the coding questions of Cracking the Coding Interview, 6th edition, with Python and Java references and hidden edge-case tests. Questions that match a LeetCode problem link to it; the rest are written for this site. This is a private study aid, not a reproduction of the book.",
    "sourceUrl": "https://www.crackingthecodinginterview.com/",
    "sourceLabel": "Official CTCI site",
    "items": [
@@ -54,6 +54,101 @@
      "category": "Arrays and Strings"
     },
     {
+     "slug": "ctci-remove-dups",
+     "label": "2.1",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "ctci-kth-to-last",
+     "label": "2.2",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "delete-node-in-a-linked-list",
+     "label": "2.3",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "partition-list",
+     "label": "2.4",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "add-two-numbers",
+     "label": "2.5",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "add-two-numbers-ii",
+     "label": "2.5",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "palindrome-linked-list",
+     "label": "2.6",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "intersection-of-two-linked-lists",
+     "label": "2.7",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "linked-list-cycle-ii",
+     "label": "2.8",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "ctci-three-in-one",
+     "label": "3.1",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "min-stack",
+     "label": "3.2",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "ctci-stack-of-plates",
+     "label": "3.3",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "implement-queue-using-stacks",
+     "label": "3.4",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "ctci-sort-stack",
+     "label": "3.5",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "ctci-animal-shelter",
+     "label": "3.6",
+     "category": "Stacks and Queues"
+    },
+    {
+     "slug": "ctci-route-between-nodes",
+     "label": "4.1",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "convert-sorted-array-to-binary-search-tree",
+     "label": "4.2",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "binary-tree-level-order-traversal",
+     "label": "4.3",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "balanced-binary-tree",
+     "label": "4.4",
+     "category": "Trees and Graphs"
+    },
+    {
      "slug": "validate-binary-search-tree",
      "label": "4.5",
      "category": "Trees and Graphs"
@@ -64,9 +159,109 @@
      "category": "Trees and Graphs"
     },
     {
-     "slug": "path-sum",
+     "slug": "course-schedule-ii",
+     "label": "4.7",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "lowest-common-ancestor-of-a-binary-tree",
+     "label": "4.8",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "ctci-bst-sequences",
+     "label": "4.9",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "subtree-of-another-tree",
+     "label": "4.10",
+     "category": "Trees and Graphs"
+    },
+    {
+     "slug": "path-sum-iii",
      "label": "4.12",
      "category": "Trees and Graphs"
+    },
+    {
+     "slug": "ctci-insertion",
+     "label": "5.1",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-binary-to-string",
+     "label": "5.2",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-flip-bit-to-win",
+     "label": "5.3",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-next-number",
+     "label": "5.4",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-conversion",
+     "label": "5.6",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-pairwise-swap",
+     "label": "5.7",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "ctci-draw-line",
+     "label": "5.8",
+     "category": "Bit Manipulation"
+    },
+    {
+     "slug": "bulb-switcher",
+     "label": "6.9",
+     "category": "Math and Logic Puzzles"
+    },
+    {
+     "slug": "minesweeper",
+     "label": "7.10",
+     "category": "Object-Oriented Design"
+    },
+    {
+     "slug": "design-hashmap",
+     "label": "7.12",
+     "category": "Object-Oriented Design"
+    },
+    {
+     "slug": "ctci-triple-step",
+     "label": "8.1",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-robot-in-a-grid",
+     "label": "8.2",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-magic-index",
+     "label": "8.3",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "subsets",
+     "label": "8.4",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-recursive-multiply",
+     "label": "8.5",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-towers-of-hanoi",
+     "label": "8.6",
+     "category": "Recursion and Dynamic Programming"
     },
     {
      "slug": "permutations",
@@ -74,9 +269,44 @@
      "category": "Recursion and Dynamic Programming"
     },
     {
+     "slug": "permutations-ii",
+     "label": "8.8",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "generate-parentheses",
+     "label": "8.9",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "flood-fill",
+     "label": "8.10",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "coin-change-ii",
+     "label": "8.11",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
      "slug": "n-queens",
      "label": "8.12",
      "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-stack-of-boxes",
+     "label": "8.13",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "ctci-boolean-evaluation",
+     "label": "8.14",
+     "category": "Recursion and Dynamic Programming"
+    },
+    {
+     "slug": "merge-sorted-array",
+     "label": "10.1",
+     "category": "Sorting and Searching"
     },
     {
      "slug": "group-anagrams",
@@ -89,14 +319,159 @@
      "category": "Sorting and Searching"
     },
     {
+     "slug": "ctci-sorted-search-no-size",
+     "label": "10.4",
+     "category": "Sorting and Searching"
+    },
+    {
+     "slug": "ctci-sparse-search",
+     "label": "10.5",
+     "category": "Sorting and Searching"
+    },
+    {
      "slug": "find-all-duplicates-in-an-array",
      "label": "10.8",
      "category": "Sorting and Searching"
     },
     {
-     "slug": "find-median-from-data-stream",
+     "slug": "search-a-2d-matrix-ii",
+     "label": "10.9",
+     "category": "Sorting and Searching"
+    },
+    {
+     "slug": "ctci-rank-from-stream",
      "label": "10.10",
      "category": "Sorting and Searching"
+    },
+    {
+     "slug": "ctci-peaks-and-valleys",
+     "label": "10.11",
+     "category": "Sorting and Searching"
+    },
+    {
+     "slug": "ctci-multiple-apartments",
+     "label": "14.1",
+     "category": "Databases"
+    },
+    {
+     "slug": "ctci-open-requests",
+     "label": "14.2",
+     "category": "Databases"
+    },
+    {
+     "slug": "ctci-close-all-requests",
+     "label": "14.3",
+     "category": "Databases"
+    },
+    {
+     "slug": "ctci-number-swapper",
+     "label": "16.1",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-word-frequencies",
+     "label": "16.2",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-tic-tac-win",
+     "label": "16.4",
+     "category": "Moderate"
+    },
+    {
+     "slug": "factorial-trailing-zeroes",
+     "label": "16.5",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-smallest-difference",
+     "label": "16.6",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-number-max",
+     "label": "16.7",
+     "category": "Moderate"
+    },
+    {
+     "slug": "integer-to-english-words",
+     "label": "16.8",
+     "category": "Moderate"
+    },
+    {
+     "slug": "divide-two-integers",
+     "label": "16.9",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-living-people",
+     "label": "16.10",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-diving-board",
+     "label": "16.11",
+     "category": "Moderate"
+    },
+    {
+     "slug": "max-points-on-a-line",
+     "label": "16.14",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-master-mind",
+     "label": "16.15",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-sub-sort",
+     "label": "16.16",
+     "category": "Moderate"
+    },
+    {
+     "slug": "maximum-subarray",
+     "label": "16.17",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-pattern-matching",
+     "label": "16.18",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-pond-sizes",
+     "label": "16.19",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-t9",
+     "label": "16.20",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-sum-swap",
+     "label": "16.21",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-langtons-ant",
+     "label": "16.22",
+     "category": "Moderate"
+    },
+    {
+     "slug": "ctci-pairs-with-sum",
+     "label": "16.24",
+     "category": "Moderate"
+    },
+    {
+     "slug": "lru-cache",
+     "label": "16.25",
+     "category": "Moderate"
+    },
+    {
+     "slug": "basic-calculator-ii",
+     "label": "16.26",
+     "category": "Moderate"
     },
     {
      "slug": "sum-of-two-integers",
@@ -114,6 +489,31 @@
      "category": "Hard"
     },
     {
+     "slug": "ctci-letters-and-numbers",
+     "label": "17.5",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-count-of-twos",
+     "label": "17.6",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-baby-names",
+     "label": "17.7",
+     "category": "Hard"
+    },
+    {
+     "slug": "russian-doll-envelopes",
+     "label": "17.8",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-kth-multiple",
+     "label": "17.9",
+     "category": "Hard"
+    },
+    {
      "slug": "majority-element",
      "label": "17.10",
      "category": "Hard"
@@ -121,6 +521,51 @@
     {
      "slug": "shortest-word-distance",
      "label": "17.11",
+     "category": "Hard"
+    },
+    {
+     "slug": "convert-binary-search-tree-to-sorted-doubly-linked-list",
+     "label": "17.12",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-re-space",
+     "label": "17.13",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-smallest-k",
+     "label": "17.14",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-longest-word",
+     "label": "17.15",
+     "category": "Hard"
+    },
+    {
+     "slug": "house-robber",
+     "label": "17.16",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-multi-search",
+     "label": "17.17",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-shortest-supersequence",
+     "label": "17.18",
+     "category": "Hard"
+    },
+    {
+     "slug": "ctci-missing-two",
+     "label": "17.19",
+     "category": "Hard"
+    },
+    {
+     "slug": "find-median-from-data-stream",
+     "label": "17.20",
      "category": "Hard"
     },
     {
@@ -134,24 +579,1184 @@
      "category": "Hard"
     },
     {
-     "slug": "maximal-square",
+     "slug": "ctci-max-black-square",
      "label": "17.23",
      "category": "Hard"
     },
     {
-     "slug": "factorial-trailing-zeroes",
-     "label": "16.5",
-     "category": "Moderate"
+     "slug": "ctci-max-submatrix",
+     "label": "17.24",
+     "category": "Hard"
+    }
+   ]
+  },
+  {
+   "id": "bctci",
+   "title": "Beyond Cracking the Coding Interview",
+   "kind": "curated",
+   "description": "Original practice for 232 of the 234 Beyond Cracking the Coding Interview problems, covering chapters 25 to 43 and all 37 problems from the five online chapters: Set & Map Implementations, Monotonic Stacks & Queues, Union-Find, Boundary Thinking, and Booster Problems. Includes Python and Java references and hidden tests. Two book problems requiring additional harness support remain unavailable.",
+   "sourceUrl": "https://start.interviewing.io/beyond-ctci/all-problems/technical-topics",
+   "sourceLabel": "BCTCI online materials",
+   "items": [
+    {
+     "slug": "bctci-implement-dynamic-array",
+     "label": "25.1",
+     "category": "Dynamic Arrays"
     },
     {
-     "slug": "lru-cache",
-     "label": "16.25",
-     "category": "Moderate"
+     "slug": "bctci-extra-dynamic-array-operations",
+     "label": "25.2",
+     "category": "Dynamic Arrays"
     },
     {
-     "slug": "basic-calculator",
-     "label": "16.26",
-     "category": "Moderate"
+     "slug": "bctci-string-split",
+     "label": "26.1",
+     "category": "String Manipulation"
+    },
+    {
+     "slug": "bctci-string-join",
+     "label": "26.2",
+     "category": "String Manipulation"
+    },
+    {
+     "slug": "bctci-string-matching",
+     "label": "26.3",
+     "category": "String Manipulation"
+    },
+    {
+     "slug": "bctci-palindrome-check",
+     "label": "27.1",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-smaller-prefixes",
+     "label": "27.2",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-array-intersection",
+     "label": "27.3",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-palindromic-sentence",
+     "label": "27.4",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-reverse-case-match",
+     "label": "27.5",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-merge-two-sorted-arrays",
+     "label": "27.6",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-2-sum",
+     "label": "27.7",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-three-way-merge-without-duplicates",
+     "label": "27.8",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-sort-valley-shaped-array",
+     "label": "27.9",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-missing-numbers-in-range",
+     "label": "27.10",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-interval-intersection",
+     "label": "27.11",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "reverse-string",
+     "label": "27.12",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-parity-sorting",
+     "label": "27.13",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "remove-duplicates-from-sorted-array",
+     "label": "27.14",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-quicksort-partition",
+     "label": "27.15",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-dutch-flag",
+     "label": "27.16",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-prefix-suffix-swap",
+     "label": "27.17",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-shift-word-to-back",
+     "label": "27.18",
+     "category": "Two Pointers"
+    },
+    {
+     "slug": "bctci-chess-moves",
+     "label": "28.1",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-queens-reach",
+     "label": "28.2",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-spiral-order",
+     "label": "28.3",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-snowprints",
+     "label": "28.4",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-valid-sudoku",
+     "label": "28.5",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-subgrid-maximums",
+     "label": "28.6",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-subgrid-sums",
+     "label": "28.7",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "bctci-matrix-operations",
+     "label": "28.8",
+     "category": "Grids & Matrices"
+    },
+    {
+     "slug": "binary-search",
+     "label": "29.1",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "first-bad-version",
+     "label": "29.2",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-valley-bottom",
+     "label": "29.3",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-2-array-2-sum",
+     "label": "29.4",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-target-count-divisible-by-k",
+     "label": "29.5",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-race-overtaking",
+     "label": "29.6",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-search-in-sorted-grid",
+     "label": "29.7",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-search-in-huge-array",
+     "label": "29.8",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "split-array-largest-sum",
+     "label": "29.9",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-water-refilling",
+     "label": "29.10",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "koko-eating-bananas",
+     "label": "29.11",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-tide-aerial-view",
+     "label": "29.12",
+     "category": "Binary Search"
+    },
+    {
+     "slug": "bctci-account-sharing-detection",
+     "label": "30.1",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-most-shared-account",
+     "label": "30.2",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-most-frequent-octet",
+     "label": "30.3",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-multi-account-cheating",
+     "label": "30.4",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-domain-resolver",
+     "label": "30.5",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-find-all-squares",
+     "label": "30.6",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-word-expansion-class",
+     "label": "30.7",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-cheater-detection",
+     "label": "30.8",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-product-of-alphabetical-sums",
+     "label": "30.9",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-action-log-anomalies",
+     "label": "30.10",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-largest-set-intersection",
+     "label": "30.11",
+     "category": "Sets & Maps"
+    },
+    {
+     "slug": "bctci-sorting-by-frequency",
+     "label": "31.1",
+     "category": "Sorting"
+    },
+    {
+     "slug": "bctci-nested-circles",
+     "label": "31.2",
+     "category": "Sorting"
+    },
+    {
+     "slug": "bctci-delete-operations",
+     "label": "31.3",
+     "category": "Sorting"
+    },
+    {
+     "slug": "bctci-spreadsheet",
+     "label": "31.4",
+     "category": "Sorting"
+    },
+    {
+     "slug": "bctci-sort-by-publication-year",
+     "label": "31.5",
+     "category": "Sorting"
+    },
+    {
+     "slug": "ctci-smallest-k",
+     "label": "31.6",
+     "category": "Sorting"
+    },
+    {
+     "slug": "bctci-compress-array",
+     "label": "32.1",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-compress-array-by-k",
+     "label": "32.2",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-viewer-counter-class",
+     "label": "32.3",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-current-url",
+     "label": "32.4",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-current-url-with-forward",
+     "label": "32.5",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-balanced-partition",
+     "label": "32.6",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-custom-brackets",
+     "label": "32.7",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-longest-balanced-subsequence",
+     "label": "32.8",
+     "category": "Stacks & Queues"
+    },
+    {
+     "slug": "bctci-robot-instructions",
+     "label": "33.1",
+     "category": "Recursion"
+    },
+    {
+     "slug": "bctci-nested-array-sum",
+     "label": "33.2",
+     "category": "Recursion"
+    },
+    {
+     "slug": "bctci-powers-mod-m",
+     "label": "33.3",
+     "category": "Recursion"
+    },
+    {
+     "slug": "bctci-lego-castle",
+     "label": "33.4",
+     "category": "Recursion"
+    },
+    {
+     "slug": "bctci-laminal-arrays",
+     "label": "33.5",
+     "category": "Recursion"
+    },
+    {
+     "slug": "bctci-singly-linked-list-design",
+     "label": "34.1",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-doubly-linked-list-design",
+     "label": "34.2",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-linked-list-based-stack",
+     "label": "34.3",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-linked-list-based-queue",
+     "label": "34.4",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-linked-list-copy",
+     "label": "34.5",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "reverse-linked-list",
+     "label": "34.6",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-sublist-reversal",
+     "label": "34.7",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "linked-list-cycle",
+     "label": "34.8",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "middle-of-the-linked-list",
+     "label": "34.10",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "remove-nth-node-from-end-of-list",
+     "label": "34.11",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-linked-list-zip",
+     "label": "34.12",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "remove-duplicates-from-sorted-list",
+     "label": "34.13",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "reverse-nodes-in-k-group",
+     "label": "34.14",
+     "category": "Linked Lists"
+    },
+    {
+     "slug": "bctci-aligned-chain",
+     "label": "35.1",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-hidden-message",
+     "label": "35.2",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-aligned-path",
+     "label": "35.3",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-tree-layout",
+     "label": "35.4",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-triangle-count",
+     "label": "35.5",
+     "category": "Trees"
+    },
+    {
+     "slug": "invert-binary-tree",
+     "label": "35.6",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-evaluate-expression-tree",
+     "label": "35.7",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-left-view",
+     "label": "35.8",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-most-prolific-level",
+     "label": "35.9",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-zig-zag-order",
+     "label": "35.10",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-most-protected-node",
+     "label": "35.11",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-bst-search",
+     "label": "35.12",
+     "category": "Trees"
+    },
+    {
+     "slug": "closest-binary-search-tree-value",
+     "label": "35.13",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-bst-validation",
+     "label": "35.14",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-bst-duplicate-detection",
+     "label": "35.15",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-bst-kth-element",
+     "label": "35.16",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-bst-merge-into-array",
+     "label": "35.17",
+     "category": "Trees"
+    },
+    {
+     "slug": "bctci-adjacency-list-validation",
+     "label": "36.1",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-graph-path",
+     "label": "36.2",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-tree-check",
+     "label": "36.3",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-spanning-tree",
+     "label": "36.4",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-reachability-queries",
+     "label": "36.5",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-strongly-connected-graph",
+     "label": "36.6",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-hilliest-connected-component",
+     "label": "36.7",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-highest-average-elevation-gain",
+     "label": "36.8",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-first-time-all-connected",
+     "label": "36.9",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-shortest-path-queries",
+     "label": "36.10",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-graph-hangout",
+     "label": "36.11",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-days-until-all-infected",
+     "label": "36.12",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-count-grid-islands",
+     "label": "36.13",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-multi-exit-maze",
+     "label": "36.14",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-rgb-distances",
+     "label": "36.15",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-the-floor-is-lava",
+     "label": "36.16",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-word-ladder-game-variation",
+     "label": "36.17",
+     "category": "Graphs"
+    },
+    {
+     "slug": "bctci-implement-a-heap",
+     "label": "37.1",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-k-most-played",
+     "label": "37.2",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-top-songs-class",
+     "label": "37.3",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-top-songs-class-with-updates",
+     "label": "37.4",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-popular-songs-class",
+     "label": "37.5",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-most-listened-across-genres",
+     "label": "37.6",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-make-playlist",
+     "label": "37.7",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-sum-of-first-k-prime-powers",
+     "label": "37.8",
+     "category": "Heaps"
+    },
+    {
+     "slug": "bctci-most-weekly-sales",
+     "label": "38.1",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-most-sales-in-k-days",
+     "label": "38.2",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-unique-best-seller-streak",
+     "label": "38.3",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-enduring-best-seller-streak",
+     "label": "38.4",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-longest-good-day-streak",
+     "label": "38.5",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "maximum-subarray",
+     "label": "38.6",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-longest-alternating-sequence",
+     "label": "38.7",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-maximum-with-at-most-3-bad-days",
+     "label": "38.8",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-ad-campaign-boost",
+     "label": "38.9",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-ad-campaign-with-small-boosts",
+     "label": "38.10",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-boosting-days-multiple-times",
+     "label": "38.11",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-longest-period-at-most-k-distinct",
+     "label": "38.12",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-longest-repeated-substring",
+     "label": "38.13",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-shortest-period-with-over-20-sales",
+     "label": "38.14",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-shortest-with-all-letters",
+     "label": "38.15",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-smallest-range-with-k-elements",
+     "label": "38.16",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-strong-start-and-ending",
+     "label": "38.17",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-at-most-k-bad-days",
+     "label": "38.18",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-exactly-k-bad-days",
+     "label": "38.19",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-at-least-k-bad-days",
+     "label": "38.20",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-good-start-and-ending",
+     "label": "38.21",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-drops",
+     "label": "38.22",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-bad-days-in-range",
+     "label": "38.23",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-subarrays-with-all-remainders",
+     "label": "38.24",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-count-good-subarrays-with-at-least-k-sales",
+     "label": "38.25",
+     "category": "Sliding Windows"
+    },
+    {
+     "slug": "bctci-max-sum-path",
+     "label": "39.1",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "subsets",
+     "label": "39.2",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "permutations",
+     "label": "39.3",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-to-be-or-not-to-be",
+     "label": "39.4",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-thesaurusly",
+     "label": "39.5",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-jumping-numbers",
+     "label": "39.6",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-ikea-shopping",
+     "label": "39.7",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-count-unique-submultisets-with-sum-zero",
+     "label": "39.9",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-4-directional-max-sum-path",
+     "label": "39.10",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-escape-with-all-clues",
+     "label": "39.11",
+     "category": "Backtracking"
+    },
+    {
+     "slug": "bctci-road-trip",
+     "label": "40.1",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-minivan-road-trip",
+     "label": "40.2",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-restaurant-ratings",
+     "label": "40.3",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-count-0-sum-paths",
+     "label": "40.4",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-magic-blackjack",
+     "label": "40.5",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-minimum-steps-to-one",
+     "label": "40.6",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "longest-common-subsequence",
+     "label": "40.7",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-reconstruct-longest-common-subsequence",
+     "label": "40.8",
+     "category": "Dynamic Programming"
+    },
+    {
+     "slug": "bctci-most-non-overlapping-intervals",
+     "label": "41.1",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-time-traveler",
+     "label": "41.2",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-center-assignment",
+     "label": "41.3",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-minimum-triplet-medians",
+     "label": "41.4",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-fewest-script-runs",
+     "label": "41.5",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-time-traveler-max-year",
+     "label": "41.6",
+     "category": "Greedy Algorithms"
+    },
+    {
+     "slug": "bctci-dag-distances",
+     "label": "42.1",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-dag-path-reconstruction",
+     "label": "42.2",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-dag-longest-path",
+     "label": "42.3",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-counting-paths",
+     "label": "42.4",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-parallel-compilation",
+     "label": "42.5",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-longest-path-of-increasing-degrees",
+     "label": "42.6",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-supersequence",
+     "label": "42.7",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-number-of-palindromic-splits",
+     "label": "42.8",
+     "category": "Topological Sort"
+    },
+    {
+     "slug": "bctci-channel-views",
+     "label": "43.1",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-youtube-video-reception",
+     "label": "43.2",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-exclusive-product",
+     "label": "43.3",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "find-pivot-index",
+     "label": "43.4",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-youtube-video-unusual-days",
+     "label": "43.5",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "subarray-sum-equals-k",
+     "label": "43.6",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-longest-subarray-with-sum-k",
+     "label": "43.7",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-segmented-video-votes",
+     "label": "43.8",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-most-booked-slot",
+     "label": "43.9",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-all-overbooked-slots",
+     "label": "43.10",
+     "category": "Prefix Sums"
+    },
+    {
+     "slug": "bctci-hash-set-class",
+     "label": "S.1",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-hash-set-class-extensions",
+     "label": "S.2",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-multiset",
+     "label": "S.3",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-hash-map-class",
+     "label": "S.4",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-hash-map-class-extensions",
+     "label": "S.5",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-multimap",
+     "label": "S.6",
+     "category": "Set & Map Implementations"
+    },
+    {
+     "slug": "bctci-max-queue",
+     "label": "M.1",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "sliding-window-maximum",
+     "label": "M.2",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-largest-temperature-change",
+     "label": "M.3",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-longest-stable-period",
+     "label": "M.4",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-next-greater-element",
+     "label": "M.5",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-largest-rectangle",
+     "label": "M.6",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-king-kong-vs-godzilla",
+     "label": "M.7",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-king-kong-vs-godzilla-in-the-fog",
+     "label": "M.8",
+     "category": "Monotonic Stacks & Queues"
+    },
+    {
+     "slug": "bctci-minimum-spanning-tree",
+     "label": "U.1",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-num-groups-operation",
+     "label": "U.2",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-mst-reconstruction",
+     "label": "U.3",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-edge-in-mst",
+     "label": "U.4",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-connected-components-over-time",
+     "label": "U.5",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-largest-connected-component-over-time",
+     "label": "U.6",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-presidential-election",
+     "label": "U.7",
+     "category": "Union-Find"
+    },
+    {
+     "slug": "bctci-tunnel-depth",
+     "label": "B.1",
+     "category": "Boundary Thinking"
+    },
+    {
+     "slug": "bctci-3-sum",
+     "label": "P.1",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-count-substrings-without-letter",
+     "label": "P.2",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-list-of-divisors",
+     "label": "P.3",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-sub-permutations",
+     "label": "P.4",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-magic-balls",
+     "label": "P.5",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-hiring-and-training",
+     "label": "P.6",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-interval-xor",
+     "label": "P.7",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "rotate-image",
+     "label": "P.8",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-company-launches",
+     "label": "P.9",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-most-ones-with-k-flips",
+     "label": "P.10",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-multiplayer-video-game",
+     "label": "P.11",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-tree-diameter",
+     "label": "P.12",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-unrooted-tree-diameter",
+     "label": "P.13",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-longest-alphabet-chain",
+     "label": "P.14",
+     "category": "Booster Problems"
+    },
+    {
+     "slug": "bctci-self-doubling-sequence",
+     "label": "P.15",
+     "category": "Booster Problems"
     }
    ]
   }
@@ -206,6 +1811,3450 @@
    "pattern": "Two-Pointer Edit Check",
    "hint": "Allow at most one replacement, insertion, or deletion while scanning both strings.",
    "time": "O(n + m)",
+   "space": "O(1)"
+  },
+  "ctci-remove-dups": {
+   "number": 4101,
+   "title": "Remove Dups",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List",
+    "Hash Table"
+   ],
+   "pattern": "Seen Set",
+   "hint": "Walk the list once, keeping a set of values already kept and unlinking repeats.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "ctci-kth-to-last": {
+   "number": 4102,
+   "title": "Return Kth to Last",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List",
+    "Two Pointers"
+   ],
+   "pattern": "Runner Gap",
+   "hint": "Advance a lead pointer k nodes, then move both pointers until the lead falls off the list.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-three-in-one": {
+   "number": 4103,
+   "title": "Three in One",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Array",
+    "Design"
+   ],
+   "pattern": "Partitioned Array",
+   "hint": "Give each stack a fixed slice of one array and track a size per stack.",
+   "time": "O(1) per operation",
+   "space": "O(stackSize)"
+  },
+  "ctci-stack-of-plates": {
+   "number": 4104,
+   "title": "Stack of Plates",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Design"
+   ],
+   "pattern": "List of Stacks",
+   "hint": "Keep a list of bounded stacks; start a new one when the last is full and drop stacks that become empty.",
+   "time": "O(1) push and pop, O(1) popAt",
+   "space": "O(n)"
+  },
+  "ctci-sort-stack": {
+   "number": 4105,
+   "title": "Sort Stack",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Sorting"
+   ],
+   "pattern": "Insertion with a Temporary Stack",
+   "hint": "Pop each value and sink it into a second stack, moving larger values back until it fits.",
+   "time": "O(n^2)",
+   "space": "O(n)"
+  },
+  "ctci-animal-shelter": {
+   "number": 4106,
+   "title": "Animal Shelter",
+   "difficulty": "easy",
+   "topics": [
+    "Queue",
+    "Design"
+   ],
+   "pattern": "Two Queues with Arrival Order",
+   "hint": "Keep one queue per species and stamp each arrival with a counter to compare the oldest of each.",
+   "time": "O(1) per operation",
+   "space": "O(n)"
+  },
+  "ctci-route-between-nodes": {
+   "number": 4107,
+   "title": "Route Between Nodes",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Breadth-First Search"
+   ],
+   "pattern": "Graph BFS",
+   "hint": "Build an adjacency list for the directed edges and search outward from the start node.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "ctci-bst-sequences": {
+   "number": 4108,
+   "title": "BST Sequences",
+   "difficulty": "hard",
+   "topics": [
+    "Tree",
+    "Binary Search Tree",
+    "Backtracking"
+   ],
+   "pattern": "Weave Subtree Orders",
+   "hint": "Every sequence starts with the root; interleave each left-subtree sequence with each right-subtree sequence while keeping their internal order.",
+   "time": "O(output size)",
+   "space": "O(output size)"
+  },
+  "ctci-insertion": {
+   "number": 4201,
+   "title": "Insertion",
+   "difficulty": "easy",
+   "topics": [
+    "Bit Manipulation"
+   ],
+   "pattern": "Clear Then Merge",
+   "hint": "Clear bits i through j of N with a mask, then OR in M shifted left by i.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "ctci-binary-to-string": {
+   "number": 4202,
+   "title": "Binary to String",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation",
+    "Math"
+   ],
+   "pattern": "Repeated Doubling",
+   "hint": "Double the fraction repeatedly; each time it reaches 1, emit a 1 and subtract 1.",
+   "time": "O(32)",
+   "space": "O(32)"
+  },
+  "ctci-flip-bit-to-win": {
+   "number": 4203,
+   "title": "Flip Bit to Win",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation"
+   ],
+   "pattern": "Adjacent Run Lengths",
+   "hint": "Track the current run of ones and the run just before the last zero; a single zero between them can be flipped.",
+   "time": "O(b)",
+   "space": "O(1)"
+  },
+  "ctci-next-number": {
+   "number": 4204,
+   "title": "Next Number",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation"
+   ],
+   "pattern": "Rightmost Non-Trailing Bit",
+   "hint": "For the next larger value, flip the rightmost 0 that has 1s to its right and pack the remaining 1s at the bottom.",
+   "time": "O(b)",
+   "space": "O(1)"
+  },
+  "ctci-conversion": {
+   "number": 4205,
+   "title": "Conversion",
+   "difficulty": "easy",
+   "topics": [
+    "Bit Manipulation"
+   ],
+   "pattern": "XOR and Count",
+   "hint": "Bits that differ are exactly the 1 bits of a XOR b.",
+   "time": "O(b)",
+   "space": "O(1)"
+  },
+  "ctci-pairwise-swap": {
+   "number": 4206,
+   "title": "Pairwise Swap",
+   "difficulty": "easy",
+   "topics": [
+    "Bit Manipulation"
+   ],
+   "pattern": "Odd and Even Masks",
+   "hint": "Mask the odd bits and shift them right, mask the even bits and shift them left, then combine.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "ctci-draw-line": {
+   "number": 4207,
+   "title": "Draw Line",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation",
+    "Array"
+   ],
+   "pattern": "Full Bytes Plus Edge Masks",
+   "hint": "Fill whole bytes between the ends directly, then apply partial masks to the first and last bytes.",
+   "time": "O(width / 8)",
+   "space": "O(1)"
+  },
+  "ctci-triple-step": {
+   "number": 4301,
+   "title": "Triple Step",
+   "difficulty": "easy",
+   "topics": [
+    "Dynamic Programming"
+   ],
+   "pattern": "Rolling Recurrence",
+   "hint": "The ways to reach step n are the sum of the ways to reach the three steps below it.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-robot-in-a-grid": {
+   "number": 4302,
+   "title": "Robot in a Grid",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming",
+    "Depth-First Search",
+    "Matrix"
+   ],
+   "pattern": "DFS with Failed-Cell Memo",
+   "hint": "Search from the start, trying right before down, and remember cells already proven to be dead ends.",
+   "time": "O(r * c)",
+   "space": "O(r * c)"
+  },
+  "ctci-magic-index": {
+   "number": 4303,
+   "title": "Magic Index",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Binary Search",
+    "Recursion"
+   ],
+   "pattern": "Pruned Binary Search",
+   "hint": "Compare the middle value with its index to skip ranges that cannot hold a magic index, searching the left side first.",
+   "time": "O(log n) for distinct values, O(n) worst case",
+   "space": "O(log n)"
+  },
+  "ctci-recursive-multiply": {
+   "number": 4304,
+   "title": "Recursive Multiply",
+   "difficulty": "medium",
+   "topics": [
+    "Recursion",
+    "Bit Manipulation"
+   ],
+   "pattern": "Halve and Double",
+   "hint": "Recursively multiply by half of the smaller operand, double the result, and add once more when it was odd.",
+   "time": "O(log min(a, b))",
+   "space": "O(log min(a, b))"
+  },
+  "ctci-towers-of-hanoi": {
+   "number": 4305,
+   "title": "Towers of Hanoi",
+   "difficulty": "medium",
+   "topics": [
+    "Recursion",
+    "Stack"
+   ],
+   "pattern": "Move n - 1 Aside",
+   "hint": "Move the top n - 1 disks to the spare tower, move the largest disk, then move the n - 1 disks on top of it.",
+   "time": "O(2^n)",
+   "space": "O(n)"
+  },
+  "ctci-stack-of-boxes": {
+   "number": 4306,
+   "title": "Stack of Boxes",
+   "difficulty": "hard",
+   "topics": [
+    "Dynamic Programming",
+    "Sorting"
+   ],
+   "pattern": "Longest Chain after Sorting",
+   "hint": "Sort boxes by height, then compute the tallest stack that has each box at its base.",
+   "time": "O(n^2)",
+   "space": "O(n)"
+  },
+  "ctci-boolean-evaluation": {
+   "number": 4307,
+   "title": "Boolean Evaluation",
+   "difficulty": "hard",
+   "topics": [
+    "Dynamic Programming",
+    "String"
+   ],
+   "pattern": "Split at Each Operator",
+   "hint": "For each operator, combine the true and false counts of its left and right sides; memoize by substring.",
+   "time": "O(n^3)",
+   "space": "O(n^2)"
+  },
+  "ctci-sorted-search-no-size": {
+   "number": 4401,
+   "title": "Sorted Search, No Size",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Binary Search",
+    "Interactive"
+   ],
+   "pattern": "Exponential Bound then Binary Search",
+   "hint": "Double an index until it passes the target or the end of the data, then binary search inside that bound.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "ctci-sparse-search": {
+   "number": 4402,
+   "title": "Sparse Search",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "String",
+    "Binary Search"
+   ],
+   "pattern": "Binary Search Skipping Blanks",
+   "hint": "When the middle is blank, move outward to the nearest non-empty string and compare against that.",
+   "time": "O(log n) typical, O(n) worst case",
+   "space": "O(1)"
+  },
+  "ctci-rank-from-stream": {
+   "number": 4403,
+   "title": "Rank from Stream",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Binary Indexed Tree"
+   ],
+   "pattern": "Order-Statistic Counts",
+   "hint": "Maintain prefix counts over values, for example with a Fenwick tree, so both operations are logarithmic.",
+   "time": "O(log V) per operation",
+   "space": "O(V)"
+  },
+  "ctci-peaks-and-valleys": {
+   "number": 4404,
+   "title": "Peaks and Valleys",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Greedy",
+    "Sorting"
+   ],
+   "pattern": "Local Swap to the Largest",
+   "hint": "Visit every other index and swap the largest of it and its two neighbors into that position.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-multiple-apartments": {
+   "number": 4501,
+   "title": "Multiple Apartments",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Group and Filter",
+   "hint": "Count rows per tenant in AptTenants, keep counts above one, then join to Tenants for the name."
+  },
+  "ctci-open-requests": {
+   "number": 4502,
+   "title": "Open Requests",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Left Join with Conditional Count",
+   "hint": "Left join buildings to apartments and open requests so buildings with no open requests still appear with 0."
+  },
+  "ctci-close-all-requests": {
+   "number": 4503,
+   "title": "Close All Requests",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Update with Subquery",
+   "hint": "Update Requests whose apartment belongs to building 11, found with a subquery on Apartments."
+  },
+  "ctci-number-swapper": {
+   "number": 4601,
+   "title": "Number Swapper",
+   "difficulty": "easy",
+   "topics": [
+    "Bit Manipulation",
+    "Math"
+   ],
+   "pattern": "XOR Swap",
+   "hint": "a ^= b; b ^= a; a ^= b exchanges the values with no temporary variable.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "ctci-word-frequencies": {
+   "number": 4602,
+   "title": "Word Frequencies",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table",
+    "String",
+    "Design"
+   ],
+   "pattern": "Precomputed Counts",
+   "hint": "Count every lowercased word once in the constructor so each lookup is a hash map read.",
+   "time": "O(n) build, O(1) average per query",
+   "space": "O(n)"
+  },
+  "ctci-tic-tac-win": {
+   "number": 4603,
+   "title": "Tic Tac Win",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Matrix"
+   ],
+   "pattern": "Check Rows, Columns, and Diagonals",
+   "hint": "A player wins when some row, column, or main diagonal is filled entirely with that player's mark.",
+   "time": "O(n^2)",
+   "space": "O(1)"
+  },
+  "ctci-smallest-difference": {
+   "number": 4604,
+   "title": "Smallest Difference",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+   ],
+   "pattern": "Sort Both and Walk",
+   "hint": "Sort both arrays and advance the pointer at the smaller value, tracking the closest pair seen.",
+   "time": "O(a log a + b log b)",
+   "space": "O(a + b)"
+  },
+  "ctci-number-max": {
+   "number": 4605,
+   "title": "Number Max",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation",
+    "Math"
+   ],
+   "pattern": "Sign Bit Selection",
+   "hint": "Compute the sign of a - b in a wider type, then use it as a 0 or 1 multiplier to select a or b.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "ctci-living-people": {
+   "number": 4606,
+   "title": "Living People",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Population Deltas",
+   "hint": "Add one at each birth year and subtract one the year after each death, then take a running sum.",
+   "time": "O(n + years)",
+   "space": "O(years)"
+  },
+  "ctci-diving-board": {
+   "number": 4607,
+   "title": "Diving Board",
+   "difficulty": "easy",
+   "topics": [
+    "Math"
+   ],
+   "pattern": "Count the Longer Planks",
+   "hint": "Every board is determined by how many of the k planks are long, from 0 to k.",
+   "time": "O(k)",
+   "space": "O(k)"
+  },
+  "ctci-master-mind": {
+   "number": 4608,
+   "title": "Master Mind",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Hits Then Color Counts",
+   "hint": "Count exact hits first, then match remaining colors by frequency for pseudo-hits.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-sub-sort": {
+   "number": 4609,
+   "title": "Sub Sort",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Running Max and Min Scans",
+   "hint": "Scanning left to right, the last value below the running maximum ends the window; scanning right to left, the last value above the running minimum starts it.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-pattern-matching": {
+   "number": 4610,
+   "title": "Pattern Matching",
+   "difficulty": "hard",
+   "topics": [
+    "String",
+    "Enumeration"
+   ],
+   "pattern": "Enumerate One Length",
+   "hint": "Choosing the length of the string for the pattern's first letter fixes the other letter's length; check each candidate.",
+   "time": "O(n^2)",
+   "space": "O(n)"
+  },
+  "ctci-pond-sizes": {
+   "number": 4611,
+   "title": "Pond Sizes",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Depth-First Search",
+    "Breadth-First Search"
+   ],
+   "pattern": "Flood Fill with Diagonals",
+   "hint": "Flood fill each unvisited water cell across all eight neighbors and record the size of each component.",
+   "time": "O(r * c)",
+   "space": "O(r * c)"
+  },
+  "ctci-t9": {
+   "number": 4612,
+   "title": "T9",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Words to Digit Keys",
+   "hint": "Convert each dictionary word to its keypad digits and keep the words whose digits equal the input.",
+   "time": "O(total letters)",
+   "space": "O(1) extra"
+  },
+  "ctci-sum-swap": {
+   "number": 4613,
+   "title": "Sum Swap",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Math"
+   ],
+   "pattern": "Target Difference Lookup",
+   "hint": "Swapping x from a with y from b balances the sums exactly when x - y is half the difference of the sums.",
+   "time": "O(a log a + b)",
+   "space": "O(a + b)"
+  },
+  "ctci-langtons-ant": {
+   "number": 4614,
+   "title": "Langton's Ant",
+   "difficulty": "medium",
+   "topics": [
+    "Simulation",
+    "Hash Table",
+    "Matrix"
+   ],
+   "pattern": "Sparse Grid Simulation",
+   "hint": "Store only black squares in a set, track the ant's position and heading, and remember the bounding box.",
+   "time": "O(K + area)",
+   "space": "O(K + area)"
+  },
+  "ctci-pairs-with-sum": {
+   "number": 4615,
+   "title": "Pairs with Sum",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Hash Table"
+   ],
+   "pattern": "Counting Complements",
+   "hint": "Count each value; a value v pairs with target - v as many times as the smaller count allows, and with itself half as many times.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "ctci-letters-and-numbers": {
+   "number": 4701,
+   "title": "Letters and Numbers",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Prefix Sum"
+   ],
+   "pattern": "Balance Prefix Positions",
+   "hint": "Track letters minus digits as a running balance; equal balances at two positions bound a balanced subarray.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "ctci-count-of-twos": {
+   "number": 4702,
+   "title": "Count of 2s",
+   "difficulty": "hard",
+   "topics": [
+    "Math",
+    "Dynamic Programming"
+   ],
+   "pattern": "Digit-by-Digit Counting",
+   "hint": "For each decimal position, count how many numbers up to n have a 2 there using the digits above, at, and below that position.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "ctci-baby-names": {
+   "number": 4703,
+   "title": "Baby Names",
+   "difficulty": "medium",
+   "topics": [
+    "Union Find",
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Union Synonym Groups",
+   "hint": "Union each synonym pair, then add every name's count to its group's total.",
+   "time": "O((n + s) alpha(n))",
+   "space": "O(n + s)"
+  },
+  "ctci-kth-multiple": {
+   "number": 4704,
+   "title": "Kth Multiple",
+   "difficulty": "hard",
+   "topics": [
+    "Math",
+    "Dynamic Programming"
+   ],
+   "pattern": "Three-Pointer Merge",
+   "hint": "Build the sequence in order; each new value is the smallest of 3, 5, or 7 times an earlier value, with one pointer per factor.",
+   "time": "O(k)",
+   "space": "O(k)"
+  },
+  "ctci-re-space": {
+   "number": 4705,
+   "title": "Re-Space",
+   "difficulty": "hard",
+   "topics": [
+    "Dynamic Programming",
+    "String",
+    "Trie"
+   ],
+   "pattern": "Best Split of Each Suffix",
+   "hint": "For each starting index, either leave one character unrecognized or consume a dictionary word, and memoize the best result.",
+   "time": "O(n^2)",
+   "space": "O(n + dictionary size)"
+  },
+  "ctci-smallest-k": {
+   "number": 4706,
+   "title": "Smallest K",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Heap (Priority Queue)",
+    "Sorting"
+   ],
+   "pattern": "Bounded Max-Heap",
+   "hint": "Keep a max-heap of the k smallest values seen so far, replacing its top when a smaller value arrives.",
+   "time": "O(n log k)",
+   "space": "O(k)"
+  },
+  "ctci-longest-word": {
+   "number": 4707,
+   "title": "Longest Word",
+   "difficulty": "hard",
+   "topics": [
+    "String",
+    "Hash Table",
+    "Dynamic Programming"
+   ],
+   "pattern": "Memoized Word Break",
+   "hint": "Try words from longest to shortest and check whether each splits into two or more other listed words.",
+   "time": "O(n * L^2)",
+   "space": "O(n * L)"
+  },
+  "ctci-multi-search": {
+   "number": 4708,
+   "title": "Multi Search",
+   "difficulty": "medium",
+   "topics": [
+    "String",
+    "Trie"
+   ],
+   "pattern": "Trie of Small Strings",
+   "hint": "Insert all small strings into a trie, then walk the trie from every starting position of the big string.",
+   "time": "O(b * k)",
+   "space": "O(total length of smalls)"
+  },
+  "ctci-shortest-supersequence": {
+   "number": 4709,
+   "title": "Shortest Supersequence",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+   ],
+   "pattern": "Minimum Covering Window",
+   "hint": "Grow a window until it covers every required value, then shrink it from the left while it still covers them.",
+   "time": "O(n)",
+   "space": "O(k)"
+  },
+  "ctci-missing-two": {
+   "number": 4710,
+   "title": "Missing Two",
+   "difficulty": "hard",
+   "topics": [
+    "Math",
+    "Bit Manipulation"
+   ],
+   "pattern": "Sum Split",
+   "hint": "The missing sum s tells you one missing number is at most s / 2; the missing sum within 1..s/2 identifies it.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "ctci-max-black-square": {
+   "number": 4711,
+   "title": "Max Black Square",
+   "difficulty": "hard",
+   "topics": [
+    "Matrix",
+    "Dynamic Programming"
+   ],
+   "pattern": "Precomputed Border Runs",
+   "hint": "Precompute, for each cell, how many black cells run to the right and downward; then each candidate square is an O(1) check.",
+   "time": "O(n^3)",
+   "space": "O(n^2)"
+  },
+  "ctci-max-submatrix": {
+   "number": 4712,
+   "title": "Max Submatrix",
+   "difficulty": "hard",
+   "topics": [
+    "Matrix",
+    "Dynamic Programming",
+    "Prefix Sum"
+   ],
+   "pattern": "Row Pair plus Kadane",
+   "hint": "Fix a top and bottom row, collapse the columns between them into sums, and run Kadane's algorithm on those sums.",
+   "time": "O(r^2 * c)",
+   "space": "O(c)"
+  },
+  "bctci-implement-dynamic-array": {
+   "number": 52501,
+   "title": "Implement Dynamic Array",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Design"
+   ],
+   "pattern": "Doubling Capacity",
+   "hint": "Store values in a fixed-size array and copy them into one twice as large whenever it fills up.",
+   "time": "O(1) amortized per operation",
+   "space": "O(n)"
+  },
+  "bctci-extra-dynamic-array-operations": {
+   "number": 52502,
+   "title": "Extra Dynamic Array Operations",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Design"
+   ],
+   "pattern": "Shifting Elements",
+   "hint": "Insertion and removal in the middle shift every later element by one position.",
+   "time": "O(n) for pop(i), insert, contains, and remove",
+   "space": "O(n)"
+  },
+  "bctci-string-split": {
+   "number": 52601,
+   "title": "String Split",
+   "difficulty": "easy",
+   "topics": [
+    "String"
+   ],
+   "pattern": "Scan and Cut",
+   "hint": "Walk the string once, cutting a piece every time the delimiter appears and once more at the end.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-string-join": {
+   "number": 52602,
+   "title": "String Join",
+   "difficulty": "easy",
+   "topics": [
+    "String"
+   ],
+   "pattern": "Character Buffer",
+   "hint": "Append characters to one buffer and convert it to a string once at the end, so the work stays linear.",
+   "time": "O(total length)",
+   "space": "O(total length)"
+  },
+  "bctci-string-matching": {
+   "number": 52603,
+   "title": "String Matching",
+   "difficulty": "easy",
+   "topics": [
+    "String",
+    "Two Pointers"
+   ],
+   "pattern": "Check Every Alignment",
+   "hint": "Try each starting position of s and compare t character by character, stopping at the first mismatch.",
+   "time": "O(n * m)",
+   "space": "O(1)"
+  },
+  "bctci-palindrome-check": {
+   "number": 52701,
+   "title": "Palindrome Check",
+   "difficulty": "easy",
+   "topics": [
+    "String",
+    "Two Pointers"
+   ],
+   "pattern": "Inward Pointers",
+   "hint": "Compare characters from both ends and move inward until the pointers meet.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-smaller-prefixes": {
+   "number": 52702,
+   "title": "Smaller Prefixes",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers",
+    "Prefix Sum"
+   ],
+   "pattern": "Slow and Fast Prefix Pointers",
+   "hint": "Advance one pointer by one and another by two, keeping the running sum of each prefix.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-array-intersection": {
+   "number": 52703,
+   "title": "Array Intersection",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Parallel Pointers",
+   "hint": "Advance the pointer at the smaller value; when both values match, record it and advance both.",
+   "time": "O(n + m)",
+   "space": "O(1) extra"
+  },
+  "bctci-palindromic-sentence": {
+   "number": 52704,
+   "title": "Palindromic Sentence",
+   "difficulty": "easy",
+   "topics": [
+    "String",
+    "Two Pointers"
+   ],
+   "pattern": "Skip Non-Letters",
+   "hint": "Move each pointer past characters that are not letters, then compare the letters case-insensitively.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-reverse-case-match": {
+   "number": 52705,
+   "title": "Reverse Case Match",
+   "difficulty": "medium",
+   "topics": [
+    "String",
+    "Two Pointers"
+   ],
+   "pattern": "Opposite-Direction Filtered Pointers",
+   "hint": "Scan lowercase letters from the left and uppercase letters from the right, comparing each pair case-insensitively.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-merge-two-sorted-arrays": {
+   "number": 52706,
+   "title": "Merge Two Sorted Arrays",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Merge Step",
+   "hint": "Repeatedly take the smaller front element of the two arrays, then append whatever remains.",
+   "time": "O(n + m)",
+   "space": "O(n + m)"
+  },
+  "bctci-2-sum": {
+   "number": 52707,
+   "title": "2-Sum",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Inward Pointers on a Sorted Array",
+   "hint": "Start at both ends; if the sum is too large move the right pointer left, otherwise move the left pointer right.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-three-way-merge-without-duplicates": {
+   "number": 52708,
+   "title": "Three-Way Merge Without Duplicates",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Three Pointers with Last-Value Check",
+   "hint": "Take the smallest front value among the three arrays and append it only if it differs from the last value appended.",
+   "time": "O(n1 + n2 + n3)",
+   "space": "O(1) extra"
+  },
+  "bctci-sort-valley-shaped-array": {
+   "number": 52709,
+   "title": "Sort Valley-Shaped Array",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Fill from the Largest End",
+   "hint": "The largest remaining value is always at one of the two ends; place it at the back of the output and move that end inward.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-missing-numbers-in-range": {
+   "number": 52710,
+   "title": "Missing Numbers in Range",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Walk Range and Array Together",
+   "hint": "Step through every value from low to high while advancing a pointer through the sorted array past smaller values.",
+   "time": "O(n + (high - low))",
+   "space": "O(1) extra"
+  },
+  "bctci-interval-intersection": {
+   "number": 52711,
+   "title": "Interval Intersection",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers",
+    "Intervals"
+   ],
+   "pattern": "Advance the Earlier-Ending Interval",
+   "hint": "Overlap the current pair of intervals, then move past whichever interval ends first.",
+   "time": "O(n + m)",
+   "space": "O(1) extra"
+  },
+  "bctci-parity-sorting": {
+   "number": 52713,
+   "title": "Parity Sorting",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Swap Misplaced Pairs",
+   "hint": "Move a left pointer past evens and a right pointer past odds, then swap the misplaced pair.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-quicksort-partition": {
+   "number": 52715,
+   "title": "Quicksort Partition",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+   ],
+   "pattern": "Three-Way Partition",
+   "hint": "Keep boundaries for the smaller and larger regions and scan the unknown middle, swapping each value into place.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-dutch-flag": {
+   "number": 52716,
+   "title": "Dutch Flag Problem",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+   ],
+   "pattern": "Three-Way Partition",
+   "hint": "Grow a red region at the front and a blue region at the back while scanning the unknown middle once.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-prefix-suffix-swap": {
+   "number": 52717,
+   "title": "Prefix-Suffix Swap",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Triple Reversal",
+   "hint": "Reverse the whole array, then reverse the first two thirds and the last third separately.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-shift-word-to-back": {
+   "number": 52718,
+   "title": "Shift Word to Back",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Two Pointers"
+   ],
+   "pattern": "Stable Compaction plus Rewrite",
+   "hint": "Mark the earliest subsequence positions, compact every other letter forward in order, then write the word at the end.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-chess-moves": {
+   "number": 52801,
+   "title": "Chess Moves",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Simulation"
+   ],
+   "pattern": "Direction Vectors",
+   "hint": "List each piece's move directions as row and column offsets; the queen keeps stepping in a direction until it leaves the board or hits an occupied cell.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-queens-reach": {
+   "number": 52802,
+   "title": "Queen's Reach",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Simulation"
+   ],
+   "pattern": "Mark Along Each Direction",
+   "hint": "From every queen, walk each of the eight directions marking cells until the edge or another queen.",
+   "time": "O(q * n)",
+   "space": "O(n^2)"
+  },
+  "bctci-spiral-order": {
+   "number": 52803,
+   "title": "Spiral Order",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Simulation"
+   ],
+   "pattern": "Growing Leg Lengths",
+   "hint": "Walk outward from the center going down, left, up, right, with leg lengths 1, 1, 2, 2, 3, 3, and so on.",
+   "time": "O(n^2)",
+   "space": "O(n^2)"
+  },
+  "bctci-snowprints": {
+   "number": 52804,
+   "title": "Snowprints",
+   "difficulty": "easy",
+   "topics": [
+    "Matrix"
+   ],
+   "pattern": "Follow the Path Column by Column",
+   "hint": "Track the fox's row as you move across the columns; it changes by at most one each step.",
+   "time": "O(R + C)",
+   "space": "O(1)"
+  },
+  "bctci-valid-sudoku": {
+   "number": 52805,
+   "title": "Valid Sudoku",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Hash Table"
+   ],
+   "pattern": "Seen Sets per Row, Column, and Box",
+   "hint": "Track which digits appear in each row, column, and 3x3 box, and report the first repeat.",
+   "time": "O(1) for a 9x9 board",
+   "space": "O(1)"
+  },
+  "bctci-subgrid-maximums": {
+   "number": 52806,
+   "title": "Subgrid Maximums",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Dynamic Programming"
+   ],
+   "pattern": "Bottom-Right Suffix Maximum",
+   "hint": "A cell's answer is the largest of its own value and the answers of the cells just below and just to the right.",
+   "time": "O(R * C)",
+   "space": "O(R * C)"
+  },
+  "bctci-subgrid-sums": {
+   "number": 52807,
+   "title": "Subgrid Sums",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Prefix Sum"
+   ],
+   "pattern": "Inclusion-Exclusion Suffix Sums",
+   "hint": "Add the answers below and to the right, then subtract the diagonal answer that was counted twice.",
+   "time": "O(R * C)",
+   "space": "O(R * C)"
+  },
+  "bctci-matrix-operations": {
+   "number": 52808,
+   "title": "Matrix Operations",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Design"
+   ],
+   "pattern": "Compose Rotations from Transposes and Reflections",
+   "hint": "A clockwise rotation is a transpose followed by a vertical reflection; a counterclockwise rotation is a transpose followed by a horizontal reflection.",
+   "time": "O(n^2) per operation",
+   "space": "O(1) extra"
+  },
+  "bctci-valley-bottom": {
+   "number": 52903,
+   "title": "Valley Bottom",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Binary Search"
+   ],
+   "pattern": "Compare with the Right Neighbor",
+   "hint": "If the middle value is smaller than the next one, the bottom is at or before the middle; otherwise it is after.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "bctci-2-array-2-sum": {
+   "number": 52904,
+   "title": "2-Array 2-Sum",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Binary Search"
+   ],
+   "pattern": "Binary Search for Each Complement",
+   "hint": "For each unsorted value, binary search the sorted array for its negation.",
+   "time": "O(m log n)",
+   "space": "O(1)"
+  },
+  "bctci-target-count-divisible-by-k": {
+   "number": 52905,
+   "title": "Target Count Divisible By K",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Binary Search"
+   ],
+   "pattern": "Lower and Upper Bounds",
+   "hint": "Binary search for the first index not less than the target and the first index greater than it; their difference is the count.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "bctci-race-overtaking": {
+   "number": 52906,
+   "title": "Race Overtaking",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Binary Search"
+   ],
+   "pattern": "Transition Point Search",
+   "hint": "Binary search for the first second at which player 2 is ahead of player 1.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "bctci-search-in-sorted-grid": {
+   "number": 52907,
+   "title": "Search In Sorted Grid",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Binary Search"
+   ],
+   "pattern": "Treat the Grid as One Sorted Array",
+   "hint": "Map a flat index to its row and column so a single binary search covers the whole grid.",
+   "time": "O(log(R * C))",
+   "space": "O(1)"
+  },
+  "bctci-search-in-huge-array": {
+   "number": 52908,
+   "title": "Search In Huge Array",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Binary Search",
+    "Interactive"
+   ],
+   "pattern": "Exponential Search",
+   "hint": "Double an index until the value there reaches the target or the end of the data, then binary search for the first match.",
+   "time": "O(log i)",
+   "space": "O(1)"
+  },
+  "bctci-water-refilling": {
+   "number": 52910,
+   "title": "Water Refilling",
+   "difficulty": "medium",
+   "topics": [
+    "Math",
+    "Binary Search"
+   ],
+   "pattern": "Binary Search on the Answer",
+   "hint": "Search for the largest count k with k * b <= a, halving the range with right shifts instead of division.",
+   "time": "O(log a)",
+   "space": "O(1)"
+  },
+  "bctci-tide-aerial-view": {
+   "number": 52912,
+   "title": "Tide Aerial View",
+   "difficulty": "hard",
+   "topics": [
+    "Matrix",
+    "Binary Search"
+   ],
+   "pattern": "Binary Search over Pictures",
+   "hint": "The number of flooded cells only grows from picture to picture, so binary search for where it crosses half the area.",
+   "time": "O(n log n log p)",
+   "space": "O(1)"
+  },
+  "bctci-account-sharing-detection": {
+   "number": 53001,
+   "title": "Account Sharing Detection",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table"
+   ],
+   "pattern": "Seen Map",
+   "hint": "Map each username to the first IP seen for it; the first repeated username reveals a shared account.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-most-shared-account": {
+   "number": 53002,
+   "title": "Most Shared Account",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table"
+   ],
+   "pattern": "Frequency Map",
+   "hint": "Count connections per username, then pick the highest count, breaking ties by first appearance.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-most-frequent-octet": {
+   "number": 53003,
+   "title": "Most Frequent Octet",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Frequency Map",
+   "hint": "Count the text before the first dot of each IP and keep the most frequent.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-multi-account-cheating": {
+   "number": 53004,
+   "title": "Multi-Account Cheating",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Sorting"
+   ],
+   "pattern": "Canonical Set Keys",
+   "hint": "Sort each user's IPs into a canonical key and check whether any key repeats.",
+   "time": "O(n * k log k)",
+   "space": "O(n * k)"
+  },
+  "bctci-domain-resolver": {
+   "number": 53005,
+   "title": "Domain Resolver",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Design"
+   ],
+   "pattern": "Nested Maps",
+   "hint": "Keep a map from IP to its domains and another from domain to its set of subdomains.",
+   "time": "O(1) average per operation",
+   "space": "O(total registrations)"
+  },
+  "bctci-find-all-squares": {
+   "number": 53006,
+   "title": "Find All Squares",
+   "difficulty": "easy",
+   "topics": [
+    "Hash Table",
+    "Array"
+   ],
+   "pattern": "Value to Index Map",
+   "hint": "Index every value by position, then look up each value's square.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-word-expansion-class": {
+   "number": 53007,
+   "title": "Word Expansion Class",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "String",
+    "Design"
+   ],
+   "pattern": "Letter Count Difference",
+   "hint": "Precompute the letter counts of s; a candidate works when its counts exceed them by exactly one letter.",
+   "time": "O(|s|) setup, O(|s2|) per query",
+   "space": "O(1)"
+  },
+  "bctci-cheater-detection": {
+   "number": 53008,
+   "title": "Cheater Detection",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Array"
+   ],
+   "pattern": "Desk Lookup Map",
+   "hint": "Map each desk to its student, then compare each student with the student at the next desk in the same row.",
+   "time": "O(n * k)",
+   "space": "O(n * k)"
+  },
+  "bctci-product-of-alphabetical-sums": {
+   "number": 53009,
+   "title": "Product of Alphabetical Sums",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Math"
+   ],
+   "pattern": "Pair Loop with Set Lookup",
+   "hint": "Alphabetical sums are at most 78, so collect the distinct sums and, for each pair, look up the needed third factor.",
+   "time": "O(n + 78^2)",
+   "space": "O(78)"
+  },
+  "bctci-action-log-anomalies": {
+   "number": 53010,
+   "title": "Action Log Anomalies",
+   "difficulty": "hard",
+   "topics": [
+    "Hash Table",
+    "Simulation"
+   ],
+   "pattern": "Per-Ticket and Per-Agent State",
+   "hint": "Track each ticket's history and each agent's last action; a ticket is clean only if its open and close are consecutive actions of one agent.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-largest-set-intersection": {
+   "number": 53011,
+   "title": "Largest Set Intersection",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Array"
+   ],
+   "pattern": "Count Memberships",
+   "hint": "An element survives excluding set i when it appears in every other set, so count how many sets contain each element.",
+   "time": "O(total elements)",
+   "space": "O(total elements)"
+  },
+  "bctci-sorting-by-frequency": {
+   "number": 53101,
+   "title": "Sorting by Frequency",
+   "difficulty": "easy",
+   "topics": [
+    "String",
+    "Sorting",
+    "Hash Table"
+   ],
+   "pattern": "Sort by a Composite Key",
+   "hint": "Count each letter, then sort the distinct letters by descending count and then alphabetically.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-nested-circles": {
+   "number": 53102,
+   "title": "Nested Circles",
+   "difficulty": "medium",
+   "topics": [
+    "Math",
+    "Sorting",
+    "Geometry"
+   ],
+   "pattern": "Sort by Radius and Check Neighbors",
+   "hint": "Sort circles from largest to smallest radius; the set is nested exactly when each circle strictly contains the next one.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-delete-operations": {
+   "number": 53103,
+   "title": "Delete Operations",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sorting"
+   ],
+   "pattern": "Sorted Index Order with a Pointer",
+   "hint": "Sort indices by value once; a delete-smallest operation advances a pointer past indices already deleted.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-spreadsheet": {
+   "number": 53104,
+   "title": "Spreadsheet",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Sorting",
+    "Matrix"
+   ],
+   "pattern": "Stable Sort by Key",
+   "hint": "Sorting rows by a column reorders whole rows; sorting columns by a row reorders the column indices and rebuilds each row.",
+   "time": "O(rows * cols log(rows * cols)) per sort",
+   "space": "O(rows * cols)"
+  },
+  "bctci-sort-by-publication-year": {
+   "number": 53105,
+   "title": "Sort By Publication Year",
+   "difficulty": "easy",
+   "topics": [
+    "Sorting",
+    "Counting Sort"
+   ],
+   "pattern": "Counting Sort by Year",
+   "hint": "Years fall in a small fixed range, so bucket books by year and read the buckets in order.",
+   "time": "O(n + years)",
+   "space": "O(n + years)"
+  },
+  "bctci-compress-array": {
+   "number": 53201,
+   "title": "Compress Array",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Array"
+   ],
+   "pattern": "Merge onto a Stack",
+   "hint": "Push values onto a stack; while the top equals the incoming value, pop it and double the value.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-compress-array-by-k": {
+   "number": 53202,
+   "title": "Compress Array By K",
+   "difficulty": "hard",
+   "topics": [
+    "Stack",
+    "Array"
+   ],
+   "pattern": "Run-Length Stack",
+   "hint": "Keep a stack of (value, run length); when a run reaches k, pop it and push the combined value.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-viewer-counter-class": {
+   "number": 53203,
+   "title": "Viewer Counter Class",
+   "difficulty": "medium",
+   "topics": [
+    "Queue",
+    "Design"
+   ],
+   "pattern": "One Queue per Viewer Type",
+   "hint": "Keep a queue of join times for each viewer type and drop times that fall out of the window before counting.",
+   "time": "O(1) amortized per operation",
+   "space": "O(n)"
+  },
+  "bctci-current-url": {
+   "number": 53204,
+   "title": "Current URL",
+   "difficulty": "easy",
+   "topics": [
+    "Stack",
+    "Simulation"
+   ],
+   "pattern": "History Stack",
+   "hint": "Push each visited URL; a back action pops entries but never removes the first URL.",
+   "time": "O(n + total back steps)",
+   "space": "O(n)"
+  },
+  "bctci-current-url-with-forward": {
+   "number": 53205,
+   "title": "Current URL with Forward",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Array",
+    "Simulation"
+   ],
+   "pattern": "History Array with a Cursor",
+   "hint": "Keep the visited URLs in an array with a current index and a forward limit; a new visit discards the forward history.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-balanced-partition": {
+   "number": 53206,
+   "title": "Balanced Partition",
+   "difficulty": "easy",
+   "topics": [
+    "Stack",
+    "String"
+   ],
+   "pattern": "Depth Counter",
+   "hint": "Track the nesting depth; each time it returns to zero, one balanced piece ends.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-custom-brackets": {
+   "number": 53207,
+   "title": "Custom Brackets",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "String",
+    "Hash Table"
+   ],
+   "pattern": "Stack of Expected Closers",
+   "hint": "Push the matching closer for every opener; each closer must match the top of the stack.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-longest-balanced-subsequence": {
+   "number": 53208,
+   "title": "Longest Balanced Subsequence",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "String"
+   ],
+   "pattern": "Match with a Stack, Drop the Rest",
+   "hint": "Match each ')' with the nearest unmatched '(' before it; every character left unmatched must be deleted.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-robot-instructions": {
+   "number": 53301,
+   "title": "Robot Instructions",
+   "difficulty": "medium",
+   "topics": [
+    "Recursion",
+    "String"
+   ],
+   "pattern": "Expand from the Right",
+   "hint": "The expansion of a suffix starting with '2' is the expansion after it followed by the expansion after the instruction it skips.",
+   "time": "O(output length)",
+   "space": "O(output length)"
+  },
+  "bctci-nested-array-sum": {
+   "number": 53302,
+   "title": "Nested Array Sum",
+   "difficulty": "easy",
+   "topics": [
+    "Recursion",
+    "Depth-First Search"
+   ],
+   "pattern": "Recursive Sum",
+   "hint": "Add integers directly and recurse into nested lists.",
+   "time": "O(total elements)",
+   "space": "O(depth)"
+  },
+  "bctci-powers-mod-m": {
+   "number": 53303,
+   "title": "Powers Mod M",
+   "difficulty": "medium",
+   "topics": [
+    "Recursion",
+    "Math"
+   ],
+   "pattern": "Fast Exponentiation",
+   "hint": "Compute a^(p/2) mod m once, square it, and multiply by a once more when p is odd.",
+   "time": "O(log p)",
+   "space": "O(log p)"
+  },
+  "bctci-lego-castle": {
+   "number": 53304,
+   "title": "Lego Castle",
+   "difficulty": "easy",
+   "topics": [
+    "Recursion",
+    "Math"
+   ],
+   "pattern": "Recurrence on Size",
+   "hint": "An n-story castle uses two (n - 1)-story castles plus a top row as wide as the whole castle, which is 2^n - 1 blocks.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-laminal-arrays": {
+   "number": 53305,
+   "title": "Laminal Arrays",
+   "difficulty": "medium",
+   "topics": [
+    "Recursion",
+    "Divide and Conquer"
+   ],
+   "pattern": "Combine Halves",
+   "hint": "Each recursive call returns its range's total and the best laminal sum inside it; the parent's best is the max of both children's bests and its own total.",
+   "time": "O(n)",
+   "space": "O(log n)"
+  },
+  "bctci-singly-linked-list-design": {
+   "number": 53401,
+   "title": "Singly Linked List Design",
+   "difficulty": "medium",
+   "topics": [
+    "Linked List",
+    "Design"
+   ],
+   "pattern": "Head Pointer with a Size Counter",
+   "hint": "Keep head and tail pointers plus a size; removing from the back must walk to the second-to-last node.",
+   "time": "O(1) except pop_back and contains, which are O(n)",
+   "space": "O(n)"
+  },
+  "bctci-doubly-linked-list-design": {
+   "number": 53402,
+   "title": "Doubly Linked List Design",
+   "difficulty": "medium",
+   "topics": [
+    "Linked List",
+    "Design"
+   ],
+   "pattern": "Sentinel Nodes",
+   "hint": "Use head and tail sentinels so every insertion and removal relinks two neighbors without special cases.",
+   "time": "O(1) except contains, which is O(n)",
+   "space": "O(n)"
+  },
+  "bctci-linked-list-based-stack": {
+   "number": 53403,
+   "title": "Linked-List-Based Stack",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List",
+    "Stack",
+    "Design"
+   ],
+   "pattern": "Push and Pop at the Head",
+   "hint": "The head of a singly linked list is the top of the stack, so every operation touches only the head.",
+   "time": "O(1) per operation",
+   "space": "O(n)"
+  },
+  "bctci-linked-list-based-queue": {
+   "number": 53404,
+   "title": "Linked-List-Based Queue",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List",
+    "Queue",
+    "Design"
+   ],
+   "pattern": "Head and Tail Pointers",
+   "hint": "Enqueue at the tail and dequeue at the head so both ends are reachable in O(1).",
+   "time": "O(1) per operation",
+   "space": "O(n)"
+  },
+  "bctci-linked-list-copy": {
+   "number": 53405,
+   "title": "Linked-List Copy",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List"
+   ],
+   "pattern": "Dummy Head",
+   "hint": "Walk the original list and append a new node with each value behind a dummy head.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-sublist-reversal": {
+   "number": 53407,
+   "title": "Sublist Reversal",
+   "difficulty": "medium",
+   "topics": [
+    "Linked List"
+   ],
+   "pattern": "Reverse Between Anchors",
+   "hint": "Walk to the node before index left, then move each following node to the front of the reversed section.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-linked-list-zip": {
+   "number": 53412,
+   "title": "Linked-List Zip",
+   "difficulty": "easy",
+   "topics": [
+    "Linked List",
+    "Two Pointers"
+   ],
+   "pattern": "Alternate Splicing",
+   "hint": "Take one node from each list in turn, and attach whatever remains of the longer list at the end.",
+   "time": "O(n + m)",
+   "space": "O(1)"
+  },
+  "bctci-aligned-chain": {
+   "number": 53501,
+   "title": "Aligned Chain",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Return Chain Length Upward",
+   "hint": "Each call returns the longest aligned chain starting at its node; an unaligned node returns 0.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-hidden-message": {
+   "number": 53502,
+   "title": "Hidden Message",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Per-Node Traversal Order",
+   "hint": "Recurse into both subtrees and place the node's character before, between, or after them according to its first letter.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-aligned-path": {
+   "number": 53503,
+   "title": "Aligned Path",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Combine Two Downward Chains",
+   "hint": "At each aligned node, a path can join its best aligned chain in the left subtree with its best in the right subtree.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-tree-layout": {
+   "number": 53504,
+   "title": "Tree Layout",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Hash Table",
+    "Depth-First Search"
+   ],
+   "pattern": "Count Coordinates",
+   "hint": "Traverse the tree carrying (row, column) and count how many nodes land on each coordinate.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-triangle-count": {
+   "number": 53505,
+   "title": "Triangle Count",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Paired Left and Right Spines",
+   "hint": "A node forms one triangle for each depth that both its all-left descent and its all-right descent reach.",
+   "time": "O(n * h)",
+   "space": "O(h)"
+  },
+  "bctci-evaluate-expression-tree": {
+   "number": 53507,
+   "title": "Evaluate Expression Tree",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Depth-First Search",
+    "Recursion"
+   ],
+   "pattern": "Post-Order Evaluation",
+   "hint": "Evaluate every child first, then combine the child values with the node's operation.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-left-view": {
+   "number": 53508,
+   "title": "Left View",
+   "difficulty": "easy",
+   "topics": [
+    "Tree",
+    "Breadth-First Search"
+   ],
+   "pattern": "First Node per Level",
+   "hint": "Traverse level by level and record the first node you see on each level.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-most-prolific-level": {
+   "number": 53509,
+   "title": "Most Prolific Level",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Breadth-First Search"
+   ],
+   "pattern": "Level Sizes",
+   "hint": "A level's prolificness is the size of the next level divided by its own size; compare these ratios level by level.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-zig-zag-order": {
+   "number": 53510,
+   "title": "Zig-Zag Order",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Breadth-First Search"
+   ],
+   "pattern": "Level Order with Alternating Reversal",
+   "hint": "Collect each level left to right and reverse the odd-depth levels before appending them.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-most-protected-node": {
+   "number": 53511,
+   "title": "Most Protected Node",
+   "difficulty": "hard",
+   "topics": [
+    "Tree",
+    "Breadth-First Search",
+    "Depth-First Search"
+   ],
+   "pattern": "Level Positions plus Heights",
+   "hint": "A level-order pass gives each node's depth and its position within its level; a post-order pass gives its height.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-bst-search": {
+   "number": 53512,
+   "title": "BST Search",
+   "difficulty": "easy",
+   "topics": [
+    "Tree",
+    "Binary Search Tree"
+   ],
+   "pattern": "Walk Down by Comparison",
+   "hint": "Go left when the target is smaller than the node and right when it is larger; stop on a match.",
+   "time": "O(h)",
+   "space": "O(1)"
+  },
+  "bctci-bst-validation": {
+   "number": 53514,
+   "title": "BST Validation",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Binary Search Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Inclusive Bounds",
+   "hint": "Pass down the range each node must fall within; a left child tightens the upper bound and a right child the lower bound.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-bst-duplicate-detection": {
+   "number": 53515,
+   "title": "BST Duplicate Detection",
+   "difficulty": "easy",
+   "topics": [
+    "Tree",
+    "Binary Search Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "In-Order Neighbors",
+   "hint": "An in-order traversal of a BST is sorted, so any duplicate shows up as two equal consecutive values.",
+   "time": "O(n)",
+   "space": "O(h)"
+  },
+  "bctci-bst-kth-element": {
+   "number": 53516,
+   "title": "BST Kth Element",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Binary Search Tree",
+    "Depth-First Search"
+   ],
+   "pattern": "Counted In-Order Traversal",
+   "hint": "Walk the tree in order and stop at the k-th visited node, counting from zero.",
+   "time": "O(h + k)",
+   "space": "O(h)"
+  },
+  "bctci-bst-merge-into-array": {
+   "number": 53517,
+   "title": "BST Merge Into Array",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Binary Search Tree",
+    "Two Pointers"
+   ],
+   "pattern": "Two In-Order Traversals and a Merge",
+   "hint": "Read each tree in order into a sorted list, then merge the two sorted lists.",
+   "time": "O(n + m)",
+   "space": "O(n + m)"
+  },
+  "bctci-adjacency-list-validation": {
+   "number": 53601,
+   "title": "Adjacency List Validation",
+   "difficulty": "easy",
+   "topics": [
+    "Graph"
+   ],
+   "pattern": "Edge Set Consistency",
+   "hint": "Collect every directed pair once, rejecting out-of-range nodes, self-loops, and repeats, then check that each pair has its reverse.",
+   "time": "O(V + E)",
+   "space": "O(E)"
+  },
+  "bctci-graph-path": {
+   "number": 53602,
+   "title": "Graph Path",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Depth-First Search",
+    "Breadth-First Search"
+   ],
+   "pattern": "Search with Parent Pointers",
+   "hint": "Search from node1, remember how each node was first reached, and walk those links back from node2.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-tree-check": {
+   "number": 53603,
+   "title": "Tree Check",
+   "difficulty": "easy",
+   "topics": [
+    "Graph",
+    "Depth-First Search"
+   ],
+   "pattern": "Edge Count plus Connectivity",
+   "hint": "An undirected graph is a tree exactly when it is connected and has V - 1 edges.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-spanning-tree": {
+   "number": 53604,
+   "title": "Spanning Tree",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Depth-First Search"
+   ],
+   "pattern": "Discovery Edges",
+   "hint": "Every edge along which a traversal first reaches a new node belongs to a spanning tree.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-reachability-queries": {
+   "number": 53605,
+   "title": "Reachability Queries",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Depth-First Search",
+    "Union Find"
+   ],
+   "pattern": "Label Components Once",
+   "hint": "Give every node a component label with one traversal per component, then answer each query by comparing labels.",
+   "time": "O(V + E + k)",
+   "space": "O(V)"
+  },
+  "bctci-strongly-connected-graph": {
+   "number": 53606,
+   "title": "Strongly Connected Graph",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Depth-First Search"
+   ],
+   "pattern": "Forward and Reverse Reachability",
+   "hint": "The graph is strongly connected when node 0 reaches every node and every node reaches node 0, which is a search on the reversed graph.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-hilliest-connected-component": {
+   "number": 53607,
+   "title": "Hilliest Connected Component",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Depth-First Search"
+   ],
+   "pattern": "Aggregate per Component",
+   "hint": "Traverse each component while summing edge gains and counting edges, remembering that each edge appears twice in an adjacency list.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-highest-average-elevation-gain": {
+   "number": 53608,
+   "title": "Highest Average Elevation Gain",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Union Find"
+   ],
+   "pattern": "Aggregate Edges per Component",
+   "hint": "Union the endpoints of every edge, then sum gains and count edges by component root.",
+   "time": "O(V + E alpha(V))",
+   "space": "O(V)"
+  },
+  "bctci-first-time-all-connected": {
+   "number": 53609,
+   "title": "First Time All Connected",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Union Find"
+   ],
+   "pattern": "Count Merges",
+   "hint": "Union each cable's endpoints and count successful merges; after V - 1 merges everything is connected.",
+   "time": "O(E alpha(V))",
+   "space": "O(V)"
+  },
+  "bctci-shortest-path-queries": {
+   "number": 53610,
+   "title": "Shortest-Path Queries",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Breadth-First Search"
+   ],
+   "pattern": "BFS Tree from the Start",
+   "hint": "One breadth-first search from the start records a parent for every reachable node; each query walks parents back.",
+   "time": "O(V + E + total path length)",
+   "space": "O(V)"
+  },
+  "bctci-graph-hangout": {
+   "number": 53611,
+   "title": "Graph Hangout",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Breadth-First Search"
+   ],
+   "pattern": "Three BFS Distance Maps",
+   "hint": "Compute BFS distances from each friend's node, then choose the node minimizing the sum of the three distances.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-days-until-all-infected": {
+   "number": 53612,
+   "title": "Days Until All Infected",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Breadth-First Search"
+   ],
+   "pattern": "Multi-Source BFS",
+   "hint": "Start a breadth-first search from all infected nodes at once; the answer is the largest distance reached.",
+   "time": "O(V + E)",
+   "space": "O(V)"
+  },
+  "bctci-count-grid-islands": {
+   "number": 53613,
+   "title": "Count Grid Islands",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Depth-First Search",
+    "Breadth-First Search"
+   ],
+   "pattern": "Flood Fill per Island",
+   "hint": "Scan the grid; each unvisited land cell starts a new island, and a flood fill marks the rest of it.",
+   "time": "O(R * C)",
+   "space": "O(R * C)"
+  },
+  "bctci-multi-exit-maze": {
+   "number": 53614,
+   "title": "Multi-Exit Maze",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Breadth-First Search"
+   ],
+   "pattern": "Multi-Source BFS from Exits",
+   "hint": "Start a breadth-first search from every exit at once; the first time a cell is reached gives its distance to the nearest exit.",
+   "time": "O(R * C)",
+   "space": "O(R * C)"
+  },
+  "bctci-rgb-distances": {
+   "number": 53615,
+   "title": "RGB Distances",
+   "difficulty": "medium",
+   "topics": [
+    "Matrix",
+    "Breadth-First Search"
+   ],
+   "pattern": "One Multi-Source BFS per Color",
+   "hint": "Run a multi-source BFS from all cells of each color; red cells read the green distances, green cells the blue, and blue cells the red.",
+   "time": "O(R * C)",
+   "space": "O(R * C)"
+  },
+  "bctci-the-floor-is-lava": {
+   "number": 53616,
+   "title": "The Floor Is Lava",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Breadth-First Search",
+    "Geometry"
+   ],
+   "pattern": "Implicit Graph over Pieces",
+   "hint": "Two pieces are linked when the gap between their rectangles is at most d; search from piece 0 toward the last piece.",
+   "time": "O(n^2)",
+   "space": "O(n)"
+  },
+  "bctci-word-ladder-game-variation": {
+   "number": 53617,
+   "title": "Word Ladder Game Variation",
+   "difficulty": "hard",
+   "topics": [
+    "Graph",
+    "Breadth-First Search",
+    "String"
+   ],
+   "pattern": "BFS over (Word, Next Move)",
+   "hint": "Track each word together with whether the next move must add or remove a letter, and search that state graph.",
+   "time": "O(W * L^2)",
+   "space": "O(W * L)"
+  },
+  "bctci-implement-a-heap": {
+   "number": 53701,
+   "title": "Implement a Heap",
+   "difficulty": "medium",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Design"
+   ],
+   "pattern": "Array-Backed Binary Heap",
+   "hint": "Store the heap in an array; sift a pushed value up and sift the moved last value down after a pop. Heapify from the bottom up.",
+   "time": "O(log n) push and pop, O(n) heapify",
+   "space": "O(n)"
+  },
+  "bctci-k-most-played": {
+   "number": 53702,
+   "title": "K Most Played",
+   "difficulty": "medium",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Sorting"
+   ],
+   "pattern": "Bounded Min-Heap",
+   "hint": "Keep the k best songs seen so far in a heap whose top is the weakest of them, and replace it when a better song arrives.",
+   "time": "O(n log k)",
+   "space": "O(k)"
+  },
+  "bctci-top-songs-class": {
+   "number": 53703,
+   "title": "Top Songs Class",
+   "difficulty": "medium",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Design"
+   ],
+   "pattern": "Keep Only the Top k",
+   "hint": "Maintain a heap holding the best k songs registered so far, so each registration costs O(log k).",
+   "time": "O(log k) per registration, O(k log k) per query",
+   "space": "O(k)"
+  },
+  "bctci-top-songs-class-with-updates": {
+   "number": 53704,
+   "title": "Top Songs Class With Updates",
+   "difficulty": "hard",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Hash Table",
+    "Design"
+   ],
+   "pattern": "Lazy Heap Entries",
+   "hint": "Keep each song's current total in a map and push a new heap entry on every update; ignore stale entries when reading the top.",
+   "time": "O(log n) per registration, O(k log n) per query",
+   "space": "O(total registrations)"
+  },
+  "bctci-popular-songs-class": {
+   "number": 53705,
+   "title": "Popular Songs Class",
+   "difficulty": "hard",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Design"
+   ],
+   "pattern": "Two Heaps for the Median",
+   "hint": "Keep the lower half of play counts in a max-heap and the upper half in a min-heap so the median is always at the tops.",
+   "time": "O(log n) per registration, O(1) per query",
+   "space": "O(n)"
+  },
+  "bctci-most-listened-across-genres": {
+   "number": 53706,
+   "title": "Most Listened Across Genres",
+   "difficulty": "medium",
+   "topics": [
+    "Heap (Priority Queue)"
+   ],
+   "pattern": "K-Way Merge",
+   "hint": "Push the first song of each genre into a max-heap; each time you pop a song, push the next song from the same genre.",
+   "time": "O(m + k log m)",
+   "space": "O(m)"
+  },
+  "bctci-make-playlist": {
+   "number": 53707,
+   "title": "Make Playlist",
+   "difficulty": "hard",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Greedy"
+   ],
+   "pattern": "Most Remaining Artist First",
+   "hint": "Repeatedly play a song by the artist with the most songs left, skipping the artist just played; it fails only when that artist is the sole option.",
+   "time": "O(n log a)",
+   "space": "O(n)"
+  },
+  "bctci-sum-of-first-k-prime-powers": {
+   "number": 53708,
+   "title": "Sum of First K Prime Powers",
+   "difficulty": "medium",
+   "topics": [
+    "Heap (Priority Queue)",
+    "Math"
+   ],
+   "pattern": "Merge Power Sequences",
+   "hint": "Start with each prime in a min-heap; after popping p^e, push p^(e+1).",
+   "time": "O((m + k) log m)",
+   "space": "O(m)"
+  },
+  "bctci-most-weekly-sales": {
+   "number": 53801,
+   "title": "Most Weekly Sales",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Fixed-Size Window",
+   "hint": "Slide a 7-day window, adding the entering day and subtracting the leaving day.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-most-sales-in-k-days": {
+   "number": 53802,
+   "title": "Most Sales in k Days",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Fixed-Size Window",
+   "hint": "Track the running k-day sum and the first start where it is largest.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-unique-best-seller-streak": {
+   "number": 53803,
+   "title": "Unique Best Seller Streak",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+   ],
+   "pattern": "Window Counts",
+   "hint": "Keep counts of titles inside a k-day window and the number of titles that appear more than once.",
+   "time": "O(n)",
+   "space": "O(k)"
+  },
+  "bctci-enduring-best-seller-streak": {
+   "number": 53804,
+   "title": "Enduring Best Seller Streak",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Run Length",
+   "hint": "Track the length of the current run of identical titles.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-longest-good-day-streak": {
+   "number": 53805,
+   "title": "Longest Good Day Streak",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Reset on Bad Days",
+   "hint": "Extend the current streak on a good day and reset it on a bad day.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-longest-alternating-sequence": {
+   "number": 53807,
+   "title": "Longest Alternating Sequence",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Grow While Alternating",
+   "hint": "Extend the window while each day's type differs from the previous day's, and restart it otherwise.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-maximum-with-at-most-3-bad-days": {
+   "number": 53808,
+   "title": "Maximum With at Most 3 Bad Days",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Variable Window with a Budget",
+   "hint": "Grow the window to the right and shrink it from the left whenever it holds more than 3 bad days.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-ad-campaign-boost": {
+   "number": 53809,
+   "title": "Ad Campaign Boost",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Variable Window with a Budget",
+   "hint": "The best run is the longest window containing at most k bad days.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-ad-campaign-with-small-boosts": {
+   "number": 53810,
+   "title": "Ad Campaign With Small Boosts",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Variable Window with a Budget",
+   "hint": "Treat days below 5 as walls and allow at most k days with 5 to 9 sales inside the window.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-boosting-days-multiple-times": {
+   "number": 53811,
+   "title": "Boosting Days Multiple Times",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Variable Window with a Budget",
+   "hint": "A window's cost is the total shortfall below 10 of its days; keep the longest window whose cost is at most k.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-longest-period-at-most-k-distinct": {
+   "number": 53812,
+   "title": "Longest Period at Most k Distinct",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+   ],
+   "pattern": "Distinct Count Window",
+   "hint": "Keep counts of titles in the window and shrink from the left when there are more than k distinct titles.",
+   "time": "O(n)",
+   "space": "O(k)"
+  },
+  "bctci-longest-repeated-substring": {
+   "number": 53813,
+   "title": "Longest Repeated Substring",
+   "difficulty": "hard",
+   "topics": [
+    "String",
+    "Binary Search",
+    "Sliding Window",
+    "Hash Table"
+   ],
+   "pattern": "Binary Search on Length",
+   "hint": "If some substring of length L repeats, so does one of every shorter length; binary search L and check with a set of windows.",
+   "time": "O(n log n) expected with hashing",
+   "space": "O(n)"
+  },
+  "bctci-shortest-period-with-over-20-sales": {
+   "number": 53814,
+   "title": "Shortest Period With Over 20 Sales",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Shrinking Window",
+   "hint": "Grow the window until its sum exceeds 20, then shrink it from the left while it still does, recording the length.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-shortest-with-all-letters": {
+   "number": 53815,
+   "title": "Shortest With All Letters",
+   "difficulty": "medium",
+   "topics": [
+    "String",
+    "Hash Table",
+    "Sliding Window"
+   ],
+   "pattern": "Minimum Covering Window",
+   "hint": "Track how many letters still fall short of their required counts; shrink the window whenever none do.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-smallest-range-with-k-elements": {
+   "number": 53816,
+   "title": "Smallest Range With k Elements",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sorting",
+    "Sliding Window"
+   ],
+   "pattern": "Sorted Window of k",
+   "hint": "After sorting, any optimal range spans k consecutive values; slide a window of size k.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-strong-start-and-ending": {
+   "number": 53817,
+   "title": "Strong Start and Ending",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Shortest Middle Window",
+   "hint": "Boosting the edge bad days leaves a middle stretch that must hold the rest; minimize that middle window.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-at-most-k-bad-days": {
+   "number": 53818,
+   "title": "Count Subarrays With at Most k Bad Days",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Count Windows Ending at Each Day",
+   "hint": "For each right end, the valid left ends form a contiguous range; exactly and at-least counts follow from at-most counts.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-exactly-k-bad-days": {
+   "number": 53819,
+   "title": "Count Subarrays With Exactly k Bad Days",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Count Windows Ending at Each Day",
+   "hint": "For each right end, the valid left ends form a contiguous range; exactly and at-least counts follow from at-most counts.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-at-least-k-bad-days": {
+   "number": 53820,
+   "title": "Count Subarrays With at Least k Bad Days",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Count Windows Ending at Each Day",
+   "hint": "For each right end, the valid left ends form a contiguous range; exactly and at-least counts follow from at-most counts.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-good-start-and-ending": {
+   "number": 53821,
+   "title": "Count Subarrays With Good Start and Ending",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Math"
+   ],
+   "pattern": "Count Good Days",
+   "hint": "Any pair of good days, including a day paired with itself, bounds exactly one valid subarray.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-drops": {
+   "number": 53822,
+   "title": "Count Subarrays With Drops",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "At-Most Counting Reused Three Ways",
+   "hint": "A drop belongs to a subarray when both of its numbers do; count windows with at most k drops and derive the other two counts.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-bad-days-in-range": {
+   "number": 53823,
+   "title": "Count Subarrays With Bad Days in Range",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Difference of At-Most Counts",
+   "hint": "The count with between k1 and k2 bad days is atMost(k2) - atMost(k1 - 1).",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-subarrays-with-all-remainders": {
+   "number": 53824,
+   "title": "Count Subarrays With All Remainders",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Last Seen Positions",
+   "hint": "For each right end, the subarray is valid for every start up to the smallest of the last positions of remainders 0, 1, and 2.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-good-subarrays-with-at-least-k-sales": {
+   "number": 53825,
+   "title": "Count Good Subarrays With at Least k Sales",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Sliding Window"
+   ],
+   "pattern": "Window Inside Each Good Run",
+   "hint": "Bad days split the array into runs; within a run, for each right end count the starts whose window sum still reaches k.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-max-sum-path": {
+   "number": 53901,
+   "title": "Max-Sum Path",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming",
+    "Matrix"
+   ],
+   "pattern": "Best Path into Each Cell",
+   "hint": "The best sum reaching a cell is its value plus the better of the best sums reaching the cell above and the cell to the left.",
+   "time": "O(R * C)",
+   "space": "O(C)"
+  },
+  "bctci-to-be-or-not-to-be": {
+   "number": 53904,
+   "title": "To Be or Not to Be",
+   "difficulty": "medium",
+   "topics": [
+    "Backtracking",
+    "String"
+   ],
+   "pattern": "Include or Exclude Each Word",
+   "hint": "Recurse over the words; each word is either kept or dropped, and a complete choice produces one sentence.",
+   "time": "O(2^w * length)",
+   "space": "O(w)"
+  },
+  "bctci-thesaurusly": {
+   "number": 53905,
+   "title": "Thesaurusly",
+   "difficulty": "medium",
+   "topics": [
+    "Backtracking",
+    "String",
+    "Hash Table"
+   ],
+   "pattern": "Cartesian Product of Choices",
+   "hint": "Walk the words left to right; a word with synonyms branches once per synonym and any other word stays as is.",
+   "time": "O(product of choices * length)",
+   "space": "O(words)"
+  },
+  "bctci-jumping-numbers": {
+   "number": 53906,
+   "title": "Jumping Numbers",
+   "difficulty": "medium",
+   "topics": [
+    "Backtracking",
+    "Breadth-First Search"
+   ],
+   "pattern": "Grow Numbers Digit by Digit",
+   "hint": "Start from each digit 1 to 9 and append a digit one larger or one smaller while the number stays below n.",
+   "time": "O(count of jumping numbers)",
+   "space": "O(count)"
+  },
+  "bctci-ikea-shopping": {
+   "number": 53907,
+   "title": "IKEA Shopping",
+   "difficulty": "medium",
+   "topics": [
+    "Backtracking",
+    "Dynamic Programming"
+   ],
+   "pattern": "Include or Exclude Each Item",
+   "hint": "Try both keeping and skipping each item while tracking the remaining budget, and remember the best rating total.",
+   "time": "O(2^n)",
+   "space": "O(n)"
+  },
+  "bctci-count-unique-submultisets-with-sum-zero": {
+   "number": 53909,
+   "title": "Count Unique Submultisets with Sum Zero",
+   "difficulty": "hard",
+   "topics": [
+    "Backtracking",
+    "Sorting"
+   ],
+   "pattern": "Choose How Many of Each Value",
+   "hint": "Group equal values and branch on how many copies of each value to take, so every distinct submultiset is generated exactly once.",
+   "time": "O(product of (count + 1))",
+   "space": "O(distinct values)"
+  },
+  "bctci-4-directional-max-sum-path": {
+   "number": 53910,
+   "title": "4-Directional Max-Sum Path",
+   "difficulty": "hard",
+   "topics": [
+    "Backtracking",
+    "Matrix"
+   ],
+   "pattern": "Exhaustive Simple Paths",
+   "hint": "Explore every simple path from the top-left corner with backtracking, recording the sum whenever it reaches the bottom-right corner.",
+   "time": "O(3^(R*C))",
+   "space": "O(R * C)"
+  },
+  "bctci-escape-with-all-clues": {
+   "number": 53911,
+   "title": "Escape with All Clues",
+   "difficulty": "hard",
+   "topics": [
+    "Backtracking",
+    "Matrix"
+   ],
+   "pattern": "Backtracking with Pruning",
+   "hint": "Explore simple paths from the start, stopping a branch once it is no shorter than the best complete path found.",
+   "time": "O(3^(R*C))",
+   "space": "O(R * C)"
+  },
+  "bctci-road-trip": {
+   "number": 54001,
+   "title": "Road Trip",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming"
+   ],
+   "pattern": "Best Cost Ending with a Stop",
+   "hint": "The cheapest plan that stops at i costs times[i] plus the cheapest plan ending with a stop among the previous three positions.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-minivan-road-trip": {
+   "number": 54002,
+   "title": "Minivan Road Trip",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming"
+   ],
+   "pattern": "Best Cost Ending with a Stop",
+   "hint": "The cheapest plan that stops at i costs times[i] plus the cheapest plan whose last stop is within the previous k + 1 positions.",
+   "time": "O(n * k)",
+   "space": "O(n)"
+  },
+  "bctci-restaurant-ratings": {
+   "number": 54003,
+   "title": "Restaurant Ratings",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming"
+   ],
+   "pattern": "Take or Skip",
+   "hint": "The best total up to restaurant i is the better of skipping it or taking it plus the best total up to i - 2.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-count-0-sum-paths": {
+   "number": 54004,
+   "title": "Count 0-Sum Paths",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming",
+    "Matrix"
+   ],
+   "pattern": "Paths into Each Zero Cell",
+   "hint": "A zero cell is reached by the paths into the cells above, to the left, and diagonally up-left; a one cell is reached by none that keep the sum 0.",
+   "time": "O(R * C)",
+   "space": "O(C)"
+  },
+  "bctci-magic-blackjack": {
+   "number": 54005,
+   "title": "Magic Blackjack",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming",
+    "Recursion"
+   ],
+   "pattern": "Count Draw Sequences by Total",
+   "hint": "The number of busting sequences from a running total depends only on that total, so memoize it.",
+   "time": "O(stand * 10)",
+   "space": "O(stand)"
+  },
+  "bctci-minimum-steps-to-one": {
+   "number": 54006,
+   "title": "Minimum Steps to One",
+   "difficulty": "easy",
+   "topics": [
+    "Dynamic Programming"
+   ],
+   "pattern": "Bottom-Up Table",
+   "hint": "The fewest steps from x is one more than the best of x - 1, x / 2, and x / 3 when those divisions are exact.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-reconstruct-longest-common-subsequence": {
+   "number": 54008,
+   "title": "Reconstruct Longest Common Subsequence",
+   "difficulty": "medium",
+   "topics": [
+    "Dynamic Programming",
+    "String"
+   ],
+   "pattern": "Walk Back Through the LCS Table",
+   "hint": "Fill the usual LCS length table, then walk from the end, taking a character when both strings match there.",
+   "time": "O(n * m)",
+   "space": "O(n * m)"
+  },
+  "bctci-most-non-overlapping-intervals": {
+   "number": 54101,
+   "title": "Most Non-Overlapping Intervals",
+   "difficulty": "medium",
+   "topics": [
+    "Greedy",
+    "Sorting",
+    "Intervals"
+   ],
+   "pattern": "Earliest End First",
+   "hint": "Sort by end point and keep each interval that starts after the last kept interval ends.",
+   "time": "O(n log n)",
+   "space": "O(1)"
+  },
+  "bctci-time-traveler": {
+   "number": 54102,
+   "title": "Time Traveler",
+   "difficulty": "medium",
+   "topics": [
+    "Greedy",
+    "Sorting"
+   ],
+   "pattern": "Jump the Largest Gaps",
+   "hint": "Living through a gap costs its length, so spend the k jumps on the k largest gaps.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-center-assignment": {
+   "number": 54103,
+   "title": "Center Assignment",
+   "difficulty": "medium",
+   "topics": [
+    "Greedy",
+    "Sorting",
+    "Geometry"
+   ],
+   "pattern": "Sort by Preference",
+   "hint": "Sort points by how much closer they are to the first center than the second, and give the first half to the first center.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-minimum-triplet-medians": {
+   "number": 54104,
+   "title": "Minimum Triplet Medians",
+   "difficulty": "medium",
+   "topics": [
+    "Greedy",
+    "Sorting"
+   ],
+   "pattern": "Pair Small Values with Large Ones",
+   "hint": "After sorting, each triplet can take two small values and one of the largest values, so the medians are every second value among the smallest two thirds.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-fewest-script-runs": {
+   "number": 54105,
+   "title": "Fewest Script Runs",
+   "difficulty": "medium",
+   "topics": [
+    "Greedy",
+    "Sorting",
+    "Intervals"
+   ],
+   "pattern": "Stab at the Earliest End",
+   "hint": "Sort meetings by end time and run the script at a meeting's end whenever the meeting was not already captured.",
+   "time": "O(n log n)",
+   "space": "O(1)"
+  },
+  "bctci-time-traveler-max-year": {
+   "number": 54106,
+   "title": "Time Traveler Max Year",
+   "difficulty": "hard",
+   "topics": [
+    "Greedy",
+    "Heap (Priority Queue)"
+   ],
+   "pattern": "Jump the Largest Gaps So Far",
+   "hint": "For each landing point, jump the k largest gaps before it (tracked with a min-heap), then spend any remaining aging budget living forward.",
+   "time": "O(n log k)",
+   "space": "O(k)"
+  },
+  "bctci-dag-distances": {
+   "number": 54201,
+   "title": "DAG Distances",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort",
+    "Dynamic Programming"
+   ],
+   "pattern": "Relax Edges in Topological Order",
+   "hint": "Process nodes in topological order; by the time a node is processed, every path into it has been considered.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-dag-longest-path": {
+   "number": 54203,
+   "title": "DAG Longest Path",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort",
+    "Dynamic Programming"
+   ],
+   "pattern": "Relax Edges in Topological Order",
+   "hint": "Process nodes in topological order; by the time a node is processed, every path into it has been considered.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-dag-path-reconstruction": {
+   "number": 54202,
+   "title": "DAG Path Reconstruction",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort"
+   ],
+   "pattern": "Predecessor Links",
+   "hint": "Record the predecessor that produced each node's best distance, then walk back from the goal.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-counting-paths": {
+   "number": 54204,
+   "title": "Counting Paths",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort",
+    "Dynamic Programming"
+   ],
+   "pattern": "Accumulate in Topological Order",
+   "hint": "The number of paths to a node is the sum over its predecessors, so propagate counts in topological order.",
+   "time": "O(V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-parallel-compilation": {
+   "number": 54205,
+   "title": "Parallel Compilation",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort",
+    "Dynamic Programming"
+   ],
+   "pattern": "Earliest Finish Times",
+   "hint": "A package finishes at its own compile time plus the latest finish among its imports; compute these in topological order.",
+   "time": "O(n + imports)",
+   "space": "O(n)"
+  },
+  "bctci-longest-path-of-increasing-degrees": {
+   "number": 54206,
+   "title": "Longest Path of Increasing Degrees",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Sorting",
+    "Dynamic Programming"
+   ],
+   "pattern": "Process Nodes by Degree",
+   "hint": "Orient each edge from the lower-degree endpoint to the higher one; the result is a DAG, and nodes sorted by degree are a topological order.",
+   "time": "O(V log V + E)",
+   "space": "O(V + E)"
+  },
+  "bctci-supersequence": {
+   "number": 54207,
+   "title": "Supersequence",
+   "difficulty": "medium",
+   "topics": [
+    "Graph",
+    "Topological Sort",
+    "String"
+   ],
+   "pattern": "Letter Order Graph",
+   "hint": "Each string forces its letters into order; add an edge between consecutive letters and check that the letter graph has no cycle.",
+   "time": "O(total length)",
+   "space": "O(1)"
+  },
+  "bctci-number-of-palindromic-splits": {
+   "number": 54208,
+   "title": "Number of Palindromic Splits",
+   "difficulty": "hard",
+   "topics": [
+    "Dynamic Programming",
+    "String"
+   ],
+   "pattern": "Count Splits of Each Prefix",
+   "hint": "Precompute which substrings are palindromes; the splits of a prefix sum the splits of every shorter prefix followed by a palindrome.",
+   "time": "O(n^2)",
+   "space": "O(n^2)"
+  },
+  "bctci-channel-views": {
+   "number": 54301,
+   "title": "Channel Views",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Prefix Sum Queries",
+   "hint": "Build prefix sums once; each period's total is a difference of two prefix sums.",
+   "time": "O(n + p)",
+   "space": "O(n)"
+  },
+  "bctci-youtube-video-reception": {
+   "number": 54302,
+   "title": "YouTube Video Reception",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Prefix Counts",
+   "hint": "Mark positive days with 1 and others with 0, then answer each period with prefix sums of those marks.",
+   "time": "O(n + p)",
+   "space": "O(n)"
+  },
+  "bctci-exclusive-product": {
+   "number": 54303,
+   "title": "Exclusive Product",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Prefix and Suffix Products",
+   "hint": "The product excluding index i is the product of everything before it times the product of everything after it, both kept modulo the prime.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-youtube-video-unusual-days": {
+   "number": 54305,
+   "title": "YouTube Video Unusual Days",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Prefix Sum",
+    "Sorting"
+   ],
+   "pattern": "Sorted Scores with Prefix Sums",
+   "hint": "After sorting the scores, the total distance from one score to all others splits into the part below it and the part above it, each computable from prefix sums.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-longest-subarray-with-sum-k": {
+   "number": 54307,
+   "title": "Longest Subarray With Sum K",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Prefix Sum",
+    "Hash Table"
+   ],
+   "pattern": "Earliest Prefix Sum",
+   "hint": "Remember the first index of each prefix sum; a subarray ending at i sums to k when prefix[i] - k was seen earlier.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-segmented-video-votes": {
+   "number": 54308,
+   "title": "Segmented Video Votes",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Difference Array",
+   "hint": "Add the vote at l and subtract it at r + 1, then a running sum gives each minute's net votes.",
+   "time": "O(n + votes)",
+   "space": "O(n)"
+  },
+  "bctci-most-booked-slot": {
+   "number": 54309,
+   "title": "Most Booked Slot",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Difference Array",
+   "hint": "Apply every bulk booking to a difference array, then scan the running totals for the first maximum.",
+   "time": "O(n + k)",
+   "space": "O(n)"
+  },
+  "bctci-all-overbooked-slots": {
+   "number": 54310,
+   "title": "All Overbooked Slots",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Difference Array",
+   "hint": "Apply every bulk booking to a difference array and count the slots whose running total exceeds the cap.",
+   "time": "O(n + k)",
+   "space": "O(n)"
+  },
+  "bctci-hash-set-class": {
+   "number": 6001,
+   "title": "Hash Set Class",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
+   "space": "O(n)"
+  },
+  "bctci-hash-set-class-extensions": {
+   "number": 6002,
+   "title": "Hash Set Class Extensions",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
+   "space": "O(n)"
+  },
+  "bctci-multiset": {
+   "number": 6003,
+   "title": "Multiset",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
+   "space": "O(n)"
+  },
+  "bctci-hash-map-class": {
+   "number": 6004,
+   "title": "Hash Map Class",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
+   "space": "O(n)"
+  },
+  "bctci-hash-map-class-extensions": {
+   "number": 6005,
+   "title": "Hash Map Class Extensions",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
+   "space": "O(n)"
+  },
+  "bctci-multimap": {
+   "number": 6006,
+   "title": "Multimap",
+   "difficulty": "Medium",
+   "topics": [
+    "Set & Map Implementations"
+   ],
+   "pattern": "Set & Map Implementations",
+   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
+   "time": "Expected amortized O(1) add/contains/size; O(k) get/remove for k values",
+   "space": "O(n)"
+  },
+  "bctci-max-queue": {
+   "number": 6101,
+   "title": "Max Queue",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Keep a second deque of possible maxima, retaining equal values.",
+   "time": "Amortized O(1) per operation",
+   "space": "O(n)"
+  },
+  "bctci-largest-temperature-change": {
+   "number": 6103,
+   "title": "Largest Temperature Change",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Track minimum and maximum indices in monotonic deques.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-longest-stable-period": {
+   "number": 6104,
+   "title": "Longest Stable Period",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Track minimum and maximum indices in monotonic deques.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-next-greater-element": {
+   "number": 6105,
+   "title": "Next Greater Element",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Resolve pending indices when a strictly taller value arrives.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-largest-rectangle": {
+   "number": 6106,
+   "title": "Largest Rectangle",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Use increasing heights and compute each popped bar's widest rectangle.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-king-kong-vs-godzilla": {
+   "number": 6107,
+   "title": "King Kong Vs Godzilla",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Find the nearest strictly smaller value on the left and strictly greater value on the right.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-king-kong-vs-godzilla-in-the-fog": {
+   "number": 6108,
+   "title": "King Kong Vs Godzilla In The Fog",
+   "difficulty": "Medium",
+   "topics": [
+    "Monotonic Stacks & Queues"
+   ],
+   "pattern": "Monotonic Stacks & Queues",
+   "hint": "Find the nearest strictly smaller value on the left and strictly greater value on the right.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-minimum-spanning-tree": {
+   "number": 6201,
+   "title": "Minimum Spanning Tree",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Process edges by increasing weight and join distinct components.",
+   "time": "O(E log E)",
+   "space": "O(V + E)"
+  },
+  "bctci-mst-reconstruction": {
+   "number": 6203,
+   "title": "MST Reconstruction",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Use Kruskal's algorithm with a stable edge ordering.",
+   "time": "O(E log E)",
+   "space": "O(V + E)"
+  },
+  "bctci-edge-in-mst": {
+   "number": 6204,
+   "title": "Edge In MST",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "An edge is mandatory exactly when no alternate endpoint path uses only edges of no greater weight.",
+   "time": "O(E alpha(V))",
+   "space": "O(V)"
+  },
+  "bctci-connected-components-over-time": {
+   "number": 6205,
+   "title": "Connected Components Over Time",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Sort edge arrivals and advance a union-find structure through the query times.",
+   "time": "O(E log E + E alpha(V) + Q)",
+   "space": "O(V + Q + E)"
+  },
+  "bctci-largest-connected-component-over-time": {
+   "number": 6206,
+   "title": "Largest Connected Component Over Time",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Sort edge arrivals and advance a union-find structure through the query times.",
+   "time": "O(E log E + E alpha(V) + Q)",
+   "space": "O(V + Q + E)"
+  },
+  "bctci-num-groups-operation": {
+   "number": 6202,
+   "title": "Num Groups Operation",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Track component minima separately from roots so union by size remains efficient.",
+   "time": "Expected amortized O(alpha(n))",
+   "space": "O(n)"
+  },
+  "bctci-presidential-election": {
+   "number": 6207,
+   "title": "Presidential Election",
+   "difficulty": "Medium",
+   "topics": [
+    "Union-Find"
+   ],
+   "pattern": "Union-Find",
+   "hint": "Use a min-heap and consume every tie at the second-smallest vote count.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-tunnel-depth": {
+   "number": 6301,
+   "title": "Tunnel Depth",
+   "difficulty": "Medium",
+   "topics": [
+    "Boundary Thinking"
+   ],
+   "pattern": "Boundary Thinking",
+   "hint": "Connectedness means occupied rows form a prefix, so binary search that boundary.",
+   "time": "O(n log n)",
+   "space": "O(1)"
+  },
+  "bctci-3-sum": {
+   "number": 6401,
+   "title": "3-Sum",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Sort, fix one position, and search the remaining suffix with two pointers.",
+   "time": "O(n squared)",
+   "space": "O(n) sorting space"
+  },
+  "bctci-count-substrings-without-letter": {
+   "number": 6402,
+   "title": "Count Substrings Without Letter",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Each non-a character ends as many valid substrings as the current a-free run length.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-list-of-divisors": {
+   "number": 6403,
+   "title": "List of Divisors",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Divisors come in pairs around the square root.",
+   "time": "O(sqrt(n))",
+   "space": "O(number of divisors)"
+  },
+  "bctci-sub-permutations": {
+   "number": 6404,
+   "title": "Sub Permutations",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Slide a frequency window, then deduplicate matching window strings.",
+   "time": "O(n * m), including substring copying",
+   "space": "O(n * m) worst case"
+  },
+  "bctci-magic-balls": {
+   "number": 6405,
+   "title": "Magic Balls",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Separate one-color, two-color, and three-color starting states.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "bctci-hiring-and-training": {
+   "number": 6406,
+   "title": "Hiring And Training",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "A run of k-1 hiring days plus training multiplies recruiters by k at a cost of k days.",
+   "time": "O(sqrt(n))",
+   "space": "O(1)"
+  },
+  "bctci-interval-xor": {
+   "number": 6407,
+   "title": "Interval XOR",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "The four endpoints partition the line into pieces with constant membership.",
+   "time": "O(1)",
+   "space": "O(1)"
+  },
+  "bctci-company-launches": {
+   "number": 6409,
+   "title": "Company Launches",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Process launch dates in order and retain the two largest previous spends.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "bctci-most-ones-with-k-flips": {
+   "number": 6410,
+   "title": "Most Ones With K Flips",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Maintain a window containing at most k zeros.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "bctci-multiplayer-video-game": {
+   "number": 6411,
+   "title": "Multiplayer Video Game",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Each component of the original visibility graph can be reduced to one survivor by eliminating a spanning tree from its leaves.",
+   "time": "Expected O(n alpha(n))",
+   "space": "O(n)"
+  },
+  "bctci-tree-diameter": {
+   "number": 6412,
+   "title": "Tree Diameter",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Process children before parents and combine their heights; use an explicit traversal to avoid recursion limits.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-unrooted-tree-diameter": {
+   "number": 6413,
+   "title": "Unrooted Tree Diameter",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "A farthest vertex from any start is a diameter endpoint; search again from it.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "bctci-longest-alphabet-chain": {
+   "number": 6414,
+   "title": "Longest Alphabet Chain",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Remove complete alphabet cycles, then find the longest circular run of letters with remaining copies.",
+   "time": "O(n + 26)",
+   "space": "O(26)"
+  },
+  "bctci-self-doubling-sequence": {
+   "number": 6415,
+   "title": "Self-Doubling Sequence",
+   "difficulty": "Medium",
+   "topics": [
+    "Booster Problems"
+   ],
+   "pattern": "Booster Problems",
+   "hint": "Each set bit identifies a round in which the index lies in the incremented half.",
+   "time": "O(log(n + 1))",
    "space": "O(1)"
   }
  }

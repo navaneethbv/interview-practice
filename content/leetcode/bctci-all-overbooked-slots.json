@@ -1,0 +1,30 @@
+{
+  "id": "bctci-all-overbooked-slots",
+  "style": "leetcode",
+  "function": {
+    "python": "overbookedSlots",
+    "java": "overbookedSlots"
+  },
+  "params": [
+    {
+      "name": "slots",
+      "type": "int[]"
+    },
+    {
+      "name": "bookings",
+      "type": "int[][]"
+    },
+    {
+      "name": "cap",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[0,0,0,0,0,0],[[0,3,4],[2,5,1],[4,4,3]],5],"sample":true,"expected":0},
+    {"input":[[1,1,0,0,2,3],[[0,3,4],[2,5,1],[4,4,3]],4],"sample":true,"expected":5},
+    {"input":[[5],[],4],"expected":1},
+    {"input":[[0,0,0],[[0,2,1000000]],1000000],"expected":0},
+    {"input":[[3,3,3],[[1,1,1]],3],"expected":1}
+  ]
+}

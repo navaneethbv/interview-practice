@@ -1,0 +1,31 @@
+{
+  "id": "bctci-time-traveler",
+  "style": "leetcode",
+  "function": {
+    "python": "canReachFinal",
+    "java": "canReachFinal"
+  },
+  "params": [
+    {
+      "name": "points",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "maxAging",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[[2020,2024],0,3],"sample":true,"expected":false},
+    {"input":[[1803,1861,1863,1865,1920,1929,1941,1964,2001,2021],4,45],"sample":true,"expected":true},
+    {"input":[[2020,2024],1,1],"expected":true},
+    {"input":[[1803,1861,1863,1865,1920,1929,1941,1964,2001,2021],4,44],"expected":false},
+    {"input":[[0,1000000000],0,1000000000],"expected":true},
+    {"input":[[1,2,3,4],3,1],"expected":true}
+  ]
+}

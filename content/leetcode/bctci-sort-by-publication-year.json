@@ -1,0 +1,21 @@
+{
+  "id": "bctci-sort-by-publication-year",
+  "style": "leetcode",
+  "function": {
+    "python": "sortByYear",
+    "java": "sortByYear"
+  },
+  "params": [
+    {
+      "name": "books",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "tests": [
+    {"input":[[["Shadow","E. Grey","350","Sci-Fi","2020"],["Whispers","L. Hart","280","Romance","2018"],["Echoes","M. Vance","420","Fantasy","2018"]]],"sample":true,"expected":[["Whispers","L. Hart","280","Romance","2018"],["Echoes","M. Vance","420","Fantasy","2018"],["Shadow","E. Grey","350","Sci-Fi","2020"]]},
+    {"input":[[]],"sample":true,"expected":[]},
+    {"input":[[["Solo","Author","100","Genre","2000"]]],"expected":[["Solo","Author","100","Genre","2000"]]},
+    {"input":[[["A","x","1","g","2025"],["B","x","1","g","1000"],["C","x","1","g","2025"],["D","x","1","g","1500"]]],"expected":[["B","x","1","g","1000"],["D","x","1","g","1500"],["A","x","1","g","2025"],["C","x","1","g","2025"]]}
+  ]
+}

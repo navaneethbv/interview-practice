@@ -1,0 +1,38 @@
+{
+  "id": "bctci-cheater-detection",
+  "style": "leetcode",
+  "function": {
+    "python": "findCheaters",
+    "java": "findCheaters"
+  },
+  "params": [
+    {
+      "name": "answers",
+      "type": "string"
+    },
+    {
+      "name": "m",
+      "type": "int"
+    },
+    {
+      "name": "students",
+      "type": "int[][]"
+    },
+    {
+      "name": "responses",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<List<int>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["abcc",5,[[4,10],[1,6],[3,8],[5,11],[9,7],[6,16]],["abcd","abcd","abdd","abcd","abcd","abdd"]],"sample":true,"expected":[[1,9]]},
+    {"input":["ab",2,[[1,1],[2,2]],["ab","ab"]],"sample":true,"expected":[]},
+    {"input":["ab",2,[[1,1],[2,2]],["bb","bb"]],"expected":[[1,2]]},
+    {"input":["ab",2,[[1,2],[2,3]],["bb","bb"]],"expected":[]},
+    {"input":["abc",3,[[7,1],[8,2],[9,3]],["aaa","aaa","aaa"]],"expected":[[7,8],[8,9]]},
+    {"input":["abc",3,[[7,1],[9,3]],["aaa","aaa"]],"expected":[]},
+    {"input":["abcd",4,[[1,1],[2,2]],["bbcd","cbcd"]],"expected":[]},
+    {"input":["a",1,[],[]],"expected":[]}
+  ]
+}

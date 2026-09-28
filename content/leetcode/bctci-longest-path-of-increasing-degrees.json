@@ -1,0 +1,26 @@
+{
+  "id": "bctci-longest-path-of-increasing-degrees",
+  "style": "leetcode",
+  "function": {
+    "python": "longestIncreasingDegreePath",
+    "java": "longestIncreasingDegreePath"
+  },
+  "params": [
+    {
+      "name": "V",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[8,[[0,1],[1,2],[2,3],[0,2],[0,4],[2,6],[3,7],[2,7],[4,5],[5,6],[6,7]]],"sample":true,"expected":3},
+    {"input":[1,[]],"sample":true,"expected":1},
+    {"input":[2,[[0,1]]],"expected":1},
+    {"input":[4,[[0,1],[1,2],[2,3]]],"expected":2},
+    {"input":[5,[[0,1],[0,2],[0,3],[0,4],[1,2]]],"expected":2}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "design",
+  "id": "bctci-viewer-counter-class",
+  "style": "leetcode",
+  "className": "ViewerCounter",
+  "ctorParams": [
+    {
+      "name": "window",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "join",
+      "java": "join",
+      "params": [
+        {
+          "name": "t",
+          "type": "int"
+        },
+        {
+          "name": "v",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get_viewers",
+      "java": "getViewers",
+      "params": [
+        {
+          "name": "t",
+          "type": "int"
+        },
+        {
+          "name": "v",
+          "type": "string"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[10],"ops":["join","join","join","get_viewers","get_viewers"],"args":[[1,"subscriber"],[2,"follower"],[3,"follower"],[10,"follower"],[13,"follower"]]},"sample":true,"expected":[null,null,null,2,1]},
+    {"input":{"ctor":[1],"ops":["get_viewers"],"args":[[5,"guest"]]},"sample":true,"expected":[0]},
+    {"input":{"ctor":[10],"ops":["join","join","join","join","join","join","get_viewers","get_viewers","get_viewers","get_viewers"],"args":[[1,"subscriber"],[1,"guest"],[2,"follower"],[2,"follower"],[2,"follower"],[3,"follower"],[10,"subscriber"],[10,"guest"],[10,"follower"],[13,"follower"]]},"expected":[null,null,null,null,null,null,1,1,4,1]},
+    {"input":{"ctor":[5],"ops":["join","get_viewers","get_viewers","join","get_viewers"],"args":[[0,"guest"],[5,"guest"],[6,"guest"],[6,"guest"],[6,"guest"]]},"expected":[null,1,0,null,1]}
+  ]
+}

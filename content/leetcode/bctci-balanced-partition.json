@@ -1,0 +1,23 @@
+{
+  "id": "bctci-balanced-partition",
+  "style": "leetcode",
+  "function": {
+    "python": "maxBalancedPieces",
+    "java": "maxBalancedPieces"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["((()))(()())()(()(()))"],"sample":true,"expected":4},
+    {"input":[""],"sample":true,"expected":0},
+    {"input":["()"],"expected":1},
+    {"input":["()()()"],"expected":3},
+    {"input":["(())"],"expected":1},
+    {"input":["(()())(())"],"expected":2}
+  ]
+}

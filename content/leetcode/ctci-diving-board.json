@@ -1,0 +1,33 @@
+{
+  "id": "ctci-diving-board",
+  "style": "leetcode",
+  "function": {
+    "python": "allLengths",
+    "java": "allLengths"
+  },
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    },
+    {
+      "name": "shorter",
+      "type": "int"
+    },
+    {
+      "name": "longer",
+      "type": "int"
+    }
+  ],
+  "returns": "List<int>",
+  "tests": [
+    {"input":[3,1,2],"sample":true,"expected":[3,4,5,6]},
+    {"input":[0,1,2],"sample":true,"expected":[]},
+    {"input":[1,1,2],"expected":[1,2]},
+    {"input":[4,5,5],"expected":[20]},
+    {"input":[5,2,7],"expected":[10,15,20,25,30,35]},
+    {"input":[2,10000,10000],"expected":[20000]},
+    {"input":[6,3,4],"expected":[18,19,20,21,22,23,24]},
+    {"input":[1,9,10],"expected":[9,10]}
+  ]
+}

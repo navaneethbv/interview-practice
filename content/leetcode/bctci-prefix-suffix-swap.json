@@ -1,0 +1,25 @@
+{
+  "id": "bctci-prefix-suffix-swap",
+  "style": "leetcode",
+  "function": {
+    "python": "prefixSuffixSwap",
+    "java": "prefixSuffixSwap"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "char[]"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[["b","a","d","r","e","v","i","e","w"]],"sample":true,"expected":["r","e","v","i","e","w","b","a","d"]},
+    {"input":[["a","b","c"]],"sample":true,"expected":["b","c","a"]},
+    {"input":[[]],"expected":[]},
+    {"input":[["x","y","z","u","v","w"]],"expected":["z","u","v","w","x","y"]},
+    {"input":[["a","a","b","b","c","c"]],"expected":["b","b","c","c","a","a"]}
+  ]
+}

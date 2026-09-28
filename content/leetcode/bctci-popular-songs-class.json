@@ -1,0 +1,42 @@
+{
+  "kind": "design",
+  "id": "bctci-popular-songs-class",
+  "style": "leetcode",
+  "className": "PopularSongs",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "register_plays",
+      "java": "registerPlays",
+      "params": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "plays",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "is_popular",
+      "java": "isPopular",
+      "params": [
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["register_plays","is_popular","register_plays","register_plays","is_popular","is_popular"],"args":[["a",193],["a"],["b",140],["c",132],["a"],["b"]]},"sample":true,"expected":[null,false,null,null,true,false]},
+    {"input":{"ctor":[],"ops":["register_plays","register_plays","is_popular","is_popular"],"args":[["x",1],["y",2],["x"],["y"]]},"sample":true,"expected":[null,null,false,true]},
+    {"input":{"ctor":[],"ops":["register_plays","register_plays","register_plays","register_plays","register_plays","register_plays","is_popular","is_popular","is_popular"],"args":[["Boolean Rhapsody",193],["Coding In The Deep",140],["All the Single Brackets",132],["All About That Base Case",291],["Oops! I Broke Prod Again",274],["Here Comes The Bug",223],["Boolean Rhapsody"],["Here Comes The Bug"],["All About That Base Case"]]},"expected":[null,null,null,null,null,null,false,true,true]},
+    {"input":{"ctor":[],"ops":["register_plays","register_plays","register_plays","is_popular"],"args":[["a",5],["b",5],["c",5],["a"]]},"expected":[null,null,null,false]},
+    {"input":{"ctor":[],"ops":["register_plays","register_plays","is_popular","is_popular"],"args":[["a",1000000000],["b",999999999],["b"],["a"]]},"expected":[null,null,false,true]}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ctci-sparse-search",
+  "style": "leetcode",
+  "function": {
+    "python": "sparseSearch",
+    "java": "sparseSearch"
+  },
+  "params": [
+    {
+      "name": "words",
+      "type": "string[]"
+    },
+    {
+      "name": "target",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["at","","","","ball","","","car","","","dad","",""],"ball"],"sample":true,"expected":4},
+    {"input":[["","",""],"a"],"sample":true,"expected":-1},
+    {"input":[[],"a"],"expected":-1},
+    {"input":[["a"],"a"],"expected":0},
+    {"input":[["a"],"b"],"expected":-1},
+    {"input":[["at","","","","ball","","","car","","","dad","",""],"at"],"expected":0},
+    {"input":[["at","","","","ball","","","car","","","dad","",""],"dad"],"expected":10},
+    {"input":[["at","","","","ball","","","car","","","dad","",""],"bat"],"expected":-1},
+    {"input":[["","","","","","zebra"],"zebra"],"expected":5},
+    {"input":[["apple","","","","",""],"apple"],"expected":0},
+    {"input":[["b","","d","","f","","h"],"a"],"expected":-1},
+    {"input":[["b","","d","","f","","h"],"z"],"expected":-1}
+  ]
+}

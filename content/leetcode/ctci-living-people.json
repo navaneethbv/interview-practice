@@ -1,0 +1,30 @@
+{
+  "id": "ctci-living-people",
+  "style": "leetcode",
+  "function": {
+    "python": "maxAliveYear",
+    "java": "maxAliveYear"
+  },
+  "params": [
+    {
+      "name": "birth",
+      "type": "int[]"
+    },
+    {
+      "name": "death",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1900,1950,1960],[1970,1990,1965]],"sample":true,"expected":1960},
+    {"input":[[1990],[1990]],"sample":true,"expected":1990},
+    {"input":[[1900],[2000]],"expected":1900},
+    {"input":[[2000,1900],[2000,1900]],"expected":1900},
+    {"input":[[1901,1902],[1901,1902]],"expected":1901},
+    {"input":[[1920,1930,1940],[1935,1945,1950]],"expected":1930},
+    {"input":[[1950,1950,1951],[1950,1960,1951]],"expected":1950},
+    {"input":[[1900,1910,1920,1930],[1909,1919,1929,1939]],"expected":1900},
+    {"input":[[1980,1970],[1990,1979]],"expected":1970}
+  ]
+}

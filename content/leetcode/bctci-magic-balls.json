@@ -1,0 +1,36 @@
+{
+  "id": "bctci-magic-balls",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "R",
+      "type": "int"
+    },
+    {
+      "name": "G",
+      "type": "int"
+    },
+    {
+      "name": "B",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[2,1,0],"expected":"BG","sample":true},
+    {"input":[0,0,9],"expected":"B","sample":true},
+    {"input":[1,0,0],"expected":"R"},
+    {"input":[0,1,0],"expected":"G"},
+    {"input":[1,1,0],"expected":"B"},
+    {"input":[1,0,1],"expected":"G"},
+    {"input":[0,1,1],"expected":"R"},
+    {"input":[2,2,0],"expected":"BGR"},
+    {"input":[1,1,1],"expected":"BGR"},
+    {"input":[1000000000,1000000000,1000000000],"expected":"BGR"},
+    {"input":[1,2,0],"expected":"BR"}
+  ]
+}

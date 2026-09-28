@@ -161,6 +161,19 @@ function applyRandomizedSetUpdate(set: Set<number>, op: string, value: number, r
   return true;
 }
 
+/** A path of adjacent, non-repeating nodes from `from` to `to` in an adjacency list. */
+function isGraphPath(graph: number[][], path: unknown, from: number, to: number): boolean {
+  if (!Array.isArray(path) || path.length === 0 || path[0] !== from || path.at(-1) !== to) return false;
+  if (new Set(path).size !== path.length) return false;
+  return path.every((node, i) => i === 0 || (graph[path[i - 1] as number] ?? []).includes(node as number));
+}
+
+function isSubsequence(small: string, big: string): boolean {
+  let index = 0;
+  for (const character of big) if (index < small.length && small[index] === character) index++;
+  return index === small.length;
+}
+
 const VALIDATORS: Record<ValidatorName, Validator> = {
   fairCandySwap: (input,output) => {
     const [alice,bob]=input as number[][];
@@ -172,6 +185,99 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     let odd=false;
     for(const value of output){if(value%2!==0)odd=true;else if(odd)return false;}
     return true;
+  },
+  peaksValleys: (input,output) => {
+    if(!Array.isArray(output)||!deepEqual(sortTop(output),sortTop(input[0])))return false;
+    const values=output as number[];
+    return values.every((value,i)=>i===0||i===values.length-1||(value>=values[i-1]&&value>=values[i+1])||(value<=values[i-1]&&value<=values[i+1]));
+  },
+  pivotPartition: (input,output) => {
+    if(!Array.isArray(output)||!deepEqual(sortTop(output),sortTop(input[0])))return false;
+    const pivot=input[1] as number;
+    const bands=(output as number[]).map((value)=>Math.sign(value-pivot));
+    return bands.every((band,i)=>i===0||band>=bands[i-1]);
+  },
+  graphPath: (input,output,expected) => {
+    const [graph,from,to]=input as [number[][],number,number];
+    if(Array.isArray(expected)&&expected.length===0)return Array.isArray(output)&&output.length===0;
+    return isGraphPath(graph,output,from,to);
+  },
+  spanningTree: (input,output) => {
+    const graph=input[0] as number[][];
+    if(!Array.isArray(output)||output.length!==Math.max(graph.length-1,0))return false;
+    const parent=graph.map((_,i)=>i);
+    const find = (node: number): number => {
+      while (parent[node] !== node) {
+        parent[node] = parent[parent[node]];
+        node = parent[node];
+      }
+      return node;
+    };
+    return output.every((edge)=>{
+      if(!Array.isArray(edge)||edge.length!==2)return false;
+      const [u,v]=edge as number[];
+      if(!(graph[u]??[]).includes(v))return false;
+      const [ru,rv]=[find(u),find(v)];
+      if(ru===rv)return false;
+      parent[ru]=rv;
+      return true;
+    });
+  },
+  shortestPaths: (input,output,expected) => {
+    const [graph,start,queries]=input as [number[][],number,number[]];
+    if(!Array.isArray(output)||!Array.isArray(expected)||output.length!==queries.length)return false;
+    return queries.every((target,i)=>{
+      const want=expected[i] as unknown[];
+      const got=output[i];
+      if(want.length===0)return Array.isArray(got)&&got.length===0;
+      return Array.isArray(got)&&got.length===want.length&&isGraphPath(graph,got,start,target);
+    });
+  },
+  artistPlaylist: (input,output,expected) => {
+    const songs=input[0] as string[][];
+    if(Array.isArray(expected)&&expected.length===0)return Array.isArray(output)&&output.length===0;
+    if(!Array.isArray(output)||!deepEqual(sortTop(output),sortTop(songs.map(([title])=>title))))return false;
+    const artist=new Map(songs.map(([title,name])=>[title,name]));
+    return output.every((title,i)=>i===0||artist.get(title as string)!==artist.get(output[i-1] as string));
+  },
+  bestSubset: (input,output,expected) => {
+    const [budget,prices,ratings]=input as [number,number[],number[]];
+    if(!Array.isArray(output)||!Array.isArray(expected)||new Set(output).size!==output.length)return false;
+    const picks=output as number[];
+    if(!picks.every((i)=>Number.isInteger(i)&&i>=0&&i<prices.length))return false;
+    const cost=picks.reduce((sum,i)=>sum+prices[i],0);
+    const rating=(items:number[])=>items.reduce((sum,i)=>sum+ratings[i],0);
+    return cost<=budget&&Math.abs(rating(picks)-rating(expected as number[]))<1e-6;
+  },
+  cluePath: (input,output,expected) => {
+    const room=input[0] as number[][];
+    if(!Array.isArray(output)||!Array.isArray(expected))return false;
+    if(expected.length===0)return output.length===0;
+    if(output.length!==expected.length)return false;
+    const cells=output as number[][];
+    const seen=new Set<string>();
+    const clues=room.flat().filter((cell)=>cell===2).length;
+    let collected=0;
+    for(let i=0;i<cells.length;i++){
+      const [r,c]=cells[i]??[];
+      if(room[r]?.[c]===undefined||room[r][c]===1||seen.has(`${r},${c}`))return false;
+      if(i===0?r!==0||c!==0:Math.abs(r-cells[i-1][0])+Math.abs(c-cells[i-1][1])!==1)return false;
+      seen.add(`${r},${c}`);
+      if(room[r][c]===2)collected++;
+    }
+    return collected===clues;
+  },
+  commonSubsequence: (input,output,expected) => {
+    const [first,second]=input as [string,string];
+    return typeof output==="string"&&typeof expected==="string"&&output.length===expected.length&&isSubsequence(output,first)&&isSubsequence(output,second);
+  },
+  dagPath: (input,output,expected) => {
+    const [,edges,start,goal]=input as [number,number[][],number,number];
+    if(!Array.isArray(output)||!Array.isArray(expected))return false;
+    if(expected.length===0)return output.length===0;
+    const weight=new Map(edges.map(([u,v,w])=>[`${u},${v}`,w]));
+    const cost=(path:unknown[])=>path.slice(1).reduce<number>((sum,node,i)=>sum+(weight.get(`${path[i]},${node}`)??Number.NaN),0);
+    return output[0]===start&&output.at(-1)===goal&&cost(output)===cost(expected);
   },
   logStorage: (input,output,expected) => {
     const {ops}=input as unknown as DesignTestCase["input"];

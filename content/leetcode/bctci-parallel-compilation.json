@@ -1,0 +1,26 @@
+{
+  "id": "bctci-parallel-compilation",
+  "style": "leetcode",
+  "function": {
+    "python": "compileTime",
+    "java": "compileTime"
+  },
+  "params": [
+    {
+      "name": "seconds",
+      "type": "int[]"
+    },
+    {
+      "name": "imports",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[10,20,30],[[],[],[0,1]]],"sample":true,"expected":50},
+    {"input":[[10,20,30],[[],[],[]]],"sample":true,"expected":30},
+    {"input":[[5],[[]]],"expected":5},
+    {"input":[[1,2,3,4],[[],[0],[1],[2]]],"expected":10},
+    {"input":[[4,1,1,9],[[1,2],[],[1],[]]],"expected":9}
+  ]
+}

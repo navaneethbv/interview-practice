@@ -1,0 +1,24 @@
+{
+  "id": "bctci-nested-array-sum",
+  "style": "leetcode",
+  "function": {
+    "python": "nestedSum",
+    "java": "nestedSum"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "List<NestedInteger>"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[1,[2,3],[4,[5]],6]],"sample":true,"expected":21},
+    {"input":[[[],[1,2],[],[3]]],"sample":true,"expected":6},
+    {"input":[[[[[1]],2]]],"expected":3},
+    {"input":[[]],"expected":0},
+    {"input":[[-1,[-2,3],[4,[-5]],6]],"expected":5},
+    {"input":[[1000000000,[1000000000,[1000000000]]]],"expected":3000000000},
+    {"input":[[[[[[[]]]]]]],"expected":0}
+  ]
+}

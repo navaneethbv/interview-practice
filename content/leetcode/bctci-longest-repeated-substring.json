@@ -1,0 +1,25 @@
+{
+  "id": "bctci-longest-repeated-substring",
+  "style": "leetcode",
+  "function": {
+    "python": "longestRepeated",
+    "java": "longestRepeated"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["murmur"],"sample":true,"expected":"mur"},
+    {"input":["aaaa"],"sample":true,"expected":"aaa"},
+    {"input":["murmurmur"],"expected":"murmur"},
+    {"input":[""],"expected":""},
+    {"input":["abc"],"expected":""},
+    {"input":["abcabxab"],"expected":"ab"},
+    {"input":["banana"],"expected":"ana"},
+    {"input":["xyzzyxzy"],"expected":"zy"}
+  ]
+}

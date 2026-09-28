@@ -1,0 +1,26 @@
+{
+  "id": "bctci-robot-instructions",
+  "style": "leetcode",
+  "function": {
+    "python": "robotMoves",
+    "java": "robotMoves"
+  },
+  "params": [
+    {
+      "name": "seq",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["2LR"],"sample":true,"expected":"LRR"},
+    {"input":["22LR"],"sample":true,"expected":"LRRLR"},
+    {"input":["LL"],"expected":"LL"},
+    {"input":["2L"],"expected":"L"},
+    {"input":["LL2R2L"],"expected":"LLRLL"},
+    {"input":["R"],"expected":"R"},
+    {"input":["222LR"],"expected":"LRRLRLRR"},
+    {"input":["2L2R2L"],"expected":"LRLLRLL"},
+    {"input":["L2R"],"expected":"LR"}
+  ]
+}

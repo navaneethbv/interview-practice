@@ -1,0 +1,28 @@
+{
+  "id": "bctci-sum-of-first-k-prime-powers",
+  "style": "leetcode",
+  "function": {
+    "python": "sumPrimePowers",
+    "java": "sumPrimePowers"
+  },
+  "params": [
+    {
+      "name": "primes",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[2,3],7],"sample":true,"expected":69},
+    {"input":[[5],3],"sample":true,"expected":155},
+    {"input":[[2],1],"expected":2},
+    {"input":[[2],0],"expected":0},
+    {"input":[[2],59],"expected":536396502},
+    {"input":[[7,3,2],20],"expected":5585},
+    {"input":[[1009,2],30],"expected":537890000}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "bctci-segmented-video-votes",
+  "style": "leetcode",
+  "function": {
+    "python": "netVotes",
+    "java": "netVotes"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    },
+    {
+      "name": "votes",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[6,[[3,4,1],[0,0,1],[1,3,1],[0,5,-1]]],"sample":true,"expected":[0,0,0,1,0,-1]},
+    {"input":[2,[]],"sample":true,"expected":[0,0]},
+    {"input":[1,[[0,0,-1],[0,0,-1]]],"expected":[-2]},
+    {"input":[5,[[0,4,1],[2,2,-1],[4,4,1]]],"expected":[1,1,0,1,2]}
+  ]
+}

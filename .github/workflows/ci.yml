@@ -48,6 +48,9 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+      - name: Verify independent BCTCI reference oracles
+        run: python3 -B scripts/judge/test_bctci_online.py
+
       - name: Verify problem references in Python and Java
         run: npm run tests:build -- --java
 

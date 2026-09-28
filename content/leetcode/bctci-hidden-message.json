@@ -1,0 +1,28 @@
+{
+  "id": "bctci-hidden-message",
+  "style": "leetcode",
+  "function": {
+    "python": "hiddenMessage",
+    "java": "hiddenMessage"
+  },
+  "params": [
+    {
+      "name": "root",
+      "type": "TreeNode"
+    },
+    {
+      "name": "texts",
+      "type": "string[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[[0,1,2,3,4,5,null,6,7,null,null,null,8],["bn","i_","a!","ae","it","br","bi","bc","ay"]],"sample":true,"expected":"nice_try!"},
+    {"input":[[0],["bx"]],"sample":true,"expected":"x"},
+    {"input":[[],[]],"expected":""},
+    {"input":[[0,1,2],["ib","ba","bc"]],"expected":"abc"},
+    {"input":[[0,1,2],["aZ","bX","bY"]],"expected":"XYZ"},
+    {"input":[[2,0,1],["b1","b3","b2"]],"expected":"213"},
+    {"input":[[0,null,1,null,2],["ah","ai","a!"]],"expected":"!ih"}
+  ]
+}

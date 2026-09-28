@@ -1,0 +1,27 @@
+{
+  "id": "bctci-hiring-and-training",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[6],"expected":5,"sample":true},
+    {"input":[7],"expected":7,"sample":true},
+    {"input":[2],"expected":2},
+    {"input":[3],"expected":3},
+    {"input":[4],"expected":4},
+    {"input":[8],"expected":6},
+    {"input":[9],"expected":6},
+    {"input":[12],"expected":7},
+    {"input":[97],"expected":97},
+    {"input":[10000],"expected":28}
+  ]
+}

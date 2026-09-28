@@ -1,0 +1,57 @@
+{
+  "kind": "sql",
+  "id": "ctci-close-all-requests",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Apartments",
+      "columns": [
+        {
+          "name": "AptID",
+          "type": "INTEGER"
+        },
+        {
+          "name": "UnitNumber",
+          "type": "TEXT"
+        },
+        {
+          "name": "BuildingID",
+          "type": "INTEGER"
+        }
+      ]
+    },
+    {
+      "name": "Requests",
+      "columns": [
+        {
+          "name": "RequestID",
+          "type": "INTEGER"
+        },
+        {
+          "name": "Status",
+          "type": "TEXT"
+        },
+        {
+          "name": "AptID",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "RequestID",
+    "Status",
+    "AptID"
+  ],
+  "compare": "unordered",
+  "resultQuery": "SELECT RequestID, Status, AptID FROM Requests",
+  "tests": [
+    {"input":{"tables":{"Apartments":[[1,"1A",11],[2,"2A",12]],"Requests":[[10,"Open",1],[11,"Open",2],[12,"Closed",1]]}},"sample":true,"expected":[[10,"Closed",1],[11,"Open",2],[12,"Closed",1]]},
+    {"input":{"tables":{"Apartments":[[2,"2A",12]],"Requests":[[11,"Open",2]]}},"sample":true,"expected":[[11,"Open",2]]},
+    {"input":{"tables":{"Apartments":[],"Requests":[]}},"expected":[]},
+    {"input":{"tables":{"Apartments":[[1,"1",11],[2,"2",11]],"Requests":[[1,"Open",1],[2,"Open",2],[3,"Open",2]]}},"expected":[[1,"Closed",1],[2,"Closed",2],[3,"Closed",2]]},
+    {"input":{"tables":{"Apartments":[[1,"1",1],[2,"2",111]],"Requests":[[1,"Open",1],[2,"Open",2]]}},"expected":[[1,"Open",1],[2,"Open",2]]},
+    {"input":{"tables":{"Apartments":[[11,"11",5],[5,"5",11]],"Requests":[[1,"Open",11],[2,"Open",5]]}},"expected":[[1,"Open",11],[2,"Closed",5]]},
+    {"input":{"tables":{"Apartments":[[1,"1",11]],"Requests":[]}},"expected":[]}
+  ]
+}

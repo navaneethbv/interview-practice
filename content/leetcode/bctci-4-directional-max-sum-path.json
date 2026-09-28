@@ -1,0 +1,23 @@
+{
+  "id": "bctci-4-directional-max-sum-path",
+  "style": "leetcode",
+  "function": {
+    "python": "maxSimplePathSum",
+    "java": "maxSimplePathSum"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,-4,3],[-2,7,-6],[5,-4,9]]],"sample":true,"expected":12},
+    {"input":[[[-5]]],"sample":true,"expected":-5},
+    {"input":[[[1,2],[3,4]]],"expected":8},
+    {"input":[[[1,-1,1],[1,-1,1],[1,1,1]]],"expected":5},
+    {"input":[[[-1,-1,-1,-1]]],"expected":-4},
+    {"input":[[[5,5,5],[5,-100,5],[5,5,5]]],"expected":25}
+  ]
+}

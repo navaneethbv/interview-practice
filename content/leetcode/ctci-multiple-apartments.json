@@ -1,0 +1,48 @@
+{
+  "kind": "sql",
+  "id": "ctci-multiple-apartments",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Tenants",
+      "columns": [
+        {
+          "name": "TenantID",
+          "type": "INTEGER"
+        },
+        {
+          "name": "TenantName",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "AptTenants",
+      "columns": [
+        {
+          "name": "TenantID",
+          "type": "INTEGER"
+        },
+        {
+          "name": "AptID",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "TenantID",
+    "TenantName"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Tenants":[[1,"Ana"],[2,"Bo"],[3,"Cy"]],"AptTenants":[[1,10],[1,11],[2,12],[3,13],[3,14],[3,15]]}},"sample":true,"expected":[[1,"Ana"],[3,"Cy"]]},
+    {"input":{"tables":{"Tenants":[[1,"Ana"]],"AptTenants":[[1,10]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Tenants":[],"AptTenants":[]}},"expected":[]},
+    {"input":{"tables":{"Tenants":[[1,"Ana"],[2,"Ana"]],"AptTenants":[[1,1],[1,2],[2,3],[2,4]]}},"expected":[[1,"Ana"],[2,"Ana"]]},
+    {"input":{"tables":{"Tenants":[[1,"Ana"],[2,"Bo"]],"AptTenants":[[1,1],[2,1]]}},"expected":[]},
+    {"input":{"tables":{"Tenants":[[5,"Eve"],[6,"Fay"]],"AptTenants":[]}},"expected":[]},
+    {"input":{"tables":{"Tenants":[[1,"A"],[2,"B"],[3,"C"],[4,"D"]],"AptTenants":[[4,1],[4,2],[3,3],[2,4],[2,5],[1,6]]}},"expected":[[2,"B"],[4,"D"]]},
+    {"input":{"tables":{"Tenants":[[9,"Zed"]],"AptTenants":[[9,1],[9,2]]}},"expected":[[9,"Zed"]]}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "bctci-longest-balanced-subsequence",
+  "style": "leetcode",
+  "function": {
+    "python": "longestBalanced",
+    "java": "longestBalanced"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["))(())(()"],"sample":true,"expected":"(())()"},
+    {"input":["(()()"],"sample":true,"expected":"()()"},
+    {"input":["())(()"],"expected":"()()"},
+    {"input":["("],"expected":""},
+    {"input":[""],"expected":""},
+    {"input":[")("],"expected":""},
+    {"input":["(((())"],"expected":"(())"},
+    {"input":["()())(()"],"expected":"()()()"}
+  ]
+}

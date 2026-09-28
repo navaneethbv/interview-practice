@@ -1,0 +1,23 @@
+{
+  "id": "bctci-to-be-or-not-to-be",
+  "style": "leetcode",
+  "function": {
+    "python": "shakespearify",
+    "java": "shakespearify"
+  },
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["I love dogs"],"sample":true,"expected":["","I","love","dogs","I love","I dogs","love dogs","I love dogs"]},
+    {"input":[""],"sample":true,"expected":[""]},
+    {"input":["hello"],"expected":["","hello"]},
+    {"input":["a a"],"expected":["","a","a","a a"]},
+    {"input":["to be or not"],"expected":["","not","or","or not","be","be not","be or","be or not","to","to not","to or","to or not","to be","to be not","to be or","to be or not"]}
+  ]
+}

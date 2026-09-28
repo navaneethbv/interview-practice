@@ -1,0 +1,27 @@
+{
+  "id": "bctci-count-good-subarrays-with-at-least-k-sales",
+  "style": "leetcode",
+  "function": {
+    "python": "countGoodWithAtLeastK",
+    "java": "countGoodWithAtLeastK"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[15,20,5,30,25],50],"sample":true,"expected":1},
+    {"input":[[10,20,30],40],"sample":true,"expected":2},
+    {"input":[[0,5,8],10],"expected":0},
+    {"input":[[],1],"expected":0},
+    {"input":[[10,10,10,10],20],"expected":6},
+    {"input":[[50,1,50,50],50],"expected":4}
+  ]
+}
