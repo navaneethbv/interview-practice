@@ -21,20 +21,37 @@ class Solution:
 
     def _best_after_change(self, nums, left_run, right_run, index):
         length = len(nums)
-        best = 1
-        if index:
-            best = max(best, min(length, left_run[index - 1] + 1))
-        if index + 1 < length:
-            best = max(best, min(length, right_run[index + 1] + 1))
-        if 0 < index < length - 1:
-            gap = nums[index + 1] - nums[index - 1]
-            if gap % 2 == 0:
-                difference = gap // 2
-                left = 1
-                right = 1
-                if index >= 2 and nums[index - 1] - nums[index - 2] == difference:
-                    left = left_run[index - 1]
-                if index + 2 < length and nums[index + 2] - nums[index + 1] == difference:
-                    right = right_run[index + 1]
-                best = max(best, left + right + 1)
-        return best
+        best = max(self._extend_left(length, left_run, index),
+                   self._extend_right(length, right_run, index))
+        return max(best, self._join_runs(nums, left_run, right_run, index))
+
+    def _extend_left(self, length, left_run, index):
+        if not index:
+            return 1
+        return min(length, left_run[index - 1] + 1)
+
+    def _extend_right(self, length, right_run, index):
+        if index + 1 >= length:
+            return 1
+        return min(length, right_run[index + 1] + 1)
+
+    def _join_runs(self, nums, left_run, right_run, index):
+        if not (0 < index < len(nums) - 1):
+            return 1
+        gap = nums[index + 1] - nums[index - 1]
+        if gap % 2:
+            return 1
+        difference = gap // 2
+        left = self._matching_left(nums, left_run, index, difference)
+        right = self._matching_right(nums, right_run, index, difference)
+        return left + right + 1
+
+    def _matching_left(self, nums, left_run, index, difference):
+        if index >= 2 and nums[index - 1] - nums[index - 2] == difference:
+            return left_run[index - 1]
+        return 1
+
+    def _matching_right(self, nums, right_run, index, difference):
+        if index + 2 < len(nums) and nums[index + 2] - nums[index + 1] == difference:
+            return right_run[index + 1]
+        return 1

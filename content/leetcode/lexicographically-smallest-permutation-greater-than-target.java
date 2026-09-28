@@ -20,9 +20,7 @@ class Solution {
                 if (c[x] > 0) {
                 c[x]--;
                 prefix.append((char)(x+'a'));
-                for (int j = 0; j < 26; j++) {
-                    prefix.append(String.valueOf((char)(j+'a')).repeat(c[j]));
-                }
+                appendSmallestSuffix(prefix, c);
                 return prefix.toString();
                 }
             }
@@ -34,5 +32,11 @@ class Solution {
             prefix.setLength(i);
         }
         return "";
+    }
+
+    private void appendSmallestSuffix(StringBuilder result, int[] counts) {
+        for (int letter = 0; letter < counts.length; letter++) {
+            result.append(String.valueOf((char) (letter + 'a')).repeat(counts[letter]));
+        }
     }
 }
