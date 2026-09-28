@@ -69,7 +69,7 @@ export interface CodeEditorProps {
   onSubmit: () => void;
 }
 
-export function CodeEditor({ value, lang, fontSize, onChange, onRun, onSubmit }: CodeEditorProps) {
+export function CodeEditor({ value, lang, fontSize, onChange, onRun, onSubmit }: Readonly<CodeEditorProps>) {
   const { resolvedTheme } = useTheme();
   // Keep the latest callbacks for the keybindings registered once on mount.
   const actions = useRef({ onRun, onSubmit });

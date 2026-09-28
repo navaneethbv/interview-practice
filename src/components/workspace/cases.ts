@@ -3,6 +3,8 @@ import type { AnyTestCase, DesignSpec, DesignTestCase, ProblemSpec, SqlSpec, Sql
 /** A test case as shown in the Testcase panel: one JSON text field per parameter. */
 export interface EditableCase {
   fields: string[];
+  /** Stable UI identity for cases created in the testcase editor. */
+  id?: string;
   /** Index of the spec test this case was copied from, if any. */
   from?: number;
 }
@@ -30,7 +32,7 @@ export function inputFields(spec: ProblemSpec, test: AnyTestCase): string[] {
 }
 
 export function toEditable(spec: ProblemSpec, test: AnyTestCase, from?: number): EditableCase {
-  return { fields: inputFields(spec, test), from };
+  return { fields: inputFields(spec, test), id: from === undefined ? "custom" : `sample-${from}`, from };
 }
 
 /** Parses the text fields back into a test input, or returns a readable error. */

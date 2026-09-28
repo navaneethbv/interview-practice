@@ -23,7 +23,7 @@ export function TestcaseEditor({
   onChange,
   onAdd,
   onRemove,
-}: {
+}: Readonly<{
   names: string[];
   cases: EditableCase[];
   active: number;
@@ -31,13 +31,13 @@ export function TestcaseEditor({
   onChange: (i: number, field: number, value: string) => void;
   onAdd: () => void;
   onRemove: (i: number) => void;
-}) {
+}>) {
   const current = cases[active];
   return (
     <div className="p-4">
       <div className="mb-4 flex flex-wrap items-center gap-2" role="tablist" aria-label="Test cases">
-        {cases.map((_, i) => (
-          <div key={i} className="group relative">
+        {cases.map((testCase, i) => (
+          <div key={testCase.id ?? testCase.fields.join("\u001f")} className="group relative">
             <button
               role="tab"
               aria-selected={i === active}
@@ -104,7 +104,7 @@ const VERDICT_COLOR: Record<string, string> = {
   "Internal Error": "text-medium",
 };
 
-function Field({ label, value, tone }: { label: string; value: string; tone?: "bad" }) {
+function Field({ label, value, tone }: Readonly<{ label: string; value: string; tone?: "bad" }>) {
   return (
     <div>
       <div className="mb-1.5 text-xs font-medium text-fg-3">{label}</div>
@@ -124,18 +124,18 @@ export function ResultPanel({
   active,
   onActive,
   running,
-}: {
+}: Readonly<{
   view: ResultView | null;
   active: number;
   onActive: (i: number) => void;
   running: string | null;
-}) {
+}>) {
   if (running) {
     return (
-      <div className="flex h-full min-h-32 items-center justify-center gap-3 text-sm text-fg-2" role="status">
+      <output className="flex h-full min-h-32 items-center justify-center gap-3 text-sm text-fg-2" aria-live="polite">
         <span className="size-4 animate-spin rounded-full border-2 border-fg-3 border-t-transparent" aria-hidden />
         {running}
-      </div>
+      </output>
     );
   }
   if (!view) {
@@ -150,12 +150,12 @@ export function ResultPanel({
 
   if (outcome.verdict === "Compile Error" || (outcome.verdict === "Internal Error" && !outcome.cases.length)) {
     return (
-      <div className="p-4" role="status">
+      <output className="block p-4" aria-live="polite">
         <h3 className={`mb-3 text-lg font-semibold ${color}`}>{outcome.verdict}</h3>
         <pre className="overflow-x-auto rounded-lg bg-bad-soft px-3 py-2.5 font-mono text-[13px] whitespace-pre-wrap text-bad">
           {outcome.compileError ?? outcome.message}
         </pre>
-      </div>
+      </output>
     );
   }
 
@@ -163,9 +163,14 @@ export function ResultPanel({
   const shown = mode === "submit" ? outcome.cases.filter((c) => !c.passed).slice(0, 1) : outcome.cases;
   const current = shown.find((c) => c.index === active) ?? shown[0];
   const failed = current && !current.passed;
+  let currentOutput: React.ReactNode;
+  if (!current) currentOutput = null;
+  else if (current.error) currentOutput = <Field label="Error" value={current.error} tone="bad" />;
+  else if (current.notRun) currentOutput = <Field label="Output" value="(not run)" />;
+  else currentOutput = <Field label="Output" value={formatValue(current.output)} tone={failed ? "bad" : undefined} />;
 
   return (
-    <div className="p-4" role="status">
+    <output className="block p-4" aria-live="polite">
       <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h3 className={`text-lg font-semibold ${color}`}>{outcome.verdict}</h3>
         {mode === "submit" && (
@@ -214,13 +219,7 @@ export function ResultPanel({
               <Field key={f.name} label={`${f.name} =`} value={f.value} />
             ))}
           </div>
-          {current.error ? (
-            <Field label="Error" value={current.error} tone="bad" />
-          ) : current.notRun ? (
-            <Field label="Output" value="(not run)" />
-          ) : (
-            <Field label="Output" value={formatValue(current.output)} tone={failed ? "bad" : undefined} />
-          )}
+          {currentOutput}
           {current.stdout ? <Field label="Stdout" value={current.stdout} /> : null}
           <Field label="Expected" value={formatValue(view.tests[current.index]?.expected)} />
         </div>
@@ -230,6 +229,6 @@ export function ResultPanel({
           <Field label="Other output" value={outcome.stdout} />
         </div>
       )}
-    </div>
+    </output>
   );
 }

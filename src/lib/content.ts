@@ -224,7 +224,7 @@ function getHighlighter() {
 
 export async function highlight(code: string, lang: "java" | "python"): Promise<string> {
   const h = await getHighlighter();
-  return h.codeToHtml(code.replace(/\n+$/, ""), {
+  return h.codeToHtml(code.trimEnd(), {
     lang,
     themes: { light: "github-light", dark: "github-dark-dimmed" },
     defaultColor: "light",

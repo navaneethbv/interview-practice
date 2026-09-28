@@ -27,13 +27,13 @@ function loadNotes(id: string): Record<string, string> {
 }
 
 /** Notes live in localStorage, so the editor mounts only after hydration. */
-export function DesignPractice(props: { id: string; reference: React.ReactNode }) {
+export function DesignPractice(props: Readonly<{ id: string; reference: React.ReactNode }>) {
   const mounted = useMounted();
   if (!mounted) return <div className="min-h-96 rounded-2xl border border-line bg-layer-1" aria-busy />;
   return <DesignPracticeInner {...props} />;
 }
 
-function DesignPracticeInner({ id, reference }: { id: string; reference: React.ReactNode }) {
+function DesignPracticeInner({ id, reference }: Readonly<{ id: string; reference: React.ReactNode }>) {
   const progress = useProgress();
   const [notes, setNotes] = useState<Record<string, string>>(() => loadNotes(id));
   const [revealed, setRevealed] = useState(false);
@@ -112,13 +112,11 @@ function DesignPracticeInner({ id, reference }: { id: string; reference: React.R
             )}
           </div>
         </div>
-        {!reference ? (
-          <p className="mt-3 text-sm text-fg-3">This document has no separate reference section.</p>
-        ) : revealed ? (
-          <div className="mt-5">{reference}</div>
-        ) : (
-          <p className="mt-3 text-sm text-fg-3">Draft your design first, then reveal the reference to compare.</p>
-        )}
+        {(() => {
+          if (!reference) return <p className="mt-3 text-sm text-fg-3">This document has no separate reference section.</p>;
+          if (revealed) return <div className="mt-5">{reference}</div>;
+          return <p className="mt-3 text-sm text-fg-3">Draft your design first, then reveal the reference to compare.</p>;
+        })()}
       </section>
     </div>
   );

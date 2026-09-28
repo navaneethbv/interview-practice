@@ -3,7 +3,7 @@
 import { Check } from "lucide-react";
 import { setRead, useProgress } from "@/lib/progress";
 
-export function MarkRead({ id }: { id: string }) {
+export function MarkRead({ id }: Readonly<{ id: string }>) {
   const progress = useProgress();
   const done = !!progress.read[id];
   return (

@@ -17,12 +17,14 @@ export function generateStaticParams() {
   return listProblems().map((p) => ({ id: p.id }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+type PageProps = Readonly<{ params: Promise<{ id: string }> }>;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const lesson = getLesson((await params).id);
   return { title: lesson?.title ?? "Problem" };
 }
 
-export default async function ProblemPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProblemPage({ params }: PageProps) {
   const { id } = await params;
   const lesson = getLesson(id);
   if (!lesson || lesson.type !== "problem") notFound();

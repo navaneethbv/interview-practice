@@ -148,18 +148,16 @@ function Handle({
   label,
   onPointerDown,
   onKeyDown,
-}: {
+}: Readonly<{
   axis: "x" | "y";
   label: string;
   onPointerDown: (e: React.PointerEvent) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
-}) {
+}>) {
   return (
-    <div
-      role="separator"
-      aria-orientation={axis === "x" ? "vertical" : "horizontal"}
+    <button
+      type="button"
       aria-label={label}
-      tabIndex={0}
       onPointerDown={onPointerDown}
       onKeyDown={onKeyDown}
       className={`group flex shrink-0 touch-none items-center justify-center outline-none ${
@@ -171,7 +169,7 @@ function Handle({
           axis === "x" ? "h-8 w-0.5" : "h-0.5 w-8"
         }`}
       />
-    </div>
+    </button>
   );
 }
 
@@ -180,12 +178,12 @@ function PanelTab({
   onClick,
   icon,
   children,
-}: {
+}: Readonly<{
   active: boolean;
   onClick: () => void;
   icon: React.ReactNode;
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <button
       role="tab"
@@ -205,17 +203,23 @@ function errorOutcome(message: string): RunOutcome {
   return { verdict: "Internal Error", message, cases: [], passed: 0, total: 0 };
 }
 
+function updateEditableCase(cases: EditableCase[], caseIndex: number, fieldIndex: number, value: string) {
+  return cases.map((testCase, index) =>
+    index === caseIndex ? { ...testCase, fields: testCase.fields.map((field, fieldIndexInCase) => (fieldIndexInCase === fieldIndex ? value : field)) } : testCase,
+  );
+}
+
 /**
  * The workspace restores code, language and history from localStorage, which only exists in
  * the browser, so it renders a static shell on the server and mounts after hydration.
  */
-export function Workspace(props: Props) {
+export function Workspace(props: Readonly<Props>) {
   const hydrated = useSyncExternalStore(subscribeNoop, () => true, () => false);
   if (!hydrated) {
     return (
-      <div className="flex h-dvh items-center justify-center bg-bg text-sm text-fg-3" role="status">
+      <output className="flex h-dvh items-center justify-center bg-bg text-sm text-fg-3" aria-live="polite">
         Loading workspace…
-      </div>
+      </output>
     );
   }
   return <WorkspaceInner {...props} />;
@@ -276,6 +280,18 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
   const names = useMemo(() => (spec ? fieldNames(spec) : []), [spec]);
   const note = spec && spec.kind !== "design" ? compareNote(spec.compare) : undefined;
+
+  const onCaseChange = useCallback((caseIndex: number, fieldIndex: number, value: string) => {
+    setCases((current) => updateEditableCase(current, caseIndex, fieldIndex, value));
+  }, []);
+  const onCaseAdd = useCallback(() => {
+    setCases((current) => [...current, { id: crypto.randomUUID(), fields: [...(current[activeCase]?.fields ?? names.map(() => ""))] }]);
+    setActiveCase(cases.length);
+  }, [activeCase, cases.length, names]);
+  const onCaseRemove = useCallback((caseIndex: number) => {
+    setCases((current) => current.filter((_, index) => index !== caseIndex));
+    setActiveCase((current) => Math.max(0, current >= caseIndex ? current - 1 : current));
+  }, []);
 
   const inputsFor = useCallback(
     (tests: AnyTestCase[]) =>
@@ -468,31 +484,19 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </PanelTab>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
-        {!spec ? (
-          <p className="p-4 text-sm text-fg-3">Test cases for this problem are not available yet.</p>
-        ) : consoleTab === "testcase" ? (
-          <TestcaseEditor
+        {(() => {
+          if (!spec) return <p className="p-4 text-sm text-fg-3">Test cases for this problem are not available yet.</p>;
+          if (consoleTab === "testcase") return <TestcaseEditor
             names={names}
             cases={cases}
             active={Math.min(activeCase, cases.length - 1)}
             onActive={setActiveCase}
-            onChange={(i, f, value) =>
-              setCases((cs) =>
-                cs.map((c, k) => (k === i ? { ...c, fields: c.fields.map((x, j) => (j === f ? value : x)) } : c)),
-              )
-            }
-            onAdd={() => {
-              setCases((cs) => [...cs, { fields: [...(cs[activeCase]?.fields ?? names.map(() => ""))] }]);
-              setActiveCase(cases.length);
-            }}
-            onRemove={(i) => {
-              setCases((cs) => cs.filter((_, k) => k !== i));
-              setActiveCase((a) => Math.max(0, a >= i ? a - 1 : a));
-            }}
-          />
-        ) : (
-          <ResultPanel view={result} active={activeResult} onActive={setActiveResult} running={running} />
-        )}
+            onChange={onCaseChange}
+            onAdd={onCaseAdd}
+            onRemove={onCaseRemove}
+          />;
+          return <ResultPanel view={result} active={activeResult} onActive={setActiveResult} running={running} />;
+        })()}
       </div>
     </section>
   );
@@ -567,7 +571,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   );
 }
 
-function NavArrow({ href, label, children }: { href: string | null; label: string; children: React.ReactNode }) {
+function NavArrow({ href, label, children }: Readonly<{ href: string | null; label: string; children: React.ReactNode }>) {
   if (!href) {
     return (
       <span className="grid size-8 place-items-center text-fg-3 opacity-40" aria-hidden>

@@ -11,13 +11,23 @@ import { DifficultyText, StatusIcon } from "./ui";
 
 type StatusFilter = "all" | "solved" | "attempted" | "todo";
 
+function secureRandomIndex(length: number) {
+  const range = 2 ** 32;
+  const limit = range - (range % length);
+  const random = new Uint32Array(1);
+  do {
+    crypto.getRandomValues(random);
+  } while (random[0] >= limit);
+  return random[0] % length;
+}
+
 export function ProblemTable({
   problems,
   patterns,
-}: {
+}: Readonly<{
   problems: ProblemListItem[];
   patterns: { id: string; title: string }[];
-}) {
+}>) {
   const progress = useProgress();
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -43,7 +53,7 @@ export function ProblemTable({
 
   function pickRandom() {
     const pool = rows.length ? rows : problems;
-    router.push(`/problems/${pool[Math.floor(Math.random() * pool.length)].id}`);
+    router.push(`/problems/${pool[secureRandomIndex(pool.length)].id}`);
   }
 
   const select =

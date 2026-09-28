@@ -10,11 +10,13 @@ export function generateStaticParams() {
   return listDesignArticles().map((a) => ({ id: a.id }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+type PageProps = Readonly<{ params: Promise<{ id: string }> }>;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   return { title: getDesignArticle((await params).id)?.title ?? "System Design" };
 }
 
-export default async function DesignPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function DesignPage({ params }: PageProps) {
   const { id } = await params;
   const article = getDesignArticle(id);
   if (!article) notFound();

@@ -2,7 +2,6 @@ class Solution:
     # Grouping nonzero entries by the shared dimension skips zero products.
     def multiply(self, mat1, mat2):
         rows = len(mat1)
-        shared = len(mat2)
         columns = len(mat2[0])
         result = [[0] * columns for _ in range(rows)]
         nonzero_rows = []

@@ -477,14 +477,16 @@ function functionBody(spec: FunctionSpec) {
 }
 
 function designBody(spec: DesignSpec) {
-  const cases = spec.methods
-    .map((m) => {
-      const call = `obj.${m.java}(${m.params.map((_, k) => `p${k}`).join(", ")})`;
-      const invoke = m.returns === "void" ? `${call}; r = null;` : `r = ${call};`;
-      const val = m.output?.arg !== undefined ? `p${m.output.arg}` : "r";
-      return `case ${JSON.stringify(m.name)}: { ${declareParams(m.params, "args")} ${invoke} r = ${methodOutput(m.output, val)}; break; }`;
-    })
-    .join("\n        ");
+  const designCase = (method: DesignSpec["methods"][number]) => {
+    const args = method.params.map((_, k) => `p${k}`).join(", ");
+    const call = `obj.${method.java}(${args})`;
+    const invoke = method.returns === "void" ? `${call}; r = null;` : `r = ${call};`;
+    const value = method.output?.arg !== undefined ? `p${method.output.arg}` : "r";
+    const params = declareParams(method.params, "args");
+    const output = methodOutput(method.output, value);
+    return `case ${JSON.stringify(method.name)}: { ${params} ${invoke} r = ${output}; break; }`;
+  };
+  const cases = spec.methods.map(designCase).join("\n        ");
   return `
   static String runCase(Object input) throws Exception {
     Map<?, ?> in = (Map<?, ?>) input;
@@ -516,13 +518,31 @@ export function listFieldFor(style: SpecStyle | undefined) {
 function b64(s: string) {
   const bytes = new TextEncoder().encode(s);
   let bin = "";
-  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCodePoint(...bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 }
 
 /** Make the user's top-level `public class X` package-private so everything fits in Main.java. */
 export function prepareJavaUserCode(code: string) {
-  return code.replace(/^(\s*)public\s+((?:final\s+|abstract\s+)*)(class|interface|enum|record)\b/gm, "$1$2$3");
+  const declarationTypes = new Set(["class", "interface", "enum", "record"]);
+  const modifiers = new Set(["final", "abstract"]);
+  return code
+    .split("\n")
+    .map((line) => {
+      const indentLength = line.length - line.trimStart().length;
+      const indent = line.slice(0, indentLength);
+      const trimmed = line.slice(indentLength);
+      if (!trimmed.startsWith("public ")) return line;
+      const declaration = trimmed.slice("public ".length).trimStart();
+      const tokens = declaration.split(/\s+/);
+      let type = tokens[0] ?? "";
+      let tokenIndex = 1;
+      while (modifiers.has(type)) {
+        type = tokens[tokenIndex++] ?? "";
+      }
+      return declarationTypes.has(type) ? indent + declaration : line;
+    })
+    .join("\n");
 }
 
 export function buildJavaProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): string {
@@ -532,6 +552,9 @@ export function buildJavaProgram(spec: ProblemSpec, userCode: string, tests: Any
   const chunks = b64(inputs).match(/.{1,60000}/g) ?? [""];
   const listField = listFieldFor(spec.style);
   const node = nodeType(spec);
+  const marker = JSON.stringify(RESULT_MARKER);
+  const okLine = String.raw`        line = "{\"i\":" + i + ",\"status\":\"ok\",\"output\":" + output + ",\"ms\":" + ms + ",\"stdout\":" + JudgeJson.quote(trim(buf)) + "}";`;
+  const errorLine = String.raw`        line = "{\"i\":" + i + ",\"status\":\"error\",\"error\":" + JudgeJson.quote(msg) + ",\"stdout\":" + JudgeJson.quote(trim(buf)) + "}";`;
   return `${IMPORTS}
 ${prepareJavaUserCode(userCode)}
 ${JAVA_HELPERS.replaceAll(LIST_FIELD, listField)}
@@ -542,7 +565,7 @@ ${usesInteractive(spec) ? JAVA_INTERACTIVE : ""}
 ${javaEnvironment(spec)}
 ${JAVA_RUNTIME.replaceAll(LIST_FIELD, listField)}
 public class Main {
-  static final String MARKER = ${JSON.stringify(RESULT_MARKER).replace(/\u0001/g, "\\u0001")};
+  static final String MARKER = ${marker};
 ${body}
 
   static String userFrame(Throwable e) {
@@ -568,11 +591,11 @@ ${body}
       try {
         String output = runCase(tests.get(i));
         double ms = (System.nanoTime() - t0) / 1e6;
-        line = "{\\"i\\":" + i + ",\\"status\\":\\"ok\\",\\"output\\":" + output + ",\\"ms\\":" + ms + ",\\"stdout\\":" + JudgeJson.quote(trim(buf)) + "}";
+${okLine}
       } catch (Throwable e) {
         String msg = e.getClass().getSimpleName() + (e.getMessage() != null ? ": " + e.getMessage() : "") + userFrame(e);
         if (e instanceof StackOverflowError) msg = "StackOverflowError: recursion is too deep" + userFrame(e);
-        line = "{\\"i\\":" + i + ",\\"status\\":\\"error\\",\\"error\\":" + JudgeJson.quote(msg) + ",\\"stdout\\":" + JudgeJson.quote(trim(buf)) + "}";
+${errorLine}
       }
       System.setOut(out);
       out.println(MARKER + line);
