@@ -1,12 +1,21 @@
 import heapq
+from functools import total_ordering
 
 
+@total_ordering
 class Ranked:
     def __init__(self, plays, title):
         self.plays = plays
         self.title = title
 
+    def __eq__(self, other):
+        if not isinstance(other, Ranked):
+            return NotImplemented
+        return (self.plays, self.title) == (other.plays, other.title)
+
     def __lt__(self, other):
+        if not isinstance(other, Ranked):
+            return NotImplemented
         if self.plays != other.plays:
             return self.plays < other.plays
         return self.title > other.title

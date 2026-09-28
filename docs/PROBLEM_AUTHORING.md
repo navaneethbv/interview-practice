@@ -78,7 +78,7 @@ The BCTCI list includes all 37 online-chapter problems, using labels S.1-S.6, M.
 Its 232 entries still exclude book problems 34.9 and 39.8, which need additional harness support.
 Sliding Maximum and Matrix Rotation reuse the existing matching problems.
 The other online problems have original statements, Python and Java references, two fixed samples, and at least eight hidden cases.
-Run `python3 -B scripts/judge/test_bctci_online.py` for independent exhaustive and seeded small-instance reference checks, in addition to the normal judge gates.
+Run `python3 -B scripts/judge/test_bctci_online.py` for independent exhaustive and fixed small-instance reference checks, in addition to the normal judge gates.
 
 The online statements document their runner conventions explicitly.
 Map lookups return an empty list for a missing key or a singleton list for a stored integer, preserving the distinction without a nullable primitive type.

@@ -6,7 +6,7 @@ These checks do not regenerate judge expectations.
 import copy
 import importlib.util
 import itertools
-import random
+import json
 import unittest
 from collections import deque
 from functools import lru_cache
@@ -15,13 +15,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def fixture_cases(group):
+    """Replay the original seeds 601-608 without runtime random generation."""
+    path = Path(__file__).with_name('fixtures') / 'bctci_online.json'
+    return json.loads(path.read_text())[group]
+
+
 @lru_cache(None)
-def reference(slug):
+def reference(slug, class_name="Solution"):
     path = ROOT / 'content' / 'leetcode' / f'bctci-{slug}.py'
     spec = importlib.util.spec_from_file_location(slug.replace('-', '_'), path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return module.Solution
+    return getattr(module, class_name)
 
 
 def solve(slug, *args):
@@ -50,15 +56,26 @@ def components(n, edges):
 
 
 class OnlineReferenceTests(unittest.TestCase):
+    def test_song_ranking_comparisons_are_consistent(self):
+        ranked = reference('top-songs-class', 'Ranked')
+        smaller = ranked(3, 'a')
+        equal = ranked(3, 'a')
+        larger = ranked(4, 'z')
+        tie_loser = ranked(3, 'b')
+        self.assertEqual(smaller, equal)
+        self.assertFalse(smaller != equal)
+        self.assertTrue(smaller <= equal and smaller >= equal)
+        self.assertTrue(smaller < larger and larger > smaller)
+        self.assertTrue(tie_loser < smaller)
+        self.assertEqual(sorted([larger, smaller, tie_loser]), [tie_loser, smaller, larger])
+        self.assertIs(smaller.__eq__(object()), NotImplemented)
+        self.assertIs(smaller.__lt__(object()), NotImplemented)
+
     def test_windows_and_nearest_neighbors(self):
-        rng = random.Random(601)
-        for _ in range(300):
-            values = [rng.randrange(-5, 6) for _ in range(rng.randrange(2, 10))]
-            width = rng.randrange(2, len(values) + 1)
+        for values, width, limit in fixture_cases('windows'):
             windows = [values[i:i + width] for i in range(len(values) - width + 1)]
             self.assertEqual(solve('largest-temperature-change', values, width),
                              max(max(window) - min(window) for window in windows))
-            limit = rng.randrange(8)
             stable = max(j - i for i in range(len(values)) for j in range(i + 1, len(values) + 1)
                          if max(values[i:j]) - min(values[i:j]) <= limit)
             self.assertEqual(solve('longest-stable-period', values, limit), stable)
@@ -82,11 +99,7 @@ class OnlineReferenceTests(unittest.TestCase):
                 self.assertEqual(solve('largest-rectangle', list(heights)), expected)
 
     def test_graphs_by_spanning_tree_enumeration(self):
-        rng = random.Random(602)
-        for _ in range(120):
-            n = rng.randrange(2, 6)
-            edges = [[i, j, rng.randrange(-3, 4)] for i in range(n) for j in range(i + 1, n)
-                     if j == i + 1 or rng.random() < 0.55]
+        for n, edges in fixture_cases('graphs'):
             trees = []
             for indices in itertools.combinations(range(len(edges)), n - 1):
                 if len(components(n, [edges[i] for i in indices])) == 1:
@@ -103,11 +116,7 @@ class OnlineReferenceTests(unittest.TestCase):
                                  all(index in indices for indices in best))
 
     def test_time_queries_by_graph_traversal(self):
-        rng = random.Random(603)
-        for _ in range(100):
-            n = rng.randrange(1, 8)
-            edges = [[i, j, rng.randrange(1, 8)] for i in range(n) for j in range(i + 1, n)
-                     if rng.random() < 0.4]
+        for n, edges in fixture_cases('time_queries'):
             times = [1, 2, 2, 3, 4, 5, 6, 7, 8]
             groups = [components(n, [edge for edge in edges if edge[2] <= time]) for time in times]
             self.assertEqual(solve('connected-components-over-time', n, edges, times), list(map(len, groups)))
@@ -152,11 +161,7 @@ class OnlineReferenceTests(unittest.TestCase):
                         queue.append((*state, days + 1))
 
     def test_election_by_sorted_rounds(self):
-        rng = random.Random(604)
-        for _ in range(300):
-            n = rng.randrange(1, 10)
-            names = [chr(65 + i) for i in range(n)]
-            votes = [rng.randrange(1, 20) for _ in range(n)]
+        for names, votes in fixture_cases('elections'):
             parties = list(zip(names, votes))
             total = sum(votes)
             while max(count for _, count in parties) * 2 <= total:
@@ -169,23 +174,16 @@ class OnlineReferenceTests(unittest.TestCase):
             self.assertEqual(solve('presidential-election', names, votes), expected)
 
     def test_booster_arrays_by_enumeration(self):
-        rng = random.Random(605)
-        for _ in range(250):
-            values = [rng.randrange(-4, 5) for _ in range(rng.randrange(10))]
-            target = rng.randrange(-10, 11)
+        for values, target, flips, days, ads, a, b in fixture_cases('arrays'):
             self.assertEqual(solve('3-sum', values, target),
                              any(sum(triple) == target for triple in itertools.combinations(values, 3)))
             binary = [value % 2 for value in values]
-            flips = rng.randrange(len(binary) + 1)
             expected = max([0] + [j - i for i in range(len(binary)) for j in range(i + 1, len(binary) + 1)
                                    if binary[i:j].count(0) <= flips])
             self.assertEqual(solve('most-ones-with-k-flips', binary, flips), expected)
-            days = rng.sample(range(1, 367), len(values))
-            ads = rng.sample(range(1, 100), len(values))
             expected = [i for i in range(len(days)) if sum(days[j] < days[i] and ads[j] > ads[i]
                                                          for j in range(len(days))) == 1]
             self.assertEqual(solve('company-launches', days, ads), expected)
-            a, b = sorted(rng.sample(range(-8, 9), 2)), sorted(rng.sample(range(-8, 9), 2))
             result = solve('interval-xor', a, b)
             actual = {point for left, right in result for point in range(left, right)}
             self.assertEqual(actual, set(range(*a)) ^ set(range(*b)))
@@ -193,18 +191,14 @@ class OnlineReferenceTests(unittest.TestCase):
             self.assertTrue(all(result[i][1] < result[i + 1][0] for i in range(len(result) - 1)))
 
     def test_strings_by_enumeration(self):
-        rng = random.Random(606)
-        for _ in range(200):
-            text = ''.join(rng.choice('abc') for _ in range(rng.randrange(1, 20)))
-            width = rng.randrange(1, min(5, len(text)) + 1)
-            pattern = ''.join(rng.choice('abc') for _ in range(width))
+        for text, pattern, counts in fixture_cases('strings'):
+            width = len(pattern)
             expected = {text[i:i + width] for i in range(len(text) - width + 1)
                         if sorted(text[i:i + width]) == sorted(pattern)}
             self.assertEqual(solve('sub-permutations', pattern, text), len(expected))
             self.assertEqual(solve('count-substrings-without-letter', text),
                              sum('a' not in text[i:j] for i in range(len(text))
                                  for j in range(i + 1, len(text) + 1)))
-            counts = [rng.randrange(5) for _ in range(26)]
             text = ''.join(chr(97 + i) * count for i, count in enumerate(counts))
             best = 0
             for start in range(26):
@@ -219,10 +213,7 @@ class OnlineReferenceTests(unittest.TestCase):
             self.assertEqual(solve('longest-alphabet-chain', text), best)
 
     def test_game_by_all_shooting_orders(self):
-        rng = random.Random(607)
-        grid = list(itertools.product(range(3), repeat=2))
-        for _ in range(100):
-            players = rng.sample(grid, rng.randrange(7))
+        for players in fixture_cases('games'):
             edges = []
             for i, (x, y) in enumerate(players):
                 for j, (a, b) in enumerate(players):
@@ -242,17 +233,8 @@ class OnlineReferenceTests(unittest.TestCase):
             self.assertEqual(solve('multiplayer-video-game', players), survivors((1 << len(players)) - 1))
 
     def test_tree_diameters_by_all_pairs(self):
-        rng = random.Random(608)
-        for _ in range(100):
-            n = rng.randrange(1, 30)
-            children = [[-1, -1] for _ in range(n)]
-            slots = [(0, 0), (0, 1)]
-            edges = []
-            for node in range(1, n):
-                parent, side = slots.pop(rng.randrange(len(slots)))
-                children[parent][side] = node
-                slots.extend([(node, 0), (node, 1)])
-                edges.append([parent, node])
+        for children, edges in fixture_cases('trees'):
+            n = len(children)
             distances = [[n] * n for _ in range(n)]
             for i in range(n):
                 distances[i][i] = 0
