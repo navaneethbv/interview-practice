@@ -3,6 +3,7 @@
 Return `true` when two strings are at most one edit apart.
 An edit is one character insertion, one character deletion, or one character replacement.
 Return `false` when two or more edits are required.
+Each character is one Unicode code point, including supplementary characters such as emoji.
 
 ## Examples
 

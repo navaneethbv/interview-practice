@@ -36,4 +36,4 @@ Padding after the logical prefix must not leak into the output.
 ## Language notes
 
 Python can slice the logical prefix and use `replace`.
-Java uses a `StringBuilder` so each expansion is appended without repeatedly rebuilding immutable strings.
+Java visits Unicode code points and uses `StringBuilder.appendCodePoint` so supplementary characters count once and remain intact.

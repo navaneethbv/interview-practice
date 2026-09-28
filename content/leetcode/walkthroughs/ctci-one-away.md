@@ -40,4 +40,4 @@ An empty string is not one edit away from a longer string.
 ## Language notes
 
 Both references normalize the shorter input first.
-The Java version uses `charAt`, while the Python version indexes Unicode code points consistently with the problem contract.
+Java counts Unicode code points and advances UTF-16 offsets by `Character.charCount`, matching Python's character indexing without allocating arrays.

@@ -39,4 +39,4 @@ Spaces, punctuation, Unicode characters, and letter case are all significant.
 ## Language notes
 
 Python uses a dictionary with `get` for frequency updates.
-Java uses `HashMap<Character, Integer>` and rejects missing or exhausted entries while scanning the second string.
+Java uses `HashMap<Integer, Integer>` keyed by Unicode code point and rejects missing or exhausted entries while scanning the second string.

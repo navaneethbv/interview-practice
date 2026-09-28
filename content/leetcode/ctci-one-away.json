@@ -17,6 +17,9 @@
   ],
   "returns": "boolean",
   "tests": [
+    {"input":["","🙂"],"expected":true},
+    {"input":["🙂a","a"],"expected":true},
+    {"input":["🙂a","🙃b"],"expected":false},
     {"input":["pale","ple"],"sample":true,"expected":true},
     {"input":["pale","bake"],"sample":true,"expected":false},
     {"input":["",""],"expected":true},

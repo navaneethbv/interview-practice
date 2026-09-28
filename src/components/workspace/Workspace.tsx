@@ -510,6 +510,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </Link>
         <Link
           href={nav.list}
+          aria-label="Problem List"
           className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium text-fg-1 hover:bg-layer-2"
         >
           <List size={16} /> <span className="hidden sm:inline">Problem List</span>

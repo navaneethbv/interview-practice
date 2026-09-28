@@ -17,6 +17,7 @@
   ],
   "returns": "string",
   "tests": [
+    {"input":["🙂 a padding",3],"expected":"🙂%20a"},
     {"input":["Mr John Smith    ",13],"sample":true,"expected":"Mr%20John%20Smith"},
     {"input":["a b  ",3],"sample":true,"expected":"a%20b"},
     {"input":["",0],"expected":""},

@@ -1,9 +1,11 @@
 class Solution {
     public boolean oneAway(String first, String second) {
-        if (Math.abs(first.length() - second.length()) > 1) {
+        int firstLength = first.codePointCount(0, first.length());
+        int secondLength = second.codePointCount(0, second.length());
+        if (Math.abs(firstLength - secondLength) > 1) {
             return false;
         }
-        if (first.length() > second.length()) {
+        if (firstLength > secondLength) {
             String temp = first;
             first = second;
             second = temp;
@@ -12,19 +14,21 @@ class Solution {
         int right = 0;
         int differences = 0;
         while (left < first.length() && right < second.length()) {
-            if (first.charAt(left) == second.charAt(right)) {
-                left++;
-                right++;
+            int firstCharacter = first.codePointAt(left);
+            int secondCharacter = second.codePointAt(right);
+            if (firstCharacter == secondCharacter) {
+                left += Character.charCount(firstCharacter);
+                right += Character.charCount(secondCharacter);
                 continue;
             }
             differences++;
             if (differences > 1) {
                 return false;
             }
-            if (first.length() == second.length()) {
-                left++;
+            if (firstLength == secondLength) {
+                left += Character.charCount(firstCharacter);
             }
-            right++;
+            right += Character.charCount(secondCharacter);
         }
         return true;
     }

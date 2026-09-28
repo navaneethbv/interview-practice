@@ -17,6 +17,7 @@
   ],
   "returns": "boolean",
   "tests": [
+    {"input":["\ud800\udc00\ud801\udc01","\ud800\udc01\ud801\udc00"],"expected":false},
     {"input":["earth","heart"],"sample":true,"expected":true},
     {"input":["apple","pearl"],"sample":true,"expected":false},
     {"input":["",""],"expected":true},

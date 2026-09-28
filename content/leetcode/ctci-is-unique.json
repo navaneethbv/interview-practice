@@ -13,6 +13,7 @@
   ],
   "returns": "boolean",
   "tests": [
+    {"input":["🙂🙃"],"expected":true},
     {"input":["lamp"],"sample":true,"expected":true},
     {"input":["letter"],"sample":true,"expected":false},
     {"input":[""],"expected":true},

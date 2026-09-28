@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { lcProgressId, type Difficulty, type SetKind, type SetRow } from "@/lib/content-types";
 import { statusOf, useProgress } from "@/lib/progress";
+import { problemPool, randomProblem } from "@/lib/problem-selection";
 import { DifficultyText, StatusIcon } from "./ui";
 
 type StatusFilter = "all" | "solved" | "attempted" | "todo";
@@ -48,13 +49,11 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
   }, [rows, query, difficulty, group, status, progress, setId, byCategory]);
 
   const available = rows.filter((r) => r.available).length;
+  const pool = problemPool(visible, (r) => r.available, (r) => statusOf(progress, lcProgressId(r.slug), setId) === "solved");
 
   function pickRandom() {
-    const unsolved = visible.filter((r) => r.available && statusOf(progress, lcProgressId(r.slug), setId) !== "solved");
-    const pool = unsolved.length ? unsolved : rows.filter((r) => r.available);
-    if (!pool.length) return;
-    const [index] = crypto.getRandomValues(new Uint32Array(1));
-    router.push(`/problems/lc/${pool[index % pool.length].slug}?set=${setId}`);
+    const problem = randomProblem(pool);
+    if (problem) router.push(`/problems/lc/${problem.slug}?set=${setId}`);
   }
 
   return (
@@ -102,7 +101,7 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
         </select>
         <button
           onClick={pickRandom}
-          disabled={!available}
+          disabled={!pool.length}
           className="flex h-9 items-center gap-1.5 rounded-lg bg-ok-strong px-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           <Shuffle size={15} /> Pick one

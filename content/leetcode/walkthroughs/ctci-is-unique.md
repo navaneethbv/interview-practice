@@ -40,4 +40,4 @@ Matching is case-sensitive, so `a` and `A` are different.
 ## Language notes
 
 Python's `set` stores the characters directly.
-Java uses a `HashSet<Character>` so the two references apply the same membership algorithm.
+Java stores Unicode code points in a `HashSet<Integer>` and advances by `Character.charCount` so supplementary characters count once.

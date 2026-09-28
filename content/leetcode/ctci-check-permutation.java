@@ -3,18 +3,20 @@ class Solution {
         if (first.length() != second.length()) {
             return false;
         }
-        java.util.HashMap<Character, Integer> counts = new java.util.HashMap<>();
-        for (int i = 0; i < first.length(); i++) {
-            char value = first.charAt(i);
+        java.util.HashMap<Integer, Integer> counts = new java.util.HashMap<>();
+        for (int offset = 0; offset < first.length();) {
+            int value = first.codePointAt(offset);
             counts.put(value, counts.getOrDefault(value, 0) + 1);
+            offset += Character.charCount(value);
         }
-        for (int i = 0; i < second.length(); i++) {
-            char value = second.charAt(i);
+        for (int offset = 0; offset < second.length();) {
+            int value = second.codePointAt(offset);
             Integer count = counts.get(value);
             if (count == null || count == 0) {
                 return false;
             }
             counts.put(value, count - 1);
+            offset += Character.charCount(value);
         }
         return true;
     }

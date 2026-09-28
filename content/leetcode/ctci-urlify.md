@@ -3,6 +3,7 @@
 Replace every space in the first `trueLength` characters of `value` with `%20`.
 Ignore any padding characters after that logical length.
 Return the transformed string without modifying the input.
+Count characters and `trueLength` in Unicode code points, so an emoji such as `🙂` counts as one character.
 
 ## Examples
 

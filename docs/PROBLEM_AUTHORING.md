@@ -2,6 +2,8 @@
 
 Import the workbook with `python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx` after installing `openpyxl` in your Python environment.
 The importer writes `content/sets/sets.json` and `content/sets/problems.json`.
+Authored lists and metadata live in `scripts/ingest/custom_problem_sets.json` and are merged into the workbook catalog on every import.
+Update this source for CTCI catalog changes; list IDs and problem slugs must not collide with workbook entries.
 The workbook contains 10 lists and 879 unique problems; its NeetCode 150 sheet contains 141 distinct entries.
 LC 659 is merged into LC 271 as the workbook's duplicate entry.
 
