@@ -7,19 +7,10 @@ import { useRouter } from "next/navigation";
 import { COURSE_SCOPE, type Difficulty } from "@/lib/content-types";
 import type { ProblemListItem } from "@/lib/content";
 import { statusOf, useProgress } from "@/lib/progress";
+import { problemPool, randomProblem } from "@/lib/problem-selection";
 import { DifficultyText, StatusIcon } from "./ui";
 
 type StatusFilter = "all" | "solved" | "attempted" | "todo";
-
-function secureRandomIndex(length: number) {
-  const range = 2 ** 32;
-  const limit = range - (range % length);
-  const random = new Uint32Array(1);
-  do {
-    crypto.getRandomValues(random);
-  } while (random[0] >= limit);
-  return random[0] % length;
-}
 
 export function ProblemTable({
   problems,
@@ -50,10 +41,11 @@ export function ProblemTable({
   }, [problems, query, difficulty, pattern, status, progress]);
 
   const solved = problems.filter((p) => statusOf(progress, p.id, COURSE_SCOPE) === "solved").length;
+  const pool = problemPool(rows, (p) => p.hasTests, (p) => statusOf(progress, p.id, COURSE_SCOPE) === "solved");
 
   function pickRandom() {
-    const pool = rows.length ? rows : problems;
-    router.push(`/problems/${pool[secureRandomIndex(pool.length)].id}`);
+    const problem = randomProblem(pool);
+    if (problem) router.push(`/problems/${problem.id}`);
   }
 
   const select =
@@ -104,7 +96,8 @@ export function ProblemTable({
         </select>
         <button
           onClick={pickRandom}
-          className="flex h-9 items-center gap-1.5 rounded-lg bg-ok-strong px-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          disabled={!pool.length}
+          className="flex h-9 items-center gap-1.5 rounded-lg bg-ok-strong px-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           <Shuffle size={15} /> Pick one
         </button>

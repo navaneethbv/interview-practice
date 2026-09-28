@@ -49,6 +49,8 @@ export type SetKind = "curated" | "company";
 export interface ProblemSetItem {
   slug: string;
   category?: string;
+  /** Optional source numbering such as a chapter and question label. */
+  label?: string;
 }
 
 /** A problem list such as Blind 75 or a company's frequently asked questions. */
@@ -57,6 +59,8 @@ export interface ProblemSet {
   title: string;
   kind: SetKind;
   description: string;
+  sourceUrl?: string;
+  sourceLabel?: string;
   items: ProblemSetItem[];
 }
 
@@ -79,6 +83,7 @@ export interface LcMeta {
 export interface SetRow extends LcMeta {
   slug: string;
   category?: string;
+  label?: string;
   available: boolean;
 }
 
@@ -107,6 +112,9 @@ export interface DesignBook {
   short: string;
   description: string;
   source: string;
+  sourceUrl?: string;
+  sourceLabel?: string;
+  sourceLinks?: { label: string; url: string }[];
   /** Public URL of the original document, when it is published alongside the book. */
   download?: string;
   parts: { title: string; chapters: DesignChapterMeta[] }[];

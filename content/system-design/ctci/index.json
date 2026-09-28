@@ -1,0 +1,40 @@
+{
+ "id": "ctci",
+ "title": "CTCI System Design Notes",
+ "short": "CTCI System Design",
+ "description": "Original notes inspired by the system design chapter of Cracking the Coding Interview, focused on turning an open-ended prompt into a scoped, scalable, and defensible design. This is a private study aid, not a reproduction of the book.",
+ "sourceUrl": "https://www.crackingthecodinginterview.com/",
+ "sourceLabel": "Official CTCI site",
+ "source": "ctci_system_design.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "ctci-system-design-a-repeatable-interview-loop",
+     "title": "CTCI system design: a repeatable interview loop"
+    },
+    {
+     "id": "capacity-sketch-turn-requirements-into-pressure",
+     "title": "Capacity sketch: turn requirements into pressure"
+    },
+    {
+     "id": "architecture-follow-the-data-through-the-system",
+     "title": "Architecture: follow the data through the system"
+    },
+    {
+     "id": "data-and-consistency-choices",
+     "title": "Data and consistency choices"
+    },
+    {
+     "id": "reliability-security-and-operations",
+     "title": "Reliability, security, and operations"
+    },
+    {
+     "id": "worked-design-a-read-later-link-service",
+     "title": "Worked design: a read-later link service"
+    }
+   ]
+  }
+ ]
+}

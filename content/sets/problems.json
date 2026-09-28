@@ -1,4 +1,55 @@
 {
+ "ctci-is-unique": {
+  "number": 4001,
+  "title": "Is Unique",
+  "difficulty": "easy",
+  "topics": [
+   "String",
+   "Hashing"
+  ],
+  "pattern": "Character Frequency / Set",
+  "hint": "Track characters already seen and reject the first repeat.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ "ctci-check-permutation": {
+  "number": 4002,
+  "title": "Check Permutation",
+  "difficulty": "easy",
+  "topics": [
+   "String",
+   "Hashing"
+  ],
+  "pattern": "Frequency Map",
+  "hint": "Count each character in one string and subtract the counts from the other.",
+  "time": "O(n + m)",
+  "space": "O(n + m)"
+ },
+ "ctci-urlify": {
+  "number": 4003,
+  "title": "URLify",
+  "difficulty": "easy",
+  "topics": [
+   "String"
+  ],
+  "pattern": "Bounded Prefix Scan",
+  "hint": "Only inspect the meaningful prefix, then replace each space with `%20`.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ "ctci-one-away": {
+  "number": 4004,
+  "title": "One Away",
+  "difficulty": "easy",
+  "topics": [
+   "String",
+   "Two Pointers"
+  ],
+  "pattern": "Two-Pointer Edit Check",
+  "hint": "Allow at most one replacement, insertion, or deletion while scanning both strings.",
+  "time": "O(n + m)",
+  "space": "O(1)"
+ },
  "two-sum": {
   "number": 1,
   "title": "Two Sum",

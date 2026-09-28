@@ -30,7 +30,12 @@ export default async function SetPage({ params }: Readonly<{ params: Promise<{ s
         <SetTabs sets={listSets()} active={set.id} />
         <h1 className="mb-1 text-2xl font-semibold tracking-tight">{set.title}</h1>
         <p className="mb-6 text-fg-2">
-          {set.description} Solve coding problems in Python or Java and database problems in SQLite; progress is tracked for this list on its own.
+          {set.description} Solve coding problems in Python or Java and database problems in SQLite; progress is tracked for this list on its own.{" "}
+          {set.sourceUrl && (
+            <a href={set.sourceUrl} target="_blank" rel="noreferrer" className="text-brand underline-offset-2 hover:underline">
+              {set.sourceLabel ?? "Source"}
+            </a>
+          )}
         </p>
         <div className="mb-6">
           <ProgressPanel

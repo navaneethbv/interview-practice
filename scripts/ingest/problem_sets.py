@@ -15,8 +15,6 @@ import re
 import sys
 from pathlib import Path
 
-import openpyxl
-
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "content" / "sets"
 
@@ -141,7 +139,29 @@ def read_set(wb, sheet: str, problems: dict[str, dict], by_number: dict[int, str
     return items
 
 
+def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
+    """Merge authored lists without depending on a previous generated catalog."""
+    source = Path(__file__).with_name("custom_problem_sets.json")
+    custom = json.loads(source.read_text(encoding="utf8"))
+    existing_ids = {item["id"] for item in sets}
+    for item in custom["sets"]:
+        if item["id"] in existing_ids:
+            raise ValueError(f"Duplicate custom list: {item['id']}")
+        existing_ids.add(item["id"])
+    overlap = problems.keys() & custom["problems"].keys()
+    if overlap:
+        raise ValueError(f"Duplicate custom problems: {sorted(overlap)}")
+    problems.update(custom["problems"])
+    for item in custom["sets"]:
+        for entry in item["items"]:
+            if entry["slug"] not in problems:
+                raise ValueError(f"Missing metadata for {entry['slug']}")
+    sets[:0] = custom["sets"]
+
+
 def main(workbook: str):
+    import openpyxl
+
     wb = openpyxl.load_workbook(workbook, data_only=True, read_only=True)
     problems, by_number = read_problems(wb)
     sets = [
@@ -150,6 +170,7 @@ def main(workbook: str):
         for set_id, sheet, title, kind, description in SETS
     ]
 
+    merge_custom_catalog(sets, problems)
     OUT.mkdir(parents=True, exist_ok=True)
     ordered = dict(sorted(problems.items(), key=lambda kv: kv[1]["number"]))
     (OUT / "problems.json").write_text(json.dumps(ordered, indent=1, ensure_ascii=False) + "\n")

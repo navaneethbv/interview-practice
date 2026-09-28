@@ -1,0 +1,56 @@
+{
+ "id": "alex-xu",
+ "title": "System Design Interview Notes",
+ "short": "System Design Interview",
+ "description": "Original interview-focused notes on estimation, reusable distributed-system building blocks, and common design follow-ups.",
+ "sourceLinks": [
+  {
+   "label": "ByteByteGo",
+   "url": "https://bytebytego.com/"
+  }
+ ],
+ "source": "alex_xu_system_design_notes.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "lead-a-system-design-interview",
+     "title": "Lead a system design interview"
+    },
+    {
+     "id": "back-of-the-envelope-estimation",
+     "title": "Back-of-the-envelope estimation"
+    },
+    {
+     "id": "reusable-scaling-primitives",
+     "title": "Reusable scaling primitives"
+    },
+    {
+     "id": "rate-limiting",
+     "title": "Rate limiting"
+    },
+    {
+     "id": "consistent-hashing-and-key-value-stores",
+     "title": "Consistent hashing and key-value stores"
+    },
+    {
+     "id": "ids-urls-and-crawlers",
+     "title": "IDs, URLs, and crawlers"
+    },
+    {
+     "id": "notifications-feeds-and-chat",
+     "title": "Notifications, feeds, and chat"
+    },
+    {
+     "id": "media-and-file-products",
+     "title": "Media and file products"
+    },
+    {
+     "id": "close-the-design-with-tradeoffs",
+     "title": "Close the design with tradeoffs"
+    }
+   ]
+  }
+ ]
+}
