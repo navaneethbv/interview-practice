@@ -127,7 +127,7 @@ function renderPage(file: string, page: number, tempDir: string) {
 function pdfBlocks(file: string): Block[] {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "verbatim-pdf-")); // NOSONAR -- the importer creates this private temporary directory
   try {
-    const raw = execFileSync("pdftotext", ["-layout", file, "-"], { maxBuffer: 1 << 30 }).toString("utf8");
+    const raw = execFileSync("pdftotext", ["-layout", file, "-"], { maxBuffer: 1 << 30 }).toString("utf8"); // NOSONAR -- file is validated as the explicit read-only CLI input
     const pages = raw.split("\f");
     if (pages.at(-1)?.trim() === "") pages.pop();
 
