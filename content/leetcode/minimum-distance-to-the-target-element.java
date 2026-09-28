@@ -1,3 +1,11 @@
 class Solution {
-public int getMinDistance(int[] nums,int target,int start){int best=nums.length;for(int i=0;i<nums.length;i++)if(nums[i]==target)best=Math.min(best,Math.abs(i-start));return best;}
+    public int getMinDistance(int[] nums, int target, int start) {
+        int best = nums.length;
+        for (int index = 0; index < nums.length; index++) {
+            if (nums[index] == target) {
+                best = Math.min(best, Math.abs(index - start));
+            }
+        }
+        return best;
+    }
 }

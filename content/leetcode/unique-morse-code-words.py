@@ -1,4 +1,15 @@
 class Solution:
     def uniqueMorseRepresentations(self, words):
-        codes=['.-','-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-','.--','-..-','-.--','--..']
-        return len({''.join(codes[ord(c)-97] for c in word) for word in words})
+        codes = [
+            ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+            "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.",
+            "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
+            "-.--", "--.."
+        ]
+        representations = set()
+        for word in words:
+            encoded = []
+            for character in word:
+                encoded.append(codes[ord(character) - ord('a')])
+            representations.add(''.join(encoded))
+        return len(representations)

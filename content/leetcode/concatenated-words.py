@@ -1,9 +1,16 @@
 class Solution:
     def findAllConcatenatedWordsInADict(self, words):
-        available=set(words);out=[]
+        available = set(words)
+        concatenated = []
         for word in words:
-            dp=[False]*(len(word)+1);dp[0]=True
-            for end in range(1,len(word)+1):
-                dp[end]=any(dp[start] and (start>0 or end<len(word)) and word[start:end] in available for start in range(end))
-            if dp[-1]:out.append(word)
-        return out
+            possible = [False] * (len(word) + 1)
+            possible[0] = True
+            for end in range(1, len(word) + 1):
+                for start in range(end):
+                    can_use_word = start > 0 or end < len(word)
+                    if possible[start] and can_use_word and word[start:end] in available:
+                        possible[end] = True
+                        break
+            if possible[-1]:
+                concatenated.append(word)
+        return concatenated

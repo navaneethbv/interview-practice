@@ -1,2 +1,6 @@
 class Solution:
-    def findCenter(self, edges):return edges[0][0] if edges[0][0] in edges[1] else edges[0][1]
+    def findCenter(self, edges):
+        first = edges[0][0]
+        if first in edges[1]:
+            return first
+        return edges[0][1]

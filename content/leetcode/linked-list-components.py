@@ -1,8 +1,12 @@
 class Solution:
     def numComponents(self, head, nums):
-        selected=set(nums);count=0;inside=False
+        selected = set(nums)
+        components = 0
+        inside = False
         while head:
-            current=head.val in selected
-            if current and not inside:count+=1
-            inside=current;head=head.next
-        return count
+            selected_node = head.val in selected
+            if selected_node and not inside:
+                components += 1
+            inside = selected_node
+            head = head.next
+        return components

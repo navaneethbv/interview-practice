@@ -1,11 +1,17 @@
 class Solution:
     def combinationSum3(self, k, n):
-        out=[]
-        def visit(start,path,total):
-            if len(path)==k:
-                if total==n:out.append(path)
-                return
-            for value in range(start,10):
-                if total+value>n:break
-                visit(value+1,path+[value],total+value)
-        visit(1,[],0);return out
+        combinations = []
+        self._visit(1, k, n, [], combinations)
+        return combinations
+
+    def _visit(self, start, remaining_slots, remaining_sum, path, combinations):
+        if remaining_slots == 0:
+            if remaining_sum == 0:
+                combinations.append(path[:])
+            return
+        for value in range(start, 10):
+            if value > remaining_sum:
+                break
+            path.append(value)
+            self._visit(value + 1, remaining_slots - 1, remaining_sum - value, path, combinations)
+            path.pop()

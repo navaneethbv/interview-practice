@@ -1,3 +1,40 @@
 class Solution {
-public int[] minEdgeReversals(int n,int[][] edges){List<List<int[]>> g=new ArrayList<>();for(int i=0;i<n;i++)g.add(new ArrayList<>());for(int[] e:edges){g.get(e[0]).add(new int[]{e[1],0});g.get(e[1]).add(new int[]{e[0],1});}int[] parent=new int[n],cost=new int[n],order=new int[n];Arrays.fill(parent,-1);parent[0]=0;int size=1,total=0;for(int i=0;i<size;i++){int u=order[i];for(int[] e:g.get(u))if(e[0]!=parent[u]){parent[e[0]]=u;cost[e[0]]=e[1];total+=e[1];order[size++]=e[0];}}int[] ans=new int[n];ans[0]=total;for(int i=1;i<n;i++){int v=order[i];ans[v]=ans[parent[v]]+1-2*cost[v];}return ans;}
+    public int[] minEdgeReversals(int n, int[][] edges) {
+        List<List<int[]>> graph = new ArrayList<>();
+        for (int node = 0; node < n; node++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(new int[]{edge[1], 0});
+            graph.get(edge[1]).add(new int[]{edge[0], 1});
+        }
+
+        int[] parent = new int[n];
+        int[] edgeCost = new int[n];
+        int[] order = new int[n];
+        Arrays.fill(parent, -1);
+        parent[0] = 0;
+        int orderSize = 1;
+        int rootCost = 0;
+        for (int index = 0; index < orderSize; index++) {
+            int node = order[index];
+            for (int[] connection : graph.get(node)) {
+                if (connection[0] == parent[node]) {
+                    continue;
+                }
+                parent[connection[0]] = node;
+                edgeCost[connection[0]] = connection[1];
+                rootCost += connection[1];
+                order[orderSize++] = connection[0];
+            }
+        }
+
+        int[] answers = new int[n];
+        answers[0] = rootCost;
+        for (int index = 1; index < n; index++) {
+            int node = order[index];
+            answers[node] = answers[parent[node]] + 1 - 2 * edgeCost[node];
+        }
+        return answers;
+    }
 }

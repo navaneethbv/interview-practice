@@ -1,1 +1,25 @@
-class NumMatrix {long[][]p;public NumMatrix(int[][]matrix){int m=matrix.length,n=matrix[0].length;p=new long[m+1][n+1];for(int r=0;r<m;r++)for(int c=0;c<n;c++)p[r+1][c+1]=matrix[r][c]+p[r][c+1]+p[r+1][c]-p[r][c];}public int sumRegion(int row1,int col1,int row2,int col2){return (int)(p[row2+1][col2+1]-p[row1][col2+1]-p[row2+1][col1]+p[row1][col1]);}}
+class NumMatrix {
+    private long[][] prefix;
+
+    public NumMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        prefix = new long[rows + 1][columns + 1];
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                prefix[row + 1][column + 1] = matrix[row][column]
+                        + prefix[row][column + 1]
+                        + prefix[row + 1][column]
+                        - prefix[row][column];
+            }
+        }
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        long total = prefix[row2 + 1][col2 + 1]
+                - prefix[row1][col2 + 1]
+                - prefix[row2 + 1][col1]
+                + prefix[row1][col1];
+        return (int) total;
+    }
+}

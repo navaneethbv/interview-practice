@@ -1,19 +1,31 @@
 class Solution:
     def containsCycle(self, grid):
-        seen=set()
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if (r,c) not in seen and self._cycle_from(grid,r,c,seen):return True
+        seen = set()
+        for row in range(len(grid)):
+            for column in range(len(grid[0])):
+                if (row, column) not in seen:
+                    if self._cycle_from(grid, row, column, seen):
+                        return True
         return False
 
-    def _cycle_from(self, grid, r, c, seen):
-        """DFS over same-valued cells; reaching a seen cell other than the parent closes a cycle."""
-        m,n=len(grid),len(grid[0])
-        seen.add((r,c));stack=[(r,c,-1,-1)]
+    def _cycle_from(self, grid, row, column, seen):
+        rows = len(grid)
+        columns = len(grid[0])
+        seen.add((row, column))
+        stack = [(row, column, -1, -1)]
+        directions = ((-1, 0), (1, 0), (0, -1), (0, 1))
         while stack:
-            a,b,pr,pc=stack.pop()
-            for x,y in ((a-1,b),(a+1,b),(a,b-1),(a,b+1)):
-                if not(0<=x<m and 0<=y<n) or grid[x][y]!=grid[a][b] or (x,y)==(pr,pc):continue
-                if (x,y) in seen:return True
-                seen.add((x,y));stack.append((x,y,a,b))
+            current_row, current_column, parent_row, parent_column = stack.pop()
+            for row_delta, column_delta in directions:
+                next_row = current_row + row_delta
+                next_column = current_column + column_delta
+                inside = 0 <= next_row < rows and 0 <= next_column < columns
+                same_value = inside and grid[next_row][next_column] == grid[current_row][current_column]
+                is_parent = (next_row, next_column) == (parent_row, parent_column)
+                if not inside or not same_value or is_parent:
+                    continue
+                if (next_row, next_column) in seen:
+                    return True
+                seen.add((next_row, next_column))
+                stack.append((next_row, next_column, current_row, current_column))
         return False

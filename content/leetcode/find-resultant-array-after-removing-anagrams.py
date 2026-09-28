@@ -1,7 +1,10 @@
 class Solution:
     def removeAnagrams(self, words):
-        out=[];previous=None
+        result = []
+        previous_signature = None
         for word in words:
-            signature=''.join(sorted(word))
-            if signature!=previous:out.append(word);previous=signature
-        return out
+            signature = ''.join(sorted(word))
+            if signature != previous_signature:
+                result.append(word)
+                previous_signature = signature
+        return result
