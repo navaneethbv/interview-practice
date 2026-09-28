@@ -1,24 +1,33 @@
 class Solution:
     def longestConsecutive(self, root):
-        if not root: return 0
-        stack=[(root,False)]; lengths={}; best=0
+        if root is None:
+            return 0
+        stack = [(root, False)]
+        lengths = {}
+        best = 0
         while stack:
-            node,visited=stack.pop()
+            node, visited = stack.pop()
             if not visited:
-                stack.append((node,True))
-                if node.left: stack.append((node.left,False))
-                if node.right: stack.append((node.right,False))
+                stack.append((node, True))
+                if node.left is not None:
+                    stack.append((node.left, False))
+                if node.right is not None:
+                    stack.append((node.right, False))
                 continue
-            lengths[node]=self._runs(node,lengths)
-            best=max(best,sum(lengths[node])-1)
+            increasing, decreasing = self._runs(node, lengths)
+            lengths[node] = (increasing, decreasing)
+            best = max(best, increasing + decreasing - 1)
         return best
 
     def _runs(self, node, lengths):
-        """Longest increasing and decreasing downward runs starting at node."""
-        increasing=decreasing=1
-        for child in (node.left,node.right):
-            if not child: continue
-            inc,dec=lengths[child]
-            if child.val==node.val+1: increasing=max(increasing,inc+1)
-            if child.val==node.val-1: decreasing=max(decreasing,dec+1)
-        return increasing,decreasing
+        increasing = 1
+        decreasing = 1
+        for child in (node.left, node.right):
+            if child is None:
+                continue
+            child_increasing, child_decreasing = lengths[child]
+            if child.val == node.val + 1:
+                increasing = max(increasing, child_increasing + 1)
+            if child.val == node.val - 1:
+                decreasing = max(decreasing, child_decreasing + 1)
+        return increasing, decreasing

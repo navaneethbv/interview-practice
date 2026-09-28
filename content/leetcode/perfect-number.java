@@ -1,3 +1,17 @@
 class Solution {
-    public boolean checkPerfectNumber(int num){if(num<=1)return false;long sum=1;for(int d=2;(long)d*d<=num;d++)if(num%d==0){sum+=d;if(d!=num/d)sum+=num/d;}return sum==num;}
+    public boolean checkPerfectNumber(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        long total = 1;
+        for (int divisor = 2; (long) divisor * divisor <= num; divisor++) {
+            if (num % divisor == 0) {
+                total += divisor;
+                if (divisor != num / divisor) {
+                    total += num / divisor;
+                }
+            }
+        }
+        return total == num;
+    }
 }
