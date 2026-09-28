@@ -115,7 +115,7 @@ def escape_block_start(md: str) -> str:
 
 PAREN_URL = re.compile(r" ?\((?:https?://|www\.)[^)]*\)")
 HTTPS = "https://"
-URL_PREFIXES = ("http://", HTTPS)
+URL_START = re.compile(r"https?://")  # matches example URLs in text; nothing is fetched
 BARE_URL = re.compile(r"^(?:https?://|www\.)\S+$")
 URL_RE = re.compile(r"(?:https?://|www\.)[^\s,;)“”\"']*[^\s,;.)“”\"']")
 URL_SPLIT = re.compile(f"({URL_RE.pattern})")
@@ -544,7 +544,7 @@ class Assembler:
 
     def add_link(self, line: Line):
         text = line.text.strip()
-        joins = self.current is not None and self.current.kind == "link" and not text.startswith((*URL_PREFIXES, "www."))
+        joins = self.current is not None and self.current.kind == "link" and not (URL_START.match(text) or text.startswith("www."))
         self.add_run("link", line, text, "", joins)
 
     def start_block(self, line: Line, block: Block):
@@ -655,7 +655,7 @@ def plain(spans: list[Span]) -> str:
 
 def paragraph_md(b: Block, ch: Chapter) -> str:
     text = plain(b.spans)
-    if text.startswith(URL_PREFIXES) and len(text.split()) <= 3:
+    if URL_START.match(text) and len(text.split()) <= 3:
         text = text.replace(" ", "")  # a long example URL wrapped across lines
     return f"`{text}`" if BARE_URL.match(text) else escape_block_start(spans_to_md(b.spans))
 
