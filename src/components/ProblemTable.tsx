@@ -11,6 +11,16 @@ import { DifficultyText, StatusIcon } from "./ui";
 
 type StatusFilter = "all" | "solved" | "attempted" | "todo";
 
+function secureRandomIndex(length: number) {
+  const range = 0x1_0000_0000;
+  const limit = range - (range % length);
+  const random = new Uint32Array(1);
+  do {
+    crypto.getRandomValues(random);
+  } while (random[0] >= limit);
+  return random[0] % length;
+}
+
 export function ProblemTable({
   problems,
   patterns,
@@ -43,8 +53,7 @@ export function ProblemTable({
 
   function pickRandom() {
     const pool = rows.length ? rows : problems;
-    const [random] = crypto.getRandomValues(new Uint32Array(1));
-    router.push(`/problems/${pool[random % pool.length].id}`);
+    router.push(`/problems/${pool[secureRandomIndex(pool.length)].id}`);
   }
 
   const select =
