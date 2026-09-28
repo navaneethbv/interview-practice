@@ -1,1 +1,35 @@
-class TaskManager {Map<Integer,int[]> tasks=new HashMap<>();PriorityQueue<int[]> q=new PriorityQueue<>((a,b)->a[2]!=b[2]?Integer.compare(b[2],a[2]):Integer.compare(b[1],a[1]));public TaskManager(List<List<Integer>> initial){for(List<Integer> t:initial)add(t.get(0),t.get(1),t.get(2));}public void add(int userId,int taskId,int priority){tasks.put(taskId,new int[]{userId,priority});q.add(new int[]{userId,taskId,priority});}public void edit(int taskId,int newPriority){add(tasks.get(taskId)[0],taskId,newPriority);}public void rmv(int taskId){tasks.remove(taskId);}public int execTop(){while(!q.isEmpty()){int[] t=q.remove(),current=tasks.get(t[1]);if(current!=null&&current[0]==t[0]&&current[1]==t[2]){tasks.remove(t[1]);return t[0];}}return -1;}}
+class TaskManager {
+    Map<Integer,int[]> tasks=new HashMap<>();
+    PriorityQueue<int[]> q=new PriorityQueue<>((a,b)->a[2]!=b[2]?Integer.compare(b[2],a[2]):Integer.compare(b[1],a[1]));
+    public TaskManager(List<List<Integer>> initial){
+        for (List<Integer> t:initial) {
+            add(t.get(0),t.get(1),t.get(2));
+        }
+    }
+    public void add(int userId,int taskId,int priority){
+        tasks.put(taskId,new int[]{
+            userId,priority
+        }
+        );
+        q.add(new int[]{
+            userId,taskId,priority
+        }
+        );
+    }
+    public void edit(int taskId,int newPriority){
+        add(tasks.get(taskId)[0],taskId,newPriority);
+    }
+    public void rmv(int taskId){
+        tasks.remove(taskId);
+    }
+    public int execTop(){
+        while (!q.isEmpty()){
+            int[] t=q.remove(),current=tasks.get(t[1]);
+            if (current!=null&&current[0]==t[0]&&current[1]==t[2]){
+                tasks.remove(t[1]);
+                return t[0];
+            }
+        }
+        return -1;
+    }
+}
