@@ -1,3 +1,31 @@
 class Solution {
-public int minSwaps(int[][] grid){int n=grid.length;int[]zero=new int[n];for(int r=0;r<n;r++)for(int c=n-1;c>=0&&grid[r][c]==0;c--)zero[r]++;int out=0;for(int i=0;i<n;i++){int j=i;while(j<n&&zero[j]<n-i-1)j++;if(j==n)return -1;out+=j-i;int value=zero[j];while(j>i){zero[j]=zero[j-1];j--;}zero[i]=value;}return out;}
+    public int minSwaps(int[][] grid) {
+        int size = grid.length;
+        int[] trailingZeros = new int[size];
+        for (int row = 0; row < size; row++) {
+            for (int column = size - 1; column >= 0 && grid[row][column] == 0; column--) {
+                trailingZeros[row]++;
+            }
+        }
+
+        int swaps = 0;
+        for (int row = 0; row < size; row++) {
+            int required = size - row - 1;
+            int candidate = row;
+            while (candidate < size && trailingZeros[candidate] < required) {
+                candidate++;
+            }
+            if (candidate == size) {
+                return -1;
+            }
+            swaps += candidate - row;
+            int selected = trailingZeros[candidate];
+            while (candidate > row) {
+                trailingZeros[candidate] = trailingZeros[candidate - 1];
+                candidate--;
+            }
+            trailingZeros[row] = selected;
+        }
+        return swaps;
+    }
 }

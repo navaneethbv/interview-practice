@@ -1,3 +1,24 @@
 class Solution {
-public int minOperations(String s,int k){int n=s.length(),z=0;for(char c:s.toCharArray())if(c=='0')z++;if(z==0)return 0;for(int m=1;m<=n;m++){long flips=(long)m*k,capacity=(long)n*m-(m%2==0?z:n-z);if(flips>=z&&(flips-z)%2==0&&flips<=capacity)return m;}return -1;}
+    public int minOperations(String s, int k) {
+        int length = s.length();
+        int zeroCount = 0;
+        for (int index = 0; index < length; index++) {
+            if (s.charAt(index) == '0') {
+                zeroCount++;
+            }
+        }
+        if (zeroCount == 0) {
+            return 0;
+        }
+        for (int moves = 1; moves <= length; moves++) {
+            long flipped = (long) moves * k;
+            long requiredCapacity = (long) length * moves
+                    - (moves % 2 == 0 ? zeroCount : length - zeroCount);
+            if (flipped >= zeroCount && (flipped - zeroCount) % 2 == 0
+                    && flipped <= requiredCapacity) {
+                return moves;
+            }
+        }
+        return -1;
+    }
 }

@@ -1,3 +1,11 @@
 class Solution {
-public long numberOfWeeks(int[] milestones){long total=0,largest=0;for(int x:milestones){total+=x;largest=Math.max(largest,x);}return Math.min(total,2*(total-largest)+1);}
+    public long numberOfWeeks(int[] milestones) {
+        long total = 0;
+        long largest = 0;
+        for (int value : milestones) {
+            total += value;
+            largest = Math.max(largest, value);
+        }
+        return Math.min(total, 2 * (total - largest) + 1);
+    }
 }

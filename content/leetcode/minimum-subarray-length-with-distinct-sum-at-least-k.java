@@ -1,3 +1,24 @@
 class Solution {
-public int minLength(int[] nums,int k){Map<Integer,Integer> c=new HashMap<>();long sum=0;int l=0,best=nums.length+1;for(int r=0;r<nums.length;r++){int x=nums[r];if(c.getOrDefault(x,0)==0)sum+=x;c.merge(x,1,Integer::sum);while(sum>=k){best=Math.min(best,r-l+1);int v=nums[l++];c.put(v,c.get(v)-1);if(c.get(v)==0)sum-=v;}}return best<=nums.length?best:-1;}
+    public int minLength(int[] nums, int k) {
+        Map<Integer, Integer> counts = new HashMap<>();
+        long distinctSum = 0;
+        int left = 0;
+        int best = nums.length + 1;
+        for (int right = 0; right < nums.length; right++) {
+            int value = nums[right];
+            if (counts.getOrDefault(value, 0) == 0) {
+                distinctSum += value;
+            }
+            counts.merge(value, 1, Integer::sum);
+            while (distinctSum >= k) {
+                best = Math.min(best, right - left + 1);
+                int removed = nums[left++];
+                counts.put(removed, counts.get(removed) - 1);
+                if (counts.get(removed) == 0) {
+                    distinctSum -= removed;
+                }
+            }
+        }
+        return best <= nums.length ? best : -1;
+    }
 }
