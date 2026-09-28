@@ -1,6 +1,6 @@
 # Interview Practice
 
-A LeetCode-style website for practicing software engineering interviews: coding problems with a real editor and hidden test cases, pattern lessons, and system design practice.
+A LeetCode-style website for practicing software engineering interviews: coding problems with a real editor and hidden test cases, pattern lessons, and system design books.
 
 Live: https://interview-practice-sandy-eight.vercel.app
 
@@ -64,28 +64,23 @@ npm run tests:build -- --java    # also compile and run the Java references
 npm run tests:build -- some-id   # only some problems
 ```
 
-### System design documents
+### System design books
+
+The System Design section is a read-only reader: pick a book, then a chapter from the contents on the left.
+Each book is imported once into `content/system-design/<book>/` (an `index.json` plus one Markdown file per chapter).
 
 ```bash
-npm run ingest:doc -- ./design-a-chat-system.pdf
-npm run ingest:doc -- "./System Design Interview.pdf" --chapters   # one page per chapter
-npm run ingest:doc -- ./article.html --split "High-level design"
-npm run ingest:doc -- "./Grokking the System Design Interview.pdf" --chapters --prefix classic
-npm run ingest:doc -- "./Grokking the Advanced System Design Interview.pdf" --lessons --prefix advanced
-npm run ingest:verbatim -- "./Grokking the System Design Interview.md" --id source-awesome-senior-system-design-notes --title "Verbatim: Awesome Senior Engineer system design notes" --source "Awesome-Senior-Engineer-Algorithms-Review Markdown"
-npm run ingest:verbatim -- "./Grokking the System Design Interview.pdf" --id source-awesome-senior-system-design-pdf --title "Verbatim: Awesome Senior Engineer system design PDF" --source "Awesome-Senior-Engineer-Algorithms-Review PDF"
-npm run ingest:verbatim -- "./Grokking the System Design Interview.pdf" --id source-grokking-system-design-pdf --title "Verbatim: Grokking the System Design Interview PDF" --source "grokking standard PDF" --alias "Grokking Dynamic Programming Patterns for Coding Interviews - Learn Interactively/Grokking the System Design Interview.pdf"
-npm run ingest:verbatim -- "./Grokking the Advanced System Design Interview.pdf" --id source-grokking-advanced-system-design-pdf --title "Verbatim: Grokking the Advanced System Design Interview PDF" --source "grokking advanced PDF" --alias "Grokking Dynamic Programming Patterns for Coding Interviews - Learn Interactively/Grokking the Advanced System Design Interview.pdf"
+python3 -m pip install pdfplumber   # once; MIT-licensed PDF layout reader
+npm run ingest:system-design -- grokking "./Grokking-the-system-design-interviewpdf-5-pdf-free.pdf"
+npm run ingest:system-design -- advanced "./Grokking the Advanced System Design Interview.pdf"
+npm run ingest:system-design -- notes "./Grokking the System Design Interview.md"   # Awesome-Senior-Engineer-Algorithms-Review
 ```
 
-The importer detects headings, paragraphs, lists, code and images.
-For PDFs, embedded diagrams are extracted at their original resolution.
-The advanced guide's vector-only diagram pages are captured as readable page images when `--lessons` is used.
-Use `ingest:verbatim` for a source archive that keeps the original Markdown or PDF alongside its extracted text and diagrams.
-The duplicate standard and advanced PDFs in the grokking repository are identical byte-for-byte and are recorded as aliases instead of being duplicated.
-For HTML imports, local and data-URL images are limited to PNG, JPEG, GIF and WebP; SVG and other local formats are skipped.
-The prompt ends at the first solution-like heading ("Step 2", "High-level design", "Architecture", and similar) unless `--split` names one.
-Use `--out <dir>` for a dry run.
+The importer has layout rules per book: it rebuilds paragraphs and lists, keeps bold, italic and inline code, restores the ligatures the advanced PDF drops, and removes course boilerplate ("We'll cover the following", Back/Next links, page numbers) and inline URL dumps.
+Diagrams, including the advanced guide's vector drawings, are rendered from their page region into WebP files under `public/course-assets/system-design/<book>/`.
+The original document is published under `public/course-assets/system-design/sources/` for download.
+It uses `/usr/share/dict/words` (present on macOS) to repair ligatures and hyphenation.
+The LibreOffice export of the classic course is the same text as the `pdf-free` edition, which is used because its diagrams and tables survive intact.
 
 ## Deployment
 
@@ -106,7 +101,7 @@ The Java endpoint accepts only same-origin browser requests, but it is not authe
 ## Project layout
 
 ```
-content/                  course lessons, problem specs, system design pages (JSON)
+content/                  course lessons, problem specs, system design books (JSON + Markdown)
 public/pyodide-worker.js  Python runner (Web Worker)
 scripts/ingest/           course and document importers
 scripts/judge/            expected-output generator and verifier
@@ -127,5 +122,5 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm test` | Judge unit tests |
 | `npm run tests:build` | Generate and verify expected outputs |
 | `npm run ingest:grokking` | Import the coding course |
-| `npm run ingest:doc` | Import a system design PDF or HTML file |
+| `npm run ingest:system-design` | Import a system design book |
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |

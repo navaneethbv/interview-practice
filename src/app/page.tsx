@@ -2,13 +2,14 @@ import Link from "next/link";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
 import { ProgressPanel } from "@/components/ProgressPanel";
-import { getCourse, listDesignArticles, listProblems } from "@/lib/content";
+import { designChapters, getCourse, listDesignBooks, listProblems } from "@/lib/content";
 import { COURSE_SCOPE } from "@/lib/content-types";
 
 export default function Home() {
   const course = getCourse();
   const problems = listProblems();
-  const designs = listDesignArticles();
+  const designBooks = listDesignBooks();
+  const designChapterCount = designBooks.reduce((sum, book) => sum + designChapters(book).length, 0);
   const patterns = course.chapters.filter((c) => c.title.startsWith("Pattern"));
 
   return (
@@ -50,9 +51,9 @@ export default function Home() {
             tone="bg-brand-soft text-brand"
             title="System Design"
             body={
-              designs.length
-                ? `${designs.length} design problems. Sketch your design, then compare with the reference.`
-                : "Design interview practice. Import your system design material to get started."
+              designBooks.length
+                ? `${designBooks.length} books, ${designChapterCount} chapters: worked designs from TinyURL to Uber, and the internals of Dynamo, Kafka and more.`
+                : "Design interview reading. Import your system design material to get started."
             }
           />
         </section>

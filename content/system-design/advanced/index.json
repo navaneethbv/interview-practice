@@ -1,0 +1,558 @@
+{
+ "id": "advanced",
+ "title": "Grokking the Advanced System Design Interview",
+ "short": "Advanced System Design",
+ "description": "How real distributed systems work: Dynamo, Cassandra, Kafka, Chubby, GFS, HDFS and BigTable, followed by 20 reusable system design patterns.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "download": "/course-assets/system-design/sources/advanced.pdf",
+ "parts": [
+  {
+   "title": "Introduction",
+   "chapters": [
+    {
+     "id": "what-is-this-course-about",
+     "title": "What Is This Course About?",
+     "lead": "Here is an overview of what to expect from this course."
+    }
+   ]
+  },
+  {
+   "title": "Dynamo",
+   "chapters": [
+    {
+     "id": "dynamo-introduction",
+     "title": "Dynamo: Introduction",
+     "lead": "Let’s explore Dynamo and its use cases."
+    },
+    {
+     "id": "high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of Dynamo’s architecture."
+    },
+    {
+     "id": "data-partitioning",
+     "title": "Data Partitioning",
+     "lead": "Let’s learn how Dynamo distributes its data across a set of nodes."
+    },
+    {
+     "id": "replication",
+     "title": "Replication",
+     "lead": "Let’s learn how Dynamo replicates its data and handles temporary failures through replication."
+    },
+    {
+     "id": "vector-clocks-and-conflicting-data",
+     "title": "Vector Clocks and Conflicting Data",
+     "lead": "Let’s learn how Dynamo uses vector clocks to keep track of data history and reconcile divergent histories at read time."
+    },
+    {
+     "id": "the-life-of-dynamos-put-get-operations",
+     "title": "The Life of Dynamo’s put() & get() Operations",
+     "lead": "Let’s learn how Dynamo handles get() and put() requests."
+    },
+    {
+     "id": "anti-entropy-through-merkle-trees",
+     "title": "Anti-entropy Through Merkle Trees",
+     "lead": "Let's understand how Dynamo uses Merkle trees for anti-entropy operations."
+    },
+    {
+     "id": "gossip-protocol",
+     "title": "Gossip Protocol",
+     "lead": "Let's explore how Dynamo uses gossip protocol to keep track of the cluster state."
+    },
+    {
+     "id": "dynamo-characteristics-and-criticism",
+     "title": "Dynamo Characteristics and Criticism",
+     "lead": "Let's explore the characteristics and the criticism of Dynamo's architecture."
+    },
+    {
+     "id": "summary-dynamo",
+     "title": "Summary: Dynamo",
+     "lead": "Here is a quick summary of Dynamo for you!"
+    }
+   ]
+  },
+  {
+   "title": "Cassandra",
+   "chapters": [
+    {
+     "id": "cassandra-introduction",
+     "title": "Cassandra: Introduction",
+     "lead": "Let’s explore Cassandra and its use cases."
+    },
+    {
+     "id": "cassandra-high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of Cassandra’s architecture."
+    },
+    {
+     "id": "cassandra-replication",
+     "title": "Replication",
+     "lead": "Let's explore Cassandra's replication strategy."
+    },
+    {
+     "id": "cassandra-consistency-levels",
+     "title": "Cassandra Consistency Levels",
+     "lead": "Let's explore how Cassandra manages data consistency."
+    },
+    {
+     "id": "gossiper",
+     "title": "Gossiper",
+     "lead": "Let's explore how Cassandra uses gossip protocol to keep track of the state of the system."
+    },
+    {
+     "id": "anatomy-of-cassandras-write-operation",
+     "title": "Anatomy of Cassandra's Write Operation",
+     "lead": "Let’s dig deeper into the components involved in Cassandra’s write path."
+    },
+    {
+     "id": "anatomy-of-cassandras-read-operation",
+     "title": "Anatomy of Cassandra's Read Operation",
+     "lead": "Let’s explore Cassandra’s read path."
+    },
+    {
+     "id": "compaction",
+     "title": "Compaction",
+     "lead": "Let's explore how Cassandra handles compaction."
+    },
+    {
+     "id": "tombstones",
+     "title": "Tombstones",
+     "lead": "Let's explore how Tombstones work in Cassandra."
+    },
+    {
+     "id": "summary-cassandra",
+     "title": "Summary: Cassandra",
+     "lead": "Here is a quick summary of Cassandra for you!"
+    }
+   ]
+  },
+  {
+   "title": "Kafka",
+   "chapters": [
+    {
+     "id": "messaging-systems-introduction",
+     "title": "Messaging Systems: Introduction",
+     "lead": "This lesson gives a brief overview of messaging systems."
+    },
+    {
+     "id": "kafka-introduction",
+     "title": "Kafka: Introduction",
+     "lead": "This lesson presents a brief introduction and common use cases of Kafka."
+    },
+    {
+     "id": "kafka-high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of Kafka’s architecture."
+    },
+    {
+     "id": "kafka-deep-dive",
+     "title": "Kafka: Deep Dive",
+     "lead": "As of now, we have discussed the core concepts of Kafka. Let us now throw some light on the workflow of Kafka."
+    },
+    {
+     "id": "consumer-groups",
+     "title": "Consumer Groups",
+     "lead": "Let's explore the role of consumer groups in Kafka."
+    },
+    {
+     "id": "kafka-workflow",
+     "title": "Kafka Workflow",
+     "lead": "Let's explore different messaging workflows that Kafka offers."
+    },
+    {
+     "id": "role-of-zookeeper",
+     "title": "Role of ZooKeeper",
+     "lead": "Let's delve into how Kafka interacts with ZooKeeper."
+    },
+    {
+     "id": "controller-broker",
+     "title": "Controller Broker",
+     "lead": "This lesson will explain the role of the controller broker in Kafka."
+    },
+    {
+     "id": "kafka-delivery-semantics",
+     "title": "Kafka Delivery Semantics",
+     "lead": "Let's explore what message delivery guarantees Kafka provides to its clients."
+    },
+    {
+     "id": "kafka-characteristics",
+     "title": "Kafka Characteristics",
+     "lead": "Let's explore different characteristics of Kafka."
+    },
+    {
+     "id": "summary-kafka",
+     "title": "Summary: Kafka",
+     "lead": "Here is a quick summary of Kafka for you!"
+    }
+   ]
+  },
+  {
+   "title": "Chubby",
+   "chapters": [
+    {
+     "id": "chubby-introduction",
+     "title": "Chubby: Introduction",
+     "lead": "This lesson will introduce Chubby and its use cases."
+    },
+    {
+     "id": "chubby-high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of Chubby’s architecture."
+    },
+    {
+     "id": "design-rationale",
+     "title": "Design Rationale",
+     "lead": "Let's explore the rationale behind Chubby's architecture."
+    },
+    {
+     "id": "how-chubby-works",
+     "title": "How Chubby Works",
+     "lead": "Let’s learn how Chubby works."
+    },
+    {
+     "id": "file-directories-and-handles",
+     "title": "File, Directories, and Handles",
+     "lead": "Let's explore how Chubby works with files, directories, and handles."
+    },
+    {
+     "id": "locks-sequencers-and-lock-delays",
+     "title": "Locks, Sequencers, and Lock-delays",
+     "lead": "Let's explore how Chubby implements Locks and Sequencers."
+    },
+    {
+     "id": "sessions-and-events",
+     "title": "Sessions and Events",
+     "lead": "This lesson will explain Chubby sessions and what different Chubby events are."
+    },
+    {
+     "id": "master-election-and-chubby-events",
+     "title": "Master Election and Chubby Events",
+     "lead": "This lesson will explain what actions a newly elected master performs. Additionally, we will look into different Chubby events."
+    },
+    {
+     "id": "caching",
+     "title": "Caching",
+     "lead": "Let's learn how Chubby implements its cache."
+    },
+    {
+     "id": "database",
+     "title": "Database",
+     "lead": "Let's learn how Chubby uses a database for storage."
+    },
+    {
+     "id": "scaling-chubby",
+     "title": "Scaling Chubby",
+     "lead": "This lesson will explain different techniques that Chubby uses for scaling."
+    },
+    {
+     "id": "summary-chubby",
+     "title": "Summary: Chubby",
+     "lead": "Here is a quick summary of Chubby for you!"
+    }
+   ]
+  },
+  {
+   "title": "Google File System (GFS)",
+   "chapters": [
+    {
+     "id": "google-file-system-introduction",
+     "title": "Google File System: Introduction",
+     "lead": "Let’s explore Google File System and its use cases."
+    },
+    {
+     "id": "google-file-system-gfs-high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of GFS’s architecture."
+    },
+    {
+     "id": "single-master-and-large-chunk-size",
+     "title": "Single Master and Large Chunk Size",
+     "lead": "This lesson will explain why Chubby has a single master and a large chunk size."
+    },
+    {
+     "id": "metadata",
+     "title": "Metadata",
+     "lead": "Let's explore how GFS manages the filesystem metadata."
+    },
+    {
+     "id": "master-operations",
+     "title": "Master Operations",
+     "lead": "Let's learn the different operations performed by the master."
+    },
+    {
+     "id": "anatomy-of-a-read-operation",
+     "title": "Anatomy of a Read Operation",
+     "lead": "Let’s learn how GFS handles a read operation."
+    },
+    {
+     "id": "anatomy-of-a-write-operation",
+     "title": "Anatomy of a Write Operation",
+     "lead": "Let’s learn how GFS handles a write operation."
+    },
+    {
+     "id": "anatomy-of-an-append-operation",
+     "title": "Anatomy of an Append Operation",
+     "lead": "Let’s learn how GFS handles an append operation."
+    },
+    {
+     "id": "gfs-consistency-model-and-snapshotting",
+     "title": "GFS Consistency Model and Snapshotting",
+     "lead": "This lesson will explain how GFS handles the consistency of its operations and data. Additionally, we will look into how GFS implements a snapshotting operation."
+    },
+    {
+     "id": "fault-tolerance-high-availability-and-data-integrity",
+     "title": "Fault Tolerance, High Availability, and Data Integrity",
+     "lead": "Let's learn how GFS implements fault tolerance, high availability, and data integrity."
+    },
+    {
+     "id": "garbage-collection",
+     "title": "Garbage Collection",
+     "lead": "Let's learn how GFS implements garbage collection."
+    },
+    {
+     "id": "criticism-on-gfs",
+     "title": "Criticism on GFS",
+     "lead": "Here is the summary of criticism on GFS's architecture."
+    },
+    {
+     "id": "summary-gfs",
+     "title": "Summary: GFS",
+     "lead": "Here is a quick summary of Google File System for you!"
+    }
+   ]
+  },
+  {
+   "title": "Hadoop Distributed File System (HDFS)",
+   "chapters": [
+    {
+     "id": "hadoop-distributed-file-system-introduction",
+     "title": "Hadoop Distributed File System: Introduction",
+     "lead": "This lesson gives a brief introduction to the Hadoop Distributed File System."
+    },
+    {
+     "id": "hadoop-distributed-file-system-hdfs-high-level-architecture",
+     "title": "High-level Architecture",
+     "lead": "This lesson gives a brief overview of HDFS’s architecture."
+    },
+    {
+     "id": "deep-dive",
+     "title": "Deep Dive",
+     "lead": "Let's explore some of HDFS's design components."
+    },
+    {
+     "id": "hadoop-distributed-file-system-hdfs-anatomy-of-a-read-operation",
+     "title": "Anatomy of a Read Operation"
+    },
+    {
+     "id": "hadoop-distributed-file-system-hdfs-anatomy-of-a-write-operation",
+     "title": "Anatomy of a Write Operation",
+     "lead": "This lesson explains how HDFS handles a write operation."
+    },
+    {
+     "id": "data-integrity-caching",
+     "title": "Data Integrity & Caching",
+     "lead": "Let's explore how HDFS ensures data integrity and implements caching."
+    },
+    {
+     "id": "fault-tolerance",
+     "title": "Fault Tolerance",
+     "lead": "Let's explore what techniques HDFS uses for fault tolerance."
+    },
+    {
+     "id": "hdfs-high-availability-ha",
+     "title": "HDFS High Availability (HA)",
+     "lead": "Let's learn how HDFS achieves high availability."
+    },
+    {
+     "id": "hdfs-characteristics",
+     "title": "HDFS Characteristics",
+     "lead": "This lesson will explore some important aspects of HDFS architecture."
+    },
+    {
+     "id": "summary-hdfs",
+     "title": "Summary: HDFS",
+     "lead": "Here is a quick summary of HDFS for you!"
+    }
+   ]
+  },
+  {
+   "title": "BigTable",
+   "chapters": [
+    {
+     "id": "bigtable-introduction",
+     "title": "BigTable: Introduction",
+     "lead": "Let’s explore Bigtable and its use cases."
+    },
+    {
+     "id": "bigtable-data-model",
+     "title": "BigTable Data Model",
+     "lead": "This lesson explains how BigTable models its data."
+    },
+    {
+     "id": "system-apis",
+     "title": "System APIs",
+     "lead": "Let's explore BigTable APIs."
+    },
+    {
+     "id": "partitioning-and-high-level-architecture",
+     "title": "Partitioning and High-level Architecture",
+     "lead": "This lesson gives a brief overview of BigTable's architecture and its data partitioning scheme."
+    },
+    {
+     "id": "sstable",
+     "title": "SSTable",
+     "lead": "Let's learn how Tablets are stored in SSTables."
+    },
+    {
+     "id": "gfs-and-chubby",
+     "title": "GFS and Chubby",
+     "lead": "Let's explore how BigTable interacts with GFS and Chubby."
+    },
+    {
+     "id": "bigtable-components",
+     "title": "Bigtable Components",
+     "lead": "Let's explore the components that constitute BigTable."
+    },
+    {
+     "id": "working-with-tablets",
+     "title": "Working with Tablets"
+    },
+    {
+     "id": "the-life-of-bigtables-read-write-operations",
+     "title": "The Life of BigTable's Read & Write Operations",
+     "lead": "Let's explore how BigTable handles its read and write operations."
+    },
+    {
+     "id": "fault-tolerance-and-compaction",
+     "title": "Fault Tolerance and Compaction",
+     "lead": "Let's learn how BigTable handles fault tolerance and data compaction."
+    },
+    {
+     "id": "bigtable-refinements",
+     "title": "BigTable Refinements",
+     "lead": "This lesson will explore different refinements that BigTable implemented."
+    },
+    {
+     "id": "bigtable-characteristics",
+     "title": "BigTable Characteristics",
+     "lead": "This lesson will explore some miscellaneous characteristics of BigTable."
+    },
+    {
+     "id": "summary-bigtable",
+     "title": "Summary: BigTable",
+     "lead": "Here is a quick summary of BigTable for you!"
+    }
+   ]
+  },
+  {
+   "title": "System Design Patterns",
+   "chapters": [
+    {
+     "id": "introduction-system-design-patterns",
+     "title": "Introduction: System Design Patterns",
+     "lead": "This lesson gives a brief overview of the system design patterns that we will be discussing in the following lessons."
+    },
+    {
+     "id": "1-bloom-filters",
+     "title": "1. Bloom Filters",
+     "lead": "Let's learn about Bloom filters and how to use them."
+    },
+    {
+     "id": "2-consistent-hashing",
+     "title": "2. Consistent Hashing",
+     "lead": "Let's learn about Consistent Hashing and its usage."
+    },
+    {
+     "id": "3-quorum",
+     "title": "3. Quorum",
+     "lead": "Let's learn about Quorum and its usage."
+    },
+    {
+     "id": "4-leader-and-follower",
+     "title": "4. Leader and Follower",
+     "lead": "Let's learn about leader and followers patterns and its usage in distributed systems."
+    },
+    {
+     "id": "5-write-ahead-log",
+     "title": "5. Write-ahead Log",
+     "lead": "Let's learn about write-ahead logging and its usage."
+    },
+    {
+     "id": "6-segmented-log",
+     "title": "6. Segmented Log",
+     "lead": "Let's learn about segmented log and its usage."
+    },
+    {
+     "id": "7-high-water-mark",
+     "title": "7. High-Water Mark",
+     "lead": "Let's learn about high-water mark and its usage."
+    },
+    {
+     "id": "8-lease",
+     "title": "8. Lease",
+     "lead": "Let's learn about lease and its usage."
+    },
+    {
+     "id": "9-heartbeat",
+     "title": "9. Heartbeat",
+     "lead": "Let's learn about heartbeat and its usage."
+    },
+    {
+     "id": "10-gossip-protocol",
+     "title": "10. Gossip Protocol",
+     "lead": "Let's learn about gossip protocol and its usage."
+    },
+    {
+     "id": "11-phi-accrual-failure-detection",
+     "title": "11. Phi Accrual Failure Detection",
+     "lead": "Let's learn about Phi Accrual Failure Detection algorithm and its usage."
+    },
+    {
+     "id": "12-split-brain",
+     "title": "12. Split Brain",
+     "lead": "Let's learn about split-brain and how to handle it."
+    },
+    {
+     "id": "13-fencing",
+     "title": "13. Fencing",
+     "lead": "Let's learn about fencing and its usage."
+    },
+    {
+     "id": "14-checksum",
+     "title": "14. Checksum",
+     "lead": "Let's learn about checksum and its usage."
+    },
+    {
+     "id": "15-vector-clocks",
+     "title": "15. Vector Clocks",
+     "lead": "Let's learn about vector clocks and their usage."
+    },
+    {
+     "id": "16-cap-theorem",
+     "title": "16. CAP Theorem",
+     "lead": "Let's learn about the CAP theorem and its usage in distributed systems."
+    },
+    {
+     "id": "17-pacelc-theorem",
+     "title": "17. PACELC Theorem",
+     "lead": "Let's learn about PACELC theorem and its usage."
+    },
+    {
+     "id": "18-hinted-handoff",
+     "title": "18. Hinted Handoff",
+     "lead": "Let's learn about hinted handoff and its usage."
+    },
+    {
+     "id": "19-read-repair",
+     "title": "19. Read Repair",
+     "lead": "Let's learn about read repair and its usage."
+    },
+    {
+     "id": "20-merkle-trees",
+     "title": "20. Merkle Trees",
+     "lead": "Let's learn about Merkle trees and their usage."
+    }
+   ]
+  }
+ ]
+}

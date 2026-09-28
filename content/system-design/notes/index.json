@@ -1,0 +1,87 @@
+{
+ "id": "notes",
+ "title": "System Design Interview Notes",
+ "short": "Condensed Notes",
+ "description": "Junfan Zhu's condensed review notes of the classic course, for a fast refresher before an interview.",
+ "source": "Grokking the System Design Interview.md",
+ "download": "/course-assets/system-design/sources/notes.pdf",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "back-of-the-envelope-estimation",
+     "title": "Back-of-the-envelope estimation"
+    },
+    {
+     "id": "shortening-url",
+     "title": "Shortening URL"
+    },
+    {
+     "id": "dropbox",
+     "title": "DropBox"
+    },
+    {
+     "id": "facebook-messenger",
+     "title": "Facebook Messenger"
+    },
+    {
+     "id": "youtube",
+     "title": "YouTube"
+    },
+    {
+     "id": "designing-typeahead-suggestion",
+     "title": "Designing Typeahead Suggestion"
+    },
+    {
+     "id": "api-rate-limiter",
+     "title": "API Rate Limiter"
+    },
+    {
+     "id": "web-crawler",
+     "title": "Web Crawler"
+    },
+    {
+     "id": "facebooks-newsfeed",
+     "title": "Facebook’s Newsfeed"
+    },
+    {
+     "id": "yelp",
+     "title": "Yelp"
+    },
+    {
+     "id": "ticket-master",
+     "title": "Ticket Master"
+    },
+    {
+     "id": "load-balancing",
+     "title": "Load Balancing"
+    },
+    {
+     "id": "caching",
+     "title": "Caching"
+    },
+    {
+     "id": "data-partitioning",
+     "title": "Data Partitioning"
+    },
+    {
+     "id": "proxy-server",
+     "title": "Proxy Server"
+    },
+    {
+     "id": "sql-nosql",
+     "title": "SQL & NoSQL"
+    },
+    {
+     "id": "cap-theorem",
+     "title": "CAP Theorem"
+    },
+    {
+     "id": "consistent-hashing",
+     "title": "Consistent Hashing"
+    }
+   ]
+  }
+ ]
+}

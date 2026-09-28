@@ -87,3 +87,27 @@ export const COURSE_SCOPE = "grokking";
 
 /** Progress key for a list problem, kept apart from course lesson ids, which can share slugs. */
 export const lcProgressId = (slug: string) => `lc:${slug}`;
+
+/* ---------------------------------------------------------------- system design books */
+
+export interface DesignChapterMeta {
+  id: string;
+  title: string;
+  /** The chapter's one-paragraph introduction. */
+  lead?: string;
+  difficulty?: Difficulty;
+  /** Real products that solve the same problem, e.g. "bit.ly, goo.gl". */
+  similar?: string;
+}
+
+/** A system design book, written by scripts/ingest/system_design.py as content/system-design/<id>/index.json. */
+export interface DesignBook {
+  id: string;
+  title: string;
+  short: string;
+  description: string;
+  source: string;
+  /** Public URL of the original document, when it is published alongside the book. */
+  download?: string;
+  parts: { title: string; chapters: DesignChapterMeta[] }[];
+}

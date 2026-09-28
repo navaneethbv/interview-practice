@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Interview Practice: agent guide
 
-LeetCode-style practice site: coding problems with an in-browser editor and hidden tests, pattern lessons, and system design pages.
+LeetCode-style practice site: coding problems with an in-browser editor and hidden tests, pattern lessons, and a read-only system design book reader.
 Next.js App Router on Vercel, Tailwind CSS v4, Monaco editor, Shiki, KaTeX.
 See README.md for features and setup.
 
@@ -19,7 +19,8 @@ See README.md for features and setup.
 - `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`
 - `npm run tests:build [-- --java] [ids...]` fills and verifies expected outputs for problem specs.
 - `npm run ingest:grokking -- <folder>` regenerates `content/courses/grokking/` and `public/course-assets/grokking/`.
-- `npm run ingest:doc -- <file.pdf|file.html> [--chapters] [--split HEADING] [--out DIR]` imports system design pages.
+- `npm run ingest:system-design -- <grokking|advanced|notes> <source>` regenerates one system design book in `content/system-design/<book>/` (needs `pip install pdfplumber`).
+  Do not hand-edit `content/system-design/**`; change `scripts/ingest/system_design.py` and re-run it.
 
 Run lint, typecheck and `npm test` before committing.
 After touching the judge or any spec, run `npm run tests:build -- --java`.
