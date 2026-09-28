@@ -515,37 +515,36 @@ function lineKind(line: Line): ParaKind {
   return "p";
 }
 
-function addPdfItem(state: PdfRenderState, item: Item, body: number, isRunningHeader: (line: Line) => boolean) {
-  if (state.renderedPages.has(item.page) && !state.insertedRenderedPage.has(item.page)) {
-    flushParagraph(state);
-    state.nodes.push({ kind: "block", block: { t: "img", src: state.renderedPages.get(item.page)!, w: 612, h: 792, alt: `Diagram page ${item.page}` } });
-    state.insertedRenderedPage.add(item.page);
-  }
-  if (item.kind === "img") {
-    flushParagraph(state);
-    state.nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(item.src), "png"), w: item.w, h: item.h } }); // NOSONAR nosemgrep -- item.src was reduced to a basename and bounded to the private importer directory
-    state.last = null;
-    return;
-  }
-  const line = item.line;
-  if (isRunningHeader(line)) return;
-  const ratio = line.size / body;
-  if (isPdfHeading(line, ratio)) {
-    flushParagraph(state);
-    const level = headingLevel(ratio);
-    const previous = state.nodes[state.nodes.length - 1];
-    if (previous?.kind === "heading" && previous.level === level && state.last?.page === line.page && line.top - state.last.top < line.height * 1.8) {
-      previous.text += ` ${line.text}`;
-    } else {
-      state.nodes.push({ kind: "heading", level, text: line.text, page: line.page, top: line.top });
-    }
-    state.last = line;
-    return;
-  }
+function addRenderedPage(state: PdfRenderState, page: number) {
+  const src = state.renderedPages.get(page);
+  if (!src || state.insertedRenderedPage.has(page)) return;
+  flushParagraph(state);
+  state.nodes.push({ kind: "block", block: { t: "img", src, w: 612, h: 792, alt: `Diagram page ${page}` } });
+  state.insertedRenderedPage.add(page);
+}
+
+function addPdfImage(state: PdfRenderState, item: Extract<Item, { kind: "img" }>) {
+  flushParagraph(state);
+  state.nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(item.src), "png"), w: item.w, h: item.h } }); // NOSONAR nosemgrep -- item.src was reduced to a basename and bounded to the private importer directory
+  state.last = null;
+}
+
+function addPdfHeading(state: PdfRenderState, line: Line, ratio: number) {
+  flushParagraph(state);
+  const level = headingLevel(ratio);
+  const previous = state.nodes.at(-1);
+  const joinsPrevious = previous?.kind === "heading" && previous.level === level && state.last?.page === line.page && line.top - state.last.top < line.height * 1.8;
+  if (joinsPrevious && previous?.kind === "heading") previous.text += ` ${line.text}`;
+  else state.nodes.push({ kind: "heading", level, text: line.text, page: line.page, top: line.top });
+  state.last = line;
+}
+
+function addPdfText(state: PdfRenderState, line: Line) {
   const kind = lineKind(line);
-  const gap = state.last && state.last.page === line.page ? line.top - (state.last.top + state.last.height) : Infinity;
+  const last = state.last;
+  const gap = last?.page === line.page ? line.top - (last.top + last.height) : Infinity;
   const sameBlock = state.para.length > 0 && kind === state.paraKind && (kind === "pre" ? gap < line.height : gap < line.height * 0.6) && !(kind === "li" && BULLET.test(line.text));
-  const previousText = state.para[state.para.length - 1] ?? "";
+  const previousText = state.para.at(-1) ?? "";
   const acrossPage = state.para.length > 0 && kind === "p" && state.paraKind === "p" && state.last !== null && state.last.page !== line.page && !/[.:?!]$/.test(previousText);
   if (!sameBlock && !acrossPage) {
     flushParagraph(state);
@@ -553,6 +552,21 @@ function addPdfItem(state: PdfRenderState, item: Item, body: number, isRunningHe
   }
   state.para.push(line.text);
   state.last = line;
+}
+
+function addPdfItem(state: PdfRenderState, item: Item, body: number, isRunningHeader: (line: Line) => boolean) {
+  addRenderedPage(state, item.page);
+  if (item.kind === "img") {
+    addPdfImage(state, item);
+    return;
+  }
+  if (isRunningHeader(item.line)) return;
+  const ratio = item.line.size / body;
+  if (isPdfHeading(item.line, ratio)) {
+    addPdfHeading(state, item.line, ratio);
+    return;
+  }
+  addPdfText(state, item.line);
 }
 
 function buildPdfNodes(file: string, tmp: string, items: Item[], pages: number, lineCounts: Map<string, number>) {
@@ -568,7 +582,7 @@ function buildPdfNodes(file: string, tmp: string, items: Item[], pages: number, 
 function importPdf(file: string): Article[] {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pdf-import-"));
   try {
-    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], {
+    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], { // NOSONAR nosemgrep -- file is the validated read-only CLI input and the output prefix is confined to tmp
       maxBuffer: 1 << 30,
     });
     const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true }); // NOSONAR nosemgrep -- doc.xml is generated inside the private importer directory

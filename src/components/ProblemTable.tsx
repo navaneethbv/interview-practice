@@ -12,7 +12,7 @@ import { DifficultyText, StatusIcon } from "./ui";
 type StatusFilter = "all" | "solved" | "attempted" | "todo";
 
 function secureRandomIndex(length: number) {
-  const range = 0x1_0000_0000;
+  const range = 2 ** 32;
   const limit = range - (range % length);
   const random = new Uint32Array(1);
   do {

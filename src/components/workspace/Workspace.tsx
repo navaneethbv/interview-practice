@@ -203,6 +203,12 @@ function errorOutcome(message: string): RunOutcome {
   return { verdict: "Internal Error", message, cases: [], passed: 0, total: 0 };
 }
 
+function updateEditableCase(cases: EditableCase[], caseIndex: number, fieldIndex: number, value: string) {
+  return cases.map((testCase, index) =>
+    index === caseIndex ? { ...testCase, fields: testCase.fields.map((field, fieldIndexInCase) => (fieldIndexInCase === fieldIndex ? value : field)) } : testCase,
+  );
+}
+
 /**
  * The workspace restores code, language and history from localStorage, which only exists in
  * the browser, so it renders a static shell on the server and mounts after hydration.
@@ -274,6 +280,18 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
   const names = useMemo(() => (spec ? fieldNames(spec) : []), [spec]);
   const note = spec && spec.kind !== "design" ? compareNote(spec.compare) : undefined;
+
+  const onCaseChange = useCallback((caseIndex: number, fieldIndex: number, value: string) => {
+    setCases((current) => updateEditableCase(current, caseIndex, fieldIndex, value));
+  }, []);
+  const onCaseAdd = useCallback(() => {
+    setCases((current) => [...current, { id: crypto.randomUUID(), fields: [...(current[activeCase]?.fields ?? names.map(() => ""))] }]);
+    setActiveCase(cases.length);
+  }, [activeCase, cases.length, names]);
+  const onCaseRemove = useCallback((caseIndex: number) => {
+    setCases((current) => current.filter((_, index) => index !== caseIndex));
+    setActiveCase((current) => Math.max(0, current >= caseIndex ? current - 1 : current));
+  }, []);
 
   const inputsFor = useCallback(
     (tests: AnyTestCase[]) =>
@@ -473,22 +491,9 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
             cases={cases}
             active={Math.min(activeCase, cases.length - 1)}
             onActive={setActiveCase}
-            onChange={(i, f, value) =>
-              setCases((cs) =>
-                cs.map((c, k) => (k === i ? { ...c, fields: c.fields.map((x, j) => (j === f ? value : x)) } : c)),
-              )
-            }
-            onAdd={() => {
-              setCases((cs) => [
-                ...cs,
-                { id: crypto.randomUUID(), fields: [...(cs[activeCase]?.fields ?? names.map(() => ""))] },
-              ]);
-              setActiveCase(cases.length);
-            }}
-            onRemove={(i) => {
-              setCases((cs) => cs.filter((_, k) => k !== i));
-              setActiveCase((a) => Math.max(0, a >= i ? a - 1 : a));
-            }}
+            onChange={onCaseChange}
+            onAdd={onCaseAdd}
+            onRemove={onCaseRemove}
           />;
           return <ResultPanel view={result} active={activeResult} onActive={setActiveResult} running={running} />;
         })()}
