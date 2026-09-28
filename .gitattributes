@@ -1,0 +1,2 @@
+# Preserve verbatim source archives exactly as copied from the source repositories.
+public/course-assets/system-design/sources/awesome-senior-system-design-notes.md -text -diff

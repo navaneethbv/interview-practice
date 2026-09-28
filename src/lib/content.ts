@@ -181,6 +181,9 @@ export interface DesignArticle {
   title: string;
   summary?: string;
   source?: string;
+  sourceFiles?: string[];
+  sourceFile?: string;
+  verbatim?: boolean;
   /** The prompt to practice against, shown first. */
   prompt: Block[];
   /** The reference design, hidden until revealed. */
@@ -194,7 +197,10 @@ export const listDesignArticles = cache((): DesignArticle[] => {
     .readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .map((f) => readJson<DesignArticle>(path.join(dir, f))!)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => {
+      const rank = (article: DesignArticle) => (article.verbatim ? 2 : article.source?.toLowerCase().includes("advanced") ? 1 : 0);
+      return rank(a) - rank(b) || a.title.localeCompare(b.title);
+    });
 });
 
 export const getDesignArticle = cache((id: string): DesignArticle | null => {

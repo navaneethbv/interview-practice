@@ -8,6 +8,17 @@ export const metadata: Metadata = { title: "System Design" };
 
 export default function SystemDesignPage() {
   const articles = listDesignArticles();
+  const groups = articles.reduce<Map<string, typeof articles>>((map, article) => {
+    const label = article.verbatim
+      ? "Verbatim source archives"
+      : article.source?.toLowerCase().includes("advanced")
+      ? "Advanced distributed systems"
+      : article.source?.toLowerCase().includes("system design")
+        ? "System design case studies"
+        : "Imported designs";
+    map.set(label, [...(map.get(label) ?? []), article]);
+    return map;
+  }, new Map());
   return (
     <>
       <NavBar />
@@ -19,19 +30,31 @@ export default function SystemDesignPage() {
         </p>
 
         {articles.length ? (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {articles.map((a) => (
-              <Link
-                key={a.id}
-                href={`/system-design/${a.id}`}
-                className="group rounded-xl border border-line bg-layer-1 p-5 transition-colors hover:border-line-strong"
-              >
-                <h2 className="mb-1 flex items-center gap-1.5 font-semibold">
-                  {a.title}
-                  <ArrowRight size={15} className="text-fg-3 transition-transform group-hover:translate-x-0.5" />
-                </h2>
-                {a.summary && <p className="line-clamp-3 text-sm text-fg-2">{a.summary}</p>}
-              </Link>
+          <div className="space-y-10">
+            {[...groups.entries()].map(([label, entries]) => (
+              <section key={label} aria-labelledby={`design-group-${label.replaceAll(" ", "-").toLowerCase()}`}>
+                <div className="mb-3 flex items-baseline justify-between gap-3">
+                  <h2 id={`design-group-${label.replaceAll(" ", "-").toLowerCase()}`} className="text-lg font-semibold">
+                    {label}
+                  </h2>
+                  <span className="text-xs text-fg-3">{entries.length} pages</span>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {entries.map((a) => (
+                    <Link
+                      key={a.id}
+                      href={`/system-design/${a.id}`}
+                      className="group rounded-xl border border-line bg-layer-1 p-5 transition-colors hover:border-line-strong"
+                    >
+                      <h3 className="mb-1 flex items-center gap-1.5 font-semibold">
+                        {a.title}
+                        <ArrowRight size={15} className="text-fg-3 transition-transform group-hover:translate-x-0.5" />
+                      </h3>
+                      {a.summary && <p className="line-clamp-3 text-sm text-fg-2">{a.summary}</p>}
+                    </Link>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         ) : (

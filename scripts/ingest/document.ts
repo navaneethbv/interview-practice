@@ -6,9 +6,10 @@
  * ...) or at the heading given with --split.
  *
  * Usage:
- *   npm run ingest:doc -- <file.pdf|file.html> [--title "Design X"] [--split "Step 2"] [--chapters] [--out dir]
+ *   npm run ingest:doc -- <file.pdf|file.html> [--title "Design X"] [--split "Step 2"] [--prefix ID] [--chapters|--lessons] [--out dir]
  *
  *   --chapters  split a whole book into one page per top-level heading (chapter)
+ *   --lessons   split an advanced PDF at its page-level lesson headings
  *   --out       write somewhere other than content/system-design (useful for a dry run)
  */
 import { execFileSync } from "node:child_process";
@@ -24,23 +25,27 @@ interface Args {
   file: string;
   title?: string;
   split?: string;
+  prefix?: string;
   chapters: boolean;
+  lessons: boolean;
   out: string;
 }
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { file: "", chapters: false, out: path.join(process.cwd(), "content/system-design") };
+  const args: Args = { file: "", chapters: false, lessons: false, out: path.join(process.cwd(), "content/system-design") };
   // Keep in sync with DEFAULT_OUT below.
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--title") args.title = argv[++i];
     else if (a === "--split") args.split = argv[++i];
+    else if (a === "--prefix") args.prefix = argv[++i];
     else if (a === "--chapters") args.chapters = true;
+    else if (a === "--lessons") args.lessons = true;
     else if (a === "--out") args.out = path.resolve(argv[++i]);
     else args.file = a;
   }
   if (!args.file || !fs.existsSync(args.file)) {
-    console.error("Usage: npm run ingest:doc -- <file.pdf|file.html> [--title T] [--split HEADING] [--chapters]");
+    console.error("Usage: npm run ingest:doc -- <file.pdf|file.html> [--title T] [--split HEADING] [--prefix ID] [--chapters|--lessons]");
     process.exit(1);
   }
   return args;
@@ -85,7 +90,9 @@ function saveAsset(buf: Buffer, ext: string): string {
 /* ---------------------------------------------------------------- sections */
 
 /** A flat document: headings and content in reading order. */
-type Node = { kind: "heading"; level: number; text: string } | { kind: "block"; block: Block };
+type Node =
+  | { kind: "heading"; level: number; text: string; page?: number; top?: number }
+  | { kind: "block"; block: Block };
 
 interface Article {
   title: string;
@@ -94,6 +101,22 @@ interface Article {
 
 const SOLUTION_HEADING =
   /\b(high[- ]level design|architecture|detailed design|design deep dive|deep dive|solution|component design|database (design|schema)|data model|step 2|step 3|propose)\b/i;
+
+const NUMBERED_SECTION_HEADING =
+  /^\d{1,2}[.)]\s+(requirements|capacity|system (apis?|interface)|database|high[- ]level|detailed|component|basic system|data partition|cache|load balanc|purging|telemetry|security|fault|replication|ranking|concurrency|design considerations|some design)/i;
+
+const STEP_HEADING = /^step\s+[2-7]\b/i;
+
+function normalizePdfText(text: string) {
+  return text
+    .replaceAll("\uFFFD", "")
+    .replaceAll("ﬁ", "fi")
+    .replaceAll("ﬂ", "fl")
+    .replace(/\bCon\s+ict/gi, "Conflict")
+    .replace(/\bwork\s+ow(s?)\b/gi, "workflow$1")
+    .replace(/\bre\s+nements\b/gi, "refinements")
+    .replace(/\blesystem\b/g, "filesystem");
+}
 
 function nodesToBlocks(nodes: Node[]): Block[] {
   const blocks: Block[] = [];
@@ -282,6 +305,35 @@ function mergeRuns(items: Item[]) {
   }
 }
 
+/**
+ * Advanced system-design PDFs often draw diagrams as vector shapes instead of embedded images.
+ * The text extractor preserves their labels but cannot preserve the shapes, so identify pages
+ * with several short architecture labels and capture those pages as a readable fallback image.
+ */
+function pageLooksLikeVectorDiagram(items: Item[]): boolean {
+  const lines = items
+    .filter((item): item is Extract<Item, { kind: "line" }> => item.kind === "line")
+    .map((item) => item.line);
+  if (lines.length < 8) return false;
+  const labels = lines.filter(
+    (line) =>
+      line.text.length <= 42 &&
+      /\b(server|client|node|broker|leader|follower|replica|partition|database|cache|queue|consumer|producer|master|worker|request|response|key|value)\b/i.test(
+        line.text,
+      ),
+  );
+  const paragraphs = lines.filter((line) => line.text.length >= 100);
+  return labels.length >= 3 && labels.length >= paragraphs.length && paragraphs.length <= 4;
+}
+
+function renderPage(file: string, page: number, tmp: string): string {
+  const prefix = path.join(tmp, `rendered-${page}`);
+  execFileSync("pdftoppm", ["-f", String(page), "-l", String(page), "-png", "-r", "120", "-singlefile", file, prefix], {
+    maxBuffer: 1 << 30,
+  });
+  return `${prefix}.png`;
+}
+
 function importPdf(file: string): Article[] {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pdf-import-"));
   try {
@@ -309,7 +361,7 @@ function importPdf(file: string): Article[] {
           const top = Number($(c).attr("top"));
           if (tag === "text") {
             const font = fonts.get($(c).attr("font") ?? "") ?? { size: 10, mono: false };
-            const text = $(c).text().replace(/\s+/g, " ").trim();
+            const text = normalizePdfText($(c).text().replace(/\s+/g, " ").trim());
             if (!text) return;
             const bold = $(c).find("b").text().replace(/\s+/g, " ").trim() === text;
             const line = { page, top, height: Number($(c).attr("height")), size: font.size, mono: font.mono, bold, text };
@@ -334,6 +386,16 @@ function importPdf(file: string): Article[] {
       /^\d+$/.test(l.text) || (pages > 4 && (lineCounts.get(l.text) ?? 0) > pages * 0.3 && l.text.length < 80);
 
     const nodes: Node[] = [];
+    const pageItems = new Map<number, Item[]>();
+    for (const item of items) pageItems.set(item.page, [...(pageItems.get(item.page) ?? []), item]);
+    const renderedPages = new Map<number, string>();
+    if (ARGS.lessons) {
+      for (const [page, pageContents] of pageItems) {
+        if (pageContents.some((item) => item.kind === "img") || !pageLooksLikeVectorDiagram(pageContents)) continue;
+        const rendered = renderPage(file, page, tmp);
+        if (fs.existsSync(rendered)) renderedPages.set(page, saveAsset(fs.readFileSync(rendered), "png"));
+      }
+    }
     let para: string[] = [];
     let paraKind: ParaKind = "p";
     let last: Line | null = null;
@@ -342,14 +404,23 @@ function importPdf(file: string): Article[] {
       let html: string;
       if (paraKind === "pre") html = `<pre><code>${escapeHtml(para.join("\n"))}</code></pre>`;
       else {
-        const text = escapeHtml(para.join(" ").replace(/(\w)-\s(?=[a-z])/g, "$1"));
+        const text = escapeHtml(normalizePdfText(para.join(" ").replace(/(\w)-\s(?=[a-z])/g, "$1")));
         html = paraKind === "li" ? `<ul><li>${text.replace(/^[•●▪◦\-–]\s*/, "")}</li></ul>` : `<p>${text}</p>`;
       }
       nodes.push({ kind: "block", block: { t: "html", html } });
       para = [];
     };
 
+    const insertedRenderedPage = new Set<number>();
     for (const it of items) {
+      if (renderedPages.has(it.page) && !insertedRenderedPage.has(it.page)) {
+        flush();
+        nodes.push({
+          kind: "block",
+          block: { t: "img", src: renderedPages.get(it.page)!, w: 612, h: 792, alt: `Diagram page ${it.page}` },
+        });
+        insertedRenderedPage.add(it.page);
+      }
       if (it.kind === "img") {
         flush();
         nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(it.src), "png"), w: it.w, h: it.h } });
@@ -360,15 +431,16 @@ function importPdf(file: string): Article[] {
       if (isRunningHeader(l)) continue;
       const ratio = l.size / body;
       // Short, fully bold lines at body size are section headings in many books ("Step 1 - ...").
-      const boldHeading = l.bold && ratio >= 0.95 && l.text.length < 100 && !/[.,;:]$/.test(l.text) && !BULLET.test(l.text);
-      if ((ratio >= 1.2 && l.text.length < 120) || boldHeading) {
+      const boldHeading = l.bold && ratio >= 1.2 && l.text.length < 100 && !/[.,;:]$/.test(l.text) && !BULLET.test(l.text);
+      const numberedSectionHeading = NUMBERED_SECTION_HEADING.test(l.text);
+      if ((ratio >= 1.2 && l.text.length < 120) || boldHeading || numberedSectionHeading || STEP_HEADING.test(l.text)) {
         flush();
         const level = ratio >= 1.9 ? 1 : ratio >= 1.45 ? 2 : 3;
         const prev = nodes.at(-1);
         // Headings that wrap onto two lines arrive as consecutive heading lines.
         if (prev?.kind === "heading" && prev.level === level && last?.page === l.page && l.top - last.top < l.height * 1.8) {
           prev.text += ` ${l.text}`;
-        } else nodes.push({ kind: "heading", level, text: l.text });
+        } else nodes.push({ kind: "heading", level, text: l.text, page: l.page, top: l.top });
         last = l;
         continue;
       }
@@ -391,6 +463,7 @@ function importPdf(file: string): Article[] {
     flush();
 
     const title = ARGS.title ?? path.basename(file, path.extname(file));
+    if (ARGS.lessons) return splitLessons(nodes, title);
     return ARGS.chapters ? splitChapters(nodes, title) : [{ title, nodes }];
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
@@ -425,6 +498,26 @@ function splitChapters(nodes: Node[], fallbackTitle: string): Article[] {
   return articles.filter((a) => a.nodes.some((n) => n.kind === "block"));
 }
 
+/**
+ * The advanced guide uses one large lesson heading near the top of each page.
+ * Its internal sections use the same heading levels, so page position is the stable boundary.
+ */
+function splitLessons(nodes: Node[], fallbackTitle: string): Article[] {
+  const startsLesson = (n: Node): n is Extract<Node, { kind: "heading" }> =>
+    n.kind === "heading" && n.page !== undefined && n.top !== undefined && n.top <= 90 && n.text.length > 3;
+  const articles: Article[] = [];
+  let current: Article | null = null;
+  for (const n of nodes) {
+    if (startsLesson(n)) {
+      current = { title: normalizePdfText(n.text.replace(/\s+#$/, "").trim()), nodes: [] };
+      articles.push(current);
+    } else if (current) {
+      current.nodes.push(n);
+    }
+  }
+  return articles.length ? articles.filter((a) => a.nodes.some((n) => n.kind === "block")) : [{ title: fallbackTitle, nodes }];
+}
+
 /* ---------------------------------------------------------------- main */
 
 function main() {
@@ -432,13 +525,18 @@ function main() {
   const articles = ext === ".pdf" ? importPdf(ARGS.file) : importHtml(ARGS.file);
   fs.mkdirSync(ARGS.out, { recursive: true });
   let written = 0;
+  const ids = new Map<string, number>();
   for (const a of articles) {
     const json = toArticleJson(a, ARGS.split);
     if (!json.id) continue;
-    fs.writeFileSync(path.join(ARGS.out, `${json.id}.json`), JSON.stringify(json, null, 1));
+    const count = ids.get(json.id) ?? 0;
+    ids.set(json.id, count + 1);
+    const prefixedId = ARGS.prefix ? `${slugify(ARGS.prefix)}-${json.id}` : json.id;
+    const id = count === 0 ? prefixedId : `${prefixedId}-${count + 1}`;
+    fs.writeFileSync(path.join(ARGS.out, `${id}.json`), JSON.stringify({ ...json, id }, null, 1));
     written++;
     const refNote = json.reference.length ? `${json.reference.length} reference blocks` : "no reference split found";
-    console.log(`✓ ${json.id} (${json.prompt.length} prompt blocks, ${refNote})`);
+    console.log(`✓ ${id} (${json.prompt.length} prompt blocks, ${refNote})`);
   }
   console.log(`\nImported ${written} page(s) into ${path.relative(process.cwd(), ARGS.out) || "."}`);
 }

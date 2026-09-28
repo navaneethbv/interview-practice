@@ -1,0 +1,13 @@
+{
+ "id": "advanced-bigtable-introduction",
+ "title": "BigTable: Introduction",
+ "summary": "Let’s explore Bigtable and its use cases.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let’s explore Bigtable and its use cases.</p><p>We'll cover the following</p><ul><li>Goal</li></ul><ul><li>What is BigTable?</li></ul><ul><li>Background</li></ul><ul><li>BigTable use cases</li></ul><h1>Goal #</h1><p>Design a distributed and scalable system that can store a huge amount of structured data. The data will be indexed by a row key where each row can have an unbounded number of columns.</p><h1>What is BigTable? #</h1><p>BigTable is a distributed and massively scalable wide-column store. It is designed to store huge sets of structured data. As its name suggests, BigTable provides storage for very big tables (often in the terabyte range).</p><p>In terms of the CAP theorem, BigTable is a CP system, i.e., it has strictly consistent reads and writes. BigTable can be used as an input source or output destination for MapReduce (https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html) jobs.</p>"
+  }
+ ],
+ "reference": []
+}

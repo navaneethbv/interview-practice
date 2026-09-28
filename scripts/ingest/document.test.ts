@@ -10,14 +10,14 @@ const project = process.cwd();
 const tsx = path.join(project, "node_modules/tsx/dist/cli.mjs");
 const importer = path.join(project, "scripts/ingest/document.ts");
 
-function importHtml(html: string) {
+function importHtml(html: string, args: string[] = []) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "document-import-test-"));
   const inputDir = path.join(root, "input");
   const outputDir = path.join(root, "output");
   fs.mkdirSync(inputDir); // nosemgrep -- test fixture in a temp directory
   const input = path.join(inputDir, "source.html");
   fs.writeFileSync(input, html); // nosemgrep -- test fixture in a temp directory
-  execFileSync(process.execPath, [tsx, importer, input, "--out", outputDir], { cwd: project });
+  execFileSync(process.execPath, [tsx, importer, input, ...args, "--out", outputDir], { cwd: project });
   const articleFile = path.join(outputDir, fs.readdirSync(outputDir).find((file) => file.endsWith(".json"))!); // nosemgrep -- test fixture in a temp directory
   const article = JSON.parse(fs.readFileSync(articleFile, "utf8")) as { // nosemgrep -- test fixture in a temp directory
     prompt: Array<{ t: string; html?: string; src?: string }>;
@@ -78,4 +78,10 @@ test("HTML data URLs cannot publish active SVG content", (t) => {
   t.after(() => fs.rmSync(result.root, { recursive: true, force: true }));
   assert.equal(result.article.prompt.some((block) => block.t === "img"), false);
   assert.equal(fs.existsSync(path.join(result.outputDir, "assets")), false); // nosemgrep -- test fixture in a temp directory
+});
+
+test("a source prefix keeps imported collections addressable", (t) => {
+  const result = importHtml("<article><h1>Repeated lesson</h1><p>Notes</p></article>", ["--prefix", "advanced"]);
+  t.after(() => fs.rmSync(result.root, { recursive: true, force: true }));
+  assert.ok(fs.existsSync(path.join(result.outputDir, "advanced-repeated-lesson.json")));
 });

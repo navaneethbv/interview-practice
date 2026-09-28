@@ -1,0 +1,24 @@
+{
+ "id": "advanced-locks-sequencers-and-lock-delays",
+ "title": "Locks, Sequencers, and Lock-delays",
+ "summary": "Let's explore how Chubby implements Locks and Sequencers.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's explore how Chubby implements Locks and Sequencers.</p><p>We'll cover the following</p><ul><li>Locks</li></ul><ul><li>Sequencer</li></ul><ul><li>Lock-delay</li></ul><h1>Locks #</h1><p>Each chubby node can act as a reader-writer lock in one of the following two ways:</p><p>Exclusive: One client may hold the lock in exclusive (write) mode.</p><p>Shared: Any number of clients may hold the lock in shared (reader) mode.</p><h1>Sequencer #</h1><p>With distributed systems, receiving messages out of order is a problem; Chubby uses sequence numbers to solve this problem. After acquiring a lock on a file, a client can immediately request a ‘Sequencer,’ which is an opaque byte string describing the state of the lock:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/6e1a9d35013062d9.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 174"
+  },
+  {
+   "t": "html",
+   "html": "<p>Sequencer = Name of the lock + Lock mode ( exclusive or shared) + Lock generation number</p><p>An application’s master server can generate a sequencer and send it with any internal order to other servers. Application servers that receive orders from a primary can check with Chubby if the sequencer is still good and does not belong to a stale primary (to handle the ‘Brain split’ scenario).</p><p>Chubby leader</p><p>r() ce en S qu r) S ce tSe en Ge qu (se S</p><p>Application server (master) S Application servers (workers)</p><p>S</p><p>Application master generating a sequencer and passing it to worker servers</p><h1>Lock-delay #</h1><p>For file servers that do not support sequencers, Chubby provides a lock-delay period to protect against message delays and server restarts.</p><p>If a client releases a lock in the normal way, it is immediately available for other clients to claim, as one would expect. However, if a lock becomes free because the holder has failed or become inaccessible, the lock server will prevent other clients from claiming the lock for a period called the lockdelay.</p><p>Clients may specify any lock-delay up to some bound, defaults to one minute. This limit prevents a faulty client from making a lock (and thus some resource) unavailable for an arbitrarily long time.</p><p>While imperfect, the lock-delay protects unmodified servers and clients from everyday problems caused by message delays and restarts.</p><p>Back Next</p><p>File, Directories, and Handles Sessions and Events</p>"
+  }
+ ],
+ "reference": []
+}

@@ -1,0 +1,13 @@
+{
+ "id": "advanced-criticism-on-dynamo",
+ "title": "Criticism on Dynamo",
+ "summary": "The following list contains criticism on Dynamo’s design:",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>The following list contains criticism on Dynamo’s design:</p><p>Each Dynamo node contains the entire Dynamo routing table. This is likely to affect the scalability of the system as this routing table will grow larger and larger as nodes are added to the system.</p><p>Dynamo seems to imply that it strives for symmetry, where every node in the system has the same set of roles and responsibilities, but later, it specifies some nodes as seeds. Seeds are special nodes that are externally discoverable. These are used to help prevent logical partitions in the Dynamo ring. This seems like it may violate Dynamo’s symmetry principle.</p><p>Although security was not a concern as Dynamo was built for internal use only, DHTs can be susceptible to several different types of attacks. While Amazon can assume a trusted environment, sometimes a buggy software can act in a manner quite similar to a malicious actor.</p><p>Dynamo’s design can be described as a “ leaky abstraction,” where client applications are often asked to manage inconsistency, and the user experience is not 100% seamless. For example, inconsistencies in the shopping cart items may lead users to think that the website is buggy or unreliable.</p><h1>Datastores developed on the principles of Dynamo #</h1><p>Dynamo is not open-source and was built for services running within Amazon. Two of the most famous datastores built on the principles of Dynamo are Riak (https://riak.com/) and Cassandra (https://cassandra.apache.org/). Riak is a distributed NoSQL key-value data store that is highly available, scalable, fault-tolerant, and easy to operate. Cassandra is a distributed, decentralized, scalable, and highly available NoSQL wide-column database. Here is how they adopted different algorithms offered by Dynamo:</p><p>Technique Apache Riak Cassandra</p><p>Consistent Hashing with virtual nodes</p><p>Hinted Handoff</p><p>Anti-entropy with Merkle trees (manual repair)</p><p>Vector Clocks (last-write-wins)</p><p>Gossip-based protocol</p><p>Back Next</p><p>Gossip Protocol Summary: Dynamo</p>"
+  }
+ ],
+ "reference": []
+}

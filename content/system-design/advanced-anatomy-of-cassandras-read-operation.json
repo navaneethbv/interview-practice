@@ -1,0 +1,57 @@
+{
+ "id": "advanced-anatomy-of-cassandras-read-operation",
+ "title": "Anatomy of Cassandra's Read Operation",
+ "summary": "Let’s explore Cassandra’s read path.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let’s explore Cassandra’s read path.</p><p>We'll cover the following</p><ul><li>Caching</li></ul><ul><li>Reading from MemTable</li></ul><ul><li>Reading from SSTable</li></ul><ul><li>Bloom lters</li></ul><ul><li>How are SSTables stored on the disk?</li></ul><ul><li>Partition index summary le</li></ul><ul><li>Reading SSTable through key cache</li></ul><p>Let’s dig deeper into the components involved in Cassandra’s read path.</p><h1>Caching #</h1><p>To boost read performance, Cassandra provides three optional forms of caching:</p><ul><li>1. Row cache: The row cache, caches frequently read (or hot) rows. It</li></ul><p>stores a complete data row, which can be returned directly to the client if requested by a read operation. This can significantly speed up read access for frequently accessed rows, at the cost of more memory usage.</p><ul><li>2. Key cache: Key cache stores a map of recently read partition keys to</li></ul><p>their SSTable offsets. This facilitates faster read access into SSTables</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/e705af97984a33b2.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 85"
+  },
+  {
+   "t": "html",
+   "html": "<p>stored on disk and improves the read performance but could slow down the writes, as we have to update the Key cache for every write.</p><ul><li>3. Chunk cache: Chunk cache is used to store uncompressed chunks of</li></ul><p>data read from SSTable files that are accessed frequently.</p><h1>Reading from MemTable #</h1><p>As we know, data is sorted by the partition key and the clustering columns. Let’s take an example. Here we have two partitions of a table with partition keys ‘2’ and ‘5’. The clustering columns are the state and city names. When a read request comes in, the node performs a binary search on the partition key to find the required partition and then return the row.</p><p>Partition Key Clustering Key</p><p>ID State City Zip</p><p>2 OR Portland 97296</p><p>2 WA Kent 98042</p><p>Partition key = 2 2 WA Redmond 98052</p><p>2 WA Seattle 98170</p><p>5 CA Los Angeles 90021 Partition key = 5</p><p>5 CA Sacramento 94203</p><p>Reading data from MemTable</p><p>Here is the summary of Cassandra’s read path:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/a04d12bd9dd7fbcc.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 86"
+  },
+  {
+   "t": "html",
+   "html": "<p>Cache the key for index</p><p>Check MemTable 3 to see if data is present Return the row, if it is present in the cache Row Cache Key Cache</p><p>Add row to the cache, if MemTable 5 row caching is enabled Memory</p><p>Disk</p><p>Retrieve data from SSTable</p><p>SSTable CommitLog Hints</p><p>Anatomy of Cassandra's read path</p><h1>Reading from SSTable #</h1><h2>Bloom filters #</h2><p>Each SStable has a Bloom filter associated with it, which tells if a particular key is present in it or not. Bloom filters are used to boost the performance of read operations. Bloom filters are very fast, non-deterministic algorithms for testing whether an element is a member of a set. They are non-deterministic because it is possible to get a false-positive read from a Bloom filter, but false-negative is not possible. Bloom filters work by mapping the values in a data set into a bit array and condensing a larger data set into a digest string using a hash function. The digest, by definition, uses a much smaller amount of memory than the original data would. The filters are stored in memory and are used to improve performance by reducing the need for disk access on key lookups. Disk access is typically much slower than memory access. So, in a way, a Bloom filter is a special kind of key cache.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/69736725f5932301.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 87"
+  },
+  {
+   "t": "html",
+   "html": "<p>Cassandra maintains a Bloom filter for each SSTable. When a query is performed, the Bloom filter is checked first before accessing the disk. Because false negatives are not possible, if the filter indicates that the element does not exist in the set, it certainly does not; but if the filter thinks that the element is in the set, the disk is accessed to make sure.</p><h2>How are SSTables stored on the disk? #</h2><p>Each SSTable consists of two files:</p><ul><li>1. Data File: Actual data is stored in a data file. It has partitions and rows</li></ul><p>associated with those partitions. The partitions are in sorted order.</p><ul><li>2. Partition Index file: Stored on disk, partition index file stores the</li></ul><p>sorted partition keys mapped to their SSTable offsets. It enables locating a partition exactly in an SSTable rather than scanning data.</p><p>Partition Key Byte Offset</p><p>2 0</p><p>Partition Index file 9 1057</p><p>11 3034</p><p>12 3914</p><p>19 5450</p><p>22 8120</p><p>0 1057 3034 3914 5450 8120 | | | | | |</p><p>Data file 2 9 11 12 19 22</p><p>Reading from an SSTable</p><h2>Partition index summary file #</h2><p>Stored in memory, the Partition Index Summary file stores the summary of the Partition Index file. This is done for performance improvement.</p><p>Partition Index file Partition Index Summary file</p><p>Memory Disk</p><p>Partition Key Byte Offset Key range Byte Offset</p><p>0 2 0 0-9 0</p><p>9 1057 10-21 32</p><p>11 3034 22-27 80 32</p><p>12 3914</p><p>19 5450</p><p>22 8120</p><p>0 1057 3034 3914 5450 8120 | | | | | |</p><p>Data file 2 9 11 12 19 22</p><p>Reading from partition index summary le</p><p>If we want to read data for, here are the steps we need to follow key=12 (also shown in the figure below):</p><ul><li>1. In the Partition Index Summary file, find the key range in which the</li></ul><p>lies. This will give us offset (=32) into the Partition Index file. key=12</p><ul><li>2. Jump to offset 32 in the Partition Index file to search for the offset of</li></ul><p>. This will give us offset (=3914) into the SSTable file. key=12</p><ul><li>3. Jump to SSTable at offset 3914 to read the data for key=12</li></ul><p>Partition Index file Partition Index Summary file</p><p>Memory Disk</p><p>Partition Key Byte Offset Key range Byte Offset</p><p>0 2 0 0-9 0</p><p>9 1057 10-21 32</p><p>11 3034 22-27 80 32</p><p>12 3914</p><p>19 5450</p><p>22 8120</p><p>0 1057 3034 3914 5450 8120 | | | | | |</p><p>Data file 2 9 11 12 19 22</p><p>Reading from partition index summary le</p><h2>Reading SSTable through key cache #</h2><p>As the Key Cache stores a map of recently read partition keys to their SSTable offsets, it is the fastest way to find the required row in the SSTable.</p><p>Partition Index file Partition Index Summary file Key cache</p><p>Memory Disk</p><p>Partition Key Byte Offset Key range Byte Offset Key Byte Offset</p><p>0 2 0 0-9 0 12 3914</p><p>9 1057 10-21 32 22 8120</p><p>11 3034 22-27 80 32</p><p>12 3914</p><p>19 5450</p><p>80 22 8120</p><p>0 1057 3034 3914 5450 8120 | | | | | |</p><p>Data file 2 9 11 12 19 22</p><p>Reading SSTable through key cache</p><p>If data is not present in MemTable, we have to look it up in SSTables or other data structures like partition index, etc. Here is the summary of Cassandra’s read operation:</p><ul><li>1. First, Cassandra checks if the row is present in the Row Cache. If</li></ul><p>present, the data is returned, and the request ends.</p><ul><li>2. If the row is not present in the Row Cache, bloom filters are checked. If a</li></ul><p>bloom filter indicates that the data is present in an SSTable, Cassandra looks for the required partition in that SSTable.</p><ul><li>3. The key cache is checked for the partition key presence. A cache hit</li></ul><p>provides an offset for the partition in SSTable. This offset is then used to retrieve the partition, and the request completes.</p><ul><li>4. Cassandra continues to seek the partition in the partition summary and</li></ul><p>partition index. These structures also provide the partition offset in an SSTable which is then used to retrieve the partition and return. The caches are updated if present with the latest data read.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/678355b071f3d2d3.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 91"
+  },
+  {
+   "t": "html",
+   "html": "<p>yes yes Row Cache Found in Row Read Request Client enabled Cache</p><p>No</p><p>No</p><p>Bloom filters? Scan bloom filters (in RAM) of next SSTable</p><p>yes</p><p>yes Data File Key cache?</p><p>no</p><p>yes Partition Index Partition Index file Summary file</p><p>Cassandra's read operation workflow</p><p>Back Next</p><p>Anatomy of Cassandra's Write Operat… Compaction</p>"
+  }
+ ],
+ "reference": []
+}

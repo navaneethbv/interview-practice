@@ -1,0 +1,20 @@
+{
+ "id": "advanced-high-level-architecture-4",
+ "title": "High-level Architecture",
+ "summary": "This lesson gives a brief overview of Chubby’s architecture.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>This lesson gives a brief overview of Chubby’s architecture.</p><p>We'll cover the following</p><ul><li>Chubby common terms</li></ul><ul><li>Chubby cell</li></ul><ul><li>Chubby servers</li></ul><ul><li>Chubby client library</li></ul><ul><li>Chubby APIs</li></ul><ul><li>General</li></ul><ul><li>File</li></ul><ul><li>Locking</li></ul><ul><li>Sequencer</li></ul><h1>Chubby common terms #</h1><p>Before digging deep into Chubby’s architecture, let’s first go through some of its common terms:</p><h2>Chubby cell #</h2><p>A Chubby Cell basically refers to a Chubby cluster. Most Chubby cells are confined to a single data center or machine room, though there can be a Chubby cell whose replicas are separated by thousands of kilometers. A single Chubby cell has two main components, server and client, that communicate via remote procedure call (RPC).</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/81e98a4781a0b9bd.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 156"
+  }
+ ],
+ "reference": []
+}

@@ -1,0 +1,18 @@
+{
+ "id": "advanced-15-vector-clocks",
+ "title": "15. Vector Clocks",
+ "summary": "Let's learn about vector clocks and their usage.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about vector clocks and their usage.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Examples</li></ul><h1>Background #</h1><p>When a distributed system allows concurrent writes, it can result in multiple versions of an object. Different replicas of an object can end up with different versions of the data. Let’s understand this with an example.</p><p>On a single machine, all we need to know about is the absolute or wall clock time: suppose we perform a write to key with timestamp, and then k t1 perform another write to with timestamp. Since, the second k t2 t2 &gt; t1 write must have been newer than the first write, and therefore, the database can safely overwrite the original value.</p><p>In a distributed system, this assumption does not hold true. The problem is clock skew – different clocks tend to run at different rates, so we cannot assume that time on node happened before time on node. The t a t + 1 b most practical techniques that help with synchronizing clocks, like NTP, still do not guarantee that every clock in a distributed system is synchronized at all times. So, without special hardware like GPS units and atomic clocks, just using wall clock timestamps is not enough.</p><p>So how can we reconcile and capture causality between different versions of the same object?</p><h1>Definition #</h1><p>Use Vector clocks to keep track of value history and reconcile divergent histories at read time.</p>"
+  }
+ ],
+ "reference": [
+  {
+   "t": "html",
+   "html": "<h1>Solution #</h1><p>A vector clock is effectively a pair. One vector clock is (node, counter) associated with every version of every object. If the counters on the first object’s clock are less-than-or-equal to all of the nodes in the second clock, then the first is an ancestor of the second and can be forgotten. Otherwise, the two changes are considered to be in conflict and require reconciliation. Such conflicts are resolved at read-time, and if the system is not able to reconcile an object’s state from its vector clocks, it sends it to the client application for reconciliation (since clients have more semantic information on the object and may be able to reconcile it). Resolving conflicts is similar to how Git works. If Git can merge different versions into one, merging is done automatically. If not, the client (i.e., the developer) has to reconcile conflicts manually.</p><p>To see how Dynamo handles conflicting data, take a look at Vector Clocks and Conflicting Data (/02.Dynamo_How Design_Key-value_Store/Vector Clocks and Conflicting Data - Grokking the Advanced System Design Interview.html)</p>"
+  }
+ ]
+}

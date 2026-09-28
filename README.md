@@ -70,9 +70,19 @@ npm run tests:build -- some-id   # only some problems
 npm run ingest:doc -- ./design-a-chat-system.pdf
 npm run ingest:doc -- "./System Design Interview.pdf" --chapters   # one page per chapter
 npm run ingest:doc -- ./article.html --split "High-level design"
+npm run ingest:doc -- "./Grokking the System Design Interview.pdf" --chapters --prefix classic
+npm run ingest:doc -- "./Grokking the Advanced System Design Interview.pdf" --lessons --prefix advanced
+npm run ingest:verbatim -- "./Grokking the System Design Interview.md" --id source-awesome-senior-system-design-notes --title "Verbatim: Awesome Senior Engineer system design notes" --source "Awesome-Senior-Engineer-Algorithms-Review Markdown"
+npm run ingest:verbatim -- "./Grokking the System Design Interview.pdf" --id source-awesome-senior-system-design-pdf --title "Verbatim: Awesome Senior Engineer system design PDF" --source "Awesome-Senior-Engineer-Algorithms-Review PDF"
+npm run ingest:verbatim -- "./Grokking the System Design Interview.pdf" --id source-grokking-system-design-pdf --title "Verbatim: Grokking the System Design Interview PDF" --source "grokking standard PDF" --alias "Grokking Dynamic Programming Patterns for Coding Interviews - Learn Interactively/Grokking the System Design Interview.pdf"
+npm run ingest:verbatim -- "./Grokking the Advanced System Design Interview.pdf" --id source-grokking-advanced-system-design-pdf --title "Verbatim: Grokking the Advanced System Design Interview PDF" --source "grokking advanced PDF" --alias "Grokking Dynamic Programming Patterns for Coding Interviews - Learn Interactively/Grokking the Advanced System Design Interview.pdf"
 ```
 
 The importer detects headings, paragraphs, lists, code and images.
+For PDFs, embedded diagrams are extracted at their original resolution.
+The advanced guide's vector-only diagram pages are captured as readable page images when `--lessons` is used.
+Use `ingest:verbatim` for a source archive that keeps the original Markdown or PDF alongside its extracted text and diagrams.
+The duplicate standard and advanced PDFs in the grokking repository are identical byte-for-byte and are recorded as aliases instead of being duplicated.
 For HTML imports, local and data-URL images are limited to PNG, JPEG, GIF and WebP; SVG and other local formats are skipped.
 The prompt ends at the first solution-like heading ("Step 2", "High-level design", "Architecture", and similar) unless `--split` names one.
 Use `--out <dir>` for a dry run.

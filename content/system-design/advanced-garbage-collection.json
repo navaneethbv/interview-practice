@@ -1,0 +1,20 @@
+{
+ "id": "advanced-garbage-collection",
+ "title": "Garbage Collection",
+ "summary": "Let's learn how GFS implements garbage collection.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn how GFS implements garbage collection.</p><p>We'll cover the following</p><ul><li>Garbage collection through lazy deletion</li></ul><ul><li>Advantages of lazy deletion</li></ul><ul><li>Disadvantages of lazy deletion</li></ul><h1>Garbage collection through lazy deletion #</h1><p>When a file is deleted, GFS does not immediately reclaim the physical space used by that file. Instead, it follows a lazy garbage collection strategy. When the client issues a delete file operation, GFS does two things:</p><ul><li>1. The master logs the deletion operation just like other changes.</li></ul><ul><li>2. The deleted file is renamed to a hidden name that also includes a</li></ul><p>deletion timestamp.</p><p>The file can still be read under the new, special name and can also be undeleted by renaming it back to normal. To reclaim the physical storage, the master, while performing regular scans of the file system, removes any such hidden files if they have existed for more than three days (this interval is configurable) and also deletes its in-memory metadata. This lazy deletion scheme provides a window of opportunity to a user who deleted a file by mistake to recover the file.</p><p>The master, while performing regular scans of chunk namespace, deletes the metadata of all chunks that are not part of any file. Also, during the exchange of regular HeartBeat messages with the master, each ChunkServer reports a subset of the chunks it has, and the master replies with a list of chunks from that subset that are no longer present in the master’s database; such chunks are then deleted from the ChunkServer.</p><h1>Advantages of lazy deletion #</h1><p>Here are the advantages of lazy deletion.</p><p>Simple and reliable. If the chunk deletion message is lost, the master does not have to retry. The ChunkServer can perform the garbage collection with the subsequent heartbeat messages.</p><p>GFS merges storage reclamation into regular background activities of the master, such as the regular scans of the filesystem or the exchange of HeartBeat messages. Thus, it is done in batches, and the cost is amortized.</p><p>Garbage collection takes place when the master is relatively free.</p><p>Lazy deletion provides safety against accidental, irreversible deletions.</p><h1>Disadvantages of lazy deletion #</h1><p>As we know, after deletion, storage space does not become available immediately. Applications that frequently create and delete files may not be able to reuse the storage right away. To overcome this, GFS provides following options:</p><p>If a client deletes a deleted file again, GFS expedites the storage reclamation.</p><p>Users can specify directories that are to be stored without replication.</p><p>Users can also specify directories where deletion takes place immediately.</p><p>Back Next</p><p>Fault Tolerance, High Availability, and … Criticism on GFS</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/fd441832db83fbdd.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 238"
+  }
+ ],
+ "reference": []
+}

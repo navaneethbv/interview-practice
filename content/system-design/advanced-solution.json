@@ -1,0 +1,13 @@
+{
+ "id": "advanced-solution",
+ "title": "Solution",
+ "summary": "At any time, one server is elected as the leader. This leader becomes responsible for data replication and can act as the central point for all coordination. The followers only accept writes from the leader and serve as ",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>At any time, one server is elected as the leader. This leader becomes responsible for data replication and can act as the central point for all coordination. The followers only accept writes from the leader and serve as a backup. In case the leader fails, one of the followers can become the leader. In some cases, the follower can serve read requests for load balancing.</p><p>Server 2 (Follower)</p><p>Server 3 replicate (Follower) replicate read/write request Server 1 Client (Leader) response replicate</p><p>Server 4 replicate (Follower)</p><p>Server 5 (Follower)</p><p>Leader entertains requests from the client and is responsible for replicating and coordinating with followers</p><h1>Examples #</h1><p>In Kafka, each partition has a designated leader which is responsible for all reads and writes for that partition. Each follower’s responsibility is to replicate the leader’s data to serve as a “backup” partition. This provides redundancy of messages in a partition, so that a follower can take over the leadership if the leader goes down.</p><p>Within the Kafka cluster, one broker is elected as the Controller. This Controller is responsible for admin operations, such as creating/deleting a topic, adding partitions, assigning leaders to partitions, monitoring broker failures, etc. Furthermore, the Controller periodically checks the health of other brokers in the system.</p><p>To ensure strong consistency, Paxos (hence Chubby) performs leader election at startup. This leader is responsible for data replication and coordination.</p><p>Back Next</p><ul><li>3. Quorum 5. Write-ahead Log</li></ul>"
+  }
+ ],
+ "reference": []
+}

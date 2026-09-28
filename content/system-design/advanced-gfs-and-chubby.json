@@ -1,0 +1,31 @@
+{
+ "id": "advanced-gfs-and-chubby",
+ "title": "GFS and Chubby",
+ "summary": "Let's explore how BigTable interacts with GFS and Chubby.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's explore how BigTable interacts with GFS and Chubby.</p><p>We'll cover the following</p><ul><li>GFS</li></ul><ul><li>Chubby</li></ul><h1>GFS #</h1><p>GFS is a scalable distributed file system developed by Google for its large data-intensive applications such as BigTable.</p><p>GFS files are broken into fixed-size blocks, called Chunks.</p><p>Chunks are stored on data servers called ChunkServers.</p><p>GFS master manages the metadata.</p><p>SSTables are divided into fixed-size, blocks and these blocks are stored on ChunkServers.</p><p>Each chunk in GFS is replicated across multiple ChunkServers for reliability.</p><p>Clients interact with the GFS master for metadata, but all data transfers happen directly between the client and ChunkServers.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/741e24b633c34a76.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 307"
+  },
+  {
+   "t": "html",
+   "html": "<p>GFS Master server</p><p>st reque Metadata data Meta Client nse respo data Meta GFS Client Library</p><p>Instructions to ChunkServers Read/W</p><p>rite Read/W re qu est rite re ChunkServer ChunkServer ChunkServer sp on se . . . Linux File System Linux File System Linux File System</p><p>Chunk Chunk Chunk Chunk Chunk Chunk Chunk Chunk</p><p>Two replicas of each chunk</p><p>High-level architecture of GFS</p><p>For a detailed discussion, please see GFS (https://www.educative.io/collection/page/5668639101419520/5559029852536 832/6383131278442496).</p><h1>Chubby #</h1><p>Chubby is a highly available and persistent distributed locking service that allows a multi-thousand node Bigtable cluster to stay coordinated.</p><p>Chubby usually runs with five active replicas, one of which is elected as the master to serve requests. To remain alive, a majority of Chubby replicas must be running.</p><p>BigTable depends on Chubby so much that if Chubby is unavailable for an extended period of time, BigTable will also become unavailable.</p><p>Chubby uses the Paxos algorithm to keep its replicas consistent in the face of failure.</p><p>Chubby provides a namespace consisting of files and directories. Each file or directory can be used as a lock.</p><p>Read and write access to a Chubby file is atomic.</p><p>Each Chubby client maintains a session with a Chubby service. A client’s session expires if it is unable to renew its session lease within the lease expiration time. When a client’s session expires, it loses any locks and open handles. Chubby clients can also register callbacks on Chubby files and directories for notification of changes or session expiration.</p><p>In BigTable, Chubby is used to: Ensure there is only one active master. The master maintains a session lease with Chubby and periodically renews it to retain the status of the master.</p><p>Store the bootstrap location of BigTable data (discussed later)</p><p>Discover new Tablet servers as well as the failure of existing ones</p><p>Store BigTable schema information (the column family information for each table)</p><p>Store Access Control Lists (ACLs)</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/b8dee0e45298fefe.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 309"
+  }
+ ],
+ "reference": []
+}

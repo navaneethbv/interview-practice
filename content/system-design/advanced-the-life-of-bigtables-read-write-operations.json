@@ -1,0 +1,42 @@
+{
+ "id": "advanced-the-life-of-bigtables-read-write-operations",
+ "title": "The Life of BigTable's Read & Write Operations",
+ "summary": "Let's explore how BigTable handles its read and write operations.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's explore how BigTable handles its read and write operations.</p><p>We'll cover the following</p><ul><li>Write request</li></ul><ul><li>Read request</li></ul><h1>Write request #</h1><p>Upon receiving a write request, a Tablet server performs the following set of steps:</p><ul><li>1. Checks that the request is well-formed.</li></ul><ul><li>2. Checks that the sender is authorized to perform the mutation. This</li></ul><p>authorization is performed based on the Access Control Lists (ACLs) that are stored in a chubby file.</p><ul><li>3. If the above two conditions are met, the mutation is written to the</li></ul><p>commit-log in GFS that stores redo records.</p><ul><li>4. Once the mutation is committed to the commit-log, its contents are</li></ul><p>stored in memory in a sorted buffer called MemTable.</p><ul><li>5. After inserting the data into the MemTable, acknowledgment is sent to</li></ul><p>the client that the data has been successfully written.</p><ul><li>6. Periodically, MemTables are flushed to SSTables, and SSTables are</li></ul><p>merged during compaction (discussed later).</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/4e2268bac1da70e1.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 319"
+  },
+  {
+   "t": "html",
+   "html": "<p>Key Value</p><p>......</p><p>F MemTable lu Memory sh GFS</p><p>Write request Client</p><p>CommitLog SSTables</p><p>The anatomy of a write request</p><h1>Read request #</h1><p>Upon receiving a read request, a Tablet server performs the following set of steps:</p><ul><li>1. Checks that the request is well-formed and the sender is authorized</li></ul><ul><li>2. Returns the rows if they are available in the Cache (discussed later)</li></ul><ul><li>3. Reads MemTable first to find the required rows</li></ul><ul><li>4. Reads SSTable indexes that are loaded in memory to find SSTables that</li></ul><p>will have the required data, then reads the rows from those SSTables</p><ul><li>5. Merge rows read from MemTable and SSTables to find the required</li></ul><p>version of the data. Since the SSTables and the MemTable are sorted, the merged view can be formed efficiently.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/85bbc9ae6b80536f.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 320"
+  },
+  {
+   "t": "html",
+   "html": "<p>Read data from MamTable, if Read SSTable index to find the correct 2 3 present. Merge data from SSTable containing data in GFS SSTable before returning.</p><p>Data</p><p>SSTable Index 1 SSTable Index n Key Value Key Offset Key Offset...... ... Client Cache............ Read request</p><p>MemTable</p><p>Memory</p><p>GFS Return data from cache, if present</p><p>CommitLog SSTables</p><p>Return data from the relevant SSTables</p><p>The anatomy of a read request</p><p>Back Next</p><p>Working with Tablets Fault Tolerance and Compaction</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/51f95e9943929afb.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 321"
+  }
+ ],
+ "reference": []
+}

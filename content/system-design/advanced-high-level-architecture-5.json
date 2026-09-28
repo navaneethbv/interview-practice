@@ -1,0 +1,31 @@
+{
+ "id": "advanced-high-level-architecture-5",
+ "title": "High-level Architecture",
+ "summary": "This lesson gives a brief overview of GFS’s architecture.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>This lesson gives a brief overview of GFS’s architecture.</p><p>We'll cover the following</p><ul><li>Chunks</li></ul><ul><li>Chunk handle</li></ul><ul><li>Cluster</li></ul><ul><li>ChunkServer</li></ul><ul><li>Master</li></ul><ul><li>Client</li></ul><p>A GFS cluster consists of a single master and multiple ChunkServers and is accessed by multiple clients.</p><h1>Chunks #</h1><p>As files stored in GFS tend to be very large, GFS breaks files into multiple fixed-size chunks where each chunk is 64 megabytes in size.</p><h1>Chunk handle #</h1><p>Each chunk is identified by an immutable and globally unique 64-bit ID 64 2 number called chunk handle. This allows for unique chunks. If each 9 10 chunk is 64 MB, total storage space would be more than exa-bytes.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/929b540e0912a959.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 203"
+  },
+  {
+   "t": "html",
+   "html": "<p>As files are split into chunks, therefore, the job of GFS is to provide a mapping from files to chunks, and then to support standard operations on files, mapping down to operations on individual chunks.</p><h1>Cluster #</h1><p>GFS is organized into a simple network of computers called a cluster. All GFS clusters contain three kinds of entities:</p><ul><li>1. A single master server</li></ul><ul><li>2. Multiple ChunkServers</li></ul><ul><li>3. Many clients</li></ul><p>The master stores all metadata about the system, while the ChunkServers store the real file data.</p><p>GFS Master server Metadata request Client</p><p>Metadata GFS Client Metadata response Library</p><p>Read/W</p><p>Read/W rite re Instructions to ChunkServers qu rite est re sp on se</p><p>ChunkServer ChunkServer ChunkServer</p><p>. . . Linux File System Linux File System Linux File System</p><p>......... Chunk Chunk Chunk Chunk Chunk Chunk Chunk Chunk Chunk</p><p>GFS high-level architecture</p><h1>ChunkServer #</h1><p>ChunkServers store chunks on local disks as regular Linux files and read or write chunk data specified by a chunk handle and byte-range.</p><p>For reliability, each chunk is replicated to multiple ChunkServers. By default, GFS stores three replicas, though different replication factors can be specified on a per-file basis.</p><p>Chunk Handle</p><p>Replica ChunkServers GFS Master server</p><p>File metadata: 1 2 3 /user/foo/f1 File with three chunks c1, c3, c4 c2, c3, c4 c1, c2, c4 4 5 /user/bar/f1 File with two chunks c1, c2, c4 c1, c3, c4</p><p>replication factor = 3</p><p>c1 c2 c3 c4</p><p>Linux File System Linux File System Linux File System Linux File System</p><p>1 2 5 1 2 3 4 5 1 3 5 4 2 3 4</p><p>ChunkServers</p><p>Chunk replication</p><h1>Master #</h1><p>Master server is the coordinator of a GFS cluster and is responsible for keeping track of filesystem metadata:</p><ul><li>1. The metadata stored at the master includes:</li></ul><p>Name and directory of each file</p><p>Mapping of each file to its chunks</p><p>Current locations of chunks</p><p>Access control information</p><ul><li>2. The master also controls system-wide activities such as chunk lease</li></ul><p>management (locks on chunks with expiration), garbage collection of orphaned chunks, and chunk migration between ChunkServers. Master assigns chunk handle to chunks at time of chunk creation.</p><ul><li>3. The master periodically communicates with each ChunkServer in</li></ul><p>HeartBeat messages to give it instructions and collect its state.</p><ul><li>4. For performance and fast random access, all metadata is stored in the</li></ul><p>master’s main memory. This includes the entire filesystem namespace as well as all the name-to-chunk mappings.</p><ul><li>5. For fault tolerance and to handle a master crash, all metadata changes</li></ul><p>are written to the disk onto an operation log. This operation log is also replicated onto remote machines. The operation log is similar to a journal. Every operation to the file system is logged into this file.</p><ul><li>6. The master is a single point of failure, hence, it replicates its data onto</li></ul><p>several remote machines so that the master can be readily restored on failure.</p><ul><li>7. The benefit of having a single, centralized master is that it has a global</li></ul><p>view of the file system, and hence, it can make optimum management decisions, for example, related to chunk placement.</p><h1>Client #</h1><p>Client is an entity that makes a read or write request to GSF. GFS client library is linked into each application that uses GFS. This library communicates with the master for all metadata-related operations like creating or deleting files, looking up files, etc. To read or write data, the client interacts directly with the ChunkServers that hold the data.</p><p>Neither the client nor the ChunkServer caches file data. Client caches offer little benefit because most applications stream through huge files or have working sets too large to be cached. ChunkServers rely on the buffer cache in Linux to maintain frequently accessed data in memory.</p><p>Back Next</p><p>Google File System: Introduction Single Master and Large Chunk Size</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/4004e34486c26def.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 207"
+  }
+ ],
+ "reference": []
+}

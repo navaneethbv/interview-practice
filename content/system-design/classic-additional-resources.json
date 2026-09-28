@@ -1,0 +1,13 @@
+{
+ "id": "classic-additional-resources",
+ "title": "Additional Resources",
+ "summary": "Here are some useful links for further reading:",
+ "source": "Grokking the System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Here are some useful links for further reading:</p><ul><li>1. Dynamo - Highly Available Key-value Store</li></ul><ul><li>2. Kafka - A Distributed Messaging System for Log Processing</li></ul><ul><li>3. Consistent Hashing - Original paper</li></ul><ul><li>4. Paxos - Protocol for distributed consensus</li></ul><h4>5. Concurrency Controls - Optimistic methods for concurrency controls</h4><ul><li>6. Gossip protocol - For failure detection and more.</li></ul><ul><li>7. Chubby - Lock service for loosely-coupled distributed systems</li></ul><ul><li>8. ZooKeeper - Wait-free coordination for Internet-scale systems</li></ul><ul><li>9. MapReduce - Simplified Data Processing on Large Clusters</li></ul><ul><li>10. Hadoop - A Distributed File System</li></ul>"
+  }
+ ],
+ "reference": []
+}

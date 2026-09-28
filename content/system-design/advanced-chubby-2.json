@@ -1,0 +1,13 @@
+{
+ "id": "advanced-chubby-2",
+ "title": "Chubby",
+ "summary": "Server",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Server</p><p>Chubby Client Library Server Application</p><p>RPC</p><p>. . . Server (master)</p><p>RPC Chubby Client Server Library Application</p><p>Server</p><p>High-level architecture of Chubby</p><p>Back Next</p><p>SSTable Bigtable Components</p>"
+  }
+ ],
+ "reference": []
+}
