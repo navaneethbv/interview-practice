@@ -1,5 +1,5 @@
 class Solution:
-    # Indexing nonzero entries by the shared dimension avoids zero products.
+    # Grouping nonzero entries by the shared dimension skips zero products.
     def multiply(self, mat1, mat2):
         rows = len(mat1)
         shared = len(mat2)
