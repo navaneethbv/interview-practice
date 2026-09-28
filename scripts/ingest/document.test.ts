@@ -83,5 +83,5 @@ test("HTML data URLs cannot publish active SVG content", (t) => {
 test("a source prefix keeps imported collections addressable", (t) => {
   const result = importHtml("<article><h1>Repeated lesson</h1><p>Notes</p></article>", ["--prefix", "advanced"]);
   t.after(() => fs.rmSync(result.root, { recursive: true, force: true }));
-  assert.ok(fs.existsSync(path.join(result.outputDir, "advanced-repeated-lesson.json")));
+  assert.ok(fs.existsSync(path.join(result.outputDir, "advanced-repeated-lesson.json"))); // NOSONAR -- outputDir is a fresh test-only directory and the filename is fixed
 });

@@ -190,6 +190,12 @@ export interface DesignArticle {
   reference: Block[];
 }
 
+function designArticleRank(article: DesignArticle) {
+  if (article.verbatim) return 2;
+  if (article.source?.toLowerCase().includes("advanced")) return 1;
+  return 0;
+}
+
 export const listDesignArticles = cache((): DesignArticle[] => {
   const dir = path.join(ROOT, "system-design");
   if (!fs.existsSync(dir)) return [];
@@ -198,8 +204,7 @@ export const listDesignArticles = cache((): DesignArticle[] => {
     .filter((f) => f.endsWith(".json"))
     .map((f) => readJson<DesignArticle>(path.join(dir, f))!)
     .sort((a, b) => {
-      const rank = (article: DesignArticle) => (article.verbatim ? 2 : article.source?.toLowerCase().includes("advanced") ? 1 : 0);
-      return rank(a) - rank(b) || a.title.localeCompare(b.title);
+      return designArticleRank(a) - designArticleRank(b) || a.title.localeCompare(b.title);
     });
 });
 

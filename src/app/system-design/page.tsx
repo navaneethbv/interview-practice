@@ -9,13 +9,10 @@ export const metadata: Metadata = { title: "System Design" };
 export default function SystemDesignPage() {
   const articles = listDesignArticles();
   const groups = articles.reduce<Map<string, typeof articles>>((map, article) => {
-    const label = article.verbatim
-      ? "Verbatim source archives"
-      : article.source?.toLowerCase().includes("advanced")
-      ? "Advanced distributed systems"
-      : article.source?.toLowerCase().includes("system design")
-        ? "System design case studies"
-        : "Imported designs";
+    let label = "Imported designs";
+    if (article.verbatim) label = "Verbatim source archives";
+    else if (article.source?.toLowerCase().includes("advanced")) label = "Advanced distributed systems";
+    else if (article.source?.toLowerCase().includes("system design")) label = "System design case studies";
     map.set(label, [...(map.get(label) ?? []), article]);
     return map;
   }, new Map());

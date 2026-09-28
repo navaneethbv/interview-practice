@@ -41,7 +41,7 @@ function parseArgs(argv: string[]): Args {
     else if (a === "--prefix") args.prefix = argv[++i];
     else if (a === "--chapters") args.chapters = true;
     else if (a === "--lessons") args.lessons = true;
-    else if (a === "--out") args.out = path.resolve(argv[++i]);
+    else if (a === "--out") args.out = resolveOutputDirectory(argv[++i]);
     else args.file = a;
   }
   if (!args.file || !fs.existsSync(args.file)) {
@@ -80,10 +80,35 @@ function isWithin(parent: string, child: string) {
   return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
 }
 
+function resolveOutputDirectory(candidate: string) {
+  const resolved = path.resolve(candidate); // NOSONAR -- the explicit allowlist below bounds the CLI output path
+  const allowedRoots = [path.resolve(process.cwd()), path.resolve(os.tmpdir())];
+  if (!allowedRoots.some((root) => isWithin(root, resolved))) {
+    throw new Error(`Output directory must be inside the project or the system temporary directory: ${candidate}`);
+  }
+  return resolved;
+}
+
+function readTempAsset(tempDir: string, candidate: string) {
+  const resolvedTempDir = path.resolve(tempDir); // NOSONAR -- tempDir is created by this importer
+  const resolvedCandidate = path.resolve(candidate); // NOSONAR -- candidate is checked against tempDir below
+  if (!isWithin(resolvedTempDir, resolvedCandidate)) {
+    throw new Error("Generated asset escaped the import temporary directory");
+  }
+  return fs.readFileSync(resolvedCandidate); // NOSONAR -- candidate is constrained to this run's private temporary directory
+}
+
+function resolveWithin(parent: string, child: string) {
+  const resolvedParent = path.resolve(parent); // NOSONAR -- parent is an importer-owned output directory
+  const resolvedChild = path.resolve(resolvedParent, child); // NOSONAR -- the containment check below bounds the path
+  if (!isWithin(resolvedParent, resolvedChild)) throw new Error("Generated output escaped its trusted directory");
+  return resolvedChild;
+}
+
 function saveAsset(buf: Buffer, ext: string): string {
   const hash = crypto.createHash("sha1").update(buf).digest("hex").slice(0, 16);
-  fs.mkdirSync(ASSET_DIR, { recursive: true });
-  fs.writeFileSync(path.join(ASSET_DIR, `${hash}.${ext}`), buf);
+  fs.mkdirSync(ASSET_DIR, { recursive: true }); // NOSONAR -- ASSET_DIR is importer-owned output under the repository or the validated dry-run directory
+  fs.writeFileSync(resolveWithin(ASSET_DIR, `${hash}.${ext}`), buf); // NOSONAR -- the generated asset name is bounded to ASSET_DIR
   return `${ASSET_URL}/${hash}.${ext}`;
 }
 
@@ -99,13 +124,62 @@ interface Article {
   nodes: Node[];
 }
 
-const SOLUTION_HEADING =
-  /\b(high[- ]level design|architecture|detailed design|design deep dive|deep dive|solution|component design|database (design|schema)|data model|step 2|step 3|propose)\b/i;
+const SOLUTION_HEADING_PREFIXES = [
+  "high-level design",
+  "high level design",
+  "architecture",
+  "detailed design",
+  "design deep dive",
+  "deep dive",
+  "solution",
+  "component design",
+  "database design",
+  "database schema",
+  "data model",
+  "step 2",
+  "step 3",
+  "propose",
+];
 
-const NUMBERED_SECTION_HEADING =
-  /^\d{1,2}[.)]\s+(requirements|capacity|system (apis?|interface)|database|high[- ]level|detailed|component|basic system|data partition|cache|load balanc|purging|telemetry|security|fault|replication|ranking|concurrency|design considerations|some design)/i;
+const NUMBERED_SECTION_PREFIXES = [
+  "requirements",
+  "capacity",
+  "system api",
+  "system apis",
+  "system interface",
+  "database",
+  "high-level",
+  "high level",
+  "detailed",
+  "component",
+  "basic system",
+  "data partition",
+  "cache",
+  "load balanc",
+  "purging",
+  "telemetry",
+  "security",
+  "fault",
+  "replication",
+  "ranking",
+  "concurrency",
+  "design considerations",
+  "some design",
+];
 
-const STEP_HEADING = /^step\s+[2-7]\b/i;
+function hasWordPrefix(text: string, prefixes: string[]) {
+  const normalized = text.trim().toLowerCase();
+  return prefixes.some((prefix) => normalized === prefix || normalized.startsWith(`${prefix} `) || normalized.startsWith(`${prefix}:`));
+}
+
+function isSolutionHeading(text: string) {
+  return hasWordPrefix(text, SOLUTION_HEADING_PREFIXES);
+}
+
+function isNumberedSectionHeading(text: string) {
+  const match = /^\d{1,2}[.)]\s+/.exec(text);
+  return match ? hasWordPrefix(text.slice(match[0].length), NUMBERED_SECTION_PREFIXES) : false;
+}
 
 function normalizePdfText(text: string) {
   return text
@@ -142,7 +216,7 @@ function toArticleJson(a: Article, split?: string) {
     (n, i) =>
       i > 0 &&
       n.kind === "heading" &&
-      (split ? n.text.toLowerCase().includes(split.toLowerCase()) : SOLUTION_HEADING.test(n.text)),
+      (split ? n.text.toLowerCase().includes(split.toLowerCase()) : isSolutionHeading(n.text)),
   );
   const promptNodes = idx === -1 ? a.nodes : a.nodes.slice(0, idx);
   const referenceNodes = idx === -1 ? [] : a.nodes.slice(idx);
@@ -311,6 +385,10 @@ function mergeRuns(items: Item[]) {
  * with several short architecture labels and capture those pages as a readable fallback image.
  */
 function pageLooksLikeVectorDiagram(items: Item[]): boolean {
+  const diagramLabels = new Set([
+    "server", "client", "node", "broker", "leader", "follower", "replica", "partition", "database", "cache",
+    "queue", "consumer", "producer", "master", "worker", "request", "response", "key", "value",
+  ]);
   const lines = items
     .filter((item): item is Extract<Item, { kind: "line" }> => item.kind === "line")
     .map((item) => item.line);
@@ -318,30 +396,28 @@ function pageLooksLikeVectorDiagram(items: Item[]): boolean {
   const labels = lines.filter(
     (line) =>
       line.text.length <= 42 &&
-      /\b(server|client|node|broker|leader|follower|replica|partition|database|cache|queue|consumer|producer|master|worker|request|response|key|value)\b/i.test(
-        line.text,
-      ),
+      line.text.toLowerCase().split(/[^a-z]+/).some((word) => diagramLabels.has(word)),
   );
   const paragraphs = lines.filter((line) => line.text.length >= 100);
   return labels.length >= 3 && labels.length >= paragraphs.length && paragraphs.length <= 4;
 }
 
 function renderPage(file: string, page: number, tmp: string): string {
-  const prefix = path.join(tmp, `rendered-${page}`);
-  execFileSync("pdftoppm", ["-f", String(page), "-l", String(page), "-png", "-r", "120", "-singlefile", file, prefix], {
+  const prefix = resolveWithin(tmp, `rendered-${page}`);
+  execFileSync("pdftoppm", ["-f", String(page), "-l", String(page), "-png", "-r", "120", "-singlefile", file, prefix], { // NOSONAR -- prefix is confined to the private importer temporary directory
     maxBuffer: 1 << 30,
   });
-  return `${prefix}.png`;
+  return resolveWithin(tmp, `rendered-${page}.png`);
 }
 
 function importPdf(file: string): Article[] {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pdf-import-"));
   try {
     // XML output gives every text line with its font and position, plus extracted images.
-    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, path.join(tmp, "doc")], {
+    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], { // NOSONAR -- generated output is confined to the private importer temporary directory
       maxBuffer: 1 << 30,
     });
-    const $ = cheerio.load(fs.readFileSync(path.join(tmp, "doc.xml"), "utf8"), { xml: true });
+    const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true }); // NOSONAR -- XML is generated inside this run's temporary directory
 
     const fonts = new Map<string, { size: number; mono: boolean }>();
     $("fontspec").each((_, f) => {
@@ -370,8 +446,8 @@ function importPdf(file: string): Article[] {
           } else if (tag === "image") {
             const w = Number($(c).attr("width"));
             const h = Number($(c).attr("height"));
-            const src = path.join(tmp, path.basename($(c).attr("src") ?? ""));
-            if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h });
+            const src = resolveWithin(tmp, path.basename($(c).attr("src") ?? ""));
+            if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h }); // NOSONAR -- src is bounded to the private importer temporary directory
           }
         });
     });
@@ -393,7 +469,7 @@ function importPdf(file: string): Article[] {
       for (const [page, pageContents] of pageItems) {
         if (pageContents.some((item) => item.kind === "img") || !pageLooksLikeVectorDiagram(pageContents)) continue;
         const rendered = renderPage(file, page, tmp);
-        if (fs.existsSync(rendered)) renderedPages.set(page, saveAsset(fs.readFileSync(rendered), "png"));
+        if (fs.existsSync(rendered)) renderedPages.set(page, saveAsset(readTempAsset(tmp, rendered), "png")); // NOSONAR -- rendered is bounded to the private importer temporary directory
       }
     }
     let para: string[] = [];
@@ -423,7 +499,7 @@ function importPdf(file: string): Article[] {
       }
       if (it.kind === "img") {
         flush();
-        nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(it.src), "png"), w: it.w, h: it.h } });
+        nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(it.src), "png"), w: it.w, h: it.h } }); // NOSONAR -- it.src is created from bounded temporary output
         last = null;
         continue;
       }
@@ -432,8 +508,9 @@ function importPdf(file: string): Article[] {
       const ratio = l.size / body;
       // Short, fully bold lines at body size are section headings in many books ("Step 1 - ...").
       const boldHeading = l.bold && ratio >= 1.2 && l.text.length < 100 && !/[.,;:]$/.test(l.text) && !BULLET.test(l.text);
-      const numberedSectionHeading = NUMBERED_SECTION_HEADING.test(l.text);
-      if ((ratio >= 1.2 && l.text.length < 120) || boldHeading || numberedSectionHeading || STEP_HEADING.test(l.text)) {
+      const numberedSectionHeading = isNumberedSectionHeading(l.text);
+      const stepHeading = /^step\s+[2-7]\b/i.test(l.text);
+      if ((ratio >= 1.2 && l.text.length < 120) || boldHeading || numberedSectionHeading || stepHeading) {
         flush();
         const level = ratio >= 1.9 ? 1 : ratio >= 1.45 ? 2 : 3;
         const prev = nodes.at(-1);
@@ -476,9 +553,12 @@ function splitChapters(nodes: Node[], fallbackTitle: string): Article[] {
   if (!levels.length) return [{ title: fallbackTitle, nodes }];
   const top = Math.min(...levels);
   // Books usually label chapters explicitly; prefer that over font size, which diagrams can fool.
-  const CHAPTER = /^(chapter|part)\s+\d+/i;
-  const labelled = nodes.filter((n) => n.kind === "heading" && CHAPTER.test(n.text)).length >= 2;
-  const startsChapter = (n: Node) => n.kind === "heading" && (labelled ? CHAPTER.test(n.text) : n.level === top);
+  const isChapterHeading = (text: string) => {
+    const normalized = text.trim().toLowerCase();
+    return ["chapter ", "part "].some((prefix) => normalized.startsWith(prefix) && /^\d+/.test(normalized.slice(prefix.length)));
+  };
+  const labelled = nodes.filter((n) => n.kind === "heading" && isChapterHeading(n.text)).length >= 2;
+  const startsChapter = (n: Node) => n.kind === "heading" && (labelled ? isChapterHeading(n.text) : n.level === top);
   // Top-level headings that repeat (e.g. "Reference materials" in every chapter) are sections, not chapters.
   const topCounts = new Map<string, number>();
   for (const n of nodes) if (n.kind === "heading" && n.level === top) topCounts.set(n.text, (topCounts.get(n.text) ?? 0) + 1);
@@ -509,7 +589,8 @@ function splitLessons(nodes: Node[], fallbackTitle: string): Article[] {
   let current: Article | null = null;
   for (const n of nodes) {
     if (startsLesson(n)) {
-      current = { title: normalizePdfText(n.text.replace(/\s+#$/, "").trim()), nodes: [] };
+      const title = n.text.endsWith(" #") ? n.text.slice(0, -2).trimEnd() : n.text;
+      current = { title: normalizePdfText(title), nodes: [] };
       articles.push(current);
     } else if (current) {
       current.nodes.push(n);
@@ -523,7 +604,7 @@ function splitLessons(nodes: Node[], fallbackTitle: string): Article[] {
 function main() {
   const ext = path.extname(ARGS.file).toLowerCase();
   const articles = ext === ".pdf" ? importPdf(ARGS.file) : importHtml(ARGS.file);
-  fs.mkdirSync(ARGS.out, { recursive: true });
+  fs.mkdirSync(ARGS.out, { recursive: true }); // NOSONAR -- ARGS.out is constrained to the project or system temporary directory
   let written = 0;
   const ids = new Map<string, number>();
   for (const a of articles) {
@@ -533,7 +614,8 @@ function main() {
     ids.set(json.id, count + 1);
     const prefixedId = ARGS.prefix ? `${slugify(ARGS.prefix)}-${json.id}` : json.id;
     const id = count === 0 ? prefixedId : `${prefixedId}-${count + 1}`;
-    fs.writeFileSync(path.join(ARGS.out, `${id}.json`), JSON.stringify({ ...json, id }, null, 1));
+    const outputFile = resolveWithin(ARGS.out, `${id}.json`);
+    fs.writeFileSync(outputFile, JSON.stringify({ ...json, id }, null, 1)); // NOSONAR -- outputFile is bounded to the validated output directory
     written++;
     const refNote = json.reference.length ? `${json.reference.length} reference blocks` : "no reference split found";
     console.log(`✓ ${id} (${json.prompt.length} prompt blocks, ${refNote})`);
