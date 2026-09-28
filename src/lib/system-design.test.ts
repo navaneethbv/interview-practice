@@ -51,7 +51,7 @@ test("renders system design chapters with anchors, safe links and only importer 
     assert.match(page.html, /<a href="https:\/\/example.com\/paper.pdf" target="_blank" rel="noreferrer">the paper<\/a>/);
     assert.doesNotMatch(page.html, /javascript:/);
     assert.match(page.html, /<figure><img src="\/course-assets\/system-design\/grokking\/a.webp"/);
-    assert.doesNotMatch(page.html, /<script>/);
+    assert.doesNotMatch(page.html, /<script/i);
     assert.match(page.html, /&lt;script&gt;/);
     assert.doesNotMatch(page.html, /http:\/\/example.com\/x.png/);
     assert.match(page.html, /<img src="\/course-assets\/x.webp" alt="local"/);

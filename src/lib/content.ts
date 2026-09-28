@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
-import { Marked, marked } from "marked";
+import { Marked, TextRenderer, marked } from "marked";
 import { createHighlighter, type Highlighter } from "shiki";
 import type {
   Block,
@@ -219,7 +219,8 @@ export const getDesignChapter = cache((bookId: string, chapterId: string): Desig
   // Both ids come from the book's own index, so the path stays inside content/system-design.
   const md = fs.readFileSync(path.join(DESIGN_DIR, book.id, `${chapterId}.md`), "utf8"); // nosemgrep -- ids are validated against index.json
   const { html, headings } = renderDesignMarkdown(md);
-  const words = md.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  // Figure and table markup is not reading time.
+  const words = md.split(/\s+/).filter((word) => /[a-z0-9]/i.test(word) && !word.startsWith("<") && !word.includes('="')).length;
   return {
     book,
     chapter: chapters[index],
@@ -230,8 +231,6 @@ export const getDesignChapter = cache((bookId: string, chapterId: string): Desig
     minutes: Math.max(1, Math.round(words / 230)),
   };
 });
-
-const ENTITIES: Record<string, string> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'" };
 
 function escapeAttribute(value: string) {
   return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -249,8 +248,8 @@ function renderDesignMarkdown(md: string): { html: string; headings: DesignHeadi
     renderer: {
       heading({ tokens, depth }) {
         const inner = this.parser.parseInline(tokens);
-        const text = inner.replace(/<[^>]+>/g, "").replace(/&(amp|lt|gt|quot|#39);/g, (e) => ENTITIES[e]);
-        const base = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "section";
+        const text = this.parser.parseInline(tokens, new TextRenderer());
+        const base = text.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).join("-") || "section";
         const count = used.get(base) ?? 0;
         used.set(base, count + 1);
         const id = count ? `${base}-${count + 1}` : base;

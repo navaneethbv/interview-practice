@@ -8,7 +8,7 @@ test("every imported system design chapter renders cleanly", () => {
   const books = listDesignBooks();
   assert.deepEqual(books.map((b) => b.id), ["grokking", "advanced", "notes"]);
   for (const book of books) {
-    if (book.download) assert.ok(fs.existsSync(path.join("public", book.download)), `${book.id}: missing ${book.download}`);
+    if (book.download) assert.ok(fs.existsSync(path.join("public", book.download)), `${book.id}: missing ${book.download}`); // nosemgrep -- test reads the repo's own generated asset paths
     for (const chapter of designChapters(book)) {
       const page = getDesignChapter(book.id, chapter.id);
       const where = `${book.id}/${chapter.id}`;
@@ -19,7 +19,7 @@ test("every imported system design chapter renders cleanly", () => {
       assert.doesNotMatch(page.html, /We'll cover the following|\(https?:\/\/www\.educative\.io/, where);
       assert.doesNotMatch(chapter.title, /\s#$|\b(Con icting|Work ow|Re nements)\b/, where);
       for (const [, src] of page.html.matchAll(/<img src="([^"]+)"/g)) {
-        if (src.startsWith("/")) assert.ok(fs.existsSync(path.join("public", src)), `${where}: missing ${src}`);
+        if (src.startsWith("/")) assert.ok(fs.existsSync(path.join("public", src)), `${where}: missing ${src}`); // nosemgrep -- test reads the repo's own generated asset paths
       }
     }
   }

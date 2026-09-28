@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { LessonContent } from "@/components/LessonContent";
 import { OnThisPage } from "@/components/design/OnThisPage";
 import { designChapters, getDesignChapter, listDesignBooks } from "@/lib/content";
 import type { Difficulty } from "@/lib/content-types";
@@ -55,7 +56,7 @@ export default async function ChapterPage({ params }: PageProps) {
           </p>
         </header>
 
-        <div className="prose-lesson prose-reader" dangerouslySetInnerHTML={{ __html: html }} />
+        <LessonContent blocks={[{ t: "html", html }]} className="prose-reader" />
 
         <nav aria-label="Chapter navigation" className="mt-14 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
           {prev ? (

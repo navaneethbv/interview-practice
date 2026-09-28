@@ -113,7 +113,7 @@ def escape_block_start(md: str) -> str:
     return md
 
 
-PAREN_URL = re.compile(r"\s*\(\s*(?:https?://|www\.)[^)]*\)")
+PAREN_URL = re.compile(r" ?\((?:https?://|www\.)[^)]*\)")
 BARE_URL = re.compile(r"^(?:https?://|www\.)\S+$")
 URL_RE = re.compile(r"(?:https?://|www\.)[^\s,;)“”\"']*[^\s,;.)“”\"']")
 URL_SPLIT = re.compile(f"({URL_RE.pattern})")
@@ -197,6 +197,11 @@ def font_style(fontname: str) -> str:
     return style
 
 
+def near(value: float, target: float) -> bool:
+    """Font sizes come from PDF matrices, so compare them with a tolerance."""
+    return abs(value - target) < 0.05
+
+
 def base_font(fontname: str) -> str:
     return fontname.split("+")[-1]
 
@@ -214,21 +219,17 @@ def decode_char(text: str) -> str:
     return CID_EXTRA.get(code, chr(code) if 32 <= code < 127 else "")
 
 
-def build_line(page_no: int, chars: list[dict]) -> Line | None:
-    # extract_text_lines repeats a char once per character of its text, e.g. 8x for "(cid:18)".
-    unique = {(c["x0"], c["top"], c["text"]): c for c in chars if c["text"] not in ("\n", "\r")}
-    chars = sorted(unique.values(), key=lambda c: c["x0"])
-    if not chars:
-        return None
+def line_spans(chars: list[dict]) -> tuple[list[Span], dict[tuple[str, float], int]]:
+    """Groups a line's characters into styled runs and counts which font the line is set in."""
     spans: list[Span] = []
     prev = None
     weights: dict[tuple[str, float], int] = {}
     for c in chars:
         text = decode_char(c["text"]).replace("\xa0", " ").replace("\uf0b7", "•")
         style = font_style(c["fontname"])
-        if prev is not None and text != " " and not spans[-1].text.endswith(" "):
-            if c["x0"] - prev["x1"] > 0.18 * c["size"]:
-                spans.append(Span(" ", ""))
+        gap = prev is not None and c["x0"] - prev["x1"] > 0.18 * c["size"]
+        if gap and text != " " and not spans[-1].text.endswith(" "):
+            spans.append(Span(" ", ""))
         if spans and spans[-1].style == style:
             spans[-1].text += text
         else:
@@ -237,6 +238,16 @@ def build_line(page_no: int, chars: list[dict]) -> Line | None:
             key = (base_font(c["fontname"]), round(c["size"], 1))
             weights[key] = weights.get(key, 0) + 1
         prev = c
+    return spans, weights
+
+
+def build_line(page_no: int, chars: list[dict]) -> Line | None:
+    # extract_text_lines repeats a char once per character of its text, e.g. 8x for "(cid:18)".
+    unique = {(c["x0"], c["top"], c["text"]): c for c in chars if c["text"] not in ("\n", "\r")}
+    chars = sorted(unique.values(), key=lambda c: c["x0"])
+    if not chars:
+        return None
+    spans, weights = line_spans(chars)
     if not weights:
         return None
     font, size = max(weights, key=weights.get)
@@ -265,24 +276,20 @@ def is_white(color) -> bool:
 
 def visible_graphics(page) -> list[dict]:
     """Rects, curves, lines and images that draw something, minus page backgrounds and link underlines."""
-    out = []
-    for kind in ("rects", "curves", "lines", "images"):
-        for o in getattr(page, kind):
-            w, h = o["x1"] - o["x0"], o["bottom"] - o["top"]
-            if kind == "images":
-                if w >= 40 and h >= 10:  # code signatures are exported as 18pt-tall strips
-                    out.append(o)
-                continue
-            if w > page.width * 0.85 and h > page.height * 0.4:
-                continue  # page background
-            stroked = o.get("stroke") and not is_white(o.get("stroking_color"))
-            filled = o.get("fill") and not is_white(o.get("non_stroking_color"))
-            if not stroked and not filled:
-                continue
-            if kind == "rects" and h < 2.5 and w < page.width * 0.6:
-                continue  # link underline
-            out.append(o)
-    return out
+    return [o for kind in ("rects", "curves", "lines", "images") for o in getattr(page, kind) if draws_something(page, kind, o)]
+
+
+def draws_something(page, kind: str, o: dict) -> bool:
+    w, h = o["x1"] - o["x0"], o["bottom"] - o["top"]
+    if kind == "images":
+        return w >= 40 and h >= 10  # code signatures are exported as 18pt-tall strips
+    if w > page.width * 0.85 and h > page.height * 0.4:
+        return False  # page background
+    stroked = o.get("stroke") and not is_white(o.get("stroking_color"))
+    filled = o.get("fill") and not is_white(o.get("non_stroking_color"))
+    if not stroked and not filled:
+        return False
+    return not (kind == "rects" and h < 2.5 and w < page.width * 0.6)  # link underline
 
 
 FOOTER = 45  # page numbers live in the bottom margin
@@ -352,7 +359,7 @@ def save_figure(book: str, fig: Figure):
     buf = io.BytesIO()
     fig.image.save(buf, "WEBP", quality=86, method=6)
     data = buf.getvalue()
-    name = hashlib.sha1(data).hexdigest()[:16] + ".webp"
+    name = hashlib.sha1(data, usedforsecurity=False).hexdigest()[:16] + ".webp"
     out = ASSET_DIR / book
     out.mkdir(parents=True, exist_ok=True)
     (out / name).write_bytes(data)
@@ -364,6 +371,14 @@ def save_figure(book: str, fig: Figure):
 BULLET_RE = re.compile(r"^\s*([•●▪◦○■□–]|o(?=\s))\s*")
 NUMBER_RE = re.compile(r"^\s*(\d{1,2})[.)]\s+")
 PARAM_RE = re.compile(r"^[a-z][a-z0-9_]* \([a-z ]+\):")  # "api_dev_key (string): ..."
+
+
+def trailing_word(text: str) -> str:
+    """The ASCII letters at the end of text, e.g. "de" for "the de"."""
+    start = len(text)
+    while start and text[start - 1].isascii() and text[start - 1].isalpha():
+        start -= 1
+    return text[start:]
 
 
 def strip_prefix(spans: list[Span], count: int) -> list[Span]:
@@ -451,11 +466,11 @@ class Assembler:
         block = self.current
         prev_text = "".join(s.text for s in block.spans)
         first = spans[0].text if spans else ""
-        tail = re.search(r"([A-Za-z]+)-$", prev_text)
+        tail = trailing_word(prev_text[:-1]) if prev_text.endswith("-") else ""
         head = re.match(r"[a-z]+", first)
         if tail and head:
             # Word-processor hyphenation: drop the hyphen only when that forms a word.
-            if is_word(tail.group(1) + head.group(0)) and not is_word(head.group(0)):
+            if is_word(tail + head.group(0)) and not is_word(head.group(0)):
                 block.spans[-1].text = block.spans[-1].text[:-1]
         elif not prev_text.endswith((" ", "/")) and not first.startswith(" "):
             block.spans.append(Span(" "))
@@ -480,76 +495,102 @@ class Assembler:
     def add_line(self, line: Line):
         if self.chapter is None:
             return
-        kind, text = line.kind, line.text
-        same_page_close = self.last is not None and self.last.page == line.page and line.top - self.last.bottom < 1.2 * line.size
-        if kind in ("h2", "h3", "h4"):
-            self.add_heading(line, int(kind[1]))
+        if line.kind == "caption" and self.attach_caption(line):
             return
-        if kind == "lead":
-            self.flush()
-            self.chapter.lead.append(text.strip())
-            self.last = line
-            return
-        if kind == "caption":
-            self.flush()
-            prev = self.chapter.blocks[-1] if self.chapter.blocks else None
-            if prev is not None and prev.kind == "fig":
-                prev.caption = f"{prev.caption} {text.strip()}".strip()
-                return
-            kind = line.kind = "body"
-        if kind == "code":
-            indent = 0
-            if self.current and self.current.kind == "code":
-                indent = max(0, round((line.x0 - self.current.number) / (line.size * 0.55)))
-            self.add_run("code", line, " " * indent + text.rstrip(), "\n", same_page_close)
-            return
-        if kind == "formula":
-            self.add_run("formula", line, text.strip(), "\n", same_page_close and self.last.kind == "formula")
-            return
-        if kind == "link":
-            joins = self.current is not None and self.current.kind == "link" and not re.match(r"^(https?://|www\.)", text.strip())
-            self.add_run("link", line, text.strip(), "", joins)
-            return
+        handler = {
+            "h2": self.add_heading_line,
+            "h3": self.add_heading_line,
+            "h4": self.add_heading_line,
+            "lead": self.add_lead,
+            "code": self.add_code,
+            "formula": self.add_formula,
+            "link": self.add_link,
+        }.get(line.kind, self.add_text)
+        handler(line)
 
-        spans = [Span(s.text, s.style) for s in line.spans]
+    def same_page_close(self, line: Line) -> bool:
+        last = self.last
+        return last is not None and last.page == line.page and line.top - last.bottom < 1.2 * line.size
+
+    def add_heading_line(self, line: Line):
+        self.add_heading(line, int(line.kind[1]))
+
+    def add_lead(self, line: Line):
+        self.flush()
+        self.chapter.lead.append(line.text.strip())
+        self.last = line
+
+    def attach_caption(self, line: Line) -> bool:
+        """Captions follow their figure; one without a figure reads as body text."""
+        self.flush()
+        prev = self.chapter.blocks[-1] if self.chapter.blocks else None
+        if prev is not None and prev.kind == "fig":
+            prev.caption = f"{prev.caption} {line.text.strip()}".strip()
+            return True
+        line.kind = "body"
+        return False
+
+    def add_code(self, line: Line):
+        indent = 0
+        if self.current and self.current.kind == "code":
+            indent = max(0, round((line.x0 - self.current.number) / (line.size * 0.55)))
+        self.add_run("code", line, " " * indent + line.text.rstrip(), "\n", self.same_page_close(line))
+
+    def add_formula(self, line: Line):
+        joins = self.same_page_close(line) and self.last.kind == "formula"
+        self.add_run("formula", line, line.text.strip(), "\n", joins)
+
+    def add_link(self, line: Line):
+        text = line.text.strip()
+        joins = self.current is not None and self.current.kind == "link" and not text.startswith(("http://", "https://", "www."))
+        self.add_run("link", line, text, "", joins)
+
+    def start_block(self, line: Line, block: Block):
+        self.flush()
+        self.current = block
+        self.last = line
+
+    def list_item(self, line: Line, spans: list[Span]) -> Block | None:
+        """Returns the list item a line starts, with its marker removed, or None."""
+        text = line.text
+        if PARAM_RE.match(text) and line.kind == "body":
+            return Block(kind="li", spans=spans, depth=0)
         marker = BULLET_RE.match(text)
-        number = NUMBER_RE.match(text)
-        item = None
-        if PARAM_RE.match(text) and kind == "body":
-            self.flush()
-            self.current = Block(kind="li", spans=spans, depth=0)
-            self.last = line
-            return
         if marker and (marker.group(1) != "o" or line.x0 > self.margin + 10):
-            item = "li"
-            spans = strip_prefix(spans, marker.end())
-        elif number and kind != "note":
-            item = "ol"
-            spans = strip_prefix(spans, number.end())
+            return Block(kind="li", spans=strip_prefix(spans, marker.end()), depth=self.list_depth(line.x0))
+        number = NUMBER_RE.match(text)
+        if number and line.kind != "note":
+            return Block(kind="ol", spans=strip_prefix(spans, number.end()), depth=self.list_depth(line.x0), number=int(number.group(1)))
+        return None
 
-        if kind == "note":
+    def continues_list(self, line: Line, spans: list[Span]) -> bool:
+        block = self.current
+        if not block or block.kind not in ("li", "ol"):
+            return False
+        if not "".join(s.text for s in block.spans).strip():
+            block.spans = spans  # the bullet glyph sat alone on its line
+            self.last = line
+            return True
+        item_x = self.list_x[-1] if self.list_x else self.margin
+        if (line.x0 > item_x - 4 or self.last.page != line.page) and self.continues(line):
+            self.append(line, spans)
+            return True
+        return False
+
+    def add_text(self, line: Line):
+        spans = [Span(s.text, s.style) for s in line.spans]
+        if line.kind == "note":
             if self.current and self.current.kind == "note":
                 self.append(line, spans)
             else:
-                self.flush()
-                self.current = Block(kind="note", spans=spans)
-                self.last = line
+                self.start_block(line, Block(kind="note", spans=spans))
             return
+        item = self.list_item(line, spans)
         if item:
-            self.flush()
-            depth = self.list_depth(line.x0)
-            self.current = Block(kind=item, spans=spans, depth=depth, number=int(number.group(1)) if item == "ol" else 0)
-            self.last = line
+            self.start_block(line, item)
             return
-        if self.current and self.current.kind in ("li", "ol"):
-            if not "".join(s.text for s in self.current.spans).strip():
-                self.current.spans = spans  # the bullet glyph sat alone on its line
-                self.last = line
-                return
-            item_x = self.list_x[-1] if self.list_x else self.margin
-            if (line.x0 > item_x - 4 or self.last.page != line.page) and self.continues(line):
-                self.append(line, spans)
-                return
+        if self.continues_list(line, spans):
+            return
         if self.current and self.current.kind == "p" and self.continues(line):
             self.append(line, spans)
             return
@@ -557,11 +598,9 @@ class Assembler:
         if line.x0 <= self.margin + 8:
             self.list_x = []
         elif self.implicit_bullets and line.x0 > self.margin + 20:
-            self.current = Block(kind="li", spans=spans, depth=self.list_depth(line.x0))
-            self.last = line
+            self.start_block(line, Block(kind="li", spans=spans, depth=self.list_depth(line.x0)))
             return
-        self.current = Block(kind="p", spans=spans)
-        self.last = line
+        self.start_block(line, Block(kind="p", spans=spans))
 
     def finish(self) -> list[Chapter]:
         self.flush()
@@ -570,7 +609,8 @@ class Assembler:
 
 # --------------------------------------------------------------------------- markdown
 
-def spans_to_md(spans: list[Span]) -> str:
+def merge_spans(spans: list[Span]) -> list[Span]:
+    """Joins neighbouring runs of the same style; whitespace joins whatever precedes it."""
     merged: list[Span] = []
     for s in spans:
         style = s.style if s.text.strip() else ""
@@ -578,28 +618,29 @@ def spans_to_md(spans: list[Span]) -> str:
             merged[-1].text += s.text
         elif s.text:
             merged.append(Span(s.text, style))
-    out = ""
-    for s in merged:
-        text = re.sub(r"\s+", " ", s.text)
-        if not s.style:
-            # Example URLs in prose read as code, not as links out of the book.
-            out += "".join(f"`{part}`" if URL_RE.fullmatch(part) else md_escape(part) for part in URL_SPLIT.split(text))
-            continue
-        lead = text[: len(text) - len(text.lstrip())]
-        trail = text[len(text.rstrip()):]
-        core = text.strip()
-        if "c" in s.style:
-            fence = "``" if "`" in core else "`"
-            body = f"{fence}{core}{fence}"
-        else:
-            body = md_escape(core)
-            if "b" in s.style and "i" in s.style:
-                body = f"***{body}***"
-            elif "b" in s.style:
-                body = f"**{body}**"
-            elif "i" in s.style:
-                body = f"*{body}*"
-        out += lead + body + trail
+    return merged
+
+
+EMPHASIS = {"bi": "***", "ib": "***", "b": "**", "i": "*"}
+
+
+def span_md(span: Span) -> str:
+    text = re.sub(r"\s+", " ", span.text)
+    if not span.style:
+        # Example URLs in prose read as code, not as links out of the book.
+        return "".join(f"`{part}`" if URL_RE.fullmatch(part) else md_escape(part) for part in URL_SPLIT.split(text))
+    core = text.strip()
+    lead = text[: len(text) - len(text.lstrip())]
+    trail = text[len(text.rstrip()):]
+    if "c" in span.style:
+        fence = "``" if "`" in core else "`"
+        return f"{lead}{fence}{core}{fence}{trail}"
+    mark = EMPHASIS.get(span.style, "")
+    return f"{lead}{mark}{md_escape(core)}{mark}{trail}"
+
+
+def spans_to_md(spans: list[Span]) -> str:
+    out = "".join(span_md(s) for s in merge_spans(spans))
     out = PAREN_URL.sub("", out)
     out = re.sub(r"\*\*([:.,;])\*\*", r"\1", out)  # a bolded colon after a bold term
     out = re.sub(r"(`) ([.,;:!?)])", r"\1\2", out)  # the code font's padding read as a space
@@ -610,52 +651,66 @@ def plain(spans: list[Span]) -> str:
     return re.sub(r"\s+", " ", "".join(s.text for s in spans)).strip()
 
 
+def paragraph_md(b: Block, ch: Chapter) -> str:
+    text = plain(b.spans)
+    if text.startswith(("http://", "https://")) and len(text.split()) <= 3:
+        text = text.replace(" ", "")  # a long example URL wrapped across lines
+    return f"`{text}`" if BARE_URL.match(text) else escape_block_start(spans_to_md(b.spans))
+
+
+def list_item_md(b: Block, ch: Chapter) -> str:
+    md = spans_to_md(b.spans)
+    marker = f"{b.number}." if b.kind == "ol" else "-"
+    return f"{'   ' * b.depth}{marker} {md}" if md else ""
+
+
+def note_md(b: Block, ch: Chapter) -> str:
+    md = spans_to_md(b.spans)
+    return f"> {md}" if md else ""
+
+
+def link_md(b: Block, ch: Chapter) -> str:
+    url = b.text if b.text.startswith("http") else "https://" + b.text
+    return f"- <{url}>"
+
+
+def figure_md(b: Block, ch: Chapter) -> str:
+    f = b.fig
+    alt = html_escape(b.caption or f"Diagram: {ch.title}")
+    img = f'<img src="{f.src}" width="{f.width}" height="{f.height}" alt="{alt}" loading="lazy">'
+    caption = f"<figcaption>{html_escape(b.caption)}</figcaption>" if b.caption else ""
+    return f"<figure>{img}{caption}</figure>"
+
+
+BLOCK_MD = {
+    "h2": lambda b, ch: f"## {md_escape(b.text)}",
+    "h3": lambda b, ch: f"### {md_escape(b.text)}",
+    "h4": lambda b, ch: f"#### {md_escape(b.text)}",
+    "p": paragraph_md,
+    "li": list_item_md,
+    "ol": list_item_md,
+    "note": note_md,
+    "code": lambda b, ch: "```\n" + b.text.rstrip() + "\n```",
+    "formula": lambda b, ch: "```text\n" + b.text + "\n```",
+    "link": link_md,
+    "table": lambda b, ch: table_html(b.rows, b.header),
+    "fig": figure_md,
+}
+# Consecutive blocks of these groups render as one tight list.
+LIST_GROUP = {"li": "list", "ol": "list", "link": "link"}
+
+
 def chapter_markdown(ch: Chapter) -> str:
     out: list[str] = []
-    prev: Block | None = None
+    prev_group = None
     for b in ch.blocks:
-        piece = None
-        if b.kind in ("h2", "h3", "h4"):
-            piece = f"{'#' * int(b.kind[1])} {md_escape(b.text)}"
-        elif b.kind == "p":
-            text = plain(b.spans)
-            if re.match(r"^https?://", text) and len(text.split()) <= 3:
-                text = text.replace(" ", "")  # a long example URL wrapped across lines
-            piece = f"`{text}`" if BARE_URL.match(text) else escape_block_start(spans_to_md(b.spans))
-        elif b.kind in ("li", "ol"):
-            md = spans_to_md(b.spans)
-            if md:
-                marker = f"{b.number}." if b.kind == "ol" else "-"
-                item = f"{'   ' * b.depth}{marker} {md}"
-                if prev is not None and prev.kind in ("li", "ol") and out:
-                    out[-1] += "\n" + item
-                else:
-                    out.append(item)
-        elif b.kind == "note":
-            md = spans_to_md(b.spans)
-            piece = f"> {md}" if md else None
-        elif b.kind == "code":
-            piece = "```\n" + b.text.rstrip() + "\n```"
-        elif b.kind == "formula":
-            piece = "```text\n" + b.text + "\n```"
-        elif b.kind == "link":
-            url = b.text if b.text.startswith("http") else "https://" + b.text
-            item = f"- <{url}>"
-            if prev is not None and prev.kind == "link" and out:
-                out[-1] += "\n" + item
-            else:
-                out.append(item)
-        elif b.kind == "table":
-            piece = table_html(b.rows, b.header)
-        elif b.kind == "fig" and b.fig:
-            f = b.fig
-            alt = html_escape(b.caption or f"Diagram: {ch.title}")
-            img = f'<img src="{f.src}" width="{f.width}" height="{f.height}" alt="{alt}" loading="lazy">'
-            caption = f"<figcaption>{html_escape(b.caption)}</figcaption>" if b.caption else ""
-            piece = f"<figure>{img}{caption}</figure>"
-        if piece:
+        piece = BLOCK_MD[b.kind](b, ch)
+        group = LIST_GROUP.get(b.kind)
+        if piece and group and group == prev_group and out:
+            out[-1] += "\n" + piece
+        elif piece:
             out.append(piece)
-        prev = b
+        prev_group = group
     return "\n\n".join(out).strip() + "\n"
 
 
@@ -708,58 +763,56 @@ def page_lines(page, page_no: int, skip: list[list[float]]) -> list[Line]:
 
 
 def clean_title(text: str) -> str:
-    text = re.sub(r"\s*#\s*$", "", text.strip())
-    return re.sub(r"\s*\(\*New\*\)\s*$", "", text).strip()
+    """Drops the "#" anchor the advanced course prints after headings and a "(*New*)" badge."""
+    text = text.strip()
+    for suffix in ("#", "(*New*)"):
+        if text.endswith(suffix):
+            text = text[: -len(suffix)].rstrip()
+    return text
 
 
-def process_pdf(book: str, path: Path, cfg) -> list[Chapter]:
-    import pdfplumber
+def page_items(cfg, raw_page, page_no: int) -> list[tuple[float, object]]:
+    """A page's tables, figures and text lines in reading order."""
+    page = raw_page.dedupe_chars()
+    items: list[tuple[float, object]] = []
+    skip: list[list[float]] = []
+    for t in (cfg.tables(page) if cfg.has_tables else []):
+        table = read_table(page, page_no, t)
+        if table:
+            items.append((table.top, table))
+            skip.append([t.bbox[1], t.bbox[3], t.bbox[0], t.bbox[2]])
+    pad = 6
+    for top, bottom, x0, x1 in cfg.figures(page, skip):
+        items.append((top, render_region(raw_page, page_no, (x0 - pad, top - pad, x1 + pad, bottom + pad))))
+        skip.append([top, bottom, x0, x1])
+    items += [(line.top, line) for line in page_lines(page, page_no, skip)]
+    return sorted(items, key=lambda it: it[0])
 
-    with pdfplumber.open(path) as pdf:
-        asm = Assembler(cfg.margin, pdf.pages[0].width, cfg.implicit_bullets)
-        for index, raw_page in enumerate(pdf.pages):
-            page_no = index + 1
-            if page_no < cfg.first_page:
-                continue
-            page = raw_page.dedupe_chars()
-            items: list[tuple[float, object]] = []
-            skip: list[list[float]] = []
 
-            for t in cfg.tables(page):
-                table = read_table(page, page_no, t)
-                if table:
-                    items.append((table.top, table))
-                    skip.append([t.bbox[1], t.bbox[3], t.bbox[0], t.bbox[2]])
+def feed_line(asm: Assembler, cfg, line: Line):
+    cfg.classify(line, asm)
+    if line.kind == "part":
+        asm.start_part(line.text.strip())
+    elif line.kind == "title":
+        if asm.last is not None and asm.last.kind == "title" and asm.last.page == line.page:
+            asm.extend_title(line.text)
+        else:
+            asm.start_chapter(clean_title(line.text))
+        asm.last = line
+    elif line.kind != "drop":
+        asm.add_line(line)
 
-            for top, bottom, x0, x1 in cfg.figures(page, skip):
-                pad = 6
-                fig = render_region(raw_page, page_no, (x0 - pad, top - pad, x1 + pad, bottom + pad))
-                items.append((top, fig))
-                skip.append([top, bottom, x0, x1])
 
-            for line in page_lines(page, page_no, skip):
-                items.append((line.top, line))
-            items.sort(key=lambda it: it[0])
+def feed_item(asm: Assembler, cfg, item: object):
+    if isinstance(item, Figure):
+        asm.add_block(Block(kind="fig", fig=item))
+    elif isinstance(item, Table):
+        asm.add_block(Block(kind="table", rows=item.rows, header=item.header))
+    else:
+        feed_line(asm, cfg, item)
 
-            for _, item in items:
-                if isinstance(item, Figure):
-                    asm.add_block(Block(kind="fig", fig=item))
-                elif isinstance(item, Table):
-                    asm.add_block(Block(kind="table", rows=item.rows, header=item.header))
-                else:
-                    cfg.classify(item, asm)
-                    if item.kind == "part":
-                        asm.start_part(item.text.strip())
-                    elif item.kind == "title":
-                        if asm.last is not None and asm.last.kind == "title" and asm.last.page == item.page:
-                            asm.extend_title(item.text)
-                        else:
-                            asm.start_chapter(clean_title(item.text))
-                        asm.last = item
-                    elif item.kind != "drop":
-                        asm.add_line(item)
-            raw_page.flush_cache()
-    chapters = asm.finish()
+
+def save_figures(book: str, chapters: list[Chapter]):
     assets = ASSET_DIR / book
     if assets.exists():
         shutil.rmtree(assets)
@@ -768,6 +821,20 @@ def process_pdf(book: str, path: Path, cfg) -> list[Chapter]:
         for b in ch.blocks:
             if b.kind == "fig":
                 save_figure(book, b.fig)
+
+
+def process_pdf(book: str, path: Path, cfg) -> list[Chapter]:
+    import pdfplumber
+
+    with pdfplumber.open(path) as pdf:
+        asm = Assembler(cfg.margin, pdf.pages[0].width, cfg.implicit_bullets)
+        for index, raw_page in enumerate(pdf.pages):
+            if index + 1 >= cfg.first_page:
+                for _, item in page_items(cfg, raw_page, index + 1):
+                    feed_item(asm, cfg, item)
+            raw_page.flush_cache()
+    chapters = asm.finish()
+    save_figures(book, chapters)
     return chapters
 
 
@@ -779,6 +846,7 @@ class AdvancedBook:
     first_page = 2
     margin = 58
     implicit_bullets = True
+    has_tables = False
     TEXT_FONTS = ("DroidSerif", "NunitoSans", "KaTeX", "unknown")
     PART_STARTS = {
         "What Is This Course About?": "Introduction",
@@ -796,11 +864,8 @@ class AdvancedBook:
         self.in_toc = False
         self.after_nav = True
 
-    def tables(self, page):
-        return []
-
     def figures(self, page, skip):
-        graphics = visible_graphics(page)
+        graphics = [g for g in visible_graphics(page) if not any(inside(g, s) for s in skip)]
         # Inline code shares the diagram font; only labels away from body text belong to a diagram.
         body_rows = {round(c["top"]) for c in page.chars if base_font(c["fontname"]).startswith("DroidSerif")}
         diagram_chars = [
@@ -820,43 +885,43 @@ class AdvancedBook:
             out.append([top, bottom, min(x0, 50), max(x1, page.width - 50)])
         return out
 
-    def classify(self, line: Line, asm: Assembler):
-        font, size, text = line.font, line.size, line.text.strip()
-        if font == "NunitoSans-Bold" and size == 11.3:
+    def boilerplate(self, line: Line) -> str | None:
+        """Classifies navigation, page numbers, captions and the lesson contents panel."""
+        font, size = line.font, line.size
+        if font == "NunitoSans-Bold" and near(size, 11.3):
             self.after_nav = True  # the Back / Next buttons that end every lesson
-            line.kind = "drop"
-            return
-        if font == "NunitoSans-Regular" and size == 10.5:
-            line.kind = "caption" if line.x0 > self.margin + 20 and not self.after_nav else "drop"
-            return
+            return "drop"
+        if font == "NunitoSans-Regular" and near(size, 10.5):
+            return "caption" if line.x0 > self.margin + 20 and not self.after_nav else "drop"
         if font == "unknown":
-            line.kind = "drop"
-            return
-        if font == "NunitoSans-Bold" and text.startswith("We'll cover the following"):
+            return "drop"
+        if font == "NunitoSans-Bold" and line.text.strip().startswith("We'll cover the following"):
             self.in_toc = True
-            line.kind = "drop"
-            return
-        if self.in_toc and font == "NunitoSans-Regular" and size == 13.5:
-            line.kind = "drop"
-            return
+            return "drop"
+        if self.in_toc and font == "NunitoSans-Regular" and near(size, 13.5):
+            return "drop"
         self.in_toc = False
+        return None
+
+    def classify(self, line: Line, asm: Assembler):
+        kind = self.boilerplate(line)
+        if kind:
+            line.kind = kind
+            return
         # Lessons open on a fresh page with the title at a fixed offset; a section that
         # merely lands at the top of a page sits higher (top ~37).
         at_title_slot = 44 <= line.top <= 56 and (asm.last is None or asm.last.page != line.page)
         starts_lesson = self.after_nav or at_title_slot or (asm.last is not None and asm.last.kind == "title")
         self.after_nav = False
-        if font.startswith("NunitoSans") and 22 <= size < 23 and starts_lesson:
-            title = clean_title(text)
+        heading = line.font.startswith("NunitoSans")
+        if heading and 22 <= line.size < 23 and starts_lesson:
+            title = clean_title(line.text)
             if title in self.PART_STARTS:
                 asm.start_part(self.PART_STARTS[title])
             line.kind = "title"
-        elif font.startswith("NunitoSans") and size >= 26:
-            line.kind = "h2"
-        elif font.startswith("NunitoSans") and size >= 22:
-            line.kind = "h3"
-        elif font.startswith("NunitoSans") and size >= 17:
-            line.kind = "h4"
-        elif font == "NunitoSans-Regular" and size == 12.0 and asm.chapter is not None and not asm.chapter.blocks:
+        elif heading and line.size >= 17:
+            line.kind = "h2" if line.size >= 26 else "h3" if line.size >= 22 else "h4"
+        elif line.font == "NunitoSans-Regular" and near(line.size, 12.0) and asm.chapter is not None and not asm.chapter.blocks:
             line.kind = "lead"
         else:
             line.kind = "body"
@@ -868,6 +933,7 @@ class GrokkingBook:
     first_page = 8
     margin = 72
     implicit_bullets = False
+    has_tables = True
 
     def __init__(self):
         self.in_note = False
@@ -894,37 +960,54 @@ class GrokkingBook:
         return out
 
     def classify(self, line: Line, asm: Assembler):
-        font, size, text = line.font, line.size, line.text.strip()
         was_note = self.in_note
         self.in_note = False
+        line.kind = self.structure_kind(line) or self.text_kind(line, asm, was_note)
+
+    @staticmethod
+    def structure_kind(line: Line) -> str | None:
+        """Page furniture, parts, chapter titles and section headings."""
+        font, size = line.font, line.size
         if font.startswith("Calibri") and size < 12:
-            line.kind = "drop"
-        elif font == "Calibri-Light" and size >= 21:
-            line.kind = "part"
-        elif font == "Calibri-Light" and size >= 15:
-            line.kind = "title"
-        elif font.startswith("Arial") and size >= 15:
-            line.kind = "h2"
-        elif font == "SegoeUISymbol":
+            return "drop"
+        if font == "Calibri-Light":
+            return "part" if size >= 21 else "title" if size >= 15 else None
+        if font.startswith("Arial") and size >= 15:
+            return "h2"
+        return None
+
+    def text_kind(self, line: Line, asm: Assembler, was_note: bool) -> str:
+        font, size, text = line.font, line.size, line.text.strip()
+        if font == "SegoeUISymbol":
+            self.in_note = True  # the lightbulb that opens a tip
+            return "drop"
+        if was_note and font.startswith("Georgia-Bold"):
             self.in_note = True
-            line.kind = "drop"
-        elif was_note and font.startswith("Georgia-Bold"):
-            self.in_note = True
-            line.kind = "note"
-        elif font.startswith("TimesNewRoman") and size > 13 and asm.chapter is not None and not asm.chapter.blocks:
-            line.kind = "lead"
-        elif font.startswith("TimesNewRoman") and (text.startswith(("http", "www.")) or (asm.current is not None and asm.current.kind == "link")):
-            line.kind = "link"
-        elif font.startswith("Arial") and "Italic" in font and "Bold" not in font and size > 13 and len(text) < 40:
-            line.kind = "h3"
-        elif font.startswith("Arial") and "Bold" in font and len(text) < 60 and re.match(r"^([a-z]\.\s)?[A-Z][\w\s-]+$", text):
-            line.kind = "h3"
-        elif font.startswith("Consolas") and not NUMBER_RE.match(text):
-            line.kind = "code"
-        else:
-            center = (line.x0 + line.x1) / 2
-            centered = abs(center - asm.page_width / 2) < 30 and line.x0 > asm.margin + 40
-            line.kind = "formula" if centered and len(text) < 70 else "body"
+            return "note"
+        if font.startswith("TimesNewRoman"):
+            return self.times_kind(line, asm)
+        if font.startswith("Arial") and is_subheading(font, size, text):
+            return "h3"
+        if font.startswith("Consolas") and not NUMBER_RE.match(text):
+            return "code"
+        centered = abs((line.x0 + line.x1) / 2 - asm.page_width / 2) < 30 and line.x0 > asm.margin + 40
+        return "formula" if centered and len(text) < 70 else "body"
+
+    @staticmethod
+    def times_kind(line: Line, asm: Assembler) -> str:
+        """Times New Roman sets a chapter's opening blurb and the reference link list."""
+        text = line.text.strip()
+        if line.size > 13 and asm.chapter is not None and not asm.chapter.blocks:
+            return "lead"
+        if text.startswith(("http", "www.")) or (asm.current is not None and asm.current.kind == "link"):
+            return "link"
+        return "body"
+
+
+def is_subheading(font: str, size: float, text: str) -> bool:
+    if "Italic" in font and "Bold" not in font:
+        return size > 13 and len(text) < 40
+    return "Bold" in font and len(text) < 60 and re.match(r"^([a-z]\.\s)?[A-Z][\w\s-]+$", text) is not None
 
 
 # --------------------------------------------------------------------------- notes (Markdown)
@@ -962,16 +1045,19 @@ def process_notes(path: Path) -> list[Chapter]:
 
 def parse_lead(text: str) -> dict:
     """Splits "Similar services: ... Difficulty Level: Easy" out of a chapter's opening blurb."""
-    text = re.sub(r"\s+", " ", text).strip()
+    text = " ".join(text.split())
     meta: dict = {}
-    m = re.search(r"\s*Difficulty Level:\s*(\w+)\.?\s*$", text)
-    if m:
-        meta["difficulty"] = m.group(1).lower()
-        text = text[: m.start()].strip()
-    m = re.search(r"\s*Similar [Ss]ervices:\s*(.+?)\s*$", text)
-    if m:
-        meta["similar"] = re.sub(r"\s*(etc\.?|Difficulty)$", "", m.group(1)).rstrip(",. ")
-        text = text[: m.start()].strip()
+    head, found, level = text.rpartition("Difficulty Level:")
+    if found and level.strip().rstrip(".").isalpha():
+        meta["difficulty"] = level.strip().rstrip(".").lower()
+        text = head.strip()
+    similar = re.search(r"Similar [Ss]ervices:", text)
+    if similar:
+        value = text[similar.end():].strip()
+        for suffix in ("Difficulty", "etc.", "etc"):
+            value = value.removesuffix(suffix).strip()
+        meta["similar"] = value.rstrip(",. ")
+        text = text[: similar.start()].strip()
     if text:
         meta["lead"] = text
     return meta
