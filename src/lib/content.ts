@@ -1,11 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
-import { marked } from "marked";
+import { Marked, marked } from "marked";
 import { createHighlighter, type Highlighter } from "shiki";
 import type {
   Block,
   CourseIndex,
+  DesignBook,
+  DesignChapterMeta,
   CourseItem,
   Difficulty,
   LcMeta,
@@ -176,42 +178,102 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
 
 /* ---------------------------------------------------------------- system design */
 
-export interface DesignArticle {
+const DESIGN_DIR = path.join(ROOT, "system-design");
+/** Reading order on the landing page; books missing from disk are skipped. */
+const DESIGN_BOOK_ORDER = ["grokking", "advanced", "notes"];
+
+export const listDesignBooks = cache((): DesignBook[] =>
+  DESIGN_BOOK_ORDER.map((id) => readJson<DesignBook>(path.join(DESIGN_DIR, id, "index.json"))).filter(
+    (book): book is DesignBook => book !== null,
+  ),
+);
+
+export const getDesignBook = cache((id: string): DesignBook | null => listDesignBooks().find((b) => b.id === id) ?? null);
+
+export function designChapters(book: DesignBook) {
+  return book.parts.flatMap((part) => part.chapters.map((chapter) => ({ ...chapter, part: part.title })));
+}
+
+export interface DesignHeading {
   id: string;
-  title: string;
-  summary?: string;
-  source?: string;
-  sourceFiles?: string[];
-  sourceFile?: string;
-  verbatim?: boolean;
-  /** The prompt to practice against, shown first. */
-  prompt: Block[];
-  /** The reference design, hidden until revealed. */
-  reference: Block[];
+  text: string;
+  depth: number;
 }
 
-function designArticleRank(article: DesignArticle) {
-  if (article.verbatim) return 2;
-  if (article.source?.toLowerCase().includes("advanced")) return 1;
-  return 0;
+export interface DesignChapterPage {
+  book: DesignBook;
+  chapter: DesignChapterMeta & { part: string };
+  prev: (DesignChapterMeta & { part: string }) | null;
+  next: (DesignChapterMeta & { part: string }) | null;
+  html: string;
+  headings: DesignHeading[];
+  minutes: number;
 }
 
-export const listDesignArticles = cache((): DesignArticle[] => {
-  const dir = path.join(ROOT, "system-design");
-  if (!fs.existsSync(dir)) return [];
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => readJson<DesignArticle>(path.join(dir, f))!)
-    .sort((a, b) => {
-      return designArticleRank(a) - designArticleRank(b) || a.title.localeCompare(b.title);
-    });
+export const getDesignChapter = cache((bookId: string, chapterId: string): DesignChapterPage | null => {
+  const book = getDesignBook(bookId);
+  if (!book || !SLUG.test(chapterId)) return null;
+  const chapters = designChapters(book);
+  const index = chapters.findIndex((c) => c.id === chapterId);
+  if (index === -1) return null;
+  // Both ids come from the book's own index, so the path stays inside content/system-design.
+  const md = fs.readFileSync(path.join(DESIGN_DIR, book.id, `${chapterId}.md`), "utf8"); // nosemgrep -- ids are validated against index.json
+  const { html, headings } = renderDesignMarkdown(md);
+  const words = md.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  return {
+    book,
+    chapter: chapters[index],
+    prev: chapters[index - 1] ?? null,
+    next: chapters[index + 1] ?? null,
+    html,
+    headings,
+    minutes: Math.max(1, Math.round(words / 230)),
+  };
 });
 
-export const getDesignArticle = cache((id: string): DesignArticle | null => {
-  if (!/^[a-z0-9-]+$/.test(id)) return null;
-  return readJson<DesignArticle>(path.join(ROOT, "system-design", `${id}.json`));
-});
+const ENTITIES: Record<string, string> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'" };
+
+function escapeAttribute(value: string) {
+  return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
+/**
+ * Renders a chapter. The importer escapes source text and only emits figure and table HTML itself,
+ * so the renderer's job is heading anchors plus keeping links and images to safe destinations.
+ */
+function renderDesignMarkdown(md: string): { html: string; headings: DesignHeading[] } {
+  const headings: DesignHeading[] = [];
+  const used = new Map<string, number>();
+  const parser = new Marked({
+    gfm: true,
+    renderer: {
+      heading({ tokens, depth }) {
+        const inner = this.parser.parseInline(tokens);
+        const text = inner.replace(/<[^>]+>/g, "").replace(/&(amp|lt|gt|quot|#39);/g, (e) => ENTITIES[e]);
+        const base = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "section";
+        const count = used.get(base) ?? 0;
+        used.set(base, count + 1);
+        const id = count ? `${base}-${count + 1}` : base;
+        if (depth <= 3) headings.push({ id, text, depth });
+        return `<h${depth} id="${id}">${inner}</h${depth}>\n`;
+      },
+      link({ href, tokens }) {
+        const inner = this.parser.parseInline(tokens);
+        if (!/^https?:\/\//i.test(href)) return inner;
+        return `<a href="${escapeAttribute(href)}" target="_blank" rel="noreferrer">${inner}</a>`;
+      },
+      image({ href, text }) {
+        if (!/^(https:\/\/|\/course-assets\/)/.test(href)) return "";
+        return `<img src="${escapeAttribute(href)}" alt="${escapeAttribute(text)}" loading="lazy">`;
+      },
+      html({ text }) {
+        // Only the figure and table markup written by the importer passes through as HTML.
+        return /^<(figure|table)>/.test(text.trimStart()) ? text : escapeAttribute(text);
+      },
+    },
+  });
+  return { html: parser.parse(md, { async: false }), headings };
+}
 
 /* ---------------------------------------------------------------- highlighting */
 

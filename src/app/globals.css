@@ -214,6 +214,92 @@ body {
   border-color: var(--border);
 }
 
+/* ------------------------------------------------------------ system design reader */
+
+.prose-reader {
+  font-size: 16.5px;
+  line-height: 1.8;
+}
+.prose-reader h2 {
+  margin-top: 2.2em;
+  padding-top: 0.2em;
+  scroll-margin-top: 5rem;
+}
+.prose-reader h3,
+.prose-reader h4 {
+  margin-top: 1.8em;
+  scroll-margin-top: 5rem;
+}
+.prose-reader p,
+.prose-reader li {
+  color: color-mix(in srgb, var(--text-1) 88%, var(--text-2));
+}
+.prose-reader li::marker {
+  color: var(--text-3);
+}
+.prose-reader ul ul,
+.prose-reader ol ul,
+.prose-reader ul ol {
+  margin: 0.3em 0;
+}
+/* Tips in the source books ("You should always clarify requirements...") read as callouts. */
+.prose-reader blockquote {
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--border));
+  border-left: 3px solid var(--brand);
+  background: var(--brand-soft);
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  color: var(--text-1);
+}
+.prose-reader blockquote p {
+  margin: 0;
+  color: inherit;
+}
+.prose-reader blockquote :where(strong, em) {
+  font-weight: 550;
+  font-style: normal;
+}
+.prose-reader figure {
+  margin: 1.6em 0;
+  text-align: center;
+}
+.prose-reader figure img {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+}
+.dark .prose-reader figure img {
+  filter: brightness(0.88);
+}
+.prose-reader figcaption {
+  margin-top: 0.6em;
+  font-size: 0.85em;
+  color: var(--text-3);
+}
+.prose-reader table {
+  display: table;
+  width: auto;
+  min-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.9em;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.prose-reader th {
+  background: var(--layer-2);
+  text-align: left;
+  font-weight: 600;
+}
+.prose-reader pre {
+  font-size: 0.95em;
+}
+.prose-reader :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+
 /* Diagrams are drawn for a white canvas; keep them readable in dark mode without glare. */
 .diagram {
   background: #fbfbfc;

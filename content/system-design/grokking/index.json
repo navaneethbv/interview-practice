@@ -1,0 +1,170 @@
+{
+ "id": "grokking",
+ "title": "Grokking the System Design Interview",
+ "short": "System Design Interview",
+ "description": "The classic course: a step-by-step interview framework, 16 worked designs from TinyURL to Ticketmaster, and the building blocks every design uses.",
+ "source": "Grokking-the-system-design-interviewpdf-5-pdf-free (1).pdf",
+ "download": "/course-assets/system-design/sources/grokking.pdf",
+ "parts": [
+  {
+   "title": "System Design Problems",
+   "chapters": [
+    {
+     "id": "system-design-interviews-a-step-by-step-guide",
+     "title": "System Design Interviews: A step by step guide"
+    },
+    {
+     "id": "designing-a-url-shortening-service-like-tinyurl",
+     "title": "Designing a URL Shortening service like TinyURL",
+     "difficulty": "easy",
+     "similar": "bit.ly, goo.gl, qlink.me",
+     "lead": "Let's design a URL shortening service like TinyURL. This service will provide short aliases redirecting to long URLs."
+    },
+    {
+     "id": "designing-pastebin",
+     "title": "Designing Pastebin",
+     "difficulty": "easy",
+     "similar": "pastebin.com, pasted.co, chopapp.com",
+     "lead": "Let's design a Pastebin like web service, where users can store plain text. Users of the service will enter a piece of text and get a randomly generated URL to access it."
+    },
+    {
+     "id": "designing-instagram",
+     "title": "Designing Instagram",
+     "difficulty": "medium",
+     "similar": "Flickr, Picasa",
+     "lead": "Let's design a photo-sharing service like Instagram, where users can upload photos to share them with other users."
+    },
+    {
+     "id": "designing-dropbox",
+     "title": "Designing Dropbox",
+     "difficulty": "medium",
+     "similar": "OneDrive, Google Drive",
+     "lead": "Let's design a file hosting service like Dropbox or Google Drive. Cloud file storage enables users to store their data on remote servers. Usually, these servers are maintained by cloud storage providers and made available to users over a network (typically through the Internet). Users pay for their cloud data storage on a monthly basis."
+    },
+    {
+     "id": "designing-facebook-messenger",
+     "title": "Designing Facebook Messenger",
+     "lead": "Let's design an instant messaging service like Facebook Messenger where users can send text messages to each other through web and mobile interfaces."
+    },
+    {
+     "id": "designing-twitter",
+     "title": "Designing Twitter",
+     "difficulty": "medium",
+     "lead": "Let's design a Twitter-like social networking service. Users of the service will be able to post tweets, follow other people, and favorite tweets."
+    },
+    {
+     "id": "designing-youtube-or-netflix",
+     "title": "Designing Youtube or Netflix",
+     "difficulty": "medium",
+     "similar": "netflix.com, vimeo.com, dailymotion.com, veoh.com",
+     "lead": "Let's design a video sharing service like Youtube, where users will be able to upload/view/search videos."
+    },
+    {
+     "id": "designing-typeahead-suggestion",
+     "title": "Designing Typeahead Suggestion",
+     "similar": "Auto-suggestions, Typeahead search Difficulty: Medium",
+     "lead": "Let's design a real-time suggestion service, which will recommend terms to users as they enter text for searching."
+    },
+    {
+     "id": "designing-an-api-rate-limiter",
+     "title": "Designing an API Rate Limiter",
+     "difficulty": "medium",
+     "lead": "Let's design an API Rate Limiter which will throttle users based upon the number of the requests they are sending."
+    },
+    {
+     "id": "designing-twitter-search",
+     "title": "Designing Twitter Search",
+     "difficulty": "medium",
+     "lead": "Twitter is one of the largest social networking service where users can share photos, news, and text-based messages. In this chapter, we will design a service that can store and search user tweets. Similar Problems: Tweet search."
+    },
+    {
+     "id": "designing-a-web-crawler",
+     "title": "Designing a Web Crawler",
+     "difficulty": "hard",
+     "lead": "Let's design a Web Crawler that will systematically browse and download the World Wide Web. Web crawlers are also known as web spiders, robots, worms, walkers, and bots."
+    },
+    {
+     "id": "designing-facebooks-newsfeed",
+     "title": "Designing Facebook’s Newsfeed",
+     "difficulty": "hard",
+     "similar": "Twitter Newsfeed, Instagram Newsfeed, Quora Newsfeed",
+     "lead": "Let's design Facebook's Newsfeed, which would contain posts, photos, videos, and status updates from all the people and pages a user follows."
+    },
+    {
+     "id": "designing-yelp-or-nearby-friends",
+     "title": "Designing Yelp or Nearby Friends",
+     "difficulty": "hard",
+     "similar": "Proximity server",
+     "lead": "Let's design a Yelp like service, where users can search for nearby places like restaurants, theaters, or shopping malls, etc., and can also add/view reviews of places."
+    },
+    {
+     "id": "designing-uber-backend",
+     "title": "Designing Uber backend",
+     "similar": "Lyft, Didi, Via, Sidecar etc. Difficulty level: Hard Prerequisite: Designing Yelp",
+     "lead": "Let's design a ride-sharing service like Uber, which connects passengers who need a ride with drivers who have a car."
+    },
+    {
+     "id": "design-ticketmaster",
+     "title": "Design Ticketmaster",
+     "difficulty": "hard",
+     "similar": "bookmyshow.com, ticketmaster.com",
+     "lead": "Let's design an online ticketing system that sells movie tickets like Ticketmaster or BookMyShow."
+    },
+    {
+     "id": "additional-resources",
+     "title": "Additional Resources"
+    }
+   ]
+  },
+  {
+   "title": "System Design Basics",
+   "chapters": [
+    {
+     "id": "key-characteristics-of-distributed-systems",
+     "title": "Key Characteristics of Distributed Systems"
+    },
+    {
+     "id": "load-balancing",
+     "title": "Load Balancing"
+    },
+    {
+     "id": "caching",
+     "title": "Caching"
+    },
+    {
+     "id": "sharding-or-data-partitioning",
+     "title": "Sharding or Data Partitioning"
+    },
+    {
+     "id": "indexes",
+     "title": "Indexes"
+    },
+    {
+     "id": "proxies",
+     "title": "Proxies"
+    },
+    {
+     "id": "redundancy-and-replication",
+     "title": "Redundancy and Replication"
+    },
+    {
+     "id": "sql-vs-nosql",
+     "title": "SQL vs. NoSQL"
+    },
+    {
+     "id": "cap-theorem",
+     "title": "CAP Theorem"
+    },
+    {
+     "id": "consistent-hashing",
+     "title": "Consistent Hashing"
+    },
+    {
+     "id": "long-polling-vs-websockets-vs-server-sent-events",
+     "title": "Long-Polling vs WebSockets vs Server-Sent Events",
+     "lead": "What is the difference between Long-Polling, WebSockets, and Server-Sent Events?"
+    }
+   ]
+  }
+ ]
+}
