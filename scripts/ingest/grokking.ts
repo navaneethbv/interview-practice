@@ -543,7 +543,7 @@ function main() {
   };
 
   const chapterDirs = fs
-    .readdirSync(SRC, { withFileTypes: true })
+    .readdirSync(SRC, { withFileTypes: true }) // NOSONAR nosemgrep -- SRC is allowlisted to the workspace and canonicalized by resolveSourceDirectory
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
     .sort(naturalSort);

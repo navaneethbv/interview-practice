@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function LessonPage({ params }: PageProps) {
   const { id } = await params;
   const lesson = getLesson(id);
-  if (!lesson || lesson.type !== "lesson") notFound();
+  if (lesson?.type !== "lesson") notFound();
   const chapter = getCourse().chapters.find((c) => c.id === lesson.chapterId);
   const blocks = await renderBlocks(lesson.body);
   const { prev, next } = neighbors(id);

@@ -85,7 +85,7 @@ function readProgress(): ProgressState {
   if (progressCache) return progressCache;
   try {
     const parsed = JSON.parse(safeGet(KEY) ?? "null") as Partial<ProgressState> | null;
-    progressCache = { ...EMPTY, ...(parsed ?? {}) };
+    progressCache = { ...EMPTY, ...parsed };
     // Migrate old first-attempt timestamps and reconstruct reset baselines while the
     // legacy event history is still present. Already discarded events cannot be recovered.
     const p = progressCache;

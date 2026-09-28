@@ -114,6 +114,8 @@ def escape_block_start(md: str) -> str:
 
 
 PAREN_URL = re.compile(r" ?\((?:https?://|www\.)[^)]*\)")
+HTTPS = "https://"
+URL_PREFIXES = ("http://", HTTPS)
 BARE_URL = re.compile(r"^(?:https?://|www\.)\S+$")
 URL_RE = re.compile(r"(?:https?://|www\.)[^\s,;)“”\"']*[^\s,;.)“”\"']")
 URL_SPLIT = re.compile(f"({URL_RE.pattern})")
@@ -542,7 +544,7 @@ class Assembler:
 
     def add_link(self, line: Line):
         text = line.text.strip()
-        joins = self.current is not None and self.current.kind == "link" and not text.startswith(("http://", "https://", "www."))
+        joins = self.current is not None and self.current.kind == "link" and not text.startswith((*URL_PREFIXES, "www."))
         self.add_run("link", line, text, "", joins)
 
     def start_block(self, line: Line, block: Block):
@@ -653,7 +655,7 @@ def plain(spans: list[Span]) -> str:
 
 def paragraph_md(b: Block, ch: Chapter) -> str:
     text = plain(b.spans)
-    if text.startswith(("http://", "https://")) and len(text.split()) <= 3:
+    if text.startswith(URL_PREFIXES) and len(text.split()) <= 3:
         text = text.replace(" ", "")  # a long example URL wrapped across lines
     return f"`{text}`" if BARE_URL.match(text) else escape_block_start(spans_to_md(b.spans))
 
@@ -670,7 +672,7 @@ def note_md(b: Block, ch: Chapter) -> str:
 
 
 def link_md(b: Block, ch: Chapter) -> str:
-    url = b.text if b.text.startswith("http") else "https://" + b.text
+    url = b.text if b.text.startswith("http") else HTTPS + b.text
     return f"- <{url}>"
 
 
@@ -913,18 +915,31 @@ class AdvancedBook:
         at_title_slot = 44 <= line.top <= 56 and (asm.last is None or asm.last.page != line.page)
         starts_lesson = self.after_nav or at_title_slot or (asm.last is not None and asm.last.kind == "title")
         self.after_nav = False
-        heading = line.font.startswith("NunitoSans")
-        if heading and 22 <= line.size < 23 and starts_lesson:
+        if line.font.startswith("NunitoSans") and 22 <= line.size < 23 and starts_lesson:
             title = clean_title(line.text)
             if title in self.PART_STARTS:
                 asm.start_part(self.PART_STARTS[title])
             line.kind = "title"
-        elif heading and line.size >= 17:
-            line.kind = "h2" if line.size >= 26 else "h3" if line.size >= 22 else "h4"
-        elif line.font == "NunitoSans-Regular" and near(line.size, 12.0) and asm.chapter is not None and not asm.chapter.blocks:
-            line.kind = "lead"
         else:
-            line.kind = "body"
+            line.kind = self.content_kind(line, asm)
+
+    @staticmethod
+    def content_kind(line: Line, asm: Assembler) -> str:
+        """Section headings, the lesson's opening line, or body text."""
+        if line.font.startswith("NunitoSans") and line.size >= 17:
+            return heading_level(line.size)
+        if line.font == "NunitoSans-Regular" and near(line.size, 12.0) and asm.chapter is not None and not asm.chapter.blocks:
+            return "lead"
+        return "body"
+
+
+def heading_level(size: float) -> str:
+    """The advanced course sets sections larger than its lesson titles."""
+    if size >= 26:
+        return "h2"
+    if size >= 22:
+        return "h3"
+    return "h4"
 
 
 class GrokkingBook:
@@ -970,8 +985,10 @@ class GrokkingBook:
         font, size = line.font, line.size
         if font.startswith("Calibri") and size < 12:
             return "drop"
-        if font == "Calibri-Light":
-            return "part" if size >= 21 else "title" if size >= 15 else None
+        if font == "Calibri-Light" and size >= 21:
+            return "part"
+        if font == "Calibri-Light" and size >= 15:
+            return "title"
         if font.startswith("Arial") and size >= 15:
             return "h2"
         return None
