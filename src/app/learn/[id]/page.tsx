@@ -14,12 +14,14 @@ export function generateStaticParams() {
     .map((i) => ({ id: i.id }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+type PageProps = Readonly<{ params: Promise<{ id: string }> }>;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const lesson = getLesson((await params).id);
   return { title: lesson?.title ?? "Lesson" };
 }
 
-export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function LessonPage({ params }: PageProps) {
   const { id } = await params;
   const lesson = getLesson(id);
   if (!lesson || lesson.type !== "lesson") notFound();

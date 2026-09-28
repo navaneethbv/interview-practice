@@ -7,7 +7,7 @@ import { COURSE_SCOPE, type CourseIndex } from "@/lib/content-types";
 import { statusOf, useProgress } from "@/lib/progress";
 import { DifficultyText, StatusIcon } from "./ui";
 
-export function CourseOutline({ course }: { course: CourseIndex }) {
+export function CourseOutline({ course }: Readonly<{ course: CourseIndex }>) {
   const progress = useProgress();
   const [open, setOpen] = useState<Record<string, boolean>>({});
 
@@ -55,13 +55,11 @@ export function CourseOutline({ course }: { course: CourseIndex }) {
                       href={it.type === "problem" ? `/problems/${it.id}` : `/learn/${it.id}`}
                       className="flex items-center gap-3 px-5 py-2.5 text-sm transition-colors hover:bg-layer-2/60"
                     >
-                      {it.type === "problem" ? (
-                        <StatusIcon status={statusOf(progress, it.id, COURSE_SCOPE)} />
-                      ) : progress.read[it.id] ? (
-                        <StatusIcon status="solved" />
-                      ) : (
-                        <BookOpen size={16} className="text-fg-3" aria-label="Lesson" />
-                      )}
+                      {(() => {
+                        if (it.type === "problem") return <StatusIcon status={statusOf(progress, it.id, COURSE_SCOPE)} />;
+                        if (progress.read[it.id]) return <StatusIcon status="solved" />;
+                        return <BookOpen size={16} className="text-fg-3" aria-label="Lesson" />;
+                      })()}
                       <span className="flex-1">{it.title}</span>
                       {it.difficulty && <DifficultyText difficulty={it.difficulty} />}
                     </Link>

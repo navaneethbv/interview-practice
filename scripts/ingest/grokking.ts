@@ -16,8 +16,22 @@ import type { AnyNode, Element } from "domhandler";
 import katex from "katex";
 import type { Block, CourseIndex, Lesson, LessonType } from "../../src/lib/content-types";
 
-const SRC = process.argv[2];
-if (!SRC || !fs.existsSync(SRC)) {
+function resolveSourceDirectory(candidate: string | undefined) {
+  if (!candidate) throw new Error("Pass the course folder path as the first argument.");
+  const resolved = path.resolve(candidate);
+  const source = fs.realpathSync(resolved);
+  if (!fs.statSync(source).isDirectory()) throw new Error("The course folder path must be a directory.");
+  const allowedRoots = [path.resolve(process.cwd()), path.resolve(process.cwd(), "..")];
+  if (!allowedRoots.some((root) => isWithin(root, source))) {
+    throw new Error("The course folder path must be inside the project workspace.");
+  }
+  return source;
+}
+
+let SRC: string;
+try {
+  SRC = resolveSourceDirectory(process.argv[2]);
+} catch {
   console.error("Pass the course folder path as the first argument.");
   process.exit(1);
 }
@@ -29,15 +43,21 @@ const IMG_DIR = path.join(process.cwd(), "public/course-assets", COURSE_ID);
 type Lang = "java" | "python" | "cpp" | "js" | "text";
 
 function detectLang(code: string): Lang {
-  if (!/[{};=]|\bdef\b|\breturn\b/.test(code)) return "text";
-  if (/#include|std::|using namespace|vector</.test(code)) return "cpp";
-  if (/^\s*(def |class \w+(\(.*\))?:|import \w|from \w+ import)/m.test(code) && !/;\s*$/m.test(code)) return "python";
-  if (/\bconsole\.log|\bfunction\b|\b(const|let) \w+ =|=>/.test(code) && !/\bpublic\b|System\.out/.test(code)) return "js";
+  const looksLikeCode = /[{};=]/.test(code) || /\bdef\b/.test(code) || /\breturn\b/.test(code);
+  if (!looksLikeCode) return "text";
+  if (code.includes("#include") || code.includes("std::") || code.includes("using namespace") || code.includes("vector<")) {
+    return "cpp";
+  }
+  const pythonHeader = /^\s*(def |class \w+(?:\([^)]*\))?:|import \w|from \w+ import)/m.test(code);
+  if (pythonHeader && !/;\s*$/m.test(code)) return "python";
+  const looksLikeJavaScript = /\bconsole\.log/.test(code) || /\bfunction\b/.test(code) || /\b(const|let) \w+ =/.test(code) || code.includes("=>");
+  if (looksLikeJavaScript && !/\bpublic\b/.test(code) && !/System\.out/.test(code)) return "js";
   return "java";
 }
 
 function naturalKey(name: string): number[] {
-  return (name.match(/^[\d.]+/)?.[0] ?? "999").split(".").filter(Boolean).map(Number);
+  const match = /^[\d.]+/.exec(name);
+  return (match?.[0] ?? "999").split(".").filter(Boolean).map(Number);
 }
 function naturalSort(a: string, b: string) {
   const ka = naturalKey(a);
@@ -53,7 +73,7 @@ function slugify(s: string) {
   return s
     .toLowerCase()
     .replace(/['’‘]/g, "")
-    .replace(/&/g, " and ")
+    .replaceAll("&", " and ")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
@@ -87,14 +107,17 @@ function codeFromEditor($: cheerio.CheerioAPI, el: Element): string {
   $(el)
     .find(".view-line")
     .each((_, l) => {
-      const top = Number(($(l).attr("style") ?? "").match(/top:\s*(\d+)/)?.[1] ?? 0);
-      lines.push({ top, text: $(l).text().replace(/ /g, " ") });
+      const topMatch = /top:\s*(\d+)/.exec($(l).attr("style") ?? "");
+      lines.push({ top: Number(topMatch?.[1] ?? 0), text: $(l).text().replaceAll(" ", " ") });
     });
   lines.sort((a, b) => a.top - b.top);
-  return lines
-    .map((l) => l.text.replace(/\s+$/, ""))
-    .join("\n")
-    .replace(/\n+$/, "\n");
+  return trimTrailingNewlines(lines.map((l) => l.text.trimEnd()).join("\n"));
+}
+
+function trimTrailingNewlines(text: string) {
+  let end = text.length;
+  while (end > 1 && text[end - 1] === "\n" && text[end - 2] === "\n") end--;
+  return text.slice(0, end);
 }
 
 function renderMath($: cheerio.CheerioAPI, root: cheerio.Cheerio<AnyNode>) {
@@ -123,7 +146,8 @@ function cleanMarkdown($: cheerio.CheerioAPI, el: Element): string {
       .find("*")
       .filter((__, a) => $(a).text().trim() === "#")
       .remove();
-    $(h).html(($(h).html() ?? "").replace(/\s*#\s*$/, ""));
+    const html = ($(h).html() ?? "").trimEnd();
+    $(h).html(html.endsWith("#") ? html.slice(0, -1).trimEnd() : html);
   });
   $el.find("script,style,button,noscript").remove();
   $el.find("*").each((_, n) => {
@@ -155,40 +179,32 @@ function cleanMarkdown($: cheerio.CheerioAPI, el: Element): string {
   return ($el.html() ?? "").replace(/\n\s*\n/g, "\n").trim();
 }
 
+function parseViewerBlock($: cheerio.CheerioAPI, b: AnyNode, file: string): RawBlock | null {
+  const $b = $(b);
+  const editors = $b.find('[class*="CodeEditorStyled"]');
+  if (editors.length) return { t: "code", code: codeFromEditor($, editors[0] as Element) };
+  const svg = $b.find(".canvas-svg-viewmode svg").first();
+  if (svg.length) return { t: "svg", svg: $.html(svg) };
+  const md = $b.find(".markdownViewer").first();
+  if (md.length) return { t: "md", html: cleanMarkdown($, md[0] as Element) };
+  const img = $b.find('img[src^="data:"]').first();
+  if (img.length) return { t: "data", uri: img.attr("src")!, alt: img.attr("alt") };
+  const diagram = $b.find("svg").not(".sf-hidden").first();
+  if (diagram.length) return { t: "svg", svg: $.html(diagram) };
+  if ($b.text().trim()) console.warn(`  ! unknown block in ${path.basename(file)}: ${$b.text().slice(0, 60)}`);
+  return null;
+}
+
 function parsePage(file: string): ParsedPage {
   const $ = cheerio.load(fs.readFileSync(file, "utf8"));
-  const title = $("title").text().replace(/\s*-\s*Grokking the Coding Interview.*$/, "").trim();
+  const rawTitle = $("title").text();
+  const titleMarker = " - Grokking the Coding Interview";
+  const markerIndex = rawTitle.indexOf(titleMarker);
+  const title = (markerIndex >= 0 ? rawTitle.slice(0, markerIndex) : rawTitle).trim();
   const blocks: RawBlock[] = [];
   $('[class*="ViewerComponentViewStyled"]').each((_, b) => {
-    const $b = $(b);
-    const editors = $b.find('[class*="CodeEditorStyled"]');
-    if (editors.length) {
-      // A tabbed code widget renders only the selected language.
-      blocks.push({ t: "code", code: codeFromEditor($, editors[0] as Element) });
-      return;
-    }
-    const svg = $b.find(".canvas-svg-viewmode svg").first();
-    if (svg.length) {
-      blocks.push({ t: "svg", svg: $.html(svg) });
-      return;
-    }
-    const md = $b.find(".markdownViewer").first();
-    if (md.length) {
-      blocks.push({ t: "md", html: cleanMarkdown($, md[0] as Element) });
-      return;
-    }
-    const img = $b.find('img[src^="data:"]').first();
-    if (img.length) {
-      blocks.push({ t: "data", uri: img.attr("src")!, alt: img.attr("alt") });
-      return;
-    }
-    const diagram = $b.find("svg").not(".sf-hidden").first();
-    if (diagram.length) {
-      blocks.push({ t: "svg", svg: $.html(diagram) });
-      return;
-    }
-    if (!$b.text().trim()) return;
-    console.warn(`  ! unknown block in ${path.basename(file)}: ${$b.text().slice(0, 60)}`);
+    const block = parseViewerBlock($, b, file);
+    if (block) blocks.push(block);
   });
   return { title, blocks };
 }
@@ -196,7 +212,18 @@ function parsePage(file: string): ParsedPage {
 /* ------------------------------------------------------- lesson assembly */
 
 function escapeHtml(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
+function isWithin(parent: string, child: string) {
+  const relative = path.relative(path.resolve(parent), path.resolve(child));
+  return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative));
+}
+
+function resolveWithin(parent: string, child: string) {
+  const resolved = path.resolve(parent, child);
+  if (!isWithin(parent, resolved)) throw new Error("Generated output escaped its trusted directory");
+  return resolved;
 }
 
 /** Challenge pages whose problem name is not in a heading. */
@@ -209,20 +236,25 @@ function saveSvg(svg: string): Block {
   fs.mkdirSync(IMG_DIR, { recursive: true });
   let out = svg;
   if (!/xmlns=/.test(out)) out = out.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
-  fs.writeFileSync(path.join(IMG_DIR, `${hash}.svg`), out);
-  const viewBox = svg.match(/viewBox="[\d.\s-]*?\s([\d.]+)\s+([\d.]+)"/);
-  const w = Math.round(Number(svg.match(/<svg[^>]*\swidth="([\d.]+)/)?.[1] ?? viewBox?.[1] ?? 600));
-  const h = Math.round(Number(svg.match(/<svg[^>]*\sheight="([\d.]+)/)?.[1] ?? viewBox?.[2] ?? 400));
+  fs.writeFileSync(resolveWithin(IMG_DIR, `${hash}.svg`), out);
+  const viewBox = /viewBox="[\d.\s-]*?\s([\d.]+)\s+([\d.]+)"/.exec(svg);
+  const width = /<svg[^>]*\swidth="([\d.]+)/.exec(svg);
+  const height = /<svg[^>]*\sheight="([\d.]+)/.exec(svg);
+  const w = Math.round(Number(width?.[1] ?? viewBox?.[1] ?? 600));
+  const h = Math.round(Number(height?.[1] ?? viewBox?.[2] ?? 400));
   return { t: "img", src: `/course-assets/${COURSE_ID}/${hash}.svg`, w, h };
 }
 
 const DATA_EXT: Record<string, string> = { "image/png": "png", "image/jpeg": "jpg", "image/gif": "gif", "image/webp": "webp" };
 
 function saveDataUri(uri: string, alt?: string): Block | null {
-  const m = uri.match(/^data:([^;,]+)(;base64)?,([\s\S]*)$/);
-  if (!m) return null;
-  const [, mime, b64, payload] = m;
-  const buf = b64 ? Buffer.from(payload, "base64") : Buffer.from(decodeURIComponent(payload));
+  if (!uri.startsWith("data:")) return null;
+  const comma = uri.indexOf(",");
+  if (comma < 0) return null;
+  const metadata = uri.slice(5, comma).split(";");
+  const mime = metadata.shift()?.toLowerCase() ?? "";
+  const payload = uri.slice(comma + 1);
+  const buf = metadata.includes("base64") ? Buffer.from(payload, "base64") : Buffer.from(decodeURIComponent(payload));
   if (mime === "image/svg+xml") {
     const img = saveSvg(buf.toString("utf8"));
     return img.t === "img" ? { ...img, alt } : img;
@@ -231,7 +263,7 @@ function saveDataUri(uri: string, alt?: string): Block | null {
   if (!ext) return null;
   const hash = crypto.createHash("sha1").update(buf).digest("hex").slice(0, 16);
   fs.mkdirSync(IMG_DIR, { recursive: true });
-  fs.writeFileSync(path.join(IMG_DIR, `${hash}.${ext}`), buf);
+  fs.writeFileSync(resolveWithin(IMG_DIR, `${hash}.${ext}`), buf);
   let w = 600;
   let h = 400;
   if (ext === "png") {
@@ -241,33 +273,31 @@ function saveDataUri(uri: string, alt?: string): Block | null {
   return { t: "img", src: `/course-assets/${COURSE_ID}/${hash}.${ext}`, w, h, alt };
 }
 
+function mergeCodeBlock(pages: ParsedPage[], index: number): Block | null {
+  const code: Partial<Record<Lang, string>> = {};
+  for (const page of pages) {
+    const block = page.blocks[index];
+    if (block?.t === "code" && block.code.trim()) code[detectLang(block.code)] ??= block.code;
+  }
+  if (code.text && !code.java && !code.python) return { t: "html", html: `<pre><code>${escapeHtml(code.text)}</code></pre>` };
+  if (!code.java && !code.python) return null;
+  return { t: "code", java: code.java, python: code.python };
+}
+
+function mergeBlock(block: RawBlock, pages: ParsedPage[], index: number): Block | null {
+  if (block.t === "md") return { t: "html", html: block.html };
+  if (block.t === "svg") return saveSvg(block.svg);
+  if (block.t === "data") return saveDataUri(block.uri, block.alt);
+  return mergeCodeBlock(pages, index);
+}
+
 /** Merge the parsed variants of a page into language-aware blocks. */
 function mergeVariants(pages: ParsedPage[]): { title: string; blocks: Block[] } {
   const base = pages.reduce((a, b) => (b.blocks.length > a.blocks.length ? b : a), pages[0]);
-  const mismatched = pages.filter((p) => p.blocks.length !== base.blocks.length);
-  if (mismatched.length) console.warn(`  ! variant block counts differ for ${base.title}`);
-  const blocks: Block[] = [];
-  base.blocks.forEach((rb, i) => {
-    if (rb.t === "md") blocks.push({ t: "html", html: rb.html });
-    else if (rb.t === "svg") blocks.push(saveSvg(rb.svg));
-    else if (rb.t === "data") {
-      const img = saveDataUri(rb.uri, rb.alt);
-      if (img) blocks.push(img);
-    } else {
-      const code: Partial<Record<Lang, string>> = {};
-      for (const p of pages) {
-        const other = p.blocks[i];
-        if (other?.t !== "code" || !other.code.trim()) continue;
-        code[detectLang(other.code)] ??= other.code;
-      }
-      if (code.text && !code.java && !code.python) {
-        blocks.push({ t: "html", html: `<pre><code>${escapeHtml(code.text)}</code></pre>` });
-        return;
-      }
-      if (!code.java && !code.python) return;
-      blocks.push({ t: "code", java: code.java, python: code.python });
-    }
-  });
+  if (pages.some((page) => page.blocks.length !== base.blocks.length)) {
+    console.warn(`  ! variant block counts differ for ${base.title}`);
+  }
+  const blocks = base.blocks.map((block, index) => mergeBlock(block, pages, index)).filter((block): block is Block => block !== null);
   return { title: base.title, blocks };
 }
 
@@ -329,7 +359,7 @@ function splitProblem(blocks: Block[]): ProblemParts {
     }
     if (phase === "statement") statement.push(b);
   });
-  const last = solution.filter((b): b is CodeBlock => b.t === "code").at(-1);
+  const last = solution.findLast((b): b is CodeBlock => b.t === "code");
   return { statement, solution, starter, reference: { java: last?.java, python: last?.python } };
 }
 
@@ -354,7 +384,7 @@ function solutionPart(blocks: Block[]): Block[] {
 }
 
 function difficultyOf(title: string): Lesson["difficulty"] {
-  const m = title.match(/\((easy|medium|hard)\)/i);
+  const m = /\((easy|medium|hard)\)/i.exec(title);
   return m ? (m[1].toLowerCase() as Lesson["difficulty"]) : undefined;
 }
 
@@ -365,8 +395,11 @@ function challengeName(statement: Block[]): string | undefined {
     const $ = cheerio.load(b.html);
     const h = $("h1,h2,h3").first().text().trim();
     if (h && !/problem statement|problem challenge/i.test(h)) return h;
-    const m = $.root().text().trim().match(/^(.{3,80}?\((?:easy|medium|hard)\))/i);
-    if (m) return m[1];
+    const text = $.root().text().trim();
+    for (const marker of [" (easy)", " (medium)", " (hard)"]) {
+      const end = text.toLowerCase().indexOf(marker);
+      if (end >= 3 && end < 80) return text.slice(0, end + marker.length);
+    }
   }
   return undefined;
 }
@@ -378,11 +411,108 @@ function listHtml(dir: string) {
     .readdirSync(dir)
     .filter((f) => f.endsWith(".html"))
     .sort(naturalSort)
-    .map((f) => path.join(dir, f));
+    .map((f) => resolveWithin(dir, f));
 }
 
 function writeLesson(lesson: Lesson) {
-  fs.writeFileSync(path.join(OUT_DIR, "lessons", `${lesson.id}.json`), JSON.stringify(lesson, null, 1));
+  fs.writeFileSync(resolveWithin(path.join(OUT_DIR, "lessons"), `${lesson.id}.json`), JSON.stringify(lesson, null, 1));
+}
+
+interface Unit {
+  name: string;
+  files: string[];
+}
+
+function listUnits(chPath: string): Unit[] {
+  const entries = fs.readdirSync(chPath, { withFileTypes: true }).sort((a, b) => naturalSort(a.name, b.name));
+  const units: Unit[] = [];
+  for (const entry of entries) {
+    if (entry.isDirectory()) units.push({ name: entry.name, files: listHtml(resolveWithin(chPath, entry.name)) });
+    else if (entry.name.endsWith(".html")) units.push({ name: entry.name, files: [resolveWithin(chPath, entry.name)] });
+  }
+  return units;
+}
+
+function challengeNumber(title: string, unitName: string) {
+  const titleMatch = /Problem Challenge (\d+)/i.exec(title);
+  const unitMatch = /Problem Challenge (\d+)/i.exec(unitName);
+  return (titleMatch ?? unitMatch)?.[1];
+}
+
+function withoutDifficulty(title: string) {
+  const match = /\s*\((easy|medium|hard)\)\s*$/i.exec(title);
+  return match ? title.slice(0, match.index).trim() : title.trim();
+}
+
+function buildLesson(merged: { title: string; blocks: Block[] }, unitName: string, chSlug: string, uniqueSlug: (s: string, chapter: string) => string) {
+  const title = merged.title || unitName;
+  const challenge = challengeNumber(title, unitName);
+  const hasStarter = merged.blocks.some((block) => block.t === "code" && (isTodo(block.java) || isTodo(block.python)));
+  const type: LessonType = hasStarter || difficultyOf(title) ? "problem" : "lesson";
+  if (type === "lesson") {
+    const intro = /^introduction$/i.test(title);
+    const lessonTitle = intro ? title : title;
+    return {
+      challenge,
+      lesson: {
+        id: uniqueSlug(slugify(intro ? `${chSlug}-introduction` : lessonTitle), chSlug),
+        courseId: COURSE_ID,
+        chapterId: chSlug,
+        title: lessonTitle,
+        type,
+        body: merged.blocks,
+      } satisfies Lesson,
+    };
+  }
+
+  const parts = splitProblem(merged.blocks);
+  let displayTitle = title;
+  if (challenge) {
+    const override = TITLE_OVERRIDES[`${chSlug}/${challenge}`];
+    const discovered = challengeName(parts.statement);
+    if (override) displayTitle = override;
+    else if (discovered) displayTitle = discovered;
+  }
+  const clean = withoutDifficulty(displayTitle);
+  return {
+    challenge,
+    lesson: {
+      id: uniqueSlug(slugify(clean), chSlug),
+      courseId: COURSE_ID,
+      chapterId: chSlug,
+      title: clean,
+      type,
+      difficulty: difficultyOf(displayTitle) ?? "medium",
+      challenge: challenge ? Number(challenge) : undefined,
+      ...parts,
+    } satisfies Lesson,
+  };
+}
+
+function processUnit(unit: Unit, chSlug: string, challenges: Map<string, Lesson>, uniqueSlug: (s: string, chapter: string) => string): Lesson | null {
+  if (!unit.files.length) return null;
+  const merged = mergeVariants(unit.files.map(parsePage));
+  const unitName = unit.name.replace(/^\d+\.\s*/, "").replace(/\.html$/, "");
+  const title = merged.title || unitName;
+  const review = /^Solution Review/i.test(title) || /^Solution Review/i.test(unitName);
+  const challenge = challengeNumber(title, unitName);
+
+  if (review && challenge) {
+    const target = challenges.get(challenge);
+    if (!target) {
+      console.warn(`  ! review without challenge: ${chSlug} / ${title}`);
+      return null;
+    }
+    target.solution = solutionPart(merged.blocks);
+    const code = target.solution.findLast((block): block is CodeBlock => block.t === "code");
+    target.reference = { java: code?.java, python: code?.python };
+    writeLesson(target);
+    return null;
+  }
+
+  const built = buildLesson(merged, unitName, chSlug, uniqueSlug);
+  if (built.challenge) challenges.set(built.challenge, built.lesson);
+  return built.lesson;
 }
 
 function main() {
@@ -414,75 +544,19 @@ function main() {
     const chTitle = chapterTitle(chDir);
     const chSlug = slugify(chTitle.replace(/^Pattern:\s*/, ""));
     const chapter: CourseIndex["chapters"][number] = { id: chSlug, title: chTitle, items: [] };
-    const chPath = path.join(SRC, chDir);
-
-    // Units are subfolders (one lesson, several language variants) or loose html files.
-    const entries = fs.readdirSync(chPath, { withFileTypes: true }).sort((a, b) => naturalSort(a.name, b.name));
-    const units: { name: string; files: string[] }[] = [];
-    for (const e of entries) {
-      if (e.isDirectory()) units.push({ name: e.name, files: listHtml(path.join(chPath, e.name)) });
-      else if (e.name.endsWith(".html")) units.push({ name: e.name, files: [path.join(chPath, e.name)] });
-    }
+    const chPath = resolveWithin(SRC, chDir);
 
     const challenges = new Map<string, Lesson>();
-    for (const unit of units) {
-      if (!unit.files.length) continue;
-      const merged = mergeVariants(unit.files.map(parsePage));
-      const unitName = unit.name.replace(/^\d+\.\s*/, "").replace(/\.html$/, "");
-      const title = merged.title || unitName;
-      const review = /^Solution Review/i.test(title) || /^Solution Review/i.test(unitName);
-      const challengeNum = (title.match(/Problem Challenge (\d+)/i) ?? unitName.match(/Problem Challenge (\d+)/i))?.[1];
-
-      if (review && challengeNum) {
-        const target = challenges.get(challengeNum);
-        if (!target) {
-          console.warn(`  ! review without challenge: ${chSlug} / ${title}`);
-          continue;
-        }
-        target.solution = solutionPart(merged.blocks);
-        const code = target.solution.filter((b): b is CodeBlock => b.t === "code").at(-1);
-        target.reference = { java: code?.java, python: code?.python };
-        writeLesson(target);
-        continue;
-      }
-
-      const hasStarter = merged.blocks.some((b) => b.t === "code" && (isTodo(b.java) || isTodo(b.python)));
-      const type: LessonType = hasStarter || difficultyOf(title) ? "problem" : "lesson";
-      let lesson: Lesson;
-      if (type === "problem") {
-        const parts = splitProblem(merged.blocks);
-        const displayTitle =
-          (challengeNum && (TITLE_OVERRIDES[`${chSlug}/${challengeNum}`] ?? challengeName(parts.statement))) || title;
-        const clean = displayTitle.replace(/\s*\((easy|medium|hard)\)\s*$/i, "").trim();
-        lesson = {
-          id: uniqueSlug(slugify(clean), chSlug),
-          courseId: COURSE_ID,
-          chapterId: chSlug,
-          title: clean,
-          type,
-          difficulty: difficultyOf(displayTitle) ?? "medium",
-          challenge: challengeNum ? Number(challengeNum) : undefined,
-          ...parts,
-        };
-      } else {
-        const intro = /^introduction$/i.test(title);
-        lesson = {
-          id: uniqueSlug(slugify(intro ? `${chSlug}-introduction` : title), chSlug),
-          courseId: COURSE_ID,
-          chapterId: chSlug,
-          title,
-          type,
-          body: merged.blocks,
-        };
-      }
+    for (const unit of listUnits(chPath)) {
+      const lesson = processUnit(unit, chSlug, challenges, uniqueSlug);
+      if (!lesson) continue;
       console.log(`${chSlug} / ${lesson.id} [${lesson.type}]`);
       chapter.items.push({ id: lesson.id, title: lesson.title, type: lesson.type, difficulty: lesson.difficulty });
-      if (challengeNum) challenges.set(challengeNum, lesson);
       writeLesson(lesson);
     }
     course.chapters.push(chapter);
   }
-  fs.writeFileSync(path.join(OUT_DIR, "course.json"), JSON.stringify(course, null, 2));
+  fs.writeFileSync(resolveWithin(OUT_DIR, "course.json"), JSON.stringify(course, null, 2));
   const n = course.chapters.reduce((a, c) => a + c.items.length, 0);
   console.log(`\nWrote ${course.chapters.length} chapters, ${n} items.`);
 }

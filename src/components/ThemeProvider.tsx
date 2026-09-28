@@ -4,7 +4,7 @@ import { ThemeProvider as NextThemes, useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <NextThemes attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       {children}
@@ -23,6 +23,8 @@ export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
   const dark = mounted && resolvedTheme === "dark";
+  let icon: React.ReactNode = <span className="size-[17px]" />;
+  if (mounted) icon = dark ? <Sun size={17} /> : <Moon size={17} />;
   return (
     <button
       type="button"
@@ -31,7 +33,7 @@ export function ThemeToggle() {
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
     >
-      {!mounted ? <span className="size-[17px]" /> : dark ? <Sun size={17} /> : <Moon size={17} />}
+      {icon}
     </button>
   );
 }

@@ -61,14 +61,15 @@ const ASSET_DIR =
 function slugify(s: string) {
   return s
     .toLowerCase()
-    .replace(/['’]/g, "")
+    .replaceAll("'", "")
+    .replaceAll("’", "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
     .slice(0, 80);
 }
 
 function escapeHtml(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
 function escapeAttribute(s: string) {
@@ -369,9 +370,10 @@ function mergeRuns(items: Item[]) {
       j++;
     }
     if (run.length === 1) continue;
+    const noSpaceBefore = new Set([",", ".", ":", ";", "!", "?", ")"]);
     const text = run
       .map((l) => l.text)
-      .reduce((acc, t) => (/^[,.:;!?)]/.test(t) ? acc + t : `${acc} ${t}`))
+      .reduce((acc, t) => (noSpaceBefore.has(t[0] ?? "") ? acc + t : `${acc} ${t}`), "")
       .trim();
     const size = Math.max(...run.map((l) => l.size));
     a.line = { ...a.line, text, size, bold: run.every((l) => l.bold), mono: run.every((l) => l.mono) };
@@ -410,135 +412,168 @@ function renderPage(file: string, page: number, tmp: string): string {
   return resolveWithin(tmp, `rendered-${page}.png`);
 }
 
+interface PdfItems {
+  items: Item[];
+  lineCounts: Map<string, number>;
+  pages: number;
+}
+
+function extractPdfItems($: cheerio.CheerioAPI, tmp: string): PdfItems {
+  const fonts = new Map<string, { size: number; mono: boolean }>();
+  $("fontspec").each((_, f) => {
+    const family = $(f).attr("family") ?? "";
+    fonts.set($(f).attr("id") ?? "", { size: Number($(f).attr("size")), mono: /mono|courier|consol|code/i.test(family) });
+  });
+  const items: Item[] = [];
+  const lineCounts = new Map<string, number>();
+  const pages = $("page").length;
+  $("page").each((_, p) => {
+    const page = Number($(p).attr("number"));
+    $(p).children().each((__, c) => {
+      const tag = (c as Element).tagName;
+      const top = Number($(c).attr("top"));
+      if (tag === "text") {
+        const font = fonts.get($(c).attr("font") ?? "") ?? { size: 10, mono: false };
+        const text = normalizePdfText($(c).text().replace(/\s+/g, " ").trim());
+        if (!text) return;
+        const bold = $(c).find("b").text().replace(/\s+/g, " ").trim() === text;
+        const line = { page, top, height: Number($(c).attr("height")), size: font.size, mono: font.mono, bold, text };
+        items.push({ kind: "line", page, top, line });
+        lineCounts.set(text, (lineCounts.get(text) ?? 0) + 1);
+        return;
+      }
+      if (tag !== "image") return;
+      const w = Number($(c).attr("width"));
+      const h = Number($(c).attr("height"));
+      const src = resolveWithin(tmp, path.basename($(c).attr("src") ?? ""));
+      if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h });
+    });
+  });
+  items.sort((a, b) => a.page - b.page || a.top - b.top);
+  mergeRuns(items);
+  return { items, lineCounts, pages };
+}
+
+function pdfBodySize(items: Item[]) {
+  const weight = new Map<number, number>();
+  for (const item of items) {
+    if (item.kind === "line") weight.set(item.line.size, (weight.get(item.line.size) ?? 0) + item.line.text.length);
+  }
+  return [...weight.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 10;
+}
+
+function renderedDiagramPages(file: string, tmp: string, items: Item[]) {
+  const pageItems = new Map<number, Item[]>();
+  for (const item of items) pageItems.set(item.page, [...(pageItems.get(item.page) ?? []), item]);
+  const rendered = new Map<number, string>();
+  if (!ARGS.lessons) return rendered;
+  for (const [page, contents] of pageItems) {
+    if (contents.some((item) => item.kind === "img") || !pageLooksLikeVectorDiagram(contents)) continue;
+    const pageFile = renderPage(file, page, tmp);
+    if (fs.existsSync(pageFile)) rendered.set(page, saveAsset(readTempAsset(tmp, pageFile), "png"));
+  }
+  return rendered;
+}
+
+function paragraphHtml(kind: ParaKind, para: string[]) {
+  if (kind === "pre") return `<pre><code>${escapeHtml(para.join("\n"))}</code></pre>`;
+  const normalized = para.join(" ").replace(/(\w)-\s(?=[a-z])/g, "$1");
+  const text = escapeHtml(normalizePdfText(normalized));
+  if (kind === "li") return `<ul><li>${text.replace(/^[•●▪◦\-–]\s*/, "")}</li></ul>`;
+  return `<p>${text}</p>`;
+}
+
+interface PdfRenderState {
+  nodes: Node[];
+  para: string[];
+  paraKind: ParaKind;
+  last: Line | null;
+  renderedPages: Map<number, string>;
+  insertedRenderedPage: Set<number>;
+}
+
+function flushParagraph(state: PdfRenderState) {
+  if (!state.para.length) return;
+  state.nodes.push({ kind: "block", block: { t: "html", html: paragraphHtml(state.paraKind, state.para) } });
+  state.para = [];
+}
+
+function headingLevel(ratio: number) {
+  if (ratio >= 1.9) return 1;
+  if (ratio >= 1.45) return 2;
+  return 3;
+}
+
+function isPdfHeading(line: Line, ratio: number) {
+  const boldHeading = line.bold && ratio >= 1.2 && line.text.length < 100 && !/[.,;:]$/.test(line.text) && !BULLET.test(line.text);
+  return (ratio >= 1.2 && line.text.length < 120) || boldHeading || isNumberedSectionHeading(line.text) || /^step\s+[2-7]\b/i.test(line.text);
+}
+
+function lineKind(line: Line): ParaKind {
+  if (line.mono) return "pre";
+  if (BULLET.test(line.text)) return "li";
+  return "p";
+}
+
+function addPdfItem(state: PdfRenderState, item: Item, body: number, isRunningHeader: (line: Line) => boolean) {
+  if (state.renderedPages.has(item.page) && !state.insertedRenderedPage.has(item.page)) {
+    flushParagraph(state);
+    state.nodes.push({ kind: "block", block: { t: "img", src: state.renderedPages.get(item.page)!, w: 612, h: 792, alt: `Diagram page ${item.page}` } });
+    state.insertedRenderedPage.add(item.page);
+  }
+  if (item.kind === "img") {
+    flushParagraph(state);
+    state.nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(item.src), "png"), w: item.w, h: item.h } });
+    state.last = null;
+    return;
+  }
+  const line = item.line;
+  if (isRunningHeader(line)) return;
+  const ratio = line.size / body;
+  if (isPdfHeading(line, ratio)) {
+    flushParagraph(state);
+    const level = headingLevel(ratio);
+    const previous = state.nodes[state.nodes.length - 1];
+    if (previous?.kind === "heading" && previous.level === level && state.last?.page === line.page && line.top - state.last.top < line.height * 1.8) {
+      previous.text += ` ${line.text}`;
+    } else {
+      state.nodes.push({ kind: "heading", level, text: line.text, page: line.page, top: line.top });
+    }
+    state.last = line;
+    return;
+  }
+  const kind = lineKind(line);
+  const gap = state.last && state.last.page === line.page ? line.top - (state.last.top + state.last.height) : Infinity;
+  const sameBlock = state.para.length > 0 && kind === state.paraKind && (kind === "pre" ? gap < line.height : gap < line.height * 0.6) && !(kind === "li" && BULLET.test(line.text));
+  const previousText = state.para[state.para.length - 1] ?? "";
+  const acrossPage = state.para.length > 0 && kind === "p" && state.paraKind === "p" && state.last !== null && state.last.page !== line.page && !/[.:?!]$/.test(previousText);
+  if (!sameBlock && !acrossPage) {
+    flushParagraph(state);
+    state.paraKind = kind;
+  }
+  state.para.push(line.text);
+  state.last = line;
+}
+
+function buildPdfNodes(file: string, tmp: string, items: Item[], pages: number, lineCounts: Map<string, number>) {
+  const body = pdfBodySize(items);
+  const renderedPages = renderedDiagramPages(file, tmp, items);
+  const state: PdfRenderState = { nodes: [], para: [], paraKind: "p", last: null, renderedPages, insertedRenderedPage: new Set() };
+  const isRunningHeader = (line: Line) => /^\d+$/.test(line.text) || (pages > 4 && (lineCounts.get(line.text) ?? 0) > pages * 0.3 && line.text.length < 80);
+  for (const item of items) addPdfItem(state, item, body, isRunningHeader);
+  flushParagraph(state);
+  return state.nodes;
+}
+
 function importPdf(file: string): Article[] {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "pdf-import-"));
   try {
-    // XML output gives every text line with its font and position, plus extracted images.
-    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], { // NOSONAR -- generated output is confined to the private importer temporary directory
+    execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], {
       maxBuffer: 1 << 30,
     });
-    const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true }); // NOSONAR nosemgrep -- XML is generated inside this run's temporary directory
-
-    const fonts = new Map<string, { size: number; mono: boolean }>();
-    $("fontspec").each((_, f) => {
-      const family = $(f).attr("family") ?? "";
-      fonts.set($(f).attr("id") ?? "", { size: Number($(f).attr("size")), mono: /mono|courier|consol|code/i.test(family) });
-    });
-
-    const items: Item[] = [];
-    const lineCounts = new Map<string, number>();
-    const pages = $("page").length;
-    $("page").each((_, p) => {
-      const page = Number($(p).attr("number"));
-      $(p)
-        .children()
-        .each((__, c) => {
-          const tag = (c as Element).tagName;
-          const top = Number($(c).attr("top"));
-          if (tag === "text") {
-            const font = fonts.get($(c).attr("font") ?? "") ?? { size: 10, mono: false };
-            const text = normalizePdfText($(c).text().replace(/\s+/g, " ").trim());
-            if (!text) return;
-            const bold = $(c).find("b").text().replace(/\s+/g, " ").trim() === text;
-            const line = { page, top, height: Number($(c).attr("height")), size: font.size, mono: font.mono, bold, text };
-            items.push({ kind: "line", page, top, line });
-            lineCounts.set(text, (lineCounts.get(text) ?? 0) + 1);
-          } else if (tag === "image") {
-            const w = Number($(c).attr("width"));
-            const h = Number($(c).attr("height"));
-            const src = resolveWithin(tmp, path.basename($(c).attr("src") ?? ""));
-            if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h }); // NOSONAR nosemgrep -- src is bounded to the private importer temporary directory
-          }
-        });
-    });
-    items.sort((a, b) => a.page - b.page || a.top - b.top);
-    mergeRuns(items);
-
-    // Body size = the font size carrying the most text.
-    const weight = new Map<number, number>();
-    for (const it of items) if (it.kind === "line") weight.set(it.line.size, (weight.get(it.line.size) ?? 0) + it.line.text.length);
-    const body = [...weight.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 10;
-    const isRunningHeader = (l: Line) =>
-      /^\d+$/.test(l.text) || (pages > 4 && (lineCounts.get(l.text) ?? 0) > pages * 0.3 && l.text.length < 80);
-
-    const nodes: Node[] = [];
-    const pageItems = new Map<number, Item[]>();
-    for (const item of items) pageItems.set(item.page, [...(pageItems.get(item.page) ?? []), item]);
-    const renderedPages = new Map<number, string>();
-    if (ARGS.lessons) {
-      for (const [page, pageContents] of pageItems) {
-        if (pageContents.some((item) => item.kind === "img") || !pageLooksLikeVectorDiagram(pageContents)) continue;
-        const rendered = renderPage(file, page, tmp);
-        if (fs.existsSync(rendered)) renderedPages.set(page, saveAsset(readTempAsset(tmp, rendered), "png")); // NOSONAR nosemgrep -- rendered is bounded to the private importer temporary directory
-      }
-    }
-    let para: string[] = [];
-    let paraKind: ParaKind = "p";
-    let last: Line | null = null;
-    const flush = () => {
-      if (!para.length) return;
-      let html: string;
-      if (paraKind === "pre") html = `<pre><code>${escapeHtml(para.join("\n"))}</code></pre>`;
-      else {
-        const text = escapeHtml(normalizePdfText(para.join(" ").replace(/(\w)-\s(?=[a-z])/g, "$1")));
-        html = paraKind === "li" ? `<ul><li>${text.replace(/^[•●▪◦\-–]\s*/, "")}</li></ul>` : `<p>${text}</p>`;
-      }
-      nodes.push({ kind: "block", block: { t: "html", html } });
-      para = [];
-    };
-
-    const insertedRenderedPage = new Set<number>();
-    for (const it of items) {
-      if (renderedPages.has(it.page) && !insertedRenderedPage.has(it.page)) {
-        flush();
-        nodes.push({
-          kind: "block",
-          block: { t: "img", src: renderedPages.get(it.page)!, w: 612, h: 792, alt: `Diagram page ${it.page}` },
-        });
-        insertedRenderedPage.add(it.page);
-      }
-      if (it.kind === "img") {
-        flush();
-        nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(it.src), "png"), w: it.w, h: it.h } }); // NOSONAR nosemgrep -- it.src is created from bounded temporary output
-        last = null;
-        continue;
-      }
-      const l = it.line;
-      if (isRunningHeader(l)) continue;
-      const ratio = l.size / body;
-      // Short, fully bold lines at body size are section headings in many books ("Step 1 - ...").
-      const boldHeading = l.bold && ratio >= 1.2 && l.text.length < 100 && !/[.,;:]$/.test(l.text) && !BULLET.test(l.text);
-      const numberedSectionHeading = isNumberedSectionHeading(l.text);
-      const stepHeading = /^step\s+[2-7]\b/i.test(l.text);
-      if ((ratio >= 1.2 && l.text.length < 120) || boldHeading || numberedSectionHeading || stepHeading) {
-        flush();
-        const level = ratio >= 1.9 ? 1 : ratio >= 1.45 ? 2 : 3;
-        const prev = nodes.at(-1);
-        // Headings that wrap onto two lines arrive as consecutive heading lines.
-        if (prev?.kind === "heading" && prev.level === level && last?.page === l.page && l.top - last.top < l.height * 1.8) {
-          prev.text += ` ${l.text}`;
-        } else nodes.push({ kind: "heading", level, text: l.text, page: l.page, top: l.top });
-        last = l;
-        continue;
-      }
-      const kind: ParaKind = l.mono ? "pre" : BULLET.test(l.text) ? "li" : "p";
-      const gap = last && last.page === l.page ? l.top - (last.top + last.height) : Infinity;
-      const sameBlock =
-        para.length > 0 &&
-        kind === paraKind &&
-        (kind === "pre" ? gap < l.height : gap < l.height * 0.6) &&
-        !(kind === "li" && BULLET.test(l.text));
-      const acrossPage =
-        para.length > 0 && kind === "p" && paraKind === "p" && last !== null && last.page !== l.page && !/[.:?!]$/.test(para.at(-1) ?? "");
-      if (!sameBlock && !acrossPage) {
-        flush();
-        paraKind = kind;
-      }
-      para.push(l.text);
-      last = l;
-    }
-    flush();
-
+    const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true });
+    const { items, lineCounts, pages } = extractPdfItems($, tmp);
+    const nodes = buildPdfNodes(file, tmp, items, pages, lineCounts);
     const title = ARGS.title ?? path.basename(file, path.extname(file));
     if (ARGS.lessons) return splitLessons(nodes, title);
     return ARGS.chapters ? splitChapters(nodes, title) : [{ title, nodes }];

@@ -14,10 +14,10 @@ type StatusFilter = "all" | "solved" | "attempted" | "todo";
 export function ProblemTable({
   problems,
   patterns,
-}: {
+}: Readonly<{
   problems: ProblemListItem[];
   patterns: { id: string; title: string }[];
-}) {
+}>) {
   const progress = useProgress();
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -43,7 +43,8 @@ export function ProblemTable({
 
   function pickRandom() {
     const pool = rows.length ? rows : problems;
-    router.push(`/problems/${pool[Math.floor(Math.random() * pool.length)].id}`);
+    const [random] = crypto.getRandomValues(new Uint32Array(1));
+    router.push(`/problems/${pool[random % pool.length].id}`);
   }
 
   const select =

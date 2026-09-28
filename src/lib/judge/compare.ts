@@ -39,7 +39,8 @@ function sortDeep(v: unknown): unknown {
 type Validator = (input: unknown[], output: unknown, expected: unknown) => boolean;
 
 function isPermutationOf(a: string, b: string) {
-  return [...a].sort().join("") === [...b].sort().join("");
+  const sortCharacters = (value: string) => [...value].sort((x, y) => x.localeCompare(y)).join("");
+  return sortCharacters(a) === sortCharacters(b);
 }
 
 function checkTopo(n: number, edges: number[][], order: unknown): boolean {

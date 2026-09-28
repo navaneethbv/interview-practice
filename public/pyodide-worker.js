@@ -34,8 +34,18 @@ async function getPyodide() {
     pyodideReady = loadPyodide({ indexURL: `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/` }).then(
       (py) => {
         const decoder = new TextDecoder();
-        py.setStdout({ write: (buf) => (flushLine(decoder.decode(buf)), buf.length) });
-        py.setStderr({ write: (buf) => (flushLine(decoder.decode(buf)), buf.length) });
+        py.setStdout({
+          write: (buf) => {
+            flushLine(decoder.decode(buf));
+            return buf.length;
+          },
+        });
+        py.setStderr({
+          write: (buf) => {
+            flushLine(decoder.decode(buf));
+            return buf.length;
+          },
+        });
         return py;
       },
     );
@@ -43,7 +53,7 @@ async function getPyodide() {
   return pyodideReady;
 }
 
-const COMPILE_CHECK = `
+const COMPILE_CHECK = String.raw`
 __compile_error = None
 try:
     __user_code = compile(__user_src, "<solution>", "exec")
@@ -53,22 +63,23 @@ except SyntaxError as e:
         __compile_error += "\\n    " + e.text.strip()
 `;
 
-self.onmessage = async (event) => {
-  const { id, prelude, user, runner, packages = [] } = event.data;
-  let py;
+function errorMessage(error) {
+  return String(error?.message ?? error);
+}
+
+async function loadRuntime(id, packages) {
   try {
-    py = await getPyodide();
+    const py = await getPyodide();
     if (packages.includes("sqlite3")) await py.loadPackage("sqlite3");
+    return py;
   } catch (e) {
     pyodideReady = null;
-    self.postMessage({ id, type: "done", error: `Could not load the Python runtime: ${e && e.message ? e.message : e}` });
-    return;
+    self.postMessage({ id, type: "done", error: `Could not load the Python runtime: ${errorMessage(e)}` });
+    return null;
   }
-  // Everything below runs synchronously, so output can't interleave with another message.
-  currentId = id;
-  pending = "";
-  self.postMessage({ id, type: "ready" });
-  const ns = py.globals.get("dict")();
+}
+
+function compileAndDefine(py, ns, id, prelude, user) {
   try {
     ns.set("__name__", "__main__");
     ns.set("__user_src", user);
@@ -77,26 +88,49 @@ self.onmessage = async (event) => {
     const compileError = ns.get("__compile_error");
     if (compileError) {
       self.postMessage({ id, type: "done", compileError });
-      return;
+      return false;
     }
     try {
       py.runPython("exec(__user_code, globals())", { globals: ns });
     } catch (e) {
       // Errors while defining the solution (e.g. a NameError at class level).
-      const msg = String(e && e.message ? e.message : e);
+      const msg = errorMessage(e);
       const last = msg.trim().split("\n").pop();
       const line = [...msg.matchAll(/File "<solution>", line (\d+)/g)].pop();
-      self.postMessage({ id, type: "done", compileError: `${last}${line ? ` (line ${line[1]})` : ""}` });
-      return;
+      const location = line ? ` (line ${line[1]})` : "";
+      self.postMessage({ id, type: "done", compileError: last + location });
+      return false;
     }
+    return true;
+  } catch (e) {
+    if (pending) flushLine("\n");
+    const msg = errorMessage(e);
+    self.postMessage({ id, type: "done", error: msg.trim().split("\n").slice(-3).join("\n") });
+    return false;
+  }
+}
+
+async function handleMessage(event) {
+  const { id, prelude, user, runner, packages = [] } = event.data;
+  const py = await loadRuntime(id, packages);
+  if (!py) return;
+  // Everything below runs synchronously, so output can't interleave with another message.
+  currentId = id;
+  pending = "";
+  self.postMessage({ id, type: "ready" });
+  const ns = py.globals.get("dict")();
+  try {
+    if (!compileAndDefine(py, ns, id, prelude, user)) return;
     py.runPython(runner, { globals: ns });
     if (pending) flushLine("\n");
     self.postMessage({ id, type: "done" });
   } catch (e) {
     if (pending) flushLine("\n");
-    const msg = String(e && e.message ? e.message : e);
+    const msg = errorMessage(e);
     self.postMessage({ id, type: "done", error: msg.trim().split("\n").slice(-3).join("\n") });
   } finally {
     ns.destroy();
   }
-};
+}
+
+self.onmessage = handleMessage;

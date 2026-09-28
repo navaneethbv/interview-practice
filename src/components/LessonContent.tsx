@@ -2,15 +2,15 @@ import type { RenderedBlock } from "@/lib/content";
 import { CodeTabs } from "./CodeTabs";
 
 /** Renders ingested lesson blocks. The HTML was sanitized during ingestion. */
-export function LessonContent({ blocks, className = "" }: { blocks: RenderedBlock[]; className?: string }) {
+export function LessonContent({ blocks, className = "" }: Readonly<{ blocks: RenderedBlock[]; className?: string }>) {
   return (
     <div className={`prose-lesson ${className}`}>
-      {blocks.map((b, i) => {
-        if (b.t === "html") return <div key={i} dangerouslySetInnerHTML={{ __html: b.html }} />;
+      {blocks.map((b) => {
+        if (b.t === "html") return <div key={`html:${b.html}`} dangerouslySetInnerHTML={{ __html: b.html }} />;
         if (b.t === "img") {
           return (
             <figure
-              key={i}
+              key={`img:${b.src}`}
               className="diagram mx-auto my-5 overflow-hidden p-2"
               style={{ maxWidth: Math.min(b.w + 16, 760) }}
             >
@@ -20,7 +20,15 @@ export function LessonContent({ blocks, className = "" }: { blocks: RenderedBloc
             </figure>
           );
         }
-        return <CodeTabs key={i} java={b.javaHtml} python={b.pythonHtml} javaSrc={b.java} pythonSrc={b.python} />;
+        return (
+          <CodeTabs
+            key={`code:${b.java ?? ""}:${b.python ?? ""}`}
+            java={b.javaHtml}
+            python={b.pythonHtml}
+            javaSrc={b.java}
+            pythonSrc={b.python}
+          />
+        );
       })}
     </div>
   );

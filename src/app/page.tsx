@@ -98,13 +98,13 @@ function TrackCard({
   tone,
   title,
   body,
-}: {
+}: Readonly<{
   href: string;
   icon: React.ReactNode;
   tone: string;
   title: string;
   body: string;
-}) {
+}>) {
   return (
     <Link href={href} className="group rounded-2xl border border-line bg-layer-1 p-5 transition-colors hover:border-line-strong">
       <span className={`mb-4 grid size-10 place-items-center rounded-xl ${tone}`}>{icon}</span>
