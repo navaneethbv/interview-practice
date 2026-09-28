@@ -1,0 +1,73 @@
+{
+ "id": "advanced-2-consistent-hashing",
+ "title": "2. Consistent Hashing",
+ "summary": "Let's learn about Consistent Hashing and its usage.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about Consistent Hashing and its usage.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Virtual nodes</li></ul><ul><li>Advantages of Vnodes</li></ul><ul><li>Examples</li></ul><h1>Background #</h1><p>The act of distributing data across a set of nodes is called data partitioning. There are two challenges when we try to distribute data:</p><ul><li>1. How do we know on which node a particular piece of data will be</li></ul><p>stored?</p><ul><li>2. When we add or remove nodes, how do we know what data will be</li></ul><p>moved from existing nodes to the new nodes? Additionally, how can we minimize data movement when nodes join or leave?</p><p>A naive approach will use a suitable hash function that maps the data key to a number. Then, find the server by applying modulo on this number and the total number of servers. For example:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/71dace1c54a33bf3.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 345"
+  },
+  {
+   "t": "html",
+   "html": "<p>key = \"California\"</p><p>hash(key) = 17 Naive approach</p><p>17 % total-servers =&gt; 17 % 5 = 2</p><p>Server Server Server Server Server</p><p>5 1 2 3 4</p><p>Simple hashing</p><p>The scheme described in the above diagram solves the problem of finding a server for storing/retrieving the data. But when we add or remove a server, we have to remap all the keys and move our data based on the new server count, which will be a complete mess!</p><h1>Definition #</h1><p>Use the Consistent Hashing algorithm to distribute data across nodes. Consistent Hashing maps data to physical nodes and ensures that only a small set of keys move when servers are added or removed.</p>"
+  }
+ ],
+ "reference": [
+  {
+   "t": "html",
+   "html": "<h1>Solution #</h1>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/f0523e33690d2da8.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 346"
+  },
+  {
+   "t": "html",
+   "html": "<p>Consistent Hashing technique stores the data managed by a distributed system in a ring. Each node in the ring is assigned a range of data. Here is an example of the consistent hash ring:</p><p>76-100</p><p>Server 4</p><p>Data range (1-25) Data range (76-100) 51-75 1-25 Hash range = 1-100 Number of Nodes = 4 Server 1 Server 3 Number range per node = 100/4</p><p>All data in the range 1-25 is stored Data range (26-50) Data range (51-75) at Server 1 and so on.</p><p>26-50</p><p>Server 2</p><p>Consistent Hashing ring</p><p>With consistent hashing, the ring is divided into smaller, predefined ranges. Each node is assigned one of these ranges. The start of the range is called a token. This means that each node will be assigned one token. The range assigned to each node is computed as follows:</p><p>Range start: Token value Range end: Next token value - 1</p><p>Here are the tokens and data ranges of the four nodes described in the above diagram:</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/ff6fe538953d3401.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 347"
+  },
+  {
+   "t": "html",
+   "html": "<p>Server Token Range Start Range End</p><p>Server 1 1 1 25</p><p>Server 2 26 26 50</p><p>Server 3 51 51 75</p><p>Server 4 76 76 100</p><p>Whenever the system needs to read or write data, the first step it performs is to apply the MD5 hashing algorithm to the key. The output of this hashing algorithm determines within which range the data lies and hence, on which node the data will be stored. As we saw above, each node is supposed to store data for a fixed range. Thus, the hash generated from the key tells us the node where the data will be stored.</p><p>76-100</p><p>Key Apply hash function to the key Server 4</p><p>CA Sacramento 94203</p><p>State City Zip State City Zip</p><p>Data range (1-25) Data range (76-100) CA Sacramento 94203 79 Sacramento 94203 1-25 51-75</p><p>WA Olympia 98501 3 Olympia 98501 Hash function Server 1 Server 3</p><p>TX Austin 73301 75 Austin 73301 WA Olympia 98501 TX Austin 73301</p><p>Data range (26-50) Data range (51-75) HI Honolulu 96801 29 Honolulu 96801</p><p>26-50 NY Albany 12201 49 Albany 12201</p><p>Server 2</p><p>HI Honolulu 96801</p><p>NY Albany 12201</p><p>Distributing data on the Consistent Hashing ring</p><p>The Consistent Hashing scheme above works great when a node is added or removed from the ring, as in these cases, since only the next node is affected. For example, when a node is removed, the next node becomes responsible for all of the keys stored on the outgoing node. However, this scheme can result in non-uniform data and load distribution. This problem can be solved with the help of Virtual nodes.</p><h2>Virtual nodes #</h2><p>Adding and removing nodes in any distributed system is quite common. Existing nodes can die and may need to be decommissioned. Similarly, new nodes may be added to an existing cluster to meet growing demands. To efficiently handle these scenarios, Consistent Hashing makes use of virtual nodes (or Vnodes).</p><p>As we saw above, the basic Consistent Hashing algorithm assigns a single token (or a consecutive hash range) to each physical node. This was a static division of ranges that requires calculating tokens based on a given number of nodes. This scheme made adding or replacing a node an expensive operation, as, in this case, we would like to rebalance and distribute the data to all other nodes, resulting in moving a lot of data. Here are a few potential issues associated with a manual and fixed division of the ranges:</p><p>Adding or removing nodes: Adding or removing nodes will result in recomputing the tokens causing a significant administrative overhead for a large cluster.</p><p>Hotspots: Since each node is assigned one large range, if the data is not evenly distributed, some nodes can become hotspots.</p><p>Node rebuilding: Since each node’s data might be replicated (for faulttolerance) on a fixed number of other nodes, when we need to rebuild a node, only its replica nodes can provide the data. This puts a lot of pressure on the replica nodes and can lead to service degradation.</p><p>To handle these issues, Consistent Hashing introduces a new scheme of distributing the tokens to physical nodes. Instead of assigning a single token to a node, the hash range is divided into multiple smaller ranges, and each</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/c267127885ee29ea.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 349"
+  },
+  {
+   "t": "html",
+   "html": "<p>physical node is assigned several of these smaller ranges. Each of these subranges is considered a Vnode. With Vnodes, instead of a node being responsible for just one token, it is responsible for many tokens (or subranges).</p><p>Server 4 Server 4</p><p>Server 1 Server 3 Server 3 Server 1</p><p>Server 2 Server 2</p><p>With Vnodes Without Vnodes</p><p>Comparing Consistent Hashing ring with and without Vnodes</p><p>Practically, Vnodes are randomly distributed across the cluster and are generally non-contiguous so that no two neighboring Vnodes are assigned to the same physical node. Additionally, nodes do carry replicas of other nodes for fault tolerance. Also, since there can be heterogeneous machines in the clusters, some servers might hold more Vnodes than others. The figure below shows how physical nodes A, B, C, D, &amp; E are using Vnodes of the Consistent Hash ring. Each physical node is assigned a set of Vnodes and each Vnode is replicated once.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/25c3bdb219a1b37b.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 350"
+  },
+  {
+   "t": "html",
+   "html": "<p>1 16 1 7 10 3 5 Server A 15 13 15</p><p>3 14 2 8 12 4 10 Server B 14 16 4 13 4 6 9 2 11 Server C 13 15 5 12</p><p>5 1 7 9 3 6 Server D 11 16 12 14</p><p>7 10 11 6 8 Server E 8 9</p><p>Mapping Vnodes to physical nodes on a Consistent Hashing ring</p><h3>Advantages of Vnodes #</h3><p>Vnodes gives the following advantages:</p><ul><li>1. As Vnodes help spread the load more evenly across the physical nodes</li></ul><p>on the cluster by dividing the hash ranges into smaller subranges, this speeds up the rebalancing process after adding or removing nodes. When a new node is added, it receives many Vnodes from the existing nodes to maintain a balanced cluster. Similarly, when a node needs to be rebuilt, instead of getting data from a fixed number of replicas, many nodes participate in the rebuild process.</p><ul><li>2. Vnodes make it easier to maintain a cluster containing heterogeneous</li></ul><p>machines. This means, with Vnodes, we can assign a high number of sub-ranges to a powerful server and a lower number of sub-ranges to a less powerful server.</p><ul><li>3. In contrast to one big range, since Vnodes help assign smaller ranges to</li></ul><p>each physical node, this decreases the probability of hotspots.</p>"
+  }
+ ]
+}

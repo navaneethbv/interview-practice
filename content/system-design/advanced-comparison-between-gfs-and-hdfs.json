@@ -1,0 +1,24 @@
+{
+ "id": "advanced-comparison-between-gfs-and-hdfs",
+ "title": "Comparison between GFS and HDFS",
+ "summary": "HDFS architecture is similar to GFS, although there are differences in the terminology. Here is the comparison between the two file systems:",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>HDFS architecture is similar to GFS, although there are differences in the terminology. Here is the comparison between the two file systems:</p><p>GFS HDFS</p><p>Storage node ChunkServer DataNode</p><p>File part Chunk Block</p><p>File part size Default chunk size is 64MB Default block size is 128MB (adjustable) (adjustable)</p><p>Metadata Checkpoint image FsImage Checkpoint</p><p>Write ahead log Operation log EditLog</p><p>Platform Linux Cross-Platform</p><p>Language Developed in C++ Developed in Java</p><p>Available Only used internally by Google Opensource Implementation</p><p>Monitoring Master receives HeartBeat NameNode receives HeartBeat from ChunkServers from DataNodes</p><p>Concurrency Follows multiple writers and Does not support multiple writmultiple readers model. ers. HDFS follows the writeonce and read-many model.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/f47842e48be73b22.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 252"
+  },
+  {
+   "t": "html",
+   "html": "<p>File operations Append and Random writes Only append is possible. are possible.</p><p>Garbage Any deleted file is renamed Any deleted file is renamed to Collection into a particular folder to be a hidden name to be garbage garbage collected later. collected later.</p><p>Communication RPC over TCP is used for RPC over TCP is used for communication with the communication with the master. NameNode.</p><p>To minimize latency, pipelining For data transfer, pipelining and streaming are used over and streaming are used over TCP for data transfer. TCP.</p><p>Cache Clients cache metadata. HDFS uses distributed cache. Management Client or ChunkServer does User-specified paths are not cache file data. cached explicitly in the DataNode’s memory in an off-heap ChunkServers rely on the bufblock cache. fer cache in Linux to maintain frequently accessed data in The cache could be private memory. (belonging to one user) or public (belonging to all the users of the same node).</p><p>Replication Chunk replicas are spread The HDFS has an automatic Strategy across the racks. Master autorack-ware replication system. matically replicates the chunks. By default, two copies of each By default, three copies of block are stored at two different each chunk are stored. User DataNodes in the same rack, can specify a different replicaand a third copy is stored on a tion factor. Data Node in a different rack (for better reliability). The master re-replicates a chunk replica as soon as the User can specify a different number of available replicas replication factor. falls below a user-specified number.</p><p>File system Files are organized hierarchi- HDFS supports a traditional hi- Namespace cally in directories and identierarchical file organization. fied by pathnames. Users or applications can create directories to store files inside.</p><p>HDFS also supports third-party file systems such as Amazon Simple Storage Service (S3) and Cloud Store.</p><p>Database Bigtable uses GFS as its stor- HBase uses HDFS as its storage engine. age engine.</p><p>Back Next</p><p>Hadoop Distributed File System: Intro… Deep Dive</p>"
+  }
+ ],
+ "reference": []
+}

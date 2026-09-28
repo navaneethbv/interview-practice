@@ -1,0 +1,13 @@
+{
+ "id": "advanced-5-write-ahead-log",
+ "title": "5. Write-ahead Log",
+ "summary": "Let's learn about write-ahead logging and its usage.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about write-ahead logging and its usage.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Examples</li></ul><h1>Background #</h1><p>Machines can fail or restart anytime. If a program is in the middle of performing a data modification, what will happen when the machine it is running on loses power? When the machine restarts, the program might need to know the last thing it was doing. Based on its atomicity and durability needs, the program might need to decide to redo or undo or finish what it had started. How can the program know what it was doing before the system crash?</p><h1>Definition #</h1><p>To guarantee durability and data integrity, each modification to the system is first written to an append-only log on the disk. This log is known as Write- Ahead Log (WAL) or transaction log or commit log. Writing to the WAL guarantees that if the machine crashes, the system will be able to recover and reapply the operation if necessary.</p>"
+  }
+ ],
+ "reference": []
+}

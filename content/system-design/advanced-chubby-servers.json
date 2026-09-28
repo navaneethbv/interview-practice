@@ -1,0 +1,13 @@
+{
+ "id": "advanced-chubby-servers",
+ "title": "Chubby servers",
+ "summary": "A chubby cell consists of a small set of servers (typically 5) known as replicas.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>A chubby cell consists of a small set of servers (typically 5) known as replicas.</p><p>Using Paxos, one of the servers is chosen as the master who handles all client requests. If the master fails, another server from replicas becomes the master.</p><p>Each replica maintains a small database to store files/directories/locks. The master writes directly to its own local database, which gets synced asynchronously to all the replicas. That’s how Chubby ensures data reliability and a smooth experience for clients even if the master fails.</p><p>For fault tolerance, Chubby replicas are placed on different racks.</p><h2>Chubby client library #</h2><p>Client applications use a Chubby library to communicate with the replicas in the chubby cell using RPC.</p><h3>Chubby</h3><p>Server</p><p>Chubby Client Library Server Application</p><p>RPC</p><p>. . . Server (master)</p><p>RPC Chubby Client Server Library Application</p><p>Server Chubby client library connects to Chubby master using RPC</p>"
+  }
+ ],
+ "reference": []
+}

@@ -1,0 +1,13 @@
+{
+ "id": "advanced-dynamo-introduction",
+ "title": "Dynamo: Introduction",
+ "summary": "Let’s explore Dynamo and its use cases.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let’s explore Dynamo and its use cases.</p><p>We'll cover the following</p><ul><li>Goal</li></ul><ul><li>What is Dynamo?</li></ul><ul><li>Background</li></ul><ul><li>Design goals</li></ul><ul><li>Dynamo’s use cases</li></ul><ul><li>System APIs</li></ul><h1>Goal #</h1><p>Design a distributed key-value store that is highly available (i.e., reliable), highly scalable, and completely decentralized.</p><h1>What is Dynamo? #</h1><p>Dynamo is a highly available key-value store developed by Amazon for their internal use. Many Amazon services, such as shopping cart, bestseller lists, sales rank, product catalog, etc., need only primary-key access to data. A multi-table relational database system would be an overkill for such services and would also limit scalability and availability. Dynamo provides a flexible design to let applications choose their desired level of availability and consistency.</p>"
+  }
+ ],
+ "reference": []
+}

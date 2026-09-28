@@ -1,0 +1,13 @@
+{
+ "id": "classic-redundancy-and-replication",
+ "title": "Redundancy and Replication",
+ "summary": "Redundancy is the duplication of critical components or functions of a system",
+ "source": "Grokking the System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Redundancy is the duplication of critical components or functions of a system</p><p>with the intention of increasing the reliability of the system, usually in the</p><p>form of a backup or fail-safe, or to improve actual system performance. For</p><p>example, if there is only one copy of a file stored on a single server, then</p><p>losing that server means losing the file. Since losing data is seldom a good</p><p>thing, we can create duplicate or redundant copies of the file to solve this</p><p>problem.</p><p>Redundancy plays a key role in removing the single points of failure in the</p><p>system and provides backups if needed in a crisis. For example, if we have</p><p>two instances of a service running in production and one fails, the system</p><p>can failover to the other one.</p><p>Replication means sharing information to ensure consistency between</p><p>redundant resources, such as software or hardware components, to improve</p><p>reliability, fault-tolerance, or accessibility.</p><p>Replication is widely used in many database management systems (DBMS),</p><p>usually with a master-slave relationship between the original and the</p><p>copies. The master gets all the updates, which then ripple through to the slaves. Each slave outputs a message stating that it has received the update</p><p>successfully, thus allowing the sending of subsequent updates.</p>"
+  }
+ ],
+ "reference": []
+}

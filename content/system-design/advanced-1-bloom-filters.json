@@ -1,0 +1,18 @@
+{
+ "id": "advanced-1-bloom-filters",
+ "title": "1. Bloom Filters",
+ "summary": "Let's learn about Bloom lters and how to use them.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about Bloom lters and how to use them.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Example: BigTable</li></ul><h1>Background #</h1><p>If we have a large set of structured data (identified by record IDs) stored in a set of data files, what is the most efficient way to know which file might contain our required data? We don’t want to read each file, as that would be slow, and we have to read a lot of data from the disk. One solution can be to build an index on each data file and store it in a separate index file. This index can map each record ID to its offset in the data file. Each index file will be sorted on the record ID. Now, if we want to search an ID in this index, the best we can do is a Binary Search. Can we do better than that?</p><h1>Definition #</h1><p>Use Bloom filters to quickly find if an element might be present in a set.</p>"
+  }
+ ],
+ "reference": [
+  {
+   "t": "html",
+   "html": "<h1>Solution #</h1><p>The Bloom filter data structure tells whether an element may be in a set, or definitely is not. The only possible errors are false positives, i.e., a search for a nonexistent element might give an incorrect answer. With more elements in the filter, the error rate increases. An empty Bloom filter is a bitarray of bits, all set to 0. There are also different hash functions, each of m k which maps a set element to one of the bit positions. m</p><p>To add an element, feed it to the hash functions to get bit positions, k and set the bits at these positions to 1.</p><p>To test if an element is in the set, feed it to the hash functions to get k bit positions. If any of the bits at these positions is 0, the element is definitely not in the set.</p><p>If all are 1, then the element may be in the set.</p><p>Here is a Bloom filter with three elements,, and. It consists of 20 bits P Q R and uses three hash functions. The colored arrows point to the bits that the elements of the set are mapped to.</p><p>P Q R</p><p>1 0 0 0 1 0 0 1 0 0 0 0 1 1 0 0 0 1 1 0</p><p>X</p><p>A Bloom lter consisting of 20 bits.</p><p>The element definitely is not in the set, since it hashes to a bit position X containing 0.</p><p>For a fixed error rate, adding a new element and testing for membership are both constant time operations, and a filter with room () for ‘n’ elements requires space. O n</p><h1>Example: BigTable #</h1><p>In BigTable (and Cassandra), any read operation has to read from all SSTables that make up a Tablet. If these SSTables are not in memory, the read operation may end up doing many disk accesses. To reduce the number of disk accesses, BigTable uses Bloom filters.</p><p>Bloom filters are created for SSTables (particularly for the locality groups). They help reduce the number of disk accesses by predicting if an SSTable may contain data corresponding to a particular row or column pair. For certain applications, a small amount of Tablet server memory used for storing Bloom filters drastically reduces the number of disk-seeks, thereby improving read performance.</p><p>Back Next</p><p>Introduction: System Design Patterns 2. Consistent Hashing</p>"
+  }
+ ]
+}

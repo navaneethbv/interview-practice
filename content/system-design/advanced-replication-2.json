@@ -1,0 +1,35 @@
+{
+ "id": "advanced-replication-2",
+ "title": "Replication",
+ "summary": "Let's explore Cassandra's replication strategy.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's explore Cassandra's replication strategy.</p><p>We'll cover the following</p><ul><li>Replication factor</li></ul><ul><li>Replication strategy</li></ul><ul><li>Simple replication strategy</li></ul><ul><li>Network topology strategy</li></ul><p>Each node in Cassandra serves as a replica for a different range of data. Cassandra stores multiple copies of data and spreads them across various replicas, so that if one node is down, other replicas can respond to queries for that range of data. This process of replicating the data on to different nodes depends upon two factors:</p><p>Replication factor</p><p>Replication strategy</p><h2>+ Replication Factor</h2><h3>Replication Strategy</h3><p>Decides how many replicas the Decides which nodes will be system will have responsible for the replicas</p><h1>Replication factor #</h1><p>The replication factor is the number of nodes that will receive the copy of the same data. This means, if a cluster has a replication factor of 3, each row will be stored on three different nodes. Each keyspace in Cassandra can have a different replication factor.</p><h1>Replication strategy #</h1><p>The node that owns the range in which the hash of the partition key falls will be the first replica; all the additional replicas are placed on the consecutive nodes. Cassandra places the subsequent replicas on the next node in a clockwise manner. There are two replication strategies in Cassandra:</p><h2>Simple replication strategy #</h2><p>This strategy is used only for a single data center cluster. Under this strategy, Cassandra places the first replica on a node determined by the partitioner and the subsequent replicas on the next node in a clockwise manner.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/aa471d347a8b0ece.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 64"
+  },
+  {
+   "t": "html",
+   "html": "<p>Replication Factor = 3</p><p>Server Coordinator node</p><p>Server Server</p><p>Client</p><p>Server Server</p><p>Server Replica node</p><p>Simple replication with 3 replicas</p><h2>Network topology strategy #</h2><p>This strategy is used for multiple data-centers. Under this strategy, we can specify different replication factors for different data-centers. This enables us to specify how many replicas will be placed in each data center. Additional replicas are always placed on the next nodes in a clockwise manner.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/77beb352bf1d1a56.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 65"
+  },
+  {
+   "t": "html",
+   "html": "<p>Different Replication Factor</p><p>Replication Factor = 3 Replication Factor = 2</p><p>Server Server Coordinator node</p><p>Server Server Server Server</p><p>Client</p><p>Server Server Server Server</p><p>Server Server Remote Coordinator Replica node Replica node</p><p>Datacenter 1 Datacenter 2</p><p>Network topology strategy for replication</p><p>Back Next</p><p>High-level Architecture Cassandra Consistency Levels</p>"
+  }
+ ],
+ "reference": []
+}

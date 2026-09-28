@@ -33,7 +33,18 @@ export default async function DesignPage({ params }: { params: Promise<{ id: str
         </nav>
         <div className="grid gap-5 lg:grid-cols-2">
           <article className="min-w-0 rounded-2xl border border-line bg-layer-1 px-5 py-7 sm:px-8">
-            <h1 className="mb-6 text-2xl font-semibold tracking-tight">{article.title}</h1>
+            <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+              <h1 className="text-2xl font-semibold tracking-tight">{article.title}</h1>
+              {article.sourceFile && (
+                <a
+                  href={article.sourceFile}
+                  download
+                  className="rounded-lg bg-layer-2 px-3 py-1.5 text-sm text-fg-2 hover:text-fg-1"
+                >
+                  Download original
+                </a>
+              )}
+            </div>
             <LessonContent blocks={prompt} />
           </article>
           <DesignPractice id={article.id} reference={reference.length ? <LessonContent blocks={reference} /> : null} />

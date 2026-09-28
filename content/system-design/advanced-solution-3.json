@@ -1,0 +1,13 @@
+{
+ "id": "advanced-solution-3",
+ "title": "Solution",
+ "summary": "A lease is like a lock, but it works even when the client goes away. The client asks for a lease for a limited period of time, after which the lease expires. If the client wants to extend the lease, it can renew the leas",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>A lease is like a lock, but it works even when the client goes away. The client asks for a lease for a limited period of time, after which the lease expires. If the client wants to extend the lease, it can renew the lease before it expires.</p><h1>Examples #</h1><p>Chubby clients maintain a time-bound session lease with the leader. During this time interval, the leader guarantees to not terminate the session unilaterally.</p><p>Back Next</p><ul><li>7. High-Water Mark 9. Heartbeat</li></ul>"
+  }
+ ],
+ "reference": []
+}

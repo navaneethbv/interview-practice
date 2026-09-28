@@ -1,0 +1,13 @@
+{
+ "id": "advanced-dynamo-vs-bigtable",
+ "title": "Dynamo vs. BigTable",
+ "summary": "Here is the comparison between Dynamo and BigTable:",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Here is the comparison between Dynamo and BigTable:</p><p>Dynamo BigTable</p><p>Architecture Decentralized Centralized</p><p>Every node has same set of Master handles metadata, responsibilities tablet servers handle read/write</p><p>Data Model Key-value Multidimensional sorted</p><p>map.</p><p>Security Access rights at column family level</p><p>Partitioning Consistent Hashing Tablets Each node is assigned to a Each table is broken into a random position on the ring. contiguous range of rows called tablets.</p><p>Replication Sloppy Quorum GFS Chunk replication Each data item is replicated Data is stored in GFS. Files to 'N' number of nodes. in GFS are broken into chunks, and these chunks</p><p>are replicated to different servers.</p><p>CAP AP CP</p><p>Operations By key By key range Storage Plug-in SSTables in GFS</p><p>Memberships and failure Gossip based protocol Handshakes initiated by detection the master</p><h1>Datastores developed on the principles of BigTable #</h1><p>Google’s BigTable has inspired many NoSQL systems. Here is a list of a few famous ones:</p><p>HBase: HBase is an open-source, distributed non-relational database modeled after BigTable. It is built on top of the Hadoop Distributed File System (HDFS).</p><p>Hypertable: Similar to HBase, Hypertable is an open-source implementation of BigTable and is written in C++. Unlike BigTable, which uses only one storage layer (i.e., GFS), Hypertable is capable of running on top of any file system (e.g., HDFS (https://en.wikipedia.org/wiki/Apache_Hadoop#HDFS), GlusterFS (https://en.wikipedia.org/wiki/Gluster#GlusterFS), or the CloudStore (https://en.wikipedia.org/wiki/CloudStore)). To achieve this, the system has abstracted the interface to the file system by sending all data requests through a Distributed File System broker process.</p><p>Cassandra: Cassandra is a distributed, decentralized, and highly available NoSQL database. Its architecture is based on Dynamo and BigTable. Cassandra can be described as a BigTable-like datastore running on a Dynamo-like infrastructure. Cassandra is also a wide-column store and utilizes the storage model of BigTable, i.e., SSTables and MemTables.</p><p>Back Next</p><p>BigTable refinements Summary: BigTable</p>"
+  }
+ ],
+ "reference": []
+}

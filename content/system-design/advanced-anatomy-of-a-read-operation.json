@@ -1,0 +1,24 @@
+{
+ "id": "advanced-anatomy-of-a-read-operation",
+ "title": "Anatomy of a Read Operation",
+ "summary": "Let’s learn how GFS handles a read operation.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let’s learn how GFS handles a read operation.</p><p>A typical read interaction with a GFS cluster by a client application goes like this:</p><ul><li>1. First, the client translates the file name and byte offset specified by the</li></ul><p>application into a chunk index within the file. Given the fixed chunk size, this can be computed easily.</p><ul><li>2. The client then sends the master an RPC request containing the file</li></ul><p>name and chunk index.</p><ul><li>3. The master replies with the chunk handle and the location of replicas</li></ul><p>holding the chunk. The client caches this metadata using the file name and chunk-index as the key. This information is subsequently used to access the data.</p><ul><li>4. The client then sends a request to one of the replicas (the closest one).</li></ul><p>The request specifies the chunk handle and a byte range within that chunk. Further reads of the same chunk require no more client-master interaction until the cached information expires or the file is reopened.</p><p>In fact, the client typically asks for multiple chunks in the same request, and the master can also include the information for chunks immediately following those requested.</p><ul><li>5. The replica ChunkServer replies with the requested data.</li></ul><ul><li>6. As evident from the above workflow, the master is involved at the start</li></ul><p>and is then completely out of the loop, implementing a separation of control and data flows – a separation that is crucial for maintaining high performance of file accesses.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/ea0f2a09ab6fd310.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 221"
+  },
+  {
+   "t": "html",
+   "html": "<p>Application</p><p>1 file data</p><p>(file name, byte range) 2 6</p><p>(file name, chunk index) GFS Master server</p><p>GFS Client Metadata (chunk handle, replica locations)</p><p>(ch 3 un (ch k h un an k h dle 4 an, b dle yte , b ra yte ng e) ra ng e)</p><p>ChunkServer ChunkServer ChunkServer</p><p>The anatomy of a read operation</p><p>Back Next</p><p>Master Operations Anatomy of a Write Operation</p>"
+  }
+ ],
+ "reference": []
+}

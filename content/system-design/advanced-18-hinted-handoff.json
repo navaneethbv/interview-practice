@@ -1,0 +1,13 @@
+{
+ "id": "advanced-18-hinted-handoff",
+ "title": "18. Hinted Handoff",
+ "summary": "Let's learn about hinted handoff and its usage.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about hinted handoff and its usage.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Examples</li></ul><h1>Background #</h1><p>Depending upon the consistency level, a distributed system can still serve write requests even when nodes are down. For example, if we have the replication factor of three and the client is writing with a quorum consistency level. This means that if one of the nodes is down, the system can still write on the remaining two nodes to fulfill the consistency level, making the write successful. Now, when the node which was down comes online again, how should we write data to it?</p><h1>Definition #</h1><p>For nodes that are down, the system keeps notes (or hints) of all the write requests they have missed. Once the failing nodes recover, the write requests are forwarded to them based on the hints stored.</p>"
+  }
+ ],
+ "reference": []
+}

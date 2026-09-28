@@ -1,0 +1,24 @@
+{
+ "id": "advanced-gossip-protocol",
+ "title": "Gossip Protocol",
+ "summary": "Let's explore how Dynamo uses gossip protocol to keep track of the cluster state.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's explore how Dynamo uses gossip protocol to keep track of the cluster state.</p><p>We'll cover the following</p><ul><li>What is gossip protocol?</li></ul><ul><li>External discovery through seed nodes</li></ul><h1>What is gossip protocol? #</h1><p>In a Dynamo cluster, since we do not have any central node that keeps track of all nodes to know if a node is down or not, how does a node know every other node’s current state? The simplest way to do this is to have every node maintain heartbeats with every other node. When a node goes down, it will stop sending out heartbeats, and everyone else will find out immediately. But 2 () then messages get sent every tick ( being the number of nodes), O N N which is a ridiculously high amount and not feasible in any sizable cluster.</p><p>Dynamo uses gossip protocol that enables each node to keep track of state information about the other nodes in the cluster, like which nodes are reachable, what key ranges they are responsible for, and so on ( this is basically a copy of the hash ring). Nodes share state information with each other to stay in sync. Gossip protocol is a peer-to-peer communication mechanism in which nodes periodically exchange state information about themselves and other nodes they know about. Each node initiates a gossip round every second to exchange state information about itself and other nodes with one other random node. This means that any new event will eventually propagate through the system, and all nodes quickly learn about all other nodes in a cluster.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/5bbdef231359dda5.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 42"
+  },
+  {
+   "t": "html",
+   "html": "<p>Every second each server exchanges information with one randomly selected server</p><p>[1, 2, 3, 5]</p><p>Server 5</p><p>[1, 3, 5] [2, 4]</p><p>Server 1 Server 4</p><p>Server 3 Server 2</p><p>[1, 3, 5] [2, 4, 5]</p><p>Every second each server exchanges information about all the servers it knows about</p><p>[1, 2, 3, 4, 5]</p><p>Server 5</p><p>[1, 2, 3, 4, 5] [1, 2, 3, 4, 5]</p><p>Server 1 Server 4</p><p>Server 3 Server 2</p><p>[1, 2, 3, 4, 5] [1, 2, 3, 4, 5]</p><p>Gossip protocol</p>"
+  }
+ ],
+ "reference": []
+}

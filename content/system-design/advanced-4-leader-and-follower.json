@@ -1,0 +1,20 @@
+{
+ "id": "advanced-4-leader-and-follower",
+ "title": "4. Leader and Follower",
+ "summary": "Let's learn about leader and followers patterns and its usage in distributed systems.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn about leader and followers patterns and its usage in distributed systems.</p><p>We'll cover the following</p><ul><li>Background</li></ul><ul><li>De nition</li></ul><ul><li>Solution</li></ul><ul><li>Examples</li></ul><h1>Background #</h1><p>Distributed systems keep multiple copies of data for fault tolerance and higher availability. A system can use quorum to ensure data consistency between replicas, i.e., all reads and writes are not considered successful until a majority of nodes participate in the operation. However, using quorum can lead to another problem, that is, lower availability; at any time, the system needs to ensure that at least a majority of replicas are up and available, otherwise the operation will fail. Quorum is also not sufficient, as in certain failure scenarios, the client can still see inconsistent data.</p><h1>Definition #</h1><p>Allow only a single server (called leader) to be responsible for data replication and to coordinate work.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/course-assets/system-design/a178ac1c0136c1c1.png",
+   "w": 612,
+   "h": 792,
+   "alt": "Diagram page 356"
+  }
+ ],
+ "reference": []
+}

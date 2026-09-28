@@ -1,0 +1,18 @@
+{
+ "id": "advanced-hdfs-high-availability-ha",
+ "title": "HDFS High Availability (HA)",
+ "summary": "Let's learn how HDFS achieves high availability.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>Let's learn how HDFS achieves high availability.</p><p>We'll cover the following</p><ul><li>HDFS high availability architecture</li></ul><ul><li>QJM</li></ul><ul><li>Zookeeper</li></ul><ul><li>Failover and fencing</li></ul><ul><li>Fencing</li></ul>"
+  }
+ ],
+ "reference": [
+  {
+   "t": "html",
+   "html": "<h1>HDFS high availability architecture #</h1><p>Although NameNode’s metadata is copied to multiple file systems to protect against data loss, it still does not provide high availability of the filesystem. If the NameNode fails, no clients will be able to read, write, or list files, because the NameNode is the sole repository of the metadata and the file-to-block mapping. In such an event, the whole Hadoop system would effectively be out of service until a new NameNode is brought online.</p><p>To recover from a failed NameNode scenario, an administrator will start a new primary NameNode with one of the filesystem metadata replicas and configure DataNodes and clients to use this new NameNode. The new NameNode is not able to serve requests until it has</p><ul><li>1. loaded its namespace image into memory,</li></ul><ul><li>2. replayed its EditLog, and</li></ul><ul><li>3. received enough block reports from the DataNodes.</li></ul><p>On large clusters with many files and blocks, it can take half an hour or more to perform a cold start of a NameNode. Furthermore, this long recovery time is a problem for routine maintenance. In fact, because an unexpected failure of the NameNode is rare, the case for planned downtime is actually more important in practice.</p><p>To solve this problem, Hadoop, in its 2.0 release, added support for HDFS High Availability (HA). In this implementation, there are two (or more) NameNodes in an active-standby configuration. At any point in time, exactly one of the NameNodes is in an active state, and the others are in a Standby state. The active NameNode is responsible for all client operations in the cluster, while the Standby is simply acting as a follower of the active, maintaining enough state to provide a fast failover when required.</p><p>For the Standby nodes to keep their state synchronized with the active node, HDFS made a few architectural changes:</p><p>The NameNodes must use highly available shared storage to share the EditLog (e.g., a Network File System (NFS) mount from a Network Attached Storage (NAS)).</p><p>When a standby NameNode starts, it reads up to the end of the shared EditLog to synchronize its state with the active NameNode, and then continues to read new entries as the active NameNode writes them.</p><p>DataNodes must send block reports to all the NameNodes because the block mappings are stored in a NameNode’s memory, and not on disk.</p><p>Clients must be configured to handle NameNode failover, using a mechanism that is transparent to users. Client failover is handled transparently by the client library. The simplest implementation uses client-side configuration to control failover. The HDFS URI uses a logical hostname which is mapped to multiple NameNode addresses, and the client library tries each NameNode address until the operation succeeds.</p><p>There are two choices for the highly available shared storage: an NFS filer (as described above), or a Quorum Journal Manager (QJM).</p>"
+  }
+ ]
+}

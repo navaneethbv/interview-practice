@@ -1,0 +1,13 @@
+{
+ "id": "advanced-gfs-consistency-model-and-snapshotting",
+ "title": "GFS Consistency Model and Snapshotting",
+ "summary": "This lesson will explain how GFS handles the consistency of its operations and data. Additionally, we will look into how GFS implements a snapshotting operation.",
+ "source": "Grokking the Advanced System Design Interview.pdf",
+ "prompt": [
+  {
+   "t": "html",
+   "html": "<p>This lesson will explain how GFS handles the consistency of its operations and data. Additionally, we will look into how GFS implements a snapshotting operation.</p><p>We'll cover the following</p><ul><li>GFS consistency model</li></ul><ul><li>Snapshotting</li></ul><h1>GFS consistency model #</h1><p>To keep things simple and efficient, GFS has a relaxed consistency model.</p><p>Metadata operations (e.g., file creation) are atomic. They are handled exclusively by the master. Namespace locking guarantees atomicity and correctness, whereas the master’s operation log defines a global total order of these operations.</p><p>In data mutations, there is an important distinction between and write operations. Write operations specify an offset at which mutations append should occur, whereas are always applied at the end of the file. This appends means that for the operation, the offset in the chunk is write predetermined, whereas for, the system decides. Concurrent writes append to the same location are not serializable and may result in corrupted regions of the file. With operations, GFS guarantees the append will happen append at-least-once and atomically (that is, as a contiguous sequence of bytes). The system does not guarantee that all copies of the chunk will be identical (some may have duplicate data).</p>"
+  }
+ ],
+ "reference": []
+}
