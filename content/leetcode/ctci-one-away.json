@@ -1,0 +1,32 @@
+{
+  "id": "ctci-one-away",
+  "style": "leetcode",
+  "function": {
+    "python": "oneAway",
+    "java": "oneAway"
+  },
+  "params": [
+    {
+      "name": "first",
+      "type": "string"
+    },
+    {
+      "name": "second",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["pale","ple"],"sample":true,"expected":true},
+    {"input":["pale","bake"],"sample":true,"expected":false},
+    {"input":["",""],"expected":true},
+    {"input":["a",""],"expected":true},
+    {"input":["","a"],"expected":true},
+    {"input":["pale","pale"],"expected":true},
+    {"input":["pale","bale"],"expected":true},
+    {"input":["pale","pales"],"expected":true},
+    {"input":["pale","plee"],"expected":false},
+    {"input":["abc","axc"],"expected":true},
+    {"input":["abc","abXY"],"expected":false}
+  ]
+}

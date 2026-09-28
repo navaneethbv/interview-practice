@@ -1,0 +1,56 @@
+{
+ "id": "linux-operations",
+ "title": "Linux and Operations Notes",
+ "short": "Linux and Operations",
+ "description": "Original operational notes covering the shell, processes, filesystems, networking, services, observability, and safe administration.",
+ "sourceLinks": [
+  {
+   "label": "Linux Pocket Guide",
+   "url": "https://www.oreilly.com/library/view/linux-pocket-guide/9781098157951/"
+  },
+  {
+   "label": "UNIX and Linux Administration Handbook",
+   "url": "https://www.admin.com/"
+  }
+ ],
+ "source": "linux_operations_notes.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "the-command-line-as-a-system-interface",
+     "title": "The command line as a system interface"
+    },
+    {
+     "id": "files-permissions-and-users",
+     "title": "Files, permissions, and users"
+    },
+    {
+     "id": "processes-and-service-lifecycles",
+     "title": "Processes and service lifecycles"
+    },
+    {
+     "id": "pipelines-and-shell-automation",
+     "title": "Pipelines and shell automation"
+    },
+    {
+     "id": "storage-filesystems-and-backups",
+     "title": "Storage, filesystems, and backups"
+    },
+    {
+     "id": "networking-and-diagnostics",
+     "title": "Networking and diagnostics"
+    },
+    {
+     "id": "observability-and-performance",
+     "title": "Observability and performance"
+    },
+    {
+     "id": "safe-operational-change",
+     "title": "Safe operational change"
+    }
+   ]
+  }
+ ]
+}

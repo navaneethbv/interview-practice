@@ -36,7 +36,7 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
     return rows.filter((r) => {
-      if (q && !r.title.toLowerCase().includes(q) && !String(r.number).startsWith(q)) return false;
+      if (q && !r.title.toLowerCase().includes(q) && !(r.label ?? String(r.number)).toLowerCase().startsWith(q)) return false;
       if (difficulty !== "all" && r.difficulty !== difficulty) return false;
       if (group !== "all" && (byCategory ? r.category !== group : !r.topics.includes(group))) return false;
       const s = statusOf(progress, lcProgressId(r.slug), setId);
@@ -136,12 +136,12 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
                 <td className="py-3 pr-3">
                   {r.available ? (
                     <Link href={`/problems/lc/${r.slug}?set=${setId}`} className="font-medium text-fg-1 hover:text-blue">
-                      {r.number}. {r.title}
+                      {r.label ?? `${r.number}.`} {r.title}
                     </Link>
                   ) : (
                     <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
                       <span className="text-fg-2">
-                        {r.number}. {r.title}
+                        {r.label ?? `${r.number}.`} {r.title}
                       </span>
                       <span className="rounded-full bg-layer-2 px-2 py-0.5 text-xs text-fg-3">Coming soon</span>
                       <a

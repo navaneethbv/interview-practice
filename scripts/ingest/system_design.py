@@ -11,6 +11,11 @@ Requires pdfplumber (MIT; pulls in pypdfium2 and Pillow):
 Usage:
     python3 scripts/ingest/system_design.py grokking "<Grokking-the-system-design-interview...pdf>"
     python3 scripts/ingest/system_design.py advanced "<Grokking the Advanced System Design Interview.pdf>"
+    python3 scripts/ingest/system_design.py ctci "scripts/ingest/ctci_system_design.md"
+    python3 scripts/ingest/system_design.py data-systems "scripts/ingest/data_systems_notes.md"
+    python3 scripts/ingest/system_design.py domain-design "scripts/ingest/domain_design_notes.md"
+    python3 scripts/ingest/system_design.py linux-operations "scripts/ingest/linux_operations_notes.md"
+    python3 scripts/ingest/system_design.py alex-xu "scripts/ingest/alex_xu_system_design_notes.md"
     python3 scripts/ingest/system_design.py notes "<Grokking the System Design Interview.md>"
 
 Re-running a book replaces its folder; other books are untouched.
@@ -48,7 +53,51 @@ BOOKS = {
         "short": "Condensed Notes",
         "description": "Junfan Zhu's condensed review notes of the classic course, for a fast refresher before an interview.",
     },
+    "ctci": {
+        "title": "CTCI System Design Notes",
+        "short": "CTCI System Design",
+        "description": "Original notes inspired by the system design chapter of Cracking the Coding Interview, focused on turning an open-ended prompt into a scoped, scalable, and defensible design. This is a private study aid, not a reproduction of the book.",
+        "sourceUrl": "https://www.crackingthecodinginterview.com/",
+        "sourceLabel": "Official CTCI site",
+    },
+    "data-systems": {
+        "title": "Data Systems Notes",
+        "short": "Data Systems",
+        "description": "Original notes on reliable data-intensive applications, storage engines, replication, partitioning, and data processing.",
+        "sourceLinks": [
+            {"label": "DDIA official site", "url": "https://dataintensive.net/"},
+            {"label": "Database Internals on O'Reilly", "url": "https://www.oreilly.com/library/view/database-internals/9781492040330/"},
+        ],
+    },
+    "domain-design": {
+        "title": "Domain and Software Design Notes",
+        "short": "Domain Design",
+        "description": "Original notes on managing software complexity with simpler designs, useful domain models, and explicit boundaries.",
+        "sourceLinks": [
+            {"label": "Code Simplicity", "url": "https://www.codesimplicity.com/"},
+            {"label": "Domain Language", "url": "https://www.domainlanguage.com/"},
+        ],
+    },
+    "linux-operations": {
+        "title": "Linux and Operations Notes",
+        "short": "Linux and Operations",
+        "description": "Original operational notes covering the shell, processes, filesystems, networking, services, observability, and safe administration.",
+        "sourceLinks": [
+            {"label": "Linux Pocket Guide", "url": "https://www.oreilly.com/library/view/linux-pocket-guide/9781098157951/"},
+            {"label": "UNIX and Linux Administration Handbook", "url": "https://www.admin.com/"},
+        ],
+    },
+    "alex-xu": {
+        "title": "System Design Interview Notes",
+        "short": "System Design Interview",
+        "description": "Original interview-focused notes on estimation, reusable distributed-system building blocks, and common design follow-ups.",
+        "sourceLinks": [
+            {"label": "ByteByteGo", "url": "https://bytebytego.com/"},
+        ],
+    },
 }
+
+MARKDOWN_BOOKS = {"notes", "ctci", "data-systems", "domain-design", "linux-operations", "alex-xu"}
 
 
 # --------------------------------------------------------------------------- text helpers
@@ -1114,7 +1163,9 @@ def write_book(book: str, chapters: list[Chapter], source: Path):
         parts[-1]["chapters"].append(entry)
         md = ch.blocks[0].text + "\n" if ch.blocks[0].kind == "raw" else chapter_markdown(ch)
         (out / f"{cid}.md").write_text(md, encoding="utf8")
-    index = {"id": book, **BOOKS[book], "source": source.name, "download": publish_source(book, source), "parts": parts}
+    index = {"id": book, **BOOKS[book], "source": source.name, "parts": parts}
+    if source.suffix == ".pdf" or source.with_suffix(".pdf").is_file():
+        index["download"] = publish_source(book, source)
     (out / "index.json").write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
     total = sum(len(p["chapters"]) for p in parts)
     print(f"✓ {book}: {len(parts)} parts, {total} chapters → {out.relative_to(ROOT)}")
@@ -1127,7 +1178,7 @@ def main(argv: list[str]):
     book, source = argv[0], Path(argv[1]).expanduser()
     if not source.is_file():
         sys.exit(f"Not a file: {source}")
-    if book == "notes":
+    if book in MARKDOWN_BOOKS:
         chapters = process_notes(source)
     else:
         chapters = process_pdf(book, source, AdvancedBook() if book == "advanced" else GrokkingBook())

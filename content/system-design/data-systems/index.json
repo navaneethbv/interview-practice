@@ -1,0 +1,56 @@
+{
+ "id": "data-systems",
+ "title": "Data Systems Notes",
+ "short": "Data Systems",
+ "description": "Original notes on reliable data-intensive applications, storage engines, replication, partitioning, and data processing.",
+ "sourceLinks": [
+  {
+   "label": "DDIA official site",
+   "url": "https://dataintensive.net/"
+  },
+  {
+   "label": "Database Internals on O'Reilly",
+   "url": "https://www.oreilly.com/library/view/database-internals/9781492040330/"
+  }
+ ],
+ "source": "data_systems_notes.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "data-systems-reliability-scale-and-maintainability",
+     "title": "Data systems: reliability, scale, and maintainability"
+    },
+    {
+     "id": "data-models-and-access-patterns",
+     "title": "Data models and access patterns"
+    },
+    {
+     "id": "storage-engines-pages-logs-and-indexes",
+     "title": "Storage engines: pages, logs, and indexes"
+    },
+    {
+     "id": "transactions-and-recovery",
+     "title": "Transactions and recovery"
+    },
+    {
+     "id": "replication-and-consistency",
+     "title": "Replication and consistency"
+    },
+    {
+     "id": "partitioning-and-coordination",
+     "title": "Partitioning and coordination"
+    },
+    {
+     "id": "batch-and-stream-processing",
+     "title": "Batch and stream processing"
+    },
+    {
+     "id": "evolving-a-data-system",
+     "title": "Evolving a data system"
+    }
+   ]
+  }
+ ]
+}

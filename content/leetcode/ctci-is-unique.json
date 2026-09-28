@@ -1,0 +1,27 @@
+{
+  "id": "ctci-is-unique",
+  "style": "leetcode",
+  "function": {
+    "python": "isUnique",
+    "java": "isUnique"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["lamp"],"sample":true,"expected":true},
+    {"input":["letter"],"sample":true,"expected":false},
+    {"input":[""],"expected":true},
+    {"input":["a"],"expected":true},
+    {"input":["aa"],"expected":false},
+    {"input":["a A"],"expected":true},
+    {"input":["112233"],"expected":false},
+    {"input":["!@#$%^&*()"],"expected":true},
+    {"input":["🙂🙃🙂"],"expected":false},
+    {"input":["abcdefghijklmnopqrstuvwxyz"],"expected":true}
+  ]
+}

@@ -15,77 +15,60 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-6xl px-4 py-10">
-        <section className="mb-10">
-          <h1 className="mb-2 text-3xl font-semibold tracking-tight sm:text-4xl">Practice for your next interview</h1>
-          <p className="max-w-2xl text-lg text-fg-2">
-            Learn the patterns, then prove it: write Python or Java, run it against edge-case tests, and keep your
-            progress in this browser.
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
+        <section className="mb-8 max-w-3xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">Interview Practice</p>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Practice the questions that move you forward.</h1>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-fg-2">
+            Coding drills, pattern lessons, and system design notes in one focused workspace.
           </p>
         </section>
 
-        <ProgressPanel
-          ids={problems.map((p) => p.id)}
-          difficulties={problems.map((p) => p.difficulty)}
-          scope={COURSE_SCOPE}
-        />
-
-        <section className="mt-10 grid gap-4 md:grid-cols-3">
-          <TrackCard
-            href="/problems"
-            icon={<Code2 size={20} />}
-            tone="bg-ok-soft text-ok"
-            title="Coding Problems"
-            body={`${problems.length} problems with hidden test cases, a LeetCode-style editor and instant feedback.`}
-          />
-          <TrackCard
-            href="/learn"
-            icon={<Boxes size={20} />}
-            tone="bg-blue-soft text-blue"
-            title="Pattern Lessons"
-            body={`${patterns.length} patterns explained step by step, from sliding window to topological sort.`}
-          />
-          <TrackCard
-            href="/system-design"
-            icon={<Network size={20} />}
-            tone="bg-brand-soft text-brand"
-            title="System Design"
-            body={
-              designBooks.length
-                ? `${designBooks.length} books, ${designChapterCount} chapters: worked designs from TinyURL to Uber, and the internals of Dynamo, Kafka and more.`
-                : "Design interview reading. Import your system design material to get started."
-            }
+        <section className="mb-10">
+          <div className="mb-3 flex items-baseline justify-between gap-4">
+            <h2 className="text-lg font-semibold tracking-tight">Keep going</h2>
+            <Link href="/problems" className="text-sm text-blue hover:underline">
+              Open problems
+            </Link>
+          </div>
+          <ProgressPanel
+            ids={problems.map((p) => p.id)}
+            difficulties={problems.map((p) => p.difficulty)}
+            scope={COURSE_SCOPE}
+            scopeLabel="Coding practice"
           />
         </section>
 
-        <section className="mt-12">
-          <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="text-xl font-semibold tracking-tight">Patterns</h2>
-            <Link href="/learn" className="text-sm text-blue hover:underline">
-              View course
-            </Link>
+        <section className="overflow-hidden rounded-2xl border border-line bg-layer-1">
+          <div className="border-b border-line px-5 py-4">
+            <h2 className="text-lg font-semibold tracking-tight">Choose a track</h2>
+            <p className="mt-1 text-sm text-fg-2">Start with the kind of practice you need today.</p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {patterns.map((ch, i) => {
-              const count = ch.items.filter((it) => it.type === "problem").length;
-              const first = ch.items[0];
-              return (
-                <Link
-                  key={ch.id}
-                  href={first.type === "problem" ? `/problems/${first.id}` : `/learn/${first.id}`}
-                  className="group flex items-center gap-3 rounded-xl border border-line bg-layer-1 px-4 py-3.5 transition-colors hover:border-line-strong"
-                >
-                  <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-layer-2 text-sm font-semibold text-fg-2">
-                    {i + 1}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate font-medium">{ch.title.replace(/^Pattern:\s*/, "")}</span>
-                    <span className="block text-xs text-fg-3">{count} problems</span>
-                  </span>
-                  <ArrowRight size={16} className="text-fg-3 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              );
-            })}
+          <div className="divide-y divide-line">
+            <TrackRow
+              href="/problems"
+              icon={<Code2 size={20} />}
+              tone="bg-ok-soft text-ok"
+              title="Coding problems"
+              meta={`${problems.length} problems`}
+              body="Write Python or Java, run hidden edge-case tests, and track what you solve."
+            />
+            <TrackRow
+              href="/learn"
+              icon={<Boxes size={20} />}
+              tone="bg-blue-soft text-blue"
+              title="Pattern lessons"
+              meta={`${patterns.length} patterns`}
+              body="Build the mental models behind the problems, from sliding window to topological sort."
+            />
+            <TrackRow
+              href="/system-design"
+              icon={<Network size={20} />}
+              tone="bg-brand-soft text-brand"
+              title="System design"
+              meta={designBooks.length ? `${designBooks.length} books · ${designChapterCount} chapters` : "Reading notes"}
+              body="Review interview frameworks, distributed systems, data systems, and operations."
+            />
           </div>
         </section>
       </main>
@@ -93,27 +76,32 @@ export default function Home() {
   );
 }
 
-function TrackCard({
+function TrackRow({
   href,
   icon,
   tone,
   title,
+  meta,
   body,
 }: Readonly<{
   href: string;
   icon: React.ReactNode;
   tone: string;
   title: string;
+  meta: string;
   body: string;
 }>) {
   return (
-    <Link href={href} className="group rounded-2xl border border-line bg-layer-1 p-5 transition-colors hover:border-line-strong">
-      <span className={`mb-4 grid size-10 place-items-center rounded-xl ${tone}`}>{icon}</span>
-      <h3 className="mb-1 flex items-center gap-1.5 font-semibold">
-        {title}
-        <ArrowRight size={15} className="text-fg-3 transition-transform group-hover:translate-x-0.5" />
-      </h3>
-      <p className="text-sm text-fg-2">{body}</p>
+    <Link href={href} className="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-layer-2">
+      <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${tone}`}>{icon}</span>
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="font-semibold">{title}</span>
+          <span className="text-xs text-fg-3">{meta}</span>
+        </span>
+        <span className="mt-0.5 block text-sm text-fg-2">{body}</span>
+      </span>
+      <ArrowRight size={17} className="shrink-0 text-fg-3 transition-transform group-hover:translate-x-0.5" />
     </Link>
   );
 }

@@ -15,8 +15,8 @@ export default function SystemDesignPage() {
         <header className="mb-10 max-w-2xl">
           <h1 className="mb-2 text-3xl font-semibold tracking-tight">System Design</h1>
           <p className="text-lg text-fg-2">
-            Three books to read front to back: the interview framework with worked designs, how real distributed systems
-            are built, and a condensed set of notes for review.
+            A complete interview framework, distributed-systems references, engineering notes, focused CTCI material, and
+            condensed review collections.
           </p>
         </header>
 

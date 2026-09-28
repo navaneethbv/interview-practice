@@ -129,7 +129,13 @@ export const lcAuthored = cache((): Set<string> => {
 export function setRows(set: ProblemSet): SetRow[] {
   const meta = lcMetaAll();
   const authored = lcAuthored();
-  return set.items.map((it) => ({ ...meta[it.slug], slug: it.slug, category: it.category, available: authored.has(it.slug) }));
+  return set.items.map((it) => ({
+    ...meta[it.slug],
+    slug: it.slug,
+    category: it.category,
+    label: it.label,
+    available: authored.has(it.slug),
+  }));
 }
 
 /** The sets a problem belongs to, in set order. */
@@ -180,7 +186,7 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
 
 const DESIGN_DIR = path.join(ROOT, "system-design");
 /** Reading order on the landing page; books missing from disk are skipped. */
-const DESIGN_BOOK_ORDER = ["grokking", "advanced", "notes"];
+const DESIGN_BOOK_ORDER = ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes"];
 
 export const listDesignBooks = cache((): DesignBook[] =>
   DESIGN_BOOK_ORDER.map((id) => readJson<DesignBook>(path.join(DESIGN_DIR, id, "index.json"))).filter(

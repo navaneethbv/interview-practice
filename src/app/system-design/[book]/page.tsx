@@ -17,6 +17,7 @@ export default async function BookPage({ params }: PageProps) {
   if (!book) notFound();
   const chapters = designChapters(book);
   const numbers = new Map(chapters.map((c, i) => [c.id, i + 1]));
+  const sourceLinks = book.sourceLinks ?? (book.sourceUrl ? [{ label: book.sourceLabel ?? "Source", url: book.sourceUrl }] : []);
 
   return (
     <article className="mx-auto w-full max-w-[46rem]">
@@ -42,6 +43,17 @@ export default async function BookPage({ params }: PageProps) {
               <Download size={15} /> Original document
             </a>
           )}
+          {sourceLinks.map((source) => (
+            <a
+              key={source.url}
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg px-3 py-2 text-sm text-fg-2 hover:bg-layer-2 hover:text-fg-1"
+            >
+              {source.label}
+            </a>
+          ))}
         </div>
       </header>
 

@@ -1,0 +1,31 @@
+{
+  "id": "ctci-check-permutation",
+  "style": "leetcode",
+  "function": {
+    "python": "checkPermutation",
+    "java": "checkPermutation"
+  },
+  "params": [
+    {
+      "name": "first",
+      "type": "string"
+    },
+    {
+      "name": "second",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["earth","heart"],"sample":true,"expected":true},
+    {"input":["apple","pearl"],"sample":true,"expected":false},
+    {"input":["",""],"expected":true},
+    {"input":["a","a"],"expected":true},
+    {"input":["a","A"],"expected":false},
+    {"input":["a","aa"],"expected":false},
+    {"input":["a a","aa "],"expected":true},
+    {"input":["listen","silent"],"expected":true},
+    {"input":["conversation","voices rant on"],"expected":false},
+    {"input":["🙂🙃","🙃🙂"],"expected":true}
+  ]
+}

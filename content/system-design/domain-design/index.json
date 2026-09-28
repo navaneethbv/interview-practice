@@ -1,0 +1,52 @@
+{
+ "id": "domain-design",
+ "title": "Domain and Software Design Notes",
+ "short": "Domain Design",
+ "description": "Original notes on managing software complexity with simpler designs, useful domain models, and explicit boundaries.",
+ "sourceLinks": [
+  {
+   "label": "Code Simplicity",
+   "url": "https://www.codesimplicity.com/"
+  },
+  {
+   "label": "Domain Language",
+   "url": "https://www.domainlanguage.com/"
+  }
+ ],
+ "source": "domain_design_notes.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "software-complexity-and-design-value",
+     "title": "Software complexity and design value"
+    },
+    {
+     "id": "discover-the-domain-language",
+     "title": "Discover the domain language"
+    },
+    {
+     "id": "entities-values-and-aggregates",
+     "title": "Entities, values, and aggregates"
+    },
+    {
+     "id": "services-modules-and-layers",
+     "title": "Services, modules, and layers"
+    },
+    {
+     "id": "bounded-contexts-and-integration",
+     "title": "Bounded contexts and integration"
+    },
+    {
+     "id": "events-and-long-running-workflows",
+     "title": "Events and long-running workflows"
+    },
+    {
+     "id": "strategic-design-and-the-core-domain",
+     "title": "Strategic design and the core domain"
+    }
+   ]
+  }
+ ]
+}

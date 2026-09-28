@@ -1,0 +1,30 @@
+{
+  "id": "ctci-urlify",
+  "style": "leetcode",
+  "function": {
+    "python": "urlify",
+    "java": "urlify"
+  },
+  "params": [
+    {
+      "name": "value",
+      "type": "string"
+    },
+    {
+      "name": "trueLength",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["Mr John Smith    ",13],"sample":true,"expected":"Mr%20John%20Smith"},
+    {"input":["a b  ",3],"sample":true,"expected":"a%20b"},
+    {"input":["",0],"expected":""},
+    {"input":["abc",3],"expected":"abc"},
+    {"input":["a  ",1],"expected":"a"},
+    {"input":["  a",3],"expected":"%20%20a"},
+    {"input":["a b c     ",5],"expected":"a%20b%20c"},
+    {"input":["padding ignored",7],"expected":"padding"},
+    {"input":["one  two",8],"expected":"one%20%20two"}
+  ]
+}
