@@ -1,9 +1,16 @@
 import heapq
+
+
 class Solution:
     def findMaximizedCapital(self, k, w, profits, capital):
-        projects=sorted(zip(capital,profits));heap=[];i=0
+        projects = sorted(zip(capital, profits))
+        available = []
+        project_index = 0
         for _ in range(k):
-            while i<len(projects) and projects[i][0]<=w:heapq.heappush(heap,-projects[i][1]);i+=1
-            if not heap:break
-            w-=heapq.heappop(heap)
+            while project_index < len(projects) and projects[project_index][0] <= w:
+                heapq.heappush(available, -projects[project_index][1])
+                project_index += 1
+            if not available:
+                break
+            w -= heapq.heappop(available)
         return w

@@ -1,3 +1,8 @@
 class Solution:
-    def minOperations(self,s):
-        mismatch=sum(int(c)!=i%2 for i,c in enumerate(s));return min(mismatch,len(s)-mismatch)
+    def minOperations(self, s):
+        mismatches = 0
+        for index, character in enumerate(s):
+            expected = index % 2
+            if int(character) != expected:
+                mismatches += 1
+        return min(mismatches, len(s) - mismatches)

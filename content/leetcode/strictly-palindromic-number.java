@@ -1,3 +1,5 @@
 class Solution {
-public boolean isStrictlyPalindromic(int n){return false;}
+    public boolean isStrictlyPalindromic(int n) {
+        return false;
+    }
 }

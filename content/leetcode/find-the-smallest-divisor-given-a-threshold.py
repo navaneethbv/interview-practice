@@ -1,8 +1,12 @@
 class Solution:
     def smallestDivisor(self, nums, threshold):
-        left,right=1,max(nums)
+        left = 1
+        right = max(nums)
         while left<right:
-            middle=(left+right)//2
-            if sum((n+middle-1)//middle for n in nums)<=threshold: right=middle
-            else: left=middle+1
+            middle = (left + right) // 2
+            rounded_sum = sum((value + middle - 1) // middle for value in nums)
+            if rounded_sum <= threshold:
+                right = middle
+            else:
+                left = middle + 1
         return left

@@ -1,7 +1,16 @@
 class Solution:
- def constructProductMatrix(self,grid):
-  m,n=len(grid),len(grid[0]);out=[[1]*n for _ in range(m)];p=1
-  for i in range(m*n):r,c=divmod(i,n);out[r][c]=p;p=p*grid[r][c]%12345
-  p=1
-  for i in range(m*n-1,-1,-1):r,c=divmod(i,n);out[r][c]=out[r][c]*p%12345;p=p*grid[r][c]%12345
-  return out
+    def constructProductMatrix(self, grid):
+        rows = len(grid)
+        columns = len(grid[0])
+        answer = [[1] * columns for _ in range(rows)]
+        product = 1
+        for index in range(rows * columns):
+            row, column = divmod(index, columns)
+            answer[row][column] = product
+            product = product * grid[row][column] % 12345
+        product = 1
+        for index in range(rows * columns - 1, -1, -1):
+            row, column = divmod(index, columns)
+            answer[row][column] = answer[row][column] * product % 12345
+            product = product * grid[row][column] % 12345
+        return answer

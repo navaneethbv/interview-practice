@@ -1,3 +1,40 @@
 class Solution {
-public int maximumDetonation(int[][] bombs){int n=bombs.length,ans=0;boolean[][] g=new boolean[n][n];for(int i=0;i<n;i++)for(int j=0;j<n;j++){long x=(long)bombs[i][0]-bombs[j][0],y=(long)bombs[i][1]-bombs[j][1],r=bombs[i][2];g[i][j]=x*x+y*y<=r*r;}for(int s=0;s<n;s++){boolean[] seen=new boolean[n];ArrayDeque<Integer> q=new ArrayDeque<>();q.add(s);seen[s]=true;int count=0;while(!q.isEmpty()){int u=q.remove();count++;for(int v=0;v<n;v++)if(g[u][v]&&!seen[v]){seen[v]=true;q.add(v);}}ans=Math.max(ans,count);}return ans;}
+    public int maximumDetonation(int[][] bombs) {
+        boolean[][] graph = buildGraph(bombs);
+        int answer = 0;
+        for (int start = 0; start < bombs.length; start++) {
+            answer = Math.max(answer, reachable(graph, start));
+        }
+        return answer;
+    }
+    private boolean[][] buildGraph(int[][] bombs) {
+        boolean[][] graph = new boolean[bombs.length][bombs.length];
+        for (int first = 0; first < bombs.length; first++) {
+            for (int second = 0; second < bombs.length; second++) {
+                long dx = (long) bombs[first][0] - bombs[second][0];
+                long dy = (long) bombs[first][1] - bombs[second][1];
+                long radius = bombs[first][2];
+                graph[first][second] = dx * dx + dy * dy <= radius * radius;
+            }
+        }
+        return graph;
+    }
+    private int reachable(boolean[][] graph, int start) {
+        boolean[] seen = new boolean[graph.length];
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        queue.add(start);
+        seen[start] = true;
+        int count = 0;
+        while (!queue.isEmpty()) {
+            int node = queue.remove();
+            count++;
+            for (int neighbor = 0; neighbor < graph.length; neighbor++) {
+                if (graph[node][neighbor] && !seen[neighbor]) {
+                    seen[neighbor] = true;
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return count;
+    }
 }

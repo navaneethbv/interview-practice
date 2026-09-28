@@ -1,3 +1,42 @@
 class Solution {
-public List<Integer> survivedRobotsHealths(int[] positions,int[] healths,String directions){Integer[] ids=new Integer[positions.length];for(int i=0;i<ids.length;i++)ids[i]=i;Arrays.sort(ids,Comparator.comparingInt(i->positions[i]));ArrayDeque<Integer> st=new ArrayDeque<>();for(int i:ids){if(directions.charAt(i)=='R'){st.push(i);continue;}while(!st.isEmpty()&&healths[i]>0){int j=st.peek();if(healths[j]<healths[i]){healths[j]=0;healths[i]--;st.pop();}else if(healths[j]>healths[i]){healths[j]--;healths[i]=0;}else{healths[j]=healths[i]=0;st.pop();}}}List<Integer> a=new ArrayList<>();for(int h:healths)if(h>0)a.add(h);return a;}
+    public List<Integer> survivedRobotsHealths(int[] positions, int[] healths, String directions) {
+        Integer[] order = new Integer[positions.length];
+        for (int index = 0; index < positions.length; index++) {
+            order[index] = index;
+        }
+        Arrays.sort(order, (first, second) -> Integer.compare(positions[first], positions[second]));
+        Deque<Integer> rightMoving = new ArrayDeque<>();
+        for (int index : order) {
+            if (directions.charAt(index) == 'R') {
+                rightMoving.push(index);
+                continue;
+            }
+            resolveCollision(index, healths, rightMoving);
+        }
+        List<Integer> survivors = new ArrayList<>();
+        for (int health : healths) {
+            if (health > 0) {
+                survivors.add(health);
+            }
+        }
+        return survivors;
+    }
+
+    private void resolveCollision(int leftMoving, int[] healths, Deque<Integer> rightMoving) {
+        while (!rightMoving.isEmpty() && healths[leftMoving] > 0) {
+            int other = rightMoving.peek();
+            if (healths[other] < healths[leftMoving]) {
+                healths[leftMoving]--;
+                healths[other] = 0;
+                rightMoving.pop();
+            } else if (healths[other] > healths[leftMoving]) {
+                healths[other]--;
+                healths[leftMoving] = 0;
+            } else {
+                healths[other] = 0;
+                healths[leftMoving] = 0;
+                rightMoving.pop();
+            }
+        }
+    }
 }

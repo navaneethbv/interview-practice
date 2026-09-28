@@ -1,1 +1,26 @@
-class FirstUnique {Map<Integer,Integer> count=new HashMap<>();ArrayDeque<Integer> q=new ArrayDeque<>();public FirstUnique(int[] nums){for(int x:nums)add(x);}public int showFirstUnique(){while(!q.isEmpty()&&count.get(q.peek())!=1)q.remove();return q.isEmpty()?-1:q.peek();}public void add(int value){count.merge(value,1,Integer::sum);q.add(value);}}
+class FirstUnique {
+    private final Map<Integer, Integer> counts = new HashMap<>();
+    private final ArrayDeque<Integer> queue = new ArrayDeque<>();
+
+    public FirstUnique(int[] nums) {
+        for (int value : nums) {
+            add(value);
+        }
+    }
+
+    public int showFirstUnique() {
+        discardRepeatedPrefix();
+        return queue.isEmpty() ? -1 : queue.peek();
+    }
+
+    public void add(int value) {
+        counts.merge(value, 1, Integer::sum);
+        queue.add(value);
+    }
+
+    private void discardRepeatedPrefix() {
+        while (!queue.isEmpty() && counts.get(queue.peek()) != 1) {
+            queue.remove();
+        }
+    }
+}

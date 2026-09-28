@@ -1,7 +1,11 @@
 class Solution:
- def findMaxVal(self,n,restrictions,diff):
-  a=[10**18]*n;a[0]=0
-  for i,v in restrictions:a[i]=v
-  for i in range(1,n):a[i]=min(a[i],a[i-1]+diff[i-1])
-  for i in range(n-2,-1,-1):a[i]=min(a[i],a[i+1]+diff[i])
-  return max(a)
+    def findMaxVal(self, n, restrictions, diff):
+        values = [10 ** 18] * n
+        values[0] = 0
+        for index, value in restrictions:
+            values[index] = value
+        for index in range(1, n):
+            values[index] = min(values[index], values[index - 1] + diff[index - 1])
+        for index in range(n - 2, -1, -1):
+            values[index] = min(values[index], values[index + 1] + diff[index])
+        return max(values)

@@ -1,7 +1,10 @@
 class Solution:
-    def validMountainArray(self,arr):
-        i=0
-        while i+1<len(arr) and arr[i]<arr[i+1]:i+=1
-        if i==0 or i==len(arr)-1:return False
-        while i+1<len(arr) and arr[i]>arr[i+1]:i+=1
-        return i==len(arr)-1
+    def validMountainArray(self, arr):
+        index = 0
+        while index + 1 < len(arr) and arr[index] < arr[index + 1]:
+            index += 1
+        if index == 0 or index == len(arr) - 1:
+            return False
+        while index + 1 < len(arr) and arr[index] > arr[index + 1]:
+            index += 1
+        return index == len(arr) - 1

@@ -1,3 +1,9 @@
 class Solution {
-public List<Integer> grayCode(int n){List<Integer> a=new ArrayList<>();for(int i=0;i<(1<<n);i++)a.add(i^(i>>1));return a;}
+    public List<Integer> grayCode(int n) {
+        List<Integer> values = new ArrayList<>();
+        for (int number = 0; number < (1 << n); number++) {
+            values.add(number ^ (number >> 1));
+        }
+        return values;
+    }
 }

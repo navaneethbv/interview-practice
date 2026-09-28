@@ -1,9 +1,16 @@
+def propagate_reachability(reach, source, middle):
+    for destination in range(len(reach)):
+        reach[source][destination] |= reach[middle][destination]
+
+
 class Solution:
     def checkIfPrerequisite(self, numCourses, prerequisites, queries):
-        reach=[[False]*numCourses for _ in range(numCourses)]
-        for a,b in prerequisites: reach[a][b]=True
+        reach = [[False] * numCourses for _ in range(numCourses)]
+        for prerequisite, course in prerequisites:
+            reach[prerequisite][course] = True
         for middle in range(numCourses):
-            for a in range(numCourses):
-                if reach[a][middle]:
-                    for b in range(numCourses): reach[a][b] |= reach[middle][b]
-        return [reach[a][b] for a,b in queries]
+            for source in range(numCourses):
+                if not reach[source][middle]:
+                    continue
+                propagate_reachability(reach, source, middle)
+        return [reach[source][destination] for source, destination in queries]

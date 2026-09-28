@@ -1,4 +1,10 @@
 class Solution:
     def diagonalSum(self, mat):
-        n=len(mat);total=sum(mat[i][i]+mat[i][n-i-1] for i in range(n))
-        return total-(mat[n//2][n//2] if n%2 else 0)
+        size = len(mat)
+        total = 0
+        for index in range(size):
+            total += mat[index][index]
+            opposite = size - index - 1
+            if opposite != index:
+                total += mat[index][opposite]
+        return total

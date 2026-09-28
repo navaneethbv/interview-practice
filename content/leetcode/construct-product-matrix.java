@@ -1,3 +1,22 @@
 class Solution {
-public int[][] constructProductMatrix(int[][] grid){int m=grid.length,n=grid[0].length;int[][] a=new int[m][n];long p=1;for(int i=0;i<m*n;i++){int r=i/n,c=i%n;a[r][c]=(int)p;p=p*grid[r][c]%12345;}p=1;for(int i=m*n-1;i>=0;i--){int r=i/n,c=i%n;a[r][c]=(int)(a[r][c]*p%12345);p=p*grid[r][c]%12345;}return a;}
+    public int[][] constructProductMatrix(int[][] grid) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        int[][] answer = new int[rows][columns];
+        long product = 1;
+        for (int index = 0; index < rows * columns; index++) {
+            int row = index / columns;
+            int column = index % columns;
+            answer[row][column] = (int) product;
+            product = product * grid[row][column] % 12345;
+        }
+        product = 1;
+        for (int index = rows * columns - 1; index >= 0; index--) {
+            int row = index / columns;
+            int column = index % columns;
+            answer[row][column] = (int) (answer[row][column] * product % 12345);
+            product = product * grid[row][column] % 12345;
+        }
+        return answer;
+    }
 }

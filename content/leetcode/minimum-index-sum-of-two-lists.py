@@ -1,9 +1,15 @@
 class Solution:
     def findRestaurant(self, list1, list2):
-        indices={word:i for i,word in enumerate(list1)};best=float('inf');out=[]
-        for j,word in enumerate(list2):
-            if word not in indices:continue
-            total=indices[word]+j
-            if total<best:best=total;out=[word]
-            elif total==best:out.append(word)
-        return out
+        indices = {word: index for index, word in enumerate(list1)}
+        best_sum = float("inf")
+        result = []
+        for index, word in enumerate(list2):
+            if word not in indices:
+                continue
+            index_sum = indices[word] + index
+            if index_sum < best_sum:
+                best_sum = index_sum
+                result = [word]
+            elif index_sum == best_sum:
+                result.append(word)
+        return result

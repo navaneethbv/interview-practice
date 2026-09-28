@@ -1,3 +1,15 @@
 class Solution {
-    public int[][] reconstructQueue(int[][] people){Arrays.sort(people,(a,b)->a[0]==b[0]?Integer.compare(a[1],b[1]):Integer.compare(b[0],a[0]));List<int[]> result=new ArrayList<>();for(int[] p:people)result.add(p[1],p);return result.toArray(new int[0][]);}
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, (first, second) -> {
+            if (first[0] != second[0]) {
+                return Integer.compare(second[0], first[0]);
+            }
+            return Integer.compare(first[1], second[1]);
+        });
+        List<int[]> result = new ArrayList<>();
+        for (int[] person : people) {
+            result.add(person[1], person);
+        }
+        return result.toArray(new int[0][]);
+    }
 }

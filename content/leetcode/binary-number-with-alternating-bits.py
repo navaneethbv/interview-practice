@@ -1,4 +1,4 @@
 class Solution:
     def hasAlternatingBits(self, n):
-        value=n^(n>>1)
-        return value&(value+1)==0
+        changed_bits = n ^ (n >> 1)
+        return changed_bits & (changed_bits + 1) == 0

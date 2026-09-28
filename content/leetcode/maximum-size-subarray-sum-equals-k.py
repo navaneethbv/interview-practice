@@ -1,8 +1,11 @@
 class Solution:
     def maxSubArrayLen(self, nums, k):
-        first={0:-1}; total=best=0
-        for i,value in enumerate(nums):
-            total+=value
-            if total-k in first: best=max(best,i-first[total-k])
-            first.setdefault(total,i)
+        first_prefix = {0: -1}
+        prefix = 0
+        best = 0
+        for index, value in enumerate(nums):
+            prefix += value
+            if prefix - k in first_prefix:
+                best = max(best, index - first_prefix[prefix - k])
+            first_prefix.setdefault(prefix, index)
         return best

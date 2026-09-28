@@ -1,4 +1,11 @@
 class Solution:
     def countWays(self, nums):
-        nums.sort();n=len(nums)
-        return sum((k==0 or nums[k-1]<k) and (k==n or nums[k]>k) for k in range(n+1))
+        nums.sort()
+        student_count = len(nums)
+        ways = 0
+        for selected in range(student_count + 1):
+            enough_before = selected == 0 or nums[selected - 1] < selected
+            enough_after = selected == student_count or nums[selected] > selected
+            if enough_before and enough_after:
+                ways += 1
+        return ways

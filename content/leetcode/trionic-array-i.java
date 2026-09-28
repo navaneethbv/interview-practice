@@ -1,3 +1,27 @@
 class Solution {
-public boolean isTrionic(int[] nums){int n=nums.length,i=0;while(i+1<n&&nums[i]<nums[i+1])i++;if(i==0)return false;int p=i;while(i+1<n&&nums[i]>nums[i+1])i++;if(i==p||i==n-1)return false;while(i+1<n&&nums[i]<nums[i+1])i++;return i==n-1;}
+    public boolean isTrionic(int[] nums) {
+        int peak = walkUp(nums, 0);
+        if (peak == 0) {
+            return false;
+        }
+        int valley = walkDown(nums, peak);
+        if (valley == peak || valley == nums.length - 1) {
+            return false;
+        }
+        return walkUp(nums, valley) == nums.length - 1;
+    }
+
+    private int walkUp(int[] nums, int index) {
+        while (index + 1 < nums.length && nums[index] < nums[index + 1]) {
+            index++;
+        }
+        return index;
+    }
+
+    private int walkDown(int[] nums, int index) {
+        while (index + 1 < nums.length && nums[index] > nums[index + 1]) {
+            index++;
+        }
+        return index;
+    }
 }

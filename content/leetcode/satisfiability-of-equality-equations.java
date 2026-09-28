@@ -1,3 +1,33 @@
 class Solution {
-public boolean equationsPossible(String[] equations){int[]p=new int[26];for(int i=0;i<26;i++)p[i]=i;for(String e:equations)if(e.charAt(1)=='=')p[find(p,e.charAt(0)-'a')]=find(p,e.charAt(3)-'a');for(String e:equations)if(e.charAt(1)=='!'&&find(p,e.charAt(0)-'a')==find(p,e.charAt(3)-'a'))return false;return true;}private int find(int[]p,int x){while(p[x]!=x){p[x]=p[p[x]];x=p[x];}return x;}
+    public boolean equationsPossible(String[] equations) {
+        int[] parent = new int[26];
+        for (int node = 0; node < 26; node++) {
+            parent[node] = node;
+        }
+        for (String equation : equations) {
+            if (equation.charAt(1) == '=') {
+                int left = equation.charAt(0) - 'a';
+                int right = equation.charAt(3) - 'a';
+                parent[find(parent, left)] = find(parent, right);
+            }
+        }
+        for (String equation : equations) {
+            if (equation.charAt(1) == '!') {
+                int left = equation.charAt(0) - 'a';
+                int right = equation.charAt(3) - 'a';
+                if (find(parent, left) == find(parent, right)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private int find(int[] parent, int node) {
+        while (parent[node] != node) {
+            parent[node] = parent[parent[node]];
+            node = parent[node];
+        }
+        return node;
+    }
 }

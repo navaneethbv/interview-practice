@@ -1,3 +1,32 @@
 class Solution {
-public long minimumCost(String source,String target,char[] original,char[] changed,int[] cost){long inf=Long.MAX_VALUE/4;long[][] d=new long[26][26];for(int i=0;i<26;i++){Arrays.fill(d[i],inf);d[i][i]=0;}for(int i=0;i<cost.length;i++){int a=original[i]-97,b=changed[i]-97;d[a][b]=Math.min(d[a][b],cost[i]);}for(int k=0;k<26;k++)for(int i=0;i<26;i++)for(int j=0;j<26;j++)d[i][j]=Math.min(d[i][j],d[i][k]+d[k][j]);long answer=0;for(int i=0;i<source.length();i++){long c=d[source.charAt(i)-97][target.charAt(i)-97];if(c==inf)return -1;answer+=c;}return answer;}
+    public long minimumCost(String source, String target, char[] original, char[] changed, int[] cost) {
+        long infinity = Long.MAX_VALUE / 4;
+        long[][] distance = new long[26][26];
+        for (int start = 0; start < 26; start++) {
+            Arrays.fill(distance[start], infinity);
+            distance[start][start] = 0;
+        }
+        for (int index = 0; index < cost.length; index++) {
+            int start = original[index] - 'a';
+            int end = changed[index] - 'a';
+            distance[start][end] = Math.min(distance[start][end], cost[index]);
+        }
+        for (int middle = 0; middle < 26; middle++) {
+            for (int start = 0; start < 26; start++) {
+                for (int end = 0; end < 26; end++) {
+                    distance[start][end] = Math.min(
+                            distance[start][end], distance[start][middle] + distance[middle][end]);
+                }
+            }
+        }
+        long answer = 0;
+        for (int index = 0; index < source.length(); index++) {
+            long price = distance[source.charAt(index) - 'a'][target.charAt(index) - 'a'];
+            if (price == infinity) {
+                return -1;
+            }
+            answer += price;
+        }
+        return answer;
+    }
 }

@@ -1,3 +1,22 @@
 class Solution {
-public ListNode partition(ListNode head,int x){ListNode small=new ListNode(0),large=new ListNode(0),a=small,b=large;while(head!=null){if(head.val<x){a.next=head;a=head;}else{b.next=head;b=head;}head=head.next;}b.next=null;a.next=large.next;return small.next;}
+    public ListNode partition(ListNode head, int x) {
+        ListNode smaller = new ListNode(0);
+        ListNode larger = new ListNode(0);
+        ListNode smallerTail = smaller;
+        ListNode largerTail = larger;
+        while (head != null) {
+            ListNode nextNode = head.next;
+            if (head.val < x) {
+                smallerTail.next = head;
+                smallerTail = head;
+            } else {
+                largerTail.next = head;
+                largerTail = head;
+            }
+            head = nextNode;
+        }
+        largerTail.next = null;
+        smallerTail.next = larger.next;
+        return smaller.next;
+    }
 }

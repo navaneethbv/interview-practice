@@ -1,3 +1,42 @@
 class Solution {
-public int largestMagicSquare(int[][] grid){int m=grid.length,n=grid[0].length;int[][]rows=new int[m][n+1],cols=new int[m+1][n];for(int r=0;r<m;r++)for(int c=0;c<n;c++){rows[r][c+1]=rows[r][c]+grid[r][c];cols[r+1][c]=cols[r][c]+grid[r][c];}for(int size=Math.min(m,n);size>1;size--)for(int r=0;r+size<=m;r++)for(int c=0;c+size<=n;c++){int target=rows[r][c+size]-rows[r][c],a=0,b=0;boolean ok=true;for(int i=0;i<size;i++){if(rows[r+i][c+size]-rows[r+i][c]!=target||cols[r+size][c+i]-cols[r][c+i]!=target){ok=false;break;}a+=grid[r+i][c+i];b+=grid[r+i][c+size-1-i];}if(ok&&a==target&&b==target)return size;}return 1;}
+    public int largestMagicSquare(int[][] grid) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        int[][] rowPrefix = new int[rows][columns + 1];
+        int[][] columnPrefix = new int[rows + 1][columns];
+        for (int row = 0; row < rows; row++) {
+            for (int column = 0; column < columns; column++) {
+                rowPrefix[row][column + 1] = rowPrefix[row][column] + grid[row][column];
+                columnPrefix[row + 1][column] = columnPrefix[row][column] + grid[row][column];
+            }
+        }
+        for (int size = Math.min(rows, columns); size > 1; size--) {
+            for (int row = 0; row + size <= rows; row++) {
+                for (int column = 0; column + size <= columns; column++) {
+                    if (isMagic(grid, rowPrefix, columnPrefix, row, column, size)) {
+                        return size;
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+
+    private boolean isMagic(int[][] grid, int[][] rowPrefix, int[][] columnPrefix,
+            int row, int column, int size) {
+        int target = rowPrefix[row][column + size] - rowPrefix[row][column];
+        for (int offset = 0; offset < size; offset++) {
+            if (rowPrefix[row + offset][column + size] - rowPrefix[row + offset][column] != target
+                    || columnPrefix[row + size][column + offset] - columnPrefix[row][column + offset] != target) {
+                return false;
+            }
+        }
+        int firstDiagonal = 0;
+        int secondDiagonal = 0;
+        for (int offset = 0; offset < size; offset++) {
+            firstDiagonal += grid[row + offset][column + offset];
+            secondDiagonal += grid[row + offset][column + size - 1 - offset];
+        }
+        return firstDiagonal == target && secondDiagonal == target;
+    }
 }

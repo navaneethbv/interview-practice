@@ -1,3 +1,26 @@
 class Solution {
-public int minDeletionSize(String[] strs) {int columns=strs[0].length();int[] best=new int[columns];Arrays.fill(best,1);int longest=1;for(int r=0;r<columns;r++) {for(int l=0;l<r;l++) {boolean valid=true;for(String row:strs) if(row.charAt(l)>row.charAt(r)) {valid=false;break;}if(valid) best[r]=Math.max(best[r],best[l]+1);}longest=Math.max(longest,best[r]);}return columns-longest;}
+    public int minDeletionSize(String[] strs) {
+        int columns = strs[0].length();
+        int[] longestEndingHere = new int[columns];
+        Arrays.fill(longestEndingHere, 1);
+        int longest = 1;
+        for (int right = 0; right < columns; right++) {
+            for (int left = 0; left < right; left++) {
+                boolean valid = true;
+                for (String row : strs) {
+                    if (row.charAt(left) > row.charAt(right)) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) {
+                    longestEndingHere[right] = Math.max(
+                        longestEndingHere[right], longestEndingHere[left] + 1
+                    );
+                }
+            }
+            longest = Math.max(longest, longestEndingHere[right]);
+        }
+        return columns - longest;
+    }
 }

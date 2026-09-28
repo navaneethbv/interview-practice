@@ -1,3 +1,82 @@
 class Solution {
-int lower(int[] a,long x){int l=0,r=a.length;while(l<r){int m=(l+r)/2;if(a[m]<x)l=m+1;else r=m;}return l;}int count(int[] a,long l,long r){return l>r?0:lower(a,r+1)-lower(a,l);}public int maxWalls(int[] robots,int[] distance,int[] walls){int n=robots.length;int[][] p=new int[n][2];Set<Integer> occupied=new HashSet<>();for(int i=0;i<n;i++){p[i]=new int[]{robots[i],distance[i]};occupied.add(robots[i]);}Arrays.sort(p,Comparator.comparingInt(a->a[0]));int fixed=0;List<Integer> remain=new ArrayList<>();for(int w:walls)if(occupied.contains(w))fixed++;else remain.add(w);int[] a=remain.stream().mapToInt(Integer::intValue).sorted().toArray();int leftScore=count(a,(long)p[0][0]-p[0][1],p[0][0]-1),rightScore=0;for(int i=1;i<n;i++){long prev=p[i-1][0],x=p[i][0],right=Math.min(x-1,prev+p[i-1][1]),left=Math.max(prev+1,x-p[i][1]);int c=count(a,prev+1,right),b=count(a,left,x-1),over=count(a,left,right);int l=Math.max(leftScore+b,rightScore+c+b-over),r=Math.max(leftScore,rightScore+c);leftScore=l;rightScore=r;}long x=p[n-1][0];return fixed+Math.max(leftScore,rightScore+count(a,x+1,x+p[n-1][1]));}
+    public int maxWalls(int[] robots, int[] distance, int[] walls) {
+        int[][] paired = pairRobots(robots, distance);
+        Arrays.sort(paired, Comparator.comparingInt(pair -> pair[0]));
+        Set<Integer> robotPositions = new HashSet<>();
+        for (int robot : robots) {
+            robotPositions.add(robot);
+        }
+        int fixed = 0;
+        int[] remainingWalls = collectWalls(walls, robotPositions);
+        for (int wall : walls) {
+            if (robotPositions.contains(wall)) {
+                fixed++;
+            }
+        }
+        int leftScore = count(remainingWalls, paired[0][0] - (long) paired[0][1],
+                paired[0][0] - 1);
+        int rightScore = 0;
+        for (int index = 1; index < paired.length; index++) {
+            int[] scores = nextScores(paired[index - 1], paired[index],
+                    remainingWalls, leftScore, rightScore);
+            leftScore = scores[0];
+            rightScore = scores[1];
+        }
+        int last = paired.length - 1;
+        int rightEnd = paired[last][0] + paired[last][1];
+        return fixed + Math.max(leftScore,
+                rightScore + count(remainingWalls, paired[last][0] + 1, rightEnd));
+    }
+
+    private int[][] pairRobots(int[] robots, int[] distance) {
+        int[][] paired = new int[robots.length][2];
+        for (int index = 0; index < robots.length; index++) {
+            paired[index][0] = robots[index];
+            paired[index][1] = distance[index];
+        }
+        return paired;
+    }
+
+    private int[] collectWalls(int[] walls, Set<Integer> robots) {
+        return Arrays.stream(walls)
+                .filter(wall -> !robots.contains(wall))
+                .sorted()
+                .toArray();
+    }
+
+    private int[] nextScores(int[] previous, int[] current, int[] walls,
+            int leftScore, int rightScore) {
+        long previousPosition = previous[0];
+        long position = current[0];
+        long rightLimit = Math.min(position - 1, previousPosition + previous[1]);
+        long leftLimit = Math.max(previousPosition + 1, position - current[1]);
+        int rightPrevious = count(walls, previousPosition + 1, rightLimit);
+        int leftCurrent = count(walls, leftLimit, position - 1);
+        int overlap = count(walls, leftLimit, rightLimit);
+        int nextLeft = Math.max(leftScore + leftCurrent,
+                rightScore + rightPrevious + leftCurrent - overlap);
+        int nextRight = Math.max(leftScore, rightScore + rightPrevious);
+        return new int[] {nextLeft, nextRight};
+    }
+
+    private int count(int[] walls, long lower, long upper) {
+        if (lower > upper) {
+            return 0;
+        }
+        return lowerBound(walls, upper + 1) - lowerBound(walls, lower);
+    }
+
+    private int lowerBound(int[] values, long target) {
+        int left = 0;
+        int right = values.length;
+        while (left < right) {
+            int middle = (left + right) / 2;
+            if (values[middle] < target) {
+                left = middle + 1;
+            } else {
+                right = middle;
+            }
+        }
+        return left;
+    }
 }

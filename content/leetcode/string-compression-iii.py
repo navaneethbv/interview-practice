@@ -1,8 +1,13 @@
 class Solution:
-    def compressedString(self,word):
-        out=[];i=0
-        while i<len(word):
-            j=i+1
-            while j<len(word) and word[j]==word[i] and j-i<9:j+=1
-            out.append(str(j-i)+word[i]);i=j
-        return ''.join(out)
+    def compressedString(self, word):
+        compressed = []
+        start = 0
+        while start < len(word):
+            end = start
+            while (end < len(word)
+                   and word[end] == word[start]
+                   and end - start < 9):
+                end += 1
+            compressed.append(str(end - start) + word[start])
+            start = end
+        return "".join(compressed)

@@ -1,3 +1,96 @@
 class Solution {
-int[] parent;int find(int x){while(parent[x]!=x){parent[x]=parent[parent[x]];x=parent[x];}return x;}boolean join(int a,int b){a=find(a);b=find(b);if(a==b)return false;parent[a]=b;return true;}boolean possible(int n,int[][] edges,int k,int bound){parent=new int[n];for(int i=0;i<n;i++)parent[i]=i;int components=n,used=0;for(int[] e:edges)if(e[3]==1){if(e[2]<bound||!join(e[0],e[1]))return false;components--;}for(int[] e:edges)if(e[3]==0&&e[2]>=bound&&join(e[0],e[1]))components--;for(int[] e:edges)if(e[3]==0&&e[2]<bound&&2*e[2]>=bound&&join(e[0],e[1])){components--;used++;}return components==1&&used<=k;}public int maxStability(int n,int[][] edges,int k){if(!possible(n,edges,k,0))return -1;int l=0,r=200000;while(l<r){int m=(l+r+1)/2;if(possible(n,edges,k,m))l=m;else r=m-1;}return l;}
+    private int[] parent;
+    private int[] componentSize;
+
+    private int find(int node) {
+        while (parent[node] != node) {
+            parent[node] = parent[parent[node]];
+            node = parent[node];
+        }
+        return node;
+    }
+
+    private boolean join(int first, int second) {
+        int firstRoot = find(first);
+        int secondRoot = find(second);
+        if (firstRoot == secondRoot) {
+            return false;
+        }
+        if (componentSize[firstRoot] > componentSize[secondRoot]) {
+            int temporary = firstRoot;
+            firstRoot = secondRoot;
+            secondRoot = temporary;
+        }
+        parent[firstRoot] = secondRoot;
+        componentSize[secondRoot] += componentSize[firstRoot];
+        return true;
+    }
+
+    private int joinMandatory(int[][] edges, int bound) {
+        int joined = 0;
+        for (int[] edge : edges) {
+            if (edge[3] == 1) {
+                if (edge[2] < bound || !join(edge[0], edge[1])) {
+                    return -1;
+                }
+                joined++;
+            }
+        }
+        return joined;
+    }
+
+    private int joinStrong(int[][] edges, int bound) {
+        int joined = 0;
+        for (int[] edge : edges) {
+            if (edge[3] == 0 && edge[2] >= bound && join(edge[0], edge[1])) {
+                joined++;
+            }
+        }
+        return joined;
+    }
+
+    private int joinUpgradable(int[][] edges, int bound) {
+        int upgrades = 0;
+        for (int[] edge : edges) {
+            if (edge[3] == 0 && edge[2] < bound && 2 * edge[2] >= bound
+                    && join(edge[0], edge[1])) {
+                upgrades++;
+            }
+        }
+        return upgrades;
+    }
+
+    private boolean possible(int n, int[][] edges, int k, int bound) {
+        parent = new int[n];
+        componentSize = new int[n];
+        for (int node = 0; node < n; node++) {
+            parent[node] = node;
+            componentSize[node] = 1;
+        }
+        int mandatory = joinMandatory(edges, bound);
+        if (mandatory < 0) {
+            return false;
+        }
+        int strong = joinStrong(edges, bound);
+        int upgrades = joinUpgradable(edges, bound);
+        int components = n - mandatory - strong - upgrades;
+        return components == 1 && upgrades <= k;
+    }
+
+    public int maxStability(int n, int[][] edges, int k) {
+        if (!possible(n, edges, k, 0)) {
+            return -1;
+        }
+        int low = 0;
+        int high = 200000;
+        while (low < high) {
+            int middle = (low + high + 1) / 2;
+            if (possible(n, edges, k, middle)) {
+                low = middle;
+            } else {
+                high = middle - 1;
+            }
+        }
+        return low;
+    }
 }

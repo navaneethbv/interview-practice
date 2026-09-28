@@ -1,4 +1,28 @@
 class Solution {
-public int numberOfStableArrays(int zero,int one,int limit){long mod=1000000007;long[][] a=new long[zero+1][one+1],b=new long[zero+1][one+1];for(int i=1;i<=Math.min(zero,limit);i++)a[i][0]=1;for(int j=1;j<=Math.min(one,limit);j++)b[0][j]=1;for(int i=1;i<=zero;i++)for(int j=1;j<=one;j++){a[i][j]=(a[i-1][j]+b[i-1][j]-(i>limit?b[i-limit-1][j]:0)+mod)%mod;b[i][j]=(a[i][j-1]+b[i][j-1]-(j>limit?a[i][j-limit-1]:0)+mod)%mod;}return (int)((a[zero][one]+b[zero][one])%mod);
-}
+    public int numberOfStableArrays(int zero, int one, int limit) {
+        long modulus = 1_000_000_007L;
+        long[][] endingZero = new long[zero + 1][one + 1];
+        long[][] endingOne = new long[zero + 1][one + 1];
+        for (int count = 1; count <= Math.min(zero, limit); count++) {
+            endingZero[count][0] = 1;
+        }
+        for (int count = 1; count <= Math.min(one, limit); count++) {
+            endingOne[0][count] = 1;
+        }
+        for (int zeros = 1; zeros <= zero; zeros++) {
+            for (int ones = 1; ones <= one; ones++) {
+                long zeroWays = endingZero[zeros - 1][ones] + endingOne[zeros - 1][ones];
+                if (zeros > limit) {
+                    zeroWays -= endingOne[zeros - limit - 1][ones];
+                }
+                endingZero[zeros][ones] = (zeroWays + modulus) % modulus;
+                long oneWays = endingZero[zeros][ones - 1] + endingOne[zeros][ones - 1];
+                if (ones > limit) {
+                    oneWays -= endingZero[zeros][ones - limit - 1];
+                }
+                endingOne[zeros][ones] = (oneWays + modulus) % modulus;
+            }
+        }
+        return (int) ((endingZero[zero][one] + endingOne[zero][one]) % modulus);
+    }
 }

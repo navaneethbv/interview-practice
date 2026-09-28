@@ -1,7 +1,25 @@
 class Fancy:
- MOD=1000000007
- def __init__(self):self.a=[];self.mul=1;self.add=0
- def append(self,val):self.a.append((val-self.add)*pow(self.mul,self.MOD-2,self.MOD)%self.MOD)
- def addAll(self,inc):self.add=(self.add+inc)%self.MOD
- def multAll(self,m):self.mul=self.mul*m%self.MOD;self.add=self.add*m%self.MOD
- def getIndex(self,idx):return (self.a[idx]*self.mul+self.add)%self.MOD if idx<len(self.a) else -1
+    MOD = 1_000_000_007
+
+    def __init__(self):
+        self.values = []
+        self.multiplier = 1
+        self.increment = 0
+
+    def append(self, value):
+        normalized = (value - self.increment) * pow(
+            self.multiplier, self.MOD - 2, self.MOD
+        ) % self.MOD
+        self.values.append(normalized)
+
+    def addAll(self, increment):
+        self.increment = (self.increment + increment) % self.MOD
+
+    def multAll(self, multiplier):
+        self.multiplier = self.multiplier * multiplier % self.MOD
+        self.increment = self.increment * multiplier % self.MOD
+
+    def getIndex(self, index):
+        if index >= len(self.values):
+            return -1
+        return (self.values[index] * self.multiplier + self.increment) % self.MOD

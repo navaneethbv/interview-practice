@@ -1,3 +1,23 @@
 class Solution {
-public long maxRunTime(int n,int[] batteries) {long l=0,r=0;for(int b:batteries) r+=b;r/=n;while(l<r) {long m=(l+r+1)/2,available=0;for(int b:batteries) available+=Math.min(b,m);if(available>=n*m) l=m;else r=m-1;}return l;}
+    public long maxRunTime(int n, int[] batteries) {
+        long left = 0;
+        long right = 0;
+        for (int battery : batteries) {
+            right += battery;
+        }
+        right /= n;
+        while (left < right) {
+            long middle = (left + right + 1) / 2;
+            long available = 0;
+            for (int battery : batteries) {
+                available += Math.min((long) battery, middle);
+            }
+            if (available >= n * middle) {
+                left = middle;
+            } else {
+                right = middle - 1;
+            }
+        }
+        return left;
+    }
 }

@@ -1,3 +1,24 @@
 class Solution {
-public String removeDuplicates(String s,int k) {char[] chars=new char[s.length()];int[] counts=new int[s.length()];int size=0;for(char c:s.toCharArray()) {if(size>0&&chars[size-1]==c) counts[size-1]++;else {chars[size]=c;counts[size++]=1;}if(counts[size-1]==k) size--;}StringBuilder out=new StringBuilder();for(int i=0;i<size;i++) out.append(String.valueOf(chars[i]).repeat(counts[i]));return out.toString();}
+    public String removeDuplicates(String s, int k) {
+        char[] characters = new char[s.length()];
+        int[] runLengths = new int[s.length()];
+        int stackSize = 0;
+        for (char character : s.toCharArray()) {
+            if (stackSize > 0 && characters[stackSize - 1] == character) {
+                runLengths[stackSize - 1]++;
+            } else {
+                characters[stackSize] = character;
+                runLengths[stackSize] = 1;
+                stackSize++;
+            }
+            if (runLengths[stackSize - 1] == k) {
+                stackSize--;
+            }
+        }
+        StringBuilder result = new StringBuilder();
+        for (int index = 0; index < stackSize; index++) {
+            result.append(String.valueOf(characters[index]).repeat(runLengths[index]));
+        }
+        return result.toString();
+    }
 }

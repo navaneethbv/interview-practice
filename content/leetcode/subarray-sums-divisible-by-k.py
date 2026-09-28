@@ -1,6 +1,11 @@
 class Solution:
     def subarraysDivByK(self, nums, k):
-        counts=[0]*k; counts[0]=1; remainder=total=0
+        counts = [0] * k
+        counts[0] = 1
+        remainder = 0
+        total = 0
         for value in nums:
-            remainder=(remainder+value)%k; total+=counts[remainder]; counts[remainder]+=1
+            remainder = (remainder + value) % k
+            total += counts[remainder]
+            counts[remainder] += 1
         return total

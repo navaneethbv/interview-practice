@@ -1,3 +1,41 @@
 class Solution {
-public long minNumberOfSeconds(int mountainHeight,int[] workerTimes){int fastest=Arrays.stream(workerTimes).min().getAsInt();long lo=0,hi=(long)fastest*mountainHeight*(mountainHeight+1)/2;while(lo<hi){long mid=lo+(hi-lo)/2,count=0;for(int t:workerTimes){long budget=mid/t,l=0,r=mountainHeight;while(l<r){long m=(l+r+1)/2;if(m*(m+1)/2<=budget)l=m;else r=m-1;}count+=l;if(count>=mountainHeight)break;}if(count>=mountainHeight)hi=mid;else lo=mid+1;}return lo;}
+    private long completedHeight(long budget, int time, int maximumHeight) {
+        long low = 0;
+        long high = maximumHeight;
+        while (low < high) {
+            long middle = (low + high + 1) / 2;
+            if (middle * (middle + 1) / 2 <= budget / time) {
+                low = middle;
+            } else {
+                high = middle - 1;
+            }
+        }
+        return low;
+    }
+
+    private boolean canFinish(long seconds, int mountainHeight, int[] workerTimes) {
+        long completed = 0;
+        for (int time : workerTimes) {
+            completed += completedHeight(seconds, time, mountainHeight);
+            if (completed >= mountainHeight) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public long minNumberOfSeconds(int mountainHeight, int[] workerTimes) {
+        int fastest = Arrays.stream(workerTimes).min().getAsInt();
+        long low = 0;
+        long high = (long) fastest * mountainHeight * (mountainHeight + 1) / 2;
+        while (low < high) {
+            long middle = low + (high - low) / 2;
+            if (canFinish(middle, mountainHeight, workerTimes)) {
+                high = middle;
+            } else {
+                low = middle + 1;
+            }
+        }
+        return low;
+    }
 }

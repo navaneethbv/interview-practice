@@ -1,3 +1,11 @@
 class Solution {
-public int findNumbers(int[] nums){int ans=0;for(int x:nums)if(Integer.toString(x).length()%2==0)ans++;return ans;}
+    public int findNumbers(int[] nums) {
+        int count = 0;
+        for (int value : nums) {
+            if (Integer.toString(value).length() % 2 == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

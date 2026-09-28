@@ -1,10 +1,22 @@
 class Solution:
- def isTrionic(self,nums):
-  n=len(nums);i=0
-  while i+1<n and nums[i]<nums[i+1]:i+=1
-  if i==0:return False
-  p=i
-  while i+1<n and nums[i]>nums[i+1]:i+=1
-  if i==p or i==n-1:return False
-  while i+1<n and nums[i]<nums[i+1]:i+=1
-  return i==n-1
+    def isTrionic(self, nums):
+        length = len(nums)
+        index = self._walk_up(nums, 0)
+        if index == 0:
+            return False
+        peak = index
+        index = self._walk_down(nums, index)
+        if index == peak or index == length - 1:
+            return False
+        index = self._walk_up(nums, index)
+        return index == length - 1
+
+    def _walk_up(self, nums, index):
+        while index + 1 < len(nums) and nums[index] < nums[index + 1]:
+            index += 1
+        return index
+
+    def _walk_down(self, nums, index):
+        while index + 1 < len(nums) and nums[index] > nums[index + 1]:
+            index += 1
+        return index

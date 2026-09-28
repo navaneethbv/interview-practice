@@ -1,3 +1,35 @@
 class Solution {
-public String largestPalindromic(String num){int[] c=new int[10];for(char d:num.toCharArray())c[d-'0']++;StringBuilder s=new StringBuilder();for(int d=9;d>=0;d--)if(d!=0||s.length()>0){s.append(String.valueOf(d).repeat(c[d]/2));c[d]%=2;}String mid="";for(int d=9;d>=0;d--)if(c[d]>0){mid=""+d;break;}String a=s.toString()+mid+s.reverse();return a.isEmpty()?"0":a;}
+    public String largestPalindromic(String num) {
+        int[] counts = new int[10];
+        for (int index = 0; index < num.length(); index++) {
+            counts[num.charAt(index) - '0']++;
+        }
+        StringBuilder left = new StringBuilder();
+        appendPairs(counts, left);
+        String middle = largestMiddle(counts);
+        String right = new StringBuilder(left).reverse().toString();
+        String result = left + middle + right;
+        return result.isEmpty() ? "0" : result;
+    }
+    private void appendPairs(int[] counts, StringBuilder left) {
+        for (int digit = 9; digit >= 0; digit--) {
+            if (digit != 0 || left.length() > 0) {
+                appendRepeated(left, digit, counts[digit] / 2);
+                counts[digit] %= 2;
+            }
+        }
+    }
+    private void appendRepeated(StringBuilder builder, int digit, int count) {
+        for (int index = 0; index < count; index++) {
+            builder.append(digit);
+        }
+    }
+    private String largestMiddle(int[] counts) {
+        for (int digit = 9; digit >= 0; digit--) {
+            if (counts[digit] > 0) {
+                return String.valueOf(digit);
+            }
+        }
+        return "";
+    }
 }

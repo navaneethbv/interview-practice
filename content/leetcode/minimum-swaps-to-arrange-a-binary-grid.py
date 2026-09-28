@@ -1,16 +1,23 @@
 class Solution:
     def minSwaps(self, grid):
-        n=len(grid);zeros=[]
+        size = len(grid)
+        trailing_zeros = []
         for row in grid:
-            count=0
+            count = 0
             for value in reversed(row):
-                if value:break
-                count+=1
-            zeros.append(count)
-        answer=0
-        for i in range(n):
-            j=i
-            while j<n and zeros[j]<n-i-1:j+=1
-            if j==n:return -1
-            answer+=j-i;zeros.insert(i,zeros.pop(j))
-        return answer
+                if value:
+                    break
+                count += 1
+            trailing_zeros.append(count)
+
+        swaps = 0
+        for row in range(size):
+            required = size - row - 1
+            candidate = row
+            while candidate < size and trailing_zeros[candidate] < required:
+                candidate += 1
+            if candidate == size:
+                return -1
+            swaps += candidate - row
+            trailing_zeros.insert(row, trailing_zeros.pop(candidate))
+        return swaps

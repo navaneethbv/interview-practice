@@ -1,1 +1,43 @@
-class Fancy {final long MOD=1000000007;List<Long> a=new ArrayList<>();long mul=1,add=0;public Fancy(){}long pow(long a,long p){long r=1;while(p>0){if((p&1)!=0)r=r*a%MOD;a=a*a%MOD;p>>=1;}return r;}public void append(int val){a.add((val-add+MOD)%MOD*pow(mul,MOD-2)%MOD);}public void addAll(int inc){add=(add+inc)%MOD;}public void multAll(int m){mul=mul*m%MOD;add=add*m%MOD;}public int getIndex(int idx){return idx<a.size()?(int)((a.get(idx)*mul+add)%MOD):-1;}}
+class Fancy {
+    private static final long MOD = 1_000_000_007L;
+    private final List<Long> values = new ArrayList<>();
+    private long multiplier = 1;
+    private long increment = 0;
+
+    public Fancy() {
+    }
+
+    private long power(long value, long exponent) {
+        long result = 1;
+        while (exponent > 0) {
+            if ((exponent & 1) != 0) {
+                result = result * value % MOD;
+            }
+            value = value * value % MOD;
+            exponent >>= 1;
+        }
+        return result;
+    }
+
+    public void append(int value) {
+        long normalized = (value - increment + MOD) % MOD;
+        normalized = normalized * power(multiplier, MOD - 2) % MOD;
+        values.add(normalized);
+    }
+
+    public void addAll(int value) {
+        increment = (increment + value) % MOD;
+    }
+
+    public void multAll(int value) {
+        multiplier = multiplier * value % MOD;
+        increment = increment * value % MOD;
+    }
+
+    public int getIndex(int index) {
+        if (index >= values.size()) {
+            return -1;
+        }
+        return (int) ((values.get(index) * multiplier + increment) % MOD);
+    }
+}

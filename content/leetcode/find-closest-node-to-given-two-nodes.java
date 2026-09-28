@@ -1,3 +1,30 @@
 class Solution {
-int[] distances(int[] e,int v){int[] d=new int[e.length];Arrays.fill(d,-1);int t=0;while(v!=-1&&d[v]<0){d[v]=t++;v=e[v];}return d;}public int closestMeetingNode(int[] edges,int node1,int node2){int[] a=distances(edges,node1),b=distances(edges,node2);int best=edges.length+1,ans=-1;for(int i=0;i<edges.length;i++)if(a[i]>=0&&b[i]>=0&&Math.max(a[i],b[i])<best){best=Math.max(a[i],b[i]);ans=i;}return ans;}
+    public int closestMeetingNode(int[] edges, int node1, int node2) {
+        int[] first = distances(edges, node1);
+        int[] second = distances(edges, node2);
+        int bestDistance = edges.length + 1;
+        int answer = -1;
+        for (int node = 0; node < edges.length; node++) {
+            if (first[node] >= 0 && second[node] >= 0) {
+                int distance = Math.max(first[node], second[node]);
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    answer = node;
+                }
+            }
+        }
+        return answer;
+    }
+
+    private int[] distances(int[] edges, int start) {
+        int[] distances = new int[edges.length];
+        Arrays.fill(distances, -1);
+        int node = start;
+        int distance = 0;
+        while (node != -1 && distances[node] == -1) {
+            distances[node] = distance++;
+            node = edges[node];
+        }
+        return distances;
+    }
 }

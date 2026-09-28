@@ -1,3 +1,26 @@
 class Solution {
-private long gcd(long a,long b) {while(b!=0) {long t=a%b;a=b;b=t;}return a;}public int nthMagicalNumber(int n,int a,int b) {long l=Math.min(a,b),r=(long)n*Math.min(a,b),lcm=(long)a*b/gcd(a,b);while(l<r) {long m=(l+r)/2;if(m/a+m/b-m/lcm>=n) r=m;else l=m+1;}return (int)(l%1000000007);}
+    private long greatestCommonDivisor(long first, long second) {
+        while (second != 0) {
+            long remainder = first % second;
+            first = second;
+            second = remainder;
+        }
+        return first;
+    }
+
+    public int nthMagicalNumber(int n, int a, int b) {
+        long left = Math.min(a, b);
+        long right = (long) n * left;
+        long leastCommonMultiple = (long) a * b / greatestCommonDivisor(a, b);
+        while (left < right) {
+            long middle = (left + right) / 2;
+            long count = middle / a + middle / b - middle / leastCommonMultiple;
+            if (count >= n) {
+                right = middle;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return (int) (left % 1_000_000_007);
+    }
 }

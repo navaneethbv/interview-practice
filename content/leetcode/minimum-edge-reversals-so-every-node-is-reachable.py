@@ -1,11 +1,25 @@
 class Solution:
- def minEdgeReversals(self,n,edges):
-  g=[[] for _ in range(n)]
-  for a,b in edges:g[a].append((b,0));g[b].append((a,1))
-  parent=[-1]*n;parent[0]=0;order=[0];cost=[0]*n;initial=0
-  for u in order:
-   for v,c in g[u]:
-    if v!=parent[u]:parent[v]=u;cost[v]=c;initial+=c;order.append(v)
-  ans=[initial]*n
-  for v in order[1:]:ans[v]=ans[parent[v]]+1-2*cost[v]
-  return ans
+    def minEdgeReversals(self, n, edges):
+        graph = [[] for _ in range(n)]
+        for start, end in edges:
+            graph[start].append((end, 0))
+            graph[end].append((start, 1))
+
+        parent = [-1] * n
+        parent[0] = 0
+        order = [0]
+        edge_cost = [0] * n
+        root_cost = 0
+        for node in order:
+            for neighbor, cost in graph[node]:
+                if neighbor == parent[node]:
+                    continue
+                parent[neighbor] = node
+                edge_cost[neighbor] = cost
+                root_cost += cost
+                order.append(neighbor)
+
+        answers = [root_cost] * n
+        for node in order[1:]:
+            answers[node] = answers[parent[node]] + 1 - 2 * edge_cost[node]
+        return answers

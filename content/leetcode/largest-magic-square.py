@@ -1,16 +1,28 @@
 class Solution:
     def largestMagicSquare(self, grid):
-        m,n=len(grid),len(grid[0]);rows=[[0]*(n+1) for _ in range(m)];cols=[[0]*n for _ in range(m+1)]
-        for r in range(m):
-            for c in range(n):rows[r][c+1]=rows[r][c]+grid[r][c];cols[r+1][c]=cols[r][c]+grid[r][c]
-        for size in range(min(m,n),1,-1):
-            if any(self._magic(grid,rows,cols,r,c,size) for r in range(m-size+1) for c in range(n-size+1)):return size
+        rows, columns = len(grid), len(grid[0])
+        row_prefix = [[0] * (columns + 1) for _ in range(rows)]
+        column_prefix = [[0] * columns for _ in range(rows + 1)]
+        for row in range(rows):
+            for column in range(columns):
+                row_prefix[row][column + 1] = row_prefix[row][column] + grid[row][column]
+                column_prefix[row + 1][column] = column_prefix[row][column] + grid[row][column]
+        for size in range(min(rows, columns), 1, -1):
+            for row in range(rows - size + 1):
+                for column in range(columns - size + 1):
+                    if self._magic(grid, row_prefix, column_prefix, row, column, size):
+                        return size
         return 1
 
     def _magic(self, grid, rows, cols, r, c, size):
         """Checks every row, column and both diagonals of one square using prefix sums."""
-        target=rows[r][c+size]-rows[r][c]
-        if any(rows[a][c+size]-rows[a][c]!=target for a in range(r,r+size)):return False
-        if any(cols[r+size][b]-cols[r][b]!=target for b in range(c,c+size)):return False
-        main=sum(grid[r+i][c+i] for i in range(size));anti=sum(grid[r+i][c+size-1-i] for i in range(size))
-        return main==target==anti
+        target = rows[r][c + size] - rows[r][c]
+        for current_row in range(r, r + size):
+            if rows[current_row][c + size] - rows[current_row][c] != target:
+                return False
+        for current_column in range(c, c + size):
+            if cols[r + size][current_column] - cols[r][current_column] != target:
+                return False
+        main_diagonal = sum(grid[r + offset][c + offset] for offset in range(size))
+        other_diagonal = sum(grid[r + offset][c + size - 1 - offset] for offset in range(size))
+        return main_diagonal == target == other_diagonal

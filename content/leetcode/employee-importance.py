@@ -1,6 +1,10 @@
 class Solution:
     def getImportance(self, employees, id):
-        by_id={employee.id:employee for employee in employees}; pending=[id]; total=0
-        while pending:
-            employee=by_id[pending.pop()]; total+=employee.importance; pending.extend(employee.subordinates)
-        return total
+        employees_by_id = {employee.id: employee for employee in employees}
+        pending_ids = [id]
+        total_importance = 0
+        while pending_ids:
+            employee = employees_by_id[pending_ids.pop()]
+            total_importance += employee.importance
+            pending_ids.extend(employee.subordinates)
+        return total_importance

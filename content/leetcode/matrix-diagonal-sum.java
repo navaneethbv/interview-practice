@@ -1,3 +1,14 @@
 class Solution {
-public int diagonalSum(int[][] mat){int n=mat.length,total=0;for(int i=0;i<n;i++){total+=mat[i][i];if(i!=n-1-i)total+=mat[i][n-1-i];}return total;}
+    public int diagonalSum(int[][] mat) {
+        int size = mat.length;
+        int total = 0;
+        for (int index = 0; index < size; index++) {
+            total += mat[index][index];
+            int opposite = size - index - 1;
+            if (opposite != index) {
+                total += mat[index][opposite];
+            }
+        }
+        return total;
+    }
 }

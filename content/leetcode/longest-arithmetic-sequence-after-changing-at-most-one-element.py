@@ -1,18 +1,57 @@
 class Solution:
- def longestArithmetic(self,nums):
-  n=len(nums);left=[1]*n;right=[1]*n;left[1]=2;right[-2]=2
-  for i in range(2,n):left[i]=left[i-1]+1 if nums[i]-nums[i-1]==nums[i-1]-nums[i-2] else 2
-  for i in range(n-3,-1,-1):right[i]=right[i+1]+1 if nums[i+1]-nums[i]==nums[i+2]-nums[i+1] else 2
-  return max([max(left)]+[self._best_changing(nums,left,right,i) for i in range(n)])
+    def longestArithmetic(self, nums):
+        length = len(nums)
+        left_run = [1] * length
+        right_run = [1] * length
+        left_run[1] = 2
+        right_run[-2] = 2
+        for index in range(2, length):
+            previous_difference = nums[index - 1] - nums[index - 2]
+            current_difference = nums[index] - nums[index - 1]
+            left_run[index] = left_run[index - 1] + 1 if current_difference == previous_difference else 2
+        for index in range(length - 3, -1, -1):
+            next_difference = nums[index + 2] - nums[index + 1]
+            current_difference = nums[index + 1] - nums[index]
+            right_run[index] = right_run[index + 1] + 1 if current_difference == next_difference else 2
 
- def _best_changing(self,nums,left,right,i):
-  """Longest run when nums[i] is replaced: extend a neighbour's run, or bridge both sides."""
-  n=len(nums);ans=1
-  if i:ans=max(ans,min(n,left[i-1]+1))
-  if i+1<n:ans=max(ans,min(n,right[i+1]+1))
-  if 0<i<n-1 and (nums[i+1]-nums[i-1])%2==0:
-   d=(nums[i+1]-nums[i-1])//2
-   l=left[i-1] if i>=2 and nums[i-1]-nums[i-2]==d else 1
-   r=right[i+1] if i+2<n and nums[i+2]-nums[i+1]==d else 1
-   ans=max(ans,l+1+r)
-  return ans
+        best = max(left_run)
+        for index in range(length):
+            best = max(best, self._best_after_change(nums, left_run, right_run, index))
+        return best
+
+    def _best_after_change(self, nums, left_run, right_run, index):
+        length = len(nums)
+        best = max(self._extend_left(length, left_run, index),
+                   self._extend_right(length, right_run, index))
+        return max(best, self._join_runs(nums, left_run, right_run, index))
+
+    def _extend_left(self, length, left_run, index):
+        if not index:
+            return 1
+        return min(length, left_run[index - 1] + 1)
+
+    def _extend_right(self, length, right_run, index):
+        if index + 1 >= length:
+            return 1
+        return min(length, right_run[index + 1] + 1)
+
+    def _join_runs(self, nums, left_run, right_run, index):
+        if not (0 < index < len(nums) - 1):
+            return 1
+        gap = nums[index + 1] - nums[index - 1]
+        if gap % 2:
+            return 1
+        difference = gap // 2
+        left = self._matching_left(nums, left_run, index, difference)
+        right = self._matching_right(nums, right_run, index, difference)
+        return left + right + 1
+
+    def _matching_left(self, nums, left_run, index, difference):
+        if index >= 2 and nums[index - 1] - nums[index - 2] == difference:
+            return left_run[index - 1]
+        return 1
+
+    def _matching_right(self, nums, right_run, index, difference):
+        if index + 2 < len(nums) and nums[index + 2] - nums[index + 1] == difference:
+            return right_run[index + 1]
+        return 1

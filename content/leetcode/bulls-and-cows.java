@@ -1,3 +1,31 @@
 class Solution {
-public String getHint(String secret,String guess){int bulls=0;int[]a=new int[10],b=new int[10];for(int i=0;i<secret.length();i++){if(secret.charAt(i)==guess.charAt(i))bulls++;a[secret.charAt(i)-'0']++;b[guess.charAt(i)-'0']++;}int matches=0;for(int i=0;i<10;i++)matches+=Math.min(a[i],b[i]);return bulls+"A"+(matches-bulls)+"B";}
+    public String getHint(String secret, String guess) {
+        int bulls = countBulls(secret, guess);
+        int matches = countSharedDigits(secret, guess);
+        return bulls + "A" + (matches - bulls) + "B";
+    }
+
+    private int countBulls(String secret, String guess) {
+        int bulls = 0;
+        for (int index = 0; index < secret.length(); index++) {
+            if (secret.charAt(index) == guess.charAt(index)) {
+                bulls++;
+            }
+        }
+        return bulls;
+    }
+
+    private int countSharedDigits(String secret, String guess) {
+        int[] secretCounts = new int[10];
+        int[] guessCounts = new int[10];
+        for (int index = 0; index < secret.length(); index++) {
+            secretCounts[secret.charAt(index) - '0']++;
+            guessCounts[guess.charAt(index) - '0']++;
+        }
+        int shared = 0;
+        for (int digit = 0; digit < 10; digit++) {
+            shared += Math.min(secretCounts[digit], guessCounts[digit]);
+        }
+        return shared;
+    }
 }

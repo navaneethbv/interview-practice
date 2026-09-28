@@ -1,2 +1,4 @@
 class Solution:
- def constructTransformedArray(self,nums):return [nums[(i+x)%len(nums)] for i,x in enumerate(nums)]
+    def constructTransformedArray(self, nums):
+        size = len(nums)
+        return [nums[(index + value) % size] for index, value in enumerate(nums)]

@@ -1,3 +1,20 @@
 class Solution {
-public boolean hasAllCodes(String s,int k){int target=1<<k;if(s.length()-k+1<target)return false;boolean[]seen=new boolean[target];int count=0,value=0;for(int i=0;i<s.length();i++){value=((value<<1)|(s.charAt(i)-'0'))&(target-1);if(i>=k-1&&!seen[value]){seen[value]=true;count++;}}return count==target;}
+    public boolean hasAllCodes(String s, int k) {
+        int required = 1 << k;
+        if (s.length() - k + 1 < required) {
+            return false;
+        }
+        boolean[] seen = new boolean[required];
+        int found = 0;
+        int value = 0;
+        int mask = required - 1;
+        for (int index = 0; index < s.length(); index++) {
+            value = ((value << 1) | (s.charAt(index) - '0')) & mask;
+            if (index >= k - 1 && !seen[value]) {
+                seen[value] = true;
+                found++;
+            }
+        }
+        return found == required;
+    }
 }

@@ -1,9 +1,14 @@
 class Solution:
- def longestBalanced(self,s):
-  ans=0
-  for i in range(len(s)):
-   count={};largest=0
-   for j in range(i,len(s)):
-    c=s[j];count[c]=count.get(c,0)+1;largest=max(largest,count[c])
-    if largest*len(count)==j-i+1:ans=max(ans,j-i+1)
-  return ans
+    def longestBalanced(self, s):
+        answer = 0
+        for start in range(len(s)):
+            counts = {}
+            largest_count = 0
+            for end in range(start, len(s)):
+                character = s[end]
+                counts[character] = counts.get(character, 0) + 1
+                largest_count = max(largest_count, counts[character])
+                length = end - start + 1
+                if largest_count * len(counts) == length:
+                    answer = max(answer, length)
+        return answer

@@ -1,5 +1,15 @@
 class Solution:
-    def countGoodStrings(self,low,high,zero,one):
-        mod=1000000007;dp=[0]*(high+1);dp[0]=1
-        for i in range(1,high+1):dp[i]=((dp[i-zero] if i>=zero else 0)+(dp[i-one] if i>=one else 0))%mod
-        return sum(dp[low:])%mod
+    def countGoodStrings(self, low, high, zero, one):
+        modulus = 1_000_000_007
+        ways = [0] * (high + 1)
+        ways[0] = 1
+        total = 0
+        for length in range(1, high + 1):
+            if length >= zero:
+                ways[length] += ways[length - zero]
+            if length >= one:
+                ways[length] += ways[length - one]
+            ways[length] %= modulus
+            if length >= low:
+                total = (total + ways[length]) % modulus
+        return total

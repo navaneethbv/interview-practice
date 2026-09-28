@@ -1,5 +1,6 @@
 class Solution:
     def largestOddNumber(self, num):
-        for i in range(len(num)-1,-1,-1):
-            if int(num[i])%2:return num[:i+1]
+        for index in range(len(num) - 1, -1, -1):
+            if int(num[index]) % 2 == 1:
+                return num[:index + 1]
         return ''

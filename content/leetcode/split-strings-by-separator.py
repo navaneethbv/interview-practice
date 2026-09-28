@@ -1,2 +1,8 @@
 class Solution:
-    def splitWordsBySeparator(self,words,separator):return [part for word in words for part in word.split(separator) if part]
+    def splitWordsBySeparator(self, words, separator):
+        pieces = []
+        for word in words:
+            for piece in word.split(separator):
+                if piece:
+                    pieces.append(piece)
+        return pieces

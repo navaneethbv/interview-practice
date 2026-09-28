@@ -1,9 +1,18 @@
 class Solution:
     def removeZeroSumSublists(self, head):
-        dummy=ListNode(0,head); last={}; prefix=0; node=dummy
+        dummy = ListNode(0, head)
+        last_node_for_sum = {}
+        prefix_sum = 0
+        node = dummy
         while node:
-            prefix+=node.val; last[prefix]=node; node=node.next
-        prefix=0; node=dummy
+            prefix_sum += node.val
+            last_node_for_sum[prefix_sum] = node
+            node = node.next
+
+        prefix_sum = 0
+        node = dummy
         while node:
-            prefix+=node.val; node.next=last[prefix].next; node=node.next
+            prefix_sum += node.val
+            node.next = last_node_for_sum[prefix_sum].next
+            node = node.next
         return dummy.next

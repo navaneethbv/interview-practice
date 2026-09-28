@@ -1,3 +1,43 @@
 class Solution {
-public int shortestPath(int[][] grid,int k){int m=grid.length,n=grid[0].length;int[][]best=new int[m][n];for(int[]row:best)Arrays.fill(row,-1);best[0][0]=k;Deque<int[]>q=new ArrayDeque<>();q.add(new int[]{0,0,k,0});int[]ds={-1,0,1,0,-1};while(!q.isEmpty()){int[]p=q.remove();if(p[0]==m-1&&p[1]==n-1)return p[3];for(int d=0;d<4;d++){int a=p[0]+ds[d],b=p[1]+ds[d+1];if(a>=0&&a<m&&b>=0&&b<n){int left=p[2]-grid[a][b];if(left>=0&&left>best[a][b]){best[a][b]=left;q.add(new int[]{a,b,left,p[3]+1});}}}}return -1;}
+    public int shortestPath(int[][] grid, int k) {
+        int rows = grid.length;
+        int columns = grid[0].length;
+        int[][] best = new int[rows][columns];
+        for (int[] row : best) {
+            Arrays.fill(row, -1);
+        }
+        Deque<int[]> queue = new ArrayDeque<>();
+        best[0][0] = k;
+        queue.add(new int[]{0, 0, k, 0});
+        int[] directions = {-1, 0, 1, 0, -1};
+        while (!queue.isEmpty()) {
+            int[] state = queue.remove();
+            if (state[0] == rows - 1 && state[1] == columns - 1) {
+                return state[3];
+            }
+            addNeighbors(grid, best, queue, directions, state);
+        }
+        return -1;
+    }
+
+    private void addNeighbors(int[][] grid, int[][] best, Deque<int[]> queue,
+                              int[] directions, int[] state) {
+        for (int direction = 0; direction < 4; direction++) {
+            int row = state[0] + directions[direction];
+            int column = state[1] + directions[direction + 1];
+            if (!inside(grid, row, column)) {
+                continue;
+            }
+            int remaining = state[2] - grid[row][column];
+            if (remaining < 0 || remaining <= best[row][column]) {
+                continue;
+            }
+            best[row][column] = remaining;
+            queue.add(new int[]{row, column, remaining, state[3] + 1});
+        }
+    }
+
+    private boolean inside(int[][] grid, int row, int column) {
+        return row >= 0 && row < grid.length && column >= 0 && column < grid[0].length;
+    }
 }

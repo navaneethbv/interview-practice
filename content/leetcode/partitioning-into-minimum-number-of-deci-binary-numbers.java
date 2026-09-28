@@ -1,3 +1,9 @@
 class Solution {
-public int minPartitions(String n){int best=0;for(char c:n.toCharArray())best=Math.max(best,c-'0');return best;}
+    public int minPartitions(String n) {
+        int largestDigit = 0;
+        for (int index = 0; index < n.length(); index++) {
+            largestDigit = Math.max(largestDigit, n.charAt(index) - '0');
+        }
+        return largestDigit;
+    }
 }

@@ -1,3 +1,19 @@
 class Solution {
-public int numComponents(ListNode head,int[] nums){Set<Integer>set=new HashSet<>();for(int x:nums)set.add(x);int count=0;boolean inside=false;while(head!=null){boolean current=set.contains(head.val);if(current&&!inside)count++;inside=current;head=head.next;}return count;}
+    public int numComponents(ListNode head, int[] nums) {
+        Set<Integer> selected = new HashSet<>();
+        for (int value : nums) {
+            selected.add(value);
+        }
+        int components = 0;
+        boolean inside = false;
+        while (head != null) {
+            boolean selectedNode = selected.contains(head.val);
+            if (selectedNode && !inside) {
+                components++;
+            }
+            inside = selectedNode;
+            head = head.next;
+        }
+        return components;
+    }
 }

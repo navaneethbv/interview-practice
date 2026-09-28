@@ -1,3 +1,36 @@
 class Solution {
-public int totalNumbers(int[] digits) {Set<Integer> values=new HashSet<>();for(int i=0;i<digits.length;i++) if(digits[i]!=0) for(int j=0;j<digits.length;j++) if(i!=j) for(int k=0;k<digits.length;k++) if(k!=i&&k!=j&&digits[k]%2==0) values.add(100*digits[i]+10*digits[j]+digits[k]);return values.size();}
+    private void addOnes(int[] digits, Set<Integer> numbers, int hundreds, int tens) {
+        for (int ones = 0; ones < digits.length; ones++) {
+            if (ones == hundreds || ones == tens) {
+                continue;
+            }
+            if (digits[ones] % 2 != 0) {
+                continue;
+            }
+            numbers.add(100 * digits[hundreds] + 10 * digits[tens] + digits[ones]);
+        }
+    }
+
+    private void addTens(int[] digits, Set<Integer> numbers, int hundreds) {
+        for (int tens = 0; tens < digits.length; tens++) {
+            if (tens == hundreds) {
+                continue;
+            }
+            addOnes(digits, numbers, hundreds, tens);
+        }
+    }
+
+    private void addNumbers(int[] digits, Set<Integer> numbers) {
+        for (int hundreds = 0; hundreds < digits.length; hundreds++) {
+            if (digits[hundreds] != 0) {
+                addTens(digits, numbers, hundreds);
+            }
+        }
+    }
+
+    public int totalNumbers(int[] digits) {
+        Set<Integer> numbers = new HashSet<>();
+        addNumbers(digits, numbers);
+        return numbers.size();
+    }
 }

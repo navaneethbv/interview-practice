@@ -1,3 +1,32 @@
 class Solution {
-public int numberOfSubmatrices(char[][] grid){int n=grid[0].length,ans=0;int[] xs=new int[n],ys=new int[n];for(char[] row:grid){int x=0,y=0;for(int j=0;j<n;j++){if(row[j]=='X')x++;if(row[j]=='Y')y++;xs[j]+=x;ys[j]+=y;if(xs[j]>0&&xs[j]==ys[j])ans++;}}return ans;}
+    public int numberOfSubmatrices(char[][] grid) {
+        int columns = grid[0].length;
+        int[] xTotals = new int[columns];
+        int[] yTotals = new int[columns];
+        int answer = 0;
+        for (char[] row : grid) {
+            answer += processRow(row, xTotals, yTotals);
+        }
+        return answer;
+    }
+
+    private int processRow(char[] row, int[] xTotals, int[] yTotals) {
+        int xCount = 0;
+        int yCount = 0;
+        int answer = 0;
+        for (int column = 0; column < row.length; column++) {
+            if (row[column] == 'X') {
+                xCount++;
+            }
+            if (row[column] == 'Y') {
+                yCount++;
+            }
+            xTotals[column] += xCount;
+            yTotals[column] += yCount;
+            if (xTotals[column] > 0 && xTotals[column] == yTotals[column]) {
+                answer++;
+            }
+        }
+        return answer;
+    }
 }

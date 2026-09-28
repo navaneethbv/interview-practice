@@ -1,7 +1,10 @@
 class Solution:
-    def minimumDeletions(self,s):
-        bs=cost=0
-        for c in s:
-            if c=='b':bs+=1
-            else:cost=min(cost+1,bs)
-        return cost
+    def minimumDeletions(self, s):
+        seen_b = 0
+        deletions = 0
+        for character in s:
+            if character == 'b':
+                seen_b += 1
+            else:
+                deletions = min(deletions + 1, seen_b)
+        return deletions

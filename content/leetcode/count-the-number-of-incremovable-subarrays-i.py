@@ -1,12 +1,18 @@
 class Solution:
-    def incremovableSubarrayCount(self,nums):
-        n=len(nums);i=0
-        while i+1<n and nums[i]<nums[i+1]:i+=1
-        if i==n-1:return n*(n+1)//2
-        result=i+2;j=n-1
+    def incremovableSubarrayCount(self, nums):
+        n = len(nums)
+        left = 0
+        while left + 1 < n and nums[left] < nums[left + 1]:
+            left += 1
+        if left == n - 1:
+            return n * (n + 1) // 2
+        result = left + 2
+        right = n - 1
         while True:
-            while i>=0 and nums[i]>=nums[j]:i-=1
-            result+=i+2
-            if j==0 or nums[j-1]>=nums[j]:break
-            j-=1
+            while left >= 0 and nums[left] >= nums[right]:
+                left -= 1
+            result += left + 2
+            if right == 0 or nums[right - 1] >= nums[right]:
+                break
+            right -= 1
         return result

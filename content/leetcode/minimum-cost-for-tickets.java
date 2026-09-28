@@ -1,3 +1,23 @@
 class Solution {
-public int mincostTickets(int[] days,int[] costs) {boolean[] travel=new boolean[366];for(int d:days) travel[d]=true;int[] dp=new int[366];int[] lengths={1,7,30};for(int d=1;d<=365;d++) {dp[d]=dp[d-1];if(travel[d]) {dp[d]=Integer.MAX_VALUE;for(int i=0;i<3;i++) dp[d]=Math.min(dp[d],dp[Math.max(0,d-lengths[i])]+costs[i]);}}return dp[365];}
+    public int mincostTickets(int[] days, int[] costs) {
+        boolean[] travelDays = new boolean[366];
+        for (int day : days) {
+            travelDays[day] = true;
+        }
+
+        int[] durations = {1, 7, 30};
+        int[] minimumCost = new int[366];
+        for (int day = 1; day <= 365; day++) {
+            minimumCost[day] = minimumCost[day - 1];
+            if (!travelDays[day]) {
+                continue;
+            }
+            minimumCost[day] = Integer.MAX_VALUE;
+            for (int option = 0; option < durations.length; option++) {
+                int coveredThrough = Math.max(0, day - durations[option]);
+                minimumCost[day] = Math.min(minimumCost[day], minimumCost[coveredThrough] + costs[option]);
+            }
+        }
+        return minimumCost[365];
+    }
 }

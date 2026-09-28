@@ -1,3 +1,18 @@
 class Solution {
-    public int[][] multiply(int[][] mat1,int[][] mat2){int[][] out=new int[mat1.length][mat2[0].length];for(int i=0;i<mat1.length;i++)for(int k=0;k<mat2.length;k++)if(mat1[i][k]!=0)for(int j=0;j<mat2[0].length;j++)if(mat2[k][j]!=0)out[i][j]+=mat1[i][k]*mat2[k][j];return out;}
+    public int[][] multiply(int[][] mat1, int[][] mat2) {
+        int[][] result = new int[mat1.length][mat2[0].length];
+        for (int row = 0; row < mat1.length; row++) {
+            for (int shared = 0; shared < mat2.length; shared++) {
+                if (mat1[row][shared] == 0) {
+                    continue;
+                }
+                for (int column = 0; column < mat2[0].length; column++) {
+                    if (mat2[shared][column] != 0) {
+                        result[row][column] += mat1[row][shared] * mat2[shared][column];
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }

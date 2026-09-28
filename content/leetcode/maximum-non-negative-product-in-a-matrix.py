@@ -1,12 +1,27 @@
 class Solution:
     def maxProductPath(self, grid):
-        m,n=len(grid),len(grid[0]);low=[[0]*n for _ in range(m)];high=[[0]*n for _ in range(m)]
-        for r in range(m):
-            for c in range(n):
-                value=grid[r][c]
-                if r==c==0:low[r][c]=high[r][c]=value;continue
-                candidates=[]
-                if r:candidates.extend((value*low[r-1][c],value*high[r-1][c]))
-                if c:candidates.extend((value*low[r][c-1],value*high[r][c-1]))
-                low[r][c],high[r][c]=min(candidates),max(candidates)
-        return -1 if high[-1][-1]<0 else high[-1][-1]%1000000007
+        rows = len(grid)
+        columns = len(grid[0])
+        minimum = [[0] * columns for _ in range(rows)]
+        maximum = [[0] * columns for _ in range(rows)]
+        for row in range(rows):
+            for column in range(columns):
+                self._fill_cell(grid, minimum, maximum, row, column)
+        result = maximum[-1][-1]
+        return -1 if result < 0 else result % 1000000007
+
+    def _fill_cell(self, grid, minimum, maximum, row, column):
+        value = grid[row][column]
+        if row == 0 and column == 0:
+            minimum[row][column] = value
+            maximum[row][column] = value
+            return
+        candidates = []
+        if row > 0:
+            candidates.extend((value * minimum[row - 1][column],
+                               value * maximum[row - 1][column]))
+        if column > 0:
+            candidates.extend((value * minimum[row][column - 1],
+                               value * maximum[row][column - 1]))
+        minimum[row][column] = min(candidates)
+        maximum[row][column] = max(candidates)

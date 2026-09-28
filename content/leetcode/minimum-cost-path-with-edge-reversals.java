@@ -1,3 +1,37 @@
 class Solution {
-public int minCost(int n,int[][] edges){List<List<int[]>> g=new ArrayList<>();for(int i=0;i<n;i++)g.add(new ArrayList<>());for(int[] e:edges){g.get(e[0]).add(new int[]{e[1],e[2]});g.get(e[1]).add(new int[]{e[0],2*e[2]});}int[] d=new int[n];Arrays.fill(d,Integer.MAX_VALUE);d[0]=0;PriorityQueue<int[]> q=new PriorityQueue<>(Comparator.comparingInt(a->a[0]));q.add(new int[]{0,0});while(!q.isEmpty()){int[] p=q.remove();int u=p[1];if(p[0]!=d[u])continue;if(u==n-1)return p[0];for(int[] e:g.get(u))if(p[0]+e[1]<d[e[0]]){d[e[0]]=p[0]+e[1];q.add(new int[]{d[e[0]],e[0]});}}return -1;}
+    public int minCost(int n, int[][] edges) {
+        List<List<int[]>> graph = new ArrayList<>();
+        for (int node = 0; node < n; node++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(new int[]{edge[1], edge[2]});
+            graph.get(edge[1]).add(new int[]{edge[0], 2 * edge[2]});
+        }
+
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[0] = 0;
+        PriorityQueue<int[]> pending = new PriorityQueue<>(Comparator.comparingInt(pair -> pair[0]));
+        pending.add(new int[]{0, 0});
+        while (!pending.isEmpty()) {
+            int[] state = pending.remove();
+            int currentCost = state[0];
+            int node = state[1];
+            if (currentCost != distance[node]) {
+                continue;
+            }
+            if (node == n - 1) {
+                return currentCost;
+            }
+            for (int[] edge : graph.get(node)) {
+                int nextCost = currentCost + edge[1];
+                if (nextCost < distance[edge[0]]) {
+                    distance[edge[0]] = nextCost;
+                    pending.add(new int[]{nextCost, edge[0]});
+                }
+            }
+        }
+        return -1;
+    }
 }
