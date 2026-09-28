@@ -1,3 +1,79 @@
 class Solution {
-public int minJumps(int[] nums){int maximum=Arrays.stream(nums).max().getAsInt();int[] spf=new int[maximum+1];for(int i=0;i<=maximum;i++)spf[i]=i;for(int p=2;p*p<=maximum;p++)if(spf[p]==p)for(int v=p*p;v<=maximum;v+=p)if(spf[v]==v)spf[v]=p;Map<Integer,List<Integer>> buckets=new HashMap<>();for(int i=0;i<nums.length;i++){int v=nums[i];while(v>1){int p=spf[v];buckets.computeIfAbsent(p,x->new ArrayList<>()).add(i);while(v%p==0)v/=p;}}int[] d=new int[nums.length];Arrays.fill(d,-1);d[0]=0;ArrayDeque<Integer> q=new ArrayDeque<>();q.add(0);while(!q.isEmpty()){int i=q.remove();if(i==nums.length-1)return d[i];List<Integer> next=new ArrayList<>();next.add(i-1);next.add(i+1);int v=nums[i];if(v>1&&spf[v]==v){List<Integer> b=buckets.remove(v);if(b!=null)next.addAll(b);}for(int j:next)if(j>=0&&j<nums.length&&d[j]<0){d[j]=d[i]+1;q.add(j);}}return -1;}
+    public int minJumps(int[] nums) {
+        int[] factors = smallestPrimeFactors(maximum(nums));
+        Map<Integer, List<Integer>> buckets = buildBuckets(nums, factors);
+        int[] distance = new int[nums.length];
+        Arrays.fill(distance, -1);
+        distance[0] = 0;
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        queue.add(0);
+        while (!queue.isEmpty()) {
+            int index = queue.remove();
+            if (index == nums.length - 1) {
+                return distance[index];
+            }
+            visitNeighbors(nums, factors, buckets, distance, queue, index);
+        }
+        return -1;
+    }
+    private void visitNeighbors(int[] nums, int[] factors,
+    Map<Integer, List<Integer>> buckets, int[] distance,
+    ArrayDeque<Integer> queue, int index) {
+        addNeighbor(index - 1, distance, queue, distance[index]);
+        addNeighbor(index + 1, distance, queue, distance[index]);
+        int value = nums[index];
+        if (value > 1 && factors[value] == value) {
+            List<Integer> neighbors = buckets.remove(value);
+            if (neighbors != null) {
+                for (int neighbor : neighbors) {
+                    addNeighbor(neighbor, distance, queue, distance[index]);
+                }
+            }
+        }
+    }
+    private void addNeighbor(int neighbor, int[] distance, ArrayDeque<Integer> queue,
+    int nextDistance) {
+        if (neighbor >= 0 && neighbor < distance.length && distance[neighbor] < 0) {
+            distance[neighbor] = nextDistance + 1;
+            queue.add(neighbor);
+        }
+    }
+    private int maximum(int[] values) {
+        int answer = 0;
+        for (int value : values) {
+            answer = Math.max(answer, value);
+        }
+        return answer;
+    }
+    private int[] smallestPrimeFactors(int maximum) {
+        int[] factors = new int[maximum + 1];
+        for (int value = 0; value <= maximum; value++) {
+            factors[value] = value;
+        }
+        for (int prime = 2; prime * prime <= maximum; prime++) {
+            if (factors[prime] != prime) {
+                continue;
+            }
+            for (int value = prime * prime; value <= maximum; value += prime) {
+                if (factors[value] == value) {
+                    factors[value] = prime;
+                }
+            }
+        }
+        return factors;
+    }
+    private Map<Integer, List<Integer>> buildBuckets(int[] nums, int[] factors) {
+        Map<Integer, List<Integer>> buckets = new HashMap<>();
+        for (int index = 0; index < nums.length; index++) {
+            int value = nums[index];
+            while (value > 1) {
+                int prime = factors[value];
+                buckets.computeIfAbsent(prime, key -> new ArrayList<>()).add(index);
+                while (value % prime == 0) {
+                    value /= prime;
+                }
+            }
+        }
+        return buckets;
+    }
 }

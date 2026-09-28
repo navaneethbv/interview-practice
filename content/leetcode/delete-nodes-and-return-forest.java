@@ -1,3 +1,25 @@
 class Solution {
-Set<Integer> deleted;List<TreeNode> out;public List<TreeNode> delNodes(TreeNode root,int[] to_delete){deleted=new HashSet<>();for(int x:to_delete)deleted.add(x);out=new ArrayList<>();visit(root,true);return out;}TreeNode visit(TreeNode n,boolean top){if(n==null)return null;boolean remove=deleted.contains(n.val);if(top&&!remove)out.add(n);n.left=visit(n.left,remove);n.right=visit(n.right,remove);return remove?null:n;}
+    private Set<Integer> deleted;
+    private List<TreeNode> forest;
+    public List<TreeNode> delNodes(TreeNode root, int[] toDelete) {
+        deleted = new HashSet<>();
+        for (int value : toDelete) {
+            deleted.add(value);
+        }
+        forest = new ArrayList<>();
+        visit(root, true);
+        return forest;
+    }
+    private TreeNode visit(TreeNode node, boolean isRoot) {
+        if (node == null) {
+            return null;
+        }
+        boolean remove = deleted.contains(node.val);
+        if (isRoot && !remove) {
+            forest.add(node);
+        }
+        node.left = visit(node.left, remove);
+        node.right = visit(node.right, remove);
+        return remove ? null : node;
+    }
 }

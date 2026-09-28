@@ -1,3 +1,58 @@
 class Solution {
-public int maxFixedPoints(int[] nums){List<int[]> a=new ArrayList<>();for(int i=0;i<nums.length;i++)if(nums[i]<=i)a.add(new int[]{nums[i],i-nums[i]});a.sort(Comparator.comparingInt(v->v[0]));int[] bit=new int[nums.length+1];int ans=0;for(int i=0;i<a.size();){int j=i;List<int[]> updates=new ArrayList<>();while(j<a.size()&&a.get(j)[0]==a.get(i)[0]){int d=a.get(j)[1],best=0;for(int p=d+1;p>0;p-=p&-p)best=Math.max(best,bit[p]);updates.add(new int[]{d+1,best+1});ans=Math.max(ans,best+1);j++;}for(int[] u:updates)for(int p=u[0];p<bit.length;p+=p&-p)bit[p]=Math.max(bit[p],u[1]);i=j;}return ans;}
+    public int maxFixedPoints(int[] nums) {
+        List<int[]> candidates = new ArrayList<>();
+        for (int index = 0; index < nums.length; index++) {
+            if (nums[index] <= index) {
+                candidates.add(new int[] {
+                    nums[index], index - nums[index]
+                }
+                );
+            }
+        }
+        candidates.sort(Comparator.comparingInt(value -> value[0]));
+        int[] tree = new int[nums.length + 1];
+        int answer = 0;
+        int index = 0;
+        while (index < candidates.size()) {
+            int next = processGroup(candidates, index, tree);
+            answer = Math.max(answer, groupBest);
+            index = next;
+        }
+        return answer;
+    }
+    private int groupBest;
+    private int processGroup(List<int[]> candidates, int start, int[] tree) {
+        groupBest = 0;
+        int index = start;
+        List<int[]> pending = new ArrayList<>();
+        while (index < candidates.size()
+        && candidates.get(index)[0] == candidates.get(start)[0]) {
+            int difference = candidates.get(index)[1];
+            int best = query(tree, difference + 1);
+            groupBest = Math.max(groupBest, best + 1);
+            pending.add(new int[] {
+                difference + 1, best + 1
+            }
+            );
+            index++;
+        }
+        for (int[] update : pending) {
+            update(tree, update[0], update[1]);
+        }
+        return index;
+    }
+    private int query(int[] tree, int position) {
+        int answer = 0;
+        while (position > 0) {
+            answer = Math.max(answer, tree[position]);
+            position -= position & -position;
+        }
+        return answer;
+    }
+    private void update(int[] tree, int position, int value) {
+        while (position < tree.length) {
+            tree[position] = Math.max(tree[position], value);
+            position += position & -position;
+        }
+    }
 }
