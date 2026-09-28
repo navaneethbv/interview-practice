@@ -446,7 +446,7 @@ function extractPdfItems($: cheerio.CheerioAPI, tmp: string): PdfItems {
       const w = Number($(c).attr("width"));
       const h = Number($(c).attr("height"));
       const src = resolveWithin(tmp, path.basename($(c).attr("src") ?? ""));
-      if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h });
+      if (w >= 80 && h >= 40 && fs.existsSync(src)) items.push({ kind: "img", page, top, src, w, h }); // NOSONAR nosemgrep -- src is reduced to a basename and bounded to the private importer directory
     });
   });
   items.sort((a, b) => a.page - b.page || a.top - b.top);
@@ -470,7 +470,7 @@ function renderedDiagramPages(file: string, tmp: string, items: Item[]) {
   for (const [page, contents] of pageItems) {
     if (contents.some((item) => item.kind === "img") || !pageLooksLikeVectorDiagram(contents)) continue;
     const pageFile = renderPage(file, page, tmp);
-    if (fs.existsSync(pageFile)) rendered.set(page, saveAsset(readTempAsset(tmp, pageFile), "png"));
+    if (fs.existsSync(pageFile)) rendered.set(page, saveAsset(readTempAsset(tmp, pageFile), "png")); // NOSONAR nosemgrep -- pageFile is generated inside the private importer directory
   }
   return rendered;
 }
@@ -523,7 +523,7 @@ function addPdfItem(state: PdfRenderState, item: Item, body: number, isRunningHe
   }
   if (item.kind === "img") {
     flushParagraph(state);
-    state.nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(item.src), "png"), w: item.w, h: item.h } });
+    state.nodes.push({ kind: "block", block: { t: "img", src: saveAsset(fs.readFileSync(item.src), "png"), w: item.w, h: item.h } }); // NOSONAR nosemgrep -- item.src was reduced to a basename and bounded to the private importer directory
     state.last = null;
     return;
   }
@@ -571,7 +571,7 @@ function importPdf(file: string): Article[] {
     execFileSync("pdftohtml", ["-xml", "-q", "-nodrm", "-zoom", "1", "-fmt", "png", file, resolveWithin(tmp, "doc")], {
       maxBuffer: 1 << 30,
     });
-    const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true });
+    const $ = cheerio.load(fs.readFileSync(resolveWithin(tmp, "doc.xml"), "utf8"), { xml: true }); // NOSONAR nosemgrep -- doc.xml is generated inside the private importer directory
     const { items, lineCounts, pages } = extractPdfItems($, tmp);
     const nodes = buildPdfNodes(file, tmp, items, pages, lineCounts);
     const title = ARGS.title ?? path.basename(file, path.extname(file));
