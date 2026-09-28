@@ -1,0 +1,28 @@
+{
+  "id": "bctci-string-join",
+  "style": "leetcode",
+  "function": {
+    "python": "join",
+    "java": "join"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "string[]"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["join","by","space"]," "],"sample":true,"expected":"join by space"},
+    {"input":[[],"x"],"sample":true,"expected":""},
+    {"input":[["b","","k","","p","r n","","d","d!!"],"ee"],"expected":"beeeekeeeepeer neeeedeed!!"},
+    {"input":[["solo"],", "],"expected":"solo"},
+    {"input":[["",""],"-"],"expected":"-"},
+    {"input":[["a","b","c"],""],"expected":"abc"},
+    {"input":[["","",""],""],"expected":""}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "bctci-magic-blackjack",
+  "style": "leetcode",
+  "function": {
+    "python": "countBusts",
+    "java": "countBusts"
+  },
+  "params": [
+    {
+      "name": "stand",
+      "type": "int"
+    },
+    {
+      "name": "limit",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[1,5],"sample":true,"expected":5},
+    {"input":[2,2],"sample":true,"expected":17},
+    {"input":[16,21],"expected":100081},
+    {"input":[10,10],"expected":4097},
+    {"input":[17,21],"expected":263361},
+    {"input":[30,40],"expected":0}
+  ]
+}

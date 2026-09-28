@@ -1,0 +1,29 @@
+{
+  "id": "bctci-youtube-video-reception",
+  "style": "leetcode",
+  "function": {
+    "python": "positiveDays",
+    "java": "positiveDays"
+  },
+  "params": [
+    {
+      "name": "likes",
+      "type": "int[]"
+    },
+    {
+      "name": "dislikes",
+      "type": "int[]"
+    },
+    {
+      "name": "periods",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[6,3,4,8,7,2,6,5,0,1],[6,0,8,0,0,0,1,8,0,2],[[0,1],[0,5],[5,8],[3,3]]],"sample":true,"expected":[1,4,2,1]},
+    {"input":[[1],[1],[[0,0]]],"sample":true,"expected":[0]},
+    {"input":[[5,5,5],[0,0,0],[[0,2],[1,2]]],"expected":[3,2]},
+    {"input":[[0,3,1],[1,2,1],[[0,0],[0,2],[1,1]]],"expected":[0,1,1]}
+  ]
+}

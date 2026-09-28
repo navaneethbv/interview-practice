@@ -1,0 +1,30 @@
+{
+  "id": "ctci-master-mind",
+  "style": "leetcode",
+  "function": {
+    "python": "estimate",
+    "java": "estimate"
+  },
+  "params": [
+    {
+      "name": "solution",
+      "type": "string"
+    },
+    {
+      "name": "guess",
+      "type": "string"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":["RGBY","GGRR"],"sample":true,"expected":[1,1]},
+    {"input":["RRRR","RRRR"],"sample":true,"expected":[4,0]},
+    {"input":["RGBY","YBGR"],"expected":[0,4]},
+    {"input":["RRGG","GGRR"],"expected":[0,4]},
+    {"input":["RGBY","BBBB"],"expected":[1,0]},
+    {"input":["RYGB","YYYY"],"expected":[1,0]},
+    {"input":["BGRR","RRBB"],"expected":[0,3]},
+    {"input":["GGGG","RRRR"],"expected":[0,0]},
+    {"input":["RGGB","YRGB"],"expected":[2,1]}
+  ]
+}

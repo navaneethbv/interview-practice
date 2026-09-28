@@ -1,0 +1,23 @@
+{
+  "id": "bctci-supersequence",
+  "style": "leetcode",
+  "function": {
+    "python": "hasSupersequence",
+    "java": "hasSupersequence"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "string[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["abc","bde","df","cfe"]],"sample":true,"expected":true},
+    {"input":[["ab","ba"]],"sample":true,"expected":false},
+    {"input":[["aa"]],"expected":false},
+    {"input":[["a"]],"expected":true},
+    {"input":[["abc","cd","da"]],"expected":false},
+    {"input":[["xyz","wxz","yz"]],"expected":true}
+  ]
+}

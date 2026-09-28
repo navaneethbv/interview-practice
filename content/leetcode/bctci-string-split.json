@@ -1,0 +1,30 @@
+{
+  "id": "bctci-string-split",
+  "style": "leetcode",
+  "function": {
+    "python": "split",
+    "java": "split"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "c",
+      "type": "string"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":["split by space"," "],"sample":true,"expected":["split","by","space"]},
+    {"input":["/home/./..//Documents/","/"],"sample":true,"expected":["","home",".","..","","Documents",""]},
+    {"input":["beekeeper needed","e"],"expected":["b","","k","","p","r n","","d","d"]},
+    {"input":["","?"],"expected":[]},
+    {"input":["abc","x"],"expected":["abc"]},
+    {"input":["x","x"],"expected":["",""]},
+    {"input":["xx","x"],"expected":["","",""]},
+    {"input":["a,b,,c",","],"expected":["a","b","","c"]},
+    {"input":[",lead",","],"expected":["","lead"]}
+  ]
+}

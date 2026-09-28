@@ -1,0 +1,31 @@
+{
+  "id": "bctci-presidential-election",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "candidates",
+      "type": "string[]"
+    },
+    {
+      "name": "votes",
+      "type": "int[]"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":[["Ada","Ben","Cy"],[2,3,4]],"expected":"Ben","sample":true},
+    {"input":[["Ada","Ben"],[4,4]],"expected":"Ada","sample":true},
+    {"input":[["A"],[1]],"expected":"A"},
+    {"input":[["A","B"],[1,9]],"expected":"B"},
+    {"input":[["C","B","A"],[1,1,1]],"expected":"A"},
+    {"input":[["A","B","C","D"],[1,2,2,5]],"expected":"B"},
+    {"input":[["A","B","C","D"],[2,2,3,3]],"expected":"C"},
+    {"input":[["Z","Y","X","W"],[1,2,4,8]],"expected":"W"},
+    {"input":[["a","B"],[2,2]],"expected":"B"},
+    {"input":[["A","B","C"],[1000000,1000000,1000000]],"expected":"A"}
+  ]
+}

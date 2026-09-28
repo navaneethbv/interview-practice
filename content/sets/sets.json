@@ -3,7 +3,7 @@
   "id": "ctci",
   "title": "Cracking the Coding Interview",
   "kind": "curated",
-  "description": "An original practice track inspired by the coding chapters of Cracking the Coding Interview, with Python and Java references and hidden edge-case tests. This is a private study aid, not a reproduction of the book.",
+  "description": "An original practice track covering the coding questions of Cracking the Coding Interview, 6th edition, with Python and Java references and hidden edge-case tests. Questions that match a LeetCode problem link to it; the rest are written for this site. This is a private study aid, not a reproduction of the book.",
   "sourceUrl": "https://www.crackingthecodinginterview.com/",
   "sourceLabel": "Official CTCI site",
   "items": [
@@ -53,6 +53,101 @@
     "category": "Arrays and Strings"
    },
    {
+    "slug": "ctci-remove-dups",
+    "label": "2.1",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "ctci-kth-to-last",
+    "label": "2.2",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "delete-node-in-a-linked-list",
+    "label": "2.3",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "partition-list",
+    "label": "2.4",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "add-two-numbers",
+    "label": "2.5",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "add-two-numbers-ii",
+    "label": "2.5",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "label": "2.6",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "intersection-of-two-linked-lists",
+    "label": "2.7",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "linked-list-cycle-ii",
+    "label": "2.8",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "ctci-three-in-one",
+    "label": "3.1",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "min-stack",
+    "label": "3.2",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "ctci-stack-of-plates",
+    "label": "3.3",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "implement-queue-using-stacks",
+    "label": "3.4",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "ctci-sort-stack",
+    "label": "3.5",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "ctci-animal-shelter",
+    "label": "3.6",
+    "category": "Stacks and Queues"
+   },
+   {
+    "slug": "ctci-route-between-nodes",
+    "label": "4.1",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "convert-sorted-array-to-binary-search-tree",
+    "label": "4.2",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "binary-tree-level-order-traversal",
+    "label": "4.3",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "balanced-binary-tree",
+    "label": "4.4",
+    "category": "Trees and Graphs"
+   },
+   {
     "slug": "validate-binary-search-tree",
     "label": "4.5",
     "category": "Trees and Graphs"
@@ -63,9 +158,109 @@
     "category": "Trees and Graphs"
    },
    {
-    "slug": "path-sum",
+    "slug": "course-schedule-ii",
+    "label": "4.7",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "lowest-common-ancestor-of-a-binary-tree",
+    "label": "4.8",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "ctci-bst-sequences",
+    "label": "4.9",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "subtree-of-another-tree",
+    "label": "4.10",
+    "category": "Trees and Graphs"
+   },
+   {
+    "slug": "path-sum-iii",
     "label": "4.12",
     "category": "Trees and Graphs"
+   },
+   {
+    "slug": "ctci-insertion",
+    "label": "5.1",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-binary-to-string",
+    "label": "5.2",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-flip-bit-to-win",
+    "label": "5.3",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-next-number",
+    "label": "5.4",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-conversion",
+    "label": "5.6",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-pairwise-swap",
+    "label": "5.7",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "ctci-draw-line",
+    "label": "5.8",
+    "category": "Bit Manipulation"
+   },
+   {
+    "slug": "bulb-switcher",
+    "label": "6.9",
+    "category": "Math and Logic Puzzles"
+   },
+   {
+    "slug": "minesweeper",
+    "label": "7.10",
+    "category": "Object-Oriented Design"
+   },
+   {
+    "slug": "design-hashmap",
+    "label": "7.12",
+    "category": "Object-Oriented Design"
+   },
+   {
+    "slug": "ctci-triple-step",
+    "label": "8.1",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-robot-in-a-grid",
+    "label": "8.2",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-magic-index",
+    "label": "8.3",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "subsets",
+    "label": "8.4",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-recursive-multiply",
+    "label": "8.5",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-towers-of-hanoi",
+    "label": "8.6",
+    "category": "Recursion and Dynamic Programming"
    },
    {
     "slug": "permutations",
@@ -73,9 +268,44 @@
     "category": "Recursion and Dynamic Programming"
    },
    {
+    "slug": "permutations-ii",
+    "label": "8.8",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "generate-parentheses",
+    "label": "8.9",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "flood-fill",
+    "label": "8.10",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "coin-change-ii",
+    "label": "8.11",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
     "slug": "n-queens",
     "label": "8.12",
     "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-stack-of-boxes",
+    "label": "8.13",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "ctci-boolean-evaluation",
+    "label": "8.14",
+    "category": "Recursion and Dynamic Programming"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "label": "10.1",
+    "category": "Sorting and Searching"
    },
    {
     "slug": "group-anagrams",
@@ -88,14 +318,159 @@
     "category": "Sorting and Searching"
    },
    {
+    "slug": "ctci-sorted-search-no-size",
+    "label": "10.4",
+    "category": "Sorting and Searching"
+   },
+   {
+    "slug": "ctci-sparse-search",
+    "label": "10.5",
+    "category": "Sorting and Searching"
+   },
+   {
     "slug": "find-all-duplicates-in-an-array",
     "label": "10.8",
     "category": "Sorting and Searching"
    },
    {
-    "slug": "find-median-from-data-stream",
+    "slug": "search-a-2d-matrix-ii",
+    "label": "10.9",
+    "category": "Sorting and Searching"
+   },
+   {
+    "slug": "ctci-rank-from-stream",
     "label": "10.10",
     "category": "Sorting and Searching"
+   },
+   {
+    "slug": "ctci-peaks-and-valleys",
+    "label": "10.11",
+    "category": "Sorting and Searching"
+   },
+   {
+    "slug": "ctci-multiple-apartments",
+    "label": "14.1",
+    "category": "Databases"
+   },
+   {
+    "slug": "ctci-open-requests",
+    "label": "14.2",
+    "category": "Databases"
+   },
+   {
+    "slug": "ctci-close-all-requests",
+    "label": "14.3",
+    "category": "Databases"
+   },
+   {
+    "slug": "ctci-number-swapper",
+    "label": "16.1",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-word-frequencies",
+    "label": "16.2",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-tic-tac-win",
+    "label": "16.4",
+    "category": "Moderate"
+   },
+   {
+    "slug": "factorial-trailing-zeroes",
+    "label": "16.5",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-smallest-difference",
+    "label": "16.6",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-number-max",
+    "label": "16.7",
+    "category": "Moderate"
+   },
+   {
+    "slug": "integer-to-english-words",
+    "label": "16.8",
+    "category": "Moderate"
+   },
+   {
+    "slug": "divide-two-integers",
+    "label": "16.9",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-living-people",
+    "label": "16.10",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-diving-board",
+    "label": "16.11",
+    "category": "Moderate"
+   },
+   {
+    "slug": "max-points-on-a-line",
+    "label": "16.14",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-master-mind",
+    "label": "16.15",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-sub-sort",
+    "label": "16.16",
+    "category": "Moderate"
+   },
+   {
+    "slug": "maximum-subarray",
+    "label": "16.17",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-pattern-matching",
+    "label": "16.18",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-pond-sizes",
+    "label": "16.19",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-t9",
+    "label": "16.20",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-sum-swap",
+    "label": "16.21",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-langtons-ant",
+    "label": "16.22",
+    "category": "Moderate"
+   },
+   {
+    "slug": "ctci-pairs-with-sum",
+    "label": "16.24",
+    "category": "Moderate"
+   },
+   {
+    "slug": "lru-cache",
+    "label": "16.25",
+    "category": "Moderate"
+   },
+   {
+    "slug": "basic-calculator-ii",
+    "label": "16.26",
+    "category": "Moderate"
    },
    {
     "slug": "sum-of-two-integers",
@@ -113,6 +488,31 @@
     "category": "Hard"
    },
    {
+    "slug": "ctci-letters-and-numbers",
+    "label": "17.5",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-count-of-twos",
+    "label": "17.6",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-baby-names",
+    "label": "17.7",
+    "category": "Hard"
+   },
+   {
+    "slug": "russian-doll-envelopes",
+    "label": "17.8",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-kth-multiple",
+    "label": "17.9",
+    "category": "Hard"
+   },
+   {
     "slug": "majority-element",
     "label": "17.10",
     "category": "Hard"
@@ -120,6 +520,51 @@
    {
     "slug": "shortest-word-distance",
     "label": "17.11",
+    "category": "Hard"
+   },
+   {
+    "slug": "convert-binary-search-tree-to-sorted-doubly-linked-list",
+    "label": "17.12",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-re-space",
+    "label": "17.13",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-smallest-k",
+    "label": "17.14",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-longest-word",
+    "label": "17.15",
+    "category": "Hard"
+   },
+   {
+    "slug": "house-robber",
+    "label": "17.16",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-multi-search",
+    "label": "17.17",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-shortest-supersequence",
+    "label": "17.18",
+    "category": "Hard"
+   },
+   {
+    "slug": "ctci-missing-two",
+    "label": "17.19",
+    "category": "Hard"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "label": "17.20",
     "category": "Hard"
    },
    {
@@ -133,24 +578,1184 @@
     "category": "Hard"
    },
    {
-    "slug": "maximal-square",
+    "slug": "ctci-max-black-square",
     "label": "17.23",
     "category": "Hard"
    },
    {
-    "slug": "factorial-trailing-zeroes",
-    "label": "16.5",
-    "category": "Moderate"
+    "slug": "ctci-max-submatrix",
+    "label": "17.24",
+    "category": "Hard"
+   }
+  ]
+ },
+ {
+  "id": "bctci",
+  "title": "Beyond Cracking the Coding Interview",
+  "kind": "curated",
+  "description": "Original practice for 232 of the 234 Beyond Cracking the Coding Interview problems, covering chapters 25 to 43 and all 37 problems from the five online chapters: Set & Map Implementations, Monotonic Stacks & Queues, Union-Find, Boundary Thinking, and Booster Problems. Includes Python and Java references and hidden tests. Two book problems requiring additional harness support remain unavailable.",
+  "sourceUrl": "https://start.interviewing.io/beyond-ctci/all-problems/technical-topics",
+  "sourceLabel": "BCTCI online materials",
+  "items": [
+   {
+    "slug": "bctci-implement-dynamic-array",
+    "label": "25.1",
+    "category": "Dynamic Arrays"
    },
    {
-    "slug": "lru-cache",
-    "label": "16.25",
-    "category": "Moderate"
+    "slug": "bctci-extra-dynamic-array-operations",
+    "label": "25.2",
+    "category": "Dynamic Arrays"
    },
    {
-    "slug": "basic-calculator",
-    "label": "16.26",
-    "category": "Moderate"
+    "slug": "bctci-string-split",
+    "label": "26.1",
+    "category": "String Manipulation"
+   },
+   {
+    "slug": "bctci-string-join",
+    "label": "26.2",
+    "category": "String Manipulation"
+   },
+   {
+    "slug": "bctci-string-matching",
+    "label": "26.3",
+    "category": "String Manipulation"
+   },
+   {
+    "slug": "bctci-palindrome-check",
+    "label": "27.1",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-smaller-prefixes",
+    "label": "27.2",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-array-intersection",
+    "label": "27.3",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-palindromic-sentence",
+    "label": "27.4",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-reverse-case-match",
+    "label": "27.5",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-merge-two-sorted-arrays",
+    "label": "27.6",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-2-sum",
+    "label": "27.7",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-three-way-merge-without-duplicates",
+    "label": "27.8",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-sort-valley-shaped-array",
+    "label": "27.9",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-missing-numbers-in-range",
+    "label": "27.10",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-interval-intersection",
+    "label": "27.11",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "reverse-string",
+    "label": "27.12",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-parity-sorting",
+    "label": "27.13",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-array",
+    "label": "27.14",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-quicksort-partition",
+    "label": "27.15",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-dutch-flag",
+    "label": "27.16",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-prefix-suffix-swap",
+    "label": "27.17",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-shift-word-to-back",
+    "label": "27.18",
+    "category": "Two Pointers"
+   },
+   {
+    "slug": "bctci-chess-moves",
+    "label": "28.1",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-queens-reach",
+    "label": "28.2",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-spiral-order",
+    "label": "28.3",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-snowprints",
+    "label": "28.4",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-valid-sudoku",
+    "label": "28.5",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-subgrid-maximums",
+    "label": "28.6",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-subgrid-sums",
+    "label": "28.7",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "bctci-matrix-operations",
+    "label": "28.8",
+    "category": "Grids & Matrices"
+   },
+   {
+    "slug": "binary-search",
+    "label": "29.1",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "first-bad-version",
+    "label": "29.2",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-valley-bottom",
+    "label": "29.3",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-2-array-2-sum",
+    "label": "29.4",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-target-count-divisible-by-k",
+    "label": "29.5",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-race-overtaking",
+    "label": "29.6",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-search-in-sorted-grid",
+    "label": "29.7",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-search-in-huge-array",
+    "label": "29.8",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "split-array-largest-sum",
+    "label": "29.9",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-water-refilling",
+    "label": "29.10",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "koko-eating-bananas",
+    "label": "29.11",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-tide-aerial-view",
+    "label": "29.12",
+    "category": "Binary Search"
+   },
+   {
+    "slug": "bctci-account-sharing-detection",
+    "label": "30.1",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-most-shared-account",
+    "label": "30.2",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-most-frequent-octet",
+    "label": "30.3",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-multi-account-cheating",
+    "label": "30.4",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-domain-resolver",
+    "label": "30.5",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-find-all-squares",
+    "label": "30.6",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-word-expansion-class",
+    "label": "30.7",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-cheater-detection",
+    "label": "30.8",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-product-of-alphabetical-sums",
+    "label": "30.9",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-action-log-anomalies",
+    "label": "30.10",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-largest-set-intersection",
+    "label": "30.11",
+    "category": "Sets & Maps"
+   },
+   {
+    "slug": "bctci-sorting-by-frequency",
+    "label": "31.1",
+    "category": "Sorting"
+   },
+   {
+    "slug": "bctci-nested-circles",
+    "label": "31.2",
+    "category": "Sorting"
+   },
+   {
+    "slug": "bctci-delete-operations",
+    "label": "31.3",
+    "category": "Sorting"
+   },
+   {
+    "slug": "bctci-spreadsheet",
+    "label": "31.4",
+    "category": "Sorting"
+   },
+   {
+    "slug": "bctci-sort-by-publication-year",
+    "label": "31.5",
+    "category": "Sorting"
+   },
+   {
+    "slug": "ctci-smallest-k",
+    "label": "31.6",
+    "category": "Sorting"
+   },
+   {
+    "slug": "bctci-compress-array",
+    "label": "32.1",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-compress-array-by-k",
+    "label": "32.2",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-viewer-counter-class",
+    "label": "32.3",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-current-url",
+    "label": "32.4",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-current-url-with-forward",
+    "label": "32.5",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-balanced-partition",
+    "label": "32.6",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-custom-brackets",
+    "label": "32.7",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-longest-balanced-subsequence",
+    "label": "32.8",
+    "category": "Stacks & Queues"
+   },
+   {
+    "slug": "bctci-robot-instructions",
+    "label": "33.1",
+    "category": "Recursion"
+   },
+   {
+    "slug": "bctci-nested-array-sum",
+    "label": "33.2",
+    "category": "Recursion"
+   },
+   {
+    "slug": "bctci-powers-mod-m",
+    "label": "33.3",
+    "category": "Recursion"
+   },
+   {
+    "slug": "bctci-lego-castle",
+    "label": "33.4",
+    "category": "Recursion"
+   },
+   {
+    "slug": "bctci-laminal-arrays",
+    "label": "33.5",
+    "category": "Recursion"
+   },
+   {
+    "slug": "bctci-singly-linked-list-design",
+    "label": "34.1",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-doubly-linked-list-design",
+    "label": "34.2",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-linked-list-based-stack",
+    "label": "34.3",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-linked-list-based-queue",
+    "label": "34.4",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-linked-list-copy",
+    "label": "34.5",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "label": "34.6",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-sublist-reversal",
+    "label": "34.7",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "label": "34.8",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "label": "34.10",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "remove-nth-node-from-end-of-list",
+    "label": "34.11",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-linked-list-zip",
+    "label": "34.12",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list",
+    "label": "34.13",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "reverse-nodes-in-k-group",
+    "label": "34.14",
+    "category": "Linked Lists"
+   },
+   {
+    "slug": "bctci-aligned-chain",
+    "label": "35.1",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-hidden-message",
+    "label": "35.2",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-aligned-path",
+    "label": "35.3",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-tree-layout",
+    "label": "35.4",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-triangle-count",
+    "label": "35.5",
+    "category": "Trees"
+   },
+   {
+    "slug": "invert-binary-tree",
+    "label": "35.6",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-evaluate-expression-tree",
+    "label": "35.7",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-left-view",
+    "label": "35.8",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-most-prolific-level",
+    "label": "35.9",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-zig-zag-order",
+    "label": "35.10",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-most-protected-node",
+    "label": "35.11",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-bst-search",
+    "label": "35.12",
+    "category": "Trees"
+   },
+   {
+    "slug": "closest-binary-search-tree-value",
+    "label": "35.13",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-bst-validation",
+    "label": "35.14",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-bst-duplicate-detection",
+    "label": "35.15",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-bst-kth-element",
+    "label": "35.16",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-bst-merge-into-array",
+    "label": "35.17",
+    "category": "Trees"
+   },
+   {
+    "slug": "bctci-adjacency-list-validation",
+    "label": "36.1",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-graph-path",
+    "label": "36.2",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-tree-check",
+    "label": "36.3",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-spanning-tree",
+    "label": "36.4",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-reachability-queries",
+    "label": "36.5",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-strongly-connected-graph",
+    "label": "36.6",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-hilliest-connected-component",
+    "label": "36.7",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-highest-average-elevation-gain",
+    "label": "36.8",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-first-time-all-connected",
+    "label": "36.9",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-shortest-path-queries",
+    "label": "36.10",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-graph-hangout",
+    "label": "36.11",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-days-until-all-infected",
+    "label": "36.12",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-count-grid-islands",
+    "label": "36.13",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-multi-exit-maze",
+    "label": "36.14",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-rgb-distances",
+    "label": "36.15",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-the-floor-is-lava",
+    "label": "36.16",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-word-ladder-game-variation",
+    "label": "36.17",
+    "category": "Graphs"
+   },
+   {
+    "slug": "bctci-implement-a-heap",
+    "label": "37.1",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-k-most-played",
+    "label": "37.2",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-top-songs-class",
+    "label": "37.3",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-top-songs-class-with-updates",
+    "label": "37.4",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-popular-songs-class",
+    "label": "37.5",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-most-listened-across-genres",
+    "label": "37.6",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-make-playlist",
+    "label": "37.7",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-sum-of-first-k-prime-powers",
+    "label": "37.8",
+    "category": "Heaps"
+   },
+   {
+    "slug": "bctci-most-weekly-sales",
+    "label": "38.1",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-most-sales-in-k-days",
+    "label": "38.2",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-unique-best-seller-streak",
+    "label": "38.3",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-enduring-best-seller-streak",
+    "label": "38.4",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-longest-good-day-streak",
+    "label": "38.5",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "maximum-subarray",
+    "label": "38.6",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-longest-alternating-sequence",
+    "label": "38.7",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-maximum-with-at-most-3-bad-days",
+    "label": "38.8",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-ad-campaign-boost",
+    "label": "38.9",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-ad-campaign-with-small-boosts",
+    "label": "38.10",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-boosting-days-multiple-times",
+    "label": "38.11",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-longest-period-at-most-k-distinct",
+    "label": "38.12",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-longest-repeated-substring",
+    "label": "38.13",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-shortest-period-with-over-20-sales",
+    "label": "38.14",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-shortest-with-all-letters",
+    "label": "38.15",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-smallest-range-with-k-elements",
+    "label": "38.16",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-strong-start-and-ending",
+    "label": "38.17",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-at-most-k-bad-days",
+    "label": "38.18",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-exactly-k-bad-days",
+    "label": "38.19",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-at-least-k-bad-days",
+    "label": "38.20",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-good-start-and-ending",
+    "label": "38.21",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-drops",
+    "label": "38.22",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-bad-days-in-range",
+    "label": "38.23",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-subarrays-with-all-remainders",
+    "label": "38.24",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-count-good-subarrays-with-at-least-k-sales",
+    "label": "38.25",
+    "category": "Sliding Windows"
+   },
+   {
+    "slug": "bctci-max-sum-path",
+    "label": "39.1",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "subsets",
+    "label": "39.2",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "permutations",
+    "label": "39.3",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-to-be-or-not-to-be",
+    "label": "39.4",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-thesaurusly",
+    "label": "39.5",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-jumping-numbers",
+    "label": "39.6",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-ikea-shopping",
+    "label": "39.7",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-count-unique-submultisets-with-sum-zero",
+    "label": "39.9",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-4-directional-max-sum-path",
+    "label": "39.10",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-escape-with-all-clues",
+    "label": "39.11",
+    "category": "Backtracking"
+   },
+   {
+    "slug": "bctci-road-trip",
+    "label": "40.1",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-minivan-road-trip",
+    "label": "40.2",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-restaurant-ratings",
+    "label": "40.3",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-count-0-sum-paths",
+    "label": "40.4",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-magic-blackjack",
+    "label": "40.5",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-minimum-steps-to-one",
+    "label": "40.6",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "longest-common-subsequence",
+    "label": "40.7",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-reconstruct-longest-common-subsequence",
+    "label": "40.8",
+    "category": "Dynamic Programming"
+   },
+   {
+    "slug": "bctci-most-non-overlapping-intervals",
+    "label": "41.1",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-time-traveler",
+    "label": "41.2",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-center-assignment",
+    "label": "41.3",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-minimum-triplet-medians",
+    "label": "41.4",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-fewest-script-runs",
+    "label": "41.5",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-time-traveler-max-year",
+    "label": "41.6",
+    "category": "Greedy Algorithms"
+   },
+   {
+    "slug": "bctci-dag-distances",
+    "label": "42.1",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-dag-path-reconstruction",
+    "label": "42.2",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-dag-longest-path",
+    "label": "42.3",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-counting-paths",
+    "label": "42.4",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-parallel-compilation",
+    "label": "42.5",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-longest-path-of-increasing-degrees",
+    "label": "42.6",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-supersequence",
+    "label": "42.7",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-number-of-palindromic-splits",
+    "label": "42.8",
+    "category": "Topological Sort"
+   },
+   {
+    "slug": "bctci-channel-views",
+    "label": "43.1",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-youtube-video-reception",
+    "label": "43.2",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-exclusive-product",
+    "label": "43.3",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "find-pivot-index",
+    "label": "43.4",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-youtube-video-unusual-days",
+    "label": "43.5",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "label": "43.6",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-longest-subarray-with-sum-k",
+    "label": "43.7",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-segmented-video-votes",
+    "label": "43.8",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-most-booked-slot",
+    "label": "43.9",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-all-overbooked-slots",
+    "label": "43.10",
+    "category": "Prefix Sums"
+   },
+   {
+    "slug": "bctci-hash-set-class",
+    "label": "S.1",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-hash-set-class-extensions",
+    "label": "S.2",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-multiset",
+    "label": "S.3",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-hash-map-class",
+    "label": "S.4",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-hash-map-class-extensions",
+    "label": "S.5",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-multimap",
+    "label": "S.6",
+    "category": "Set & Map Implementations"
+   },
+   {
+    "slug": "bctci-max-queue",
+    "label": "M.1",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "label": "M.2",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-largest-temperature-change",
+    "label": "M.3",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-longest-stable-period",
+    "label": "M.4",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-next-greater-element",
+    "label": "M.5",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-largest-rectangle",
+    "label": "M.6",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-king-kong-vs-godzilla",
+    "label": "M.7",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-king-kong-vs-godzilla-in-the-fog",
+    "label": "M.8",
+    "category": "Monotonic Stacks & Queues"
+   },
+   {
+    "slug": "bctci-minimum-spanning-tree",
+    "label": "U.1",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-num-groups-operation",
+    "label": "U.2",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-mst-reconstruction",
+    "label": "U.3",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-edge-in-mst",
+    "label": "U.4",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-connected-components-over-time",
+    "label": "U.5",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-largest-connected-component-over-time",
+    "label": "U.6",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-presidential-election",
+    "label": "U.7",
+    "category": "Union-Find"
+   },
+   {
+    "slug": "bctci-tunnel-depth",
+    "label": "B.1",
+    "category": "Boundary Thinking"
+   },
+   {
+    "slug": "bctci-3-sum",
+    "label": "P.1",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-count-substrings-without-letter",
+    "label": "P.2",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-list-of-divisors",
+    "label": "P.3",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-sub-permutations",
+    "label": "P.4",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-magic-balls",
+    "label": "P.5",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-hiring-and-training",
+    "label": "P.6",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-interval-xor",
+    "label": "P.7",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "rotate-image",
+    "label": "P.8",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-company-launches",
+    "label": "P.9",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-most-ones-with-k-flips",
+    "label": "P.10",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-multiplayer-video-game",
+    "label": "P.11",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-tree-diameter",
+    "label": "P.12",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-unrooted-tree-diameter",
+    "label": "P.13",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-longest-alphabet-chain",
+    "label": "P.14",
+    "category": "Booster Problems"
+   },
+   {
+    "slug": "bctci-self-doubling-sequence",
+    "label": "P.15",
+    "category": "Booster Problems"
    }
   ]
  },

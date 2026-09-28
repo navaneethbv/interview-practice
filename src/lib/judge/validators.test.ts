@@ -23,6 +23,36 @@ it("validates alternate answers without accepting malformed ones", () => {
   assert.ok(!check("smallestPairs", [[1, 2], [1, 2], 2], [[1, 1], [1, 1]], [[1, 1], [1, 2]]));
   assert.ok(check("bstDelete", [[2, 1, 3], 2], [1, null, 3], [3, 1]));
   assert.ok(!check("bstDelete", [[2, 1, 3], 2], [1, 3], [3, 1]));
+  assert.ok(check("peaksValleys", [[5, 3, 1, 2, 3]], [3, 5, 1, 3, 2], [5, 1, 3, 2, 3]));
+  assert.ok(!check("peaksValleys", [[5, 3, 1, 2, 3]], [1, 2, 3, 3, 5], [5, 1, 3, 2, 3]));
+  assert.ok(!check("peaksValleys", [[5, 3, 1, 2, 3]], [5, 1, 3, 2, 4], [5, 1, 3, 2, 3]));
+  assert.ok(check("pivotPartition", [[1, 7, 3, 5, 3], 3], [1, 3, 3, 7, 5], [1, 3, 3, 5, 7]));
+  assert.ok(!check("pivotPartition", [[1, 7, 3, 5, 3], 3], [1, 3, 7, 3, 5], [1, 3, 3, 5, 7]));
+  assert.ok(!check("pivotPartition", [[1, 7, 3, 5, 3], 3], [1, 3, 3, 5, 5], [1, 3, 3, 5, 7]));
+  const graph = [[1], [0, 2, 5, 4], [1, 4, 5], [], [5, 2, 1], [1, 2, 4]];
+  assert.ok(check("graphPath", [graph, 0, 4], [0, 1, 2, 5, 4], [0, 1, 4]));
+  assert.ok(!check("graphPath", [graph, 0, 4], [0, 2, 4], [0, 1, 4]));
+  assert.ok(!check("graphPath", [graph, 0, 3], [0, 1], []));
+  assert.ok(check("spanningTree", [[[1, 2], [0, 2], [0, 1]]], [[1, 2], [0, 2]], [[0, 1], [0, 2]]));
+  assert.ok(!check("spanningTree", [[[1, 2], [0, 2], [0, 1]]], [[0, 1], [1, 0]], [[0, 1], [0, 2]]));
+  assert.ok(check("shortestPaths", [graph, 0, [4, 3]], [[0, 1, 4], []], [[0, 1, 4], []]));
+  assert.ok(!check("shortestPaths", [graph, 0, [4, 3]], [[0, 1, 2, 4], []], [[0, 1, 4], []]));
+  const songs = [["a", "X"], ["b", "X"], ["c", "Y"]];
+  assert.ok(check("artistPlaylist", [songs], ["a", "c", "b"], ["b", "c", "a"]));
+  assert.ok(!check("artistPlaylist", [songs], ["a", "b", "c"], ["b", "c", "a"]));
+  assert.ok(!check("artistPlaylist", [songs], [], ["b", "c", "a"]));
+  assert.ok(check("bestSubset", [10, [2, 3, 4, 5], [1, 2, 3.5, 4]], [3, 2], [2, 3]));
+  assert.ok(!check("bestSubset", [10, [2, 3, 4, 5], [1, 2, 3.5, 4]], [0, 1, 2], [2, 3]));
+  assert.ok(!check("bestSubset", [10, [6, 6], [5, 5]], [0, 1], [0]));
+  const room = [[0, 1, 0], [0, 2, 0], [0, 0, 2]];
+  assert.ok(check("cluePath", [room], [[0, 0], [1, 0], [1, 1], [2, 1], [2, 2]], [[0, 0], [1, 0], [1, 1], [1, 2], [2, 2]]));
+  assert.ok(!check("cluePath", [room], [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2]], [[0, 0], [1, 0], [1, 1], [1, 2], [2, 2]]));
+  assert.ok(check("commonSubsequence", ["ABCD", "ACBAD"], "ABD", "ACD"));
+  assert.ok(!check("commonSubsequence", ["ABCD", "ACBAD"], "ADC", "ACD"));
+  const dag = [4, [[0, 1, 1], [1, 3, 1], [0, 2, 1], [2, 3, 1]], 0, 3];
+  assert.ok(check("dagPath", dag, [0, 2, 3], [0, 1, 3]));
+  assert.ok(!check("dagPath", dag, [0, 3], [0, 1, 3]));
+  assert.ok(!check("dagPath", [3, [[0, 1, 5]], 0, 2], [0, 1], []));
 });
 
 it("randomized designs accept valid draws and reject invalid or constant outputs", () => {

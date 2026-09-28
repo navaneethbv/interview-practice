@@ -1,0 +1,31 @@
+{
+  "id": "bctci-string-matching",
+  "style": "leetcode",
+  "function": {
+    "python": "indexOf",
+    "java": "indexOf"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "t",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["hello world","world"],"sample":true,"expected":6},
+    {"input":["needle in a haystack","not"],"sample":true,"expected":-1},
+    {"input":["needle in a haystack","needle"],"expected":0},
+    {"input":["",""],"expected":0},
+    {"input":["","a"],"expected":-1},
+    {"input":["abc",""],"expected":0},
+    {"input":["aaaab","aab"],"expected":2},
+    {"input":["abc","abcd"],"expected":-1},
+    {"input":["abcabc","cab"],"expected":2},
+    {"input":["a","a"],"expected":0}
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "ctci-baby-names",
+  "style": "leetcode",
+  "function": {
+    "python": "trulyMostPopular",
+    "java": "trulyMostPopular"
+  },
+  "params": [
+    {
+      "name": "names",
+      "type": "string[]"
+    },
+    {
+      "name": "counts",
+      "type": "int[]"
+    },
+    {
+      "name": "synonyms",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[["John","Jon","Chris","Kris","Christopher"],[15,12,13,4,19],[["Jon","John"],["John","Johnny"],["Chris","Kris"],["Chris","Christopher"]]],"sample":true,"expected":["John:27","Chris:36"]},
+    {"input":[["Ann"],[3],[]],"sample":true,"expected":["Ann:3"]},
+    {"input":[["A","B","C"],[1,2,3],[["A","B"],["B","C"]]],"expected":["A:6"]},
+    {"input":[["A","B","C"],[1,2,3],[]],"expected":["A:1","B:2","C:3"]},
+    {"input":[["Zed"],[5],[["Zed","Adam"]]],"expected":["Adam:5"]},
+    {"input":[["x","y"],[1,1],[["p","q"],["x","p"]]],"expected":["p:1","y:1"]},
+    {"input":[["Bo","Al"],[10,20],[["Bo","Bo"]]],"expected":["Bo:10","Al:20"]},
+    {"input":[["a","b","c","d"],[4,3,2,1],[["a","c"],["b","d"],["d","e"]]],"expected":["a:6","b:4"]}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "ctci-kth-multiple",
+  "style": "leetcode",
+  "function": {
+    "python": "getKthMagicNumber",
+    "java": "getKthMagicNumber"
+  },
+  "params": [
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[6],"sample":true,"expected":15},
+    {"input":[1],"sample":true,"expected":1},
+    {"input":[2],"expected":3},
+    {"input":[4],"expected":7},
+    {"input":[5],"expected":9},
+    {"input":[7],"expected":21},
+    {"input":[10],"expected":35},
+    {"input":[100],"expected":33075},
+    {"input":[1000],"expected":81716054175},
+    {"input":[2000],"expected":100913818359375}
+  ]
+}

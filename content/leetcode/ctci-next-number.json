@@ -1,0 +1,28 @@
+{
+  "id": "ctci-next-number",
+  "style": "leetcode",
+  "function": {
+    "python": "nextNumbers",
+    "java": "nextNumbers"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[13],"sample":true,"expected":[14,11]},
+    {"input":[1],"sample":true,"expected":[2,-1]},
+    {"input":[2147483647],"expected":[-1,-1]},
+    {"input":[1073741824],"expected":[-1,536870912]},
+    {"input":[7],"expected":[11,-1]},
+    {"input":[6],"expected":[9,5]},
+    {"input":[13948],"expected":[13967,13946]},
+    {"input":[10115],"expected":[10117,10096]},
+    {"input":[3],"expected":[5,-1]},
+    {"input":[1610612736],"expected":[-1,1342177280]},
+    {"input":[2],"expected":[4,1]}
+  ]
+}

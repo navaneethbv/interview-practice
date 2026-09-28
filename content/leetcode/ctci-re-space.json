@@ -1,0 +1,30 @@
+{
+  "id": "ctci-re-space",
+  "style": "leetcode",
+  "function": {
+    "python": "respace",
+    "java": "respace"
+  },
+  "params": [
+    {
+      "name": "dictionary",
+      "type": "string[]"
+    },
+    {
+      "name": "sentence",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[["looked","just","like","her","brother"],"jesslookedjustliketimherbrother"],"sample":true,"expected":7},
+    {"input":[[],"abc"],"sample":true,"expected":3},
+    {"input":[["a"],""],"expected":0},
+    {"input":[["abc"],"abc"],"expected":0},
+    {"input":[["ab","abc","c"],"abcc"],"expected":0},
+    {"input":[["a","aa","aaa"],"aaaaaaa"],"expected":0},
+    {"input":[["cat","cats","and","dog"],"catsanddogx"],"expected":1},
+    {"input":[["potimzz"],"potimzzpotimzz"],"expected":0},
+    {"input":[["the","he","hello"],"thello"],"expected":1}
+  ]
+}

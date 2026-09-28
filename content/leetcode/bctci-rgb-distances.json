@@ -1,0 +1,22 @@
+{
+  "id": "bctci-rgb-distances",
+  "style": "leetcode",
+  "function": {
+    "python": "rgbDistances",
+    "java": "rgbDistances"
+  },
+  "params": [
+    {
+      "name": "screen",
+      "type": "string[]"
+    }
+  ],
+  "returns": "int[][]",
+  "tests": [
+    {"input":[["RRRGRB","BGRGRR","RRRGRR","RGRRRR","GBGRGG"]],"sample":true,"expected":[[2,1,1,2,1,1],[1,1,1,3,1,2],[2,1,1,4,1,2],[1,1,1,1,1,1],[1,2,1,1,3,4]]},
+    {"input":[["RGB"]],"sample":true,"expected":[[1,1,2]]},
+    {"input":[["R","G","B"]],"expected":[[1],[1],[2]]},
+    {"input":[["RRRR","RRRR","GRRB"]],"expected":[[2,3,4,5],[1,2,3,4],[3,1,2,1]]},
+    {"input":[["BGR","GRB","RBG"]],"expected":[[2,1,1],[1,1,1],[1,1,1]]}
+  ]
+}

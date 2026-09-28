@@ -1,0 +1,28 @@
+{
+  "id": "bctci-delete-operations",
+  "style": "leetcode",
+  "function": {
+    "python": "applyDeletes",
+    "java": "applyDeletes"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "operations",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int[]",
+  "tests": [
+    {"input":[[50,30,70,20,80],[2,-1,4,-1]],"sample":true,"expected":[50]},
+    {"input":[[1,2,3],[]],"sample":true,"expected":[1,2,3]},
+    {"input":[[1,2,3],[-1,-1,-1]],"expected":[]},
+    {"input":[[5,5,5],[-1,0]],"expected":[5,5]},
+    {"input":[[3,1,2],[1,1,-1]],"expected":[3]},
+    {"input":[[7],[0]],"expected":[]},
+    {"input":[[4,-2,9,-2],[-1,3]],"expected":[4,9]}
+  ]
+}

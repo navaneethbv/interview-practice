@@ -1,0 +1,27 @@
+{
+  "id": "bctci-unique-best-seller-streak",
+  "style": "leetcode",
+  "function": {
+    "python": "hasUniqueStreak",
+    "java": "hasUniqueStreak"
+  },
+  "params": [
+    {
+      "name": "bestSeller",
+      "type": "string[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[["book3","book1","book3","book3","book2","book3","book4","book3"],3],"sample":true,"expected":true},
+    {"input":[["book3","book1","book3","book3","book2","book3","book4","book3"],4],"sample":true,"expected":false},
+    {"input":[["book1","book2","book3"],3],"expected":true},
+    {"input":[["a"],1],"expected":true},
+    {"input":[["a","a"],2],"expected":false},
+    {"input":[["a","a","b"],2],"expected":true}
+  ]
+}

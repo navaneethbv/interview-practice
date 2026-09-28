@@ -1,0 +1,26 @@
+{
+  "id": "bctci-palindrome-check",
+  "style": "leetcode",
+  "function": {
+    "python": "isPalindrome",
+    "java": "isPalindrome"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["level"],"sample":true,"expected":true},
+    {"input":["hello"],"sample":true,"expected":false},
+    {"input":["naan"],"expected":true},
+    {"input":[""],"expected":true},
+    {"input":["a"],"expected":true},
+    {"input":["ab"],"expected":false},
+    {"input":["aa"],"expected":true},
+    {"input":["abcba"],"expected":true},
+    {"input":["abcda"],"expected":false}
+  ]
+}

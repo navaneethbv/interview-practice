@@ -1,0 +1,26 @@
+{
+  "id": "bctci-reverse-case-match",
+  "style": "leetcode",
+  "function": {
+    "python": "reverseCaseMatch",
+    "java": "reverseCaseMatch"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["haDrRAHd"],"sample":true,"expected":true},
+    {"input":["haHrARDd"],"sample":true,"expected":false},
+    {"input":["BbbB"],"expected":true},
+    {"input":[""],"expected":true},
+    {"input":["aA"],"expected":true},
+    {"input":["aB"],"expected":false},
+    {"input":["ABab"],"expected":false},
+    {"input":["abBA"],"expected":true},
+    {"input":["xYyX"],"expected":true}
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "bctci-edge-in-mst",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "V",
+      "type": "int"
+    },
+    {
+      "name": "edges",
+      "type": "int[][]"
+    },
+    {
+      "name": "i",
+      "type": "int"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":[3,[[0,1,1],[1,2,1],[0,2,1]],0],"expected":false,"sample":true},
+    {"input":[3,[[0,1,1],[1,2,2],[0,2,3]],1],"expected":true,"sample":true},
+    {"input":[2,[[0,1,0]],0],"expected":true},
+    {"input":[3,[[0,1,-5],[1,2,2],[0,2,7]],0],"expected":true},
+    {"input":[3,[[0,1,-5],[1,2,2],[0,2,7]],1],"expected":true},
+    {"input":[3,[[0,1,1],[1,2,1],[0,2,1]],0],"expected":false},
+    {"input":[3,[[0,1,1],[1,2,1],[0,2,1]],1],"expected":false},
+    {"input":[4,[[0,1,1],[1,2,2],[2,3,3]],0],"expected":true},
+    {"input":[4,[[0,1,1],[1,2,2],[2,3,3]],1],"expected":true},
+    {"input":[4,[[0,1,-3],[0,2,-2],[0,3,-1],[1,2,4],[2,3,2]],0],"expected":true},
+    {"input":[4,[[0,1,-3],[0,2,-2],[0,3,-1],[1,2,4],[2,3,2]],1],"expected":true},
+    {"input":[2,[[1,0,-1000000]],0],"expected":true},
+    {"input":[4,[[0,1,0],[1,2,0],[2,3,0],[0,3,0]],0],"expected":false},
+    {"input":[4,[[0,1,0],[1,2,0],[2,3,0],[0,3,0]],1],"expected":false},
+    {"input":[5,[[0,1,1000000],[0,2,1000000],[0,3,1000000],[0,4,1000000]],0],"expected":true},
+    {"input":[5,[[0,1,1000000],[0,2,1000000],[0,3,1000000],[0,4,1000000]],1],"expected":true}
+  ]
+}

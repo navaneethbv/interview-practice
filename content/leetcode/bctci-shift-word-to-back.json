@@ -1,0 +1,31 @@
+{
+  "id": "bctci-shift-word-to-back",
+  "style": "leetcode",
+  "function": {
+    "python": "shiftWordToBack",
+    "java": "shiftWordToBack"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "char[]"
+    },
+    {
+      "name": "word",
+      "type": "string"
+    }
+  ],
+  "returns": "void",
+  "output": {
+    "arg": 0
+  },
+  "tests": [
+    {"input":[["b","a","c","b"],"ab"],"sample":true,"expected":["b","c","a","b"]},
+    {"input":[["b","a","b","c"],"b"],"sample":true,"expected":["a","b","c","b"]},
+    {"input":[["s","e","e","k","e","r","a","n","d","w","r","i","t","e","r"],"edit"],"expected":["s","e","k","e","r","a","n","w","r","e","r","e","d","i","t"]},
+    {"input":[[],""],"expected":[]},
+    {"input":[["a","b"],""],"expected":["a","b"]},
+    {"input":[["a","b","c"],"abc"],"expected":["a","b","c"]},
+    {"input":[["x","a","y","a"],"aa"],"expected":["x","y","a","a"]}
+  ]
+}

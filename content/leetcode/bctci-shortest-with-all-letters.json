@@ -1,0 +1,27 @@
+{
+  "id": "bctci-shortest-with-all-letters",
+  "style": "leetcode",
+  "function": {
+    "python": "shortestWithAllLetters",
+    "java": "shortestWithAllLetters"
+  },
+  "params": [
+    {
+      "name": "s1",
+      "type": "string"
+    },
+    {
+      "name": "s2",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["helloworld","well"],"sample":true,"expected":5},
+    {"input":["helloworld","weelll"],"sample":true,"expected":-1},
+    {"input":["ab","b"],"expected":1},
+    {"input":["aaab","ab"],"expected":2},
+    {"input":["abcabc","cba"],"expected":3},
+    {"input":["xyz","q"],"expected":-1}
+  ]
+}

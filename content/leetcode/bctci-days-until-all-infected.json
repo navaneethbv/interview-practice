@@ -1,0 +1,26 @@
+{
+  "id": "bctci-days-until-all-infected",
+  "style": "leetcode",
+  "function": {
+    "python": "daysToInfectAll",
+    "java": "daysToInfectAll"
+  },
+  "params": [
+    {
+      "name": "graph",
+      "type": "int[][]"
+    },
+    {
+      "name": "infected",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[[1,2],[0,2],[0,1,3],[2]],[0]],"sample":true,"expected":2},
+    {"input":[[[1],[0,2],[1,3],[2,4],[3]],[0,4]],"sample":true,"expected":2},
+    {"input":[[[1,2],[0,3],[0,3],[1,2]],[0,3]],"expected":1},
+    {"input":[[[]],[0]],"expected":0},
+    {"input":[[[1],[0,2],[1,3],[2]],[0]],"expected":3}
+  ]
+}

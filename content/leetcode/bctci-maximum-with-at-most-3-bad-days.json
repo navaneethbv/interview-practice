@@ -1,0 +1,22 @@
+{
+  "id": "bctci-maximum-with-at-most-3-bad-days",
+  "style": "leetcode",
+  "function": {
+    "python": "longestWithThreeBadDays",
+    "java": "longestWithThreeBadDays"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[0,14,7,9,0,20,10,0,10]],"sample":true,"expected":6},
+    {"input":[[5,5,5,5]],"sample":true,"expected":3},
+    {"input":[[10,10,10]],"expected":3},
+    {"input":[[]],"expected":0},
+    {"input":[[1,2,3,10,4,10,10]],"expected":6}
+  ]
+}

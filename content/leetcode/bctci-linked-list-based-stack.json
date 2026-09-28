@@ -1,0 +1,50 @@
+{
+  "kind": "design",
+  "id": "bctci-linked-list-based-stack",
+  "style": "leetcode",
+  "className": "LinkedStack",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "push",
+      "java": "push",
+      "params": [
+        {
+          "name": "v",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "pop",
+      "java": "pop",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "peek",
+      "java": "peek",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "size",
+      "java": "size",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "empty",
+      "java": "empty",
+      "params": [],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["push","push","push","peek","size","empty","pop","pop"],"args":[[1],[2],[3],[],[],[],[],[]]},"sample":true,"expected":[null,null,null,3,3,false,3,2]},
+    {"input":{"ctor":[],"ops":["pop","peek","size","empty"],"args":[[],[],[],[]]},"sample":true,"expected":[-1,-1,0,true]},
+    {"input":{"ctor":[],"ops":["push","pop","pop","empty","push","peek"],"args":[[1],[],[],[],[4],[]]},"expected":[null,1,-1,true,null,4]},
+    {"input":{"ctor":[],"ops":["push","push","push","push","push","push","pop","pop","pop","size","peek"],"args":[[0],[1],[2],[3],[4],[5],[],[],[],[],[]]},"expected":[null,null,null,null,null,null,5,4,3,3,2]}
+  ]
+}

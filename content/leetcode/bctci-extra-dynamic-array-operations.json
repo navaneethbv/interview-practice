@@ -1,0 +1,116 @@
+{
+  "kind": "design",
+  "id": "bctci-extra-dynamic-array-operations",
+  "style": "leetcode",
+  "className": "DynamicArrayExtras",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "append",
+      "java": "append",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "i",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "set",
+      "java": "set",
+      "params": [
+        {
+          "name": "i",
+          "type": "int"
+        },
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "size",
+      "java": "size",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "pop_back",
+      "java": "popBack",
+      "params": [],
+      "returns": "void"
+    },
+    {
+      "name": "pop",
+      "java": "pop",
+      "params": [
+        {
+          "name": "i",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "contains",
+      "java": "contains",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    },
+    {
+      "name": "insert",
+      "java": "insert",
+      "params": [
+        {
+          "name": "i",
+          "type": "int"
+        },
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "remove",
+      "java": "remove",
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["append","append","append","pop","get","size"],"args":[[1],[2],[3],[1],[1],[]]},"sample":true,"expected":[null,null,null,2,3,2]},
+    {"input":{"ctor":[],"ops":["append","append","append","remove","get"],"args":[[1],[2],[2],[2],[1]]},"sample":true,"expected":[null,null,null,1,2]},
+    {"input":{"ctor":[],"ops":["append","append","contains","contains"],"args":[[1],[2],[1],[3]]},"expected":[null,null,true,false]},
+    {"input":{"ctor":[],"ops":["append","append","insert","get","get","get"],"args":[[1],[2],[1,3],[0],[1],[2]]},"expected":[null,null,null,1,3,2]},
+    {"input":{"ctor":[],"ops":["insert","insert","insert","size","get","get"],"args":[[0,7],[0,6],[2,8],[],[0],[2]]},"expected":[null,null,null,3,6,8]},
+    {"input":{"ctor":[],"ops":["remove","append","remove","size","contains"],"args":[[4],[4],[4],[],[4]]},"expected":[-1,null,0,0,false]},
+    {"input":{"ctor":[],"ops":["append","append","append","append","append","append","append","append","append","append","pop","pop","size","get","get","remove","get"],"args":[[0],[1],[2],[3],[4],[5],[6],[7],[8],[9],[0],[8],[],[0],[7],[5],[4]]},"expected":[null,null,null,null,null,null,null,null,null,null,0,9,8,1,8,4,6]},
+    {"input":{"ctor":[],"ops":["append","append","append","remove","remove","size","pop_back","contains"],"args":[[3],[3],[3],[3],[3],[],[],[3]]},"expected":[null,null,null,0,0,1,null,false]}
+  ]
+}

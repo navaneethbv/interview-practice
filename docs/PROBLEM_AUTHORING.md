@@ -74,6 +74,17 @@ Use Java for threaded submissions; Python in the browser supports the sequential
 
 ## Coverage
 
+The BCTCI list includes all 37 online-chapter problems, using labels S.1-S.6, M.1-M.8, U.1-U.7, B.1, and P.1-P.15.
+Its 232 entries still exclude book problems 34.9 and 39.8, which need additional harness support.
+Sliding Maximum and Matrix Rotation reuse the existing matching problems.
+The other online problems have original statements, Python and Java references, two fixed samples, and at least eight hidden cases.
+Run `python3 -B scripts/judge/test_bctci_online.py` for independent exhaustive and seeded small-instance reference checks, in addition to the normal judge gates.
+
+The online statements document their runner conventions explicitly.
+Map lookups return an empty list for a missing key or a singleton list for a stored integer, preserving the distinction without a nullable primitive type.
+Collection enumeration is ordered, union-find representatives are component minima, and MST reconstruction uses input order to break equal-weight ties.
+The string-labeled binary-tree problem uses child-index arrays so labels retain their original type without changing the shared numeric TreeNode helper.
+
 All 872 problems supported by the Python, Java, and SQLite runners are authored.
 The remaining seven require JavaScript, shell, or pandas runners.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.

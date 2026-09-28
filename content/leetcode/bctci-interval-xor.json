@@ -1,0 +1,31 @@
+{
+  "id": "bctci-interval-xor",
+  "style": "leetcode",
+  "function": {
+    "python": "solve",
+    "java": "solve"
+  },
+  "params": [
+    {
+      "name": "a",
+      "type": "int[]"
+    },
+    {
+      "name": "b",
+      "type": "int[]"
+    }
+  ],
+  "returns": "List<int[]>",
+  "tests": [
+    {"input":[[1,5],[3,8]],"expected":[[1,3],[5,8]],"sample":true},
+    {"input":[[1,3],[3,6]],"expected":[[1,6]],"sample":true},
+    {"input":[[1,2],[1,2]],"expected":[]},
+    {"input":[[1,5],[2,3]],"expected":[[1,2],[3,5]]},
+    {"input":[[1,2],[4,5]],"expected":[[1,2],[4,5]]},
+    {"input":[[4,5],[1,2]],"expected":[[1,2],[4,5]]},
+    {"input":[[1,5],[1,3]],"expected":[[3,5]]},
+    {"input":[[1,5],[3,5]],"expected":[[1,3]]},
+    {"input":[[-5,-1],[-3,1]],"expected":[[-5,-3],[-1,1]]},
+    {"input":[[-1000000000,0],[0,1000000000]],"expected":[[-1000000000,1000000000]]}
+  ]
+}

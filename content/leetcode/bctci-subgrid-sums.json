@@ -1,0 +1,23 @@
+{
+  "id": "bctci-subgrid-sums",
+  "style": "leetcode",
+  "function": {
+    "python": "subgridSums",
+    "java": "subgridSums"
+  },
+  "params": [
+    {
+      "name": "grid",
+      "type": "int[][]"
+    }
+  ],
+  "returns": "int[][]",
+  "tests": [
+    {"input":[[[-1,2,3],[4,0,0],[-2,0,9]]],"sample":true,"expected":[[15,14,12],[11,9,9],[7,9,9]]},
+    {"input":[[[1,2,3]]],"sample":true,"expected":[[6,5,3]]},
+    {"input":[[[5]]],"expected":[[5]]},
+    {"input":[[[1],[2],[3]]],"expected":[[6],[5],[3]]},
+    {"input":[[[1,1],[1,1]]],"expected":[[4,2],[2,1]]},
+    {"input":[[[1000,-1000],[-1000,1000]]],"expected":[[0,0],[0,1000]]}
+  ]
+}

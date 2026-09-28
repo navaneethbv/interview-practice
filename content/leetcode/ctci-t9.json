@@ -1,0 +1,29 @@
+{
+  "id": "ctci-t9",
+  "style": "leetcode",
+  "function": {
+    "python": "getValidT9Words",
+    "java": "getValidT9Words"
+  },
+  "params": [
+    {
+      "name": "digits",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<string>",
+  "tests": [
+    {"input":["8733",["tree","used","true","treg","apple"]],"sample":true,"expected":["tree","used"]},
+    {"input":["2",["b","d"]],"sample":true,"expected":["b"]},
+    {"input":["23",[]],"expected":[]},
+    {"input":["9999",["zzzz","wxyz","zzz","yyyyy"]],"expected":["zzzz","wxyz"]},
+    {"input":["4663",["good","home","gone","hood","hoof","inof"]],"expected":["good","home","gone","hood","hoof","inof"]},
+    {"input":["7",["p","q","r","s","t"]],"expected":["p","q","r","s"]},
+    {"input":["22",["ab","ba","cc","abc","a"]],"expected":["ab","ba","cc"]},
+    {"input":["6",["mm"]],"expected":[]}
+  ]
+}

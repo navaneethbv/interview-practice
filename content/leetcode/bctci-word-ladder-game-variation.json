@@ -1,0 +1,34 @@
+{
+  "id": "bctci-word-ladder-game-variation",
+  "style": "leetcode",
+  "function": {
+    "python": "canReach",
+    "java": "canReach"
+  },
+  "params": [
+    {
+      "name": "word1",
+      "type": "string"
+    },
+    {
+      "name": "word2",
+      "type": "string"
+    },
+    {
+      "name": "words",
+      "type": "string[]"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["leap","hop",["fare","hug","car","vibes","once","sop","far","ounce","slap","sap","cart","hung","art","shop","fart","lap","soap","are","hop","care","leap","bounce","beyond","cracking"]],"sample":true,"expected":true},
+    {"input":["bounce","once",["fare","hug","car","vibes","once","sop","far","ounce","slap","sap","cart","hung","art","shop","fart","lap","soap","are","hop","care","leap","bounce","beyond","cracking"]],"sample":true,"expected":false},
+    {"input":["car","cart",["fare","hug","car","vibes","once","sop","far","ounce","slap","sap","cart","hung","art","shop","fart","lap","soap","are","hop","care","leap","bounce","beyond","cracking"]],"expected":true},
+    {"input":["hung","hug",["fare","hug","car","vibes","once","sop","far","ounce","slap","sap","cart","hung","art","shop","fart","lap","soap","are","hop","care","leap","bounce","beyond","cracking"]],"expected":true},
+    {"input":["car","race",["car","race"]],"expected":false},
+    {"input":["a","ab",["a","ab"]],"expected":true},
+    {"input":["a","b",["a","ab","b"]],"expected":true},
+    {"input":["ab","b",["ab","b","abc"]],"expected":true},
+    {"input":["abc","a",["abc","ab","a"]],"expected":false}
+  ]
+}

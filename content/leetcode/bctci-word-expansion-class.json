@@ -1,0 +1,32 @@
+{
+  "kind": "design",
+  "id": "bctci-word-expansion-class",
+  "style": "leetcode",
+  "className": "Checker",
+  "ctorParams": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "methods": [
+    {
+      "name": "expands_into",
+      "java": "expandsInto",
+      "params": [
+        {
+          "name": "s2",
+          "type": "string"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":["tea"],"ops":["expands_into","expands_into","expands_into"],"args":[["tea"],["team"],["seam"]]},"sample":true,"expected":[false,true,false]},
+    {"input":{"ctor":[""],"ops":["expands_into","expands_into"],"args":[["a"],[""]]},"sample":true,"expected":[true,false]},
+    {"input":{"ctor":["on"],"ops":["expands_into","expands_into","expands_into"],"args":[["nooo"],["not"],["now"]]},"expected":[false,true,true]},
+    {"input":{"ctor":[""],"ops":["expands_into"],"args":[["ab"]]},"expected":[false]},
+    {"input":{"ctor":["aab"],"ops":["expands_into","expands_into","expands_into","expands_into"],"args":[["abaa"],["abab"],["abbb"],["aab"]]},"expected":[true,true,false,false]}
+  ]
+}

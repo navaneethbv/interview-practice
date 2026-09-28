@@ -81,7 +81,7 @@ export interface OutputSpec {
 
 export type Compare = "exact" | "unordered" | "unorderedDeep" | { validator: ValidatorName };
 
-export type ValidatorName = "topoOrder" | "courseOrder" | "noAdjacentRepeat" | "kDistanceApart" | "alienOrder" | "frequencySorted" | "longestPalindrome" | "balancedBST" | "peakIndex" | "randomizedSet" | "weightedPick" | "customSort" | "minimalParentheses" | "divisibleSubset" | "smallestPairs" | "bstDelete" | "prePostTree" | "allOne" | "shuffle" | "peakGrid" | "zeroSumList" | "circularInsertion" | "grayCode" | "uniqueBinary" | "balancedTree" | "logStorage" | "fairCandySwap" | "parityPartition";
+export type ValidatorName = "topoOrder" | "courseOrder" | "noAdjacentRepeat" | "kDistanceApart" | "alienOrder" | "frequencySorted" | "longestPalindrome" | "balancedBST" | "peakIndex" | "randomizedSet" | "weightedPick" | "customSort" | "minimalParentheses" | "divisibleSubset" | "smallestPairs" | "bstDelete" | "prePostTree" | "allOne" | "shuffle" | "peakGrid" | "zeroSumList" | "circularInsertion" | "grayCode" | "uniqueBinary" | "balancedTree" | "logStorage" | "fairCandySwap" | "parityPartition" | "peaksValleys" | "pivotPartition" | "graphPath" | "spanningTree" | "shortestPaths" | "artistPlaylist" | "bestSubset" | "cluePath" | "commonSubsequence" | "dagPath";
 
 export interface TestCase {
   input: unknown[];

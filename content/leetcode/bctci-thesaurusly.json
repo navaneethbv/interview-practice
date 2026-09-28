@@ -1,0 +1,27 @@
+{
+  "id": "bctci-thesaurusly",
+  "style": "leetcode",
+  "function": {
+    "python": "thesaurusly",
+    "java": "thesaurusly"
+  },
+  "params": [
+    {
+      "name": "sentence",
+      "type": "string"
+    },
+    {
+      "name": "synonyms",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input":["walk",[["walk","stroll"]]],"sample":true,"expected":["stroll"]},
+    {"input":["a b",[["a","x","y"]]],"sample":true,"expected":["x b","y b"]},
+    {"input":["one does not simply walk into mordor",[["walk","stroll","hike","wander"],["simply","just","merely"]]],"expected":["one does not just stroll into mordor","one does not just hike into mordor","one does not just wander into mordor","one does not merely stroll into mordor","one does not merely hike into mordor","one does not merely wander into mordor"]},
+    {"input":["no change here",[]],"expected":["no change here"]},
+    {"input":["a a",[["a","b","c"]]],"expected":["b b","b c","c b","c c"]}
+  ]
+}

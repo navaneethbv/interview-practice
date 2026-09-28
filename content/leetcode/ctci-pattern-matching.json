@@ -1,0 +1,36 @@
+{
+  "id": "ctci-pattern-matching",
+  "style": "leetcode",
+  "function": {
+    "python": "doesMatch",
+    "java": "doesMatch"
+  },
+  "params": [
+    {
+      "name": "pattern",
+      "type": "string"
+    },
+    {
+      "name": "value",
+      "type": "string"
+    }
+  ],
+  "returns": "boolean",
+  "tests": [
+    {"input":["aabab","catcatgocatgo"],"sample":true,"expected":true},
+    {"input":["ab","x"],"sample":true,"expected":false},
+    {"input":["",""],"expected":true},
+    {"input":["","a"],"expected":false},
+    {"input":["a",""],"expected":false},
+    {"input":["a","catcatgocatgo"],"expected":true},
+    {"input":["b","catcatgocatgo"],"expected":true},
+    {"input":["ab","catcatgocatgo"],"expected":true},
+    {"input":["aa","catcat"],"expected":true},
+    {"input":["aa","catca"],"expected":false},
+    {"input":["abba","dogcatcatdog"],"expected":true},
+    {"input":["abba","dogdogdogdog"],"expected":true},
+    {"input":["bbba","xxxyxxxyxxxyz"],"expected":true},
+    {"input":["aab","aaaa"],"expected":true},
+    {"input":["abab","xyzxyx"],"expected":false}
+  ]
+}

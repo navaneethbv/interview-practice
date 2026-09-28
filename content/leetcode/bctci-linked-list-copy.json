@@ -1,0 +1,22 @@
+{
+  "id": "bctci-linked-list-copy",
+  "style": "leetcode",
+  "function": {
+    "python": "copyList",
+    "java": "copyList"
+  },
+  "params": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "returns": "ListNode",
+  "tests": [
+    {"input":[[1,2,3]],"sample":true,"expected":[1,2,3]},
+    {"input":[[]],"sample":true,"expected":null},
+    {"input":[[1]],"expected":[1]},
+    {"input":[[5,5,5]],"expected":[5,5,5]},
+    {"input":[[-1,0,1000000000]],"expected":[-1,0,1000000000]}
+  ]
+}

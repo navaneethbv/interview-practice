@@ -1,0 +1,24 @@
+{
+  "id": "bctci-laminal-arrays",
+  "style": "leetcode",
+  "function": {
+    "python": "maxLaminalSum",
+    "java": "maxLaminalSum"
+  },
+  "params": [
+    {
+      "name": "arr",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[3,-9,2,4,-1,5,5,-4]],"sample":true,"expected":6},
+    {"input":[[-2,-1,-4,-3]],"sample":true,"expected":-1},
+    {"input":[[1]],"expected":1},
+    {"input":[[-1,-2]],"expected":-1},
+    {"input":[[1,2,3,4]],"expected":10},
+    {"input":[[1000000000,1000000000]],"expected":2000000000},
+    {"input":[[5,-10,3,3,0,0,-1,7]],"expected":7}
+  ]
+}

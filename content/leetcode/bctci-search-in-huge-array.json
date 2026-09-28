@@ -1,0 +1,29 @@
+{
+  "id": "bctci-search-in-huge-array",
+  "style": "leetcode",
+  "function": {
+    "python": "searchHuge",
+    "java": "searchHuge"
+  },
+  "params": [
+    {
+      "name": "reader",
+      "type": "ArrayReader"
+    },
+    {
+      "name": "target",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[1,3,5,7,9],5],"sample":true,"expected":2},
+    {"input":[[2,4,6,8,10],1],"sample":true,"expected":-1},
+    {"input":[[1,3,5,7,9],10],"expected":-1},
+    {"input":[[],3],"expected":-1},
+    {"input":[[4,4,4,4,4],4],"expected":0},
+    {"input":[[1,2,2,2,3],2],"expected":1},
+    {"input":[[1,1,1,1,1,1,1,1,1,9],9],"expected":9},
+    {"input":[[7],7],"expected":0}
+  ]
+}

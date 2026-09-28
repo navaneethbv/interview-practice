@@ -1,0 +1,22 @@
+{
+  "id": "bctci-count-subarrays-with-good-start-and-ending",
+  "style": "leetcode",
+  "function": {
+    "python": "countGoodStartEnd",
+    "java": "countGoodStartEnd"
+  },
+  "params": [
+    {
+      "name": "sales",
+      "type": "int[]"
+    }
+  ],
+  "returns": "long",
+  "tests": [
+    {"input":[[0,20,5,15,10]],"sample":true,"expected":6},
+    {"input":[[0,5,8]],"sample":true,"expected":0},
+    {"input":[[10,20,30]],"expected":6},
+    {"input":[[]],"expected":0},
+    {"input":[[10]],"expected":1}
+  ]
+}

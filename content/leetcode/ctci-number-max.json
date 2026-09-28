@@ -1,0 +1,30 @@
+{
+  "id": "ctci-number-max",
+  "style": "leetcode",
+  "function": {
+    "python": "getMax",
+    "java": "getMax"
+  },
+  "params": [
+    {
+      "name": "a",
+      "type": "int"
+    },
+    {
+      "name": "b",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[3,8],"sample":true,"expected":8},
+    {"input":[2147483647,-2147483648],"sample":true,"expected":2147483647},
+    {"input":[0,0],"expected":0},
+    {"input":[-1,-2],"expected":-1},
+    {"input":[-2147483648,2147483647],"expected":2147483647},
+    {"input":[5,5],"expected":5},
+    {"input":[-7,7],"expected":7},
+    {"input":[100,-100],"expected":100},
+    {"input":[-2147483648,-2147483648],"expected":-2147483648}
+  ]
+}
