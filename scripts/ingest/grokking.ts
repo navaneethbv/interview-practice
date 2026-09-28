@@ -19,12 +19,13 @@ import type { Block, CourseIndex, Lesson, LessonType } from "../../src/lib/conte
 function resolveSourceDirectory(candidate: string | undefined) {
   if (!candidate) throw new Error("Pass the course folder path as the first argument.");
   const resolved = path.resolve(candidate);
-  const source = fs.realpathSync(resolved);
-  if (!fs.statSync(source).isDirectory()) throw new Error("The course folder path must be a directory.");
   const allowedRoots = [path.resolve(process.cwd()), path.resolve(process.cwd(), "..")];
-  if (!allowedRoots.some((root) => isWithin(root, source))) {
+  if (!allowedRoots.some((root) => isWithin(root, resolved))) {
     throw new Error("The course folder path must be inside the project workspace.");
   }
+  if (!fs.statSync(resolved).isDirectory()) throw new Error("The course folder path must be a directory.");
+  const source = fs.realpathSync(resolved);
+  if (!allowedRoots.some((root) => isWithin(root, source))) throw new Error("The course folder path must be inside the project workspace.");
   return source;
 }
 
@@ -48,8 +49,14 @@ function detectLang(code: string): Lang {
   if (code.includes("#include") || code.includes("std::") || code.includes("using namespace") || code.includes("vector<")) {
     return "cpp";
   }
-  const pythonHeader = /^\s*(def |class \w+(?:\([^)]*\))?:|import \w|from \w+ import)/m.test(code);
-  if (pythonHeader && !/;\s*$/m.test(code)) return "python";
+  const firstLine = code.split("\n").find((line) => line.trim())?.trim() ?? "";
+  const pythonHeader =
+    firstLine.startsWith("def ") ||
+    (firstLine.startsWith("class ") && firstLine.endsWith(":")) ||
+    firstLine.startsWith("import ") ||
+    firstLine.startsWith("from ") && firstLine.includes(" import ");
+  const hasSemicolonLine = code.split("\n").some((line) => line.trimEnd().endsWith(";"));
+  if (pythonHeader && !hasSemicolonLine) return "python";
   const looksLikeJavaScript = /\bconsole\.log/.test(code) || /\bfunction\b/.test(code) || /\b(const|let) \w+ =/.test(code) || code.includes("=>");
   if (looksLikeJavaScript && !/\bpublic\b/.test(code) && !/System\.out/.test(code)) return "js";
   return "java";
@@ -440,8 +447,9 @@ function challengeNumber(title: string, unitName: string) {
 }
 
 function withoutDifficulty(title: string) {
-  const match = /\s*\((easy|medium|hard)\)\s*$/i.exec(title);
-  return match ? title.slice(0, match.index).trim() : title.trim();
+  const lower = title.toLowerCase();
+  const suffix = [" (easy)", " (medium)", " (hard)"].find((value) => lower.endsWith(value));
+  return suffix ? title.slice(0, title.length - suffix.length).trim() : title.trim();
 }
 
 function buildLesson(merged: { title: string; blocks: Block[] }, unitName: string, chSlug: string, uniqueSlug: (s: string, chapter: string) => string) {
@@ -451,14 +459,14 @@ function buildLesson(merged: { title: string; blocks: Block[] }, unitName: strin
   const type: LessonType = hasStarter || difficultyOf(title) ? "problem" : "lesson";
   if (type === "lesson") {
     const intro = /^introduction$/i.test(title);
-    const lessonTitle = intro ? title : title;
+    const lessonId = intro ? `${chSlug}-introduction` : title;
     return {
       challenge,
       lesson: {
-        id: uniqueSlug(slugify(intro ? `${chSlug}-introduction` : lessonTitle), chSlug),
+        id: uniqueSlug(slugify(lessonId), chSlug),
         courseId: COURSE_ID,
         chapterId: chSlug,
-        title: lessonTitle,
+        title,
         type,
         body: merged.blocks,
       } satisfies Lesson,
