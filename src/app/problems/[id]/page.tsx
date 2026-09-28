@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ProblemPage({ params }: PageProps) {
   const { id } = await params;
   const lesson = getLesson(id);
-  if (!lesson || lesson.type !== "problem") notFound();
+  if (lesson?.type !== "problem") notFound();
 
   const problems = listProblems();
   const idx = problems.findIndex((p) => p.id === id);
