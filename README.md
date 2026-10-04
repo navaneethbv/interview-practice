@@ -146,7 +146,7 @@ src/lib/judge/            spec types, harness generators, grading and runners
 
 ## Browser regression checks
 
-Run `npx playwright install chromium` once, then `npm run test:browser`.
+Run `npm run test:browser:install` once, then `npm run test:browser`.
 The suite starts a local development server on port 4326; stop other development servers for this checkout first.
 CI runs the same suite against the production build after the reference checks.
 Tests use isolated browser storage and cover draft persistence, storage quota failure and recovery, reset undo, malformed history, keyboard tabs, filter history, backup restore, and mobile layout.

@@ -62,6 +62,19 @@ export function storedEntries(): Record<string, string> {
   return entries;
 }
 
+function rollbackEntries(changed: string[], before: Map<string, string | null>): boolean {
+  // Remove newly written data before restoring prior values to release quota.
+  let rollbackFailed = false;
+  for (const key of changed) {
+    if (!safeRemove(key)) rollbackFailed = true;
+  }
+  for (const key of changed) {
+    const value = before.get(key) ?? null;
+    if (value !== null && !write(key, value)) rollbackFailed = true;
+  }
+  return rollbackFailed;
+}
+
 /** Restore only backup keys. On failure, roll back writes and retain any values
  * that cannot be restored on disk in memory for recovery. */
 export function restoreEntries(entries: Record<string, string>): void {
@@ -75,15 +88,7 @@ export function restoreEntries(entries: Record<string, string>): void {
       changed.push(key);
     }
   } catch {
-    // Remove newly written data before restoring prior values to release quota.
-    let rollbackFailed = false;
-    for (const key of changed) {
-      if (!safeRemove(key)) rollbackFailed = true;
-    }
-    for (const key of changed) {
-      const value = before.get(key) ?? null;
-      if (value !== null && !write(key, value)) rollbackFailed = true;
-    }
+    const rollbackFailed = rollbackEntries(changed, before);
     throw new Error(rollbackFailed
       ? "Import failed. Some original data is held in this tab only. Export it before leaving."
       : "Import failed. Your previous data was restored. Free browser storage and try again.");

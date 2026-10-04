@@ -42,6 +42,12 @@ test("quota failures are visible and drafts remain downloadable and retryable", 
   await page.goto(problem);
   await edit(page, draft);
   await expect(page.getByRole("complementary", { name: "Unsaved practice data" })).toContainText("held in this tab only");
+  const leaveWarning = page.waitForEvent("dialog");
+  const reload = page.evaluate(() => window.location.reload());
+  const warning = await leaveWarning;
+  expect(warning.type()).toBe("beforeunload");
+  await warning.dismiss();
+  await reload;
   await page.getByRole("combobox", { name: "Language", exact: true }).selectOption("java");
   await page.getByRole("combobox", { name: "Language", exact: true }).selectOption("python");
   await expect(page.locator(".view-lines")).toContainText("browser regression draft");

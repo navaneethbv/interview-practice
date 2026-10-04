@@ -48,7 +48,7 @@ class CustomCatalogTests(unittest.TestCase):
         additions = {"add-two-numbers", "graph-valid-tree", "happy-number",
                      "multiply-strings", "number-of-connected-components-in-an-undirected-graph",
                      "partition-equal-subset-sum", "plus-one", "powx-n", "redundant-connection"}
-        self.assertTrue(additions <= slugs)
+        self.assertLessEqual(additions, slugs)
         self.assertIn("add-and-search-word-data-structure-design", slugs)
         for slug in slugs:
             for extension in (".md", ".json", ".py", ".java"):

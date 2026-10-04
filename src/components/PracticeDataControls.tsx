@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { BACKUP_LIMIT, exportPractice, importPractice, parseBackup, type PracticeBackup } from "@/lib/practice-backup";
 import { downloadText } from "@/lib/download";
 
@@ -11,6 +11,15 @@ export function PracticeDataControls() {
   const confirm = useRef<HTMLButtonElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+
+  function cancelRestore() {
+    setBackup(null);
+    input.current?.focus();
+  }
+
+  function handleRestoreKey(event: KeyboardEvent<HTMLButtonElement>) {
+    if (event.key === "Escape") cancelRestore();
+  }
 
   function exportData() {
     try {
@@ -24,7 +33,7 @@ export function PracticeDataControls() {
     <p className="mt-3 text-sm text-fg-2">Save a copy of your code, progress, submissions, and last opened pages. Files stay on your device.</p>
     <div className="mt-3 flex flex-wrap gap-2">
       <button className={button} onClick={exportData}>Export backup</button>
-      <label className={`${button} cursor-pointer`}>Choose backup
+      <label className={`${button} cursor-pointer`}><span>Choose backup</span>
         <input ref={input} type="file" accept=".json,application/json" aria-label="Choose practice backup" className="mt-2 block max-w-full text-xs" disabled={busy}
           onChange={async (event) => {
             const file = event.currentTarget.files?.[0];
@@ -44,18 +53,18 @@ export function PracticeDataControls() {
           }} />
       </label>
     </div>
-    {backup && <fieldset className="mt-4 rounded-lg border border-line p-3" onKeyDown={(event) => { if (event.key === "Escape") { setBackup(null); input.current?.focus(); } }}>
+    {backup && <fieldset className="mt-4 rounded-lg border border-line p-3">
       <legend className="text-sm font-medium">Confirm restore</legend>
       <p className="text-sm text-fg-2">Restore {Object.keys(backup.entries).length} saved records from {new Date(backup.exportedAt).toLocaleDateString()}? Matching records will be replaced. Other records remain. Export your current data first if you want to keep both versions.</p>
       <div className="mt-3 flex gap-2">
-        <button ref={confirm} className={button} onClick={() => {
+        <button ref={confirm} className={button} onKeyDown={handleRestoreKey} onClick={() => {
           try { importPractice(backup); setBackup(null); setMessage("Backup restored. Open a problem to continue with the restored data."); }
           catch (error) { setMessage((error as Error).message); }
           input.current?.focus();
         }}>Restore backup</button>
-        <button className={button} onClick={() => { setBackup(null); input.current?.focus(); }}>Cancel</button>
+        <button className={button} onKeyDown={handleRestoreKey} onClick={cancelRestore}>Cancel</button>
       </div>
     </fieldset>}
-    <p role="status" className="mt-3 text-sm text-fg-2">{message}</p>
+    <output className="mt-3 block text-sm text-fg-2">{message}</output>
   </details>;
 }

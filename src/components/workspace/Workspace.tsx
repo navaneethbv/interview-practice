@@ -491,7 +491,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-3 py-1 text-xs text-fg-2">
-        <span role="status">{pendingWrites ? "Changes are not saved to this browser" : "Draft saves automatically"}</span>
+        <output>{pendingWrites ? "Changes are not saved to this browser" : "Draft saves automatically"}</output>
         <button className="text-blue hover:underline" onClick={() => downloadText(`${id.replaceAll(":", "-")}.${lang === "python" ? "py" : lang}`, code)}>Download code</button>
         {recovery !== null && <button className="text-blue hover:underline" onClick={() => {
           if (code !== (starters[lang] ?? "") && !window.confirm("Replace this draft with the version saved before reset? Download your current draft first if you want to keep it.")) return;

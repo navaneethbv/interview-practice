@@ -158,8 +158,12 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
                 raise ValueError(f"Missing metadata for {entry['slug']}")
     sets[:0] = custom["sets"]
 
-    # Reconcile curated membership while keeping the source workbook untouched.
-    for override in custom.get("workbookListOverrides", []):
+    apply_workbook_overrides(custom.get("workbookListOverrides", []), sets, problems)
+
+
+def apply_workbook_overrides(overrides: list[dict], sets: list[dict], problems: dict[str, dict]):
+    """Reconcile curated membership while keeping the source workbook untouched."""
+    for override in overrides:
         matches = [item for item in sets if item["id"] == override["id"]]
         if len(matches) != 1:
             raise ValueError(f"Unknown workbook list override: {override['id']}")

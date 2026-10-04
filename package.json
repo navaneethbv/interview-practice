@@ -13,7 +13,8 @@
     "ingest:system-design": "python3 scripts/ingest/system_design.py",
     "test": "tsx --test src/lib/*.test.ts src/lib/judge/*.test.ts && python3 -B -m unittest discover -s scripts/ingest -p 'test_*.py'",
     "typecheck": "tsc --noEmit",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:browser:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",

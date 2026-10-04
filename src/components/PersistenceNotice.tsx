@@ -11,7 +11,7 @@ export function PersistenceNotice() {
   useEffect(() => {
     if (!pending) return;
     const warn = (event: BeforeUnloadEvent) => {
-      if (pendingWriteCount()) { event.preventDefault(); event.returnValue = ""; }
+      if (pendingWriteCount()) { event.preventDefault(); }
     };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
@@ -26,6 +26,6 @@ export function PersistenceNotice() {
         catch (e) { setError(`${(e as Error).message} Use Download code in the editor to save the current draft.`); }
       }} className="hover:underline">Export backup</button>
     </div>
-    {error && <p role="status" className="mt-2 text-sm text-bad">{error}</p>}
+    {error && <output className="mt-2 block text-sm text-bad">{error}</output>}
   </aside>;
 }
