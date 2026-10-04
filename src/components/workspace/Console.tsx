@@ -1,5 +1,7 @@
 "use client";
 
+import { useId } from "react";
+import { AccessibleTab } from "../AccessibleTab";
 import { Plus, X } from "lucide-react";
 import type { AnyTestCase, RunOutcome } from "@/lib/judge/types";
 import { formatValue, type EditableCase } from "./cases";
@@ -32,27 +34,29 @@ export function TestcaseEditor({
   onAdd: () => void;
   onRemove: (i: number) => void;
 }>) {
+  const tabId = useId();
   const current = cases[active];
   return (
     <div className="p-4">
       <div className="mb-4 flex flex-wrap items-center gap-2" role="tablist" aria-label="Test cases">
         {cases.map((testCase, i) => (
           <div key={testCase.id ?? testCase.fields.join("\u001f")} className="group relative">
-            <button
-              role="tab"
-              aria-selected={i === active}
+            <AccessibleTab
+              id={`${tabId}-${i}`}
+              panelId={`${tabId}-panel`}
+              selected={i === active}
               onClick={() => onActive(i)}
               className={`rounded-lg px-3 py-1.5 text-sm transition-colors ${
                 i === active ? "bg-layer-2 font-medium text-fg-1" : "text-fg-2 hover:bg-layer-2/60"
               }`}
             >
               Case {i + 1}
-            </button>
+            </AccessibleTab>
             {cases.length > 1 && (
               <button
                 onClick={() => onRemove(i)}
                 aria-label={`Remove case ${i + 1}`}
-                className="absolute -top-1.5 -right-1.5 hidden size-4 place-items-center rounded-full bg-layer-3 text-fg-2 group-hover:grid focus-visible:grid"
+                className="absolute -top-1.5 -right-1.5 hidden size-4 place-items-center rounded-full bg-layer-3 text-fg-2 group-hover:grid group-focus-within:grid focus-visible:grid"
               >
                 <X size={10} />
               </button>
@@ -71,7 +75,7 @@ export function TestcaseEditor({
         )}
       </div>
       {current && (
-        <div className="space-y-3">
+        <div id={`${tabId}-panel`} role="tabpanel" aria-labelledby={`${tabId}-${active}`} tabIndex={0} className="space-y-3">
           {names.map((name, f) => (
             <label key={name} className="block">
               <span className="mb-1.5 block text-xs font-medium text-fg-3">{name} =</span>
@@ -130,6 +134,7 @@ export function ResultPanel({
   onActive: (i: number) => void;
   running: string | null;
 }>) {
+  const tabId = useId();
   if (running) {
     return (
       <output className="flex h-full min-h-32 items-center justify-center gap-3 text-sm text-fg-2" aria-live="polite">
@@ -188,10 +193,11 @@ export function ResultPanel({
       {mode === "run" && shown.length > 0 && (
         <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Case results">
           {shown.map((c) => (
-            <button
+            <AccessibleTab
               key={c.index}
-              role="tab"
-              aria-selected={c.index === current?.index}
+              id={`${tabId}-${c.index}`}
+              panelId={`${tabId}-panel`}
+              selected={c.index === current?.index}
               onClick={() => onActive(c.index)}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm transition-colors ${
                 c.index === current?.index ? "bg-layer-2 font-medium text-fg-1" : "text-fg-2 hover:bg-layer-2/60"
@@ -200,7 +206,7 @@ export function ResultPanel({
               <span className={`size-1.5 rounded-full ${c.passed ? "bg-ok" : "bg-bad"}`} aria-hidden />
               Case {c.index + 1}
               <span className="sr-only">{c.passed ? "passed" : "failed"}</span>
-            </button>
+            </AccessibleTab>
           ))}
         </div>
       )}
@@ -212,7 +218,7 @@ export function ResultPanel({
       )}
 
       {current && (
-        <div className="space-y-3">
+        <div id={`${tabId}-panel`} role={mode === "run" ? "tabpanel" : undefined} aria-labelledby={mode === "run" ? `${tabId}-${current.index}` : undefined} tabIndex={0} className="space-y-3">
           {mode === "submit" && <p className="text-xs font-medium text-fg-3">Failing test case</p>}
           <div className="space-y-2">
             {view.inputs[current.index]?.map((f) => (

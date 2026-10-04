@@ -2402,15 +2402,15 @@
     "category": "Arrays & Hashing"
    },
    {
+    "slug": "encode-and-decode-strings",
+    "category": "Arrays & Hashing"
+   },
+   {
     "slug": "product-of-array-except-self",
     "category": "Arrays & Hashing"
    },
    {
     "slug": "valid-sudoku",
-    "category": "Arrays & Hashing"
-   },
-   {
-    "slug": "encode-and-decode-strings",
     "category": "Arrays & Hashing"
    },
    {
@@ -2471,10 +2471,6 @@
    },
    {
     "slug": "evaluate-reverse-polish-notation",
-    "category": "Stack"
-   },
-   {
-    "slug": "generate-parentheses",
     "category": "Stack"
    },
    {
@@ -2539,6 +2535,10 @@
    },
    {
     "slug": "copy-list-with-random-pointer",
+    "category": "Linked List"
+   },
+   {
+    "slug": "add-two-numbers",
     "category": "Linked List"
    },
    {
@@ -2618,18 +2618,6 @@
     "category": "Trees"
    },
    {
-    "slug": "implement-trie-prefix-tree",
-    "category": "Tries"
-   },
-   {
-    "slug": "add-and-search-word-data-structure-design",
-    "category": "Tries"
-   },
-   {
-    "slug": "word-search-ii",
-    "category": "Tries"
-   },
-   {
     "slug": "kth-largest-element-in-a-stream",
     "category": "Heap / Priority Queue"
    },
@@ -2678,6 +2666,10 @@
     "category": "Backtracking"
    },
    {
+    "slug": "generate-parentheses",
+    "category": "Backtracking"
+   },
+   {
     "slug": "word-search",
     "category": "Backtracking"
    },
@@ -2692,6 +2684,18 @@
    {
     "slug": "n-queens",
     "category": "Backtracking"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Tries"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Tries"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Tries"
    },
    {
     "slug": "number-of-islands",
@@ -2730,7 +2734,15 @@
     "category": "Graphs"
    },
    {
-    "slug": "alien-dictionary",
+    "slug": "graph-valid-tree",
+    "category": "Graphs"
+   },
+   {
+    "slug": "number-of-connected-components-in-an-undirected-graph",
+    "category": "Graphs"
+   },
+   {
+    "slug": "redundant-connection",
     "category": "Graphs"
    },
    {
@@ -2742,6 +2754,10 @@
     "category": "Advanced Graphs"
    },
    {
+    "slug": "reconstruct-itinerary",
+    "category": "Advanced Graphs"
+   },
+   {
     "slug": "min-cost-to-connect-all-points",
     "category": "Advanced Graphs"
    },
@@ -2750,100 +2766,104 @@
     "category": "Advanced Graphs"
    },
    {
+    "slug": "alien-dictionary",
+    "category": "Advanced Graphs"
+   },
+   {
     "slug": "cheapest-flights-within-k-stops",
     "category": "Advanced Graphs"
    },
    {
-    "slug": "reconstruct-itinerary",
-    "category": "Advanced Graphs"
-   },
-   {
     "slug": "climbing-stairs",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "min-cost-climbing-stairs",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "house-robber",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "house-robber-ii",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "longest-palindromic-substring",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "palindromic-substrings",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "decode-ways",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "coin-change",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "maximum-product-subarray",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "word-break",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "longest-increasing-subsequence",
-    "category": "1D DP"
+    "category": "1-D Dynamic Programming"
+   },
+   {
+    "slug": "partition-equal-subset-sum",
+    "category": "1-D Dynamic Programming"
    },
    {
     "slug": "unique-paths",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "longest-common-subsequence",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "coin-change-ii",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "target-sum",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "interleaving-string",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "longest-increasing-path-in-a-matrix",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "distinct-subsequences",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "edit-distance",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "burst-balloons",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "regular-expression-matching",
-    "category": "2D DP"
+    "category": "2-D Dynamic Programming"
    },
    {
     "slug": "maximum-subarray",
@@ -2914,6 +2934,22 @@
     "category": "Math & Geometry"
    },
    {
+    "slug": "happy-number",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "plus-one",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Math & Geometry"
+   },
+   {
+    "slug": "multiply-strings",
+    "category": "Math & Geometry"
+   },
+   {
     "slug": "detect-squares",
     "category": "Math & Geometry"
    },
@@ -2945,7 +2981,9 @@
     "slug": "reverse-integer",
     "category": "Bit Manipulation"
    }
-  ]
+  ],
+  "sourceUrl": "https://neetcode.io/practice/practice/neetcode150",
+  "sourceLabel": "Official NeetCode 150"
  },
  {
   "id": "grind-169",

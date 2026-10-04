@@ -24,7 +24,9 @@ import { expectedFor, preloadPython, runCode } from "@/lib/judge/runner";
 import type { AnyTestCase, ProblemSpec, RunOutcome } from "@/lib/judge/types";
 import {
   addSubmission,
-  clearCode,
+  loadRecovery,
+  resetCode,
+  restoreCode,
   loadCode,
   loadPrefs,
   loadSubmissions,
@@ -35,6 +37,10 @@ import {
   useProgress,
   type Submission,
 } from "@/lib/progress";
+import { AccessibleTab } from "../AccessibleTab";
+import { PracticeVisit } from "../PracticeVisit";
+import { downloadText } from "@/lib/download";
+import { usePendingWrites } from "@/lib/storage";
 import { ThemeToggle } from "../ThemeProvider";
 import { CodeEditor } from "./CodeEditor";
 import { ResultPanel, TestcaseEditor, type ResultView } from "./Console";
@@ -175,19 +181,24 @@ function Handle({
 
 function PanelTab({
   active,
+  id,
+  panelId,
   onClick,
   icon,
   children,
 }: Readonly<{
   active: boolean;
+  id: string;
+  panelId: string;
   onClick: () => void;
   icon: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
-    <button
-      role="tab"
-      aria-selected={active}
+    <AccessibleTab
+      id={id}
+      panelId={panelId}
+      selected={active}
       onClick={onClick}
       className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-sm transition-colors ${
         active ? "font-medium text-fg-1" : "text-fg-3 hover:bg-layer-2 hover:text-fg-1"
@@ -195,7 +206,7 @@ function PanelTab({
     >
       {icon}
       {children}
-    </button>
+    </AccessibleTab>
   );
 }
 
@@ -234,6 +245,9 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const [leftTab, setLeftTab] = useState<LeftTab>("description");
   const [consoleTab, setConsoleTab] = useState<ConsoleTab>("testcase");
   const [lang, setLang] = useState<CodeLang>(initialLang);
+  const pendingWrites = usePendingWrites();
+  const [recovery, setRecovery] = useState(() => loadRecovery(id, initialLang));
+  const [resetError, setResetError] = useState("");
   const [fontSize, setFontSize] = useState(prefs.fontSize);
   const [code, setCode] = useState(() => loadCode(id, initialLang) ?? starters[initialLang] ?? "");
   const [cases, setCases] = useState<EditableCase[]>(() =>
@@ -263,6 +277,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
   function switchLang(nextLang: CodeLang) {
     setLang(nextLang);
+    setRecovery(loadRecovery(id, nextLang));
+    setResetError("");
     savePrefs({ lang: nextLang });
     setCode(loadCode(id, nextLang) ?? starters[nextLang] ?? "");
   }
@@ -274,8 +290,16 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   }
 
   function reset() {
-    clearCode(id, lang);
-    setCode(starters[lang] ?? "");
+    const starter = starters[lang] ?? "";
+    if (code === starter) return;
+    if (!window.confirm("Reset to starter code? Your current draft will be saved as a recovery copy.")) return;
+    if (!resetCode(id, lang, code, starter)) {
+      setResetError("Could not save a recovery copy. Your draft has not been reset. Download it or free browser storage first.");
+      return;
+    }
+    setRecovery(code);
+    setResetError("");
+    setCode(starter);
   }
 
   const names = useMemo(() => (spec ? fieldNames(spec) : []), [spec]);
@@ -365,8 +389,10 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
   const left = (
     <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-line bg-layer-1" aria-label="Problem">
-      <div className="flex shrink-0 items-center gap-1 border-b border-line px-2 py-1.5" role="tablist">
+      <div className="flex shrink-0 items-center gap-1 border-b border-line px-2 py-1.5" role="tablist" aria-label="Problem panels">
         <PanelTab
+          id="workspace-description-tab"
+          panelId="workspace-description-panel"
           active={leftTab === "description"}
           onClick={() => setLeftTab("description")}
           icon={<BookOpenText size={15} className="text-blue" />}
@@ -374,6 +400,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           Description
         </PanelTab>
         <PanelTab
+          id="workspace-solution-tab"
+          panelId="workspace-solution-panel"
           active={leftTab === "solution"}
           onClick={() => setLeftTab("solution")}
           icon={<FlaskConical size={15} className="text-medium" />}
@@ -381,6 +409,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           Solution
         </PanelTab>
         <PanelTab
+          id="workspace-submissions-tab"
+          panelId="workspace-submissions-panel"
           active={leftTab === "submissions"}
           onClick={() => setLeftTab("submissions")}
           icon={<History size={15} className="text-ok" />}
@@ -389,24 +419,25 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </PanelTab>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
-        <div hidden={leftTab !== "description"}>{description}</div>
-        <div hidden={leftTab !== "solution"}>
+        <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>{description}</div>
+        <div id="workspace-solution-panel" role="tabpanel" aria-labelledby="workspace-solution-tab" tabIndex={0} hidden={leftTab !== "solution"}>
           <p className="mb-5 rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">
             Spoiler: this is the full walkthrough. Give the problem a real try first.
           </p>
           {solution}
         </div>
-        {leftTab === "submissions" && (
+        <div id="workspace-submissions-panel" role="tabpanel" aria-labelledby="workspace-submissions-tab" tabIndex={0} hidden={leftTab !== "submissions"}>
           <SubmissionList
             id={id}
             submissions={submissions}
             onLoad={(s) => {
               setLang(s.lang);
               setCode(s.code);
+              setRecovery(loadRecovery(id, s.lang));
               saveCode(id, s.lang, s.code);
             }}
           />
-        )}
+        </div>
       </div>
     </section>
   );
@@ -459,6 +490,17 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           </button>
         </div>
       </div>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-3 py-1 text-xs text-fg-2">
+        <output>{pendingWrites ? "Changes are not saved to this browser" : "Draft saves automatically"}</output>
+        <button className="text-blue hover:underline" onClick={() => downloadText(`${id.replaceAll(":", "-")}.${lang === "python" ? "py" : lang}`, code)}>Download code</button>
+        {recovery !== null && <button className="text-blue hover:underline" onClick={() => {
+          if (code !== (starters[lang] ?? "") && !window.confirm("Replace this draft with the version saved before reset? Download your current draft first if you want to keep it.")) return;
+          restoreCode(id, lang, recovery);
+          setCode(recovery);
+          setRecovery(loadRecovery(id, lang));
+        }}>Restore pre-reset draft</button>}
+      </div>
+      {resetError && <p role="alert" className="px-3 py-2 text-sm text-bad">{resetError}</p>}
       <div className="min-h-0 flex-1">
         <CodeEditor value={code} lang={lang} fontSize={fontSize} onChange={onCodeChange} onRun={run} onSubmit={submit} />
       </div>
@@ -467,8 +509,10 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
   const consolePanel = (
     <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-line bg-layer-1" aria-label="Console">
-      <div className="flex shrink-0 items-center gap-1 border-b border-line px-2 py-1.5" role="tablist">
+      <div className="flex shrink-0 items-center gap-1 border-b border-line px-2 py-1.5" role="tablist" aria-label="Console panels">
         <PanelTab
+          id="workspace-testcase-tab"
+          panelId="workspace-console-panel"
           active={consoleTab === "testcase"}
           onClick={() => setConsoleTab("testcase")}
           icon={<SquareTerminal size={15} className="text-ok" />}
@@ -476,6 +520,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           Testcase
         </PanelTab>
         <PanelTab
+          id="workspace-result-tab"
+          panelId="workspace-console-panel"
           active={consoleTab === "result"}
           onClick={() => setConsoleTab("result")}
           icon={<Terminal size={15} className="text-ok" />}
@@ -483,7 +529,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           Test Result
         </PanelTab>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div id="workspace-console-panel" role="tabpanel" aria-labelledby={`workspace-${consoleTab}-tab`} tabIndex={0} className="min-h-0 flex-1 overflow-y-auto">
         {(() => {
           if (!spec) return <p className="p-4 text-sm text-fg-3">Test cases for this problem are not available yet.</p>;
           if (consoleTab === "testcase") return <TestcaseEditor
@@ -504,6 +550,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const busy = !!running;
   return (
     <div className="flex h-dvh flex-col bg-bg">
+      <PracticeVisit kind="problem" title={title} context={listSlug ? "Coding workbook" : "Grokking Patterns"} />
       <header className="flex h-12 shrink-0 items-center gap-1.5 px-3">
         <Link href="/" className="grid size-8 shrink-0 place-items-center rounded-md bg-brand text-white" aria-label="Home">
           <Code2 size={16} strokeWidth={2.5} />

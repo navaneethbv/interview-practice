@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { PracticeDataControls } from "@/components/PracticeDataControls";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
+import { ResumePractice } from "@/components/ResumePractice";
 import { ProgressPanel } from "@/components/ProgressPanel";
 import { designChapters, getCourse, listDesignBooks, listProblems } from "@/lib/content";
 import { COURSE_SCOPE } from "@/lib/content-types";
@@ -31,11 +33,13 @@ export default function Home() {
               Open problems
             </Link>
           </div>
+          <ResumePractice />
+          <h3 className="mb-2 text-sm font-medium text-fg-2">Grokking Patterns progress</h3>
           <ProgressPanel
             ids={problems.map((p) => p.id)}
             difficulties={problems.map((p) => p.difficulty)}
             scope={COURSE_SCOPE}
-            scopeLabel="Coding practice"
+            scopeLabel="Grokking Patterns"
           />
         </section>
 
@@ -50,7 +54,7 @@ export default function Home() {
               icon={<Code2 size={20} />}
               tone="bg-ok-soft text-ok"
               title="Coding problems"
-              meta={`${problems.length} problems`}
+              meta={`${problems.length} Grokking problems + curated workbooks`}
               body="Write Python or Java, run hidden edge-case tests, and track what you solve."
             />
             <TrackRow
@@ -71,6 +75,7 @@ export default function Home() {
             />
           </div>
         </section>
+        <PracticeDataControls />
       </main>
     </>
   );

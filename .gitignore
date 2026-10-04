@@ -44,3 +44,7 @@ next-env.d.ts
 .remember/
 .claude/settings.local.json
 .DS_Store
+
+# browser test artifacts
+/test-results/
+/playwright-report/

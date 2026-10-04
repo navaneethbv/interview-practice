@@ -12,7 +12,9 @@
     "sandbox:snapshot": "tsx --env-file-if-exists=.env.local scripts/sandbox/create-java-snapshot.ts",
     "ingest:system-design": "python3 scripts/ingest/system_design.py",
     "test": "tsx --test src/lib/*.test.ts src/lib/judge/*.test.ts && python3 -B -m unittest discover -s scripts/ingest -p 'test_*.py'",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:browser": "playwright test",
+    "test:browser:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -27,6 +29,7 @@
     "shiki": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/katex": "^0.16.8",
     "@types/node": "^20",

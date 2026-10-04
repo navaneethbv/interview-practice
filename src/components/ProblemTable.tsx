@@ -2,29 +2,33 @@
 
 import Link from "next/link";
 import { Search, Shuffle } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { COURSE_SCOPE, type Difficulty } from "@/lib/content-types";
+import { COURSE_SCOPE } from "@/lib/content-types";
 import type { ProblemListItem } from "@/lib/content";
 import { statusOf, useProgress } from "@/lib/progress";
 import { problemPool, randomProblem } from "@/lib/problem-selection";
 import { DifficultyText, StatusIcon } from "./ui";
+import { useProblemFilters } from "./useProblemFilters";
 
-type StatusFilter = "all" | "solved" | "attempted" | "todo";
-
-export function ProblemTable({
-  problems,
-  patterns,
-}: Readonly<{
+type Props = Readonly<{
   problems: ProblemListItem[];
   patterns: { id: string; title: string }[];
-}>) {
+}>;
+
+export function ProblemTable(props: Props) {
+  return (
+    <Suspense fallback={<p className="py-8 text-sm text-fg-3">Loading problems...</p>}>
+      <ProblemTableContent {...props} />
+    </Suspense>
+  );
+}
+
+function ProblemTableContent({ problems, patterns }: Props) {
   const progress = useProgress();
   const router = useRouter();
-  const [query, setQuery] = useState("");
-  const [difficulty, setDifficulty] = useState<Difficulty | "all">("all");
-  const [pattern, setPattern] = useState("all");
-  const [status, setStatus] = useState<StatusFilter>("all");
+  const { query, difficulty, group: pattern, status, setQuery, setDifficulty, setGroup: setPattern, setStatus } =
+    useProblemFilters("pattern", patterns.map((p) => p.id));
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -67,7 +71,7 @@ export function ProblemTable({
         <select
           aria-label="Difficulty"
           value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value as Difficulty | "all")}
+          onChange={(e) => setDifficulty(e.target.value)}
           className={select}
         >
           <option value="all">Difficulty</option>
@@ -86,7 +90,7 @@ export function ProblemTable({
         <select
           aria-label="Status"
           value={status}
-          onChange={(e) => setStatus(e.target.value as StatusFilter)}
+          onChange={(e) => setStatus(e.target.value)}
           className={select}
         >
           <option value="all">Status</option>
