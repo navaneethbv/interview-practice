@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { PracticeVisit } from "@/components/PracticeVisit";
 import { LessonContent } from "@/components/LessonContent";
 import { OnThisPage } from "@/components/design/OnThisPage";
 import { designChapters, getDesignChapter, listDesignBooks } from "@/lib/content";
@@ -35,6 +36,7 @@ export default async function ChapterPage({ params }: PageProps) {
 
   return (
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] xl:gap-10">
+      <PracticeVisit kind="chapter" title={chapter.title} context={book.short} href={`/system-design/${book.id}/${chapter.id}`} />
       <article className="mx-auto w-full max-w-[46rem] min-w-0">
         <header className="mb-8 border-b border-line pb-6">
           <p className="mb-2 text-sm font-medium text-brand">{chapter.part}</p>

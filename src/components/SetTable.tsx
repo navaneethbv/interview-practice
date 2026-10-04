@@ -2,27 +2,31 @@
 
 import Link from "next/link";
 import { ExternalLink, Search, Shuffle } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { lcProgressId, type Difficulty, type SetKind, type SetRow } from "@/lib/content-types";
+import { lcProgressId, type SetKind, type SetRow } from "@/lib/content-types";
 import { statusOf, useProgress } from "@/lib/progress";
 import { problemPool, randomProblem } from "@/lib/problem-selection";
 import { DifficultyText, StatusIcon } from "./ui";
-
-type StatusFilter = "all" | "solved" | "attempted" | "todo";
+import { useProblemFilters } from "./useProblemFilters";
 
 const select =
   "h-9 rounded-lg border border-line bg-layer-1 px-2.5 text-sm text-fg-1 outline-none hover:border-line-strong focus-visible:border-blue";
 
 /** Problems of one list with filters; statuses count only submissions since the list's last reset. */
-export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: SetKind; rows: SetRow[] }>) {
+type Props = Readonly<{ setId: string; kind: SetKind; rows: SetRow[] }>;
+
+export function SetTable(props: Props) {
+  return (
+    <Suspense fallback={<p className="py-8 text-sm text-fg-3">Loading problems...</p>}>
+      <SetTableContent {...props} />
+    </Suspense>
+  );
+}
+
+function SetTableContent({ setId, kind, rows }: Props) {
   const progress = useProgress();
   const router = useRouter();
-  const [query, setQuery] = useState("");
-  const [difficulty, setDifficulty] = useState<Difficulty | "all">("all");
-  const [group, setGroup] = useState("all");
-  const [status, setStatus] = useState<StatusFilter>("all");
-
   // Curated lists come with categories; company lists are filtered by topic.
   const byCategory = kind === "curated";
   const groups = useMemo(() => {
@@ -33,6 +37,8 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
     const unique = [...new Set(rows.flatMap(groupsOf))];
     return byCategory ? unique : unique.sort((x, y) => x.localeCompare(y));
   }, [rows, byCategory]);
+  const { query, difficulty, group, status, setQuery, setDifficulty, setGroup, setStatus } =
+    useProblemFilters(byCategory ? "category" : "topic", groups);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -72,7 +78,7 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
         <select
           aria-label="Difficulty"
           value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value as Difficulty | "all")}
+          onChange={(e) => setDifficulty(e.target.value)}
           className={select}
         >
           <option value="all">Difficulty</option>
@@ -93,7 +99,7 @@ export function SetTable({ setId, kind, rows }: Readonly<{ setId: string; kind: 
             </option>
           ))}
         </select>
-        <select aria-label="Status" value={status} onChange={(e) => setStatus(e.target.value as StatusFilter)} className={select}>
+        <select aria-label="Status" value={status} onChange={(e) => setStatus(e.target.value)} className={select}>
           <option value="all">Status</option>
           <option value="todo">Todo</option>
           <option value="attempted">Attempted</option>

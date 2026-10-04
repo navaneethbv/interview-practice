@@ -11,8 +11,27 @@ Live: https://interview-practice-sandy-eight.vercel.app
 - **Run** checks your code against the sample cases and any cases you add or edit (expected output comes from a tested reference solution).
 - **Submit** checks it against every case, including hidden edge cases, and reports Accepted, Wrong Answer, Runtime Error, Compile Error or Time Limit Exceeded.
 - **Patterns**: the course lessons, with diagrams, math and highlighted code in both languages.
-- **System Design**: import a PDF or HTML document; each page shows the prompt, a structured notes area for your own design, and a reference design you reveal when ready.
+- **System Design**: read imported books and chapters, with table-of-contents navigation and a home-page link to resume your last chapter.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
+
+## Saving and resuming practice
+
+Drafts, progress, submissions, and the last opened problem and chapter are saved in this browser.
+The home page links back to the last problem, including its workbook context, and the last chapter.
+The home progress card is explicitly scoped to Grokking Patterns; each workbook has its own progress panel.
+Problem-list filters are stored in the URL, so reloads, bookmarks, and browser history preserve them.
+
+The editor confirms a reset and saves one recovery copy per problem and language before replacing the draft.
+Use **Restore pre-reset draft** to recover it, including after a reload.
+If browser storage fills or is blocked, a warning appears and new changes remain in memory for the current tab.
+Use **Retry saving**, **Download code**, or **Export backup** before closing or reloading that tab.
+An in-memory draft cannot survive closing the browser.
+
+Open **Back up or restore practice data** on the home page to export a JSON copy of code, reset recovery copies, progress, submissions, preferences, and resume links.
+Restore validates the complete file before writing, asks for confirmation, and replaces only records present in the backup.
+Export the current data first if you want to retain both versions.
+A failed import attempts to restore the previous records and reports any recovery data retained only in memory.
+Backup files stay on your device and contain your code and practice history.
 
 ## How code runs
 
@@ -124,3 +143,10 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm run ingest:grokking` | Import the coding course |
 | `npm run ingest:system-design` | Import a system design book |
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |
+
+## Browser regression checks
+
+Run `npx playwright install chromium` once, then `npm run test:browser`.
+The suite starts a local development server on port 4326; stop other development servers for this checkout first.
+CI runs the same suite against the production build after the reference checks.
+Tests use isolated browser storage and cover draft persistence, storage quota failure and recovery, reset undo, malformed history, keyboard tabs, filter history, backup restore, and mobile layout.

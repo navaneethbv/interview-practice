@@ -1,8 +1,9 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { useState, useSyncExternalStore } from "react";
+import { useId, useState, useSyncExternalStore } from "react";
 import type { CodeLang } from "@/lib/content-types";
+import { AccessibleTab } from "./AccessibleTab";
 import { loadPrefs, savePrefs } from "@/lib/progress";
 
 const LABEL: Record<CodeLang, string> = { python: "Python", java: "Java", sql: "SQLite" };
@@ -21,8 +22,16 @@ export function setPreferredLang(lang: CodeLang) {
 }
 function subscribe(cb: () => void) {
   langListeners.add(cb);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === "ip:prefs:v1" || event.key === null) {
+      currentLang = null;
+      cb();
+    }
+  };
+  window.addEventListener("storage", onStorage);
   return () => {
     langListeners.delete(cb);
+    window.removeEventListener("storage", onStorage);
   };
 }
 
@@ -35,6 +44,7 @@ const SOURCE_PROP = { java: "javaSrc", python: "pythonSrc", sql: "sqlSrc" } as c
 
 export function CodeTabs(props: Readonly<{ java?: string; python?: string; sql?: string; javaSrc?: string; pythonSrc?: string; sqlSrc?: string }>) {
   const preferred = usePreferredLang();
+  const tabId = useId();
   const [copied, setCopied] = useState(false);
   const available = (["python", "java", "sql"] as const).filter((l) => props[l]);
   if (!available.length) return null;
@@ -56,17 +66,18 @@ export function CodeTabs(props: Readonly<{ java?: string; python?: string; sql?:
       <div className="flex items-center gap-1 border-b border-line bg-layer-1 px-2 py-1">
         <div role="tablist" aria-label="Code language" className="flex gap-1">
           {available.map((l) => (
-            <button
+            <AccessibleTab
               key={l}
-              role="tab"
-              aria-selected={l === lang}
+              id={`${tabId}-${l}`}
+              panelId={`${tabId}-panel`}
+              selected={l === lang}
               onClick={() => setPreferredLang(l)}
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                 l === lang ? "bg-layer-2 text-fg-1" : "text-fg-3 hover:text-fg-1"
               }`}
             >
               {LABEL[l]}
-            </button>
+            </AccessibleTab>
           ))}
         </div>
         <button
@@ -79,6 +90,7 @@ export function CodeTabs(props: Readonly<{ java?: string; python?: string; sql?:
         </button>
       </div>
       <div
+        id={`${tabId}-panel`} role="tabpanel" aria-labelledby={`${tabId}-${lang}`} tabIndex={0}
         className="overflow-x-auto px-4 py-3 text-[13px] leading-6 [&_code]:!border-0 [&_code]:!bg-transparent [&_code]:!p-0 [&_code]:!text-[13px] [&_pre]:!m-0 [&_pre]:!rounded-none [&_pre]:!border-0 [&_pre]:!bg-transparent [&_pre]:!p-0"
         dangerouslySetInnerHTML={{ __html: props[lang]! }}
       />

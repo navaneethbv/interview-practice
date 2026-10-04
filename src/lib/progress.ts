@@ -3,6 +3,8 @@
 import { useSyncExternalStore } from "react";
 import type { CodeLang } from "./content-types";
 import type { Verdict } from "./judge/types";
+import { safeGet, safeSet, safeRemove } from "./storage";
+import { normalizeProgress, parsePrefs, parseSubmissions } from "./progress-data";
 
 /**
  * Per-browser practice state kept in localStorage: solved/attempted problems, finished
@@ -50,31 +52,6 @@ const KEY = "ip:progress:v1";
 const PREFS_KEY = "ip:prefs:v1";
 const EMPTY: ProgressState = { solved: {}, attempted: {}, read: {}, log: {}, resets: {} };
 const LOG_LIMIT = 100;
-const DEFAULT_PREFS: Prefs = { lang: "python", fontSize: 14 };
-
-function safeGet(key: string): string | null {
-  try {
-    return window.localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function safeSet(key: string, value: string) {
-  try {
-    window.localStorage.setItem(key, value);
-  } catch {
-    // Storage full or blocked: progress simply isn't persisted.
-  }
-}
-
-function safeRemove(key: string) {
-  try {
-    window.localStorage.removeItem(key);
-  } catch {
-    // Storage blocked: nothing to remove.
-  }
-}
 
 /* ---------------------------------------------------------------- progress store */
 
@@ -84,8 +61,7 @@ const listeners = new Set<() => void>();
 function readProgress(): ProgressState {
   if (progressCache) return progressCache;
   try {
-    const parsed = JSON.parse(safeGet(KEY) ?? "null") as Partial<ProgressState> | null;
-    progressCache = { ...EMPTY, ...parsed };
+    progressCache = normalizeProgress(JSON.parse(safeGet(KEY) ?? "null"));
     // Migrate old first-attempt timestamps and reconstruct reset baselines while the
     // legacy event history is still present. Already discarded events cannot be recovered.
     const p = progressCache;
@@ -119,7 +95,7 @@ function writeProgress(next: ProgressState) {
 function subscribe(cb: () => void) {
   listeners.add(cb);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === KEY) {
+    if (e.key === KEY || e.key === null) {
       progressCache = null;
       cb();
     }
@@ -237,20 +213,31 @@ export function loadCode(id: string, lang: CodeLang): string | null {
 }
 
 export function saveCode(id: string, lang: CodeLang, code: string) {
-  safeSet(codeKey(id, lang), code);
+  return safeSet(codeKey(id, lang), code);
 }
 
 export function clearCode(id: string, lang: CodeLang) {
   safeRemove(codeKey(id, lang));
 }
 
+const recoveryKey = (id: string, lang: CodeLang) => `ip:recovery:${id}:${lang}`;
+export function loadRecovery(id: string, lang: CodeLang): string | null {
+  return safeGet(recoveryKey(id, lang));
+}
+
+/** Refuse to replace a draft until its recovery copy has reached disk. */
+export function resetCode(id: string, lang: CodeLang, current: string, starter: string): boolean {
+  if (!safeSet(recoveryKey(id, lang), current)) return false;
+  saveCode(id, lang, starter);
+  return true;
+}
+
+export function restoreCode(id: string, lang: CodeLang, code: string) {
+  if (saveCode(id, lang, code)) safeRemove(recoveryKey(id, lang));
+}
+
 export function loadSubmissions(id: string): Submission[] {
-  try {
-    const parsed = JSON.parse(safeGet(subsKey(id)) ?? "[]");
-    return Array.isArray(parsed) ? (parsed as Submission[]) : [];
-  } catch {
-    return [];
-  }
+  return parseSubmissions(safeGet(subsKey(id)));
 }
 
 export function addSubmission(id: string, sub: Submission) {
@@ -260,13 +247,10 @@ export function addSubmission(id: string, sub: Submission) {
 /* ---------------------------------------------------------------- prefs */
 
 export function loadPrefs(): Prefs {
-  try {
-    return { ...DEFAULT_PREFS, ...(JSON.parse(safeGet(PREFS_KEY) ?? "{}") as Partial<Prefs>) };
-  } catch {
-    return DEFAULT_PREFS;
-  }
+  return parsePrefs(safeGet(PREFS_KEY));
 }
 
 export function savePrefs(prefs: Partial<Prefs>) {
   safeSet(PREFS_KEY, JSON.stringify({ ...loadPrefs(), ...prefs }));
+  window.dispatchEvent(new StorageEvent("storage", { key: PREFS_KEY }));
 }
