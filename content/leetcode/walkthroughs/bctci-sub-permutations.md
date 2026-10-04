@@ -1,50 +1,48 @@
 ## Intuition
 
-A substring rearranges all letters of s1 exactly when its length and frequency vector match s1.
-Slide a fixed-width window across s2 to find matching occurrences.
-Store the actual matching strings in a set because the requested count is of distinct arrangements, not positions.
+A substring rearranges all letters of `s1` exactly when it has the same length and the same 26 letter counts.
+A set of matching substring strings then removes repeated occurrences of the same arrangement.
 
 ## Brute force
 
-Generate every permutation of s1 and search for each in s2.
-The number of permutations can be factorial, and repeated letters introduce many duplicate generated arrangements.
+Generating all permutations is factorial in the pattern length and duplicates work for repeated letters.
+Sorting every candidate substring also repeats character processing.
+The reference maintains counts in a sliding window of the required width.
 
 ## Approach
 
-Count s1 into a 26-entry `need` array and maintain a matching-size `window` frequency array.
-As each source character arrives, increment its count.
-Once the window would exceed `width`, decrement the character that is leaving.
-For a complete window, compare all 26 counts with need.
-On equality, extract that window's substring and insert it into `found`.
-Finally return the set size.
-Frequency equality guarantees the substring is a permutation, while string-set equality ensures repeated occurrences of the same ordering count only once.
+Fill `need` from `s1` and maintain `window` while scanning `s2`.
+Add the entering letter and remove the letter leaving once the window exceeds `width`.
+When a full window equals `need`, insert its exact substring into `found`.
+Return the set size.
 
 ## Walkthrough
 
-Example 1 has s1 equal to `ab` and s2 equal to `ababba`.
-Its two-character windows are `ab`, `ba`, `ab`, `bb`, and `ba`.
-Every window except `bb` has one a and one b.
-The matching strings inserted into found are therefore only `ab` and `ba`, despite four matching positions.
-The answer is 2.
+Example 1 scans width two windows `ab`, `ba`, `ab`, `bb`, and `ba` in `ababba`.
+All except `bb` have one a and one b.
+The set retains only the distinct strings `ab` and `ba`, so the answer is 2.
 
 ## Complexity
 
-Let n be source length, m target length, and h the number of matching occurrences.
-Frequency maintenance and comparisons cost O(n) for the fixed alphabet, but copying and hashing matching substrings costs O(h times m).
-Worst-case time is O(n times m).
-If d distinct strings match, stored substring space is O(d times m), plus O(m) temporary allocation and fixed counters.
+Let n be text length, m pattern length, and a the number of matching windows.
+Frequency comparisons cost O(26n), while substring copying and hashing add expected O(am).
+With d distinct matches, stored strings require O(dm) space, plus constant sized count arrays.
 
 ## Edge cases
 
-For s1 equal to one repeated letter, many positions may still produce only one distinct string.
-Repeated letters in s1 require their full multiplicity in every matching window.
+Repeated appearances of one arrangement count once.
+Repeated letters in `s1` are handled through multiplicities in `need`.
+A one letter pattern can produce at most one distinct matching string.
+Only windows of exactly the pattern length qualify.
 
 ## Common mistakes
 
-Counting successful windows directly overcounts repeated arrangements.
-Do not describe the displayed implementation as strictly O(n) when substring copying and hashing depend on m.
+Do not count matching positions instead of distinct matching strings.
+A set of sorted signatures would merge all permutations into one key, losing the required distinction.
+Do not claim unconditional linear time without accounting for copied matching substrings.
 
 ## Language notes
 
-Python compares lists and stores sliced strings.
-Java uses `Arrays.equals` and `HashSet<String>`, with newly created substrings for candidate insertions.
+Python compares integer lists and stores slices in a set.
+Java uses `Arrays.equals` and a `HashSet<String>` of substrings.
+Both use 26 buckets because the contract restricts letters to lowercase English, allowing direct character offset indexing.

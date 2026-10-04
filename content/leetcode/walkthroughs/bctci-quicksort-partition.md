@@ -1,48 +1,48 @@
 ## Intuition
 
-Maintain three completed regions around an unclassified middle: values smaller than the pivot, equal to it, and larger than it.
-Examining one unclassified value either extends a completed region or swaps in another unclassified value.
-This is the three-way partition used to handle duplicates efficiently in quicksort.
+The array needs three contiguous regions: values below `pivot`, values equal to it, and values above it.
+Three pointers maintain those regions while the unclassified interval shrinks.
 
 ## Brute force
 
-Build separate smaller, equal, and larger lists, then concatenate them back into the array.
-That takes linear time but uses O(n) extra space.
+Creating separate lists for smaller, equal, and larger values is simple but uses O(n) extra space.
+In-place swaps provide the same grouping with constant auxiliary space.
 
 ## Approach
 
-`smaller` marks the end of the smaller region, `current` the next unclassified position, and `larger` the last unclassified position.
-When the current value is smaller, swap it with `smaller` and advance both left-side indices.
-When it is larger, swap with `larger` and retreat only the right boundary.
-The swapped-in value is still unknown, so `current` must stay for another examination.
-When the current value equals the pivot, simply advance `current`.
-Stop once the unclassified interval becomes empty.
+1. Set `smaller` and `current` to the first index and `larger` to the last index.
+2. When `arr[current]` is smaller, swap it into the next smaller slot and advance both left pointers.
+3. When it is larger, swap it with `arr[larger]` and decrement `larger` without advancing `current`.
+4. When it equals the pivot, advance `current`.
+5. Stop when `current` passes `larger`.
 
 ## Walkthrough
 
-Example 1 uses pivot 4 with `[1, 7, 2, 3, 3, 5, 3]`.
-The first 1 extends the smaller region.
-The 7 swaps with the final 3, producing `[1, 3, 2, 3, 3, 5, 7]`.
-The scan accepts the successive smaller values and eventually moves 5 into the larger region.
-The references can finish with `[1, 3, 2, 3, 3, 5, 7]`.
-This differs from the displayed ordering but is equally valid because ordering inside a region is unrestricted.
+Example 1 uses pivot 4 and starts with `[1, 7, 2, 3, 3, 5, 3]`.
+The values 1, 2, and 3 move into the prefix as they are encountered.
+The values 7 and 5 move into the suffix through swaps, while equal-to-pivot values would simply advance the scan.
+The validator accepts the resulting arrangement because every prefix value is smaller than 4 and every suffix value is larger.
 
 ## Complexity
 
-Each iteration shrinks the unclassified interval by one.
-Both references take O(n) time and O(1) auxiliary space, mutating the input array directly.
+- Time: O(n), because each index is classified and each swap removes at least one unclassified value.
+- Space: O(1), since the algorithm stores only three indices and a temporary swap value.
 
 ## Edge cases
 
-The pivot need not occur in the array, leaving the equal region empty.
-An all-equal array advances only `current` and needs no meaningful swaps.
+An empty array exits immediately.
+If no value equals the pivot, the middle region has length zero.
+If every value equals the pivot, only `current` advances.
+Negative values and pivots use the same comparisons without special handling.
 
 ## Common mistakes
 
-Do not advance `current` after swapping from the right.
-Use `current <= larger` so the last unclassified position is processed.
+- Advancing `current` after swapping in an unknown larger value can skip classification.
+- Sorting the array solves a different problem and adds unnecessary work.
+- Assuming the output must preserve order conflicts with the validator contract.
+- Forgetting to shrink `larger` leaves the loop stuck on a large value.
 
 ## Language notes
 
-Python uses simultaneous assignment for swaps.
-Java delegates swaps to a small helper and uses post-increment or post-decrement when moving boundaries.
+Python swaps tuple-style and Java uses a small `swap` helper.
+Both references mutate `arr` in place and expose the same three-way partition invariant.

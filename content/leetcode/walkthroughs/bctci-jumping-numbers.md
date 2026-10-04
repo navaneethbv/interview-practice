@@ -1,52 +1,46 @@
 ## Intuition
 
-A jumping number can be extended only by a digit one smaller or one larger than its last digit.
-Generate valid numbers directly instead of testing every positive integer below n.
+Once a jumping number's final digit is known, only two next digits are possible: one smaller or one larger.
+Generating these valid extensions avoids examining ordinary integers whose digit differences already violate the rule.
 
 ## Brute force
 
-Scanning every integer and checking all adjacent digits takes O(n log n) digit work.
-Generation explores only valid prefixes and a small number of children beyond the bound.
+Check every integer below n by converting it to digits and testing adjacent differences.
+That costs O(n log n) digit work even when relatively few integers qualify.
 
 ## Approach
 
-Start recursive growth from digits 1 through 9, avoiding leading zeroes.
-If number is at least n, stop that branch.
-Otherwise append it to found, inspect its last digit, and recursively append last - 1 or last + 1 when that digit lies between 0 and 9.
-Appending increases a positive number, so a branch beyond the bound can never return to range.
-Every valid multi-digit number has a unique valid prefix, ensuring complete generation without duplicates.
-Sort found before returning it.
+Start recursive `grow` calls from first digits 1 through 9, excluding leading zeros.
+If a candidate reaches n, stop that branch.
+Otherwise append it to `found`, inspect its last digit, and recurse with each valid neighboring digit.
+Every generated child preserves the jumping property.
+Conversely, removing the final digit of any multidigit jumping number gives a jumping parent, so every valid number is generated exactly once.
+Sort the collected numbers because depth-first generation is not numerical order.
 
 ## Walkthrough
 
-```text
-Input: n = 34
-Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32]
-```
-
-For Example 1, all single digits 1 through 9 qualify.
-The first-digit branches also generate 10, 12, 21, 23, and 32 below 34.
-The candidate 34 equals the bound and is excluded.
-Longer generated values already exceed the bound.
-Sorting these discoveries gives the stated increasing list.
+For Example 1, n is 34.
+Single digits 1 through 9 qualify.
+The branch beginning with 1 additionally produces 10 and 12; three-digit extensions exceed the limit.
+Starting with 2 produces 21 and 23, and starting with 3 produces 32.
+The candidate 34 is excluded because the bound is strict.
+Sorting gives `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32]`.
 
 ## Complexity
 
-For J returned numbers and maximum digit length d, generation takes O(J + 1) recursive calls up to a constant branching factor.
-Sorting costs O(J log J), and output plus recursion uses O(J + d) space.
+With J qualifying numbers, generation takes O(J + 1) calls up to a constant factor and sorting takes O(J log J).
+Storage is O(J + log n), including results and recursion depth.
 
 ## Edge cases
 
-For n equal to one, no positive candidate qualifies.
-A final zero has only digit 1 as a valid extension.
-A final nine has only digit 8.
+When n is one, there are no positive qualifying numbers.
+A last digit zero has only successor one; nine has only successor eight.
 
 ## Common mistakes
 
-Do not include zero as an output or allow leading-zero branches.
-Use a strict smaller-than bound.
+Do not include zero, allow leading zeros, or return an unsorted depth-first list.
 
 ## Language notes
 
-Python integers safely grow during candidate generation.
-Java uses long for recursive candidates before checking the int-sized bound, avoiding overflow in the multiplication by ten.
+Python integers naturally hold generated candidates.
+Java uses `long` inside `grow` before comparing against n and casts only accepted numbers into the result.

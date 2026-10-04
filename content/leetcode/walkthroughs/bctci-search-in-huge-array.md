@@ -1,49 +1,49 @@
 ## Intuition
 
-An unknown length prevents initializing an ordinary binary search, but an exponentially growing probe finds a sufficiently large upper bound quickly.
-The past-the-end sentinel behaves like a value larger than every allowed target.
-After bracketing the target position, perform a lower-bound search to handle duplicates correctly.
+The array is sorted, but its length is hidden behind a sentinel reader.
+Exponential probing finds a range that must contain the target or the end of the array.
+Ordinary binary search then finds the first target index within that range.
 
 ## Brute force
 
-Read indices in order until reaching the target or a larger value.
-A distant target requires linear reader calls, defeating the purpose of accessing a huge external array sparingly.
+Reading indices from zero upward can require linear reads before reaching a large target.
+Doubling the bound reaches the relevant scale in logarithmic probes.
 
 ## Approach
 
-Start `bound` at one and inspect index `bound - 1`.
-While that value is smaller than target, double the bound.
-The first non-smaller probe bounds the target's earliest possible position above, while the preceding probe excludes the lower prefix.
-Search from `bound // 2` through `bound - 1`.
-If a midpoint value is smaller, move low past it; otherwise move high to that midpoint.
-When the bounds meet, verify equality and return the index or -1.
-Keeping equality in the upper half preserves the first matching occurrence.
+1. Start with `bound = 1` and read index `bound - 1`.
+2. Double `bound` while that value is less than `target`.
+3. Search the inclusive interval `[bound // 2, bound - 1]` for the first value at least `target`.
+4. Return the lower bound if it equals `target`, otherwise return `-1`.
 
 ## Walkthrough
 
 Example 1 searches for 5 in `[1, 3, 5, 7, 9]`.
-Probes at indices zero and one find 1 and 3, so the bound grows to four.
-Index three contains 7, establishing the search interval from two through three.
-The midpoint at two contains 5, moving high to two.
-The final equality check returns index 2.
+The first probe reads index 0 and sees 1, then the doubled bound probes index 1 and sees 3, then index 3 and sees 7.
+Binary search narrows the range from indices 2 through 3 to index 2 because 5 is the first value at least the target.
+The final reader call confirms index 2 contains 5.
 
 ## Complexity
 
-If p is the first index whose value or sentinel is at least target, the number of reads is O(log(p + 2)).
-Both implementations use O(1) auxiliary space.
-For an absent target beyond all values, this becomes O(log(n + 2)) reads for length n.
+- Time: O(log p), where p is the target's first possible index or the hidden array length when the target is absent.
+- Space: O(1), using only bounds and one reader value at a time.
 
 ## Edge cases
 
-An empty reader immediately returns its sentinel and leads to -1.
-A target at index zero requires no bound expansion.
+An empty array returns `-1` after the sentinel bounds the search.
+A target smaller than the first value searches the first interval and fails cleanly.
+Duplicates are allowed, so the lower-bound search is required for the smallest index.
+The sentinel is treated as greater than every valid target.
 
 ## Common mistakes
 
-Do not return the first equal midpoint encountered, since duplicates require the smallest index.
-Never use the unavailable length API.
+- Returning the first matching probe can miss an earlier duplicate.
+- Using a fixed high index defeats the hidden-length contract.
+- Moving `low` on equality returns an arbitrary duplicate instead of the first.
+- Forgetting the final equality check returns an insertion position for absent targets.
 
 ## Language notes
 
-Python receives infinity past the end; Java receives `Integer.MAX_VALUE`.
-Allowed targets are smaller than both sentinels, so sentinel equality cannot masquerade as a real match.
+Python receives `math.inf` from the reader past the end.
+Java receives `Integer.MAX_VALUE` and uses unsigned midpoint arithmetic.
+Both implementations query only through `reader.get` and never assume a length API.

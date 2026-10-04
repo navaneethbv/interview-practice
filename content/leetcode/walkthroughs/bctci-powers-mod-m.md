@@ -1,51 +1,48 @@
 ## Intuition
 
-Squaring a half-power recovers an even exponent, and an odd exponent needs one additional factor of a.
-Reducing each intermediate product modulo m preserves the final remainder while preventing the full exponential-size integer from being constructed.
-The exponent is halved at every recursive call.
+Exponentiation by squaring reuses the result for half the exponent.
+An even power is the square of that half-power, while an odd power needs one additional factor of a.
+Reducing after each multiplication keeps stored recursive results bounded by the modulus.
 
 ## Brute force
 
-Multiply by a exactly p times, reducing after each multiplication.
-That keeps numbers bounded but still takes O(p) multiplications, too many for a billion-sized exponent.
+Multiply by a exactly p times, reducing modulo m at each step.
+This takes O(p) arithmetic operations, which is too many when p approaches one billion.
 
 ## Approach
 
-For exponent zero, return `1 % m`.
-Otherwise recursively calculate `half`, the remainder for exponent `p // 2`.
-Square that value and reduce modulo m.
-If p is odd, multiply the result by `a % m` and reduce again.
-Return the resulting remainder.
-Only one recursive half-power is computed, then reused for both factors of the square.
-The modular multiplication identity justifies reducing operands before later multiplications.
-The implementation bounds products by roughly m squared rather than constructing a to the power p.
+The base case `p == 0` returns `1 % m`.
+Recursively compute `half = powerMod(a, p // 2, m)` exactly once.
+Set `result = half * half % m`.
+For odd p, multiply that result by `a % m` and reduce again; for even p, return it directly.
+The modular multiplication identity permits replacing factors by their remainders without changing the final remainder.
+Only one recursive branch is needed because both halves of an even exponent are identical.
 
 ## Walkthrough
 
-Example 1 requests 2 to the fifth power modulo 30.
-The recursive exponent sequence is 5, 2, 1, 0.
-The zero exponent returns 1, and the exponent-one state returns 2.
-The exponent-two state squares 2 to obtain 4.
-The exponent-five state squares 4 to obtain 16, then applies its extra factor of 2.
-Reducing 32 modulo 30 produces the final answer 2.
+Example 1 evaluates `2^5 mod 30`.
+The recursive exponents are 5, 2, 1, and 0.
+The base returns 1; exponent 1 squares that and multiplies by 2, giving 2.
+Exponent 2 squares 2 to give 4.
+Exponent 5 squares 4 to give 16, then multiplies by 2 and reduces `32 % 30` to 2.
+That is the returned result.
 
 ## Complexity
 
-There are O(log(p + 1)) recursive levels and constant arithmetic per level.
-Both references therefore use O(log(p + 1)) time and stack space under bounded-width arithmetic.
-They do not use constant stack space, since the implementation is recursive.
+Halving the exponent gives O(log(p + 1)) arithmetic operations and recursive stack space.
+Stored remainders are below m, but transient products can approach m²; the implementation does not keep every intermediate below m itself.
 
 ## Edge cases
 
-Exponent zero returns one because m exceeds one.
-If a is divisible by m, every positive exponent returns zero.
+Exponent zero returns one under the stated m greater than one constraint.
+If a is divisible by m and p is positive, the result becomes zero.
 
 ## Common mistakes
 
-Calling the half-power function twice would destroy the logarithmic recurrence.
-Do not omit the extra factor for odd exponents.
+Do not call the half-power recursion twice.
+For odd powers, multiply by a after squaring the half result.
 
 ## Language notes
 
-Python supports arbitrary-precision products.
-Java stores products in `long`; with m at most one billion, the squared reduced values fit before the modulo operation.
+Python integers hold products automatically.
+Java promotes multiplication to long; products of the stated sub-billion remainders fit signed 64-bit range before the final int conversion.

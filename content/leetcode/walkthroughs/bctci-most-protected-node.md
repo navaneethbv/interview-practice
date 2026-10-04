@@ -1,49 +1,47 @@
 ## Intuition
 
-Protection combines four independent directions: ancestors above, descendants below, and neighbors on either side of the same level.
-A postorder traversal supplies downward heights, while a breadth-first traversal supplies depth and horizontal position.
-Combining these two views avoids repeatedly scanning a node's descendants or level.
+Three protection quantities depend on a node's position in the whole tree, while its downward chain length depends on its subtree.
+Compute subtree heights first, then use level order traversal to evaluate all four quantities together.
 
 ## Brute force
 
-For each node, independently measure its deepest descendant and count its peers.
-Repeated subtree traversals can take O(n squared) time on long chains.
+Individually finding ancestors, descendants, and level neighbors for every node repeats tree traversals.
+A postorder pass and one breadth first pass share those calculations, with each node handled a constant number of times.
 
 ## Approach
 
-First compute `heights[node]` recursively as one plus the maximum child height.
-A missing child has height -1, so a leaf has height zero in edges.
-Next process each level as an ordered list from left to right.
-For the node at `position`, the four quantities are `depth`, its stored height, `position`, and `len(level) - 1 - position`.
-Their minimum is that node's protection.
-Track the greatest such minimum and build the next level by appending left children before right children.
-Actual nodes count as neighbors; absent positions in a complete-tree layout do not.
+The helper `height` stores edge height in `heights`, returning -1 for missing children so leaves have height zero.
+For each `level`, a node at `position` has `depth` ancestors, `position` left neighbors, and `len(level) - 1 - position` right neighbors.
+Maximize their minimum with its height.
 
 ## Walkthrough
 
-Example 1 is the complete tree with values 1 through 7.
-The root has no ancestors, so its protection is zero.
-At level one, each of the two nodes is at an outer edge and has zero neighbors on one side.
-At level two, every node is a leaf and has downward height zero.
-Every candidate therefore has protection zero, which is returned.
+Example 1 has three levels in a complete seven node tree.
+The root has no ancestors or lateral neighbors.
+At depth one, each node lacks a neighbor on one side.
+Every depth two node is a leaf with downward height zero.
+All protection levels are therefore zero.
 
 ## Complexity
 
-Both traversals together take O(n) time.
-The height map requires O(n) storage, breadth-first lists use O(w), and recursive height calculation uses O(h) stack frames.
-The overall space bound is O(n).
+Both passes take O(n) time.
+The height map stores n entries, the level lists use O(w) for maximum width w, and recursion uses O(h) for height h.
+Overall auxiliary space is O(n).
 
 ## Edge cases
 
-A single node and any simple chain have protection zero.
-A node needs both side neighbors and a descendant to achieve positive protection.
+A single root has protection zero.
+A chain has no same level neighbors, so every node also has protection zero.
+Only actual nodes count left and right; gaps in the serialized tree do not count as protective neighbors.
 
 ## Common mistakes
 
-Use height in edges, not nodes.
-Preserve left-to-right level order when counting side neighbors.
+Measure downward height in edges, not nodes.
+Preserve left to right order when creating the next level.
+The protection level uses the minimum of four quantities, and the final answer uses the maximum across nodes.
 
 ## Language notes
 
-Both maps use node objects as keys, distinguishing nodes even when values repeat.
-Python's helper is nested; Java stores the map in the solution instance.
+Python keys `heights` by node objects and builds each level with a child comprehension.
+Java uses a `Map<TreeNode, Integer>` and explicit next level lists.
+Repeated numeric values do not merge nodes because the map tracks node identity.

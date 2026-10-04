@@ -1,52 +1,47 @@
 ## Intuition
 
-A single five-sale boost can repair days with 5 through 9 sales, but cannot repair days below 5.
-An unrepairable day acts as a barrier that no valid good-day window can cross.
+Translate each day into the number of boosts needed to make it good.
+Sales of at least 10 cost zero, sales from 5 through 9 cost one, and smaller values cannot be repaired by a single allowed boost.
 
 ## Brute force
 
-Enumerating every interval and checking whether it can be repaired costs at least quadratic time.
-The reference instead assigns each day a nonnegative cost and uses a sliding window.
+Enumerate all consecutive intervals and count repairable bad days while rejecting intervals containing an unrepairable day.
+Even with running counts, there are O(n squared) candidate intervals to inspect.
 
 ## Approach
 
-`_boost_cost` returns zero for already-good days, one for repairable days, and `blocked_cost = len(sales) + 1` for barriers.
-Because k is at most the array length, a barrier alone always exceeds the budget.
-Add each arriving day's cost, then remove days from the left while `cost > k`.
-Once feasible, update `best` with the current length.
-The large barrier cost forces the left boundary past every impossible day without needing a separate reset branch.
-Nonnegative contributions ensure that shrinking eventually restores feasibility.
+The reference maintains a window from `left` through `right` and its repair `cost`.
+An unrepairable day contributes `len(sales) + 1`, a value larger than every allowed budget.
+After extending the right boundary, remove leftmost contributions until `cost <= k`.
+Only then update `best` with the valid window length.
+Because all contributions are nonnegative, extending a window cannot repair an excessive cost, which makes forward-only shrinking correct.
 
 ## Walkthrough
 
-```text
-Input: sales = [10, 5, 8], k = 1
-Output: 2
-```
-
-Example 1 has daily costs `[0, 1, 1]` and budget 1.
-The first two days form a feasible window of length 2.
-Adding the final day raises the cost to 2.
-Removing the first day removes zero cost, so shrinking continues and removes the middle day too.
-The final feasible suffix has length 1, leaving the recorded best length at 2.
+In Example 1, `sales = [10, 5, 8]` and `k = 1`.
+The first day costs zero and gives length one.
+Adding 5 costs one and increases `best` to two.
+Adding 8 raises the cost to two.
+Removing 10 leaves it unchanged; removing 5 restores cost one and leaves only the last day.
+The answer remains 2.
 
 ## Complexity
 
-Each endpoint advances at most n times, giving O(n) time.
-The cost mapping is computed as needed and uses O(1) extra space.
+Time is O(n) because each day enters and leaves the window at most once.
+Auxiliary space is O(1), with costs calculated directly from the input.
 
 ## Edge cases
 
-A day with 4 sales is impossible even if unused boosts remain, because each day may be boosted only once.
-A day with 5 sales is repairable.
-An empty array returns zero.
+An empty input returns zero.
+With no boosts, the window contains only already-good days.
+Even a large budget cannot make a day below 5 good.
 
 ## Common mistakes
 
-Counting every bad day as cost one incorrectly allows impossible repairs.
-Using k rather than a strictly larger value for barrier cost would admit barriers.
+Do not charge every bad day one boost or repeatedly boost the same day.
+Update `best` after restoring the budget condition, rather than while the window is invalid.
 
 ## Language notes
 
-Python factors the cost calculation into a helper.
-Java uses equivalent conditional expressions and a `long` running total for accumulated barrier costs.
+Python represents `cost` with an arbitrary-precision integer.
+Java uses `long` for the cost and a long-valued sentinel, while window indices and the returned length remain integers.

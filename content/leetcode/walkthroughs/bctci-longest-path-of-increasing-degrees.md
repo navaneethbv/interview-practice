@@ -1,55 +1,47 @@
 ## Intuition
 
-Orient each usable edge from the lower-degree endpoint to the higher-degree endpoint.
-Strict increases make cycles impossible, so sorting vertices by degree supplies a valid order for longest-path dynamic programming.
+Strictly increasing degrees impose a direction on every usable edge.
+Following that direction can never cycle, so sorting vertices by degree creates a valid dynamic programming order even though the original graph is undirected.
 
 ## Brute force
 
-Enumerating all simple paths is exponential.
-The strict degree rule removes cyclic dependencies and lets each useful edge relax one dynamic-programming value.
+Searching all simple paths can be exponential.
+The degree restriction eliminates the need to remember a visited path: all transitions go from smaller degree to larger degree and therefore follow an acyclic dependency order.
 
 ## Approach
 
-Build undirected adjacency lists and count each vertex's degree from the original graph.
-Initialize `longest` to one for every vertex, representing its singleton path.
-Process vertices in nondecreasing degree order.
-For every neighbor with strictly larger degree, update its length with `longest[node] + 1` if larger.
-Return the maximum length.
-All possible preceding vertices have lower degree and have already been processed, making each value final before it is propagated.
-Equal-degree edges are unusable and need no ordering among their endpoints.
+Build `degree` and `neighbors` from the undirected edges.
+Initialize `longest` to one for every vertex.
+Process vertices in ascending degree and relax each higher degree neighbor with `longest[node] + 1`.
+The largest computed length is the answer.
 
 ## Walkthrough
 
-```text
-Input: V = 8, edges = [[0, 1], [1, 2], [2, 3], [0, 2], [0, 4], [2, 6], [3, 7], [2, 7], [4, 5], [5, 6], [6, 7]]
-Output: 3
-Explanation: 5, 6, 2 have degrees 2, 3, and 5.
-```
-
-Example 1 gives node 5 degree 2, node 6 degree 3, and node 2 degree 5.
-The edge from 5 to 6 raises longest[6] to at least 2.
-The edge from 6 to 2 then raises longest[2] to at least 3.
-Only degree values 2, 3, and 5 occur, so no strictly increasing path can contain more than three nodes.
-The answer is 3.
+In Example 1, node 5 has degree 2, node 6 has degree 3, and node 2 has degree 5.
+Processing 5 can set node 6's length to 2.
+Processing 6 then sets node 2's length to 3.
+No valid longer chain exists, so return 3.
 
 ## Complexity
 
-Building adjacency and relaxing edges takes O(V + E) time.
-Sorting vertices adds O(V log V), for O(V log V + E) total time.
-Storage is O(V + E).
+Computing adjacency and relaxing all neighbor lists takes O(V + E).
+Sorting vertices adds O(V log V), giving O(V log V + E) total time.
+Adjacency, degree, ordering, and dynamic programming arrays use O(V + E) space.
 
 ## Edge cases
 
-An isolated vertex still gives a one-node path.
-If all degrees are equal, the answer is one.
-Disconnected components are handled in the same global scan.
+A graph with one isolated vertex returns one because length counts nodes.
+Equal degree neighbors cannot extend one another.
+Disconnected components are all processed, and an isolated vertex still contributes a candidate path of length one.
 
 ## Common mistakes
 
-Return node count rather than edge count.
-Do not recompute degrees after orienting or filtering edges.
+Count degrees in the original undirected graph before orienting transitions.
+Do not allow equal degree moves, which invalidate the acyclic argument.
+Do not initialize path lengths to zero unless also changing the final conversion from edges to nodes.
 
 ## Language notes
 
-Python sorts a range using degree keys.
-Java sorts boxed vertex indices and stores lengths in an int array, preserving the same degree-based processing order.
+Python sorts integer vertex indices using a degree key.
+Java uses a boxed index array and a comparator, then tracks `best` during processing.
+Both references store each undirected edge twice in adjacency and preserve the input edge list.

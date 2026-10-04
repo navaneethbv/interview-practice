@@ -1,54 +1,42 @@
 ## Intuition
 
-Sudoku validity is a collection of local uniqueness rules.
-Each filled digit must be new in its row, column, and three-by-three box; empty cells impose no constraint.
-Finding a completed solution is unnecessary.
-
-## Brute force
-
-Comparing each filled cell against every cell sharing its groups repeats many checks.
-Three sets of seen-digit information detect a conflict immediately when a digit is processed.
+A valid partially filled Sudoku board only needs local uniqueness checks.
+For each nonzero digit, record whether that digit has appeared in its row, column, and 3 by 3 box.
+Encountering any recorded key means the digit violates one of the three rules.
 
 ## Approach
 
-Scan all 81 cells.
-Skip zeros.
-For each digit, form its row, column, and box membership identities.
-If any identity has already been seen, return false; otherwise record all three and continue.
-Python stores tagged tuple keys in one set, while Java uses separate boolean tables.
-The box index can be computed from integer-divided row and column coordinates.
-If scanning finishes without a duplicate, every required uniqueness condition holds.
+Scan all 81 cells and skip zeros because they represent empty positions.
+For a digit at row `r` and column `c`, derive its box coordinates with `r // 3` and `c // 3`.
+Check the row, column, and box records before adding all three records to `seen`.
+Return false on the first conflict and true after the complete scan.
 
 ## Walkthrough
 
-```text
-Input: board = the example puzzle with 7 at row 8, column 8
-Output: true
-```
-
-The local statement describes Example 1 by its final 7 at row 8, column 8; the matching sample fixture supplies the full board.
-That final cell belongs to row 8, column 8, and the bottom-right box.
-Earlier filled digits in that box are 4 and 2, so 7 introduces no box conflict.
-Its row and column also contain no earlier 7.
-All other filled cells pass their checks, yielding true.
+In Example 1, the seven at the bottom-right position creates three records that do not already exist, so the scan continues.
+In Example 2, the changed seven shares the bottom-right box with the existing seven.
+The box key is already in `seen`, so the method returns false even though the question does not ask whether the puzzle can be solved.
 
 ## Complexity
 
-The board dimensions and digit alphabet are fixed, so time and extra space are O(1).
-More explicitly, the references inspect 81 cells and store at most three membership records per filled cell.
+The board size is fixed, so the scan takes `O(81)` time and uses `O(81)` records.
+More generally, for a board with side length `n`, the work is `O(n^2)` and the tracking space is `O(n^2)`.
+The Java arrays and Python set both represent only seen constraints, not candidate solutions.
 
 ## Edge cases
 
-An empty board is valid even though it has many possible completions.
-Repeated zeros are ignored.
-A duplicate in any one group is sufficient to reject the board.
+An all-zero board is valid because empty cells do not create any constraint.
+Two equal digits in the same row or column fail even when their boxes differ.
+Two equal digits in the same box fail even when they are in different rows and columns.
 
 ## Common mistakes
 
-Do not require that the puzzle be solvable or complete.
-Do not use ordinary division when assigning integer box groups.
+Treating zero as a digit creates false conflicts among empty cells.
+Computing a box index from `r * c` does not identify the 3 by 3 region; both coordinates must be grouped by integer division.
+Searching for a solution instead of checking duplicates solves a harder problem than the contract asks.
 
 ## Language notes
 
-Python tags row and column keys to prevent accidental collisions between group types.
-Java allocates digit tables with ten positions so digits one through nine can be indexed directly.
+Python stores tuple keys for row, column, and box constraints in one set.
+Java stores three boolean tables and maps a box to `(r / 3) * 3 + c / 3`.
+Both methods preserve the input board and return as soon as a duplicate is proven.

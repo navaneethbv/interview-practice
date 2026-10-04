@@ -1,49 +1,48 @@
 ## Intuition
 
-Consecutive k-day windows overlap in all but two positions.
-Moving the window one day forward removes its oldest day's sales and adds its new last day's sales.
-A running sum captures this change without recomputing the shared middle days.
+Adjacent periods of exactly k days overlap in all but two positions.
+Subtract the departing day's sales and add the entering day's sales to maintain their totals without summing every period from scratch.
+The answer is the period's starting index.
 
 ## Brute force
 
-For every possible start, sum all k days from scratch.
-This costs O(n times k) time when n days are available.
+Compute a fresh sum for every possible k-day period.
+There are n minus k plus one periods, each requiring k additions, giving O(nk) worst-case work.
 
 ## Approach
 
-Sum the first k sales values and initialize both `window` and `best` from that sum.
-Set `best_start` to zero, since the first window is initially the winner.
-For each subsequent `day`, add `sales[day]` and subtract `sales[day - k]`.
-If this new sum is strictly greater than `best`, store it and the start index `day - k + 1`.
-Otherwise preserve the old start, which is earlier because windows are considered chronologically.
-After the scan, return the winning starting day rather than its total sales.
+Initialize both `window` and `best` with the first k-day total and set `best_start` to zero.
+For each entering `day` from k onward, add `sales[day] - sales[day - k]` to window.
+Replace best and its start only when the new total is strictly greater.
+The current start is `day - k + 1`.
+Scanning chronologically and ignoring ties preserves the earliest maximizing period automatically.
 
 ## Walkthrough
 
-Example 1 uses `[8, 1, 3, 7]` and k equal to two.
-The initial window sums to 9 and starts at day zero.
-Advancing to day two removes 8 and adds 3, giving 4, so the winner stays unchanged.
-Advancing to day three removes 1 and adds 7, giving 10.
-This beats 9, and the corresponding start is `3 - 2 + 1 = 2`.
-The answer is 2.
+Example 1 has sales `[8, 1, 3, 7]` and k two.
+The first total is nine, starting at zero.
+The next update subtracts 8 and adds 3, giving four at start one.
+The last update subtracts 1 and adds 7, giving ten at start two.
+That is a strict improvement, so the returned starting day is 2.
 
 ## Complexity
 
-Both references take O(n) time.
+Time is O(n).
 Java uses O(1) auxiliary space.
-Python's initial `sales[:k]` slice temporarily uses O(k) extra space; the subsequent sliding scan uses only scalar state.
+Python's initial `sales[:k]` slice temporarily uses O(k) extra space, although the subsequent rolling scan stores only counters.
 
 ## Edge cases
 
-For k equal to n, only the initialized window exists.
-For k equal to one, the answer is the first day with maximum sales.
+When k equals n, only start zero is possible.
+When k is one, this selects the earliest maximum individual sale.
+An all-zero input also returns zero because every period ties.
 
 ## Common mistakes
 
-Using greater-than-or-equal replaces the earliest winner on ties.
-The incoming day's index is the window end, not its start.
+Do not return the maximum sum or ending index.
+Updating on greater-than-or-equal would violate the earliest-start tie rule.
 
 ## Language notes
 
-Python initializes the sum with `sum`; Java uses an explicit loop.
-The provided limits keep every k-day total within Java's signed integer range.
+Python stores `best` and `best_start` together on improvement.
+Java's integer sum is safe because at most one million values below 1,000 contribute to a period.

@@ -1,45 +1,48 @@
 ## Intuition
 
-A multimap needs two different counts: the hash table tracks distinct keys, while `total` tracks all stored key-value pairs.
-Each key owns an ordered list of values, so duplicates and insertion order remain visible.
-Separate chaining supplies the required custom hash table without built-in maps.
+A multimap stores an ordered list of values for each distinct key.
+Its public size counts all key-value pairs, including repeated copies, while the internal hash table counts distinct keys only for bucket management.
+
+## Brute force
+
+Store every pair in one flat list and scan it for each key query.
+That preserves insertion order but makes membership and retrieval search unrelated pairs repeatedly, costing linear time per lookup.
 
 ## Approach
 
-`Buckets` stores lists of entries, choosing a chain from the integer key modulo the bucket count.
-Lookup scans only that chain and returns the stored value list, or a fresh empty list for a missing key.
-`add` appends a value, stores the updated list, and increments `total`.
-The table replaces an existing entry rather than creating duplicate entries for one key.
-When distinct-key load exceeds two per bucket, double the bucket array and redistribute entries.
-`remove` subtracts that key's entire list length from `total` and removes its table entry.
-`get` returns a copy so callers cannot mutate internal storage.
+`Buckets` provides a custom chained hash table, starting with eight buckets and doubling when its distinct-key count exceeds twice capacity.
+`add` obtains the key's value list, appends the new copy, writes that list back, and increments `total`.
+`remove` subtracts the entire list length before deleting the key.
+`contains` checks whether the stored list is nonempty.
+`get` returns a copy, preserving insertion order while protecting internal storage from caller mutation.
 
 ## Walkthrough
 
-Example 1 begins empty, then adds key 3 with value -2.
-Membership becomes true, size becomes one, and get returns `[-2]`.
-Adding -1 under the same key preserves insertion order, producing `[-2, -1]` and total size two.
-Removing key 3 deletes both pairs, so membership becomes false and size becomes zero.
-Repeated removals of 3 and the absent key 123456 leave the state unchanged.
+Example 1 starts at size zero.
+Adding `(3, -2)` makes size one and retrieval returns `[-2]`.
+Adding `(3, -1)` appends rather than replaces, making size two and retrieval `[-2, -1]`.
+Removing key 3 deletes both pairs, so size returns to zero.
+Repeated removals of that key or missing key 123456 leave the map empty.
 
 ## Complexity
 
-With well-distributed keys, add and contains are expected amortized O(1), while size is O(1).
-Returning k values costs O(k), and removing a key may require releasing its k values.
-Adversarial collisions can make a chain scan O(u) for u distinct keys.
-Storage is O(p + capacity) for p pairs and the allocated bucket array, which does not shrink after removals.
+Add and membership are expected amortized O(1) under well-distributed keys, with linear worst-case bucket scans.
+Returning k values costs O(k).
+Removal may release k stored values.
+Space is O(p + peak d), where p is current pairs and peak d reflects nonshrinking bucket capacity for distinct keys.
 
 ## Edge cases
 
-Repeated equal values are separate pairs.
-A missing key returns an empty list, distinct from a stored negative or zero value.
+Duplicate values remain distinct stored copies.
+Negative keys are valid.
+Removing a missing key changes neither size nor other entries.
 
 ## Common mistakes
 
-Do not decrease total by only one when removing a multi-valued key.
-Never expose the mutable internal list directly.
+Do not replace a key's old values or report the number of keys as public size.
+Returning the internal list allows accidental mutation without updating total.
 
 ## Language notes
 
-Python's modulo handles negative keys naturally.
-Java uses `Math.floorMod` and copies results with `new ArrayList`.
+Python uses nonnegative modulo indexing and copies with `list`.
+Java uses `Math.floorMod` for negative keys and an `ArrayList` copy for retrieval.

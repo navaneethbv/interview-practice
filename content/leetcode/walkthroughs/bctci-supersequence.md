@@ -1,51 +1,44 @@
 ## Intuition
 
-A string with no repeated letters is an ordering of distinct characters.
-Each input word imposes precedence constraints between its consecutive letters.
-A shared ordering exists exactly when these constraints contain no directed cycle and no individual word repeats a letter.
-
-## Brute force
-
-Try every permutation of the observed letters and test whether every word is a subsequence.
-The factorial number of orderings is unnecessary because only their relative-order constraints matter.
+Each input word imposes an order between every pair of adjacent letters.
+A no-repeat supersequence exists exactly when those order constraints have no cycle.
+This is a directed graph problem, so topological sorting can test whether all present letters can be placed.
 
 ## Approach
 
-Reject any word that contains a repeated letter, since no distinct-letter supersequence can include both occurrences.
-Add a directed edge between each consecutive pair in every word.
-Deduplicate edges so repeated constraints do not inflate indegrees.
-Count incoming edges for every observed letter, then place all zero-indegree letters in `ready`.
-Repeatedly remove one ready letter, increment `placed`, and decrease the indegrees of its outgoing neighbors.
-A neighbor becomes ready when all its prerequisites have been placed.
-Return whether placed equals the number of observed letters.
-Unplaced letters imply a cycle, whose mutually contradictory ordering requirements cannot be satisfied.
+Create one graph vertex for each letter that appears and add an edge for every adjacent pair in every word.
+Reject a word immediately if it repeats a letter, because the requested supersequence cannot repeat letters.
+Compute indegrees and put every present zero-indegree letter into `ready`.
+Repeatedly remove a ready letter, decrement its outgoing neighbors, and add neighbors whose indegree becomes zero.
+The constraints are feasible exactly when the number of placed letters equals the number of distinct present letters.
 
 ## Walkthrough
 
-Example 1 imposes a before b before c, b before d before e, d before f, and c before f before e.
-One valid topological order places a, b, c, d, f, then e.
-The resulting `abcdfe` contains every input word as a subsequence without repeating a character.
-Thus all observed letters can be placed and the method returns true.
-The implementation need not construct that string because only existence is requested.
+For Example 1, the words add edges such as `a -> b`, `b -> c`, `b -> d`, `d -> f`, and `c -> f`.
+The zero-indegree letters can begin with `a`, then `b` becomes available, followed by `c` and `d` in an order that permits `f`.
+All present letters are placed, so a sequence such as `abcdfe` satisfies every word.
+In Example 2, `ab` adds `a -> b` while `ba` adds `b -> a`, leaving both letters with positive indegree and revealing a cycle.
 
 ## Complexity
 
-For total input length L and alphabet size A, Python takes O(L + A + E) expected time for distinct precedence edges E.
-Java scans a fixed A by A matrix, taking O(L + A squared) time.
-Both use O(A squared) worst-case graph space; here A is only 26.
+Let `L` be the total number of characters and let `U` be the number of distinct lowercase letters.
+Building constraints and computing indegrees costs `O(L + U^2)` with the fixed 26-letter scan used by Java.
+The graph and indegree state use `O(U^2)` space, which is constant under lowercase input.
 
 ## Edge cases
 
-Single-letter words add vertices without edges.
-Empty words add no constraints.
-Inputs `ab` and `ba` create a directed cycle and must fail.
+An input word with one letter contributes a vertex but no edge.
+Repeated letters inside one word fail even if the repeated character is adjacent to itself.
+Several words may repeat the same ordering edge, so the Python set and Java boolean matrix keep indegrees from being duplicated.
 
 ## Common mistakes
 
-Checking only repeated letters within words misses contradictions between different words.
-Count duplicate edges once so indegrees match the edges actually removed.
+Checking only adjacent words or sorting the letters alphabetically ignores the actual precedence constraints.
+Treating duplicate edges as separate edges can leave an indegree that never reaches zero.
+Returning true after processing only some letters incorrectly accepts a cycle in an unprocessed component.
 
 ## Language notes
 
-Python uses sets of outgoing letters and a list stack.
-Java uses a Boolean adjacency matrix and `ArrayDeque`, exploiting the fixed lowercase alphabet.
+Python stores only letters that appear and uses sets for outgoing edges.
+Java uses a 26 by 26 boolean matrix and scans all alphabet positions, which matches the lowercase contract.
+Both references use `arr` and return a boolean rather than constructing the supersequence itself.

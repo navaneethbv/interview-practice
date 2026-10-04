@@ -1,50 +1,43 @@
 ## Intuition
 
-Sorted order restricts where a value equal to its index can occur, even when duplicates are allowed.
-A midpoint value can eliminate part of each side, but duplicates mean the usual single-branch binary-search decision is unsafe.
-Search the left candidate region first to obtain the smallest matching index.
-
-## Brute force
-
-Scan every index and return the first one whose value equals that index.
-This is O(n) time and constant space, and remains a useful baseline because duplicates can force the reference to inspect linearly many positions too.
+For a sorted array, the value at the midpoint bounds where a magic index can still occur.
+With duplicate values, the left side may need to extend as far as `A[mid]`, and the right side may begin after that value.
+Searching the left branch first guarantees the smallest valid index is returned.
 
 ## Approach
 
-At midpoint `mid`, search the left interval ending at `min(mid - 1, A[mid])`.
-Sortedness proves that excluded left indices above A[mid] cannot equal their values.
-Return a match found there before considering the midpoint.
-If `A[mid] == mid`, return mid.
-Otherwise search right starting at `max(mid + 1, A[mid])`.
-An interval with start greater than end returns -1.
-Every recursive candidate interval is smaller than its parent.
+Recursively search the current inclusive interval.
+At midpoint `mid`, search the left range through `min(mid - 1, A[mid])` because larger indices cannot be forced below the sorted value boundary.
+If the left search fails, test `A[mid] == mid`.
+Finally search from `max(mid + 1, A[mid])` through the right boundary.
+The two clamped ranges preserve correctness with duplicates while skipping impossible positions.
 
 ## Walkthrough
 
-In Example 1, midpoint 5 contains 3, so the left search is restricted to indices 0 through 3 and finds nothing.
-The right search spans 6 through 10 and first examines index 8, whose value is 9.
-Its left region includes index 7.
-Index 6 does not match, then index 7 is found to contain 7.
-Return 7 before examining later candidates.
+In Example 1, the array's midpoint checks narrow the search toward the first index where the value catches up with the index.
+The left-first recursion eventually tests index seven, where the value is seven, and returns it before any later match is considered.
+In Example 2, the repeated value two makes the left boundary clamp important, and index two is found as the first magic index.
 
 ## Complexity
 
-Worst-case time is O(n) with duplicate-heavy inputs.
-Recursive depth is O(log n) because each branch remains within a half interval, so stack space is O(log n).
-Pruning can reduce the actual work substantially.
+With distinct values, the pruning behaves like binary search and takes `O(log n)` time.
+With duplicates, the worst case can revisit many indices, so the guaranteed time is `O(n)`.
+The recursion uses `O(log n)` stack space in favorable cases and `O(n)` in the worst case.
 
 ## Edge cases
 
-An empty array returns -1.
-When several indices match, searching left first preserves the smallest answer.
-Negative values can discard entire left regions.
+An empty array starts with an invalid interval and returns `-1`.
+Index zero is checked normally, so an initial value of zero is an immediate answer.
+Repeated values may produce several magic indices, but left-first traversal preserves the smallest one.
 
 ## Common mistakes
 
-Applying the distinct-values binary-search rule can skip a valid index when repeated values appear.
-Checking the midpoint before searching left can return a later match.
+Using the distinct-value binary-search bounds with duplicates can skip a valid earlier index.
+Checking the midpoint before the left branch can return a larger magic index than required.
+Forgetting the `start > end` base case causes invalid recursive intervals to continue.
 
 ## Language notes
 
-Both references pass interval indices rather than copying array slices.
-Java uses unsigned shift for midpoint division; Python uses integer division on the nonnegative index sum.
+Python uses floor division for the midpoint and the same clamped bounds as the Java version.
+Java uses an unsigned right shift for midpoint calculation, which avoids overflow for nonnegative indices.
+Both implementations pass the sorted array and interval bounds without allocating a copy.

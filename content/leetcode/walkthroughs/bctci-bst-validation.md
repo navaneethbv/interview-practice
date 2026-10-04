@@ -1,53 +1,48 @@
 ## Intuition
 
-A node must satisfy ordering constraints from every ancestor, not just from its immediate parent.
-Carry the allowed value interval down the tree so those inherited constraints remain visible.
-This problem permits equality at either boundary.
+Checking only a node's immediate children is insufficient because every ancestor imposes a bound on its whole descendant subtree.
+Carry the allowed interval down the tree and require each value to remain inside it.
+Both interval endpoints are inclusive because this version permits duplicates.
 
 ## Brute force
 
-For each node, rescanning every value in both subtrees would verify the rules but can take quadratic time.
-Comparing only direct children is faster but fails to detect deeper violations of ancestor bounds.
+For each node, independently scan its left subtree for the maximum and its right subtree for the minimum.
+Repeated subtree scans can cost O(n squared) on an unbalanced tree.
 
 ## Approach
 
-Start with an unbounded interval.
-For a node with allowed range `[low, high]`, reject its value if it lies outside that inclusive range.
-Its left child inherits `[low, node.val]`, and its right child inherits `[node.val, high]`.
-Null nodes are valid and need no further processing.
-If every visited node respects its accumulated range, every left-subtree value is at most its ancestors where required and every right-subtree value is at least them.
-This is exactly the stated BST definition.
+The Python stack starts with `(root, negative infinity, positive infinity)`.
+Pop a node and its `low` and `high` bounds, skipping null entries.
+Reject a value outside the interval.
+Its left child inherits the lower bound and receives the current value as its upper bound.
+Its right child inherits the upper bound and receives the current value as its lower bound.
+Java expresses the same recurrence with `valid` calls instead of an explicit stack.
 
 ## Walkthrough
 
-```text
-Input: root = [5, 2, 9, null, 4, 9, 11, null, null, null, 9]
-Output: true
-```
-
-Example 1 starts with root 5.
-The left subtree receives an upper bound of 5, accepting values 2 and 4.
-The right subtree receives a lower bound of 5 and accepts 9 and 11.
-Additional 9 values remain legal because bounds are inclusive, including a 9 placed under another 9.
-No node violates an inherited bound, so validation returns true.
+In Example 1, root 5 divides the allowed ranges at 5.
+The left subtree contains 2 and 4, both within its upper bound.
+The right subtree contains 9, 9, 11, and another 9.
+The nested 9 can equal its ancestor's boundary, so it remains valid.
+Every interval check succeeds and the output is true.
 
 ## Complexity
 
-Time is O(n), since each node is checked once.
-The depth-first traversal uses O(h) extra space for height h, through an explicit stack in Python and recursion in Java.
+Each of n nodes is checked once, giving O(n) time.
+The depth-first pending work or recursive calls require O(h) auxiliary space for tree height h.
 
 ## Edge cases
 
-An empty tree is valid.
-Equal parent and child values are valid here.
-A grandchild can violate an ancestor's bound even when it compares correctly with its parent.
+The empty tree is valid.
+Repeated values are permitted on both sides when they also respect all ancestor bounds.
+Integer extremes need bounds that do not overflow.
 
 ## Common mistakes
 
-Using strict inequalities solves a different BST definition.
-Replacing inherited bounds with only the parent value loses constraints from earlier ancestors.
+Using strict inequalities would reject legal duplicates.
+Resetting bounds at each node would miss violations involving a more distant ancestor.
 
 ## Language notes
 
-Python uses infinite initial bounds.
-Java uses long extrema, which safely contain every int node value without arithmetic on the boundaries.
+Python uses floating-point infinities only as comparison sentinels, without converting node values.
+Java uses `long` bounds initialized to its extreme values, so every allowed integer node value is representable.

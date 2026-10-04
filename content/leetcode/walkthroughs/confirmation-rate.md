@@ -12,7 +12,7 @@ The grouped left join lets SQLite aggregate all rows in one query plan.
 
 1. Start with `Signups` and left join `Confirmations` by `user_id`.
 2. Use `AVG(c.action='confirmed')` so confirmed rows contribute 1 and other actions contribute 0 in SQLite.
-3. Wrap the average with `COALESCE(..., 0)` for users with no joined confirmation row.
+3. Wrap the average with `COALESCE(.., 0)` for users with no joined confirmation row.
 4. Round to two decimal places and group by `user_id`.
 
 ## Walkthrough

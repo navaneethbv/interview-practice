@@ -1,52 +1,43 @@
 ## Intuition
 
-The number of full pours is the largest integer q satisfying q times b at most a.
-That predicate is monotone, so binary search can find the quotient without using division.
-
-## Brute force
-
-Repeatedly subtracting b until the container cannot hold another pour takes O(a / b) steps.
-When b is small, binary search is substantially more efficient.
+If `x` full small containers are poured into the large container, the total water is `x * b` gallons.
+The feasible counts form a contiguous range because increasing `x` only increases that total.
+Binary search can therefore find the largest feasible count without using division.
 
 ## Approach
 
-Search possible counts between one and a.
-The lower bound is feasible because a is greater than b, and a is a safe upper bound because b is at least one.
-Use the upper midpoint `(low + high + 1) >> 1`.
-If mid times b fits, move low to mid; otherwise move high to mid - 1.
-The upper midpoint ensures progress when only two neighboring candidates remain and the lower bound is assigned to mid.
-Return low when the interval collapses.
+Search counts from one through `a`, using an upper midpoint so the lower bound can safely move upward.
+If `mid * b <= a`, `mid` is feasible and becomes the new lower bound.
+Otherwise the count is too large, so reduce the upper bound to `mid - 1`.
+When the bounds meet, `low` is the greatest count whose total volume fits.
 
 ## Walkthrough
 
-```text
-Input: a = 18, b = 5
-Output: 3
-```
-
-Example 1 searches for the largest count whose product with 5 is at most 18.
-Candidates 10 and 5 are too large, reducing the upper bound to four.
-Candidate 3 fits because 15 is at most 18, but candidate 4 fails because 20 exceeds 18.
-The bounds meet at 3, leaving three unused gallons that cannot hold another full pour.
+For Example 1, `a = 18` and `b = 5`.
+The search tests candidate counts such as ten, five, and three, retaining three because fifteen gallons fit while four would require twenty gallons.
+The bounds converge at three, so the method returns three.
+For `a = 10` and `b = 2`, five is feasible exactly and six is not, producing five.
 
 ## Complexity
 
-The search halves a range of size a, giving O(log a) time.
-Two bounds and one midpoint use O(1) extra space.
-No repeated-volume array is constructed.
+The interval at least halves on each iteration, so the running time is `O(log a)`.
+The method uses `O(1)` auxiliary space.
+Java widens `mid * b` to `long` before comparison so the product cannot overflow a 32-bit integer during the search.
 
 ## Edge cases
 
-If a is an exact multiple of b, the fitting equality must be accepted.
-For b equal to one, the result is a.
-A capacity only slightly above b yields one pour.
+When `b` is just below `a`, exactly one pour fits.
+When `b` is one, the answer is `a`.
+An exact multiple returns that quotient count, while a remainder leaves the floor count as the answer without performing division.
 
 ## Common mistakes
 
-A lower midpoint with low = mid can cause an infinite loop.
-Avoid overflow when multiplying the candidate count by b.
+Using a lower midpoint can leave the search stuck when only the upper candidate remains.
+Returning the first feasible count finds a minimum, while the task asks for the maximum feasible count.
+Checking `mid + b <= a` models adding gallons rather than counting full pours and gives the wrong predicate.
 
 ## Language notes
 
-Python uses arbitrary-precision integers and right shift.
-Java uses long bounds and multiplication, then casts the final count back to int because it cannot exceed a.
+Python uses the allowed right shift to compute the midpoint and ordinary integer multiplication for the feasibility test.
+Java stores both bounds and the midpoint as `long`, then casts the final count back to `int`.
+Neither reference uses division, and both retain the parameter names `a` and `b`.

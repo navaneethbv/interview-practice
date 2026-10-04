@@ -1,53 +1,47 @@
 ## Intuition
 
-Removing days from a window cannot increase its number of distinct titles.
-This monotonicity permits a sliding window that expands rightward and shrinks only when a new title pushes the distinct count above k.
+A valid period is a contiguous window whose title-frequency map contains at most k keys.
+When adding a new day makes too many distinct titles, removing days from the left is the only way to restore validity while retaining the new right endpoint.
 
 ## Brute force
 
-Enumerating every period and rebuilding its title set takes quadratic or worse time.
-Maintaining per-title frequencies lets adjacent windows share nearly all their work.
+For every starting day, extend the period while tracking a set of titles.
+This can take O(n squared) total work, with heavily overlapping periods rebuilding much of the same information.
 
 ## Approach
 
-Store the current window's title frequencies in `counts`.
-Add the title at right, then move left while counts contains more than k keys.
-Decrement each departing title and delete its key when its frequency reaches zero.
-Once feasible, update best with `right - left + 1`.
-The window is the longest valid suffix ending at right because any earlier start was removed only while the distinct-title budget was exceeded.
-Zero-count keys must disappear so map size equals the actual number of distinct titles.
+Maintain `counts`, `left`, and `best` while advancing `right`.
+Increase the entering title's count.
+While the map has more than k keys, decrement the leaving title and delete its key when the count reaches zero, then advance left.
+The resulting window is the longest valid one ending at right, so compare its length with best.
+Titles that still occur elsewhere inside the window remain represented.
 
 ## Walkthrough
 
-```text
-Input: bestSeller = ["book1", "book1", "book2", "book1", "book3", "book1"], k = 2
-Output: 4
-```
-
-Example 1's first four days contain only book1 and book2, giving length 4.
-Adding book3 creates a third title.
-Removing the two leading book1 occurrences does not eliminate book1, but removing book2 next restores the limit.
-The remaining suffix can extend through the final book1 to length 3.
-The earlier best length 4 remains the answer.
+Example 1 has `book1, book1, book2, book1, book3, book1` with k two.
+The first four days contain only book1 and book2, setting best to four.
+Adding book3 introduces a third title.
+Removing the first two book1 entries still leaves book1 present; removing book2 finally restores two distinct titles.
+The final book1 extends this later window to three, so the answer stays 4.
 
 ## Complexity
 
-Each day enters and leaves at most once, so expected time is O(n) hash-table operations.
-The map holds at most k + 1 titles transiently, giving O(min(n, k + 1)) extra space.
-String hashing and comparisons add their text-processing costs.
+Expected time is O(n) hash-table operations because each day enters and leaves once.
+The frequency map stores O(min(n, k + 1)) entries, including the transient extra title before shrinking.
+String hashing cost depends on title lengths.
 
 ## Edge cases
 
 Empty input returns zero.
-If k covers every distinct title, the full array qualifies.
-For k equal to one, the answer is the longest equal-title run.
+When k covers every distinct title, the full array qualifies.
+Repeated occurrences of one title do not consume additional distinct-title budget.
 
 ## Common mistakes
 
-Counting total occurrences instead of distinct keys changes the constraint.
-Leaving zero-frequency keys in the map can prevent shrinking from terminating correctly.
+Leaving zero-count keys in the map makes its size inaccurate.
+Do not shrink only once when several earlier days must be removed.
 
 ## Language notes
 
-Python deletes exhausted dictionary entries.
-Java uses Map.merge to decrement and explicitly removes entries whose updated count is zero.
+Python explicitly deletes exhausted dictionary entries.
+Java uses `merge` with -1 and removes the key only when the resulting count is zero.

@@ -1,52 +1,47 @@
 ## Intuition
 
-The visible value at each depth is the first existing node from left to right.
-A level-order traversal preserving child order exposes that node at the front of every level.
+The left view contains the first existing node on each level, even when that node belongs to a right subtree.
+A breadth-first traversal already groups nodes by depth; preserving left-to-right order makes each level's first value the required answer.
 
 ## Brute force
 
-Following only left-child links fails when a level's leftmost node lies inside a right subtree.
-Collecting and sorting nodes by depth and position would add unnecessary bookkeeping.
+One could record every node with its depth and position, then sort or group all records.
+That uses extra storage and processing when the traversal itself can preserve the desired order directly.
 
 ## Approach
 
-Start with the root as the first level when it exists.
-Append the first node's value from the current level.
-Construct or enqueue the next level by visiting current nodes left to right and adding each left child before its right child.
-Continue until no nodes remain.
-This ordering guarantees the first entry of every level is its leftmost real node, even when earlier branches end.
-Missing children do not occupy visible positions.
+Python keeps the current `level` as an ordered list.
+Append its first node's value to `view`, then construct the next level by visiting each parent's left child before its right child.
+Java instead keeps a queue, records its front value, and processes exactly the queue size measured at that level's start.
+Children appended during those removals form the next level.
+Both approaches prevent nodes from different depths from being mixed when selecting the visible value.
 
 ## Walkthrough
 
-```text
-Input: root = [1, 2, 3, null, 5, null, 6, null, null, null, 7]
-Output: [1, 2, 5, 7]
-```
-
-Example 1 has levels `[1]`, `[2, 3]`, `[5, 6]`, and `[7]`.
-Selecting the first value from each gives `[1, 2, 5, 7]`.
-The final 7 comes from the right-side branch, but it is still visible because no node exists farther left at that depth.
-This is why a simple left-child walk would miss part of the answer.
+Example 1 starts with root 1, so the first view value is 1.
+The next level is `[2, 3]`, contributing 2.
+Their existing children form `[5, 6]`, contributing 5.
+The last level contains only 7, reached below the right-hand branch, so it contributes 7.
+The returned view is `[1, 2, 5, 7]`.
 
 ## Complexity
 
-Every node is processed once, giving O(n) time.
-Level storage uses O(w) space for maximum tree width w, and the returned view uses O(h) space for tree height h.
-Both are O(n) in the worst case.
+Each of n nodes is visited once, giving O(n) time.
+The level storage or queue uses O(w) auxiliary space for maximum tree width w.
+The result uses O(h) space for the number of nonempty levels.
 
 ## Edge cases
 
-An empty tree returns an empty view.
-A right-only chain shows every node.
-Duplicate values remain separate level entries.
+An empty tree returns an empty list.
+A chain contributes every node, even when all edges point right.
+Missing left children do not end the traversal.
 
 ## Common mistakes
 
-Enqueueing right children before left children computes the right view instead.
-In the queue version, fix the current level size before adding children.
+Do not simply follow root.left repeatedly.
+In Java, do not use the changing queue size as the bound while adding children.
 
 ## Language notes
 
-Python builds a new list for each level.
-Java retains one queue and processes exactly its saved initial size for that level.
+Python's comprehension filters null children while preserving parent and child order.
+Java's `ArrayDeque` rejects null entries, so both child insertions have explicit null checks.

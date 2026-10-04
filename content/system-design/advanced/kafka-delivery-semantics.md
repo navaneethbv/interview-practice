@@ -1,20 +1,48 @@
-## Producer delivery semantics
+## Specify the guarantee's boundary
 
-As we know, a producer writes only to the leader broker, and the followers asynchronously replicate the data. How can a producer know that the data is successfully stored at the leader or that the followers are keeping up with the leader? Kafka offers three options to denote the number of brokers that must receive the record before the producer considers the write as successful:
+Delivery guarantees describe a protocol and its failure assumptions, not every effect produced by the application.
+Distinguish writing a record, consuming it, and updating an external destination.
+This replacement chapter uses Kafka 4.0 documentation and was reviewed October 4, 2026.
 
-- **Async**: Producer sends a message to Kafka and does not wait for acknowledgment from the server. This means that the write is considered successful the moment the request is sent out. This **fire-and-forget** approach gives the best performance as we can write data to Kafka at network speed, but no guarantee can be made that the server has received the record in this case.
-- **Committed to Leader**: Producer waits for an acknowledgment from the leader. This ensures that the data is committed at the leader; it will be slower than the ‘Async’ option, as the data has to be written on disk on the leader. Under this scenario, the leader will respond without waiting for acknowledgments from the followers. In this case, the record will be lost if the leader crashes immediately after acknowledging the producer but before the followers have replicated it.
-- **Committed to Leader and Quorum**: Producer waits for an acknowledgment from the leader and the quorum. This means the leader will wait for the full set of in-sync replicas to acknowledge the record. This will be the slowest write but guarantees that the record will not be lost as long as at least one in-sync replica remains alive. This is the strongest available guarantee.
+## Producer acknowledgments
 
-As we can see, the above options enable us to configure our preferred trade-off between durability and performance.
+| Setting | Producer waits for | Important limit |
+| --- | --- | --- |
+| `acks=0` | No broker acknowledgment | Sending is not proof of storage |
+| `acks=1` | Partition leader acknowledgment | A leader failure before replication can lose the record |
+| `acks=all` | The current in-sync replica set | Durability also depends on replication and minimum ISR settings |
 
-- If we would like to be sure that our records are safely stored in Kafka, we have to go with the last option – Committed to Leader and Quorum.
-- If we value latency and throughput more than durability, we can choose one of the first two options. These options will have a greater chance of losing messages but will have better speed and throughput.
+`acks=all` does not mean a majority of every configured replica.
+For example, configure replication factor three and `min.insync.replicas=2` with `acks=all`.
+If only one in-sync replica remains, the topic's minimum requirement prevents a successful write acknowledgment under those settings.
+Explain the availability cost of that durability choice.
+Do not describe ordinary acknowledgment as a guarantee that every record was individually forced onto stable storage by `fsync`.
 
-## Consumer delivery semantics
+## Retries and transactions
 
-A consumer can read only those messages that have been written to a set of in-sync replicas. There are three ways of providing consistency to the consumer:
+An idempotent producer protects against duplicate records caused by its supported retry protocol.
+It does not deduplicate every business request submitted again by an application.
+Kafka transactions can coordinate Kafka writes and consumed offsets in suitable read-process-write flows.
+Consumers that should exclude aborted transactional records need the appropriate isolation setting.
+An external database or payment system is not automatically included in that Kafka transaction.
 
-- **At-most-once** (Messages may be lost but are never redelivered): In this option, a message is delivered a maximum of one time only. Under this option, the consumer upon receiving a message, commit (or increment) the offset to the broker. Now, if the consumer crashes before fully consuming the message, that message will be lost, as when the consumer restarts, it will receive the next message from the last committed offset.
-- **At-least-once** (Messages are never lost but maybe redelivered): Under this option, a message might be delivered more than once, but no message should be lost. This scenario occurs when the consumer receives a message from Kafka, and it does not immediately commit the offset. Instead, it waits till it completes the processing. So, if the consumer crashes after processing the message but before committing the offset, it has to reread the message upon restart. Since, in this case, the consumer never committed the offset to the broker, the broker will redeliver the same message. Thus, duplicate message delivery could happen in such a scenario.
-- **Exactly-once** (each message is delivered once and only once): It is very hard to achieve this unless the consumer is working with a transactional system. Under this option, the consumer puts the message processing and the offset increment in one transaction. This will ensure that the offset increment will happen only if the whole transaction is complete. If the consumer crashes while processing, the transaction will be rolled back, and the offset will not be incremented. When the consumer restarts, it can reread the message as it failed to process it last time. This option leads to no data duplication and no data loss but can lead to decreased throughput.
+## Worked failure sequence
+
+A consumer reads event E, updates a database, and crashes before committing its offset.
+On restart it reads E again.
+If the database update is applied twice, the system has duplicated the business effect even though record delivery behaved as designed.
+One approach is a unique event identifier recorded atomically with the database update.
+The replay finds the recorded identifier and avoids repeating the effect.
+That boundary must match the application's real transaction and retention assumptions.
+
+## Exercise
+
+Reverse the order: commit the offset before the database update.
+A crash between those steps can lose the effect instead.
+Explain why merely reordering the two independent operations cannot guarantee both no loss and no duplication.
+
+## Sources
+
+- [Producer configuration](https://kafka.apache.org/40/configuration/producer-configs/)
+- [Topic durability settings](https://kafka.apache.org/40/configuration/topic-configs/)
+- [Kafka delivery semantics](https://kafka.apache.org/40/design/design/)

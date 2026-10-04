@@ -1,54 +1,62 @@
 ## Intuition
 
-Flooded counts increase over time, so the closest photo to half flooded lies at the crossing of that midpoint.
-Within each row, the boundary between ones and zeros can also be found by binary search.
+Tide Aerial View is organized around Binary Search over Pictures.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Counting every cell in every photo takes O(Pn squared) time for P pictures of side n.
-Both monotonicities reduce the amount of image data that must be inspected.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-`_ones` finds the first zero in a row and returns its index, which equals that row's flooded count.
-Sum those counts to obtain `_flooded` for a photo.
-Binary-search pictures for the first whose doubled flooded count reaches n squared, or the final picture when none reaches it.
-Compare that candidate with its immediate predecessor using absolute imbalance `abs(2 * flooded - total)`.
-Prefer the earlier index on equal imbalance.
-Strictly increasing flooded counts ensure no more distant photo can improve on these candidates.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Binary Search over Pictures idea: The number of flooded cells only grows from picture to picture, so binary search for where it crosses half the area.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named mostBalanced can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: pictures = [["000", "000", "000"], ["100", "000", "100"], ["110", "000", "100"], ["110", "111", "100"], ["111", "111", "110"]]
-Output: 2
-Explanation: Pictures 2 and 3 are equally close to half flooded; 2 is earlier.
-```
-
-Example 1 has nine cells per picture and flooded counts 0, 2, 3, 6, and 8.
-The midpoint crossing is picture 3, with six flooded cells.
-Its imbalance is abs(12 - 9) = 3.
-Picture 2 has imbalance abs(6 - 9) = 3 as well.
-The earlier-picture tie rule therefore returns index 2.
+Example 1 uses input [[["000", "000", "000"], ["100", "000", "100"], ["110", "000", "100"], ["110", "111", "100"], ["111", "111", "110"]]] and expects 2.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 2.
+The same reasoning handles hidden cases [[["0"], ["1"]]], [[["00", "00"], ["10", "00"], ["10", "10"], ["11", "10"], ["11", "11"]]], [[["000", "000", "000"], ["111", "111", "111"]]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-One flooded count costs O(n log(n + 1)).
-The outer search and final comparisons give O(n log(n + 1) log(P + 1)) time.
-The iterative searches use O(1) extra space beyond input.
+The imported workbook records the expected time bound as O(n log n log p).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A single picture returns index zero.
-If all pictures are below half, the final one is closest.
-If all are above half, the first is closest.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[["0"], ["1"]]], [[["00", "00"], ["10", "00"], ["10", "10"], ["11", "10"], ["11", "11"]]], [[["000", "000", "000"], ["111", "111", "111"]]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not assume counts change by exactly one between pictures.
-Use a non-strict comparison when selecting the earlier tied candidate.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses integer arithmetic throughout.
-Java uses long for doubled counts and total-area comparisons, while row and picture indices remain ints.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

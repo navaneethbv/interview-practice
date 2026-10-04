@@ -1,50 +1,47 @@
 ## Intuition
 
-In a valley-shaped array, the largest remaining value is always at one of the two ends.
-Removing that endpoint leaves another valley-shaped interval.
-Choose the larger endpoint repeatedly and fill the output from largest position toward smallest.
+A valley's largest remaining value must be at one of its two ends.
+Removing that end leaves another valley-shaped interval.
+We can therefore repeatedly choose the larger endpoint and fill the output backward from largest to smallest.
 
 ## Brute force
 
-Apply a general comparison sort to a copy of the array.
-This takes O(n log n) time and ignores the special shape that permits linear merging.
+Use a general comparison sort on a copy of the input.
+That takes O(n log n) time, missing the linear-time opportunity supplied by the valley shape.
 
 ## Approach
 
-Allocate `result` with the input length and initialize `left` and `right` at the endpoints.
-Visit output positions from the last index down to zero.
-Compare the remaining endpoint values.
-Copy the larger into the current output position and advance its corresponding endpoint inward.
-On equality, the references choose the left endpoint, but either choice preserves sortedness and multiplicity.
-The completed suffix of result is always sorted and contains the largest values already removed.
-No explicit search for the valley bottom is needed, because endpoint comparisons handle both monotone sides together.
+Allocate `result` and initialize `left = 0`, `right = n - 1`.
+For output positions from n - 1 down to zero, compare `arr[left]` with `arr[right]`.
+Write the larger value into the current result position and advance only its corresponding endpoint inward.
+On equality, the reference selects the left endpoint; either choice preserves sorted values.
+The filled output suffix always contains the largest removed values in ascending order, while the unprocessed input interval still contains exactly the values needed for the remaining prefix.
 
 ## Walkthrough
 
 Example 1 starts with `[8, 4, 2, 6]`.
-Compare 8 and 6, placing 8 in the final output position.
-Compare the new left endpoint 4 with 6, placing 6 next.
-Compare 4 with 2, placing 4 next.
-The remaining 2 fills the first position.
-The result is `[2, 4, 6, 8]`, assembled backward while the input remains unchanged.
+Compare endpoints 8 and 6, place 8 at result index 3, and move left to 1.
+Now compare 4 and 6, place 6 at index 2, and move right to 2.
+Compare 4 and 2, place 4 at index 1.
+The final remaining value 2 fills index 0.
+The output is `[2, 4, 6, 8]`.
 
 ## Complexity
 
-Exactly one endpoint is consumed for every output position.
-Both references take O(n) time and O(n) space for the required new array.
-Beyond that returned array, only indices and scalar comparisons are needed, giving O(1) auxiliary working space.
+Exactly n values are selected, so time is O(n).
+The required new result takes O(n) space, with O(1) auxiliary working space beyond that output.
 
 ## Edge cases
 
-Empty input creates an empty result and performs no endpoint reads.
-Plateaus and repeated minimum or maximum values remain valid and retain all occurrences.
+An empty array creates an empty result and never indexes the input.
+Equal values and a flat valley bottom are handled by the endpoint comparison.
 
 ## Common mistakes
 
-Choosing the smaller endpoint for the next smallest output position is incorrect because the minimum can be inside the valley.
-Do not deduplicate equal endpoint values.
+Fill backward when choosing the largest endpoint.
+The same method would be incorrect for an arbitrary unsorted array whose maximum lies in the interior.
 
 ## Language notes
 
-Python uses a descending `range` and explicit pointer updates.
-Java uses post-increment and post-decrement after assigning the chosen endpoint value.
+Both references preserve the input and return a new array.
+Python uses a descending range; Java uses a decreasing output index with separate left and right pointers.

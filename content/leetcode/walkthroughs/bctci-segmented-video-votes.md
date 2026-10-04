@@ -1,50 +1,45 @@
 ## Intuition
 
-A range vote begins contributing at its left endpoint and stops contributing immediately after its right endpoint.
-Represent only those two changes instead of updating every covered minute.
-A prefix sum then reconstructs the active net contribution at each minute.
+A range vote changes the running vote total at two boundaries.
+Its value begins contributing at the left endpoint and stops just after the right endpoint, so the entire range need not be updated individually.
 
 ## Brute force
 
-For every vote, loop through all covered minutes and add its value.
-With v votes spanning a video of n minutes, this can take O(n times v) time.
+Adding each vote to every minute it covers costs O(nq) for n minutes and q votes.
+A difference array performs two updates per vote and reconstructs all final values with one prefix scan.
 
 ## Approach
 
-Allocate `delta` with n plus one entries, all zero.
-For each `[l, r, v]`, add v at index l and subtract v at index `r + 1`.
-The extra entry accommodates intervals ending at the final minute.
-Scan real minutes from zero through n minus one, accumulating `running += delta[minute]`.
-Append or store running as that minute's net vote count.
-Positive and negative votes use exactly the same update rule, since overlapping contributions combine by addition.
-The cancellation at `r + 1` removes only that interval's contribution while leaving all other active votes intact.
+Allocate `delta` with n + 1 zeros.
+For every `[l, r, v]`, add v at l and subtract v at `r + 1`.
+Scan minute indices, accumulate `running += delta[minute]`, and store that running total in `result`.
 
 ## Walkthrough
 
-Example 1 combines four votes over six minutes.
-The first adds one at minutes three and four, the second at minute zero, and the third at minutes one through three.
-The last subtracts one everywhere.
-After combining boundary changes, delta over the relevant positions is `[0, 0, 0, 1, -1, -1]`.
-Its running sums are `[0, 0, 0, 1, 0, -1]`, matching the returned result.
-Minute three retains one positive vote after its two upvotes and one downvote combine.
+Example 1's positive votes initially give totals `[1, 1, 1, 2, 1, 0]`.
+The final vote subtracts one from all six minutes.
+The resulting array is `[0, 0, 0, 1, 0, -1]`, including the negative final minute.
 
 ## Complexity
 
-Recording v votes takes O(v), and reconstruction takes O(n).
-Both references therefore run in O(n + v) time and use O(n) space for the difference array and result.
+Each vote takes constant update time and each minute takes constant reconstruction time, giving O(n + q).
+The difference array requires O(n) auxiliary space and the returned result requires O(n) output space.
 
 ## Edge cases
 
-No votes produces n zeros.
-A one-minute range still needs cancellation immediately after that minute.
-Net counts may be negative.
+With no votes, every minute remains zero.
+A single minute vote affects only its selected position.
+Overlapping positive and negative votes cancel naturally.
+A vote ending at minute n - 1 uses the extra delta entry at n.
 
 ## Common mistakes
 
-Subtract at `r + 1`, not r, because the range is inclusive.
-Do not output the raw difference array; it stores changes rather than totals.
+The right endpoint is inclusive, so the cancellation belongs at `r + 1`.
+Do not clamp negative net totals to zero.
+At the ending boundary, subtract v even when v is negative; this correctly removes its negative contribution.
 
 ## Language notes
 
-Python appends running totals to a list.
-Java allocates the exact result length; at most 100,000 unit votes fit within signed `int` counts.
+Python builds `result` by appending each running total.
+Java writes directly into a fixed integer array.
+Since each vote is 1 or -1 and there are at most 100,000 votes, all intermediate and final counts fit Java `int`.

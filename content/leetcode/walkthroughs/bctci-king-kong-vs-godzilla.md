@@ -1,50 +1,46 @@
 ## Intuition
 
-A building needs two independent witnesses: a strictly shorter building on the left and a strictly taller building on the right.
-Monotone stacks identify the nearest qualifying witness on each side.
+A building survives when both a shorter predecessor and a taller successor exist.
+Monotone stacks reveal those two conditions independently, after which their Boolean results can be combined at each original position.
 
 ## Brute force
 
-Scanning outward from every building takes quadratic time in the worst case.
-The nearest-witness stacks discard candidates that a newer, more useful building dominates.
+Scanning every building on both sides of each position takes quadratic time.
+Prefix minima and suffix maxima could also solve this unrestricted visibility version, but the supplied references use two monotone stack passes.
 
 ## Approach
 
-Scan left to right, popping heights at least the current height.
-The remaining stack top, if present, is the nearest strictly shorter building.
-Record whether it is within distance k.
-Then scan right to left, popping heights at most the current height, and combine the nearest strictly taller condition with the earlier result.
-The reference sets k to the full street length, so every existing witness automatically passes the distance check.
-Each popped candidate can be replaced by a closer candidate at least as useful for future positions.
+Scan left to right, removing stack entries whose heights are at least the current value.
+A remaining top witnesses a strictly shorter left building.
+Clear the stack and scan right to left, removing heights at most the current one, then combine the taller right witness with `answer[index]`.
 
 ## Walkthrough
 
-```text
-Input: [[2, 5, 3, 8]]
-Output: [false, true, true, false]
-```
-
-In Example 1, height 5 has shorter 2 to its left and taller 8 to its right.
-Height 3 also has shorter 2 and taller 8.
-The first building has no left witness, and the last has no right witness.
-The result is `[false, true, true, false]`.
+For `[2, 5, 3, 8]`, the left pass marks `[false, true, true, true]`.
+On the right, 8 has no successor, while both 3 and 5 have taller building 8 available.
+The first building lacks a shorter predecessor, leaving `[false, true, true, false]`.
 
 ## Complexity
 
-Each index is pushed and popped at most once per pass, giving O(n) time.
-Stacks and output require O(n) space.
+Each index is pushed once and popped at most once in each pass, giving O(n) time.
+The stack uses O(n) auxiliary space and the returned Boolean array uses O(n) output space.
+The street itself remains unchanged.
 
 ## Edge cases
 
-Equal heights do not satisfy either strict condition.
-All comparisons use original buildings, even those marked false.
+The first and last buildings cannot survive because one required side is empty.
+Equal heights do not satisfy either strict comparison.
+A one building street returns false.
+Buildings that fail survival still count as potential witnesses for others.
 
 ## Common mistakes
 
-Do not remove failed buildings from the street before checking others.
-Store indices so visibility distances can be measured.
+Do not progressively remove destroyed buildings from the street.
+The reference sets `k` to the full street length, so its distance checks impose no additional visibility restriction.
+Reverse the stack comparison correctly for the right to left pass.
 
 ## Language notes
 
-Python uses list stacks.
-Java uses ArrayDeque with its last element as the stack top, preserving the same monotone ordering.
+Python stores indices in a list and uses `bool` to obtain explicit Boolean results.
+Java uses `ArrayDeque<Integer>` and a primitive Boolean array.
+Keeping indices rather than heights preserves the exact distance and original position checks.

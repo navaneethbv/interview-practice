@@ -1,3 +1,7 @@
+> **Historical architecture:** This imported chapter describes the ZooKeeper-era design.
+> Kafka 4.0 and later use KRaft; consult the updated Role of ZooKeeper, Controller Broker, and Kafka Delivery Semantics chapters in this collection.
+> [Apache Kafka upgrade documentation](https://kafka.apache.org/40/getting-started/upgrade/)
+
 ## Summary
 
 1. Kafka provides low-latency, high-throughput, fault-tolerant **publish and subscribe pipelines** and can process huge continuous streams of events.

@@ -1,49 +1,62 @@
 ## Intuition
 
-A candidate must split into at least two dictionary words.
-Once a prefix is known, the remaining suffix may itself be a dictionary word or another concatenation.
-Checking candidates from longest to shortest lets the first successful decomposition satisfy the requested ranking immediately.
+Longest Word is organized around Memoized Word Break.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-For each candidate, enumerate every cut pattern and test all pieces against the dictionary.
-Different cut patterns repeatedly ask whether the same suffix can be built, causing exponential repeated search without memoization.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Store dictionary words in `known` and sort candidates by decreasing length, then alphabetical order.
-For a candidate, try every proper cut between its first and last characters.
-Require the prefix to be known and accept the suffix if it is known or recursively buildable.
-Cache suffix results to avoid repeated decomposition work.
-The whole candidate is never accepted merely because it belongs to `known`; at least one proper cut is mandatory.
-Return the first successful candidate, or the empty string.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Memoized Word Break idea: Try words from longest to shortest and check whether each splits into two or more other listed words.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named longestWord can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 checks `dogwalker` before the shorter entries.
-At cut position 3, its prefix is `dog` and suffix is `walker`.
-Both appear in the dictionary, so this is a valid two-word construction.
-The candidate is already the longest entry, making further checks unnecessary.
-Return `dogwalker`; it need not split `walker` further into smaller pieces.
+Example 1 uses input [["cat", "banana", "dog", "nana", "walk", "walker", "dogwalker"]] and expects "dogwalker".
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is "dogwalker".
+The same reasoning handles hidden cases [[]], [["a", "aa", "aaa"]], [["ab", "cd", "abcd", "cdab"]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For W words of maximum length L, a conservative bound is O(WL cubed + WL log W) time including substring creation, hashing, and sorting comparisons.
-There are O(WL) possible suffix states whose stored strings can occupy O(WL squared) characters.
-Recursive depth is O(L).
+The imported workbook records the expected time bound as O(n * L^2).
+The imported workbook records the expected space bound as O(n * L).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A word may reuse the same dictionary component multiple times.
-Equal-length successful candidates are resolved alphabetically.
-A word alone does not qualify as its own decomposition.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[]], [["a", "aa", "aaa"]], [["ab", "cd", "abcd", "cdab"]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Accepting every candidate found in the dictionary makes the problem trivial and incorrect.
-Caching whole-word membership as buildability would create the same error indirectly.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python distinguishes whole-candidate calls from suffix calls in `splits`.
-Java separates `splits` from cached `buildable` calls, preserving the same proper-split requirement.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

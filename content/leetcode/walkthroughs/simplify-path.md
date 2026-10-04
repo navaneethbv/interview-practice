@@ -20,7 +20,7 @@ One left-to-right component scan handles every rule once and stores only active 
 
 ## Walkthrough
 
-Example 1 is /a//b/../c/.
+Example 1 is /a//b/./c/.
 Splitting yields empty, a, empty, b, two dots, c, and empty components.
 The stack becomes [a], then [a, b].
 The two dots pop b, and c is pushed, leaving [a, c].

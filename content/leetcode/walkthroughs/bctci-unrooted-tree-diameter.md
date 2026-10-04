@@ -1,52 +1,62 @@
 ## Intuition
 
-In a tree, a vertex farthest from any starting vertex is an endpoint of a diameter.
-A second search from that endpoint reaches the opposite endpoint and measures the maximum path length.
+Unrooted Tree Diameter is organized around Booster Problems.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Running a graph search from every vertex costs O(n squared) time.
-The tree's unique-path structure makes two breadth-first searches sufficient.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Build an undirected adjacency list from the n - 1 edges.
-Run `farthest` from vertex zero, assigning distances with BFS and retaining the final dequeued vertex.
-FIFO processing visits vertices in nondecreasing distance, so that final vertex is farthest.
-Run the same search from it and return the farthest distance from the second pass.
-The first pass selects a peripheral endpoint; unique tree paths ensure its maximum-distance partner realizes a diameter.
-No rooting convention or node values are needed.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Booster Problems idea: A farthest vertex from any start is a diameter endpoint; search again from it.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named solve can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: [4, [[0, 1], [1, 2], [1, 3]]]
-Output: 2
-```
-
-Example 1 starts at vertex 0.
-Its distances are zero to itself, one to vertex 1, and two to vertices 2 and 3.
-Either 2 or 3 can serve as the first farthest endpoint.
-Starting from 3, for example, vertices 0 and 2 are both distance two away.
-The second search therefore returns diameter 2 edges.
+Example 1 uses input [4, [[0, 1], [1, 2], [1, 3]]] and expects 2.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 2.
+The same reasoning handles hidden cases [2, [[0, 1]]], [3, [[0, 1], [1, 2]]], [5, [[0, 1], [0, 2], [0, 3], [0, 4]]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Building adjacency and performing two searches takes O(n) time because a tree has n - 1 edges.
-Adjacency, distances, and the queue require O(n) space.
+The imported workbook records the expected time bound as O(n).
+The imported workbook records the expected space bound as O(n).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A singleton has diameter zero.
-A path-shaped tree has diameter n - 1.
-Several equally distant vertices may exist; any first-pass farthest vertex works for an unweighted tree.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [2, [[0, 1]]], [3, [[0, 1], [1, 2]]], [5, [[0, 1], [0, 2], [0, 3], [0, 4]]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not return the number of vertices along the route instead of edges.
-The two-search theorem should not be assumed for arbitrary cyclic graphs.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python factors BFS into a helper returning endpoint and distance.
-Java performs two passes in one method, reinitializing distances and the queue before each search.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

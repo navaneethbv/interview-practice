@@ -1,48 +1,62 @@
 ## Intuition
 
-Swapping x from a with y from b changes the first sum by y minus x and the second by x minus y.
-Equating the new sums yields `x - y = (sum(a) - sum(b)) / 2`.
-This turns a search over pairs into a lookup for one required complement.
+Sum Swap is organized around Target Difference Lookup.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Try every pair of elements and compare the two resulting sums.
-Even with the original sums precomputed, this costs O(nm) pair checks for arrays of lengths n and m.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Calculate `difference` between the sums.
-If it is odd, return an empty list because integer values cannot satisfy the half-difference equation.
-Set `shift` to half the difference and store b's values in a set.
-Visit a's distinct values in sorted order; for each x, check whether `x - shift` appears in b.
-Return the first matching pair, or an empty list if none exists.
-Sorting implements the required deterministic preference for the smaller first value.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Target Difference Lookup idea: Swapping x from a with y from b balances the sums exactly when x - y is half the difference of the sums.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named findSwapValues can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 has sums 11 and 15, so difference is -4 and shift is -2.
-The sorted distinct a candidates begin with 1.
-Its required counterpart is `1 - (-2) = 3`, which exists in b.
-Swapping them raises a's sum to 13 and lowers b's sum to 13.
-Return `[1, 3]`.
+Example 1 uses input [[4, 1, 2, 1, 1, 2], [3, 6, 3, 3]] and expects [1, 3].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [1, 3].
+The same reasoning handles hidden cases [[5], [5]], [[1, 2, 3], [1, 2, 3]], [[1, 1], [2, 2]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For u distinct values in a, Python takes expected O(n + m + u log u) time and O(u + m) space.
-Java sorts a full clone, so its bound is O(n log n + m) time with O(n + m) space.
+The imported workbook records the expected time bound as O(a log a + b).
+The imported workbook records the expected space bound as O(a + b).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Equal sums require a shared value if exactly one pair must be exchanged.
-An even difference is necessary but does not guarantee that a matching pair exists.
-Negative values obey the same equation.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[5], [5]], [[1, 2, 3], [1, 2, 3]], [[1, 1], [2, 2]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Using the full difference instead of half overshoots the needed correction.
-Returning values in reversed array order violates the pair contract.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python sums use arbitrary precision.
-Java computes the difference and set complements with long arithmetic to avoid overflow when summing int-valued arrays.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

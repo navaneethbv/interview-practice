@@ -1,51 +1,47 @@
 ## Intuition
 
-Hilliness depends on every edge in a component, including cycle edges.
-A graph traversal finds the component while its adjacency entries supply both the total gain and the number of edge endpoints.
+A component's hilliness depends on its edges collectively, so first explore one entire component and accumulate its edge gains.
+Compare component averages only after completing each traversal, rather than selecting the largest individual edge.
 
 ## Brute force
 
-Computing a hilliness score for each possible start repeats the same component traversal.
-A global seen array ensures each component is evaluated only once.
+Computing a separate component for every starting vertex repeats work.
+A persistent `seen` array lets the outer loop start one traversal per component, including isolated vertices that have no edge gains.
 
 ## Approach
 
-For each unseen vertex, start a stack traversal with gain and endpoints reset to zero.
-For every adjacency entry, add the absolute height difference and increment endpoints, regardless of whether the neighbor is already seen.
-Enqueue unseen neighbors after marking them.
-In an undirected adjacency list, each edge contributes twice to both numerator and denominator, so their ratio equals the average over edges.
-Update best for nonzero endpoint counts; isolated vertices contribute zero.
+For each unseen `start`, use a stack and mark vertices when pushing.
+For every adjacency entry, add the absolute height difference to `gain` and increment `endpoints`.
+After exploration, update `best` with `gain / endpoints` if any entries were encountered.
 
 ## Walkthrough
 
-```text
-Input: graph = [[1, 3], [0, 2], [1, 3], [0, 2]], heights = [4.0, 1.0, 3.0, 2.0]
-Output: 2.0
-```
-
-Example 1 has four undirected edge gains: 3 between 0 and 1, 2 between 1 and 2, 1 between 2 and 3, and 2 between 3 and 0.
-Their sum is 8 across four edges.
-The adjacency traversal records gain 16 and eight endpoints because each edge appears twice.
-Both calculations produce the same average, 2.0.
+Example 1 is one four vertex cycle.
+Its undirected edge gains are 3, 2, 1, and 2, totaling 8 over four edges.
+The adjacency scan counts each edge twice, producing gain 16 and endpoints 8.
+Their ratio is still 2.0.
 
 ## Complexity
 
-For V vertices and E listed adjacency entries, time is O(V + E).
-Seen state and the traversal stack use O(V) extra space.
-Heights and gains remain floating point.
+Every vertex and adjacency entry is examined once, giving O(V + E) time for an undirected graph with E edges.
+The visited array and explicit stack use O(V) auxiliary space.
+Only constant aggregate state is retained per component.
 
 ## Edge cases
 
-An isolated vertex has hilliness zero and must not divide by zero.
-Equal-height endpoints add zero gain but still add to the count.
-Disconnected components are scored independently.
+An isolated vertex has hilliness zero and does not trigger division.
+All equal heights also produce zero.
+Fractional heights must retain fractional differences and averages.
+Disconnected components are compared separately even when their edge counts differ.
 
 ## Common mistakes
 
-Counting only edges leading to unseen neighbors computes a traversal-tree average and loses cycle edges.
-Do not take the absolute value after summing signed differences.
+Count gains for all adjacency entries, including neighbors already visited.
+Counting only traversal tree edges would omit cycle edges.
+If counting each undirected edge twice, keep both numerator and denominator doubled rather than dividing only one of them.
 
 ## Language notes
 
-Python uses float accumulation.
-Java uses double gains and a long endpoint counter; both mark vertices when adding them to the stack.
+Python initializes `gain` and `best` as floating point values.
+Java uses `double` for gains and a `long` adjacency count.
+Both references take absolute endpoint differences and rely on the graph's undirected adjacency contract.

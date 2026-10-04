@@ -1,48 +1,43 @@
 ## Intuition
 
-A pond is a connected component of zero-valued cells, including diagonal connections.
-Starting a flood fill from each unvisited water cell counts one entire component.
-Marking cells as they are added to the work stack ensures each water cell contributes exactly once.
-
-## Brute force
-
-Launch a fresh search from every water cell without retaining visited information.
-The same large pond would be traversed repeatedly, producing duplicate component sizes and potentially quadratic work in the number of cells.
+Pond cells are connected through all eight neighboring directions, including diagonals.
+Each unvisited zero starts one connected component, and a flood fill can count every zero in that component exactly once.
+Marking cells when they are added to the stack prevents duplicate visits.
 
 ## Approach
 
-Scan the grid row by row using a `visited` matrix.
-For each unvisited zero, call `_fill` and append its returned size.
-The fill marks its starting cell, then repeatedly pops a cell and examines all combinations of row and column offsets from -1 through 1.
-Enqueue only in-bounds, unvisited water cells, marking them immediately.
-Sort the completed component sizes before returning them.
+Scan every cell in row-major order.
+When a zero has not been visited, start `_fill` with that cell and perform iterative depth-first search.
+For each popped cell, inspect `dr` and `dc` values from negative one through one, skip out-of-bounds or nonzero neighbors, and mark valid zero neighbors before pushing them.
+Append each component size and sort `sizes` before returning.
 
 ## Walkthrough
 
-In Example 1, zeros `(0, 0)` and `(1, 0)` form a size-two pond.
-The zero at `(0, 3)` connects diagonally to `(1, 2)`, which connects to `(2, 2)` and `(3, 2)`, forming size four.
-The zero at `(3, 0)` is isolated and contributes size one.
-Sorting the discovered sizes produces `[1, 2, 4]`.
+For Example 1, the flood fill from the top-left zero reaches its vertical and diagonal water neighbors and counts four cells.
+Other isolated or smaller connected groups produce sizes one and two.
+After the scan, sorting those component counts returns `[1, 2, 4]`.
+The diagonal loop is what connects water cells that touch only at a corner.
 
 ## Complexity
 
-For N grid cells and P ponds, traversal takes O(N), followed by O(P log P) sorting.
-Visited storage and the explicit stack require O(N) space in the worst case.
-The result contains P sizes.
+Every cell is visited at most once and checks a constant eight-neighbor set, so the scan and fills take `O(RC)` time.
+The visited matrix and worst-case stack use `O(RC)` auxiliary space.
+Sorting the `p` pond sizes adds `O(p log p)` time, which is at most `O(RC log(RC))`.
 
 ## Edge cases
 
-Diagonal-only contact still joins water into one pond.
-An all-land grid returns an empty list.
-The original height values are not modified.
+An all-land matrix produces an empty result.
+An all-water matrix becomes one pond because every cell is connected through the eight directions.
+Single-cell ponds are recorded with size one and remain present after sorting.
 
 ## Common mistakes
 
-Checking only four orthogonal neighbors splits ponds that connect diagonally.
-Marking only after popping permits duplicate stack entries and can overcount cells.
+Checking only four directions splits diagonal ponds into separate components.
+Marking a neighbor only when it is popped allows the same cell to be pushed repeatedly.
+Returning discovery order instead of sorting violates the required increasing order.
 
 ## Language notes
 
-Python uses coordinate tuples in a list stack.
-Java uses coordinate arrays in an `ArrayDeque`.
-The offset pair `(0, 0)` is harmless because the current cell is already marked visited.
+Python uses a boolean matrix and a list stack, while Java uses `Deque<int[]>` for the same iterative fill.
+The nested direction loops include `(0, 0)`, but the current cell is already visited, so that case has no effect.
+Both implementations leave land heights unchanged and use zero as the only pond marker.

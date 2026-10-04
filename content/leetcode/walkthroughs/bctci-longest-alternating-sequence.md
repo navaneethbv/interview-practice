@@ -1,53 +1,47 @@
 ## Intuition
 
-Only the good-or-bad classification matters, not the numeric difference between sales values.
-A valid run extends when the current classification differs from the previous day's and otherwise restarts at the current day.
+Only the good or bad category matters, not the size of a sales change.
+The longest alternating run ending today either extends yesterday's run or restarts with today's single element.
 
 ## Brute force
 
-Checking every possible interval for alternating classifications repeats adjacent comparisons and can take quadratic time or worse.
-A current-run summary tests each neighboring pair once.
+Enumerating every contiguous interval and checking all adjacent categories repeats comparisons.
+A single forward scan needs only the length of the alternating suffix ending at the previous position and the best length seen.
 
 ## Approach
 
-Initialize best and run to zero.
-For each day, compare whether its sales are at least 10 with the same predicate for the previous day.
-If the classifications differ, increment run.
-Otherwise set run to one, since the current day alone is valid.
-Update best after either branch.
-The invariant is that run is the longest alternating suffix ending today; every optimal interval is considered when its final day is processed.
+Maintain `run` and `best`.
+For each `day`, compare `(value >= 10)` with the previous day's category when a previous day exists.
+If they differ, increment `run`; otherwise set it to one.
+Update `best` after either choice.
 
 ## Walkthrough
 
-```text
-Input: sales = [8, 9, 20, 0, 9]
-Output: 3
-```
-
-Example 1 classifies as bad, bad, good, bad, bad.
-The first two days each leave run at one because their classes match.
-Day 2 extends the run to two and day 3 extends it to three.
-The final bad day matches its predecessor and resets run to one.
-The saved maximum remains 3, corresponding to sales `[9, 20, 0]`.
+Example 1 has categories bad, bad, good, bad, bad for `[8, 9, 20, 0, 9]`.
+The run lengths become 1, 1, 2, 3, and 1.
+The maximum is 3, corresponding to sales `[9, 20, 0]` at indices 1 through 3.
 
 ## Complexity
 
-The scan takes O(n) time and O(1) extra space.
-No classification array is materialized and the original sales array stays unchanged.
+The algorithm performs one constant time update per day, giving O(n) time.
+Only two counters and the loop position are stored, giving O(1) auxiliary space.
+No category array or list of candidate intervals is needed.
 
 ## Edge cases
 
-Empty input returns zero.
-Any singleton has answer one.
-An entirely good or entirely bad nonempty array has answer one.
-Exactly 10 sales is a good day.
+An empty input returns zero because `best` never changes.
+A single day returns one.
+Sales exactly equal to 10 are good.
+If all days share a category, every nonempty alternating run has length one.
 
 ## Common mistakes
 
-Do not alternate based on increasing and decreasing numeric sales.
-Do not skip same-class days to construct a noncontiguous subsequence.
+Do not confuse this contiguous run problem with an alternating subsequence, which permits skipped days.
+Numerically rising and falling sales are irrelevant if their categories remain the same.
+On a repeated category, reset to one rather than zero.
 
 ## Language notes
 
-Python compares two boolean expressions with `!=`.
-Java computes the equivalent `alternates` boolean before updating run, keeping the first-day guard ahead of the previous-index access.
+Python compares Boolean category expressions directly.
+Java stores the comparison in `alternates` and uses a ternary expression for the new run length.
+Both guard the previous day access with `day > 0` and leave sales unchanged.

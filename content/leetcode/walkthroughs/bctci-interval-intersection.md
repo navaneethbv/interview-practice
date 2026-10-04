@@ -1,51 +1,47 @@
 ## Intuition
 
-For two current intervals, their common portion begins at the later start and ends at the earlier end.
-The interval ending first cannot overlap any later interval in the other list and can be discarded.
+The overlap of two closed intervals starts at the later start and ends at the earlier end.
+Sorted, disjoint input lists let two pointers consider only pairs that could still overlap.
+The interval ending first cannot contribute to any later interval on the opposite side.
 
 ## Brute force
 
-Comparing every interval in one list against every interval in the other takes O(nm) time.
-Sorted, internally disjoint inputs allow a merge-style scan instead.
+Compare every interval from `arr1` with every interval from `arr2` and retain nonempty overlaps.
+That takes O(mn) time before any necessary output ordering.
 
 ## Approach
 
-Maintain indices i and j.
-Compute `start = max(starts)` and `end = min(ends)`.
-Append `[start, end]` whenever start is at most end, since endpoints are inclusive.
-Advance the pointer belonging to the smaller end; on equal ends, the reference advances j.
-The untouched interval may still overlap later intervals from the other array, so it remains available.
-The generated intersections are already sorted and need no final sort.
+Start `i = j = 0`.
+Compute `start = max(arr1[i][0], arr2[j][0])` and `end = min(arr1[i][1], arr2[j][1])`.
+When `start <= end`, append that closed intersection to `result`.
+Advance i if the first interval ends earlier; otherwise advance j.
+If endpoints are equal, advancing either is sufficient because the next interval in that list begins strictly later.
+Each step discards an interval that cannot overlap any unexamined interval on the other side.
 
 ## Walkthrough
 
-```text
-Input: arr1 = [[0, 1], [4, 6], [7, 8]], arr2 = [[2, 3], [5, 9], [10, 11]]
-Output: [[5, 6], [7, 8]]
-```
-
-Example 1 first compares `[0, 1]` with `[2, 3]`, finding no overlap and advancing the first pointer.
-After discarding the second list's `[2, 3]`, compare `[4, 6]` with `[5, 9]` and append `[5, 6]`.
-Advance to `[7, 8]`, which intersects the same `[5, 9]` as `[7, 8]`.
-The first list ends, leaving the stated two intervals.
+Example 1 first compares `[0, 1]` with `[2, 3]`, finds no overlap, and advances i.
+Comparing `[4, 6]` with `[2, 3]` advances j.
+The pair `[4, 6]` and `[5, 9]` contributes `[5, 6]`.
+Then `[7, 8]` with `[5, 9]` contributes `[7, 8]`.
+The first list is exhausted, so the answer is `[[5, 6], [7, 8]]`.
 
 ## Complexity
 
-Each iteration advances one pointer, so time is O(n + m).
-Working storage excluding output is O(1), and output uses O(n + m) space in the worst case.
+Every iteration advances a pointer, giving O(m + n) time.
+Auxiliary working space is O(1), excluding the returned intersection list, whose size is O(m + n).
 
 ## Edge cases
 
-An empty input gives no intersections.
-A single shared endpoint creates a valid singleton interval.
-One long interval may overlap several intervals in the other list.
+An empty input list produces an empty result.
+Touching endpoints create a valid singleton interval such as `[4, 4]`.
 
 ## Common mistakes
 
-Using start less than end loses point intersections.
-Advancing both pointers after every overlap can skip later matches.
+Use `<=` when testing overlap because endpoints are included.
+Do not advance the interval with the later ending boundary, which could miss another overlap.
 
 ## Language notes
 
-Python appends two-element lists.
-Java builds a list of int arrays and converts it to the required two-dimensional array without changing input intervals.
+Python returns nested lists directly.
+Java accumulates `int[]` pairs in an `ArrayList` and converts the final collection to `int[][]`.

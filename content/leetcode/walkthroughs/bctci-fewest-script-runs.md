@@ -1,51 +1,46 @@
 ## Intuition
 
-The meeting that ends earliest forces a script run no later than its end.
-Placing that run exactly at the endpoint captures it while reaching as far right as possible to cover other meetings too.
+The meeting that ends earliest is the first deadline that must be covered.
+Scheduling a run at its endpoint covers it while placing the run as far right as possible, leaving the best opportunity to cover later meetings too.
 
 ## Brute force
 
-Trying combinations of possible run times is exponential.
-Selecting by earliest meeting start can waste a run before several overlapping meetings become simultaneously active.
+Try combinations of meeting endpoints until finding a set that intersects every interval.
+The number of candidate subsets grows exponentially, even though a simple exchange argument identifies an optimal next choice.
 
 ## Approach
 
-Sort meetings by end time.
-Track `last_run`, initially -1 because valid meeting starts are nonnegative.
-If a meeting starts after last_run, it is not yet covered, so increment runs and set last_run to that meeting's end.
-Otherwise the existing run lies inside it: sorted end order guarantees it is not after this meeting ends.
-Any optimal solution can move its first required run to the earliest ending meeting's endpoint without losing coverage of meetings it covered later.
-Repeating this exchange argument proves the greedy choice.
+Sort meetings by their ending times.
+Track the most recent chosen time in `last_run`, initially -1 because all meeting times are nonnegative.
+If a meeting starts after that time, it is not covered, so schedule a new run at its end and increment `runs`.
+Otherwise the previous run lies inside the meeting: its time is no later than this meeting's end because of the sorting order.
+Moving any first required run to the earliest end cannot lose coverage of a later-ending interval that already contained it.
 
 ## Walkthrough
 
-```text
-Input: meetings = [[2, 3], [1, 4], [2, 3], [3, 6], [8, 10]]
-Output: 2
-```
-
-Example 1 first chooses time 3 for an interval `[2, 3]`.
-The duplicate `[2, 3]`, `[1, 4]`, and `[3, 6]` all include that same time.
-The final meeting `[8, 10]` begins after 3, so choose a second run at 10.
-Two runs cover everything, and disjoint early and late meetings prove one run cannot suffice.
+Example 1 contains `[2, 3]`, `[1, 4]`, another `[2, 3]`, `[3, 6]`, and `[8, 10]`.
+The first earliest-ending meeting chooses time 3.
+The duplicate, `[1, 4]`, and `[3, 6]` all include that time.
+The last meeting starts at 8, so a second run is chosen at 10.
+The answer is 2.
 
 ## Complexity
 
-Sorting takes O(n log n) time and the scan O(n).
-Both references create a sorted outer copy, requiring O(n) extra space.
+Sorting n meetings takes O(n log n) time; the greedy scan is O(n).
+Both references create a separate ordered collection, requiring O(n) auxiliary space.
 
 ## Edge cases
 
-An empty meeting list needs zero runs.
-Meetings touching at an endpoint can share one run because endpoints are inclusive.
-Duplicate intervals add no new requirement.
+No meetings require no runs.
+Duplicate intervals share the same run.
+Intervals touching at one endpoint can be covered together because endpoints are inclusive.
 
 ## Common mistakes
 
 Use `start > last_run`, not greater-than-or-equal.
-Sort by end rather than by start or duration.
+Sorting by start time and selecting early starts does not establish the same greedy guarantee.
 
 ## Language notes
 
-Python uses `sorted` with an end-time key.
-Java shallow-clones the outer array before sorting, preserving the original meeting order without modifying individual endpoint pairs.
+Python's `sorted` leaves the input unchanged.
+Java clones the outer array before sorting its meeting references and keeps the chosen time in `lastRun`.

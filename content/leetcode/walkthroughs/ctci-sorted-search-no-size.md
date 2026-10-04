@@ -1,49 +1,62 @@
 ## Intuition
 
-Binary search needs an upper boundary, but it does not need the array's exact length.
-Probe exponentially increasing positions until reaching a value at least as large as the target.
-The reader's large out-of-range sentinel behaves like an ordered value above every legal target.
+Sorted Search, No Size is organized around Exponential Bound then Binary Search.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Read positions one at a time until finding the target or a greater value.
-That may require O(n) reader calls, even though sorted order permits a logarithmic search.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Initialize `bound` to one and inspect `reader.get(bound - 1)`.
-While the returned value is below target, double `bound`.
-Search the interval from `bound // 2` through `bound - 1` with ordinary binary search.
-The last unsuccessful exponential probe proves the target cannot lie before that lower boundary.
-A reader value below target moves `low` right; a greater value, including the sentinel, moves `high` left.
-An empty search interval returns -1.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Exponential Bound then Binary Search idea: Double an index until it passes the target or the end of the data, then binary search inside that bound.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named search can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 hides `[1, 3, 5, 8, 13, 21]` and seeks 8.
-Bounds 1 and 2 probe indices 0 and 1, returning 1 and 3.
-Bound 4 probes index 3 and finds 8, ending expansion.
-Binary search over indices 2 through 3 first sees 5 at index 2, then 8 at index 3.
-Return 3.
+Example 1 uses input [[1, 3, 5, 8, 13, 21], 8] and expects 3.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 3.
+The same reasoning handles hidden cases [[], 5], [[7], 7], [[7], 8]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For n hidden elements, the number of reader calls is O(log(n + 1)).
-Auxiliary space is O(1).
-This assumes each reader access is constant time.
+The imported workbook records the expected time bound as O(log n).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty reader immediately supplies the sentinel and eventually returns -1.
-A target below the first element also fails without scanning the array.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[], 5], [[7], 7], [[7], 8] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-This exercise uses a large sentinel, not -1.
-Treating out-of-range values as small would make exponential expansion continue incorrectly.
-The probed position is `bound - 1`, so its matching interval endpoints must remain consistent.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python receives positive infinity beyond the array.
-Java receives `Integer.MAX_VALUE`, which exceeds every legal target under the stated constraints.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

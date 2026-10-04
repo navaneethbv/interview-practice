@@ -186,7 +186,7 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
 
 const DESIGN_DIR = path.join(ROOT, "system-design");
 /** Reading order on the landing page; books missing from disk are skipped. */
-const DESIGN_BOOK_ORDER = ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes"];
+const DESIGN_BOOK_ORDER = ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes", "low-level-design", "ai-design", "testing-debugging", "behavioral"];
 
 export const listDesignBooks = cache((): DesignBook[] =>
   DESIGN_BOOK_ORDER.map((id) => readJson<DesignBook>(path.join(DESIGN_DIR, id, "index.json"))).filter(

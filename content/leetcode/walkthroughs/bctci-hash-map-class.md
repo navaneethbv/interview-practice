@@ -1,52 +1,48 @@
 ## Intuition
 
-A map needs one stored entry per key, with replacement preserving the number of distinct keys.
-Separate chaining handles collisions by keeping a short list of entries in each bucket.
+A hash table narrows a key lookup to one bucket, while explicit key comparisons resolve collisions.
+Each key stores a singleton value list so every integer remains distinguishable from the empty list representing absence.
 
 ## Brute force
 
-One unsorted entry list requires linear lookup for every operation.
-A direct-address array across the full signed-integer key range wastes excessive memory.
+An unsorted list of all key and value pairs needs a full scan for each lookup.
+The reference instead distributes entries among buckets and doubles their number when the overall load grows too large.
 
 ## Approach
 
-Buckets begin with eight chains.
-A key's remainder selects its chain, which is searched using exact key equality.
-Put removes an existing entry before appending its replacement and incrementing count.
-When count exceeds twice the bucket count, double the table and rehash every entry.
-
+`Buckets.get` scans the bucket chosen by key modulo capacity.
+`put` removes an old entry, inserts the replacement, and updates `count`.
+When count exceeds twice the bucket count, rehash all entries.
+The public class delegates membership, removal, size, and lookup.
 
 ## Walkthrough
 
-```text
-Input: {"ctor": [], "ops": ["size", "add", "contains", "size", "get", "add", "contains", "size", "get", "remove", "contains", "get", "size", "remove", "contains", "get", "size", "remove", "contains", "get", "size", "remove", "contains", "get", "size"], "args": [[], [3, -2], [3], [], [3], [3, -1], [3], [], [3], [3], [3], [3], [], [3], [3], [3], [], [123456], [123456], [123456], [], [123456], [123456], [123456], []]}
-Output: [0, null, true, 1, [-2], null, true, 1, [-1], null, false, [], 0, null, false, [], 0, null, false, [], 0, null, false, [], 0]
-```
-
-Example 1 inserts key 3 with value -2, so size becomes one and get returns `[-2]`.
-Replacing it with -1 keeps size one and changes get to `[-1]`.
-Removing key 3 makes contains false and get return an empty list.
-Repeated removals, including absent key 123456, leave size zero.
+Example 1 starts with size zero.
+Adding key 3 with -2 makes size one and lookup `[-2]`.
+Replacing it with -1 leaves size one and changes lookup to `[-1]`.
+Removing 3 makes membership false and lookup empty; further missing removals remain harmless.
 
 ## Complexity
 
-Let n be the current number of distinct keys and B the allocated number of buckets after earlier growth.
-With well-distributed keys, basic operations are expected amortized O(1); size is O(1).
-This deterministic remainder hash can suffer O(n) collision chains on adversarial keys.
-Storage is O(B + n), with B tied to peak occupancy because the table never shrinks.
+With well distributed keys, basic operations are expected amortized O(1), and resizing costs O(n) occasionally.
+The deterministic modulo hash can place many keys together, so a single operation can cost O(n) under heavy collisions.
+Storage follows peak entry count because buckets never shrink.
 
 ## Edge cases
 
-Negative keys are valid.
-Removing a missing key changes nothing.
-A stored negative value must remain distinguishable from absence.
+Zero, negative values, and -1 are valid stored values.
+Repeated addition replaces rather than duplicates a key.
+Removing an absent key must not decrease size.
+Different keys sharing one bucket remain separate entries.
 
 ## Common mistakes
 
-Resizing requires rehashing against the new bucket count.
-Do not assume unequal keys cannot share a bucket.
+Do not treat the stored integer's truthiness as membership.
+The list itself must be nonempty even for value zero.
+Resizing requires recomputing bucket positions, and replacing a key must not increase the distinct key count.
 
 ## Language notes
 
-Python's modulo produces nonnegative bucket indices; Java uses `Math.floorMod` for the same behavior.
-Get returns a copied singleton list for present values and an empty list for absence.
+Python's modulo gives a nonnegative bucket index for a positive capacity.
+Java uses `Math.floorMod` to obtain that behavior for negative keys.
+Both public `get` methods copy the stored singleton list before returning it.

@@ -11,7 +11,7 @@ The classic game uses `stand = 16` and `limit = 21`.
 
 ```text
 Input: stand = 16, limit = 21
-Output: The number of busting sequences in the classic game.
+Output: 100081
 ```
 
 ### Example 2

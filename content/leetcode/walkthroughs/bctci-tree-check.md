@@ -1,53 +1,62 @@
 ## Intuition
 
-For a nonempty simple undirected graph, being connected and having exactly V - 1 edges is equivalent to being a tree.
-That characterization avoids separately tracking parent edges during cycle detection.
+Tree Check is organized around Edge Count plus Connectivity.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-A direct cycle search can work, but repeatedly checking reachability after removing edges would be expensive.
-The edge-count theorem gives a simple preliminary rejection before one traversal.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Sum adjacency-list lengths and divide by two, since every undirected edge appears from both endpoints.
-Return false immediately unless the edge count equals V - 1.
-Otherwise run a stack traversal from vertex zero, marking neighbors when discovered.
-Return whether all V vertices were reached.
-A connected graph has a spanning tree with V - 1 edges; when the whole graph has exactly that many edges, no extra cycle edge remains.
-Connectivity is essential because a disconnected cyclic graph can also have V - 1 total edges.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Edge Count plus Connectivity idea: An undirected graph is a tree exactly when it is connected and has V - 1 edges.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named isTree can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: graph = [[2], [2, 5], [0, 1, 3, 4], [2], [2], [1]]
-Output: true
-```
-
-Example 1 has degree sum ten, giving five edges for six vertices.
-Traversal from zero reaches 2, then 1, 3, and 4, and from 1 reaches 5.
-All six vertices are visited.
-Both required conditions hold, so the method returns true.
-The graph's branching shape does not affect the argument.
+Example 1 uses input [[[2], [2, 5], [0, 1, 3, 4], [2], [2], [1]]] and expects true.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is true.
+The same reasoning handles hidden cases [[[2], [5], [0, 3], [2], [], [1]]], [[[]]], [[[], []]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For V vertices and E adjacency entries, time is O(V + E).
-Visited state and stack use O(V) extra space.
-No edges or vertices are modified.
+The imported workbook records the expected time bound as O(V + E).
+The imported workbook records the expected space bound as O(V).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A singleton with no edges is a tree.
-A disconnected graph fails even if its edge count is correct.
-A connected graph with an extra edge fails the initial count.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[[2], [5], [0, 3], [2], [], [1]]], [[[]]], [[[], []]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not forget to divide the undirected degree sum by two.
-Do not infer connectivity from the edge count alone.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python stores visited vertices in a set.
-Java uses a boolean array and an explicit reached counter; both mark on insertion to avoid repeated pending stack entries.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

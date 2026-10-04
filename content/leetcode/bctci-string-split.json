@@ -25,6 +25,8 @@
     {"input":["x","x"],"expected":["",""]},
     {"input":["xx","x"],"expected":["","",""]},
     {"input":["a,b,,c",","],"expected":["a","b","","c"]},
-    {"input":[",lead",","],"expected":["","lead"]}
+    {"input":[",lead",","],"expected":["","lead"]},
+    {"input":["😀left😀😀right😀","😀"],"expected":["","left","","right",""]},
+    {"input":["😀😃😀","😃"],"expected":["😀","😀"]}
   ]
 }

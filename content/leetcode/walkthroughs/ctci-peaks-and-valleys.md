@@ -1,47 +1,62 @@
 ## Intuition
 
-It is enough to make every odd index a local peak.
-Each even interior index then has peaks on both sides and is a valley.
-A local swap can establish one peak without destroying the previously established peak two positions earlier.
+Peaks and Valleys is organized around Local Swap to the Largest.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Sort the numbers and swap neighboring pairs to create an alternating arrangement.
-That takes O(n log n) time, while the reference needs only local comparisons and swaps.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Copy the input into `result`.
-For each odd `index`, find the largest value among that index and its existing immediate neighbors.
-Swap that value into the odd position.
-Its neighbors are now no larger, satisfying the peak condition.
-If the swap uses the shared even neighbor of an earlier peak, that neighbor only becomes smaller or equal, so the earlier peak remains valid.
-Return the rearranged copy after processing all odd positions.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Local Swap to the Largest idea: Visit every other index and swap the largest of it and its two neighbors into that position.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named sortValleyPeak can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 starts with `[5, 3, 1, 2, 3]`.
-At index 1, the largest nearby value is 5 at index 0, giving `[3, 5, 1, 2, 3]`.
-At index 3, the largest nearby value is 3 at index 4, giving `[3, 5, 1, 3, 2]`.
-This differs from the statement's illustrative output but is also valid: 5 and 3 are peaks, and the middle 1 is a valley.
+Example 1 uses input [[5, 3, 1, 2, 3]] and expects [5, 1, 3, 2, 3].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [5, 1, 3, 2, 3].
+The same reasoning handles hidden cases [[]], [[4]], [[1, 2, 3, 4, 5, 6]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Each visited index examines at most three values, so time is O(n).
-The returned copy uses O(n) space; the rearrangement itself needs O(1) additional workspace.
+The imported workbook records the expected time bound as O(n).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Empty and one-element inputs already satisfy the requirement.
-Equal neighbors are allowed because the inequalities are non-strict.
-A final odd index may have only a left neighbor.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[]], [[4]], [[1, 2, 3, 4, 5, 6]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not require the exact illustrative permutation when the validator accepts any valid arrangement.
-Comparing only one neighbor can leave the other larger than the intended peak.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Both references copy the input before swapping.
-Python selects the maximum neighbor through a short loop; Java uses explicit bounds-aware comparisons.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

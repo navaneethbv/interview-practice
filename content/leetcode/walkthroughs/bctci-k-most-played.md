@@ -1,52 +1,46 @@
 ## Intuition
 
-Keep only the strongest k songs seen so far, with the weakest retained song at the heap root.
-A new song needs to replace that root only when it ranks higher.
+Keep only the best k songs seen so far, with the weakest retained song easy to remove.
+A min-heap arranged by retention strength provides exactly that boundary.
+For equal play counts, alphabetically later titles are weaker.
 
 ## Brute force
 
-Sorting every song by descending play count and ascending title takes O(n log n) comparisons and stores all ranking entries.
-A bounded heap reduces the retained set to at most k songs.
+Sort all songs by descending play count and ascending title, then take the first k.
+This takes O(n log n) comparisons and stores all ranked entries, even when k is small.
 
 ## Approach
 
-The ranking compares play counts first and alphabetical title order second.
-Maintain `weakest` so lower plays and, on ties, alphabetically later titles have lower priority for retention.
-Python inserts until full, then replaces the root only for a stronger entry.
-Java inserts each candidate and removes the weakest whenever size exceeds k.
-After each song, the heap contains exactly the best min(k, processed) songs.
-Heap enumeration is not sorted, which is allowed by the output contract.
+The Python heap `weakest` stores `(count, reversed_title_key, title)`.
+The title key negates character codes and ends with a positive sentinel, reversing alphabetical preference correctly even when one title is a prefix of another.
+Fill the heap until it has k entries, then replace its root only when a stronger entry arrives.
+Java instead heaps indices with the ranking comparator reversed and removes one entry whenever size exceeds k.
+Both maintain the invariant that every discarded song ranks no higher than the retained boundary.
 
 ## Walkthrough
 
-```text
-Input: titles = ["All the Single Brackets", "Oops! I Broke Prod Again", "Coding In The Deep", "Boolean Rhapsody", "Here Comes The Bug", "All About That Base Case"], plays = [132, 274, 146, 193, 291, 291], k = 3
-Output: ["All About That Base Case", "Here Comes The Bug", "Oops! I Broke Prod Again"]
-```
-
-Example 1's two 291-play songs outrank every other song.
-The 274-play song beats the remaining counts 193, 146, and 132.
-Thus the retained titles are All About That Base Case, Here Comes The Bug, and Oops! I Broke Prod Again.
-Alphabetical order resolves the tie between the two 291-play titles if a cutoff separates them.
+Example 1 asks for three songs.
+The two songs with 291 plays outrank every other song: `All About That Base Case` and `Here Comes The Bug`.
+The next highest count is 274 for `Oops! I Broke Prod Again`.
+The heap eventually retains exactly those three titles, discarding the entries with 193, 146, and 132 plays.
+Heap iteration may return the retained titles in a different order, which the spec accepts.
 
 ## Complexity
 
-For n songs, heap work is O(n log(k + 1)) comparisons.
-String comparisons can add a factor proportional to title length.
-Java retains O(k) indices; Python stores reversed-title keys totaling the retained title lengths and builds each candidate key.
+With bounded title lengths, time is O(n log(min(k, n) + 1)) and heap space is O(min(k, n)).
+For maximum title length L, string-key construction and comparison can add a factor of L, and Python's stored keys require O(kL) space.
 
 ## Edge cases
 
-If k exceeds n, retain every title.
-An empty input returns empty output.
-Prefix-related titles require correct alphabetical ordering.
+An empty catalog returns an empty list.
+When k exceeds the number of songs, every title is retained.
 
 ## Common mistakes
 
-A strongest-at-root heap would discard the wrong song.
-Equal play counts must not ignore title ordering.
+The root must be the weakest retained song, not the strongest.
+Equal counts still require the alphabetical tie rule.
 
 ## Language notes
 
-Python encodes reversed character priorities with a terminating marker to handle prefix titles.
-Java reverses an explicit count-and-title comparator for its PriorityQueue.
+Python uses `heapq` tuples and explicitly reverses title order.
+Java uses `PriorityQueue` with a reversed comparator; its iteration order is not sorted order.

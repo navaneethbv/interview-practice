@@ -1,46 +1,47 @@
 ## Intuition
 
-A string reads the same in both directions exactly when every pair of mirrored positions contains the same character.
-Compare the outermost pair first, then move toward the center.
-Any mismatch disproves the palindrome immediately, while matching outer pairs can be forgotten.
+A palindrome pairs its first letter with its last, its second with its second last, and so forth.
+Checking those mirrored pairs directly proves whether reading in either direction yields the same string.
+
+## Brute force
+
+Reversing the string and comparing it with the original is straightforward but allocates a second string.
+Two indices perform the same logical comparisons without constructing a reversed copy or changing the original input.
 
 ## Approach
 
-Initialize `left` to zero and `right` to the last valid index.
-While `left` is smaller than `right`, compare the characters at those positions.
-Return false as soon as they differ.
-Otherwise increment `left` and decrement `right` to examine the next inner pair.
-If the pointers meet or cross without a mismatch, return true.
-The loop invariant is that every position outside the remaining interval has already matched its mirrored partner.
-Thus the final success covers all required comparisons, and an unmatched center character in an odd-length string needs no check against another position.
+Set `left` to zero and `right` to the final index.
+While `left < right`, compare those two letters and return false on a mismatch.
+Otherwise move both indices inward.
+If all required pairs match, return true.
 
 ## Walkthrough
 
-Example 1 is `level`.
-The first comparison matches the `l` at index zero with the `l` at index four.
-The next comparison matches the two `e` characters at indices one and three.
-Both pointers then reach index two, containing `v`, so the loop stops.
-All mirrored pairs matched and the method returns true.
-The center character could be any lowercase letter without changing the success of those comparisons.
+For Example 1, `level` first compares l at indices 0 and 4.
+They match, so the next comparison checks e at indices 1 and 3.
+Those also match.
+The pointers meet on v, which requires no comparison with another position, and the result is true.
 
 ## Complexity
 
-Both references compare at most half the string, taking O(n) worst-case time.
-Only two indices are stored, so auxiliary space is O(1).
-A mismatch near the ends permits an early return, but does not change the worst-case bound.
+At most floor(n/2) pairs are compared, giving O(n) worst case time for a string of length n.
+A mismatch can terminate sooner.
+The two indices occupy O(1) auxiliary space, and the result is one Boolean.
 
 ## Edge cases
 
-Empty strings and single-character strings return true because the loop never runs.
-Even-length strings finish by crossing pointers; odd-length strings finish by meeting at the center.
+The empty string returns true because it has no mismatched mirrored pairs.
+A one letter string also returns true.
+Even lengths stop after the middle pair, whereas odd lengths leave a single middle letter that always matches itself.
 
 ## Common mistakes
 
-Advance both pointers after a successful comparison.
-Do not normalize or discard characters here: the contract already provides lowercase letters, and every position participates.
+Do not remove letters or perform case normalization because the given alphabet is already lowercase English.
+Stop on the first mismatch rather than allowing later matches to overwrite failure.
+The loop condition avoids comparing the same middle letter unnecessarily.
 
 ## Language notes
 
-Python indexes the string directly.
-Java uses `charAt` and advances both indices inside the comparison expression.
-The lowercase-English restriction makes Java's character-unit comparisons match the problem's intended alphabet exactly.
+Python indexes characters and updates pointers in separate statements.
+Java compares `charAt(left++)` and `charAt(right--)`, advancing after reading each character.
+For the specified English alphabet, both representations compare the same individual letters and preserve the original string.

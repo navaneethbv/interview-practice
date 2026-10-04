@@ -1,52 +1,48 @@
 ## Intuition
 
-Inorder traversal exposes BST values in sorted order, including repeated values.
-Counting visited nodes therefore identifies the requested zero-based position without sorting or storing every value.
+An inorder traversal of this binary search tree produces values in nondecreasing order, including repeated values.
+The task uses zero-based rank, so the first visited node is rank zero and duplicate nodes each consume a position.
 
 ## Brute force
 
-Collecting all values and sorting them costs O(n log n) time and O(n) storage.
-Even collecting the already-sorted inorder list visits more nodes than necessary when k is small.
+Traverse all nodes, collect their values, and sort the list before indexing it.
+That takes O(n log n) time and O(n) memory, even though the tree already provides sorted traversal order.
 
 ## Approach
 
-Maintain an explicit stack and descend left from the current `node`.
-After reaching null, pop the smallest unvisited node.
-If k is zero, return its value.
-Otherwise decrement k and continue with the popped node's right subtree.
-The stack remembers nodes deferred while their smaller left-subtree values are visited.
-Each pop consumes exactly one sorted occurrence, so duplicate values count as separate ranks.
-The input guarantee that k is valid ensures the traversal finds an answer before the stack is exhausted.
+Keep an explicit `stack` and a moving `node` pointer.
+Push nodes while following left children to reach the next smallest unvisited node.
+Pop that node; if `k` is zero, return its value.
+Otherwise decrement `k`, move to its right child, and repeat.
+The stack preserves ancestors whose own visit is waiting for their left subtree to finish.
+Stopping as soon as the requested node is popped avoids processing larger values unnecessarily.
 
 ## Walkthrough
 
-```text
-Input: root = [5, 2, 9, null, 4, 9, 11], k = 4
-Output: 9
-```
-
-Example 1 has inorder values `[2, 4, 5, 9, 9, 11]`.
-Starting with k equal to 4, visits to 2, 4, 5, and the first 9 reduce k successively to 3, 2, 1, and 0.
-The next popped value is the second 9.
-It occupies index 4 in the sorted sequence and is returned.
+Example 1 has inorder values `[2, 4, 5, 9, 9, 11]` and `k = 4`.
+Popping 2 changes the remaining rank from four to three.
+After 4 and 5 it becomes one.
+The first 9 consumes that position, leaving zero.
+The next 9 is returned, so the answer is 9 even though its value duplicates the previous visit.
 
 ## Complexity
 
-Time is O(h + k + 1), bounded by O(n), because the traversal explores the initial left path and enough nodes to reach the requested rank.
-The stack uses O(h) extra space.
+Time is O(h + k) for initial height h and requested rank k, bounded by O(n).
+The explicit stack uses O(h) auxiliary space.
+A skewed tree can make h equal n.
 
 ## Edge cases
 
-For k equal to zero, return the minimum value.
-For k equal to n - 1, return the maximum.
-Identical values at different nodes still occupy different ranks.
+A singleton tree with rank zero returns its root.
+The largest valid rank requires visiting every node.
+Equal values may occur on either side under this problem's inclusive BST definition.
 
 ## Common mistakes
 
-This problem counts from zero, unlike many similarly named exercises.
-Do not deduplicate values before counting positions.
+Do not use the one-based rank convention from other versions of kth-smallest problems.
+Do not deduplicate values during traversal.
 
 ## Language notes
 
-Python checks k before decrementing.
-Java's `k-- == 0` performs the equivalent comparison followed by decrement; the decrement is irrelevant when returning immediately.
+Python uses a list as a stack.
+Java uses `ArrayDeque` and tests `k-- == 0`, equivalent to checking first and decrementing only after an unsuccessful rank comparison.

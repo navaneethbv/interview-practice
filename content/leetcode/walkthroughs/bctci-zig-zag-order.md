@@ -1,53 +1,62 @@
 ## Intuition
 
-Keep the actual traversal order of every level left to right, and reverse only the values emitted for odd-depth levels.
-This separates discovering the next level from deciding how the current level should appear in the answer.
+Zig-Zag Order is organized around Level Order with Alternating Reversal.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Repeatedly searching the tree for all nodes at each depth can take quadratic time on a long chain.
-A level-order traversal visits every node once and already groups the required output segments.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Initialize level with root when nonempty and depth with zero.
-Collect the current level's values.
-Append them normally at even depths and in reverse at odd depths.
-Construct the next level by visiting current nodes left to right and adding each left child before its right child.
-Increment depth and repeat.
-The traversal list remains in geometric left-to-right order even when its displayed values are reversed, preventing the following level from inheriting an unintended reversal.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Level Order with Alternating Reversal idea: Collect each level left to right and reverse the odd-depth levels before appending them.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named zigZagOrder can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: root = [1, 2, 3, 4, 5, null, 6]
-Output: [1, 3, 2, 4, 5, 6]
-```
-
-Example 1 begins with level `[1]` at depth zero and emits 1.
-Depth one has nodes `[2, 3]`, whose values are emitted as 3, 2.
-The next level is still built from nodes 2 then 3, producing `[4, 5, 6]`.
-Depth two is even, so those values are emitted normally.
-Combining the levels gives `[1, 3, 2, 4, 5, 6]`.
+Example 1 uses input [[1, 2, 3, 4, 5, null, 6]] and expects [1, 3, 2, 4, 5, 6].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [1, 3, 2, 4, 5, 6].
+The same reasoning handles hidden cases [[1]], [[1, 2, 3, 4, 5, 6, 7, 8, 9]], [[1, null, 2, 3]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Every node contributes to one level and one output position, giving O(n) time.
-Current and next levels plus temporary values use O(w) working space for maximum width w.
-The returned flat list uses O(n) space.
+The imported workbook records the expected time bound as O(n).
+The imported workbook records the expected space bound as O(n).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty tree returns an empty list.
-A single-node level looks identical in either direction.
-Missing children are skipped without placeholders.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[1]], [[1, 2, 3, 4, 5, 6, 7, 8, 9]], [[1, null, 2, 3]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not reverse the node level before generating children unless the traversal logic compensates for it.
-Return one flat list rather than a list of level lists.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses reversed for odd-level values.
-Java reverses a temporary values list with Collections.reverse, while keeping the node-level list and child discovery order unchanged.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

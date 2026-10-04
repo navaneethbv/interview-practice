@@ -1,55 +1,46 @@
 ## Intuition
 
-At a BST node, the comparison with target identifies the only subtree that can still contain the target.
-Equality is handled immediately, so duplicates do not create any ambiguity in deciding which direction to search.
+At a binary search tree node, comparing the target with the node value identifies the only subtree that can contain it.
+The allowed duplicates do not change this rule once equality is checked first.
 
 ## Brute force
 
-A general binary-tree traversal checks every node in the worst case.
-A BST search can discard an entire subtree at each comparison by using the ordering guarantee.
+A full depth first traversal could test every node, costing O(n) even in a balanced tree.
+The reference instead follows a single root to leaf route and discards an entire impossible subtree at each step.
 
 ## Approach
 
-Start `node` at root.
-While it is non-null, return true if its value equals target.
-Otherwise move left when target is smaller and right when target is larger.
-Return false if the chosen branch reaches null.
-When target is smaller, every value in the right subtree is at least the current value and therefore too large.
-The symmetric argument excludes the left subtree for a larger target.
-Thus the search never discards a possible matching value.
+Initialize `node` to `root`.
+While it exists, return true if `node.val == target`.
+Otherwise move to `node.left` when the target is smaller and `node.right` when it is larger.
+Reaching a missing child proves that the target is absent.
 
 ## Walkthrough
 
-```text
-Input: root = [5, 2, 9, null, 4, 9, 11, null, null, null, 9], target = 4
-Output: true
-```
-
-Example 1 starts at value 5 while searching for 4.
-Since 4 is smaller, move to the left child with value 2.
-Since 4 is larger than 2, move to its right child with value 4.
-Equality now succeeds and the method returns true.
-The large right subtree rooted at 9 is never inspected.
+In Example 1, target 4 is less than the root value 5, so search moves left to 2.
+Since 4 is greater than 2, it moves right to 4.
+Equality then returns true, without visiting the subtree rooted at 9.
 
 ## Complexity
 
-Time is O(h), where h is tree height.
-This is O(log n) for a balanced tree but can be O(n) for a skewed tree.
-The iterative implementation uses O(1) extra space and leaves every tree link unchanged.
+Time is O(h), where h is the tree height, because only one node per level is examined.
+This becomes O(log n) for a balanced tree and O(n) for a chain.
+The iterative reference uses O(1) auxiliary space.
 
 ## Edge cases
 
-An empty tree returns false.
-A target equal to the root returns immediately.
-Targets outside the stored value range eventually reach a missing child.
-Duplicates still require only a boolean answer.
+A null root immediately produces false.
+A matching root returns true without inspecting children.
+Repeated copies of the target elsewhere are irrelevant because the requested output is existence, not a count or a particular node identity.
 
 ## Common mistakes
 
-Do not promise logarithmic time without a balance guarantee.
-Searching both subtrees discards the main benefit of BST order.
+Do not choose a subtree before testing equality.
+Do not binary search the level order fixture array, which is a serialization rather than a sorted sequence.
+Only tree links and the BST ordering justify eliminating a branch.
 
 ## Language notes
 
-Python updates the node reference with a conditional expression.
-Java uses the equivalent ternary operator; neither implementation allocates a traversal stack or recurses.
+Both references keep one local `node` variable and leave the tree unchanged.
+Python uses a conditional expression to select the next child, while Java uses the ternary operator.
+The harness supplies `TreeNode` with the value field named `val`.

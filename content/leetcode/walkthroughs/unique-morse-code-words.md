@@ -17,8 +17,8 @@ Encoding once and inserting into a set avoids that repeated work.
 
 ## Walkthrough
 
-For Example 1, `gin` encodes as `--...-.` and `zen` produces the same sequence.
-`gig` produces `--...--.` and `msg` produces `--...--.` as well.
+For Example 1, `gin` encodes as `--..-.` and `zen` produces the same sequence.
+`gig` produces `--..--.` and `msg` produces `--..--.` as well.
 The set therefore contains two strings, so the result is 2.
 
 ## Complexity

@@ -1,51 +1,47 @@
 ## Intuition
 
-An edge is mandatory exactly when its endpoints cannot be connected without it using edges of no greater weight.
-An alternative route of such edges makes it possible to replace the target without increasing spanning-tree cost.
+An edge is mandatory in every minimum spanning tree precisely when its endpoints cannot be connected without it using edges of no greater weight.
+An alternative connection of equal weight is enough to make the target replaceable.
 
 ## Brute force
 
-Enumerating all spanning trees is exponential.
-Even comparing an MST with and without each candidate does more work than this single-edge question requires.
+Build a minimum spanning tree, remove the target edge from consideration, and build another one to compare optimal costs.
+That works but requires sorting and full tree construction when a threshold connectivity test suffices.
 
 ## Approach
 
-Let the target endpoints be u and v and its weight be weight.
-Initialize disjoint sets and join every other edge whose cost is at most weight.
-Return whether u and v remain in different components.
-If they are disconnected, the cut around u's component has the target as its uniquely cheapest crossing edge, so every MST must include it.
-If connected, the alternative path together with the target forms a cycle on which the target is a maximum-weight edge; an MST exists that omits it.
+Read the target endpoints `u`, `v` and its `weight`.
+Create `DisjointSets` for all vertices.
+Join endpoints of every other edge whose cost is at most the target weight.
+Return whether the target endpoints remain in different components.
+If separated, every alternative crossing edge is more expensive, making the target the unique cheapest edge across that component cut.
+If connected, an alternate path can replace the target in a tree without increasing cost.
 
 ## Walkthrough
 
-```text
-Input: [3, [[0, 1, 1], [1, 2, 1], [0, 2, 1]], 0]
-Output: false
-```
-
-Example 1 selects edge `[0, 1, 1]` in an equal-weight triangle.
-Ignoring that edge, the two remaining weight-1 edges connect 0 to 2 to 1.
-Union-find therefore gives the target endpoints the same root.
-The method returns false: an MST can use those two other edges and achieve the same total cost.
+Example 1 is a triangle with all three weights equal to one, and edge zero is the target.
+Exclude the edge from 0 to 1.
+Joining edges 1-to-2 and 0-to-2 still connects vertices 0 and 1.
+Their representatives are equal, so the result is false.
+A minimum tree can use the other two equal-weight edges instead.
 
 ## Complexity
 
-For V vertices and E edges, time is O(V + E alpha(V)) with path compression and union by size.
-The component arrays use O(V) extra space.
-No edge sorting is performed.
+For V vertices and E edges, initialization costs O(V) and union-find processing takes O(E alpha(V)) amortized time.
+Auxiliary space is O(V); this algorithm does not sort edges.
 
 ## Edge cases
 
-Negative weights are handled by ordinary ordering.
-An edge that is a graph bridge is mandatory.
-Equal-weight replacement routes must count as alternatives.
+A bridge is mandatory regardless of negative or positive weight.
+Equal weights must be included in the alternative-connectivity test.
+The statement guarantees a connected graph and a valid target index.
 
 ## Common mistakes
 
-Exclude the target itself from unions.
-Using only strictly lighter edges answers a different question and mishandles equal-weight cycles.
+Do not join the target itself, which would force a false result.
+Testing only strictly lighter edges determines a different property and mishandles equal-weight alternatives.
 
 ## Language notes
 
-Both references use the shared disjoint-set pattern with sizes and compressed root searches.
-The result is about every MST, not merely membership in one particular MST.
+Both references use union by size with path compression by halving.
+The Python names `u`, `v`, and `weight` correspond to Java's entries in the `target` array.

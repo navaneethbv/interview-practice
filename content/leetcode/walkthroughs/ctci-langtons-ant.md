@@ -1,49 +1,62 @@
 ## Intuition
 
-The infinite board need not be allocated in advance.
-Only black cells differ from the default white background, so a set of black coordinates describes the changing state.
-A running bounding rectangle records the finite region that must eventually be printed.
+Langton's Ant is organized around Sparse Grid Simulation.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Allocate a very large grid and simulate within it.
-This wastes space and still risks choosing bounds too small for a valid walk.
-Sparse coordinates permit movement in every direction without resizing a dense board during simulation.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Start at row zero, column zero, facing right with an empty `black` set.
-On a black cell, remove it and turn left; on a white cell, add it and turn right.
-Move one cell according to `HEADINGS = RDLU` and `STEPS`.
-Update top, bottom, left, and right to include the new location.
-After K moves, render the bounding rectangle, printing the heading at the final ant location, X for other black cells, and underscore for white cells.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Sparse Grid Simulation idea: Store only black squares in a set, track the ant's position and heading, and remember the bounding box.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named printKMoves can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 uses K equal to zero.
-The movement loop does not execute, so the black set remains empty and all four bounds remain zero.
-Rendering visits only coordinate `(0, 0)`.
-That coordinate contains the ant, whose initial heading is R, so its heading overrides the underlying white-cell symbol.
-The result is the single line `["R"]`.
+Example 1 uses input [0] and expects ["R"].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is ["R"].
+The same reasoning handles hidden cases [1], [3], [4]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Simulation takes expected O(K) time with hash-set operations.
-If the rendered rectangle contains A cells, output generation takes O(A) time and space.
-The black set holds at most O(K) coordinates, giving total O(K + A) time and space including output.
+The imported workbook records the expected time bound as O(K + area).
+The imported workbook records the expected space bound as O(K + area).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Coordinates may become negative.
-The final ant cell must be included even if it has never been flipped.
-Returning to a black cell makes it white again.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [1], [3], [4] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-The turn happens before movement.
-Updating bounds before including the new position can crop the final ant from the output.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses coordinate tuples as set keys.
-Java packs signed row and column values into a long key, masking the column's low 32 bits to prevent collisions.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

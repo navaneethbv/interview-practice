@@ -1,50 +1,43 @@
 ## Intuition
 
-The requested unit is a tenant, while apartment rentals are individual relationship rows.
-Join each rental to its tenant, group those rows by tenant identity, and retain groups with more than one rental.
-The uniqueness guarantee for each tenant/apartment pair makes row count equal apartment count.
-
-## Brute force
-
-For every tenant, scan all rental rows and count matches.
-This correlated approach can do O(TA) work without a useful index, for T tenants and A rental relationships.
-Grouping processes the joined relationships collectively.
+The apartment relation has one row for every tenant and apartment pair.
+A tenant qualifies exactly when their relation rows form a group with count greater than one.
+After identifying those tenant IDs, joining to `Tenants` supplies each tenant's name without grouping by a possibly duplicated name.
 
 ## Approach
 
-Join `Tenants t` with `AptTenants a` on `TenantID`.
-Group by both `t.TenantID` and `t.TenantName` so each returned row identifies one tenant clearly.
-Apply `HAVING COUNT(*) > 1` to the groups.
-Select only the tenant ID and name required by the result contract.
-Tenants with no rentals disappear in the inner join, which is correct because they cannot qualify.
+Group `AptTenants` by `TenantID` and keep groups whose `COUNT(*)` exceeds one.
+Join that result to `Tenants` on `TenantID`.
+Select `TenantID` and `TenantName`, leaving the result unordered as permitted by the spec.
+Counting rows is sufficient because the statement guarantees that each tenant and apartment pair appears once.
 
 ## Walkthrough
 
-In Example 1, Ana joins with apartment IDs 10 and 11, yielding a group count of two.
-Bo joins with apartment 12 only, yielding count one.
-Cy joins with apartment IDs 13, 14, and 15, yielding count three.
-The HAVING predicate retains Ana and Cy and rejects Bo.
-Return `[[1, "Ana"], [3, "Cy"]]`, in either row order.
+For Example 1, grouping the apartment rows gives counts two for tenant one, one for tenant two, and three for tenant three.
+The `HAVING` condition retains tenant IDs one and three.
+Joining them to `Tenants` returns `[1, "Ana"]` and `[3, "Cy"]`.
+For Example 2, tenant one has only one relation row, so its group is filtered out and the result is empty.
 
 ## Complexity
 
-SQL execution cost depends on SQLite's chosen join and grouping plan and available indexes.
-A naive join can require O(TA) comparisons; grouping can require a temporary structure proportional to the matched relationships.
-The reference does not promise a constant-space streaming plan.
+SQLite scans the apartment relation and groups its rows, then joins the qualifying IDs to the tenant table.
+The query is `O(A + T)` in the usual indexed or hash-style analysis, where `A` is apartment rows and `T` is tenant rows.
+The grouping state uses `O(U)` space for the distinct tenant IDs represented in `AptTenants`.
 
 ## Edge cases
 
-An empty relationship table produces no qualifying rows.
-Different tenants may share a name and must remain separate groups.
-Exactly two apartments are enough to qualify.
+An empty `AptTenants` table creates no groups and returns no tenants.
+Two tenants may share the same name, so grouping or joining by `TenantName` would merge unrelated people.
+The threshold is strictly greater than one, so exactly one apartment does not qualify.
 
 ## Common mistakes
 
-Grouping only by name can merge different tenants.
-Putting an aggregate predicate in WHERE is incorrect because WHERE operates before grouping.
+Using `WHERE COUNT(*) > 1` is invalid because aggregate filters belong in `HAVING`.
+Selecting only from `AptTenants` omits the required tenant name.
+Adding an `ORDER BY` is unnecessary because the spec compares rows without order.
 
 ## SQLite notes
 
-SQLite supports this inner join, GROUP BY, and HAVING syntax directly.
-`COUNT(*)` is appropriate because every joined row is a real rental and pairs are guaranteed unique.
-No ORDER BY is required because output order is unrestricted.
+SQLite supports the same `GROUP BY`, `HAVING`, and inner `JOIN` forms used here.
+The local query source is `content/leetcode/ctci-multiple-apartments.sql`, and this SQL problem intentionally has no Python or Java reference.
+The result columns must remain exactly `TenantID` and `TenantName` so the harness can compare the selected rows.

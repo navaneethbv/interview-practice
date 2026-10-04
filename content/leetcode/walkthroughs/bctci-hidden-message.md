@@ -1,51 +1,46 @@
 ## Intuition
 
-Each node chooses where its own character appears relative to the two subtree messages.
-The child ordering is always left before right; only the node's insertion point changes.
+Each node chooses when its own character appears relative to its two subtrees.
+The children still recursively apply their own choices, so this is a traversal with a local ordering rule rather than one global preorder or inorder traversal.
 
 ## Brute force
 
-Building a new concatenated string at every node can repeatedly copy long subtree messages and become quadratic on a skewed tree.
-Append characters into one shared output buffer instead.
+Construct the complete left and right subtree strings at every recursive call, then concatenate them with the current character.
+Repeated copying can cost O(nh) for n nodes and height h, particularly in a long narrow tree.
 
 ## Approach
 
-The recursive `read` returns immediately for null nodes.
-Look up the two-character text using `node.val`.
-Append its letter before both children for b, between the child traversals for i, or after both for a.
-Always recurse left before right.
-Every node's character is appended exactly once at its specified position, so recursively combining the subtree orderings produces the required message.
-Finally join or convert the accumulated character buffer into a string.
+Maintain one shared output buffer, `parts` in Python or `message` in Java.
+At each node, read its order marker and letter from `texts[node.val]`.
+Append before both recursive calls for `b`, between the left and right calls for `i`, and after both calls for `a`.
+Null children emit nothing.
+Every node appends exactly once, and the selected position gives precisely the recursive message definition.
 
 ## Walkthrough
 
-```text
-Input: root = [0, 1, 2, 3, 4, 5, null, 6, 7, null, null, null, 8], texts = ["bn", "i_", "a!", "ae", "it", "br", "bi", "bc", "ay"]
-Output: "nice_try!"
-```
-
-Example 1 begins with root text bn, so n is emitted first.
-The left subtree emits i and c before its postorder e, then its inorder underscore and t, yielding `ice_t`.
-The right subtree's br emits r before its descendant y, while its a! emits the exclamation mark after that subtree.
-Combining these pieces gives `nice_try!`.
+In Example 1, the root text `bn` emits `n` first.
+The left subtree's `ae` node emits child letters `i` and `c`, then `e`.
+Its parent `i_` contributes `_` between that subtree and the node contributing `t`.
+The right subtree contributes `r`, then `y`, then its `a!` root contributes `!`.
+Joining the emissions produces `nice_try!`.
 
 ## Complexity
 
-Each node is visited once and contributes one character, so time is O(n).
-The output buffer uses O(n) space and recursion uses O(h), where h is tree height.
+Time is O(n), including final message construction.
+The output buffer uses O(n) space and recursive calls use O(h) additional space.
 
 ## Edge cases
 
-An empty tree produces an empty string.
-A leaf emits its character regardless of whether its order is b, i, or a.
-Missing children simply contribute nothing.
+A null root produces an empty message.
+A single node emits its letter regardless of order marker.
+Nodes missing one child still place their own character according to the same rules.
 
 ## Common mistakes
 
-Do not choose one traversal order for the entire tree; each node has its own rule.
-Node values are indices into texts, not character codes.
+Do not interpret the node's integer label as the message character.
+Do not apply the root's order marker to all descendants.
 
 ## Language notes
 
-Python appends to a list and joins once.
-Java uses StringBuilder, avoiding repeated immutable-string concatenation while preserving the same recursive ordering.
+Python joins the accumulated character list once.
+Java uses a `StringBuilder` field; the judge supplies a fresh solution instance for the testcase, so the buffer begins empty.

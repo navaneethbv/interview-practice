@@ -1,47 +1,50 @@
 ## Intuition
 
-Distances to the nearest red, green, and blue pixel are three separate nearest-source problems.
-A breadth-first search beginning at every pixel of one color computes that color's distance field.
-After building all three fields, each pixel selects the field for its required next color.
+Each requested value is the distance to the nearest pixel of one target color.
+For one target color, multi-source BFS starting from every pixel of that color gives all nearest distances at once.
+Running it for red, green, and blue covers the three cyclic requests.
 
 ## Brute force
 
-For each pixel, scan every pixel of its target color and minimize Manhattan distance.
-A grid with N cells can then require O(N squared) comparisons.
+Checking every target pixel for every screen cell can be quadratic in the grid area.
+Multi-source BFS visits each cell once per color and reuses the distance map for all cells requesting that color.
 
 ## Approach
 
-For one target color, initialize all distances to -1 and enqueue every pixel of that color at distance zero.
-Expand in four orthogonal directions, assigning each unvisited neighbor the current distance plus one.
-The grid has no obstacles, so shortest four-direction path distance equals taxicab distance.
-Repeat for R, G, and B.
-Construct the result by selecting distance to green for red pixels, distance to blue for green pixels, and distance to red for blue pixels.
-A pixel's own color field is not its answer field.
+1. Run `_distances` with every `R`, then every `G`, then every `B` cell as an initial queue source.
+2. Expand four-directionally, assigning an unvisited neighbor one more than the current distance.
+3. For a red pixel read its green distance, for green read its blue distance, and for blue read its red distance.
+4. Build the integer result grid in the original row and column order.
 
 ## Walkthrough
 
-In Example 1, the red pixel at `(0, 0)` is two steps from green at `(1, 1)`, so its result is 2.
-The green pixel at `(0, 3)` is two steps from blue at `(0, 5)`, so its result is also 2.
-That blue pixel is one step from red at `(0, 4)`, producing 1.
-The same three computed fields supply every other displayed cell without independent nearest-color searches.
+Example 2 is `screen = ["RGB"]`.
+The green BFS assigns distances 1, 0, and 1, so the red cell receives 1.
+The blue BFS assigns 2, 1, and 0, so the green cell receives 1.
+The red BFS assigns 0, 1, and 2, so the blue cell receives 2.
+The result is `[[1, 1, 2]]`.
 
 ## Complexity
 
-Each breadth-first search visits every cell once, and there are exactly three colors.
-For r rows and c columns, both references take O(r times c) time.
-The three distance grids, output, and queue require O(r times c) space overall, with a larger constant than a single search.
+- Time: O(3RC), which is O(RC) because the number of colors is constant.
+- Space: O(RC) for one distance grid and the queue, with three maps retained for the final lookup.
 
 ## Edge cases
 
-The contract guarantees at least one source of every color.
-Single-row or single-column grids still use the same orthogonal traversal.
+The guarantee of all three colors ensures every BFS reaches every cell.
+A one-cell-wide screen still uses ordinary four-direction checks.
+Adjacent target colors produce distance one.
+The source pixels themselves always receive distance zero in their own map.
 
 ## Common mistakes
 
-Do not treat other colors as walls.
-The target mapping is directional: red seeks green, green seeks blue, and blue seeks red.
+- Starting BFS from the requesting color reverses the meaning of the answer.
+- Running a separate search from each cell repeats work unnecessarily.
+- Allowing diagonal neighbors changes taxicab distance.
+- Reusing one distance map without retaining all three target maps loses earlier results.
 
 ## Language notes
 
-Python stores the fields in a color-keyed dictionary.
-Java keeps three named arrays and uses a conditional expression to select the appropriate field.
+Python stores target maps in a dictionary keyed by color.
+Java keeps named `toRed`, `toGreen`, and `toBlue` arrays and uses `long` only where needed by coordinates.
+Both references use a queue seeded with every source pixel before expansion.

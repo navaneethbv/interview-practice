@@ -1,53 +1,47 @@
 ## Intuition
 
-Forward navigation requires retaining pages after the current position.
-Represent history as an array plus a cursor, and discard its forward suffix only when a new go action branches away from that history.
+Browser history is a sequence of pages plus a cursor pointing at the currently displayed entry.
+Back and forward move the cursor, while a new visit replaces the branch of history that used to lie ahead.
 
 ## Brute force
 
-Moving pages between stacks one step at a time can waste time on very large navigation counts.
-Arithmetic on a cursor jumps directly to the clamped destination.
+Two stacks can simulate each individual movement, but moving up to a billion steps one at a time is unnecessary.
+An indexed history list permits each back or forward action to clamp its destination directly.
 
 ## Approach
 
-Maintain `pages` and zero-based `current`.
-For back, subtract the requested steps and clamp to zero.
-For forward, add the steps and clamp to the last stored position.
-For go, advance current once, delete the existing suffix beginning there, and append the new URL.
-The prefix through current remains valid back history, while the suffix after current is exactly the available forward history.
-Return `pages[current]` after all actions.
+Maintain `pages` and `current`, initially an empty list and -1.
+For `go`, increment the cursor, delete entries from that position onward, and append the new URL.
+For navigation, subtract or add the parsed step count and clamp to valid history bounds.
 
 ## Walkthrough
 
-```text
-Input: actions = [["go", "google.com"], ["go", "wikipedia.com"], ["back", "1"], ["forward", "1"], ["back", "3"], ["go", "netflix.com"], ["forward", "3"]]
-Output: "netflix.com"
-```
-
-Example 1 visits google and wikipedia, then goes back to google and forward to wikipedia.
-Going back three steps clamps at google.
-The new netflix visit deletes wikipedia from the forward branch and places netflix after google.
-The final forward request cannot recover the deleted wikipedia visit or move beyond netflix.
-The returned URL is `netflix.com`.
+Example 1 visits Google and Wikipedia, then moves back to Google and forward to Wikipedia.
+Backing up three steps stops at Google.
+Visiting Netflix removes Wikipedia's forward entry and appends Netflix.
+The final forward request cannot move beyond Netflix, so that URL is returned.
 
 ## Complexity
 
-Navigation arithmetic takes O(1) per action.
-Each appended page is deleted at most once, so suffix deletion costs O(n) over n actions.
-Total time and history storage are O(n).
+For a actions, total time is O(a), excluding URL storage and the bounded numeric string parsing cost.
+Although a visit may delete many history entries, each entry is appended and deleted at most once.
+The retained history uses O(a) space.
 
 ## Edge cases
 
-Forward at the newest page and back at the oldest page are no-ops.
-A go after back must clear every forward page.
-Repeated URLs are still distinct visits.
+A back request beyond the oldest page stops at index zero.
+A forward request beyond the newest page stops at the last entry.
+Repeated URLs are separate visits.
+The guaranteed initial `go` ensures a valid current page exists at the end.
 
 ## Common mistakes
 
-Do not truncate history during back itself.
-Do not retain old forward pages after appending a new branch.
+A new visit must clear only forward history, retaining every earlier page.
+Back and forward themselves must not delete entries.
+Do not treat a URL string as a unique page identity or lose repeated visits through set storage.
 
 ## Language notes
 
-Python deletes a list slice.
-Java clears an ArrayList sublist and parses step counts as long before clamping, preventing large-step addition from overflowing the cursor calculation.
+Python removes a suffix with `del pages[current:]`.
+Java clears an `ArrayList` suffix through `subList` and parses navigation counts as `long` before clamping.
+Both return the string at the final cursor rather than the newest stored entry unconditionally.

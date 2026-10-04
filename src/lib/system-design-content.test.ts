@@ -6,7 +6,7 @@ import { designChapters, getDesignChapter, listDesignBooks } from "./content";
 
 test("every imported system design chapter renders cleanly", () => {
   const books = listDesignBooks();
-  assert.deepEqual(books.map((b) => b.id), ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes"]);
+  assert.deepEqual(books.map((b) => b.id), ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes", "low-level-design", "ai-design", "testing-debugging", "behavioral"]);
   assert.equal(books.find((b) => b.id === "ctci")?.sourceUrl, "https://www.crackingthecodinginterview.com/");
   for (const book of books) {
     if (book.download) assert.ok(fs.existsSync(path.join("public", book.download)), `${book.id}: missing ${book.download}`); // nosemgrep -- test reads the repo's own generated asset paths

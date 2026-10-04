@@ -1,52 +1,48 @@
 ## Intuition
 
 If a substring of length L repeats, its shorter prefixes repeat too.
-This monotone feasibility condition supports binary search on length, while each fixed-length check records the earliest occurrence of every substring.
+This monotonic property allows binary search over lengths.
+For a fixed length, matching substring values identify repetitions, and retaining the earliest start enforces the required tie rule.
 
 ## Brute force
 
-Comparing every pair of starting positions and extending their common prefix can take cubic time.
-Binary search reduces the number of candidate lengths, although this reference still copies full substring keys.
+Compare substrings at every pair of starting positions and extend matches character by character.
+That can require O(n³) character comparisons.
 
 ## Approach
 
-Search lengths from one through n - 1.
-For a candidate length, `_repeat` scans every window and stores its first index in seen.
-A repeated key updates `best_start` using that original index.
-A successful check raises the lower bound; a failed check lowers the upper bound.
-Keep the successful substring as best.
-Scanning all windows rather than returning at the first duplicate ensures the earliest-first-occurrence tie rule.
+Binary search between lengths 1 and `len(s) - 1`.
+The `_repeat` helper scans every window of the requested length, storing each distinct window's first start in `seen`.
+On a repeated window, update `best_start` only if that first occurrence is earlier than the current candidate.
+Return the chosen substring, or `None` when no repetition exists.
+A successful length becomes `best` and moves the search upward; failure moves it downward.
+Overlapping windows are deliberately included.
 
 ## Walkthrough
 
-```text
-Input: s = "murmur"
-Output: "mur"
-```
-
-For Example 1, length 3 finds `mur` at indices 0 and 3 and succeeds.
-Trying length 4 finds `murm`, `urmu`, and `rmur`, none repeated.
-The binary search cannot find a longer feasible length, so it returns `mur`.
-Its first occurrence starts at zero.
+Example 1 is `murmur`, of length six.
+The initial midpoint is length 3.
+The helper sees `mur` first at index 0 and again at index 3, so it returns `mur`.
+The search next tests length 4, whose windows `murm`, `urmu`, and `rmur` are distinct.
+That failure ends the search with `best = "mur"`.
 
 ## Complexity
 
-A length-L check copies and hashes O(n) windows of length L, costing O(nL) expected time and up to O(nL) stored character space.
-A conservative whole-method bound is O(n squared log n) time and O(n squared) peak space.
-This implementation is therefore not a rolling-hash or suffix-array solution for large inputs.
+These references copy and hash complete substring windows rather than using a rolling hash.
+A length-L test can cost O(nL) time and O(nL) stored characters.
+Thus conservative worst-case bounds are O(n² log n) time and O(n²) peak space, despite the logarithmic number of length tests.
 
 ## Edge cases
 
-Empty and singleton strings return empty output.
-Overlapping occurrences count, so `aaaa` can return `aaa`.
-Equal-length repeated alternatives require the earliest first index.
+Empty and one-character strings return the empty string.
+Overlaps matter: `aaaa` contains `aaa` at starts 0 and 1.
 
 ## Common mistakes
 
-Do not forbid overlapping windows.
-Do not overwrite a substring's first occurrence with later indices.
+Do not return the first duplicate encountered without checking earlier first-occurrence ties.
+Do not describe the implementation as an O(n log n) rolling-hash algorithm.
 
 ## Language notes
 
-Python slicing and Java substring create window strings in these references.
-Dictionary or HashMap lookup does not remove the cost of constructing and hashing those strings.
+Python distinguishes failure `None` from a found string.
+Java uses null and `putIfAbsent`; both preserve the earliest start of each exact substring.

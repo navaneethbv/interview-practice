@@ -1,50 +1,49 @@
 ## Intuition
 
-A length-k period has all distinct titles exactly when no title occurs at least twice inside it.
-Track how many titles are repeated, rather than rescanning the whole frequency map after every window movement.
+A valid window has no title appearing twice.
+While a fixed-size window slides, only one title enters and one title leaves.
+Tracking how many titles have reached count two lets the algorithm test uniqueness without rescanning the window.
 
 ## Brute force
 
-Building a set for every length-k window takes O(nk) time.
-Sliding frequencies reuse the previous window's counts and update only the entering and leaving titles.
+For every starting day, inserting the next k titles into a fresh set takes O(k) time.
+Across all windows this can take O(nk), which is too slow for a million days.
 
 ## Approach
 
-Increment the new title's count and increase `repeated` only when its count becomes two.
-Once the window exceeds k positions, decrement the departing title's count and decrease repeated only when that count becomes one.
-After a complete window exists, return true if repeated is zero.
-Counts above two still represent one repeated title, so only crossings between one and two change the counter.
-If every full window fails, return false.
+Add the current title to counts as the right edge advances.
+When its count becomes two, increment repeated.
+Once the window exceeds k, decrement the title at day minus k.
+When that count falls from two to one, decrement repeated.
+After a full window exists, repeated equal to zero means every title in that window is distinct.
 
 ## Walkthrough
 
-```text
-Input: bestSeller = ["book3", "book1", "book3", "book3", "book2", "book3", "book4", "book3"], k = 3
-Output: true
-```
-
-Example 1 first sees `[book3, book1, book3]`, which repeats book3.
-Later windows also contain repeated book3 until the period `[book2, book3, book4]` at indices 4 through 6.
-Removing the older book3 occurrence lowers its count to one, leaving repeated equal to zero.
-That complete three-day window has distinct titles and returns true.
+In Example 1, the first full window of length three is book3, book1, book3, so repeated is one.
+As the window moves, the leaving title is removed before the next uniqueness check.
+The window book2, book3, book4 contains three different titles, so repeated reaches zero and the method returns true.
+For k equal to four, every full window still contains a repeated title, so the result is false.
 
 ## Complexity
 
-Each day causes at most two expected constant-time map updates, giving O(n) expected time apart from string processing.
-The references retain zero-count keys, so map storage is O(U) for all distinct titles encountered, rather than only O(k).
+Each title enters and leaves the sliding window once.
+The scan takes O(n) time and the counts map uses O(k) space for the active window.
 
 ## Edge cases
 
-For k equal to one, the first day qualifies.
-Multiple copies of one title affect repeated only once.
-The final possible window must still be checked.
+When k is one, the first available window is always unique.
+Two equal neighboring titles make their length-two window invalid.
+The window can contain titles that appeared in earlier windows without affecting the current test.
+The method returns false only after every full window has been checked.
 
 ## Common mistakes
 
-Do not increment repeated for every count above two.
-Do not report success before k days have entered the window.
+Checking only whether the newest title repeats misses duplicates left elsewhere in the window.
+Removing the outgoing title after testing leaves stale counts in the map.
+Using a set without tracking counts cannot know when a leaving duplicate stops being repeated.
 
 ## Language notes
 
-Python uses a dictionary and explicit transition checks.
-Java's Map.merge returns each updated count, allowing the same one-to-two and two-to-one transition tests.
+Python updates a dictionary with get and assignment.
+Java uses Map.merge to increment and decrement counts in the same control flow.
+Both references count a title as repeated only when its count crosses the threshold of two.

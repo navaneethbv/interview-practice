@@ -11,27 +11,8 @@ Live: https://interview-practice-sandy-eight.vercel.app
 - **Run** checks your code against the sample cases and any cases you add or edit (expected output comes from a tested reference solution).
 - **Submit** checks it against every case, including hidden edge cases, and reports Accepted, Wrong Answer, Runtime Error, Compile Error or Time Limit Exceeded.
 - **Patterns**: the course lessons, with diagrams, math and highlighted code in both languages.
-- **System Design**: read imported books and chapters, with table-of-contents navigation and a home-page link to resume your last chapter.
+- **Interview Guides**: system design books plus focused practice for low-level design, AI architecture, testing and debugging, and behavioral interviews.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
-
-## Saving and resuming practice
-
-Drafts, progress, submissions, and the last opened problem and chapter are saved in this browser.
-The home page links back to the last problem, including its workbook context, and the last chapter.
-The home progress card is explicitly scoped to Grokking Patterns; each workbook has its own progress panel.
-Problem-list filters are stored in the URL, so reloads, bookmarks, and browser history preserve them.
-
-The editor confirms a reset and saves one recovery copy per problem and language before replacing the draft.
-Use **Restore pre-reset draft** to recover it, including after a reload.
-If browser storage fills or is blocked, a warning appears and new changes remain in memory for the current tab.
-Use **Retry saving**, **Download code**, or **Export backup** before closing or reloading that tab.
-An in-memory draft cannot survive closing the browser.
-
-Open **Back up or restore practice data** on the home page to export a JSON copy of code, reset recovery copies, progress, submissions, preferences, and resume links.
-Restore validates the complete file before writing, asks for confirmation, and replaces only records present in the backup.
-Export the current data first if you want to retain both versions.
-A failed import attempts to restore the previous records and reports any recovery data retained only in memory.
-Backup files stay on your device and contain your code and practice history.
 
 ## How code runs
 
@@ -85,7 +66,9 @@ npm run tests:build -- some-id   # only some problems
 
 ### System design books
 
-The System Design section is a read-only reader: pick a book, then a chapter from the contents on the left.
+The Interview Guides section is a read-only reader: pick a collection, then a chapter from the contents on the left.
+The original practice collections are maintained as Markdown sources under `scripts/ingest/` and imported into `content/system-design/`.
+They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories.
 Each book is imported once into `content/system-design/<book>/` (an `index.json` plus one Markdown file per chapter).
 
 ```bash
@@ -94,6 +77,9 @@ npm run ingest:system-design -- grokking "./Grokking-the-system-design-interview
 npm run ingest:system-design -- advanced "./Grokking the Advanced System Design Interview.pdf"
 npm run ingest:system-design -- notes "./Grokking the System Design Interview.md"   # Awesome-Senior-Engineer-Algorithms-Review
 ```
+
+The Kafka chapters in the advanced collection include a version-scoped update for Kafka 4.0 and later, where ZooKeeper mode has been removed in favor of KRaft.
+The reviewed NeetCode 150 snapshot is stored in `scripts/ingest/neetcode_150.json` so workbook imports retain all 150 official entries while preserving existing slugs and saved progress.
 
 The importer has layout rules per book: it rebuilds paragraphs and lists, keeps bold, italic and inline code, restores the ligatures the advanced PDF drops, and removes course boilerplate ("We'll cover the following", Back/Next links, page numbers) and inline URL dumps.
 Diagrams, including the advanced guide's vector drawings, are rendered from their page region into WebP files under `public/course-assets/system-design/<book>/`.
@@ -143,10 +129,3 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm run ingest:grokking` | Import the coding course |
 | `npm run ingest:system-design` | Import a system design book |
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |
-
-## Browser regression checks
-
-Run `npm run test:browser:install` once, then `npm run test:browser`.
-The suite starts a local development server on port 4326; stop other development servers for this checkout first.
-CI runs the same suite against the production build after the reference checks.
-Tests use isolated browser storage and cover draft persistence, storage quota failure and recovery, reset undo, malformed history, keyboard tabs, filter history, backup restore, and mobile layout.

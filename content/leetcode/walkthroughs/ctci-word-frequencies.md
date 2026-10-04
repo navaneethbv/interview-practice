@@ -1,50 +1,62 @@
 ## Intuition
 
-Repeated queries against one book should reuse a frequency table instead of recounting its words.
-Normalize case while building that table and while querying it, so differently capitalized versions share the same entry.
-The structure stores counts, not the original word order.
+Word Frequencies is organized around Precomputed Counts.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-For every query, scan the complete book and count case-insensitive matches.
-For q queries and n words, this requires O(qn) word comparisons, plus the cost of normalizing or comparing characters.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-The constructor lowercases each book word and increments its entry in `counts`.
-`getFrequency` lowercases the requested word and returns that entry, using zero when no entry exists.
-After preprocessing, the stored count for a normalized word equals the number of book positions containing that word regardless of case.
-Each query is independent and does not consume occurrences or change the book's counts.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Precomputed Counts idea: Count every lowercased word once in the constructor so each lookup is a hash map read.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named the solution method can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 contains `The`, `cat`, `saw`, `the`, and `dog`.
-Normalization merges the first and fourth words under `the`, giving count two.
-The remaining three normalized words each have count one.
-Querying `the` returns 2.
-Querying `DOG` normalizes to `dog` and returns 1.
-Querying `bird` finds no stored entry and returns 0.
-The output is `[2, 1, 0]`.
+Example 1 uses input {"ctor": [["The", "cat", "saw", "the", "dog"]], "ops": ["getFrequency", "getFrequency", "getFrequency"], "args": [["the"], ["DOG"], ["bird"]]} and expects [2, 1, 0].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [2, 1, 0].
+The same reasoning handles hidden cases {"ctor": [["a", "A", "a"]], "ops": ["getFrequency", "getFrequency"], "args": [["a"], ["A"]]}, {"ctor": [["Hello"]], "ops": ["getFrequency", "getFrequency", "getFrequency"], "args": [["hello"], ["HELLO"], ["hell"]]}, {"ctor": [["to", "be", "or", "not", "to", "be"]], "ops": ["getFrequency", "getFrequency", "getFrequency", "getFrequency"], "args": [["to"], ["be"], ["or"], ["question"]]}; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Let C be the total characters in the book and U its distinct normalized words.
-Preprocessing takes expected O(C) time with hashing.
-A query of length L takes expected O(L) time including lowercase conversion and hashing.
-Stored keys and counts require space proportional to the total characters across distinct normalized words.
+The imported workbook records the expected time bound as O(n) build, O(1) average per query.
+The imported workbook records the expected space bound as O(n).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty book returns zero for every query.
-Repeated queries return the same count.
-Words differing only in capitalization deliberately merge.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases {"ctor": [["a", "A", "a"]], "ops": ["getFrequency", "getFrequency"], "args": [["a"], ["A"]]}, {"ctor": [["Hello"]], "ops": ["getFrequency", "getFrequency", "getFrequency"], "args": [["hello"], ["HELLO"], ["hell"]]}, {"ctor": [["to", "be", "or", "not", "to", "be"]], "ops": ["getFrequency", "getFrequency", "getFrequency", "getFrequency"], "args": [["to"], ["be"], ["or"], ["question"]]} independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Normalizing only the constructor or only the query produces inconsistent lookups.
-Do not remove words from the table after querying them; this is a frequency lookup, not a matching-consumption task.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python's `Counter` returns zero for missing keys.
-Java uses `getOrDefault` and `Locale.ROOT` for stable lowercase normalization rather than depending on the machine's default locale.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

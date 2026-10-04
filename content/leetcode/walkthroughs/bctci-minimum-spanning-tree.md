@@ -1,49 +1,46 @@
 ## Intuition
 
-A minimum spanning tree can be built by repeatedly choosing the cheapest edge that joins two currently disconnected components.
-An edge within one component would create a cycle and contributes nothing to connectivity.
-A disjoint-set structure efficiently distinguishes these cases.
+Build a forest by repeatedly accepting the cheapest edge that connects two different components.
+Such an edge links previously disconnected groups without creating a cycle, and the minimum-spanning-tree cut property makes this greedy choice safe.
 
 ## Brute force
 
-Try all subsets of V minus one edges, check whether each forms a spanning tree, and keep the cheapest cost.
-The number of subsets becomes prohibitive even for moderately sized graphs.
+Enumerate subsets of V minus one edges and check which subsets form spanning trees.
+That search is combinatorial in the number of edges and repeats connectivity tests for many unsuitable subsets.
 
 ## Approach
 
-Sort edges by weight and initially place every vertex in its own set.
-For each edge, call `join` on its endpoints.
-The helper finds roots using path halving and attaches the smaller component to the larger one.
-If the roots were different, the merge succeeds and the edge weight is added to `total`.
-Otherwise skip the edge.
-The cut property justifies each accepted edge: a cheapest available edge crossing two current components can belong to some optimal spanning tree.
-The connected-input guarantee ensures the accepted edges eventually connect every vertex.
+Initialize `DisjointSets` with each vertex in its own component.
+Sort all edges by weight.
+For each `[u, v, weight]`, call `join(u, v)`.
+When the representatives differ, union by size merges the components and the edge weight is added to `total`.
+When they already agree, reject the edge because it would close a cycle.
+The connected-input guarantee ensures that the accepted forest eventually becomes a spanning tree, even though the reference continues scanning remaining edges.
 
 ## Walkthrough
 
-Example 1 sorts the edges into weights -1, 2, and 5.
-The edge from 1 to 2 joins two singleton components and sets `total` to -1.
-The edge from 0 to 1 joins vertex 0 to that component, making the total 1.
-The weight-5 edge now has both endpoints in one component and is rejected.
-The returned minimum cost is 1.
+Example 1 has edges of weights 2, -1, and 5.
+Sorting processes `[1, 2, -1]` first, joining vertices 1 and 2 and setting total to -1.
+The weight-two edge joins vertex 0 to that component, making total one.
+The weight-five edge now has endpoints in the same component and is rejected.
+The result is 1.
 
 ## Complexity
 
-For E edges and V vertices, sorting costs O(E log E), and union-find operations add O(E alpha(V)) amortized time.
-Both references use O(V) union-find storage and up to O(E) sorting storage.
-Python also builds a sorted edge list; Java sorts the provided outer edge array.
+Sorting dominates at O(E log E), with O(E alpha(V)) amortized union-find work and O(V) initialization.
+Auxiliary space is O(V + E) including sorting storage and the disjoint-set arrays.
 
 ## Edge cases
 
-Negative weights remain valid and should be processed first.
-Equal weights may yield different trees with the same optimal cost.
+Negative edge weights are valid and naturally sort first.
+Equal weights may yield several minimum trees, but only their common minimum cost is requested.
 
 ## Common mistakes
 
-Do not sum every sorted edge, since cycles must be excluded.
-The connected-input contract matters: disconnected graphs would otherwise produce a forest cost.
+Do not accept an edge merely because one endpoint has not appeared before.
+Connectivity must be checked between current components, not individual visited flags.
 
 ## Language notes
 
-Python integers grow as needed.
-Java accumulates into `long` because many signed edge weights can exceed an `int` total.
+Python sorts a new list of edges.
+Java sorts the input outer edge array and accumulates the returned cost in `long`; both helpers apply path compression and union by size.

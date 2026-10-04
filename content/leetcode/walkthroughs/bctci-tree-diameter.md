@@ -1,53 +1,43 @@
 ## Intuition
 
-The longest path through a node joins its deepest left branch to its deepest right branch.
-Child heights therefore provide enough information to evaluate every possible joining point without enumerating endpoint pairs.
-
-## Brute force
-
-Computing distances for every pair of tree nodes takes quadratic time.
-A bottom-up height calculation shares the work across all possible diameter paths.
+For every node, the longest path that passes through it uses the deepest path below its left child and the deepest path below its right child.
+Those two heights also let the parent compute its own height.
+Processing nodes from leaves toward the root makes both values available without recursion.
 
 ## Approach
 
-Build an order list starting at root index zero and append each node's existing children.
-Reverse that order so every child is processed before its parent.
-For each node, read child heights a and b, using zero for missing children.
-Update best with a + b, then store `1 + max(a, b)` as the current node's height.
-Heights count nodes downward, so a + b counts edges through the current parent correctly.
-Return zero immediately for an empty tree.
+Build a breadth-first `order` beginning with node zero by following the child indices in `children`.
+Process that order in reverse so children are handled before parents.
+For each node, read the stored heights of its left and right children, treating a missing child as height zero.
+Update `best` with their sum, then store one plus the larger child height as this node's height.
 
 ## Walkthrough
 
-```text
-Input: [["a", "b", "c"], [[1, 2], [-1, -1], [-1, -1]]]
-Output: 2
-```
-
-Example 1 has root a with two leaf children b and c.
-Each leaf receives height one and contributes diameter candidate zero.
-At the root, both child heights are one, yielding candidate 1 + 1 = 2 edges.
-The path b to a to c realizes that value.
-Labels identify nodes for the fixture but never enter distance calculations.
+For Example 1, the order is root `a`, then `b` and `c`.
+Processing `b` and `c` first gives both leaves height one and a path through either leaf of length zero.
+At `a`, the two child heights are one and one, so the path through the root has two edges and becomes `best`.
+The method returns two, which counts edges rather than nodes on the path.
 
 ## Complexity
 
-Order construction and reverse processing each visit n nodes once, giving O(n) time.
-The order and height arrays use O(n) extra space.
-The iterative method avoids recursion depth problems on a long chain.
+Each node and child link is visited a constant number of times, so the running time is `O(n)`.
+The breadth-first order and height array use `O(n)` auxiliary space.
+The algorithm keeps labels only to follow the input size, because label values do not affect distance.
 
 ## Edge cases
 
-An empty tree and a singleton both have diameter zero.
-A one-sided chain of n nodes has n - 1 edges.
-The maximum path may lie entirely inside a subtree.
+An empty `labels` array returns zero before indexing node zero.
+A single node has two missing children, height one, and diameter zero.
+A one-sided chain accumulates its edge count through successive parent heights even though one child is absent at every step.
 
 ## Common mistakes
 
-Do not return node count instead of edge count.
-Do not assume the root lies on every diameter.
+Returning `a + b + 1` counts nodes when the contract asks for edges.
+Processing the input order without proving it is postorder can read a child height before it is computed.
+Using label values as indices is unsafe because labels are arbitrary unique strings.
 
 ## Language notes
 
-Python extends its order list during iteration and then traverses it in reverse.
-Java uses an index-controlled growing list and the same reverse dependency order, with -1 reserved for absent children.
+Python extends a list while iterating over it to produce the breadth-first order.
+Java uses an explicit index over an `ArrayList` for the same traversal.
+Both references treat `-1` as missing and use the parallel `children` arrays rather than constructing another tree object.

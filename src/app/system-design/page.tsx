@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
 import { designChapters, listDesignBooks } from "@/lib/content";
 
-export const metadata: Metadata = { title: "System Design" };
+export const metadata: Metadata = { title: "Interview Guides" };
 
 export default function SystemDesignPage() {
   const books = listDesignBooks();
@@ -13,10 +13,10 @@ export default function SystemDesignPage() {
       <NavBar />
       <main className="mx-auto max-w-6xl px-4 py-10">
         <header className="mb-10 max-w-2xl">
-          <h1 className="mb-2 text-3xl font-semibold tracking-tight">System Design</h1>
+          <h1 className="mb-2 text-3xl font-semibold tracking-tight">Interview Guides</h1>
           <p className="text-lg text-fg-2">
-            A complete interview framework, distributed-systems references, engineering notes, focused CTCI material, and
-            condensed review collections.
+            System design, object-oriented exercises, AI architecture, testing, and behavioral preparation.
+            Read a worked example, practice the follow-ups, and review your reasoning.
           </p>
         </header>
 

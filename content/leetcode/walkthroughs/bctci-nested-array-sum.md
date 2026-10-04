@@ -1,50 +1,49 @@
 ## Intuition
 
-The sum of a nested array is the sum of its immediate integer entries plus the sums of its immediate nested arrays.
-This definition naturally becomes a recursive function.
-Nesting changes how values are reached, but does not change their contribution to the total.
+The sum of a nested list is the sum of its immediate integers plus the sums of its immediate nested lists.
+This recursive definition means each subtree can be reduced independently, without flattening the structure into a separate collection first.
 
 ## Brute force
 
-Flatten all nested integers into a separate array and sum that array afterward.
-The traversal is still linear, but the flattened copy uses storage proportional to the number of integer values.
-The references accumulate directly instead.
+Flatten all integers into a new array and sum that array afterward.
+This still visits every entry, but allocates storage proportional to the number of integers when only a running total is needed.
 
 ## Approach
 
 Initialize `total` to zero for the current list.
-For every `item`, call `isInteger` to determine which part of the interface is valid.
-If it is an integer, add `getInteger` directly.
-Otherwise recurse on `getList` and add the returned subtotal.
-When the list ends, return its accumulated total to the caller.
-An empty nested list naturally returns zero because its loop has no iterations.
-Every integer belongs to exactly one immediate list, so this decomposition includes each value once without omission or duplication.
+For each `item`, ask `isInteger()` which representation it holds.
+Add `getInteger()` directly for an integer.
+Otherwise call `nestedSum` on `getList()` and add the returned subtotal.
+An empty child list contributes zero because its loop performs no additions.
+By induction on nesting depth, each returned subtotal includes exactly the integer leaves in that list, once each.
 
 ## Walkthrough
 
 Example 1 is `[1, [2, 3], [4, [5]], 6]`.
-The first nested list returns 5 from 2 plus 3.
-The innermost `[5]` returns 5, allowing its parent `[4, [5]]` to return 9.
-The top level combines 1, 5, 9, and 6 for a final sum of 21.
-No depth multiplier is applied to the nested 5.
+The first item contributes one.
+The list `[2, 3]` recursively returns five.
+Inside `[4, [5]]`, the innermost list returns five and its parent returns nine.
+The final integer contributes six.
+The outer total is `1 + 5 + 9 + 6 = 21`.
 
 ## Complexity
 
-Both references take O(t) time for t total nested entries, including container entries as well as integers.
-The recursion stack uses O(d) space for maximum nesting depth d.
-There is no flattened output array or other storage proportional to the number of integers.
+Time is O(m), where m counts all visited nested-list entries, including container entries as well as integers.
+Recursion uses O(d) auxiliary space for maximum nesting depth d.
+No flattened list is created.
 
 ## Edge cases
 
-Empty nested lists contribute zero.
-Negative integers can cancel positive values, and a deeply nested singleton contributes exactly its own value.
+An empty outer list returns zero.
+Empty lists may appear at any depth.
+Negative integers cancel positive values normally, and deeply nested singleton lists preserve the same integer sum.
 
 ## Common mistakes
 
-Call the correct accessor after checking the entry type.
-Do not treat this as a depth-weighted sum problem.
+Do not multiply values by their depth; this problem asks for an ordinary sum.
+Do not call the integer accessor on an item that holds a list.
 
 ## Language notes
 
-The harness provides `NestedInteger` objects in both languages.
-Python integers grow automatically; Java returns `long` because summing many large signed integers can exceed `int` capacity.
+The runner wraps JSON nested arrays in `NestedInteger` helpers for both languages.
+Python integers hold the total directly, while Java returns `long` to accommodate up to 100,000 large-magnitude integers.

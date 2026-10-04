@@ -30,7 +30,7 @@ Joining the two results produces `"Imaa peaksmaaa"`.
 
 ## Complexity
 
-- Time: O(L + w²), for input length L and w words; the positional suffixes contain `1 + 2 + ... + w` a characters.
+- Time: O(L + w²), for input length L and w words; the positional suffixes contain `1 + 2 + .. + w` a characters.
 - Space: O(L + w²), including split words, transformed strings, and the returned sentence.
 
 The quadratic term is part of the required output size, not repeated processing of existing output.
@@ -50,6 +50,6 @@ Single spaces are restored between outputs without adding a trailing space.
 
 ## Language notes
 
-Python uses `enumerate(..., 1)` and a list of transformed strings.
+Python uses `enumerate(.., 1)` and a list of transformed strings.
 Java indexes a split array from zero and uses `index + 1` with `String.repeat`.
 Both allocate substrings for consonant rotation, which is included in the stated cost.

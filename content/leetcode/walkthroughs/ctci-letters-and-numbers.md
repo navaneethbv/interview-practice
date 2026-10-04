@@ -1,48 +1,43 @@
 ## Intuition
 
-Treat a letter as plus one and a number as minus one.
-A subarray has equal quantities exactly when its net sum is zero.
-Two equal prefix balances therefore delimit a balanced subarray, and the earliest occurrence of a balance gives its longest possible span ending at the current index.
-
-## Brute force
-
-Enumerate every subarray and count letters and numbers within it.
-Even carrying counts forward from each start requires O(n squared) work.
-Prefix-balance lookup reduces each new endpoint to one expected constant-time map operation.
+Map every letter to `+1` and every digit to `-1`.
+Two equal prefix balances mean the elements between those prefixes contain equal numbers of letters and digits.
+Keeping the first index for each balance gives the longest interval ending at every position.
 
 ## Approach
 
-Initialize `first_seen` with balance zero at index -1.
-Update `balance` for each array entry.
-Store the current index only if this balance has never occurred before.
-Otherwise calculate the length since its earliest occurrence and update the best interval only for a strictly greater length.
-Return the corresponding slice.
-Keeping the earliest prefix index maximizes length, and strict improvement preserves the earliest answer among ties.
+Initialize `first_seen` with balance zero at index `-1`, representing an empty prefix.
+Scan `array`, increasing balance for a letter and decreasing it for a digit.
+When a balance appears for the first time, store its index.
+When it appears again, calculate the interval from the first occurrence and update the answer only if its length is strictly larger.
 
 ## Walkthrough
 
-Example 1 has balances `1, 0, 1, 2, 1, 0, 1` after its successive entries.
-Balance zero at index 1 gives the first two-element match.
-At index 5, zero matches the initial prefix at -1, producing length six.
-The final balance one yields another six-element span starting later, so the existing best is retained.
-Return `["a", "1", "b", "c", "2", "3"]`.
+For Example 1, the running balances for `a, 1, b, c, 2, 3, d` are one, zero, one, two, one, zero, and one.
+Balance zero first appears before the array and reappears after the sixth element, giving the interval from index zero through five.
+The final balance one also repeats, but its interval is shorter, so the earlier six-element answer remains selected.
+Example 2 never returns to balance zero after the initial prefix, so the result is empty.
 
 ## Complexity
 
-For n entries, expected time is O(n) and the prefix map uses O(n) space.
-The returned slice requires additional space proportional to the chosen subarray's length.
+The scan performs constant work per element, giving `O(n)` time.
+The first-occurrence map uses `O(n)` space in the worst case.
+Slicing the chosen range adds `O(answer length)` output work, which is bounded by `O(n)`.
 
 ## Edge cases
 
-An all-letter or all-number input has no nonempty balanced answer.
-The initial zero balance allows a valid interval starting at index zero.
+An empty array returns an empty slice because the initial balance has no later occurrence.
+An array containing only one type cannot produce a nonempty balanced range.
+Equal-length candidates keep the earliest start because the code updates only when `length > best_length`.
 
 ## Common mistakes
 
-Replacing an earlier stored balance index shortens future candidates.
-Using a greater-than-or-equal update would replace an equally long earlier interval with a later one.
+Overwriting the first index of a balance loses the longest possible interval ending later.
+Using absolute counts independently is more cumbersome and can miss the prefix-equality shortcut.
+Updating on `>=` would replace an earlier equally long answer with a later one.
 
 ## Language notes
 
-Python uses `isalpha()` and Java uses `Character.isLetter` on the constrained entry representation.
-Both retain first occurrences in a hash map and copy the selected range for the result.
+Python uses `item.isalpha()` and returns a slice of the original list.
+Java uses `Character.isLetter` and `Arrays.copyOfRange` to create the returned array.
+Both references use the input name `array` and treat every nonletter permitted by the spec as a digit.

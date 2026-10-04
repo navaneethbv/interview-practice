@@ -1,52 +1,51 @@
 ## Intuition
 
-The best jump choices depend on how many landing years are actually reached.
-For every prefix, retain its k largest gaps as jumps, compute the aging needed to reach its endpoint, and spend any remaining age allowance by living forward.
+Moving between consecutive landing points lets the traveler skip the aging represented by that gap.
+For a fixed landing point, using jumps on the largest gaps leaves the least aging time before that point.
+A min-heap keeps exactly those largest gaps while the scan advances.
 
 ## Brute force
 
-Re-sorting every prefix's gaps would take quadratic sorting work.
-A bounded min heap updates the largest-k selection as one new gap arrives.
+Trying every choice of up to k gaps would enumerate combinations and become infeasible.
+Scanning every possible jump set also repeats the same prefix calculations.
 
 ## Approach
 
-Initialize best to the starting year plus maxAging, covering a journey with no jumps.
-For each new landing point, push its preceding gap into `jumped` and add it to `jumped_total`.
-If the heap exceeds k entries, remove its smallest gap and subtract that saving.
-Minimum age used for this prefix is endpoint minus start minus jumped_total.
-When affordable, its latest reachable year is endpoint plus the remaining age allowance.
-Take the maximum across prefixes.
+Start with points[0] plus all available aging because no jump is needed for that answer.
+For each next landing point, add its gap to a min-heap and to jumped_total.
+When the heap contains more than k gaps, remove its smallest gap.
+The retained sum is therefore the sum of the k largest gaps seen so far.
+Compute aged as the total span from points[0] minus jumped_total.
+If aged fits maxAging, spend the remaining aging budget after that landing point and update best.
 
 ## Walkthrough
 
-```text
-Input: points = [2020, 2024], k = 1, maxAging = 1
-Output: 2025
-```
-
-Example 1 starts at 2020 with one aging year, so the initial best is 2021.
-The four-year gap to 2024 enters the one-slot heap and is entirely skipped by the jump.
-Aging used to reach 2024 is therefore zero.
-The remaining one year can be lived after the last landing point, improving best to 2025.
+In Example 1, the gap from 2020 to 2024 is 4.
+With one jump, the heap retains that gap, so aged is zero at 2024.
+The remaining one aging year reaches 2025, which improves the initial answer of 2021.
+The same calculation also shows why a jump changes the landing time without consuming aging years.
 
 ## Complexity
 
-Each of n - 1 gaps performs heap work on at most k + 1 entries.
-Time is O(n log(k + 2)), and extra space is O(k + 1).
-The code examines all prefixes even after an unaffordable one.
+For n landing points, each gap enters and leaves the heap at most once.
+The scan takes O(n log k) time and the heap uses O(k) space.
+All distance calculations use wide integer values in Java and naturally wide integers in Python.
 
 ## Edge cases
 
-With no jumps, the answer is start plus maxAging.
-Unused aging can extend beyond the final landing year.
-Some journeys may stop between landing points.
+When k is zero, the heap immediately discards every gap and aging is the full elapsed span.
+If maxAging is large, the best result can lie well beyond the final landing point.
+The initial answer covers aging directly from points[0].
+Only landing points reachable within the budget can seed a later extension.
 
 ## Common mistakes
 
-Checking only whether the final landing point is reachable misses the best partial journey.
-Subtract a removed gap from jumped_total when maintaining heap size.
+Keeping the k smallest gaps would maximize aging instead of minimizing it.
+Subtracting jumped_total from the wrong span loses the cost of gaps that were not jumped.
+Forgetting the initial answer misses years reached without using any landing point.
 
 ## Language notes
 
-Python uses heapq for the smallest retained jump.
-Java uses `PriorityQueue<Long>` and long year calculations so the final year safely includes both calendar position and additional aging.
+Python uses heapq, which is a min-heap, and stores integer gaps.
+Java uses PriorityQueue<Long> so subtraction and the returned year remain safe for large values.
+Both implementations update best only after confirming that the landing point is reachable.

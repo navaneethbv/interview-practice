@@ -49,6 +49,14 @@
     {
      "id": "evolving-a-data-system",
      "title": "Evolving a data system"
+    },
+    {
+     "id": "read-a-query-plan-and-choose-an-index",
+     "title": "Read a query plan and choose an index"
+    },
+    {
+     "id": "diagnose-a-transaction-conflict",
+     "title": "Diagnose a transaction conflict"
     }
    ]
   }

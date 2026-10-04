@@ -1,52 +1,47 @@
 ## Intuition
 
-A blue rectangle spanning several columns is limited by the shortest column in its span.
-A monotone stack identifies the widest useful span for each height when a shorter column finally ends it.
+A rectangle spanning consecutive columns has height limited by its shortest column.
+A monotonic stack identifies the widest interval over which each height can serve as that limiting height, without checking every interval explicitly.
 
 ## Brute force
 
-Trying every column interval while tracking its minimum height takes O(n squared) time.
-The stack shares boundary information across intervals.
+For every left endpoint, extend the right endpoint while maintaining the minimum column height.
+This considers O(n squared) intervals and calculates each area in constant additional work.
 
 ## Approach
 
-Scan column indices with nondecreasing heights on the stack.
-When the current height is smaller than the top height, pop that top index as `previous`.
-The current index is its right boundary; the new stack top is the excluded left boundary, or -1 if none exists.
-Compute area as `tiles[previous] * (index - left - 1)` and update best.
-Append a virtual zero-height column after the real array to flush remaining positive heights.
-Equal heights may stay stacked, with an earlier equal entry eventually receiving the full width.
+Store column indices in a stack with nondecreasing heights.
+When a shorter `height` arrives, pop each taller `previous` column.
+The current index is its exclusive right boundary, and the new stack top `left` is its left blocking boundary, or -1 if absent.
+Evaluate `tiles[previous] * (index - left - 1)` and update `best`.
+A final synthetic zero height flushes positive heights remaining in the stack.
+Equal heights remain until a later smaller value exposes their different possible widths.
 
 ## Walkthrough
 
-```text
-Input: [[2, 2, 0]]
-Output: 4
-```
-
-Example 1 pushes both height-2 columns.
-At index 2, the zero height pops index 1, producing width 1 and area 2.
-It then pops index 0, leaving no left boundary and producing width 2 and area 4.
-The zero column contributes no larger rectangle.
-The maximum blue area is 4.
+Example 1 is `[2, 2, 0]`.
+Indices zero and one are both pushed because their heights are equal.
+At index two, height zero pops index one, giving height two and width one for area two.
+Popping index zero next leaves no left boundary, giving width two and area four.
+No later rectangle improves `best`, so the answer is 4.
 
 ## Complexity
 
-Each index is pushed once and popped at most once, giving O(n) time.
-The stack uses O(n) extra space in the worst case.
+Time is O(n), as each real index is pushed and popped at most once.
+The stack needs O(n) auxiliary space in a nondecreasing histogram.
 
 ## Edge cases
 
-All-zero heights return zero.
-A single column contributes its own height.
-Increasing heights need the final virtual zero to complete their spans.
+All-zero columns yield zero area.
+A single positive column uses width one.
+Long plateaus must eventually be considered across their full width.
 
 ## Common mistakes
 
-The width excludes both boundary positions, hence the subtraction of one.
-Do not omit equal-height handling or prematurely discard their possible wider spans.
+The width excludes both blocking boundaries, hence the subtraction of one.
+Do not multiply before widening Java arithmetic or forget to flush the stack after the final real column.
 
 ## Language notes
 
-Python integer multiplication safely handles the area.
-Java casts height to long before multiplying by width, as areas may exceed int capacity under the stated million-column limit.
+Python's integers support large areas.
+Java casts the height to `long` before multiplication and returns a long-valued best area, as required by the spec.

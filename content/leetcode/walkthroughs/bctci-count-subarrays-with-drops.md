@@ -1,51 +1,47 @@
 ## Intuition
 
-A drop belongs to an adjacent pair inside the subarray, rather than to a single array value.
-Once a helper counts intervals with at most a given number of drops, subtraction supplies exact and at-least counts.
+A drop belongs to the boundary between two adjacent elements, not to either element alone.
+Counting subarrays with a bounded number of these boundaries supports a sliding window.
+Two such counts provide all three requested answers.
 
 ## Brute force
 
-Checking every interval and recounting its adjacent decreases can take cubic time.
-A sliding count updates only the new right edge and the departing left edge.
+Extend every possible subarray and count each newly crossed descending boundary.
+This gives O(n²) time even when counts are maintained incrementally.
 
 ## Approach
 
-`_at_most` increments drops when a new right endpoint creates `arr[right - 1] > arr[right]`.
-While the limit is exceeded, remove the edge between left and left + 1 if it is a drop, then advance left.
-Add the number of remaining suffixes, `right - left + 1`.
-Compute `at_most` for k and `below` for k - 1.
-Return `[at_most, at_most - below, total - below]`, where total counts all nonempty subarrays.
+The `_at_most` helper adds one drop when `arr[right - 1] > arr[right]`.
+While there are too many drops, remove the boundary from `left` to `left + 1`, if descending, before advancing `left`.
+Every suffix of the resulting window has at most the same number of drops, so add its length to `count`.
+Compute `at_most = helper(k)` and `below = helper(k - 1)`.
+Exactly k drops contribute `at_most - below`; at least k contribute the total number of subarrays minus `below`.
+A negative limit has no valid windows.
 
 ## Walkthrough
 
-```text
-Input: arr = [3, 2, 1], k = 1
-Output: [5, 2, 3]
-```
-
-In Example 1, each adjacent pair is a drop.
-The three singletons and two length-two intervals have at most one drop, giving 5.
-Only the singletons have zero drops, giving 3.
-Exactly one drop therefore gives 5 - 3 = 2, and at least one gives 6 - 3 = 3.
-The result is `[5, 2, 3]`.
+Example 1 uses `[3, 2, 1]` with `k = 1`.
+The helper for one drop contributes 1, then 2, then 2 subarrays at the three endpoints, totaling 5.
+For zero drops, only the three singletons qualify, so `below = 3`.
+There are six subarrays overall.
+Return `[5, 5 - 3, 6 - 3]`, which is `[5, 2, 3]`.
 
 ## Complexity
 
-Two linear helper passes give O(n) time.
-Only pointers and counters are retained, so extra space is O(1).
+Each helper performs O(n) total pointer movement.
+Two calls still take O(n) time and O(1) auxiliary space.
 
 ## Edge cases
 
-Every singleton has zero drops.
 Equal adjacent values are not drops.
-A negative helper limit returns zero, which handles k equal to zero correctly.
+For `k = 0`, the at-least count is every subarray, and the exact count equals the at-most count.
 
 ## Common mistakes
 
-When advancing left, remove the departing adjacency, not a property of the departing value alone.
-Use strict greater-than for a drop.
+When moving `left`, remove its outgoing boundary before incrementing the index.
+A singleton has zero internal boundaries, regardless of adjacent values outside it.
 
 ## Language notes
 
-Python integer counts have arbitrary precision.
-Java uses long totals and a long result array because interval counts can exceed a signed int.
+Python uses arbitrary-precision counts.
+Java returns `long[]` and uses a long multiplication for the total number of subarrays.

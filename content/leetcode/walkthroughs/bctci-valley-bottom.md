@@ -1,53 +1,48 @@
 ## Intuition
 
-The slope between adjacent middle values tells which side contains the minimum.
-A rising slope means the valley has already been reached by the middle index, while a falling slope means it lies farther right.
+A valley decreases until its minimum and increases afterward.
+At a midpoint, comparing arr[mid] with arr[mid + 1] tells which side contains the bottom.
+An increasing step means the bottom is at or left of mid, while a decreasing step means it is to the right.
 
 ## Brute force
 
-A linear minimum scan ignores the required logarithmic-time target.
-Sorting is even more expensive and discards the valley structure already provided by the input.
+Scanning the array and taking its minimum is correct but takes O(n) time.
+The required logarithmic result comes from discarding half of the remaining candidates at each comparison.
 
 ## Approach
 
-Maintain an inclusive interval `[low, high]` containing the minimum.
-While low is smaller than high, compare arr[mid] with arr[mid + 1].
-If arr[mid] is smaller, keep mid as a possible minimum and set high to mid.
-Otherwise the slope is still descending, so set low to mid + 1.
-The distinct-value guarantee eliminates flat slopes and their ambiguous direction.
-When the bounds meet, return the value at that index.
+Keep low and high as an inclusive candidate interval.
+Choose mid between them.
+If arr[mid] is less than arr[mid + 1], set high to mid because the increasing suffix has started at or before that point.
+Otherwise set low to mid plus one because the sequence is still descending through mid.
+When the pointers meet, arr[low] is the valley bottom.
 
 ## Walkthrough
 
-```text
-Input: arr = [6, 5, 4, 7, 9]
-Output: 4
-```
-
-Example 1 starts with indices zero through four and middle index two.
-The comparison 4 < 7 is rising, so high becomes two.
-The next middle index is one; 5 > 4 is descending, so low becomes two.
-Both bounds now identify value 4, the valley bottom.
-Only two neighboring comparisons were needed.
+In Example 1, the first midpoint is index 2 with value 4, and 4 is less than 7, so high becomes 2.
+The next midpoint is index 1 with value 5, and 5 is not less than 4, so low becomes 2.
+Both pointers now identify value 4.
 
 ## Complexity
 
-Each step removes roughly half the remaining positions, giving O(log n) time.
-The search stores only indices, so extra space is O(1).
-No input values are modified.
+The candidate interval is halved on every iteration, so the scan takes O(log n) time.
+The algorithm uses O(1) extra space.
 
 ## Edge cases
 
-A two-element array converges after one comparison.
-The local second example permits a decreasing array, which the reference correctly resolves to its last value.
-An endpoint minimum is handled without an out-of-range access.
+An entirely increasing array returns its first value.
+An entirely decreasing array returns its last value.
+The two-element cases compare exactly one adjacent pair.
+Distinct values guarantee that equality never creates an ambiguous branch.
 
 ## Common mistakes
 
-On an increasing slope, use high = mid rather than mid - 1, because mid may itself be the minimum.
-The low < high loop ensures mid + 1 is valid.
+Moving high to mid minus one can discard the bottom when mid itself is the minimum.
+Moving low to mid on the descending branch can leave the interval unchanged.
+Checking only whether arr[mid] is smaller than its left neighbor changes the boundary logic and can mishandle endpoints.
 
 ## Language notes
 
-Python uses floor division for the midpoint.
-Java uses an unsigned right shift on the nonnegative index sum; both select the lower middle index.
+Python uses integer floor division for the midpoint.
+Java uses an unsigned shift to calculate the midpoint without overflow from adding the bounds.
+Both return the value at the converged index rather than the index itself.

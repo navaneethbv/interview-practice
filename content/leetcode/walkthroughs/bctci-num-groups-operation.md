@@ -1,44 +1,49 @@
 ## Intuition
 
-Merging two different groups reduces the number of groups by exactly one.
-Merging elements already connected changes nothing.
-A union-find structure can maintain that count alongside component size and the smallest value in each component.
+Union-find stores each element in a tree whose root identifies its group.
+The public representative is the smallest value in that group, so the root itself does not need to be the smallest value.
+Keeping a separate minimum at every root lets union by size remain efficient while preserving the deterministic result.
+
+## Brute force
+
+Scanning every member of a group for each `find` or `union` can make a long sequence of operations quadratic.
+The parent forest avoids repeated scans by sharing group structure between operations.
 
 ## Approach
 
-`add` creates a singleton parent entry, size one, and minimum equal to the new element, then increments `groups`.
-A private root lookup follows parent pointers while shortening paths by pointing nodes toward their grandparents.
-`union` locates both roots and returns immediately if they match.
-Otherwise attach the smaller component to the larger, combine their sizes and minima, and decrement `groups` once.
-The public `find` returns the stored minimum at the root, not necessarily the root's own value.
-`size` counts all introduced elements; `num_groups` returns the maintained component counter.
-Separating structural roots from public representatives permits efficient balancing while honoring the deterministic minimum convention.
+1. `add` creates a self-parented node with size one and its own minimum.
+2. `_root` follows parent links and shortens the path by pointing each visited node to its grandparent.
+3. `union` attaches the smaller root below the larger root, combines sizes, and updates the minimum.
+4. Decrease the group count only when two distinct roots are joined.
+5. `find` returns the stored minimum for the located root.
 
 ## Walkthrough
 
-Example 1 begins with size and group count zero.
-Adding 4 creates one group represented publicly by 4.
-Adding 2 creates a second group represented by 2.
-Unioning 4 and 2 combines them, so `find(2)` returns 2 and the group count becomes one.
-Repeating that union discovers matching roots and leaves the group count at one, while the total element count remains two.
+Example 1 starts empty, so `size` and `num_groups` both return zero.
+After adding 4, the only group has size one and `find(4)` returns 4.
+Adding 2 creates a second singleton group, then `union(4, 2)` attaches one root and stores minimum 2.
+The next `find(2)` therefore returns 2, `num_groups` is one, and a repeated union changes nothing.
 
 ## Complexity
 
-With expected constant-time map access, find and union take O(alpha(n)) amortized time after path compression and union by size.
-Add, size, and group-count queries are expected O(1).
-All dictionaries or maps together require O(n) storage for n introduced elements.
+- Time: Each operation is amortized O(alpha(n)), where alpha is the inverse Ackermann function.
+- Space: O(n) for parent, size, minimum, and group metadata.
 
 ## Edge cases
 
-Negative element values work normally because elements are map keys, not array indices.
-The contract guarantees each element is added once before any lookup or union uses it.
+An empty instance reports zero elements and zero groups.
+Negative element values work because the minimum comparison is numeric.
+Unioning two elements already in one group must not decrement `groups`.
 
 ## Common mistakes
 
-Never decrement the group counter for a redundant union.
-Returning the balancing root directly can violate the smallest-element representative convention.
+- Returning the root value instead of the stored group minimum breaks deterministic representatives.
+- Attaching by value instead of size can create tall trees.
+- Forgetting path compression preserves correctness but loses the intended performance.
+- Counting `union` calls instead of successful merges gives the wrong group count.
 
 ## Language notes
 
-Python uses integer-keyed dictionaries and Java uses `HashMap<Integer, Integer>`.
-Java's public group-count method is `numGroups`, while Python exposes `num_groups` through the operation-name mapping.
+Python uses dictionaries because elements are arbitrary signed integers.
+Java uses `HashMap<Integer, Integer>` for the same reason and exposes `numGroups` in camelCase.
+Both references use halving compression and retain the minimum only at current roots.

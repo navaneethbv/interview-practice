@@ -1,54 +1,49 @@
 ## Intuition
 
-An operator's value depends only on its children's evaluated values.
-A postorder traversal therefore evaluates nested expressions naturally, returning one numeric result from each subtree.
+Every operator node depends only on its children's completed values.
+A postorder evaluation therefore reduces each subtree to one number before its parent combines the results, directly mirroring the nested arithmetic expression.
 
 ## Brute force
 
-Repeatedly rescanning the tree for operators whose children are ready would revisit nodes unnecessarily.
-Recursive evaluation follows dependencies directly and computes every subtree once.
+Repeatedly search for operators whose children are already numbers and rebuild the expression after each reduction.
+That introduces repeated tree scans and mutation, whereas recursion naturally schedules each operator exactly once.
 
 ## Approach
 
 Use `root.val` as an index into `kinds` and `nums`.
-For kind num, return the corresponding numeric literal.
-Otherwise recursively evaluate the children and combine their values using sum, product, maximum, or minimum.
-The statement guarantees every operator has at least one child.
-Sum begins from zero and product from one; extrema must use actual child values rather than an arbitrary zero baseline.
-By induction, each child result equals its expression value, so applying the parent operator produces the correct subtree result.
+A `num` node returns its stored number immediately.
+Otherwise evaluate every child recursively and combine their values according to sum, product, maximum, or minimum.
+Python first collects child results in `values`.
+Java combines children as they return, using the first result to initialize minimum and maximum correctly.
+Multiplication starts from one, while addition starts from zero.
 
 ## Walkthrough
 
-```text
-Input: root = [0, null, 1, 2, null, 3, 4, 5, null, 6, null, null, null, 7, 8, null, 9, 10], kinds = ["min", "max", "sum", "num", "num", "sum", "product", "num", "num", "num", "num"], nums = [0, 0, 0, 4, 6, 0, 0, 5, 7, 6, 8]
-Output: 12
-Explanation: min(max(4, 6, 5 + 7), 6 * 8) = 12.
-```
-
-Example 1 first evaluates the nested sum 5 + 7 to 12.
-The surrounding maximum compares 4, 6, and 12, returning 12.
-The other root branch computes the product 6 times 8 = 48.
-The root minimum compares 12 and 48 and returns 12.
-The arrays' zero entries for operator nodes are placeholders, not literal operands.
+Example 1 represents `min(max(4, 6, 5 + 7), 6 * 8)`.
+The inner sum evaluates to 12 and the product evaluates to 48.
+The maximum of 4, 6, and 12 is 12.
+Finally the root minimum compares 12 and 48 and returns 12.
+The integer labels in the tree identify these operations; they are not themselves operand values.
 
 ## Complexity
 
-Both references visit each node once, giving O(n) arithmetic work.
-Java combines children incrementally and uses O(h) stack space.
-Python materializes child-result lists, which can require O(n) space overall in addition to recursion.
+Both versions take O(n) time for n nodes.
+Java uses O(h) recursion space for height h.
+Python additionally stores child-result lists; together these can use O(n) auxiliary space in the worst case, such as a root with many children.
 
 ## Edge cases
 
-A numeric root returns its value directly.
-Negative child values matter for min and max initialization.
-A one-child operator returns that child's value.
+A number-only root returns that number, including negative values.
+Every operator has at least one child, so minimum and maximum are always defined.
+Intermediate results satisfy the statement's numeric bounds.
 
 ## Common mistakes
 
-Do not interpret node.val itself as the numeric literal.
-Initializing a product to zero destroys every product result.
+Initializing maximum to zero breaks all-negative children.
+Initializing product to zero makes every product zero.
+Do not interpret node labels as literal numbers.
 
 ## Language notes
 
-Python uses built-in sum, min, and max on evaluated lists.
-Java treats the first child specially for extrema and dispatches subsequent combinations through a helper.
+Python uses the harness's N-ary node children list.
+Java receives the equivalent `Node` helper and separates arithmetic dispatch into the small `combine` method.

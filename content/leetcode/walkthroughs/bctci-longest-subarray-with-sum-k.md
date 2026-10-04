@@ -1,53 +1,47 @@
 ## Intuition
 
-A subarray sum is the difference between two prefix sums.
-For a current prefix p, an earlier prefix p - k identifies a matching interval; its earliest occurrence gives the longest such interval ending here.
+The sum between two positions is the difference of their prefix sums.
+For a current prefix total, finding an earlier prefix equal to `prefix - k` identifies a subarray summing to k.
+The earliest such prefix gives the longest possible interval ending here.
 
 ## Brute force
 
-Enumerating all starts and ends with incremental sums takes O(n squared) time.
-A standard shrinking window is unreliable because negative values can make its sum move in either direction.
+Try every start and extend every end with a running sum.
+This takes O(n squared) time.
+A standard positive-number sliding window is unsuitable because negative values can increase or decrease sums unpredictably.
 
 ## Approach
 
-Initialize `first` with prefix zero at index -1, representing the empty prefix before the array.
-Accumulate prefix while scanning.
-If prefix - k has appeared, update best with the distance from its stored earliest index.
-Then insert the current prefix only if absent.
-Preserving the first index maximizes every later interval using that prefix.
-Checking before insertion ensures that only nonempty intervals are considered, including when k is zero.
+Initialize `first = {0: -1}` to represent the empty prefix before the array.
+Accumulate `prefix` as each value arrives.
+Before storing the current prefix, look up `prefix - k`; if present, update `best` with the index difference.
+Use `setdefault` to store only the first occurrence of a prefix sum.
+Keeping earliest indices maximizes future lengths, and querying before insertion avoids inventing a zero-length subarray.
 
 ## Walkthrough
 
-```text
-Input: arr = [1, 2, 3, 2, 1], k = 3
-Output: 2
-```
-
-Example 1 produces cumulative sums 1, 3, 6, 8, and 9.
-At index 1, prefix 3 finds prefix zero at -1, giving interval length 2 for `[1, 2]`.
-At index 2, prefix 6 finds earlier prefix 3 and gives only length 1.
-At index 4, prefix 9 finds prefix 6 at index 2, producing another length-2 interval `[2, 1]`.
-The maximum remains 2.
+Example 1 uses `[1, 2, 3, 2, 1]` and k three.
+The first two values produce prefix three, matched with the initial zero at -1, yielding length two.
+The next value alone also sums to three, but gives only length one.
+At the last index, prefix nine matches earlier prefix six at index two, again giving length two.
+The answer is 2.
 
 ## Complexity
 
-With expected constant-time hash operations, time is O(n).
-The earliest-prefix map stores at most n + 1 entries, using O(n) space.
+Expected time is O(n) and auxiliary space is O(n) for distinct prefix totals.
+Hash-table lookup avoids scanning earlier positions on every iteration.
 
 ## Edge cases
 
-An empty input returns -1.
-A whole-array match uses the initial index -1 entry.
-Zero-sum repeated prefixes can create long matches.
-Negative values and negative k are supported.
+Empty input returns -1.
+A valid zero-sum subarray must contain at least one value.
+Repeated prefix sums are especially useful when zeros or cancelling positive and negative values occur.
 
 ## Common mistakes
 
-Overwriting an earliest prefix index can shorten the reported answer.
-Return -1 when no nonempty matching interval exists, not zero.
+Do not overwrite earliest positions or initialize best to zero when the required no-solution result is -1.
 
 ## Language notes
 
-Python uses setdefault to preserve first occurrences.
-Java uses long prefix keys and putIfAbsent, preventing cumulative arithmetic from overflowing int in broader input ranges.
+Python integer sums need no explicit widening.
+Java uses `long` prefix values and `Map<Long, Integer>`, while stored positions and returned lengths remain integers.

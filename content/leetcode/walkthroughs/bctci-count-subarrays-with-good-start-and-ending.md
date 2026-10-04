@@ -1,53 +1,48 @@
 ## Intuition
 
-Only the two endpoints matter; bad days inside the interval are allowed.
-After identifying good-day positions, choosing an ordered pair of those positions with start no later than end uniquely determines a qualifying subarray.
+Only the two endpoints determine whether a subarray qualifies.
+Interior days may be good or bad, so their values impose no additional condition.
+Once the good positions are known, each pair of them determines exactly one valid interval.
 
 ## Brute force
 
-Enumerating every start and end and testing their sales values costs O(n squared) time.
-The actual distances between good positions do not affect how many endpoint pairs exist.
+One could examine all start and end positions and test whether both sales values are at least 10.
+That requires O(n squared) endpoint checks even though every check depends on the same simple classification.
 
 ## Approach
 
-Count the number `good` of values at least 10.
-There are `good * (good - 1) / 2` pairs of distinct good positions.
-Each pair defines exactly one interval, with the earlier position as its start.
-There are also `good` one-day intervals whose start and end coincide.
-Adding these terms gives `good * (good + 1) / 2`, the formula used by the reference.
-No list of good indices or scan of the intervals between them is necessary.
+Count the number of good days in `good`.
+Choosing two distinct good positions gives `good * (good - 1) / 2` intervals, with their chronological order determining start and end.
+Each individual good day also gives a valid singleton interval.
+Adding those singletons simplifies the formula to `good * (good + 1) / 2`.
+No window, prefix sum, or storage of the actual good indices is necessary.
 
 ## Walkthrough
 
-```text
-Input: sales = [0, 20, 5, 15, 10]
-Output: 6
-```
-
-Example 1 has good days at zero-based indices 1, 3, and 4, with sales 20, 15, and 10.
-The three singletons qualify.
-The distinct endpoint pairs `(1, 3)`, `(1, 4)`, and `(3, 4)` supply three additional intervals.
-The intervening bad day at index 2 is permitted.
-With good equal to 3, the formula gives 3 times 4 divided by 2 = 6.
+In Example 1, `[0, 20, 5, 15, 10]` has good positions 1, 3, and 4.
+The three singleton intervals qualify.
+The endpoint pairs `(1, 3)`, `(1, 4)`, and `(3, 4)` give three more.
+The bad value 5 between some of these endpoints does not matter.
+Thus `good = 3` and the formula returns 6.
 
 ## Complexity
 
-Counting good days takes O(n) time.
-The formula takes constant time and uses O(1) extra space.
-The input remains unchanged.
+Scanning n sales values takes O(n) time.
+Only the counter and arithmetic result are stored, giving O(1) auxiliary space.
+The count itself can be quadratic in n despite the linear scan.
 
 ## Edge cases
 
-No good days means zero qualifying intervals.
-One good day contributes its singleton.
-If all days are good, all n(n + 1)/2 intervals qualify.
+An empty array or an array containing no good days returns zero.
+One good day gives one valid subarray, regardless of surrounding bad days.
+If all n days are good, every nonempty interval qualifies.
 
 ## Common mistakes
 
-Do not require every interior day to be good.
-Do not exclude singleton intervals by choosing only distinct endpoints.
+Do not require the interior to be good.
+Do not omit single-day intervals or count the same two endpoints in both orders.
 
 ## Language notes
 
-Python performs exact integer division with `//`.
-Java stores good as long before multiplication, ensuring that a large quadratic count does not overflow int arithmetic.
+Python uses integer division after multiplying.
+Java declares `good` as `long`, ensuring the multiplication is performed in wide arithmetic before division.

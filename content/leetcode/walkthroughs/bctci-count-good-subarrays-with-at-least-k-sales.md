@@ -1,52 +1,47 @@
 ## Intuition
 
-Bad days divide the array into independent good-day runs.
-Within a run, sales are positive, so for each ending day the valid starts form a prefix of that run's starting positions.
+Bad days divide the array into independent runs of good days.
+Inside a good run, every value is positive, so removing the leftmost day strictly decreases the sales sum.
+For each ending position, identify the latest start that still reaches `k`.
 
 ## Brute force
 
-Enumerating all intervals and checking both their minimum sale value and total takes quadratic or cubic time.
-A sliding sum can identify the latest qualifying start while retaining the number of earlier starts.
+Enumerate every subarray, checking that every day is good and summing its sales.
+Even with incremental sums, this takes O(n²) time.
 
 ## Approach
 
-On a bad day, reset `run_start`, `left`, and `window` past that day.
-Otherwise add sales to window and move left while removing its sale value would still leave at least k.
-If the remaining window reaches k, add `left - run_start + 1` to total.
-These are exactly the starts from the beginning of the current good run through the latest feasible start.
-Earlier starts only increase the sum, while later starts cannot reach k.
+Track the good run's first index `run_start`, a movable `left`, the current sum `window`, and the accumulated answer `total`.
+A value below 10 resets both starting indices to `right + 1` and clears `window`.
+For a good day, add its sales and remove leftmost days while the remaining sum would still be at least `k`.
+If the resulting window reaches `k`, every start from `run_start` through `left` also qualifies, contributing `left - run_start + 1`.
+Later starts fail by the stopping condition, so this counts precisely the valid subarrays ending here.
 
 ## Walkthrough
 
-```text
-Input: sales = [15, 20, 5, 30, 25], k = 50
-Output: 1
-```
-
-Example 1 first builds the good run `[15, 20]`, whose total 35 is below 50.
-The bad day 5 resets the state.
-The next good run `[30, 25]` reaches total 55.
-Removing 30 would leave only 25, so left stays at the 30-sale day.
-Exactly one start qualifies, yielding answer 1.
+Example 1 has `[15, 20, 5, 30, 25]` and `k = 50`.
+The first good run reaches only 35, contributing nothing.
+The value 5 resets the run at index 3.
+The next sum is 30, then 55 after adding 25.
+Removing 30 would leave 25, so `left` stays 3.
+Exactly one start qualifies for the final endpoint, giving answer 1.
 
 ## Complexity
 
-Both boundaries advance at most n times, so time is O(n).
-Counters and indices use O(1) extra space.
-The result can be quadratic in n even though computation is linear.
+Each index enters and leaves the window at most once.
+Time is O(n), and auxiliary space is O(1).
 
 ## Edge cases
 
-A single good day can qualify if its sales reach k.
-Bad days never belong to a counted interval.
-A run whose total is too small contributes nothing.
+An empty array or a run whose total is too small contributes zero.
+A single good day can itself meet the threshold.
 
 ## Common mistakes
 
-Do not add the window length; valid starts are before or at left, not after it.
-Reset the sum when encountering a bad day.
+Do not let a window cross a bad day.
+Count all earlier starts in the current good run rather than only the shortest qualifying window.
 
 ## Language notes
 
-Python integers hold large counts automatically.
-Java uses long values for both cumulative sales and the number of subarrays.
+Python's integer result is unbounded.
+Java uses `long` for both the running sum and count, since the number of subarrays can exceed `int`.

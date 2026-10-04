@@ -1,53 +1,48 @@
 ## Intuition
 
-As time increases, edges are only added, so components can merge but never split.
-A disjoint-set structure can preserve connectivity between queries instead of rebuilding the graph repeatedly.
+As time advances, edges only appear and connected components can only merge.
+Since query times are nondecreasing, one persistent disjoint set structure can represent all edges available at the current query.
 
 ## Brute force
 
-Running a complete graph traversal for every timestamp would repeat nearly all earlier work.
-Sorting edges once lets each edge be incorporated only when it first becomes available.
+Rebuilding the graph and running a component traversal for every query repeats earlier work.
+Sorting edges once lets the solution process each edge only when it first becomes relevant, regardless of how many later queries follow.
 
 ## Approach
 
-Initialize `DisjointSets` with V singleton groups.
-Sort edges by timestamp and keep a `position` pointer into that order.
-For each already-sorted query time, join every edge with timestamp at most the query, then append `sets.groups`.
-`join` finds both roots and decrements groups only when they differ.
-Union by size and path compression keep future root lookups efficient.
-After processing a query, the structure contains exactly the edges available at that time.
+Initialize `DisjointSets(V)` with `groups = V`.
+Sort edges by timestamp and advance `position` while timestamps are at most the query `time`.
+Call `join` for each edge, decrementing `groups` only when distinct roots merge.
+Append the current group count to `answer`.
 
 ## Walkthrough
 
-```text
-Input: [3, [[0, 1, 2], [1, 2, 4]], [1, 2, 4]]
-Output: [3, 2, 1]
-```
-
 Example 1 starts with three isolated vertices.
-At time 1, neither edge is available, so record 3.
-At time 2, joining 0 and 1 reduces the component count to 2.
-At time 4, joining 1 and 2 connects the remaining vertex, reducing it to 1.
-The returned sequence is `[3, 2, 1]`.
+At time 1 no edges qualify, so record 3.
+At time 2, edge 0 to 1 merges two groups and yields 2.
+At time 4, edge 1 to 2 connects the remaining vertex and yields 1.
 
 ## Complexity
 
-For E edges and Q queries, time is O(E log E + E alpha(V) + V + Q).
-Here alpha is the inverse Ackermann function from disjoint-set operations.
-Stored edge order, component arrays, and output use O(E + V + Q) space.
+For E edges and Q queries, time is O(V + E log E + E alpha(V) + Q), where alpha is the inverse Ackermann function.
+Disjoint set arrays use O(V) space.
+Python's sorted edge copy uses O(E), and the answer uses O(Q).
 
 ## Edge cases
 
-Repeated query times return the same count.
-Cycle-closing edges do not reduce groups.
-A single vertex always has one component.
+Repeated query times reuse the same graph state.
+An edge with timestamp exactly equal to a query must already be included.
+Edges closing a cycle do not change the component count.
+With one vertex and no edges, every answer is one.
 
 ## Common mistakes
 
-Use `<=` for equal timestamps.
-Do not decrement groups for an edge whose endpoints already share a root.
+Do not decrement `groups` for every edge unconditionally.
+Do not restart `position` between queries.
+The input guarantee about sorted query times is essential because this structure cannot undo edges for a query that moves backward in time.
 
 ## Language notes
 
-Python sorts into a new list.
-Java sorts the supplied edge array in place, a mutation difference that does not change returned answers.
+Both helpers use union by size and path halving in `find`.
+Python sorts into `ordered`; Java sorts the provided edge array in place.
+Java's sorting storage is implementation dependent, while its disjoint set arrays have explicit linear size.

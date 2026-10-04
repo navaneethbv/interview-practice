@@ -1,49 +1,50 @@
 ## Intuition
 
-The root must be inserted first to create the supplied BST.
-After that, left-subtree insertions and right-subtree insertions may interleave freely, provided each subtree's own insertion order remains valid.
-This turns the problem into recursively generating subtree sequences and weaving them together.
+The root of a binary search tree must be inserted first.
+After that, the left and right subtree insertion sequences can be interleaved in any way that preserves the internal order of each subtree.
+This is exactly a recursive sequence-weaving problem.
 
 ## Brute force
 
-Try all n factorial permutations, build a BST from each, and retain those matching the target.
-Most permutations fail, and constructing each candidate tree repeats work that the target's structure already explains.
+Generating every permutation of all node values and rebuilding a tree for each one costs factorial time.
+It also ignores the ordering constraints already encoded by each subtree.
 
 ## Approach
 
-`allSequences` obtains every valid left and right sequence recursively.
-For each pair, begin `prefix` with `root.val` and call `_weave`.
-At each weaving step, choose either the next unused left value or the next unused right value.
-Never rearrange values within either input sequence.
-When one sequence is exhausted, append the remainder of the other and store a fresh result.
-Backtracking restores the prefix before the next choice.
+For an empty root, return one sequence containing no values.
+Recursively collect every valid sequence for the left and right children.
+For each pair of child sequences, start a prefix with root.val.
+Weave the two sequences by choosing the next value from either side while preserving each side's original order.
+When one side is exhausted, append the untouched suffixes and record the completed sequence.
 
 ## Walkthrough
 
-Example 1 is the tree `[2, 1, 3]`.
-The left subtree contributes `[1]` and the right contributes `[3]`.
-The fixed prefix is `[2]`.
-Choosing the left value first produces `[2, 1, 3]`.
-Choosing the right value first produces `[2, 3, 1]`.
-Both create the same BST because 1 goes left of 2 and 3 goes right regardless of which arrives first.
+In Example 1, root 2 is fixed first.
+The left sequence is [1] and the right sequence is [3].
+Choosing 1 before 3 produces [2, 1, 3], while choosing 3 before 1 produces [2, 3, 1].
+Both preserve the child sequence order and therefore can recreate the same tree.
 
 ## Complexity
 
-The output can be factorial in size.
-For S complete sequences of length n, writing the output alone costs O(Sn) time and space; recursive intermediate sequences also require storage.
-A conservative bound for these small inputs is O(n times n factorial) time and space.
+The work is output-sensitive because every valid sequence must be materialized.
+If R sequences are returned for a tree of n nodes, the output itself costs O(Rn) space and the weaving work is O(Rn) apart from recursive subproblems.
+The recursion and active prefix use O(n) additional space.
 
 ## Edge cases
 
-An empty subtree returns `[[]]`, supplying one empty sequence for weaving.
-A chain-shaped tree has only one valid insertion order.
+An empty tree returns one empty sequence rather than no sequences.
+A one-node tree returns one sequence containing the root.
+A tree with only one child has no meaningful interleaving choice.
+The unordered result comparison allows any order among the returned sequences.
 
 ## Common mistakes
 
-Returning no sequences for an empty subtree would eliminate valid combinations.
-Storing the mutable prefix itself would cause later backtracking to corrupt earlier results.
+Omitting the root from the prefix creates sequences that cannot build the tree.
+Sorting or freely permuting child sequences changes the insertion order constraints.
+Appending a shared mutable prefix as a result would let later recursion corrupt earlier answers.
 
 ## Language notes
 
-Python concatenation creates result copies.
-Java explicitly copies the prefix and appends remaining sublists before saving the sequence.
+Python reuses prefix during backtracking and copies it only when a branch is complete.
+Java creates a fresh ArrayList at each completed weave and appends the remaining suffixes.
+Both references return the empty sequence for a null root as required by the spec.

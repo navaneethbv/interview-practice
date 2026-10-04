@@ -1,52 +1,62 @@
 ## Intuition
 
-The next legal neighbors depend on whether the upcoming move must add or remove a letter.
-Search states therefore include both the current word and the next operation, rather than only the word.
+Word Ladder Game Variation is organized around BFS over (Word, Next Move).
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Enumerating whole chains by backtracking can revisit many equivalent continuations.
-A state graph shares those continuations while preserving the alternating-move restriction.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Put both `(word1, add)` and `(word1, remove)` in the BFS queue because either first move is allowed.
-Generate candidates by inserting each alphabet letter at every position or deleting each position, then keep only dictionary words.
-Every transition flips the required next operation.
-Mark states on enqueue and return true on reaching word2.
-For either chosen first operation, lengths alternate between two adjacent sizes, so a given word has one next-operation state on that branch.
-Removing any repeated-state cycle therefore yields a chain without repeated words.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the BFS over (Word, Next Move) idea: Track each word together with whether the next move must add or remove a letter, and search that state graph.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named canReach can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: word1 = "leap", word2 = "hop", words = ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]
-Output: true
-Explanation: leap, lap, slap, sap, soap, sop, shop, hop.
-```
-
-Example 1 follows leap to lap by deletion, then slap by insertion.
-Deleting gives sap, inserting gives soap, deleting gives sop, inserting gives shop, and deleting gives hop.
-Every intermediate word is listed, character order is preserved, and operations alternate throughout.
-The target is therefore reachable without repeating a word.
+Example 1 uses input ["leap", "hop", ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]] and expects true.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is true.
+The same reasoning handles hidden cases ["car", "cart", ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]], ["hung", "hug", ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]], ["car", "race", ["car", "race"]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For W words of maximum length L and fixed alphabet size 26, at most two states per word are visited.
-Constructing and hashing all insertion/deletion candidates gives O(26WL squared) expected time.
-Stored dictionary and states require O(WL) character storage, with additional temporary candidate lists per expanded state.
+The imported workbook records the expected time bound as O(W * L^2).
+The imported workbook records the expected space bound as O(W * L).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Repeated letters can generate the same candidate through different edit positions; seen states prevent duplicate search work.
-A direct single edit is valid with the appropriate initial state.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases ["car", "cart", ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]], ["hung", "hug", ["fare", "hug", "car", "vibes", "once", "sop", "far", "ounce", "slap", "sap", "cart", "hung", "art", "shop", "fart", "lap", "soap", "are", "hop", "care", "leap", "bounce", "beyond", "cracking"]], ["car", "race", ["car", "race"]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not allow substitutions or reorder existing letters.
-Using a word-only seen set can discard the other legitimate initial-operation branch.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses tuple states and string slicing.
-Java encodes move and word into its seen key and uses substring concatenation; both costs include constructing the candidate strings.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

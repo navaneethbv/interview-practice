@@ -1,51 +1,45 @@
 ## Intuition
 
-A cell's best continuation depends on which cells have already been used.
-Four-direction movement therefore requires exploring simple paths rather than applying the usual right-and-down grid recurrence.
+Four movement directions allow routes to turn back, but revisiting a cell is forbidden.
+The relevant state therefore includes the cells already used by the current path, not just its endpoint.
 
 ## Brute force
 
-The reference deliberately performs exhaustive search because the grid is tiny.
-Choosing the largest neighboring value greedily can trap the path or sacrifice a better later route.
+Enumerating simple paths is the reference approach because the grid is small.
+A usual right and down dynamic program misses legal detours, while a greedy choice can sacrifice a better total later.
 
 ## Approach
 
-Mark the starting cell visited and call `walk` with its value already included in `total`.
-For each in-bounds, unvisited neighbor, mark it, recurse with its value added, then unmark it when returning.
-This restoration lets another candidate path use that cell independently.
-At the bottom-right cell, update `best` and stop extending that path.
-Every accepted recursion branch is a valid simple path, and every simple path can be generated through its sequence of neighbor choices.
+Mark the starting cell in `visited` and call `walk` with its value as `total`.
+For every in bounds unvisited neighbor, mark it, recurse with the added value, and unmark it afterward.
+At the destination, update `best` and stop that branch.
 
 ## Walkthrough
 
-```text
-Input: grid = [[1, -4, 3], [-2, 7, -6], [5, -4, 9]]
-Output: 12
-```
-
-In Example 1, one optimal route goes right, down, left, down, right, right.
-Its cell values are 1, -4, 7, -2, 5, -4, and 9, totaling 12.
-The route must briefly move left, so a right-and-down-only search would miss it.
-The search marks each cell as it enters this branch and removes those marks on return.
-Comparing this total with every other complete simple path leaves 12 as the maximum.
+For Example 1, one optimal route visits values 1, -2, 5, -4, 7, -4, 3, -6, and 9.
+Its coordinates snake through the entire grid without repetition.
+The accumulated sum is 12, and exhaustive exploration finds no larger destination total.
 
 ## Complexity
 
-With N cells, a conservative time bound is O(4 to the power N).
-The visited grid and recursion stack use O(N) space.
-The exponential bound is why this approach is limited to small grids.
+Let N be the number of cells.
+A conservative upper bound is O(4^N) time because each recursive level considers at most four directions and a path uses at most N cells.
+The visited matrix and recursion require O(N) auxiliary space.
 
 ## Edge cases
 
-A one-cell grid returns its value immediately.
-All-negative grids still require a complete start-to-destination path.
+A one cell grid returns that cell, even when it is negative.
+An all negative grid still requires a complete start to destination path.
+Negative intermediate totals cannot safely be discarded because later cells might improve them.
 
 ## Common mistakes
 
-Initializing the answer to zero incorrectly beats every negative route.
-Failing to undo visited state prevents legitimate alternative paths.
+Unmark a cell only after its recursive branch returns.
+A global permanent visited set would incorrectly block alternate paths.
+Initializing the best answer to zero would fail when every possible path has a negative sum.
 
 ## Language notes
 
-Python uses `None` before the first complete path.
-Java uses `Integer.MIN_VALUE`; both retain negative answers correctly.
+Python stores `best` in a one element list so the nested function can update it.
+Java uses an instance field initialized to `Integer.MIN_VALUE`.
+Both use the same four neighbor moves and leave grid values unchanged.

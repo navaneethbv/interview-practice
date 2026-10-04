@@ -4,12 +4,16 @@ class Solution {
         if (s.isEmpty()) {
             return pieces;
         }
-        char delimiter = c.charAt(0);
+        int delimiter = c.codePointAt(0);
         int start = 0;
-        for (int index = 0; index < s.length(); index++) {
-            if (s.charAt(index) == delimiter) {
+        for (int index = 0; index < s.length();) {
+            int codePoint = s.codePointAt(index);
+            if (codePoint == delimiter) {
                 pieces.add(s.substring(start, index));
-                start = index + 1;
+                index += Character.charCount(codePoint);
+                start = index;
+            } else {
+                index += Character.charCount(codePoint);
             }
         }
         pieces.add(s.substring(start));

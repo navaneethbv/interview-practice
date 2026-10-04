@@ -1,53 +1,45 @@
 ## Intuition
 
-A chain can continue through only one child, and only when the current node is aligned with its absolute tree depth.
-A mismatch breaks a chain but must not prevent searching for a new chain farther below.
+A chain must follow one downward branch, so its length at an aligned node is one plus the better child chain.
+A misaligned node breaks that chain without invalidating answers entirely inside its descendants.
 
 ## Brute force
 
-Starting a separate downward search from every node repeats subtree work and can take quadratic time.
-A postorder traversal summarizes the useful continuation from each child once.
+Starting a separate downward search from every node repeats work and can take quadratic time.
+A postorder traversal computes each child's usable chain once, while a separate `best` records chains that start anywhere.
 
 ## Approach
 
-`chain(node, depth)` returns the longest aligned downward chain beginning exactly at `node`.
-First evaluate both children at `depth + 1` and keep their maximum as `below`.
-If the current value differs from depth, return zero.
-Otherwise its chain length is `below + 1`; update the shared `best` and return that length.
-Children are evaluated before the mismatch check, so valid chains below a misaligned ancestor still contribute to the answer.
-A null child contributes zero.
+The helper `chain(node, depth)` first recursively evaluates both children at `depth + 1`.
+Set `below` to the larger child result.
+Return zero for a mismatched value; otherwise update `best` with `below + 1` and return that length.
 
 ## Walkthrough
 
-```text
-Input: root = [7, 1, 3, 2, 8, null, 2, 4, 3, null, null, 3, 3]
-Output: 3
-Explanation: 1, 2, 3 down the left side is the longest aligned chain.
-```
-
-In Example 1, the root value 7 is not aligned at depth 0.
-Its left child 1 is aligned at depth 1, its left child 2 at depth 2, and the descendant 3 at depth 3.
-Postorder returns lengths 1, 2, and 3 upward along those nodes.
-The root returns zero because it cannot extend their chain, but `best` retains 3.
+Example 1 has root value 7 at depth zero, so the root cannot extend a chain.
+In its left subtree, value 1 at depth 1 connects to value 2 at depth 2 and value 3 at depth 3.
+Those calls build lengths 1, 2, and 3 upward, producing answer 3.
 
 ## Complexity
 
-Every node is visited once, giving O(n) time.
-The recursion stack uses O(h) space for height h.
-A balanced tree has logarithmic height, while a long chain uses linear stack space.
+For n nodes and height h, each node receives one call and performs constant work, giving O(n) time.
+The recursion stack occupies O(h) auxiliary space.
+No extra tree or collection of candidate chains is built.
 
 ## Edge cases
 
 An empty tree returns zero.
-An aligned singleton root returns one.
-A misaligned parent can have an aligned child because alignment uses original depth rather than chain-relative depth.
+A lone root with value zero yields one; any other root value yields zero.
+A valid longest chain may start below several misaligned ancestors, so traversal must still explore every subtree.
 
 ## Common mistakes
 
-Do not reset depth when a new candidate chain starts.
-Adding left and right lengths would describe a path with a turn, not a descendant chain.
+Do not return immediately on a value mismatch before visiting the children.
+Do not add both child lengths, because that would create a branching path rather than a descendant chain.
+Depth always refers to the original root.
 
 ## Language notes
 
-Python updates `best` through `nonlocal`.
-Java stores the answer in a field and uses the same recursive return contract.
+Python uses `nonlocal best` inside the nested helper.
+Java keeps `best` in an instance field and passes depth explicitly.
+The harness supplies `TreeNode.val`, `left`, and `right`; array positions in the serialized fixture are not node depths.

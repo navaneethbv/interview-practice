@@ -22,7 +22,7 @@ export default async function BookPage({ params }: PageProps) {
   return (
     <article className="mx-auto w-full max-w-[46rem]">
       <header className="mb-10 border-b border-line pb-8">
-        <p className="mb-2 text-sm font-medium text-brand">System Design</p>
+        <p className="mb-2 text-sm font-medium text-brand">Interview Guides</p>
         <h1 className="text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-[2.1rem]">{book.title}</h1>
         <p className="mt-3 text-lg leading-relaxed text-fg-2">{book.description}</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">

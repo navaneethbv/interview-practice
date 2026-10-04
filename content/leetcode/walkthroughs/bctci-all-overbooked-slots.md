@@ -1,53 +1,47 @@
 ## Intuition
 
-A bulk booking changes a whole interval by the same amount.
-Record where that contribution begins and ends, then recover all final totals with one prefix scan.
+A booking changes a contiguous range by a constant amount.
+Instead of updating each covered slot, record only where that amount begins and where it stops.
+A running prefix sum reconstructs the extra bookings at each slot.
 
 ## Brute force
 
-Adding c directly to every slot in every booking takes O(nm) time for n slots and m bookings in the worst case.
-A difference array reduces each interval update to two boundary changes.
+Apply each `[l, r, c]` booking directly to every index between its endpoints.
+For n slots and b bookings this can require O(nb) updates before counting overbooked slots.
 
 ## Approach
 
-Allocate `delta` with n + 1 entries.
-For each inclusive interval `[l, r]`, add c at l and subtract c at `r + 1`.
-While scanning slots, accumulate `running` and add it to the slot's original booking count.
-The helper stores these final values in `totals`.
-Count only totals strictly greater than `cap`.
-The running prefix includes exactly the bookings that have begun but have not yet passed their ending slot, which establishes the correctness of each recovered total.
+The helper `_totals` allocates `delta` with n + 1 entries.
+Add `c` at `delta[l]` and subtract `c` at `delta[r + 1]` for every inclusive booking.
+Sweep the slots with `running`, adding the current delta before combining it with the original `booked` value.
+Store these final values in `totals`.
+The public method counts only totals strictly greater than `cap`.
+At each index, `running` equals the sum of exactly those bookings whose ranges currently cover that index.
 
 ## Walkthrough
 
-```text
-Input: slots = [0, 0, 0, 0, 0, 0], bookings = [[0, 3, 4], [2, 5, 1], [4, 4, 3]], cap = 5
-Output: 0
-```
-
-In Example 1, the first booking contributes four to slots 0 through 3.
-The second contributes one to slots 2 through 5, and the third contributes three only to slot 4.
-The recovered totals are `[4, 4, 5, 5, 4, 1]`.
-The capacity is 5, so the two slots equal to 5 are still allowed.
-No total exceeds capacity and the answer is zero.
+Example 1 begins with six zero slots.
+The three bookings produce `delta = [4, 0, 1, 0, -1, -3, -1]`.
+The first six prefix sums are `[4, 4, 5, 5, 4, 1]`, which are also the final totals because the original slots are zero.
+With `cap = 5`, values equal to 5 are permitted.
+No total exceeds the capacity, so the answer is 0.
 
 ## Complexity
 
-Time is O(n + m).
-The reference stores both `delta` and `totals`, using O(n) extra space.
-The original slots are not modified.
+Building changes takes O(b), and reconstructing and counting takes O(n).
+Total time is O(n + b), with O(n) auxiliary space for `delta` and `totals`.
 
 ## Edge cases
 
-A booking ending at the final slot writes its cancellation into the extra sentinel entry.
-No bookings means only original counts are tested.
-Overlapping intervals add their contributions normally.
+With no bookings, count overcapacity values already present in `slots`.
+A booking covering the last slot uses the extra sentinel entry at index n.
 
 ## Common mistakes
 
-Subtracting at r instead of `r + 1` excludes the last booked slot.
-Using greater-than-or-equal incorrectly marks exactly-full slots as overbooked.
+Subtract at `r + 1`, not at `r`.
+Do not replace the strict `>` comparison with `>=`.
 
 ## Language notes
 
-Python integers expand as totals grow.
-Java uses long arrays and a long prefix sum because many overlapping bookings can exceed an int total.
+Python integers handle accumulated totals automatically.
+Java uses `long[]` for changes and totals because many overlapping bookings can exceed the range of `int`.

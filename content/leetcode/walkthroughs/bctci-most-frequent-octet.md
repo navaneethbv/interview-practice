@@ -1,47 +1,46 @@
 ## Intuition
 
-Only the substring before the first dot identifies the group being counted.
-The complete addresses are distinct, but many can share that first octet.
-Counting those groups is enough; their first encounter order resolves ties without sorting.
+The relevant category of an IPv4 address is only the text before its first dot.
+After counting those categories, the tie rule requires retaining their order of first appearance rather than sorting them numerically or lexicographically.
 
 ## Brute force
 
-For each address's first octet, scan every address again to count matches.
-That repeats counting for popular octets and can take quadratic time in the number of addresses.
+For each address, rescan all addresses to count its first octet and compare candidates.
+This can take O(n squared) work and repeatedly splits or inspects the same address strings.
 
 ## Approach
 
-Extract each first octet and increment its frequency in `counts`.
-Preserve insertion order so groups are later visited in the order they first appeared in `ips`.
-After all frequencies are final, scan the map entries.
-Replace `best` only when there is no current winner or the new group has a strictly larger count.
-A tied later group cannot replace the earlier group, giving exactly the requested tie rule.
-Computing final frequencies before selecting the winner also avoids confusing a temporary lead with the earliest occurrence among final tied groups.
+Build an insertion-ordered `counts` map from first-octet strings to frequencies.
+Then iterate that map in first-seen order.
+Initialize `best` as empty and replace it only when a candidate's count is strictly greater than the current best count.
+Equal frequencies leave the earlier octet selected.
+Because counting is complete before selection, a temporarily frequent octet cannot win merely by leading midway through the input.
 
 ## Walkthrough
 
-Example 1 encounters octets 203, 208, 202, then 203 again.
-The ordered map has counts `203: 2`, `208: 1`, and `202: 1`.
-The scan first chooses 203 and neither later entry exceeds its count.
-The returned string is `203`, retaining its textual form rather than converting the answer to an integer.
+Example 1 contains first octets `203, 208, 202, 203`.
+Counting produces 203 with frequency two, then 208 and 202 with frequency one each.
+The selection pass first chooses 203.
+Neither later entry has a greater count, so it remains selected.
+The returned value is the string `"203"`, not an entire IP address or a numeric octet.
 
 ## Complexity
 
-With valid IPv4 strings of bounded length, both references run in O(n) time.
-There are at most 256 possible first-octet groups, so the counting map is bounded by O(256) space, or O(u) when expressed in terms of distinct observed octets.
-The returned string is one stored key.
+Expected time is O(n) because valid IPv4 strings have bounded length.
+The map uses O(u) space for u distinct first octets, bounded by the IPv4 category range for canonical addresses.
 
 ## Edge cases
 
-Empty input leaves `best` as the empty string.
-If all observed octets have equal counts, the one from the first address wins.
+Empty input returns `""`.
+If all first octets are different, the first address determines the winner.
+Distinct full addresses can still share an octet and must each contribute a count.
 
 ## Common mistakes
 
-An unordered map iteration cannot by itself guarantee the tie rule.
-Do not count complete addresses or all four octets together.
+A regular Java hash map does not promise first-appearance iteration order.
+Updating best on equal counts would prefer the last tied category instead.
 
 ## Language notes
 
-Python dictionaries preserve insertion order and `split` extracts the first component.
-Java explicitly uses `LinkedHashMap` and obtains the substring ending at the first dot.
+Python dictionaries preserve insertion order.
+Java explicitly uses `LinkedHashMap` and extracts the prefix with `substring` and the first dot position instead of splitting the complete address.

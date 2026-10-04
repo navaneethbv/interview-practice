@@ -1,53 +1,49 @@
 ## Intuition
 
-A balanced parenthesis piece must end when the running number of unmatched opening parentheses returns to zero.
-Cutting at every such point gives the maximum number of pieces without affecting the validity of the remaining suffix.
+A balanced piece must end where the running parenthesis depth returns to zero.
+Every such return offers an independent cut, and taking that cut cannot interfere with the balanced suffix still to be processed.
+The input guarantee lets us focus on maximizing pieces rather than validating syntax.
 
 ## Brute force
 
-Trying every possible partition would require exponentially many boundary choices.
-Even repeatedly checking candidate substrings repeats work that one running depth counter already captures.
+One could try every placement of separators and validate all resulting pieces.
+That search has exponentially many partitions.
+Repeatedly checking candidate substrings is also unnecessary because one running depth summarizes whether a prefix is balanced.
 
 ## Approach
 
 Initialize `depth` and `pieces` to zero.
-For each opening parenthesis, increment depth; for each closing parenthesis, decrement it.
-Whenever depth becomes zero after processing a character, increment pieces.
-The input is guaranteed balanced, so depth never becomes negative and ends at zero.
-Between two successive zero-depth positions, there is no earlier valid cut.
-Thus every piece found is indivisible into additional balanced consecutive pieces, and any other valid partition can only merge some of these pieces.
+For each character, add one for an opening parenthesis and subtract one for a closing parenthesis.
+Whenever the resulting depth is zero, increase `pieces`.
+Between consecutive zero-depth positions the string is balanced, so all counted pieces are valid.
+No solution can cut inside such an interval without ending at positive depth, proving that counting every return maximizes the number of pieces.
 
 ## Walkthrough
 
-```text
-Input: s = "((()))(()())()(()(()))"
-Output: 4
-```
-
-Example 1 separates naturally as `((()))`, `(()())`, `()`, and `(()(()))`.
-Depth first returns to zero after the sixth character, then after the twelfth, fourteenth, and final character.
-Each return closes one complete piece and increments the count.
-Nested parentheses inside a piece do not create an additional boundary while depth remains positive.
-The final count is 4.
+Example 1 is `((()))(()())()(()(()))`.
+Its first six characters complete `((()))`, making `pieces` one.
+The next six complete `(()())`, and the following two complete `()`.
+The remaining `(()(()))` returns to depth zero only at its end.
+There are four completed pieces, so the result is 4.
 
 ## Complexity
 
-For n characters, time is O(n).
-The algorithmic counters use O(1) working space.
-Python iterates over the string directly; the Java reference's `toCharArray()` also allocates O(n) storage.
+For a string of length n, the scan takes O(n) time.
+Python uses O(1) auxiliary space.
+Java's `toCharArray()` creates an O(n) character array for this implementation.
 
 ## Edge cases
 
-The empty string contains zero pieces.
-A fully nested string has exactly one piece.
-A string of repeated `()` pairs has one piece per pair.
+The empty string has zero pieces.
+A fully nested string has one piece, whereas a sequence of adjacent `()` pairs has one piece per pair.
 
 ## Common mistakes
 
-Do not count every closing parenthesis as a piece.
-Do not increment for the initial empty prefix before reading any character.
+Count a piece after updating depth for the current character.
+Counting every closing parenthesis would incorrectly split nested groups before they are balanced.
+Do not require each piece to have length two.
 
 ## Language notes
 
-Both references rely on the balanced-input guarantee rather than implementing a separate validator.
-The equality check must occur after updating depth for the current character.
+Both references use integer counters and rely on the statement's balanced-input guarantee.
+They return a count and never build or store the actual partition strings.

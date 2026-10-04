@@ -1,50 +1,48 @@
 ## Intuition
 
-Every valid partition has a unique final palindrome piece.
-If that piece begins at a known position, the preceding prefix can be partitioned independently.
-Counting partitions by their last piece yields a dynamic program once palindrome substrings can be queried quickly.
+Every valid partition has one final palindromic piece.
+If that last piece begins at `start`, all earlier pieces form a valid partition of the prefix ending there.
+Summing over possible final pieces counts each partition exactly once.
 
 ## Brute force
 
-Choose whether to cut at every gap, then test all resulting pieces.
-There are exponentially many cut patterns, and the same substrings are checked repeatedly.
+Try every subset of the n - 1 possible cut positions and check whether all pieces are palindromes.
+There are exponentially many partitions, and palindrome checks repeat heavily.
 
 ## Approach
 
-Build `palindrome[start][end]` by matching endpoint characters and checking the enclosed substring.
-Lengths one and two need no inner-table lookup.
-Process starts backward so the needed inner entries already exist.
-Next let `ways[end]` count partitions of the prefix ending just before `end`.
-Initialize `ways[0]` to one, representing the empty prefix before the first piece.
-For every possible final-piece start, add `ways[start]` when the substring through `end - 1` is palindromic.
-Reduce each completed prefix total modulo 1,000,000,007.
-The separately handled empty input returns zero as required by the external contract.
+Precompute `palindrome[start][end]` for inclusive endpoints.
+Equal boundary characters form a palindrome when the interior is palindromic, with lengths one and two as direct base cases.
+Process starts in descending order so the interior state is ready.
+Then let `ways[end]` count partitions of the first end characters.
+Set `ways[0] = 1` as the empty-prefix identity and sum `ways[start]` whenever the final segment from start through end - 1 is palindromic.
+Reduce each total modulo `MOD`.
+Handle an entirely empty input separately because its public result is defined as zero.
 
 ## Walkthrough
 
-Example 1 uses `abbaab`.
-The prefix counts, including the initial empty prefix, are `[1, 1, 1, 2, 3, 5, 6]`.
-The prefix `abbaa` has five partitions: three ending with singleton `a` and two ending with `aa`.
-At the final `b`, a singleton final piece contributes those five partitions.
-The palindrome `baab`, starting at index two, contributes the one partition of prefix `ab`.
-These disjoint choices for the final piece give six total partitions.
+Example 1 is `abbaab`.
+The prefix counts, including the initial identity, become `[1, 1, 1, 2, 3, 5, 6]`.
+For the full string, the last singleton `b` extends the five partitions of `abbaa`.
+The other palindromic final piece is `baab`, beginning at index 2, which extends the one partition of `ab`.
+Thus the final total is `5 + 1 = 6`.
 
 ## Complexity
 
-Both tables take O(n squared) time overall.
-The palindrome table requires O(n squared) space, and prefix counts add O(n).
+The palindrome table and prefix transitions each take O(n²) time.
+The boolean table uses O(n²) space, and `ways` adds O(n).
 
 ## Edge cases
 
-A nonempty single character has one split.
-Repeated equal characters permit every cut pattern.
+A one-character string has one partition.
+For a string of all identical characters, every cut pattern is valid.
 
 ## Common mistakes
 
-Do not initialize `ways[0]` to zero, which would erase every count.
-Apply the requested modulo rather than returning an unbounded count.
+Do not confuse the internal empty-prefix count of one with the empty-input answer of zero.
+Every piece must be nonempty.
 
 ## Language notes
 
-Python sums a generator of qualifying prefix counts.
-Java accumulates in `long`; its at-most-2000 reduced terms fit safely before each modulo.
+Python stores the recurrence in nested lists.
+Java uses a boolean matrix and long totals before reducing modulo 1,000,000,007.

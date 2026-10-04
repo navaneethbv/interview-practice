@@ -33,5 +33,5 @@ Use `>` rather than `>=`.
 Return the required strings `Yes` and `No` with matching capitalization.
 
 ## SQLite notes
-Use `CASE WHEN ... THEN 'Yes' ELSE 'No' END AS triangle`.
+Use `CASE WHEN .. THEN 'Yes' ELSE 'No' END AS triangle`.
 Select the original columns so the output schema remains `x`, `y`, `z`, `triangle`.

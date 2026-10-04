@@ -1,49 +1,62 @@
 ## Intuition
 
-The sort key comes from a fixed small interval of years rather than an unbounded domain.
-Create one bucket per possible year and append books to those buckets in input order.
-Reading the buckets chronologically gives a stable sorted result without comparison sorting.
+Sort By Publication Year is organized around Counting Sort by Year.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Use a general stable comparison sort by parsed publication year.
-That takes O(n log n) comparisons, while the bounded year domain permits a linear scan plus fixed bucket overhead.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Allocate buckets for every year from `FIRST_YEAR` through `LAST_YEAR`, inclusive.
-For each book, parse its fifth field as an integer and subtract FIRST_YEAR to obtain the bucket index.
-Append the entire book record to that bucket.
-After distributing all books, iterate buckets in increasing index order and append their records to the output.
-Books sharing a year remain ordered by their original insertion sequence, giving the required stability.
-Other fields are carried through unchanged and never used as tie breakers.
-The algorithm rearranges references to book records rather than rebuilding their textual contents.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Counting Sort by Year idea: Years fall in a small fixed range, so bucket books by year and read the buckets in order.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named sortByYear can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 places Shadow in the 2020 bucket.
-Whispers enters the 2018 bucket first, then Echoes is appended behind it.
-Reading buckets in chronological order emits Whispers, then Echoes, then Shadow.
-Whispers remains before Echoes even though a different title or author ordering might suggest another arrangement.
-Their shared publication year requires preserving their original order.
+Example 1 uses input [[["Shadow", "E. Grey", "350", "Sci-Fi", "2020"], ["Whispers", "L. Hart", "280", "Romance", "2018"], ["Echoes", "M. Vance", "420", "Fantasy", "2018"]]] and expects [["Whispers", "L. Hart", "280", "Romance", "2018"], ["Echoes", "M. Vance", "420", "Fantasy", "2018"], ["Shadow", "E. Grey", "350", "Sci-Fi", "2020"]].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [["Whispers", "L. Hart", "280", "Romance", "2018"], ["Echoes", "M. Vance", "420", "Fantasy", "2018"], ["Shadow", "E. Grey", "350", "Sci-Fi", "2020"]].
+The same reasoning handles hidden cases [[["Solo", "Author", "100", "Genre", "2000"]]], [[["A", "x", "1", "g", "2025"], ["B", "x", "1", "g", "1000"], ["C", "x", "1", "g", "2025"], ["D", "x", "1", "g", "1500"]]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For n books and Y possible years, both references take O(n + Y) time and O(n + Y) space.
-Here Y is 1026, so runtime is linear in the number of books with fixed domain overhead.
-Year strings have bounded length under the contract.
+The imported workbook records the expected time bound as O(n + years).
+The imported workbook records the expected space bound as O(n + years).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Empty input returns an empty result.
-Books from the first and last allowed years map to the first and last valid buckets.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[["Solo", "Author", "100", "Genre", "2000"]]], [[["A", "x", "1", "g", "2025"], ["B", "x", "1", "g", "1000"], ["C", "x", "1", "g", "2025"], ["D", "x", "1", "g", "1500"]]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Include both endpoint years when allocating buckets.
-Sorting same-year entries by another field would violate stability.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python parses the year with `int` and flattens using a comprehension.
-Java uses `Integer.parseInt` and `addAll`, preserving each bucket's insertion order in both languages.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

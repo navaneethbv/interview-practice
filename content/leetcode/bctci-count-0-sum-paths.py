@@ -1,22 +1,19 @@
 class Solution:
     MOD = 1_000_000_007
 
-    def _row_counts(self, row, previous, first_row):
-        current = [0] * len(row)
-        for column, cell in enumerate(row):
-            if cell == 1:
-                continue
-            if first_row and column == 0:
-                current[column] = 1
-                continue
-            ways = previous[column]
-            if column > 0:
-                ways += current[column - 1] + previous[column - 1]
-            current[column] = ways % self.MOD
-        return current
-
     def countZeroPaths(self, grid):
-        previous = [0] * len(grid[0])
-        for index, row in enumerate(grid):
-            previous = self._row_counts(row, previous, index == 0)
+        cols = len(grid[0])
+        previous = [0] * cols
+        for r, row in enumerate(grid):
+            current = [0] * cols
+            for c, cell in enumerate(row):
+                if cell == 1:
+                    continue
+                if r == 0 and c == 0:
+                    current[c] = 1
+                    continue
+                ways = (current[c - 1] if c > 0 else 0) + (previous[c] if r > 0 else 0)
+                ways += previous[c - 1] if r > 0 and c > 0 else 0
+                current[c] = ways % self.MOD
+            previous = current
         return previous[-1]

@@ -1,53 +1,48 @@
 ## Intuition
 
-All occurrences of a target occupy one contiguous block in a sorted array.
-Find that block's two boundaries with binary search, then test its length for divisibility.
-The actual occurrence positions do not need to be enumerated.
+Because arr is sorted, all copies of target form one contiguous block.
+The number of copies is the first position after target minus the first position at target.
+The desired answer is simply whether that block length has remainder zero when divided by k.
 
 ## Brute force
 
-Scanning every element and counting equality takes O(n) time.
-Sorted order permits two logarithmic searches even when the target occupies most of the array.
+A linear scan can count values equal to target.
+That works, but it ignores that binary search can find both block boundaries without examining unrelated values.
 
 ## Approach
 
-Find the first index whose value is at least target and the first index whose value is greater than target.
-Subtract the former from the latter to obtain count.
-Return whether `count % k` equals zero.
-Each binary search maintains a half-open candidate range and chooses the half containing its boundary.
-The first greater position is allowed to be n, so targets reaching the array's final position need no special case.
-If target is absent, both boundaries coincide and the count is zero.
+Use bisect_left to find the first index whose value is at least target.
+Use bisect_right to find the first index whose value is greater than target.
+Subtract the two positions to obtain the exact occurrence count.
+Return count modulo k equal to zero, which also makes zero occurrences satisfy the problem's rule.
 
 ## Walkthrough
 
-```text
-Input: arr = [1, 2, 2, 2, 2, 2, 2, 3], target = 2, k = 3
-Output: true
-```
-
-In Example 1, the first 2 occurs at index 1 and the first value greater than 2 occurs at index 7.
-The block length is therefore 7 - 1 = 6.
-Six divided by k = 3 has remainder zero, so the answer is true.
-The values 1 and 3 delimit the block but are not included in its count.
+In Example 1, the six copies of 2 occupy one block between the two boundary searches.
+The count is 6, and 6 modulo 3 is zero, so the result is true.
+In Example 2, the same count is tested against 4, and 6 modulo 4 is 2, so the result is false.
+If target is absent, both boundaries are the same and the count is zero.
 
 ## Complexity
 
-Two binary searches take O(log(n + 1)) time.
-Only indices and the resulting count are stored, giving O(1) extra space.
-The input remains unchanged.
+The two binary searches take O(log n) time for an array of length n.
+The references use O(1) additional space.
 
 ## Edge cases
 
-An absent target returns true because zero is a multiple of every positive k.
-When k is one, every count qualifies.
-An all-target array has count n.
+A target at the beginning or end is handled by the half-open boundary positions.
+All values can be equal, so the block may span the entire array.
+An absent target returns true for every positive k because zero is divisible by k.
+Negative values use the same ordering rules as positive values.
 
 ## Common mistakes
 
-Do not subtract the last matching index from the first without accounting for inclusivity.
-A generic binary search finding any match does not identify the entire block.
+Using only one boundary cannot distinguish one occurrence from many.
+Counting the inclusive right endpoint adds one extra position.
+Treating zero occurrences as false contradicts the stated divisibility convention.
 
 ## Language notes
 
-Python uses bisect_left and bisect_right.
-Java reuses firstGreater with target and target - 1L, widening before subtraction to avoid integer-boundary overflow.
+Python directly uses bisect_left and bisect_right from bisect.
+Java's firstGreater helper returns the first position whose value exceeds a long boundary.
+The Java call uses target minus 1 as a long so the minimum integer target does not overflow.

@@ -1,48 +1,50 @@
 ## Intuition
 
-Because each IP appears only once, counting connections for a username also counts how many distinct IPs share that account.
-The IP text itself does not need to be stored after reading the connection.
-A frequency table of usernames contains all information needed for the result.
+Each connection contributes one vote to its username because the IPs are already distinct.
+The winner is the largest final frequency, with first appearance as the tie rule.
+Preserving insertion order in the frequency map captures that tie information automatically.
 
 ## Brute force
 
-For every username encountered, scan all connections again to count its occurrences.
-Repeated usernames cause repeated work, leading to quadratic time in the number of connections.
+For every username encountered, rescan the connection list to count its occurrences.
+This can require O(n²) work and repeatedly recount the same account.
 
 ## Approach
 
-Build `counts` by incrementing the second field of each connection.
-Preserve usernames in first-encounter order.
-Once all counts are complete, scan those entries and replace `best` only when a strictly greater frequency appears.
-Because tied candidates are encountered in the order of their first connections, the earlier one remains the winner.
-Separating counting from selection matters: a user who takes an early temporary lead need not be the earliest user among the final tied leaders.
-If no entries exist, the initially empty `best` is the required answer.
+Build `counts` by scanning connections in their original order and incrementing each user's total.
+New usernames enter the map when first seen; updating an existing count must preserve its position.
+Then scan map entries in insertion order.
+Initialize `best` with the first encountered account and replace it only when another count is strictly larger.
+Equal counts never displace the earlier entry.
+If there were no connections, the initial empty result is returned.
 
 ## Walkthrough
 
-Example 1 processes usernames mike, bob, mike, and bob2.
-The frequency table ends with mike at two and each other account at one.
-The winner scan selects mike first, then keeps that choice because neither later count is greater.
+Example 1 encounters mike first, bob second, and bob2 last.
+The second mike connection increments mike's count without changing its position.
+Final counts are mike 2, bob 1, and bob2 1.
+The selection pass begins with mike and neither later account exceeds its total.
 The returned username is `mike`.
-The two different IP strings associated with mike require no separate deduplication under the distinct-IP contract.
+In a tie, the same pass would retain whichever tied username first appeared in the connections.
 
 ## Complexity
 
-With expected constant-time hash-table operations, both references take O(n) time for n connections.
-They use O(u) auxiliary space for u distinct usernames.
-String hashing and comparison additionally depend on username length when that length is treated as a variable.
+For n connections and u usernames, expected time is O(n + u), or O(n).
+The frequency map uses O(u) auxiliary space.
+String hashing and comparison additionally depend on username length.
 
 ## Edge cases
 
-No connections returns an empty string.
-If every username appears once, the first connection's username wins.
+No connections return the empty string.
+If every account has exactly one connection, the account in the first row wins.
 
 ## Common mistakes
 
-Do not group by IP instead of username.
-An arbitrary map iteration order would fail the earliest-first-connection tie rule.
+An ordinary unordered map does not preserve the tie rule during its entry scan.
+Do not choose whichever account first reaches a temporary high count; only final counts determine the winner.
 
 ## Language notes
 
 Python dictionaries preserve insertion order.
-Java uses `LinkedHashMap` explicitly and `merge` to increment counts without a separate presence branch.
+Java deliberately uses `LinkedHashMap` rather than `HashMap`.
+The reference uses the empty string as its unset marker, following the examples' nonempty account names.

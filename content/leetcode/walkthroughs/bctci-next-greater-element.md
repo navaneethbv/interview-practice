@@ -1,49 +1,46 @@
 ## Intuition
 
-Some earlier positions are still waiting for their first larger value.
-If a new value exceeds the value at the most recent waiting position, it resolves that position immediately.
-A monotonic stack keeps precisely these unresolved positions in an order that supports efficient resolution.
+An index remains unresolved until a strictly larger value appears.
+A stack of unresolved indices in nonincreasing value order lets one new element settle every smaller candidate it dominates.
 
 ## Brute force
 
-For every position, scan rightward until finding a strictly larger value.
-A decreasing array forces almost every scan to reach the end, producing O(n squared) time.
+For each position, scanning rightward until a larger element appears can take O(n squared) time on a decreasing array.
+The stack shares those scans, ensuring each unresolved position is processed only when pushed and resolved.
 
 ## Approach
 
-Initialize `answer` to -1 and keep an empty stack of indices.
-Read the array left to right.
-While the new value is strictly larger than the value at the stack's final index, pop that index and record the current index as its answer.
-Then append the current index to the stack.
-Values referenced by the stack remain nonincreasing.
-A popped position has seen no earlier larger value, or it would already have been removed, so the current position is exactly its first qualifying answer.
-Unresolved positions retain their initialized -1 values.
+Initialize every answer to -1.
+Scan `index, value` from left to right.
+While the stack's top value is strictly smaller, pop that index and set its answer to the current index.
+Finally push the current index as a new unresolved candidate.
 
 ## Walkthrough
 
-Example 1 starts with values `[2, 2, 4, 3]`.
-Indices 0 and 1 both enter the stack because equal 2s do not qualify as strictly greater.
-At index 2, value 4 pops index 1 and then index 0, assigning answer 2 to both.
-The final value 3 cannot resolve the waiting 4, and neither remaining position finds anything larger afterward.
-The result is `[2, 2, -1, -1]`.
+Example 1 begins with values 2 and 2, so both indices remain on the stack because equality does not qualify.
+Value 4 at index 2 pops both and assigns their answer 2.
+Value 3 cannot resolve 4, leaving the final answers `[2, 2, -1, -1]`.
 
 ## Complexity
 
-Each index is pushed once and popped at most once.
-Both references therefore take O(n) time despite the nested while loop.
-The answer array and stack each use O(n) worst-case space.
+Every index is pushed once and popped at most once, giving O(n) total time despite the inner loop.
+The stack uses O(n) auxiliary space, and the answer array uses O(n) output space.
 
 ## Edge cases
 
-A single element returns -1.
-Equal or decreasing arrays leave every answer at -1, while an increasing array resolves each position at its immediate successor.
+A decreasing or constant array has no next greater values and retains all -1 answers.
+The final position always has answer -1.
+Negative numbers work normally.
+Several earlier positions may share the same next greater index.
 
 ## Common mistakes
 
-Store and return indices, not values.
-Popping on equality would violate the strictly-larger requirement.
+Return indices, not the larger values themselves.
+Use strict less than when resolving candidates so equal values remain unresolved.
+Because the scan moves left to right, the first resolving value is automatically the nearest qualifying one.
 
 ## Language notes
 
-Python uses a list as the stack.
-Java uses the back of an `ArrayDeque<Integer>` and fills the answer array with -1 explicitly.
+Python uses a list as the stack of indices.
+Java uses `ArrayDeque<Integer>` with operations at its last end.
+Both references initialize the result before scanning and need no cleanup pass for indices that remain unresolved.

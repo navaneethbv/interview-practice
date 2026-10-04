@@ -1,48 +1,62 @@
 ## Intuition
 
-After both arrays are sorted, the smaller current value is the only one whose pointer needs to move.
-Keeping that smaller value while increasing the larger value cannot improve their difference.
-This eliminates whole sets of unhelpful pairs at each step.
+Smallest Difference is organized around Sort Both and Walk.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Compare every value in a with every value in b and track the smallest absolute difference.
-That costs O(nm) time for lengths n and m, even when sorted order could discard most pairs.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Create sorted copies `first` and `second`, with pointers i and j initially zero.
-Update `best` with the absolute difference of the pointed values.
-If `first[i]` is smaller, increment i; otherwise increment j.
-Stop when either pointer leaves its array.
-The discarded value cannot form a better pair with any later, larger value from the other array, so no possible improvement is skipped.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Sort Both and Walk idea: Sort both arrays and advance the pointer at the smaller value, tracking the closest pair seen.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named smallestDifference can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 sorts a into `[1, 2, 3, 11, 15]` and b into `[8, 19, 23, 127, 235]`.
-Against 8, the first three differences are 7, 6, and 5.
-Comparing 11 and 8 improves the answer to 3, then advances b's pointer to 19.
-The following comparisons produce differences 8 and 4 before a is exhausted.
-Return the best difference, 3.
+Example 1 uses input [[1, 3, 15, 11, 2], [23, 127, 235, 19, 8]] and expects 3.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 3.
+The same reasoning handles hidden cases [[5], [5]], [[1, 2, 3], [10, 20, 30]], [[10, 20, 30], [1, 2, 3]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Sorting costs O(n log n + m log m), followed by an O(n + m) scan.
-The copied arrays use O(n + m) space.
-The input arrays themselves retain their original order.
+The imported workbook records the expected time bound as O(a log a + b log b).
+The imported workbook records the expected space bound as O(a + b).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A shared value produces difference zero, which is optimal.
-Negative numbers and duplicate values work with the same ordering argument.
-The contract supplies nonempty arrays.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[5], [5]], [[1, 2, 3], [10, 20, 30]], [[10, 20, 30], [1, 2, 3]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Advancing the larger value's pointer can skip an improving pair.
-Subtracting two Java ints before widening can overflow even when each input is individually valid.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python integers handle the difference directly.
-Java casts one operand to long before subtraction and returns a long, preserving differences spanning the full signed-int range.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

@@ -1,53 +1,49 @@
 ## Intuition
 
-The newest pushed item can be placed directly at the head of a singly linked list.
-That same head is the first item removed, matching last-in-first-out stack behavior.
+The head of a singly linked list is the natural stack top because inserting and removing there never require searching for a predecessor.
+A separate length counter makes size and emptiness queries constant time too.
 
 ## Brute force
 
-Appending to a singly linked tail and removing that tail would require finding its predecessor.
-Using the list head for both updates makes every stack operation constant time.
+Representing the top as the tail of a singly linked list makes removal require a scan to the previous node.
+That takes O(n) per pop and violates the requested constant-time operation contract.
 
 ## Approach
 
-Maintain a top pointer and a length counter.
-Push creates a node whose next pointer is the old top, then makes the new node top.
-Pop returns -1 if top is null; otherwise save its value, advance top to next, decrement length, and return the saved value.
-Peek reads top's value without changing links.
-Size returns length and empty checks whether it is zero.
-The reachable chain always lists values in reverse insertion order, excluding those already popped.
+Store `top` and `length`.
+`push` allocates a new node whose next pointer is the previous top, then increments length.
+`pop` first handles an empty stack; otherwise save the top value, advance top to its next node, decrement length, and return the saved value.
+`peek` reads the value without moving pointers.
+`size` returns length, and `empty` tests whether length is zero.
+These operations preserve the invariant that following next pointers enumerates values from newest to oldest.
 
 ## Walkthrough
 
-```text
-Input: ops = ["push", "push", "push", "peek", "size", "empty", "pop", "pop"], args = [[1], [2], [3], [], [], [], [], []]
-Output: [null, null, null, 3, 3, false, 3, 2]
-```
-
-Example 1 pushes 1, then 2, then 3.
-The chain from top is now 3 to 2 to 1.
-Peek returns 3, size returns 3, and empty returns false.
-The first pop returns 3 and moves top to 2.
-The second returns 2 and leaves the one-node stack containing 1.
+Example 1 pushes 1, 2, then 3.
+The linked chain is now `3 -> 2 -> 1` and length is three.
+`peek` returns 3, `size` returns 3, and `empty` returns false.
+The first pop advances top to 2 and returns 3.
+The next advances top to 1 and returns 2.
+Push operations contribute null results.
 
 ## Complexity
 
-Each operation takes O(1) time.
-Storing n live values requires O(n) nodes, plus constant metadata.
-No operation scans or copies the remaining stack.
+Every operation takes O(1) time.
+A stack holding n values uses O(n) node storage and O(1) bookkeeping space.
+Removed nodes become reclaimable once no references remain.
 
 ## Edge cases
 
-Empty pop and peek return -1 without changing state.
-Popping a singleton sets top to null.
-Repeated equal values are still distinct pushed entries.
+Empty pop and peek return -1 without changing length.
+Popping the final value sets top to null.
+Values are nonnegative, so -1 is an unambiguous empty result.
 
 ## Common mistakes
 
-Do not overwrite top before saving the removed value or linking the new node to the old chain.
-Length must change only after an actual insertion or removal.
+Do not decrement length on an unsuccessful empty pop.
+Save the removed value before advancing the top pointer.
 
 ## Language notes
 
-Python nodes accept the next pointer in their constructor.
-Java's node next field is final because existing nodes never need relinking; only the stack's top reference changes.
+Python defines its own `ListItem` class.
+Java uses an internal immutable-link `Node`; moving the stack's top reference is enough to perform removal without editing node links.

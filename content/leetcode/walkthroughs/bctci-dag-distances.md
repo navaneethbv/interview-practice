@@ -1,51 +1,48 @@
 ## Intuition
 
-A topological order processes every predecessor before its successors.
-This makes each node's smallest reachable path value final before its outgoing edges are relaxed, even when weights are negative.
+A topological order places every edge's source before its destination.
+When a node is processed, all possible incoming paths have already been considered.
+This makes shortest-path relaxation safe even when edge weights are negative.
 
 ## Brute force
 
-Enumerating all directed paths can require exponential time.
-The acyclic structure allows one dynamic-programming pass instead of repeatedly exploring shared suffixes.
+Repeatedly relax every edge as in Bellman-Ford.
+That works for negative weights but requires O(VE) time, wasting the graph's acyclic structure.
 
 ## Approach
 
-Build weighted adjacency lists and obtain a topological order using indegrees and a queue.
-Initialize `best[start]` to zero and every other entry to the unreachable sentinel.
-Skip unreachable nodes during relaxation.
-For each outgoing edge, compare its candidate `best[node] + weight` with the neighbor's current value and retain the smallest value.
-Because every incoming edge has been considered before a node is processed, this local recurrence produces the global optimum.
+Build `adjacency`, then compute a topological order with indegrees and a queue.
+Every zero-indegree node enters the queue; removing its outgoing edges can make more nodes ready.
+Initialize `best[start] = 0` and every other distance to `SENTINEL`.
+Visit nodes in topological order, skipping unreachable ones.
+For each outgoing `(v, w)`, compare `best[node] + w` with the current distance to v and keep the smaller value.
+No later node can supply an unprocessed path back into the current node, because that would contradict topological order.
 
 ## Walkthrough
 
-```text
-Input: V = 6, edges = [[0, 1, 10], [2, 1, 10], [3, 4, 12], [4, 1, 11], [4, 2, 21], [4, 5, 14], [5, 2, -30]], start = 4
-Output: [2147483647, -6, -16, 2147483647, 0, 14]
-```
-
-The edge from 4 to 5 gives distance 14.
-Following its -30 edge improves node 2 from the direct cost 21 to -16.
-The edge from 2 to 1 then improves node 1 from 11 to -6.
-Nodes 0 and 3 are unreachable and retain 2147483647, while start remains zero.
+Example 1 starts at node 4.
+Relaxing its edges initially gives node 1 distance 11, node 2 distance 21, and node 5 distance 14.
+Node 5 then improves node 2 to `14 - 30 = -16`.
+Node 2 improves node 1 to `-16 + 10 = -6`.
+Nodes 0 and 3 cannot be reached from 4.
+The result is `[2147483647, -6, -16, 2147483647, 0, 14]`.
 
 ## Complexity
 
-Building adjacency, topological sorting, and relaxing edges take O(V + E) time.
-The adjacency structure, order, queue, and distance array require O(V + E) space.
-No priority queue is needed.
+Building the graph, ordering it, and relaxing edges each take O(V + E) time.
+Adjacency storage, indegrees, ordering, queue, and distances occupy O(V + E) space.
 
 ## Edge cases
 
-Negative edge weights are valid because there are no directed cycles.
-A singleton graph returns distance zero to itself.
-An unreachable vertex must retain the exact requested sentinel.
+A one-node graph returns `[0]`.
+Disconnected components still participate in topological ordering but retain sentinel distances unless reached from `start`.
 
 ## Common mistakes
 
-Do not add edge weights to the sentinel; that can manufacture a false reachable value.
-Processing vertices by numeric label is not necessarily topological order.
+Do not add an edge weight to the unreachable sentinel.
+Dijkstra's greedy processing is unsuitable for these negative weights.
 
 ## Language notes
 
-Python uses arbitrary-precision integers.
-Java stores distances in int; the given limits on path length and edge magnitude keep valid distances within range, distinct from the sentinel.
+Both references return integer distances and the exact sentinel 2147483647.
+The stated vertex and weight limits bound simple-path sums within Java `int` range.

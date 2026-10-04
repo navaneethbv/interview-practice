@@ -1,48 +1,44 @@
 ## Intuition
 
-A stop's optimal cost depends on the cheapest recent stop from which it can be reached without skipping more than k consecutive stops.
-The start and destination behave like free virtual stops.
-Thinking in terms of gaps between chosen stops makes the constraint local.
+A chosen stop can follow any earlier chosen stop separated by at most k skipped stops.
+This creates a dynamic program over the most recent stop, with a free virtual stop before the trip and a final choice among stops close enough to the destination.
 
 ## Brute force
 
-Try all subsets of rest stops and reject any choice with an excessive skipped run.
-This takes exponential time and repeatedly recomputes the same cheapest prefixes.
+Enumerate every subset of rest stops and reject those with a gap exceeding k.
+There are exponentially many subsets, while only the cheapest total ending at each actual stop matters for future choices.
 
 ## Approach
 
-Store the minimum cost of stopping at index `stop` in `best[stop + 1]`.
-The entry `best[0]` represents starting before all real stops at zero cost.
-A real stop may follow any of the preceding k plus one positions, since a distance of k plus one skips exactly k stops.
-For the first k plus one real stops, reaching directly from the start is legal.
-For later stops, add the current detour time to the minimum allowed predecessor cost.
-The destination can follow any of the final k plus one stored positions, so return the minimum of that suffix.
+`best[stop + 1]` records the minimum total when actually stopping at index `stop`.
+For `stop <= k`, the trip may reach that stop directly with no earlier detour.
+Otherwise take the minimum of `best[stop - gap]` for gaps zero through k, then add `times[stop]`.
+Those shifted indices encode previous stops with at most k skipped positions.
+Finally minimize `best` from index `max(0, n - k)` through n so the remaining suffix is also short enough.
 
 ## Walkthrough
 
-Example 1 uses k equal to 2.
-The stored costs for real stops become `[8, 1, 2, 4, 10, 8, 6, 10]`.
-For the stop costing 3 at index 3, the cheapest predecessor is index 1 with accumulated cost 1, producing 4.
-Index 6 then follows index 3 for total cost 6.
-Stopping at indices 1, 3, and 6 skips no run longer than two, and the final suffix minimum is 6.
+Example 1 uses `[8, 1, 2, 3, 9, 6, 2, 4]` with k two.
+The full best array becomes `[0, 8, 1, 2, 4, 10, 8, 6, 10]`.
+The allowed final entries are 8, 6, and 10, so the answer is 6.
+Stops at indices 1, 3, and 6 cost `1 + 3 + 2`, with every skipped run at most two.
 
 ## Complexity
 
-The references examine up to k plus one predecessors per stop, taking O(n times min(n, k + 1)) time.
-Both retain O(n) dynamic-programming storage.
-Python also builds a temporary predecessor list of O(min(n, k + 1)) size; Java scans candidates directly.
+Time is O(n times min(n, k + 1)) and storage is O(n + k) at most, hence O(n + k) with Python's temporary candidate list.
+Java uses only the O(n) best array.
 
 ## Edge cases
 
-An empty route costs zero.
-When n is at most k, passing every stop is legal and the virtual-start entry remains a final candidate.
+When n is at most k, skipping every stop costs zero.
+Empty input also returns zero.
 
 ## Common mistakes
 
-Do not confuse skipped stops with distance between chosen indices.
-The final answer need not include the last real stop.
+The allowed index distance between chosen stops is k plus one, not k.
+Do not force a stop at the final rest area.
 
 ## Language notes
 
-Python's slice includes `best[n]` by ending at `n + 1`.
-Java's final loop uses an inclusive upper bound for the same reason.
+Python explicitly builds each predecessor window.
+Java scans its entries with a running minimum; both return a cost, not the stop sequence.

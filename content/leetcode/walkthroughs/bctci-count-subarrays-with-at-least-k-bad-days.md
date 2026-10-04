@@ -1,52 +1,48 @@
 ## Intuition
 
-At least k bad days is the complement of having at most k - 1 bad days.
-Counting interval occurrences is different from finding just the longest acceptable window.
+Counting at least `k` bad days is easier through its complement.
+Every nonempty subarray either has at most `k - 1` bad days or has at least `k`.
+The first category supports a standard sliding window because removing days cannot increase its bad-day count.
 
 ## Brute force
 
-Checking every start and end with a running bad-day count takes O(n squared) time.
-Repeated full scans of each interval are even more expensive.
+For each starting index, extend every ending index while counting values below 10.
+This checks O(n²) subarrays explicitly.
 
 ## Approach
 
-Subtract `_at_most(sales, k - 1)` from the total number `n * (n + 1) // 2` of nonempty subarrays.
-The helper `_at_most` counts subarrays by their right endpoint.
-It maintains `left` and the number of bad days in the current window, shrinking while that count exceeds the supplied limit.
-After shrinking, all `right - left + 1` suffixes of the window are valid, since removing days cannot increase the bad-day count.
-Starts before left are invalid because the loop already discarded them while the budget was exceeded.
-A negative limit returns zero immediately.
+Compute the number of all subarrays as `n * (n + 1) // 2`.
+The `_at_most` helper counts windows with no more than its supplied limit.
+Add each rightmost day's badness to `bad`, then advance `left` until `bad` is within that limit.
+All starts from `left` through `right` now qualify, contributing `right - left + 1` to `total`.
+Subtract `_at_most(sales, k - 1)` from the overall count.
+A negative helper limit returns zero immediately, correctly handling the outer case `k = 0`.
 
 ## Walkthrough
 
-```text
-Input: sales = [0, 20, 5], k = 1
-Output: 5
-```
-
-Example 1 has six nonempty subarrays in total.
-Only `[20]` has no bad days.
-The zero-bad-day helper contributes 0, 1, and 0 at the three endpoints, for a total of 1.
-Subtracting gives 6 - 1 = 5.
+Example 1 has `[0, 20, 5]` and `k = 1`.
+There are six nonempty subarrays in total.
+The helper counts subarrays with at most zero bad days.
+At value 0 it shrinks to an empty window; at 20 it counts the singleton `[20]`; at 5 it shrinks past the bad day again.
+Thus only one subarray has no bad days.
+The requested result is `6 - 1 = 5`.
 
 ## Complexity
 
-Each helper pass takes O(n) time because both boundaries only move forward.
-The overall method uses at most two linear passes and O(1) extra space.
-The answer can grow quadratically even though the computation is linear.
+The two pointers each move at most n times, giving O(n) time.
+The helper stores only counters, so auxiliary space is O(1).
 
 ## Edge cases
 
-When k is zero, every nonempty subarray qualifies, and the negative-limit helper correctly returns zero.
-An empty sales array contributes zero.
-A day with exactly 10 sales is good.
+When `k = 0`, every nonempty subarray qualifies.
+When `k` exceeds the available bad days, the complement equals the total and the answer is zero.
 
 ## Common mistakes
 
-Do not add only one per endpoint; every valid suffix must be counted.
-Keep threshold comparisons strict at fewer than 10 sales.
+Use `k - 1`, not `k`, in the complement.
+Exactly 10 sales is a good day.
 
 ## Language notes
 
-Python treats comparisons as zero-or-one values in the counter.
-Java uses explicit branches and long result arithmetic to avoid overflow when counting many intervals.
+Python adds booleans directly to `bad`.
+Java uses explicit branches and casts the total-subarray multiplication to `long` before multiplying.

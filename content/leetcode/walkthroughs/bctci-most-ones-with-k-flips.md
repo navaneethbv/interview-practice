@@ -1,49 +1,48 @@
 ## Intuition
 
-A contiguous segment can become all ones exactly when it contains at most k zeros.
-The problem therefore asks for the longest window satisfying a zero-count budget.
-Its actual values do not need to be changed.
+A contiguous interval can become all ones exactly when it contains at most k zeros.
+There is no need to perform flips: counting zeros in a moving window completely captures whether that interval is achievable.
 
 ## Brute force
 
-Try every start and end position and count zeros in the chosen segment.
-Even with an incremental count for each start, this takes O(n squared) time.
+Enumerate every interval and count its zeros, or choose subsets of zero positions to flip.
+Even maintaining counts incrementally over all intervals takes O(n squared) time.
 
 ## Approach
 
-Maintain a window from `left` through `right` and a counter `zeros`.
-Whenever the right edge advances, count the new value if it is zero.
-While `zeros` exceeds k, move the left edge forward, subtracting a zero whenever one leaves.
-After restoring the budget, update `best` with the window length.
-This window is the longest valid one ending at the current right edge: every earlier start still includes too many zeros.
-Since extending the right edge cannot reduce the zero count, rejected earlier starts never need reconsideration.
+Track `left`, `zeros`, and `best` while advancing `right`.
+Increase zeros when the incoming value is zero.
+While the count exceeds k, remove the leftmost value's contribution and advance left.
+After restoring validity, compare the current length with best.
+Removing values cannot increase the zero count, so the window only needs forward movement.
+For each right endpoint, the retained left boundary is the earliest one still satisfying the budget.
 
 ## Walkthrough
 
-Example 1 uses `[1, 0, 1, 0, 1]` with k equal to one.
-The first three entries contain one zero, producing a valid length of three.
-Adding the next zero creates two zeros.
-The left edge passes the first 1 and then the first 0, restoring the budget and leaving `[1, 0]`.
-Adding the final 1 creates another valid length-three window.
-The result is 3, attainable by flipping either zero within its corresponding three-element window.
+Example 1 is `[1, 0, 1, 0, 1]` with k one.
+The first three values form a valid length-three window.
+Adding the second zero exceeds the budget, so remove the leading one and then the first zero.
+The remaining `[1, 0]` is valid.
+Adding the final one makes another length-three window, leaving the answer at 3.
 
 ## Complexity
 
-Each index enters once and leaves at most once, so both references take O(n) time.
-The pointers and counters occupy O(1) auxiliary space.
-No copied array or explicit list of flipped positions is needed.
+Time is O(n) since every element enters and leaves at most once.
+Auxiliary space is O(1), and the input array remains unchanged.
+The nested shrinking loop does not make the scan quadratic.
 
 ## Edge cases
 
-For k equal to zero, the algorithm finds the longest existing run of ones.
-Empty input returns zero, and a budget covering all zeros permits the entire array.
+Empty input returns zero.
+With k zero, the algorithm finds the longest existing run of ones.
+If the budget covers all zeros, the entire array qualifies.
 
 ## Common mistakes
 
-Shrink until the budget is satisfied rather than removing only one position.
-Use the inclusive length `right - left + 1` after shrinking.
+Do not count ones against the flip budget or require exactly k flips.
+Update best only after shrinking an invalid window.
 
 ## Language notes
 
-Python adds Boolean zero tests directly to its integer counter.
-Java uses explicit conditional increments and decrements for the same transitions.
+Python adds boolean expressions directly into the integer zero count.
+Java uses explicit conditions for increments and decrements; integer indices and counts are sufficient under the array-size constraint.

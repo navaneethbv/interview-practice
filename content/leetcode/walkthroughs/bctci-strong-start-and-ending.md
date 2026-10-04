@@ -1,49 +1,62 @@
 ## Intuition
 
-The desired good prefix and suffix are everything outside one middle interval.
-With k boosts, at least `totalBad - k` bad days must remain unboosted inside that interval.
-Maximizing the retained ends is therefore equivalent to minimizing a middle interval containing enough bad days.
+Strong Start and Ending is organized around Shortest Middle Window.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Try every prefix and suffix length, count their bad days, and keep the largest feasible nonoverlapping total.
-There are quadratically many boundary pairs.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Compute `must_keep`, the total number of bad days minus k.
-If it is nonpositive, every day can become good, so return n once rather than double-counting overlapping ends.
-Otherwise slide a window across sales while maintaining its count `bad`.
-As long as removing its leftmost day would still leave at least must_keep bad days, remove that day.
-For each right boundary with enough bad days, record the shortest such middle window.
-Return n minus that shortest length.
-All bad days outside the selected middle can be boosted within budget, making both outer pieces good.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Shortest Middle Window idea: Boosting the edge bad days leaves a middle stretch that must hold the rest; minimize that middle window.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named strongStartAndEnd can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 contains five bad days and allows two boosts, so the middle must retain at least three bad days.
-Indices one through three are three consecutive bad days and form a shortest qualifying middle of length three.
-Boosting the bad days at indices five and six makes the suffix from index four through seven good.
-Together with the initial good day, the good ends contain one plus four days.
-The answer is `8 - 3 = 5`.
+Example 1 uses input [[10, 0, 0, 0, 10, 0, 0, 10], 2] and expects 5.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 5.
+The same reasoning handles hidden cases [[0, 10, 0, 10], 1], [[], 3], [[5, 5], 5]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Both references scan the input to count bad days and then move each window pointer forward at most n times.
-Time is O(n), and auxiliary space is O(1).
+The imported workbook records the expected time bound as O(n).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty array returns zero.
-A budget covering every bad day returns n, including when the input is already all good.
-A day with exactly ten sales is good.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[0, 10, 0, 10], 1], [[], 3], [[5, 5], 5] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not count overlapping prefix and suffix days twice.
-The complement window must contain unboosted bad days, so its target is totalBad minus k, not k.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python adds Boolean bad-day tests to counters.
-Java uses conditional increments and an explicit ternary expression when testing whether the leftmost day can leave.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

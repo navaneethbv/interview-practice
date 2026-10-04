@@ -1,54 +1,49 @@
 ## Intuition
 
-Process companies by launch date so all previously seen companies are exactly the possible overshadowers.
-Only the largest and second-largest earlier advertising spends are needed to distinguish exactly one larger spend from zero or at least two.
+Processing companies in launch order turns the earlier launch condition into a property of everything already seen.
+Exactly one earlier spend exceeds the current spend precisely when it lies strictly between the largest and second largest earlier spends.
 
 ## Brute force
 
-Comparing every company with every other company takes O(n squared) time.
-Counting all earlier larger spends is unnecessary once the two largest earlier values are known.
+For each company, comparing its launch and advertising values against every other company takes O(n squared) time.
+The two largest earlier spends summarize everything needed to decide whether the overshadowing count is exactly one.
 
 ## Approach
 
 Sort original indices by `launches`.
-Before incorporating the current spend, test whether `second < value < maximum`.
-If so, exactly the maximum earlier spend is larger, and the current original index qualifies.
-Then update `maximum` and `second` to include this spend.
-Sort the accumulated original indices before returning them.
-Distinct launch days and distinct spends make the strict comparisons sufficient, without handling equal-date groups or repeated maxima.
+Maintain `maximum` and `second`, initially -1 because valid spends are positive.
+Before updating these values, append `index` if `second < value < maximum`.
+Update the top two spends, then sort `answer` by original index.
 
 ## Walkthrough
 
-```text
-Input: [[3, 1, 2], [4, 5, 3]]
-Output: [0, 2]
-```
-
-Example 1 processes original indices 1, 2, then 0 by launch day.
-Index 1 has spend 5 and no earlier company, so it does not qualify.
-Index 2 has spend 3, between the sentinel second value and maximum 5, so it qualifies.
-Index 0 has spend 4, between second 3 and maximum 5, so it also qualifies.
-Sorting selected indices produces `[0, 2]`.
+Example 1 processes original indices 1, 2, then 0.
+Spend 5 establishes the maximum.
+Spend 3 lies between -1 and 5, so index 2 qualifies and becomes second.
+Spend 4 lies between 3 and 5, so index 0 qualifies.
+Sorting gives `[0, 2]`.
 
 ## Complexity
 
-Sorting dominates at O(n log n) time.
-The order list and answer require O(n) extra space.
-The scan itself stores only two spend summaries.
+Sorting launch order and the final answer each take O(n log n) time in the worst case.
+The scan itself takes O(n).
+The index ordering and result require O(n) space; the two spend statistics need only constant space.
 
 ## Edge cases
 
-An empty input returns an empty list.
-The first company never qualifies.
-Increasing spends produce no overshadowed companies.
-A spend below the second-largest earlier spend has at least two overshadowers.
+The earliest company never qualifies because no earlier company exists.
+Increasing advertising spend yields no overshadowed companies.
+An empty input yields an empty answer.
+Distinct launch days and distinct spends make strict comparisons sufficient without grouping equal values.
 
 ## Common mistakes
 
-Update the maxima after testing; otherwise the company can interfere with its own comparison.
-Return original indices, not positions in launch order.
+Test the company before adding its spend to the running statistics.
+Do not return launch sorted indices because the contract asks for ascending original indices.
+Keeping only the maximum cannot distinguish one larger predecessor from several larger predecessors.
 
 ## Language notes
 
-Python sorts an index range using a key function.
-Java sorts boxed indices with a comparator, preserving both input arrays while retaining their original indexing.
+Python sorts `range(len(launches))` with a key function and updates the top pair simultaneously.
+Java sorts boxed indices with a comparator and performs the equivalent assignments explicitly.
+Both retain original array indices throughout the computation.

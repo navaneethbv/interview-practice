@@ -1,52 +1,47 @@
 ## Intuition
 
-A dynamic array separates allocated capacity from logical length.
-Indexed insertions and removals preserve a compact used prefix by shifting only the affected suffix.
+Separate logical length from backing capacity.
+Only the prefix of `values` before `length` belongs to the array, allowing deletion to leave stale storage while insertion shifts the live suffix.
 
 ## Brute force
 
-Allocating exactly one additional slot per insertion repeatedly copies the entire array and makes consecutive appends quadratic.
-Geometric growth amortizes that resizing cost, although middle insertions still require shifts.
+Allocating an exact sized array for every append causes quadratic copying across a growing sequence.
+Doubling capacity only when full spreads allocation cost over many operations, while indexed edits still shift affected elements.
 
 ## Approach
 
-Store values in a fixed-size buffer and maintain `length`.
-When full, allocate twice the capacity and copy live values.
-Insert shifts the suffix right before writing the new value; pop saves the removed value and shifts the following suffix left.
-Append calls insert at length.
-Contains scans only live positions, and remove finds the first matching value before calling pop and returning its old index.
-Get, set, size, and pop_back operate directly on indices or length.
+`insert` grows if needed, shifts entries right, writes `x`, and increments `length`.
+`pop` saves the removed value and shifts later entries left.
+`remove` finds the first match and delegates to `pop`; `contains` scans the live prefix.
 
 ## Walkthrough
 
-```text
-Input: ops = ["append", "append", "append", "pop", "get", "size"], args = [[1], [2], [3], [1], [1], []]
-Output: [null, null, null, 2, 3, 2]
-```
-
-Example 1 appends 1, 2, and 3, growing capacity as needed.
-Pop at index 1 saves 2 and shifts 3 into that position, leaving logical contents `[1, 3]`.
-Get at index 1 returns 3, and size returns 2.
-Unused buffer slots are irrelevant even if they still contain stale values.
+Example 1 appends 1, 2, and 3, leaving logical contents `[1, 2, 3]`.
+`pop(1)` saves 2 and shifts 3 into index 1, giving `[1, 3]`.
+The next `get(1)` returns 3 and `size()` returns 2.
 
 ## Complexity
 
-Get, set, size, and pop_back take O(1) time.
-Append is amortized O(1); insert, pop, contains, and remove take O(n) worst-case time.
-Capacity is O(M), where M is the maximum historical length, because the reference never shrinks its buffer.
+`get`, `set`, `size`, and `pop_back` take O(1).
+Append is amortized O(1), but a growing append can take O(n).
+Indexed insert, pop, contains, and remove take O(n) worst case.
+Storage is O(p), where p is peak length.
 
 ## Edge cases
 
-Insertion at length is valid and shifts nothing.
-Removing an absent value returns -1.
-Duplicate removal affects only the first occurrence.
+Insertion at `length` appends without shifting.
+Removing an absent value returns -1 and preserves contents.
+Duplicates remain except for the first matched occurrence.
+Empty capacity slots must never count as actual stored zeros.
 
 ## Common mistakes
 
-Right shifts must proceed backward to avoid overwriting values not yet moved.
-Search only through length, not through capacity.
+Shift right from the end when inserting, or unread values will be overwritten.
+Shift left from the removal point when deleting.
+Use logical length for membership checks, and distinguish `pop`, which returns a value, from void `pop_back`.
 
 ## Language notes
 
-Python copies and shifts with loops.
-Java uses `Arrays.copyOf` and overlap-safe `System.arraycopy`; its popBack method corresponds to Python's pop_back and returns no value.
+Python explicitly allocates and copies fixed capacity lists.
+Java uses `Arrays.copyOf` and overlapping `System.arraycopy` calls.
+The spec maps Python `pop_back` to Java `popBack`; neither method returns the removed value.

@@ -1,54 +1,46 @@
 ## Intuition
 
-Once one member of a triple is fixed, finding the other two becomes a sorted two-pointer search.
-Positions, rather than distinct values, define which elements may be used.
+Sorting makes the direction of a useful adjustment predictable.
+Once `first` is fixed, the remaining question is whether two later positions sum to `w - arr[first]`.
+A small pair sum needs a larger left value; a large pair sum needs a smaller right value.
 
 ## Brute force
 
-Three nested loops try O(n cubed) triples.
-Sorting makes it possible to eliminate many pairs at once instead of enumerating every third index independently.
+Try every triple of distinct indices and compare its sum with `w`.
+This takes O(n³) time and constant auxiliary space, but repeatedly explores pairs without using their order.
 
 ## Approach
 
-The reference sorts `arr` in place.
-For each `first` with at least two later elements, initialize `left = first + 1` and `right` at the end.
-Compare the three-value `total` with `w`.
-An undersized sum requires moving `left` rightward; an oversized sum requires moving `right` leftward.
-Return true as soon as equality is found.
-All three positions remain distinct because `first < left < right` throughout the inner loop.
-No duplicate-skipping logic is necessary for a boolean answer.
+Sort `arr`, then choose each possible `first` before the final two positions.
+Initialize `left = first + 1` and `right = n - 1`.
+Compute `total` from those three positions and return true when it equals `w`.
+If it is too small, every pair using that left value and a smaller right value also fails, so increment `left`.
+Apply the symmetric argument to decrement `right` when the sum is too large.
+Return false after every candidate first position is exhausted.
 
 ## Walkthrough
 
-```text
-Input: [[2, 2, -1, 8], 3]
-Output: true
-```
-
-Sorting Example 1 produces `[-1, 2, 2, 8]`.
-Fix -1 at index 0 and initially compare -1 + 2 + 8 = 9 with the target 3.
-Move `right` leftward to the second 2.
-The next sum is -1 + 2 + 2 = 3, so the result is true.
-Both 2 values are allowed because they occupy different positions.
+Example 1 sorts `[2, 2, -1, 8]` into `[-1, 2, 2, 8]`.
+With `first = 0`, `left = 1`, and `right = 3`, the total is 9.
+Move `right` to 2; the total becomes `-1 + 2 + 2 = 3`.
+The function returns true, using the two distinct positions containing 2.
 
 ## Complexity
 
-The nested scans take O(n squared) time, dominating sorting.
-Pointer storage is O(1), but Python sorting can use O(n) temporary space.
-Java primitive-array sorting has its own sorting workspace, so the complete method should not be described as universally constant-space.
+Sorting takes O(n log n), and the nested pointer scans take O(n²) overall.
+The search itself uses O(1) space; Python sorting may use O(n) temporary space, while Java primitive sorting uses a logarithmic stack.
 
 ## Edge cases
 
-Fewer than three elements cannot produce a triple.
-Three equal values are valid when their total matches `w`.
-Negative targets require no special branch.
+Fewer than three values return false naturally.
+Zeros, negative values, and duplicates need no special branch.
 
 ## Common mistakes
 
-Starting `left` at `first` would reuse an index.
-The reference mutates input order, which matters to callers retaining that array.
+Do not allow `left == right`, which would reuse one element.
+Skipping duplicate values is unnecessary for this boolean result.
 
 ## Language notes
 
-Python uses `list.sort`; Java uses `Arrays.sort`.
-The stated value bounds keep Java's three-term integer sum in range.
+Both references sort the input in place.
+Java `int` safely holds sums of three values under the stated bounds; Python integers grow automatically.

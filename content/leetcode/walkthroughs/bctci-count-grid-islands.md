@@ -1,53 +1,47 @@
 ## Intuition
 
-Every unvisited land cell belongs to exactly one island.
-Count it as a new island, then mark all land reachable through horizontal and vertical steps so no cell of that island starts another count.
+An island is exactly one connected component of land under four directional movement.
+After discovering any cell of an island, visiting every land cell reachable from it prevents that same island from being counted again.
 
 ## Brute force
 
-Starting an independent traversal at every land cell repeatedly explores the same island.
-Remembering visited cells turns those repeated searches into one traversal per component.
+Starting a fresh unrestricted traversal from each land cell would repeatedly explore the same component.
+The reference combines one grid scan with persistent visitation information, so each land cell enters a flood fill at most once.
 
 ## Approach
 
-Scan the grid in row order.
-Whenever a land cell has not been visited, increment `islands` and start a stack-based flood fill.
-Mark cells when pushing them, then repeatedly inspect their four orthogonal neighbors.
-Push only in-bounds land that has not already been marked.
-The flood fill reaches every cell in that connected component and no cell outside it.
-Consequently each component triggers exactly one increment during the outer scan.
+Scan coordinates in row order.
+When an unseen land cell is found, increment `islands`, mark it immediately, and place it on `stack`.
+Repeatedly pop a cell and push its unvisited land neighbors after marking them.
+Continue the outer scan after the stack becomes empty.
 
 ## Walkthrough
 
-```text
-Input: grid = [[0, 0, 1, 0], [1, 1, 0, 1], [0, 0, 1, 1]]
-Output: 3
-```
-
-In Example 1, cell `[0, 2]` is isolated orthogonally and starts the first island.
-Cells `[1, 0]` and `[1, 1]` form the second island.
-Cells `[1, 3]`, `[2, 3]`, and `[2, 2]` form the third.
-Diagonal contact between these groups does not connect them.
-The scan therefore returns 3.
+Example 1 first discovers the isolated land at row 0, column 2.
+The next new island contains `(1, 0)` and `(1, 1)`.
+The land at `(1, 3)` connects to `(2, 3)` and `(2, 2)`.
+These three flood fills produce answer 3.
 
 ## Complexity
 
-For N grid cells, time is O(N), since each land cell is processed once and has four neighbors.
-The stack can use O(N) space.
-Python additionally stores an O(N) visited set.
+For N total grid cells, scanning and exploring four neighbors per visited land cell takes O(N) time.
+The stack can hold O(N) cells.
+Python additionally stores up to O(N) coordinate pairs in `seen`, so both versions have O(N) worst case auxiliary space.
 
 ## Edge cases
 
-Empty grids and grids containing only water return zero.
-An all-land nonempty rectangle is one island.
-Corner-touching land remains separate without an orthogonal route.
+An empty grid or rows containing no land return zero.
+Diagonal contact alone does not join two islands.
+An entirely land filled rectangle is one island, while separated corner cells may represent several independent islands.
 
 ## Common mistakes
 
-Mark on insertion, not only on removal, to avoid duplicate pending entries.
-Do not add diagonal directions to the neighbor list.
+Mark neighbors when pushing them, rather than waiting until they are popped, to prevent duplicate pending work.
+Check row and column bounds before reading a neighbor.
+Include only up, down, left, and right connections in the traversal.
 
 ## Language notes
 
-Python preserves the input and stores coordinate tuples in `seen`.
-Java marks visited land by setting it to zero, so its reference mutates the grid while avoiding a separate visited collection.
+Python preserves the input by recording coordinate tuples in `seen`.
+Java's `sink` marks visited land by replacing it with zero in the grid.
+Both use explicit stacks, avoiding recursion depth limits on a large connected island.

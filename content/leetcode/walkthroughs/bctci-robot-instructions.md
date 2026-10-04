@@ -1,51 +1,47 @@
 ## Intuition
 
-The meaning of an instruction depends on the suffix that follows it.
-Compute suffix expansions from right to left so every needed continuation is already available.
-A doubling instruction combines two different suffixes, because its second pass skips one original instruction.
+A suffix beginning with `2` expands into two already describable suffixes: everything after it, followed by everything after the next instruction.
+This gives a direct recurrence that can be evaluated backward through the program.
 
 ## Brute force
 
-Interpret both passes recursively whenever a 2 appears.
-Repeated suffixes would be expanded again and again, and careless skipping of an expanded move would change the program's meaning.
+Recursively interpreting both passes without remembering suffix expansions repeats work for nested `2` instructions.
+The reference stores each suffix result, but still pays the cost of copying strings when concatenating those results.
 
 ## Approach
 
-Let `expansions[index]` hold the complete move string produced by the suffix beginning at that original index.
-Add two empty sentinel entries after the program.
-For L or R, concatenate that move with the following suffix expansion.
-For 2, concatenate `expansions[index + 1]` with `expansions[index + 2]`.
-The second term skips exactly the next original instruction, whether that instruction is a move or another 2.
-Fill indices backward and return the expansion at zero.
-This recurrence follows the instruction definition directly and avoids recursive control flow.
-It still stores complete expanded strings for all suffixes, so it is not a compact representation of the final program.
+Allocate `expansions` with two extra empty entries.
+From right to left, an L or R prepends itself to `expansions[index + 1]`.
+A `2` concatenates `expansions[index + 1]` with `expansions[index + 2]`.
+Return the expansion at index zero.
 
 ## Walkthrough
 
-Example 1 uses `2LR`.
-The suffix at index two expands to R.
-The suffix at index one expands to L followed by R, giving LR.
-At index zero, the 2 concatenates the expansion LR with the expansion R that skips the following original L.
-The final move sequence is LRR.
+For Example 1, `seq = "2LR"` first gives suffix R the expansion `R`.
+The preceding L gives `LR`.
+At the leading `2`, concatenate the full following expansion `LR` with the expansion after skipping L, namely `R`.
+The result is `LRR`.
 
 ## Complexity
 
-Let n be instruction count and S the sum of all stored suffix-expansion lengths.
-Both references take O(n + S) time and space because immutable-string concatenation copies those expansions.
-With final output length L, O(n times L + n) is a useful upper bound.
-Even a program without doubling can have quadratic total suffix storage.
+Let n be program length and L the final output length.
+The actual string copies cost the sum of stored suffix expansion lengths, bounded by O(nL).
+Stored suffix strings also require O(nL) worst case space, not merely O(n + L).
 
 ## Edge cases
 
-One move returns itself.
-Consecutive 2 instructions must skip an original instruction during the second pass, not merely remove the first resulting move.
+A program without `2` returns its original moves but still constructs all suffix strings.
+Consecutive `2` instructions are handled by the same recurrence.
+The statement forbids a trailing `2`, so every repeat instruction has a following instruction to skip.
 
 ## Common mistakes
 
-Do not claim linear complexity just because the outer loop is linear.
-The no-trailing-2 contract ensures each doubling has an instruction to skip.
+Skip one source instruction on the second pass, not one move from the already expanded output.
+These differ when the skipped instruction is another `2`.
+Do not claim linear time merely because the outer loop visits n indices.
 
 ## Language notes
 
-Python stores suffix strings in a list; Java stores them in a `String[]`.
-Both allocate new immutable strings when concatenating.
+Python and Java both use immutable string concatenation and retain every suffix expansion.
+Java initializes the two terminal strings explicitly; Python fills the entire list with empty strings.
+Neither implementation uses recursion, so nested instructions do not create call stack depth.

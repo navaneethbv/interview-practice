@@ -4,7 +4,6 @@
  "short": "Advanced System Design",
  "description": "How real distributed systems work: Dynamo, Cassandra, Kafka, Chubby, GFS, HDFS and BigTable, followed by 20 reusable system design patterns.",
  "source": "Grokking the Advanced System Design Interview.pdf",
- "download": "/course-assets/system-design/sources/advanced.pdf",
  "parts": [
   {
    "title": "Introduction",
@@ -554,5 +553,6 @@
     }
    ]
   }
- ]
+ ],
+ "download": "/course-assets/system-design/sources/advanced.pdf"
 }

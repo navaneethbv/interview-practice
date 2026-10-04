@@ -3,11 +3,10 @@
 Import the workbook with `python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx` after installing `openpyxl` in your Python environment.
 The importer writes `content/sets/sets.json` and `content/sets/problems.json`.
 Authored lists and metadata live in `scripts/ingest/custom_problem_sets.json` and are merged into the workbook catalog on every import.
-Update this source for authored catalog changes; new list IDs and problem slugs must not collide with workbook entries.
-The `workbookListOverrides` section records independently verified curated membership without modifying the workbook or other lists.
+Update this source for CTCI catalog changes; list IDs and problem slugs must not collide with workbook entries.
 The workbook contains 10 lists and 879 unique problems; its NeetCode 150 sheet contains 141 distinct entries.
-The authored NeetCode 150 membership was reconciled against the [official list](https://neetcode.io/practice/practice/neetcode150) on 2026-10-04 and contains all 150 entries.
-The nine added members reuse existing authored problems; the official WordDictionary URL maps to the existing `add-and-search-word-data-structure-design` slug to retain saved progress.
+The importer reconciles that sheet with the 150-entry official snapshot in `scripts/ingest/neetcode_150.json`, including a pinned source URL and review date.
+The reconciliation reuses existing slugs, including the historical Add and Search Word slug, so saved progress is preserved.
 LC 659 is merged into LC 271 as the workbook's duplicate entry.
 
 For each slug, author an original `content/leetcode/<slug>.md` statement, a `<slug>.json` spec, and a Python `<slug>.py` reference.
@@ -81,14 +80,14 @@ The BCTCI list includes all 37 online-chapter problems, using labels S.1-S.6, M.
 Its 232 entries still exclude book problems 34.9 and 39.8, which need additional harness support.
 Sliding Maximum and Matrix Rotation reuse the existing matching problems.
 The other online problems have original statements, Python and Java references, two fixed samples, and at least eight hidden cases.
-Run `python3 -B scripts/judge/test_bctci_online.py` for independent exhaustive and fixed small-instance reference checks, in addition to the normal judge gates.
+Run `python3 -B scripts/judge/test_bctci_online.py` for independent exhaustive and seeded small-instance reference checks, in addition to the normal judge gates.
 
 The online statements document their runner conventions explicitly.
 Map lookups return an empty list for a missing key or a singleton list for a stored integer, preserving the distinction without a nullable primitive type.
 Collection enumeration is ordered, union-find representatives are component minima, and MST reconstruction uses input order to break equal-weight ties.
 The string-labeled binary-tree problem uses child-index arrays so labels retain their original type without changing the shared numeric TreeNode helper.
 
-All 872 problems supported by the Python, Java, and SQLite runners are authored.
+All 1,141 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
 The remaining seven require JavaScript, shell, or pandas runners.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
 

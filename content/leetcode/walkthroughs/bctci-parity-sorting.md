@@ -1,49 +1,49 @@
 ## Intuition
 
-An even value already at the left side and an odd value already at the right side are correctly placed.
-An odd value on the left paired with an even value on the right can be fixed by one swap.
-Two inward-moving pointers repeatedly isolate and repair those misplaced pairs.
+Even values belong on the left and odd values on the right, with no ordering requirement inside either group.
+Two inward moving indices identify misplaced values that can fix each other's positions through a swap.
 
 ## Brute force
 
-Collect all even values, then all odd values, and copy the combined result back.
-That is linear in time but needs O(n) extra storage, which the in-place requirement avoids.
+Collecting evens and odds separately would need linear extra storage.
+Sorting by parity takes more comparisons than necessary.
+The reference partitions in place, taking advantage of the fact that any valid internal order is accepted.
 
 ## Approach
 
-Initialize `left` and `right` to the array endpoints.
-If `arr[left]` is even, advance the left pointer.
-Otherwise, if `arr[right]` is odd, retreat the right pointer.
-When neither condition holds, the left value is odd and the right value is even, so swap them.
-The next loop iterations recognize those corrected positions and advance the pointers.
-Throughout the loop, everything before `left` is even and everything after `right` is odd.
-Once the pointers meet or cross, the remaining single position, if any, can belong to either partition without violating the required order.
+Maintain `left` and `right`.
+Advance `left` when it already holds an even value.
+Otherwise retreat `right` when it holds an odd value.
+If neither condition applies, swap the odd left value with the even right value and reconsider the boundaries.
 
 ## Walkthrough
 
 Example 1 starts with `[1, 2, 3, 4, 5]`.
-The left 1 is misplaced, but rightmost 5 is already odd, so the right pointer moves to 4.
-Swapping 1 and 4 produces `[4, 2, 3, 1, 5]`.
-The left pointer passes the two evens, while the right pointer passes the corrected odd value.
-The partition is complete, matching the displayed valid arrangement.
+The final 5 is already odd, so move `right` to 4 and swap it with the initial 1.
+The array becomes `[4, 2, 3, 1, 5]`.
+Further boundary advances finish the valid partition.
 
 ## Complexity
 
-Both pointers move only inward and each swap repairs two boundary values.
-Runtime is O(n), and the references use O(1) auxiliary space.
-They mutate the provided array rather than returning a new arranged array.
+Each index moves only inward, and every swap fixes two boundary values that will be skipped next.
+Total time is O(n), with O(1) auxiliary space.
+The method returns no collection because the array itself is the output.
 
 ## Edge cases
 
-Empty, singleton, all-even, and all-odd inputs require no special branches.
-Negative integers are classified by divisibility exactly like positive integers.
+Empty and single element arrays already satisfy the partition.
+All even or all odd inputs need no swaps.
+Zero is even.
+Negative numbers are classified by whether their remainder is zero, just like positive numbers.
 
 ## Common mistakes
 
-The task does not require stable ordering within either parity group.
-Use nonzero remainder for oddness rather than assuming every odd remainder equals positive one.
+Do not require odd remainders to equal one, since negative odd integers can have remainder -1 in Java.
+Do not sort within parity groups or require stable order.
+After swapping, this reference intentionally advances pointers on subsequent loop iterations.
 
 ## Language notes
 
-Python swaps with tuple assignment.
-Java uses a temporary integer; its negative odd remainders still satisfy the reference's `!= 0` check.
+Python uses simultaneous assignment for swapping and Java uses a temporary integer.
+Both test oddness with `% 2 != 0`.
+The local `parityPartition` validator checks partition correctness and preservation of input values rather than one exact arrangement.

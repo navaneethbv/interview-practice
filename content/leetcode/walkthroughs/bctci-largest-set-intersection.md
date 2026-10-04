@@ -1,53 +1,48 @@
 ## Intuition
 
-After removing one set, only values present in every set or missing from exactly one set can survive the intersection.
-Global frequency counts identify both categories without repeatedly computing intersections.
+After removing one set, an element survives the intersection only if it appeared everywhere originally or was missing solely from the removed set.
+Element frequencies therefore describe every candidate intersection without constructing it.
+Elements absent from two or more sets cannot help any exclusion.
 
 ## Brute force
 
-Trying each excluded index and intersecting all other sets repeatedly revisits the same elements.
-A two-pass frequency calculation instead scores every exclusion from local membership information.
+For each possible excluded index, intersect all the other sets from scratch.
+This repeats nearly the same membership work n times and can take O(nM) time for M total input elements.
 
 ## Approach
 
-Count how many sets contain each value, relying on distinct entries within each set.
-Let `everywhere` count frequencies n and `missing_one` count frequencies n - 1.
-When excluding a group, all everywhere values survive.
-A missing-one value survives only if the excluded group is its missing group, so subtract the missing-one values actually present in that group.
-The score is `everywhere + missing_one - present_missing_one`.
-Scan indices in order and update only for a strictly larger score, preserving the smallest-index tie rule.
+Count how many sets contain each value in `counts`.
+Since each input group contains distinct values, one occurrence means membership in one set.
+Compute `everywhere`, the number of frequencies equal to n, and `missing_one`, the number equal to n - 1.
+For a candidate group, subtract from `missing_one` those near-universal values present in that group.
+Only the near-universal values absent from the excluded group become universal among the survivors.
+Add `everywhere` and update the best index only on a strictly larger size, preserving the earliest tie.
 
 ## Walkthrough
 
-```text
-Input: sets = [[1, 2, 3], [3, 2, 1], [1, 4, 5], [1, 2]]
-Output: 2
-```
-
-In Example 1, value 1 appears in all four sets and value 2 appears in exactly three.
-No other value occurs often enough.
-Set 2 is the sole set missing value 2, so excluding it preserves both 1 and 2.
-Every other exclusion preserves only 1.
-The best excluded index is therefore 2.
+Example 1 has four sets.
+Value 1 occurs four times, so `everywhere = 1`.
+Value 2 occurs three times, so `missing_one = 1`; all other values occur too rarely.
+Set 2 is the only set missing value 2.
+Excluding it leaves intersection `{1, 2}` of size two, while the other exclusions leave only `{1}`.
+The answer is index 2.
 
 ## Complexity
 
-For n sets and T total elements, expected time is O(n + T).
+For n sets and M total entries, expected time is O(n + M).
 The frequency map uses O(U) space for U distinct values.
-No intermediate intersections are built.
 
 ## Edge cases
 
-For one input set, return zero because excluding it leaves the defined empty intersection.
-Empty groups are valid.
-Equal scores keep the earliest index.
+For one set, excluding it leaves the defined empty intersection and returns 0.
+Empty groups are allowed and can be the best exclusion.
 
 ## Common mistakes
 
-Do not count repeated occurrences within a set as separate memberships; the statement guarantees they are absent.
-Using greater-than-or-equal for best updates breaks ties.
+Use strict improvement to honor the smallest-index tie rule.
+Do not treat repeated appearances within a group as separate memberships; the contract guarantees distinctness there.
 
 ## Language notes
 
-Python computes category counts with generators.
-Java uses an explicit map and loops, with the same distinct-set frequency interpretation.
+Python uses a dictionary and generators for the counts.
+Java uses `HashMap.merge` and explicit loops, with the same frequency categories.
