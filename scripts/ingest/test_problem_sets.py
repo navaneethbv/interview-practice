@@ -38,6 +38,22 @@ class CustomCatalogTests(unittest.TestCase):
         self.assertEqual(workbook_sets, sets)
         self.assertEqual(workbook_problems, problems)
 
+    def test_neetcode_reconciliation_preserves_workbook_and_authored_content(self):
+        root = Path(__file__).resolve().parents[2]
+        sets = json.loads((root / "content/sets/sets.json").read_text())
+        items = next(item["items"] for item in sets if item["id"] == "neetcode-150")
+        slugs = {item["slug"] for item in items}
+        self.assertEqual(len(items), 150)
+        self.assertEqual(len(slugs), 150)
+        additions = {"add-two-numbers", "graph-valid-tree", "happy-number",
+                     "multiply-strings", "number-of-connected-components-in-an-undirected-graph",
+                     "partition-equal-subset-sum", "plus-one", "powx-n", "redundant-connection"}
+        self.assertTrue(additions <= slugs)
+        self.assertIn("add-and-search-word-data-structure-design", slugs)
+        for slug in slugs:
+            for extension in (".md", ".json", ".py", ".java"):
+                self.assertTrue((root / "content/leetcode" / (slug + extension)).is_file())
+
     def test_rejects_collisions_and_missing_metadata(self):
         with self.assertRaisesRegex(ValueError, "Duplicate custom list"):
             merge_custom_catalog([{"id": "ctci"}], {})

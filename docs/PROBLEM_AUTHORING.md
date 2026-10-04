@@ -3,8 +3,11 @@
 Import the workbook with `python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx` after installing `openpyxl` in your Python environment.
 The importer writes `content/sets/sets.json` and `content/sets/problems.json`.
 Authored lists and metadata live in `scripts/ingest/custom_problem_sets.json` and are merged into the workbook catalog on every import.
-Update this source for CTCI catalog changes; list IDs and problem slugs must not collide with workbook entries.
+Update this source for authored catalog changes; new list IDs and problem slugs must not collide with workbook entries.
+The `workbookListOverrides` section records independently verified curated membership without modifying the workbook or other lists.
 The workbook contains 10 lists and 879 unique problems; its NeetCode 150 sheet contains 141 distinct entries.
+The authored NeetCode 150 membership was reconciled against the [official list](https://neetcode.io/practice/practice/neetcode150) on 2026-10-04 and contains all 150 entries.
+The nine added members reuse existing authored problems; the official WordDictionary URL maps to the existing `add-and-search-word-data-structure-design` slug to retain saved progress.
 LC 659 is merged into LC 271 as the workbook's duplicate entry.
 
 For each slug, author an original `content/leetcode/<slug>.md` statement, a `<slug>.json` spec, and a Python `<slug>.py` reference.

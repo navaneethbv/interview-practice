@@ -158,6 +158,20 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
                 raise ValueError(f"Missing metadata for {entry['slug']}")
     sets[:0] = custom["sets"]
 
+    # Reconcile curated membership while keeping the source workbook untouched.
+    for override in custom.get("workbookListOverrides", []):
+        matches = [item for item in sets if item["id"] == override["id"]]
+        if len(matches) != 1:
+            raise ValueError(f"Unknown workbook list override: {override['id']}")
+        slugs = [entry["slug"] for entry in override["items"]]
+        if len(slugs) != len(set(slugs)):
+            raise ValueError(f"Duplicate override entries: {override['id']}")
+        missing = set(slugs) - problems.keys()
+        if missing:
+            raise ValueError(f"Missing override metadata: {sorted(missing)}")
+        matches[0].update({key: override[key] for key in
+                          ("items", "sourceUrl", "sourceLabel")})
+
 
 def main(workbook: str):
     import openpyxl
