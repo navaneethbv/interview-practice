@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
+import { PracticeDataControls } from "@/components/PracticeDataControls";
 import { ProgressPanel } from "@/components/ProgressPanel";
+import { ResumePractice } from "@/components/ResumePractice";
 import { designChapters, getCourse, listDesignBooks, listProblems } from "@/lib/content";
 import { COURSE_SCOPE } from "@/lib/content-types";
 
@@ -31,6 +33,7 @@ export default function Home() {
               Open problems
             </Link>
           </div>
+          <ResumePractice />
           <ProgressPanel
             ids={problems.map((p) => p.id)}
             difficulties={problems.map((p) => p.difficulty)}
@@ -71,6 +74,7 @@ export default function Home() {
             />
           </div>
         </section>
+        <PracticeDataControls />
       </main>
     </>
   );
