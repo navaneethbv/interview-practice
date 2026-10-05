@@ -1,51 +1,45 @@
 ## Intuition
 
-Between training days, the recruiter count stays fixed.
-If r recruiters perform h hiring days and then one training day, the recruiter count becomes `(h + 1) * r` at a cost of h + 1 days.
+Several hiring days followed by one training day multiply the current recruiter count.
+If there are r recruiters and h consecutive hiring days, training produces `(h + 1) * r` recruiters at a cost of `h + 1` days.
 
 ## Brute force
 
-Searching all recruiter and untrained-employee states is possible for small n but ignores this multiplicative structure.
-Instead, choose a factorization of n whose factor sum is minimal.
+Search all states of trained and untrained staff using breadth-first search.
+Although bounded staff makes this finite, it stores many states that can instead be summarized by multiplicative growth phases.
 
 ## Approach
 
-Each useful hiring-and-training block multiplies the recruiter count by an integer factor f at a cost of f days.
-Splitting a composite factor ab into successive factors a and b costs a + b instead of ab, never more for a and b at least two.
-Repeated splitting therefore yields prime factors as an optimal choice.
-The reference trial-divides n, adding each discovered factor to answer and dividing it out repeatedly.
-Any remainder above one is a final prime factor and is added.
+The goal becomes factoring n into multipliers while minimizing their sum.
+A composite multiplier `a * b` can be replaced by phases a and b because `a + b <= a * b` for integers at least two.
+Therefore prime factors give an optimal cost.
+The reference repeatedly divides n by `factor`, adding that factor to `answer` each time.
+Once `factor * factor > n`, any remaining n greater than one is prime and contributes directly.
 
 ## Walkthrough
 
-```text
-Input: [6]
-Output: 5
-```
-
-Example 1 has n = 6 with factors 2 and 3.
-One hiring day plus one training day produces two recruiters in two days.
-Those two recruiters then hire on two days, creating four untrained employees, and train them on the next day.
-This produces six recruiters in three more days, totaling 5.
-Staff never exceeds six during this schedule.
+For Example 1, n is 6.
+Factor 2 divides it, so `answer` becomes 2 and the remaining n becomes 3.
+The loop stops and returns `2 + 3 = 5`.
+Operationally, hire once and train to get two recruiters in two days.
+Then hire twice and train, turning four additional employees into recruiters in three more days.
 
 ## Complexity
 
-Trial division takes O(sqrt(n)) time in the worst case and O(1) extra space.
-Removing small factors early often reduces the remaining trial range.
+Trial division takes O(sqrt(n)) time in the worst case, using the original target as the bound.
+Auxiliary space is O(1).
 
 ## Edge cases
 
-A prime target p requires p days through p - 1 hiring days and one training day.
-Repeated prime factors contribute repeatedly.
-Training with nobody untrained cannot improve an optimal schedule.
+A prime target requires that many days: hire target-minus-one times with the initial recruiter, then train.
+Repeated prime factors each contribute separately, as for powers of two.
 
 ## Common mistakes
 
-Do not count only distinct prime factors.
-The answer is the sum of factors, not their number or product.
+Do not add a prime factor only once when it divides repeatedly.
+Recruiters keep recruiting during hiring days, but newly hired employees cannot recruit until training.
 
 ## Language notes
 
-Python updates n with integer floor division.
-Java integer division has the same exact behavior because division occurs only after confirming divisibility.
+Python uses integer division to shrink n.
+Java's integer arithmetic is safe under the target limit of 10,000, including the squared factor loop condition.

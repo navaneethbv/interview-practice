@@ -1,52 +1,46 @@
 ## Intuition
 
-In a DAG, all paths into a node arrive from earlier nodes in a topological order.
-Once those predecessors have been processed, their path counts can be safely added and propagated onward.
+In a directed acyclic graph, every predecessor can be processed before the node it contributes to.
+This allows path counts to flow forward once, adding the number of ways to reach a predecessor for each outgoing edge.
 
 ## Brute force
 
-Enumerating every path can require exponential time even when the graph is small.
-Dynamic programming aggregates paths sharing the same destination.
+A traversal that explicitly enumerates complete paths may take exponential time because a DAG can contain exponentially many distinct paths.
+Counting contributions reuses work when many paths arrive at the same vertex.
 
 ## Approach
 
-Compute every vertex's indegree and enqueue all zero-indegree vertices.
-Set `paths[start] = 1` for the empty path and leave every other count zero.
-Remove vertices from the queue, adding their count to each outgoing neighbor modulo `MOD`.
-Decrement each neighbor's indegree and enqueue it when all predecessors have been processed.
-Every path to a neighbor has one final incoming edge, so summing predecessor contributions counts each path once.
-Vertices unreachable from start propagate zero.
+Compute every vertex's `indegree` and enqueue all vertices with zero indegree.
+Set `paths[start] = 1` for the empty path and leave other counts zero.
+When removing a `node`, add `paths[node]` to each neighbor's count modulo `MOD`.
+Decrease that neighbor's indegree and enqueue it only when all incoming edges have been processed.
+Processing the entire graph ensures that unreachable predecessors also release their indegree contributions without inventing paths.
 
 ## Walkthrough
 
-```text
-Input: graph = [[1], [], [1], [4], [1, 2, 5], [2]], start = 4
-Output: [0, 3, 2, 0, 1, 1]
-```
-
-Example 1 starts with one path at node 4.
-Its outgoing edges give one path each to nodes 1, 2, and 5.
-Node 5 contributes another path to node 2, bringing that count to 2.
-Node 2 then contributes two additional paths to node 1, bringing its count to 3.
-Nodes 0 and 3 are unreachable from start, so the result is `[0, 3, 2, 0, 1, 1]`.
+In Example 1, start is 4.
+After vertex 3 releases 4, vertex 4 contributes one path to vertices 1, 2, and 5.
+Vertex 5 adds another path to 2, making `paths[2] = 2`.
+Vertex 2 then contributes those two paths to 1, whose direct path from 4 already contributed one.
+The result is `[0, 3, 2, 0, 1, 1]`.
 
 ## Complexity
 
 For V vertices and E edges, time is O(V + E).
-Indegrees, counts, and the queue use O(V) extra space.
+Indegrees, counts, and the queue use O(V) auxiliary space beyond the input graph.
 
 ## Edge cases
 
-The starting vertex counts its empty path even if it has incoming edges from unreachable vertices.
-A singleton graph returns `[1]`.
-Disconnected regions remain zero in the output.
+A graph consisting only of the start returns `[1]`.
+Unreachable vertices keep zero counts.
+The start may itself have incoming edges from unreachable vertices without changing its empty-path count.
 
 ## Common mistakes
 
-Do not initialize every zero-indegree vertex with one path.
-Queueing only start can stall indegree processing when unreachable predecessors exist.
+A visited flag is insufficient for path counting because multiple predecessors must contribute.
+Do not process a node before all its incoming edges have been released.
 
 ## Language notes
 
-Python uses deque and reduces each addition modulo the constant.
-Java accumulates into long entries, then converts the reduced results to ints for the required return type.
+Python uses `deque` for efficient queue removal.
+Java uses long-valued counts during modular addition and converts the final reduced entries into the required integer array.

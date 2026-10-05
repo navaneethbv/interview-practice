@@ -1,53 +1,43 @@
 ## Intuition
 
-Every adjacent landing-year gap must be crossed either by aging or by one jump.
-A jump saves exactly that gap's length, so the largest gaps provide the greatest savings for the limited jump budget.
-
-## Brute force
-
-Trying every subset of at most k gaps is combinatorial.
-An exchange argument makes the optimal jump choices independent: replace any selected smaller gap with an unselected larger gap.
+Each gap between consecutive landing points normally contributes aging equal to its size.
+A jump can eliminate the aging for one gap, so the best use of `k` jumps is to remove the `k` largest gaps.
+The minimum possible aging is therefore the sum of all gaps after those largest gaps are discarded.
 
 ## Approach
 
-Compute differences between consecutive points.
-Sort the gaps and reserve the largest k for jumps.
-Sum the remaining gaps as the minimum unavoidable aging.
-Return whether that sum is at most maxAging.
-Exchanging a smaller jumped gap with a larger unjumped gap never increases aging, so some optimum always uses the largest k gaps.
-All gaps are nonnegative because landing years are sorted, and spending an available jump cannot worsen the result.
+Compute every consecutive gap in `points`.
+Sort the gaps from largest to smallest in Python, or ascending in Java.
+Skip the first `k` largest gaps and sum the rest.
+Return whether that minimum aging is at most `maxAging`.
 
 ## Walkthrough
 
-```text
-Input: points = [2020, 2024], k = 0, maxAging = 3
-Output: false
-```
-
-Example 1 contains only the gap from 2020 to 2024, whose length is four years.
-With k equal to zero, no gap can be removed from the aging sum.
-Minimum aging is therefore four.
-Since maxAging is three, reaching the final landing year is impossible and the result is false.
-The answer does not depend on the absolute calendar year, only on the four-year difference.
+For Example 1, the only gap is four years and no jumps are available, so all four years count as aging.
+Because four exceeds `maxAging = 3`, the method returns false.
+For Example 2, the gaps are `[58, 2, 2, 55, 9, 12, 23, 37, 20]`.
+Using four jumps removes the four largest gaps, leaving an aging total of forty five or less, so the result is true.
 
 ## Complexity
 
-Computing and summing gaps takes O(n) time, while sorting takes O(n log n).
-The gap array requires O(n) extra space.
-The original landing-year list is not changed.
+With `n` landing points, gap construction takes `O(n)` time and sorting takes `O(n log n)` time.
+The gap array uses `O(n)` auxiliary space.
+Java accumulates the answer in a `long` because a valid year difference can exceed the signed 32-bit range when summed.
 
 ## Edge cases
 
-With a jump for every gap, minimum aging is zero.
-Exactly meeting maxAging is allowed.
-Zero-length gaps, if present, provide no useful savings but need no special handling.
+When `k` equals the number of gaps, every gap is jumped and the remaining aging is zero.
+With zero jumps, the method sums every consecutive gap, which telescopes to the full time span.
+Large year values require subtracting in a widened type before adding gaps.
 
 ## Common mistakes
 
-Do not jump the smallest gaps.
-A jump covers only one adjacent gap, not an arbitrary interval spanning several landing points.
+Removing arbitrary gaps instead of the largest ones can leave more aging than necessary.
+Sorting ascending and skipping the first `k` values removes the smallest gaps and reverses the intended optimization.
+Comparing against `maxAging` before all retained gaps are summed can produce a premature result.
 
 ## Language notes
 
-Python sorts descending and sums after the first k entries.
-Java sorts ascending and sums the first number-of-gaps minus k entries, using long arithmetic for totals.
+Python creates a reverse-sorted list and sums the slice beginning at `k`.
+Java sorts ascending and sums the first `gaps.length - k` entries, which is the same retained set.
+Both references keep the original sorted landing-point order while choosing jumps by gap size.

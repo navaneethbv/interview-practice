@@ -1,50 +1,50 @@
 ## Intuition
 
-Every building must appear, including buildings with no apartments or no open requests.
-Start from buildings and preserve them through left joins.
-Count only matched request identifiers so an unmatched placeholder row contributes zero instead of one.
+Each open request is reached through its apartment and then its building.
+A left join beginning with Buildings preserves buildings that have no matching apartment or open request.
+Counting a request identifier after filtering the status gives zero for those preserved rows.
 
 ## Brute force
 
-For each building, scan its apartments and then all requests to count open matches.
-Repeated scans can be costly and make zero-count buildings easy to omit accidentally.
-A grouped outer join expresses the required preservation explicitly.
+A query could count requests separately for every building with a correlated subquery.
+That repeats the join work and is harder to extend when more building fields are selected.
 
 ## Approach
 
-Left join `Buildings b` to `Apartments a` using `BuildingID`.
-Then left join `Requests r` using both matching `AptID` and `r.Status = 'Open'` in the join condition.
-Group by the building ID and name.
-Select `COUNT(r.RequestID)` as `OpenRequests`.
-Putting the status filter in the join ensures buildings survive even when none of their requests satisfies it.
-The nullable request side supplies a zero count for those buildings.
+Start from Buildings and left join Apartments by BuildingID.
+Left join Requests by AptID while placing Status equal to Open in the join condition.
+Group by BuildingID and BuildingName.
+Count r.RequestID so unmatched rows contribute zero rather than one.
+Return the three columns named by resultColumns.
 
 ## Walkthrough
 
-Example 1 places apartments 10 and 11 in North, and apartment 20 in South.
-North has open requests 100 and 102; closed request 101 does not join as an open request.
-South's only request, 103, is closed, so its joined request identifier is null.
-The grouped counts are two for North and zero for South.
-Return `[[1, "North", 2], [2, "South", 0]]`.
+In Example 1, North joins apartments 10 and 11, and each has one open request.
+The closed request on apartment 10 is rejected by the join condition, so North counts 2.
+South still survives the first left join, but its only request is closed, so r.RequestID is null and COUNT returns 0.
 
 ## Complexity
 
-Runtime and temporary storage depend on SQLite's join order, indexes, and aggregation plan.
-Without useful indexes, repeated relation scans can dominate the work.
-Joined rows and grouping may require storage proportional to the participating data; the query itself does not impose a specific execution strategy.
+The query lets SQLite join and group the three tables in one statement.
+Its runtime depends on the table sizes and available indexes, and the grouped result uses one row per building.
+The query itself uses no temporary application-side storage.
 
 ## Edge cases
 
-A building with no apartments still appears with zero.
-Several requests for one apartment all count individually when open.
-Building names need not serve as unique identities.
+An empty Buildings table returns no rows.
+Buildings without apartments remain because both relationships use LEFT JOIN.
+Several open requests for one apartment are counted separately.
+Two buildings may share a name because grouping includes the unique BuildingID.
 
 ## Common mistakes
 
-`COUNT(*)` counts outer-join placeholder rows and can incorrectly return one.
-Filtering open status in WHERE removes buildings whose request side is null.
+Using INNER JOIN removes buildings whose open-request count should be zero.
+Putting Status = Open in a WHERE clause after the left join also removes those buildings.
+Counting apartment rows instead of request identifiers counts closed or requestless apartments incorrectly.
 
 ## SQLite notes
 
-SQLite's COUNT expression ignores nulls and returns zero for a group without matching request identifiers.
-The explicit alias supplies the required `OpenRequests` result column, and output order is unrestricted.
+The reference uses SQLite-compatible LEFT JOIN, COUNT, and GROUP BY syntax.
+COUNT(r.RequestID) ignores null request identifiers created by unmatched joins.
+The semicolon terminates the standalone query used by the SQLite runner.
+The result comparison is unordered, so no ORDER BY clause is required.

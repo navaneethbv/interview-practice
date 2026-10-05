@@ -23,4 +23,4 @@ Output: ["", "home", ".", "..", "", "Documents", ""]
 ## Constraints
 
 - `0 <= s.length <= 10^6`
-- `c` is exactly one character.
+- `c` contains exactly one Unicode code point.

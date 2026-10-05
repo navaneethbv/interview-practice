@@ -1,52 +1,45 @@
 ## Intuition
 
-A period sum equals all views through its right endpoint minus all views strictly before its left endpoint.
-One cumulative array allows every query to reuse those totals.
+Every requested interval is part of the same immutable sequence of daily views.
+Storing totals for all prefixes lets an interval total be recovered by subtracting the contribution of days that come before it.
 
 ## Brute force
 
-Summing each requested period directly costs O(nq) in the worst case for n days and q queries.
-Overlapping periods repeatedly add the same daily counts.
+Summing every requested range independently costs O(nq) in the worst case for n days and q queries.
+Overlapping queries repeat the same additions, so a single preprocessing pass can replace that repeated work.
 
 ## Approach
 
-Create `prefix` with an initial zero.
-After processing i days, `prefix[i]` is the sum of views at indices 0 through i - 1.
-Append each daily count to the previous cumulative sum.
-For an inclusive query `[l, r]`, return `prefix[r + 1] - prefix[l]`.
-The subtraction cancels exactly the days before l and retains both requested endpoints.
-Process periods in input order so the result positions correspond directly to the original queries.
+Build `prefix` with a leading zero and let `prefix[i]` mean the sum of the first i days.
+Append each new cumulative total.
+For inclusive endpoints `l` and `r`, return `prefix[r + 1] - prefix[l]` in the original query order.
 
 ## Walkthrough
 
-```text
-Input: views = [3, 5, 4, 8, 7, 2, 5, 3, 2, 3], periods = [[0, 1], [0, 5], [5, 8], [3, 3]]
-Output: [8, 29, 12, 8]
-```
-
-Example 1 builds prefix values `[0, 3, 8, 12, 20, 27, 29, 34, 37, 39, 42]`.
-Period `[0, 1]` gives 8 - 0 = 8.
-Period `[0, 5]` gives 29, and `[5, 8]` gives 39 - 27 = 12.
-The single-day period `[3, 3]` gives 20 - 12 = 8.
-Thus the result is `[8, 29, 12, 8]`.
+Example 1 builds prefixes `[0, 3, 8, 12, 20, 27, 29, 34, 37, 39, 42]`.
+The ranges give `8 - 0 = 8`, `29 - 0 = 29`, `39 - 27 = 12`, and `20 - 12 = 8`.
+Thus the returned array is `[8, 29, 12, 8]`.
 
 ## Complexity
 
-Preprocessing takes O(n) time and each query O(1), for O(n + q) total time.
-Extra storage is O(n) for prefixes plus O(q) for output.
+Preprocessing takes O(n) time and each query takes O(1), for O(n + q) overall.
+The prefix table uses O(n) auxiliary space, and the returned totals use O(q) output space.
+No sorting of periods is needed.
 
 ## Edge cases
 
-Queries beginning at zero use the initial zero prefix.
-A one-day query must retain that day's views.
-Zero-view days leave cumulative sums unchanged.
+A one day interval subtracts consecutive prefix entries and recovers that day's count.
+A range starting at zero uses the leading zero directly.
+Zero view days contribute nothing but still occupy positions in the prefix table.
 
 ## Common mistakes
 
-Using `prefix[r]` excludes the inclusive right endpoint.
-Subtracting `prefix[l + 1]` incorrectly removes the first requested day.
+The right endpoint is inclusive, so using `prefix[r]` omits its day.
+Subtract `prefix[l]`, not `prefix[l - 1]`.
+Keep the prefix index convention consistent rather than adding separate branches for intervals beginning at the first day.
 
 ## Language notes
 
-Python builds a list incrementally.
-Java allocates an n + 1 integer array; the stated maximum total remains below the signed-int limit.
+Python stores arbitrary precision cumulative integers.
+Java uses an `int[]`; with at most 100,000 days and each count below 10,000, the maximum cumulative total stays below one billion.
+Both references preserve the input arrays.

@@ -1,49 +1,46 @@
 ## Intuition
 
-The queue must remember every value in arrival order, but a maximum query needs only values that could still become the largest remaining item.
-A newly appended larger value makes smaller values behind the current maximum permanently irrelevant: those older values leave before the new one.
-Keep these candidates in a second deque.
+The FIFO queue preserves every value, while a second deque stores only values that could still become the maximum.
+A newer larger value makes older smaller candidates unnecessary because it will leave later.
 
 ## Brute force
 
-Maintain an ordinary FIFO queue and scan all its values for every maximum query.
-That makes each maximum query O(n), violating the required amortized constant time.
+Scanning the whole queue on every maximum query takes O(n) per query.
+Maintaining a decreasing candidate deque spreads the work of removing obsolete maxima across the push operations that make them obsolete.
 
 ## Approach
 
-`queue` stores all entries, while `maximums` stores a nonincreasing sequence of candidate values.
-On push, remove strictly smaller candidates from the back, then append the new value to both structures.
-On pop, remove the oldest queue value.
-If it equals the first maximum candidate, remove that candidate too.
-The maximum is always the front of `maximums`; peek and size use the ordinary queue.
-Equal candidates must remain separately represented because duplicate maxima can depart at different times.
+`push` appends to `queue`, removes strictly smaller values from the back of `maximums`, and appends the new value there.
+`pop` removes the FIFO front and removes the maximum front only if they match.
+Peek, max, and size read maintained state.
 
 ## Walkthrough
 
-Example 1 begins with size zero and pushes 2, giving candidate deque `[2]`.
-Pushing 5 removes candidate 2 and produces `[5]`, while the FIFO queue still contains `[2, 5]`.
-Pushing another 5 leaves candidates `[5, 5]`.
-Popping 2 leaves the maximum unchanged.
-The next pop removes the first 5 and one matching candidate, so the remaining maximum is still 5.
-After the last 5 leaves, pushing and popping 8 works on the emptied structures and size returns zero.
+Example 1 pushes 2, 5, and 5.
+The FIFO sequence is `[2, 5, 5]`, while maximum candidates are `[5, 5]`.
+Popping 2 leaves max 5.
+Popping the first 5 removes one maximum candidate, so the other 5 still supplies the next max query.
 
 ## Complexity
 
-Each value enters and leaves each deque at most once.
-Thus all operations are amortized O(1), although one push may remove O(n) candidates.
-Space is O(n), including repeated maximum values.
+Each value enters and leaves each deque at most once, making operations amortized O(1).
+An individual push can remove many candidates and take O(n).
+Peek, max, size, and pop are constant time; storage is O(n).
 
 ## Edge cases
 
-A decreasing sequence keeps every element as a candidate.
-The contract guarantees element-requiring queries are never called on an empty queue.
+Equal maxima must remain as separate candidates so successive pops preserve the correct maximum.
+Negative values require no special case.
+Queries requiring an element are guaranteed nonempty, and a completely drained queue can be reused.
 
 ## Common mistakes
 
-Removing equal values during push loses the multiplicity needed when one duplicate leaves.
-Candidate removal must correspond to the popped value, not the new queue front.
+Use a strict less than comparison when discarding tail candidates.
+Discarding equal values would lose multiplicity because this version stores values without occurrence indices.
+Do not remove from `maximums` merely because any ordinary queue element was popped.
 
 ## Language notes
 
-Python uses `deque`; Java uses `ArrayDeque<Integer>`.
-Both support constant-time operations at both ends without shifting array contents.
+Python uses two `collections.deque` instances.
+Java uses two `ArrayDeque<Integer>` instances and unboxes values for comparison.
+Void pushes are represented by null outputs in the operation transcript, while pop returns the removed integer.

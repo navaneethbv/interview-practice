@@ -1,3 +1,7 @@
+> **Historical architecture:** This imported chapter describes the ZooKeeper-era design.
+> Kafka 4.0 and later use KRaft; consult the updated Role of ZooKeeper, Controller Broker, and Kafka Delivery Semantics chapters in this collection.
+> [Apache Kafka upgrade documentation](https://kafka.apache.org/40/getting-started/upgrade/)
+
 ## What is Kafka?
 
 Apache Kafka is an open-source **publish-subscribe**-based messaging system (*Kafka can work as a message queue too, more on this later*). It is **distributed**, **durable**, **fault-tolerant**, and **highly scalable** by design. Fundamentally, it is a system that takes streams of messages from applications known as producers, stores them reliably on a central cluster (containing a set of brokers), and allows those messages to be received by applications (known as consumers) that process the messages.

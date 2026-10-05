@@ -1,50 +1,62 @@
 ## Intuition
 
-At each sentence position, either leave the next character unrecognized or consume a dictionary word beginning there.
-Once that choice is made, only the optimal answer for the remaining suffix matters.
-A suffix dynamic program therefore minimizes unrecognized characters without enumerating every possible spacing.
+Re-Space is organized around Best Split of Each Suffix.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Try every cut pattern between characters, score its recognized words, and choose the best.
-There are exponentially many cut patterns, and they repeatedly solve identical sentence suffixes.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Convert the dictionary to a set and record its longest word length.
-Let `best[start]` be the minimum unrecognized characters from start onward, with `best[n] = 0`.
-Process start indices backward.
-Initialize each state to one plus the next state's cost, treating the first character as unrecognized.
-For each dictionary-length-bounded ending position, test the substring and, when recognized, minimize with `best[end]`.
-Return `best[0]`.
-All referenced suffix states have already been computed because every end lies after start.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Best Split of Each Suffix idea: For each starting index, either leave one character unrecognized or consume a dictionary word, and memoize the best result.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named respace can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 contains `jesslookedjustliketimherbrother`.
-The dictionary recognizes `looked`, `just`, `like`, `her`, and `brother` as zero-cost chunks.
-The prefix `jess` contributes four unrecognized characters and the middle `tim` contributes three.
-The dynamic program can connect those recognized chunks around both gaps, giving total cost seven.
-No spacing can recognize those remaining characters using the supplied dictionary, so return 7.
+Example 1 uses input [["looked", "just", "like", "her", "brother"], "jesslookedjustliketimherbrother"] and expects 7.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 7.
+The same reasoning handles hidden cases [["a"], ""], [["abc"], "abc"], [["ab", "abc", "c"], "abcc"]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Let n be sentence length, L the maximum dictionary word length, and C dictionary characters.
-The references create and hash substrings, giving a conservative O(C + nL squared) time bound.
-Stored dictionary strings and the suffix table use O(C + n) space, plus a temporary O(L) substring.
+The imported workbook records the expected time bound as O(n^2).
+The imported workbook records the expected space bound as O(n + dictionary size).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty sentence costs zero.
-An empty dictionary leaves every character unrecognized.
-Several overlapping dictionary matches must all be considered.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [["a"], ""], [["abc"], "abc"], [["ab", "abc", "c"], "abcc"] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Always taking the longest available word is not generally optimal for later suffixes.
-Ignoring substring-copy cost understates the literal reference implementation's runtime.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses string slices and Java uses substring calls before hash-set lookup.
-Both return only the minimum count; they do not reconstruct the chosen spacing.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

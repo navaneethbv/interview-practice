@@ -1,50 +1,48 @@
 ## Intuition
 
-A building needs two independent witnesses: a strictly shorter building on the left and a strictly taller building on the right.
-Monotone stacks identify the nearest qualifying witness on each side.
+Only the nearest strictly smaller building on the left and nearest strictly greater building on the right matter.
+If either nearest witness lies outside distance k, every other witness on that side is farther away and cannot qualify.
 
 ## Brute force
 
-Scanning outward from every building takes quadratic time in the worst case.
-The nearest-witness stacks discard candidates that a newer, more useful building dominates.
+For each building, inspect up to k neighbors in each direction.
+That takes O(nk) comparisons and becomes quadratic when the visibility limit spans most of the street.
 
 ## Approach
 
-Scan left to right, popping heights at least the current height.
-The remaining stack top, if present, is the nearest strictly shorter building.
-Record whether it is within distance k.
-Then scan right to left, popping heights at most the current height, and combine the nearest strictly taller condition with the earlier result.
-Here k is the supplied visibility radius; if the nearest qualifying witness is too far away, every other qualifying witness is farther still.
-Each popped candidate can be replaced by a closer candidate at least as useful for future positions.
+Scan left to right with a monotonic stack of indices.
+Pop buildings at least as tall as the current one; the remaining top is its nearest strictly smaller left neighbor.
+Store whether that neighbor is within k in `answer`.
+Clear the stack and scan right to left, popping buildings no taller than the current one.
+Combine the existing answer with the distance test for the nearest strictly greater right neighbor.
+All comparisons use the original `street` values.
 
 ## Walkthrough
 
-```text
-Input: [[2, 5, 3, 8], 1]
-Output: [false, false, false, false]
-```
-
-In Example 1, building 5 has shorter 2 immediately left, but its nearest taller building is 8 two positions right, beyond k = 1.
-Building 3 has taller 8 immediately right, but its shorter left witness 2 is two positions away.
-The endpoints lack one side entirely.
-Every result is false.
+Example 1 uses `[2, 5, 3, 8]` and k one.
+Building 2 lacks a smaller left neighbor.
+Building 5 has visible smaller 2, but its next taller building 8 is two positions away.
+Building 3 has visible taller 8, but its smaller left witness 2 is two positions away.
+Building 8 has no taller building to its right.
+All four answers are false.
 
 ## Complexity
 
-Each index is pushed and popped at most once per pass, giving O(n) time.
-Stacks and output require O(n) space.
+Time is O(n), since each index is pushed and popped at most once per pass.
+The stack uses O(n) auxiliary space, and the returned boolean array has n entries.
 
 ## Edge cases
 
-Equal heights do not satisfy either strict condition.
-All comparisons use original buildings, even those marked false.
+Equal-height buildings are never strict witnesses.
+The first and last buildings cannot satisfy both sides.
+A large k removes distance restrictions but not strict height requirements.
 
 ## Common mistakes
 
-Do not remove failed buildings from the street before checking others.
-Store indices so visibility distances can be measured.
+Do not delete failed buildings before the second pass.
+Do not retain equal heights as qualifying witnesses.
 
 ## Language notes
 
-Python uses list stacks.
-Java uses ArrayDeque with its last element as the stack top, preserving the same monotone ordering.
+Python uses one reusable list stack.
+Java uses `ArrayDeque` from its last end, matching Python's append and pop operations on the stack top.

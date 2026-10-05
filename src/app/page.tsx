@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { PracticeDataControls } from "@/components/PracticeDataControls";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
 import { NavBar } from "@/components/NavBar";
-import { ResumePractice } from "@/components/ResumePractice";
+import { PracticeDataControls } from "@/components/PracticeDataControls";
 import { ProgressPanel } from "@/components/ProgressPanel";
+import { ResumePractice } from "@/components/ResumePractice";
 import { designChapters, getCourse, listDesignBooks, listProblems } from "@/lib/content";
 import { COURSE_SCOPE } from "@/lib/content-types";
 
@@ -22,7 +22,7 @@ export default function Home() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">Interview Practice</p>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Practice the questions that move you forward.</h1>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-fg-2">
-            Coding drills, pattern lessons, and system design notes in one focused workspace.
+            Coding drills, pattern lessons, and interview guides in one focused workspace.
           </p>
         </section>
 
@@ -34,12 +34,11 @@ export default function Home() {
             </Link>
           </div>
           <ResumePractice />
-          <h3 className="mb-2 text-sm font-medium text-fg-2">Grokking Patterns progress</h3>
           <ProgressPanel
             ids={problems.map((p) => p.id)}
             difficulties={problems.map((p) => p.difficulty)}
             scope={COURSE_SCOPE}
-            scopeLabel="Grokking Patterns"
+            scopeLabel="Coding practice"
           />
         </section>
 
@@ -54,7 +53,7 @@ export default function Home() {
               icon={<Code2 size={20} />}
               tone="bg-ok-soft text-ok"
               title="Coding problems"
-              meta={`${problems.length} Grokking problems + curated workbooks`}
+              meta={`${problems.length} problems`}
               body="Write Python or Java, run hidden edge-case tests, and track what you solve."
             />
             <TrackRow
@@ -69,9 +68,9 @@ export default function Home() {
               href="/system-design"
               icon={<Network size={20} />}
               tone="bg-brand-soft text-brand"
-              title="System design"
+              title="Interview guides"
               meta={designBooks.length ? `${designBooks.length} books · ${designChapterCount} chapters` : "Reading notes"}
-              body="Review interview frameworks, distributed systems, data systems, and operations."
+              body="Practice system design, AI architecture, testing, and behavioral interviews with worked examples."
             />
           </div>
         </section>

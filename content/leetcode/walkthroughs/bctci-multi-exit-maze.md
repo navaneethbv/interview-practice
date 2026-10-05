@@ -1,49 +1,46 @@
 ## Intuition
 
-Instead of asking every floor cell to find an exit, let all exits expand outward simultaneously.
-Breadth-first expansion reaches each cell at the smallest possible number of steps from any starting exit.
-This computes every nearest-exit distance in one traversal.
+All exits can begin a breadth first search simultaneously.
+The first wave to reach a cell necessarily comes along a shortest route from whichever exit is closest, so separate searches from every cell are unnecessary.
 
 ## Brute force
 
-Run a separate breadth-first search from each floor cell until reaching an exit.
-Repeatedly traversing the same passages can require quadratic work in the number of cells.
+Running BFS independently from each open cell can take quadratic work in the number of cells.
+A multi source BFS merges all those searches by expanding outward from every exit at distance zero.
 
 ## Approach
 
-Initialize the `distance` grid to -1 and enqueue every exit with distance zero.
-Repeatedly remove the oldest cell from the queue.
-Inspect its four orthogonal neighbors and ignore out-of-bounds cells, walls, and already assigned cells.
-Assign each new neighbor the current distance plus one, then enqueue it.
-Marking a cell when enqueued ensures it enters the queue only once.
-Because all exits begin in the same queue at distance zero, wavefronts compete in increasing distance order and the first assignment is optimal.
-Walls keep their original -1 values.
+Initialize all `distance` entries to -1 and enqueue each exit after setting it to zero.
+Pop cells in FIFO order and inspect four neighbors.
+For each unvisited nonwall neighbor, assign the current distance plus one and enqueue it once.
 
 ## Walkthrough
 
-Example 1 begins with exits at `(0, 5)`, `(1, 0)`, and `(4, 1)`.
-The cell `(0, 0)` receives distance 1 from `(1, 0)`, while `(0, 1)` and `(0, 2)` receive 2 and 3.
-The wall at `(0, 3)` remains -1 and prevents crossing that row directly.
-The lower passage eventually reaches `(4, 3)` with distance 6.
-The resulting grid matches the local example's distances from the nearest available exit, not from a single designated exit.
+Example 1 seeds exits `(0,5)`, `(1,0)`, and `(4,1)`.
+The first wave sets `(0,0)` and `(2,0)` to one from the left exit, and `(0,4)` and `(1,5)` to one from the upper right exit.
+Later waves route around walls; `(4,3)` reaches distance 6.
 
 ## Complexity
 
-For r rows and c columns, both references take O(r times c) time.
-The distance grid and queue each require O(r times c) worst-case storage.
+For R rows and C columns, initialization and traversal take O(RC) time.
+Each cell enters the queue at most once and has four neighbor checks.
+The distance grid and worst case queue each use O(RC) space.
 
 ## Edge cases
 
-An exit always has distance zero.
-A cell adjacent to several exits is assigned once.
-The problem guarantees every open cell can reach an exit.
+Exits keep distance zero, including an isolated exit surrounded by walls.
+Walls remain -1.
+The statement guarantees every open cell can reach some exit, so no other cells should remain unvisited.
+Multiple equally near exits require no tie breaking.
 
 ## Common mistakes
 
-Do not allow diagonal movement.
-Starting separate sequential searches without allowing distance improvements can preserve a longer distance from an earlier exit.
+Enqueue every exit before processing any wave.
+Mark a distance when enqueuing, not when dequeuing, to avoid duplicate visits.
+Manhattan distance alone is insufficient because walls may force long detours, and diagonal steps are forbidden.
 
 ## Language notes
 
-Python uses coordinate tuples in `deque`.
-Java uses `int[]` coordinates in `ArrayDeque` and explicitly fills distance rows with -1.
+Python uses coordinate tuples in a `deque` and indexes row strings.
+Java uses integer coordinate arrays in `ArrayDeque` and reads characters with `charAt`.
+Both references build a separate distance matrix and preserve the input maze.

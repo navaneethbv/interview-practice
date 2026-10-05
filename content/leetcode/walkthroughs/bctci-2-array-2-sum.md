@@ -1,51 +1,45 @@
 ## Intuition
 
-The sorted input already provides an efficient membership index without using additional storage.
-Scan the unsorted input in its original order so that the first successful lookup also satisfies the smallest-j rule.
+Only one array is sorted, so binary search can test whether each unsorted value has its opposite in the sorted array.
+Processing unsorted positions from left to right also enforces the required smallest `j`.
 
 ## Brute force
 
-Comparing every element of one array with every element of the other costs O(nm) time.
-A hash table could improve lookup speed, but would violate the required constant extra space.
+Checking every pair takes O(nm) comparisons for lengths n and m.
+A hash table would speed up membership checks, but it would violate the explicit constant extra space requirement for this problem.
 
 ## Approach
 
-For each `value` at index `j`, search `sorted_arr` for `-value` using `_find`.
-The inclusive interval `[low, high]` contains every remaining possible match.
-Compare the middle value with the target and discard the half that cannot contain it.
-Return `[i, j]` immediately after a successful search; return `[-1, -1]` only after every `j` fails.
-Distinct values ensure the matching sorted-array index is unambiguous.
+For each `j, value`, call `_find(sorted_arr, -value)`.
+The helper maintains inclusive bounds `low` and `high`, discarding the half that cannot contain `target` after comparing `arr[mid]`.
+Return `[i, j]` immediately when a match exists.
 
 ## Walkthrough
 
-```text
-Input: sorted_arr = [-5, -4, -1, 4, 6, 7], unsorted_arr = [-3, 7, 18, 4, 6]
-Output: [1, 3]
-```
-
-The first three unsorted values are -3, 7, and 18.
-Their required partners 3, -7, and -18 are absent.
-At `j = 3`, the value 4 requires -4, which binary search finds at `i = 1`.
-The returned pair is therefore `[1, 3]`; later connections between the arrays cannot improve its second index.
+In Example 1, values -3, 7, and 18 require 3, -7, and -18, none of which occur.
+At `j = 3`, value 4 requires -4.
+Binary search finds -4 at sorted index 1, so the result is `[1, 3]`.
 
 ## Complexity
 
-For sorted length n and unsorted length m, time is O(m log(n + 1)).
-The iterative search and outer loop use O(1) extra space.
-Neither input is sorted or modified by this solution.
+With n sorted elements and m unsorted elements, worst case time is O(m log(n + 1)).
+Both references use O(1) auxiliary space and return a fixed size pair.
+Neither reference changes either input array.
 
 ## Edge cases
 
-A single-element sorted array still supports a valid match.
-Zero matches zero across the two separate arrays.
-If all complements are absent, both returned indices must be -1.
+A matching pair may include zero in both arrays.
+A single element sorted array still follows the same search rule.
+When no opposite exists for any value, return the two element sentinel `[-1, -1]`.
 
 ## Common mistakes
 
-Sorting the unsorted array loses the original-index tie rule.
-Returning `[j, i]` reverses the required index order.
+Do not sort `unsorted_arr`, because its original index determines the tie break.
+Do not stop at the smallest sorted index across all pairs.
+The search target is the negation of the value, not the value itself.
 
 ## Language notes
 
-Python implements binary search explicitly with integer midpoint division.
-Java uses `Arrays.binarySearch`, whose negative results indicate absence rather than valid indices.
+Python implements the inclusive binary search directly with integer division.
+Java uses `Arrays.binarySearch`, whose negative failure result is not a valid index.
+The given value bounds make negation safe for a Java `int`.

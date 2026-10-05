@@ -1,44 +1,46 @@
 ## Intuition
 
-A queen attacks along eight straight rays, stopping at the board boundary or an original queen.
-Mark those rays in a separate result grid so newly marked attacked squares do not become false blockers.
-The original board remains the authoritative source of queen positions.
+A queen's attacks extend along eight straight rays until blocked by another queen or the board edge.
+Keep the original board separate from marked attacks so an attacked empty cell never becomes a new blocking queen.
+
+## Brute force
+
+For every empty cell, searching all rows, columns, and diagonals can repeat long scans.
+The supplied reference instead begins at each actual queen and directly marks every empty cell on its reachable rays.
 
 ## Approach
 
-Copy the board into `unsafe`, preserving queen cells as ones.
-Visit every original cell and launch rays only when it contains a queen.
-For each combination of row and column direction from -1, 0, and 1 except the all-zero direction, start at the adjacent square.
-While the square remains inside the board and is empty in the original board, mark it unsafe and advance along the same direction.
-Stop at an original queen, which is already marked unsafe by the initial copy.
-Once all queens have been processed, return the accumulated grid.
+Copy the board into `unsafe` to preserve queen cells.
+For each queen, consider every pair `dr, dc` from -1 through 1 except `(0, 0)`.
+Advance along that direction while inside the board and on original empty cells, marking each destination unsafe.
 
 ## Walkthrough
 
-Example 1 has queens at `(0, 3)` and `(3, 0)`.
-The first queen marks the top row, the rightmost column, and the down-left diagonal.
-The second marks the bottom row, the leftmost column, and that same diagonal in the other direction.
-Cells `(1, 1)` and `(2, 2)` are on neither queen's row, column, or diagonal, so they remain zero.
-All other cells become one, matching the displayed result.
+Example 1 has queens at `(0,3)` and `(3,0)`.
+They mark their entire rows and columns plus the shared descending diagonal through `(1,2)` and `(2,1)`.
+The cells `(1,1)` and `(2,2)` remain safe, producing zeros only at those positions.
 
 ## Complexity
 
-A straightforward per-queen bound is O(q times n) ray work for q queens on an n by n board.
-A tighter aggregate bound is O(n squared): along any row, column, or diagonal, each empty gap is traversed at most once from either end before an original queen blocks further movement.
-The board scan and output copy are also O(n squared).
-Output storage is O(n squared), with constant ray-traversal state.
+The simple per queen bound is O(n squared + qn) for q queens.
+A tighter bound is O(n squared): each empty cell can be scanned by only the nearest queen in each of eight directions because queens block rays.
+The copied output uses O(n squared) space.
 
 ## Edge cases
 
-A board with no queens returns all zeros.
-A queen on a corner has only three rays extending into the board.
+A board with no queens returns an unchanged all zero copy.
+A queen cell is unsafe even if no other queen attacks it.
+Adjacent queens stop each other's rays immediately.
+A one cell board preserves either zero or one.
 
 ## Common mistakes
 
-Do not test blockers in `unsafe`, since previously attacked empty cells are still traversable.
-Skip the zero direction to avoid an infinite loop.
+Exclude direction `(0, 0)` or the traversal cannot progress.
+Check blockers in `board`, not in `unsafe`.
+Do not add knight moves or stop a ray at an already attacked empty cell; neither matches queen movement.
 
 ## Language notes
 
-Python precomputes the eight direction pairs.
-Java generates them with nested loops and copies each row independently.
+Python precomputes direction pairs in a class constant and copies each row.
+Java nests direction loops inside `markAttacks` and clones rows.
+Both references preserve original occupancy, which is essential for correct blocking behavior.

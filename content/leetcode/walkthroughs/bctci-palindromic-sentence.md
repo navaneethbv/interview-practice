@@ -1,49 +1,48 @@
 ## Intuition
 
-Only ASCII letters matter, so punctuation, digits, and spaces can be skipped as the pointers move inward.
-Compare retained letters without regard to case.
-This achieves the same result as filtering and lowercasing the whole sentence, while avoiding an extra string.
+The answer depends only on the sequence of ASCII letters after filtering and normalizing case.
+Two pointers can compare that sequence from both ends without allocating a cleaned copy.
 
 ## Brute force
 
-Construct a lowercase string containing only letters, reverse it, and compare the two strings.
-This takes linear time but allocates storage proportional to the number of retained letters.
+Building a lowercase filtered string and then reversing it takes O(n) extra space.
+The direct scan keeps the same linear time while using constant auxiliary space.
 
 ## Approach
 
-Start `left` and `right` at the sentence's ends.
-If the left character is not an ASCII letter, advance only the left pointer.
-Otherwise, if the right character is not a letter, move only the right pointer.
-When both are letters, compare their lowercase forms and return false on a mismatch.
-For a match, move both pointers inward.
-Return true when they meet or cross.
-Each iteration either discards an irrelevant character or validates one mirrored pair, so no relevant letter is lost.
+1. Place `left` at the beginning and `right` at the end of `s`.
+2. Advance `left` past every non-letter and retreat `right` past every non-letter.
+3. Compare the lowercase letters at the two pointers.
+4. Return false immediately on a mismatch, otherwise move both pointers inward.
+5. Return true when the pointers meet or cross.
 
 ## Walkthrough
 
-Example 1 is `Bob wondered, 'Now, Bob?'`.
-Ignoring nonletters and case yields `bobwonderednowbob`.
-The outside comparisons match b with b, o with o, and b with b.
-Continuing inward matches w, o, n, d, and e with their corresponding mirrored letters around the center.
-Every retained pair agrees, so the result is true despite spaces, punctuation, and uppercase letters in the original sentence.
+Example 1 compares the letters in `"Bob wondered, 'Now, Bob?'"` from the outside inward.
+The outer `B` and `b` match after case folding, and punctuation or spaces are skipped whenever a pointer reaches them.
+The remaining pairs also match, so the scan finishes without a mismatch and returns true.
 
 ## Complexity
 
-Each pointer moves across at most n characters in total.
-Both references therefore take O(n) time and O(1) auxiliary space.
-They lowercase one character at a time rather than allocating a normalized copy of the full input.
+- Time: O(n), because each input character is passed by a pointer at most once.
+- Space: O(1), excluding the input string and the constant helper state.
 
 ## Edge cases
 
-An empty sentence or one containing no letters is palindromic under this contract.
-Digits are ignored even when they would change the result of an alphanumeric palindrome check.
+An empty string returns true because there is no pair that can disagree.
+A sentence containing no letters also returns true.
+A single letter is already a palindrome regardless of case.
+Digits and punctuation are ignored even when they sit between matching letters.
 
 ## Common mistakes
 
-Do not use an alphanumeric test, since numeric characters must be skipped.
-Move only the pointer whose current character is being discarded.
+- Treating digits as letters changes the filtered sequence.
+- Comparing original case makes valid pairs such as `B` and `b` fail.
+- Moving both pointers after skipping only one side can skip a letter.
+- Using Unicode letter checks would exceed this problem's explicit ASCII contract.
 
 ## Language notes
 
-Both helpers explicitly restrict accepted lowercase characters to a through z.
-Python uses `lower`; Java uses `Character.toLowerCase`, followed by the same ASCII range check.
+Python checks the lowercase character against `a` through `z`.
+Java uses `Character.toLowerCase` but then explicitly limits the result to ASCII letters.
+Both methods use the same left-first, right-second skip order as the reference code.

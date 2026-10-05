@@ -1,3 +1,7 @@
+> **Historical architecture:** This imported chapter describes the ZooKeeper-era design.
+> Kafka 4.0 and later use KRaft; consult the updated Role of ZooKeeper, Controller Broker, and Kafka Delivery Semantics chapters in this collection.
+> [Apache Kafka upgrade documentation](https://kafka.apache.org/40/getting-started/upgrade/)
+
 ## What is a consumer group?
 
 A consumer group is basically a set of one or more consumers working together in parallel to consume messages from topic partitions. Messages are equally divided among all the consumers of a group, with no two consumers receiving the same message.

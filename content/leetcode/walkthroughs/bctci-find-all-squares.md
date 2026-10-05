@@ -1,52 +1,48 @@
 ## Intuition
 
-A value's square can be found through a direct value-to-index lookup.
-The distinct-input guarantee means every present square has exactly one target index, so no index lists are needed.
+The mathematical relation directly identifies the only candidate partner for each value: its square.
+A map from values to original indices lets us test that partner immediately.
+Distinct input values ensure each square has at most one index.
 
 ## Brute force
 
-Comparing the square of every value with every other entry costs O(n squared) time.
-A hash map turns each square search into an expected constant-time lookup.
+Try every ordered pair of positions and test whether the second value equals the square of the first.
+This uses O(n²) comparisons and O(1) auxiliary space apart from output.
 
 ## Approach
 
-First build `position`, mapping each array value to its original index.
-Then scan every value at index i, compute its square, and check whether that square is in position.
-If present, append `[i, position[square]]`.
-The map is complete before scanning, so squares are found whether they occur earlier or later in the array.
-Every index is considered once as the base, which emits all valid pairs without duplicate generation.
+Build `position` by recording each value and its input index.
+Scan `arr` again with index i and value `value`.
+Compute `value * value` and look it up in `position`.
+When found, append `[i, position[value * value]]` to the result.
+The lookup must use the squared value rather than a square root, avoiding floating-point accuracy concerns.
+Each valid ordered pair is emitted when its first index is scanned, so it appears exactly once.
 
 ## Walkthrough
 
-```text
-Input: arr = [4, 10, 3, 100, 5, 2, 10000]
-Output: [[5, 0], [1, 3], [3, 6]]
-```
-
-In Example 1, value 2 at index 5 squares to 4 at index 0, giving `[5, 0]`.
-Value 10 at index 1 squares to 100 at index 3, giving `[1, 3]`.
-Value 100 at index 3 squares to 10000 at index 6, giving `[3, 6]`.
-No other base has its square present.
-The reference may enumerate these pairs in a different order, which is accepted.
+Example 1 is `[4, 10, 3, 100, 5, 2, 10000]`.
+The value 4 has no partner 16, while 10 finds 100 at index 3 and contributes `[1, 3]`.
+The value 100 finds 10000 at index 6, contributing `[3, 6]`.
+The value 2 finds 4 at index 0, contributing `[5, 0]`.
+The other squares are absent.
+These are the same three pairs as the example, although their listing order differs.
 
 ## Complexity
 
-Building the map and querying once per element takes expected O(n) time.
-The map and output require O(n) space.
-No sorting or modification of the input is needed.
+Building and probing the hash map takes O(n) expected time.
+The map requires O(n) space, and there are at most n output pairs.
 
 ## Edge cases
 
 An empty array returns no pairs.
-Value 1 pairs with its own index, explicitly allowed here.
-A square larger than every input value simply fails the lookup.
+For value 1, its square is itself, and `[i, i]` is explicitly allowed by the statement.
 
 ## Common mistakes
 
 Return indices rather than values.
-Do not forbid i equal to j, since that would lose the valid value-1 case.
+Do not impose a distinct-index requirement, which would incorrectly exclude 1.
 
 ## Language notes
 
-Python integers safely represent large squares.
-Java casts before multiplication and uses Long map keys, so squaring an int cannot overflow before the lookup.
+Java promotes the value to long before multiplication and uses `Map<Long, Integer>`.
+This matters because squaring a valid value as large as one billion exceeds int range, even when the square is absent.

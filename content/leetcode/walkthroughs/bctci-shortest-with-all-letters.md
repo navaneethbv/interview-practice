@@ -1,50 +1,49 @@
 ## Intuition
 
-A valid window must cover letter multiplicities, not merely include each distinct letter once.
-Track how many more copies of each required letter are needed, and count how many distinct requirements are still unsatisfied.
-This makes validity a constant-time check while the window moves.
+A valid window must satisfy letter multiplicities, not merely contain distinct required letters.
+Track remaining deficits for each required letter.
+Once all deficits are satisfied, shrinking the window finds the shortest valid ending at the current right boundary.
 
 ## Brute force
 
-Check every substring by counting its letters and comparing with the target frequencies.
-This requires quadratic or worse work in the source length.
+Try every substring and count its letters to test whether it covers s2.
+Even with incremental counts for each start, this requires O(n²) candidate windows.
 
 ## Approach
 
-Build `need` from s2 and initialize `missing` to its number of distinct letters.
-When a required letter enters the window, decrement its need count.
-If that count reaches zero, one previously unsatisfied requirement is now fulfilled.
-Negative counts represent harmless surplus copies.
-Whenever missing becomes zero, record the current length and repeatedly remove leftmost characters.
-A required count rising from zero to one makes the window invalid again.
-Continue extending until all source characters are processed, returning -1 if no valid length was recorded.
+Build `need` from s2 and initialize `missing` to the number of distinct required letters.
+When adding a required letter, decrement its deficit; a transition to zero satisfies that letter and decrements missing.
+Negative deficits represent surplus occurrences.
+While missing is zero, update best and remove the leftmost character.
+If removing a required character changes its deficit to one, that letter becomes unsatisfied and shrinking stops.
+The loop considers every minimal valid window endpoint without moving either pointer backward.
 
 ## Walkthrough
 
-Example 1 requires w once, e once, and l twice from `helloworld`.
-The window through the w at index five first contains every requirement.
-Removing the initial h leaves `ellow`, length five, which still contains e, both l characters, and w.
-Removing the e would break its requirement, so shrinking stops.
-Later extensions cannot find a shorter valid window, and the answer is 5.
+Example 1 uses `s1 = "helloworld"` and `s2 = "well"`.
+The required counts are w:1, e:1, and l:2.
+At index 5, the prefix `hellow` first satisfies them all.
+Removing the unnecessary h leaves `ellow`, of length five.
+Removing e would make e deficient, so the valid shrinking phase ends.
+No later window can replace that sole e with another occurrence.
+The minimum returned length is 5.
 
 ## Complexity
 
-Both pointers traverse s1 only once, and building requirements scans s2 once.
-Time is O(length(s1) + length(s2)).
-Python stores at most 26 map entries, using O(1) alphabet-bounded auxiliary space.
-Java also has fixed-size arrays, but its `s2.toCharArray()` calls temporarily allocate O(length(s2)) space.
+For lengths n and m, counting and pointer scans take O(n + m) time.
+The lowercase alphabet bounds count storage by 26, giving O(1) auxiliary space.
 
 ## Edge cases
 
-A repeated required letter needs every requested copy.
-Unrequired source letters may be skipped during shrinking without affecting missing.
+If a required letter or multiplicity never appears, best remains unset and the result is -1.
+Extra copies of required letters can be removed while their deficits remain nonpositive.
 
 ## Common mistakes
 
-Do not count distinct letters as though multiplicities were irrelevant.
-Only zero-crossing transitions change the number of unsatisfied requirements.
+Do not decrement missing for every occurrence of a required character.
+Only crossings between deficient and satisfied status change it.
 
 ## Language notes
 
-Python factors inclusion and exclusion into helpers.
-Java separates the permanent `required` flags from mutable need counts so surplus and absent letters remain distinguishable.
+Python uses a dictionary containing only required letters.
+Java uses `need[26]` plus a `required` mask so unrelated letters do not alter deficit tracking.

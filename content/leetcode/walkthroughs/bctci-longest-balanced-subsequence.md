@@ -1,52 +1,48 @@
 ## Intuition
 
-A closing parenthesis should pair with the nearest unmatched earlier opener whenever one exists.
-Mark both positions of every successful pair and discard all unpaired positions afterward, preserving the original order of the remaining characters.
+A closing parenthesis can be retained only if an earlier unmatched opener exists.
+Pairing it immediately cannot reduce the maximum number of pairs, and using the nearest available opener follows the problem's explicit rule for selecting a unique answer.
 
 ## Brute force
 
-Trying all subsets of positions takes exponential time.
-Keeping only counts could find a length but would lose the required nearest-opener tie rule for the returned string.
+Enumerate all subsequences and select the longest balanced one.
+There are exponentially many choices, and an arbitrary longest answer may still violate the specified nearest-opener matching convention.
 
 ## Approach
 
-Maintain a stack of opener indices and a boolean `keep` array.
-Push each opening parenthesis.
-For a closing parenthesis with a nonempty stack, pop the nearest opener and mark both positions true.
-Unmatched closers and leftover openers stay false.
-Build the result by scanning the original string and retaining marked characters.
-Greedily matching an available opener cannot reduce the number of future matches: the current closer cannot match a later opener, while the chosen pair uses one available opener exactly once.
+Create a boolean `keep` array and an `openers` stack of indices.
+Push the index of each opening parenthesis.
+For a closer with a nonempty stack, pop the nearest unmatched opener and mark both positions to keep.
+Ignore a closer when no opener exists.
+Finally scan the original string and join only marked characters.
+The stack enforces valid nesting while the final scan preserves original character order, rather than emitting pairs in the order they close.
 
 ## Walkthrough
 
-```text
-Input: s = "))(())(()"
-Output: "(())()"
-```
-
-Example 1 begins with two unmatched closers, which are discarded.
-The middle `(())` forms two nested pairs and is fully retained.
-In the final `(()`, the closer matches the nearer of the two openers, leaving the earlier one unmatched.
-Deleting that unmatched opener gives another `()`.
-The combined result is `(())()`.
+Example 1 is `))(())(()`.
+The initial two closers have no available openers and are discarded.
+The next `(())` forms two nested matched pairs.
+In the final `(()`, the closer matches the nearer of its two openers, leaving the earlier one unmarked.
+Reading marked characters in their original order yields `(())()`.
 
 ## Complexity
 
-Each character is pushed, popped, or inspected a constant number of times, giving O(n) time.
-The stack, keep flags, and returned string use O(n) space.
+Both scans take O(n) time for n characters.
+The keep array, opener stack, and constructed output require O(n) space.
 
 ## Edge cases
 
-An empty or one-type-only string returns empty output.
-An already-balanced string remains unchanged.
-Leading closers never become matchable later.
+An empty string returns empty.
+All-open or all-close strings also return empty.
+Already balanced input keeps every character.
+Surplus openers remain on the stack and are naturally omitted.
 
 ## Common mistakes
 
-Using the oldest unmatched opener changes the prescribed canonical result.
-Do not output pairs in discovery order, which can scramble nested structure.
+Do not append both matched characters immediately when a closer appears, because that changes nested ordering.
+Do not pair with the oldest opener when the contract requires the nearest.
 
 ## Language notes
 
-Python joins marked original characters.
-Java appends them with StringBuilder; both separate matching from final ordered reconstruction.
+Python builds the final string with a filtered join.
+Java uses `ArrayDeque` for opener indices and a `StringBuilder` for the second-pass output, with an equivalent boolean keep array.

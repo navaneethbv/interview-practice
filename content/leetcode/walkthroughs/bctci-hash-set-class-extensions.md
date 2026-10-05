@@ -1,56 +1,48 @@
 ## Intuition
 
-A set represents membership once per distinct key, even when add is called repeatedly.
-Separate chaining stores colliding keys in a list attached to their shared bucket.
+The set stores one marker per distinct key in a custom bucket table.
+Union and intersection can build independent result tables, using the same insertion rule to eliminate duplicate keys in the supplied array.
 
 ## Brute force
 
-One unsorted entry list requires linear lookup for every operation.
-A direct-address array across the full signed-integer key range wastes excessive memory.
+Repeated linear membership scans make set combinations quadratic.
+Bucket lookups reduce expected membership work, while sorting only at enumeration time provides the ascending order required by the public methods.
 
 ## Approach
 
-Buckets begin with eight chains.
-A key's remainder selects its chain, which is searched using exact key equality.
-Put removes an existing entry before appending its replacement and incrementing count.
-When count exceeds twice the bucket count, double the table and rehash every entry.
-
-Enumeration sorts collected keys.
-Union and intersection build a separate Buckets result, which deduplicates repeated keys without mutating this set or the other input.
+Basic operations delegate to `Buckets` with singleton marker `[1]`.
+`elements` gathers and sorts keys.
+`union` inserts current keys and `other` into a fresh table.
+`intersection` inserts only values from `other` already present in the original set.
 
 ## Walkthrough
 
-```text
-Input: {"ctor": [], "ops": ["size", "add", "contains", "size", "add", "contains", "size", "elements", "union", "intersection", "elements", "remove", "contains", "size", "remove", "contains", "size", "remove", "contains", "size", "remove", "contains", "size"], "args": [[], [3], [3], [], [3], [3], [], [], [[7, -3, 7]], [[7, -3, 7]], [], [3], [3], [], [3], [3], [], [123456], [123456], [], [123456], [123456], []]}
-Output: [0, null, true, 1, null, true, 1, [3], [-3, 3, 7], [], [3], null, false, 0, null, false, 0, null, false, 0, null, false, 0]
-```
-
-Example 1 starts empty, then adds key 3 twice.
-Membership is true but size remains one because replacement does not duplicate the key.
-Removing 3 returns the set to size zero.
-Repeated removals of 3 and absent key 123456 leave it empty.
-Before removal, union with `[7, -3, 7]` yields `[-3, 3, 7]`, intersection is empty, and elements still returns `[3]`.
+Example 1 adds key 3 twice, so size stays one and elements remain `[3]`.
+Union with `[7, -3, 7]` gives `[-3, 3, 7]`.
+Intersection is empty because neither -3 nor 7 is stored.
+The next elements call still returns `[3]`.
 
 ## Complexity
 
-Let n be the current number of distinct keys and B the allocated number of buckets after earlier growth.
-With well-distributed keys, basic operations are expected amortized O(1); size is O(1).
-This deterministic remainder hash can suffer O(n) collision chains on adversarial keys.
-Ordered enumeration costs O(B + n log n), including scanning B allocated buckets; set combinations also process the other input.
-Storage is O(B + n), with B tied to peak occupancy because the table never shrinks.
+Basic operations are expected amortized O(1) with well distributed keys, but collisions can make them O(n).
+Enumeration costs O(n log n).
+For n stored keys and m supplied values, expected union time is O((n + m) log(n + m)); intersection costs O(m + r log r) for r matches.
 
 ## Edge cases
 
-Negative keys are valid.
-Removing a missing key changes nothing.
-Repeated insertion must not increase size.
+The temporary result table deduplicates repeated values in `other`.
+Empty sets and empty arrays produce ordinary empty enumerations.
+Negative keys are permitted.
+Repeated removal of an absent key leaves the stored count unchanged.
 
 ## Common mistakes
 
-Resizing requires rehashing against the new bucket count.
-Do not assume unequal keys cannot share a bucket.
+Do not mutate the original table while computing a union or intersection.
+Do not return bucket traversal order because enumeration must be sorted.
+The load factor controls average bucket size, but does not guarantee a collision free distribution.
 
 ## Language notes
 
-Python's modulo produces nonnegative bucket indices; Java uses `Math.floorMod` for the same behavior.
-The stored singleton marker `[1]` distinguishes membership from an empty lookup result.
+Python uses nonnegative modulo indexing; Java uses `Math.floorMod`.
+Both implementations use lists of custom entries rather than built in sets or maps.
+Result storage is O(n + m) for union and O(r) for intersection, excluding retained table capacity.

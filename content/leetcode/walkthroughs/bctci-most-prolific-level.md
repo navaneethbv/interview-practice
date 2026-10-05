@@ -1,44 +1,48 @@
 ## Intuition
 
-Every child of a node on one level appears on the next level exactly once.
-Therefore a level's average child count equals the next level's size divided by its own size.
-Individual node values and the distribution of children within a level do not affect that ratio.
+Every child of a node at depth d lies at depth d + 1.
+Thus the total number of children of level d is simply the size of the next level.
+Prolificness is the ratio of consecutive level sizes, without needing individual node degrees afterward.
+
+## Brute force
+
+For every depth, traverse the whole tree again to count its nodes and their children.
+A tall tree can make these repeated traversals quadratic.
 
 ## Approach
 
-Traverse the tree breadth first and record each level size in `sizes`.
-Append a final zero for the nonexistent level below the leaves.
-Start with level zero as `best`, then compare every later level's ratio with the current best ratio.
-Use cross multiplication instead of division: a candidate wins when its next-level size times the best level's size is strictly larger than the reverse product.
-All real level sizes are positive, so multiplication preserves the ordering of the ratios.
-Strict comparison retains the earliest level on a tie.
-Return -1 immediately for an empty tree.
+Perform breadth-first traversal and append each level's node count to `sizes`.
+Append a final zero to represent the nonexistent level after the leaves.
+Start `best = 0` and compare each later depth's ratio `sizes[depth + 1] / sizes[depth]` with the best ratio.
+Use cross multiplication to compare them exactly without floating-point rounding.
+Update best only for a strictly larger ratio, preserving the earliest level when ratios tie.
+An empty root returns -1 before any traversal.
 
 ## Walkthrough
 
-Example 1 has level sizes 1, 1, 2, and 3 under the local level-order tree representation.
-Appending zero yields `[1, 1, 2, 3, 0]`.
-The averages are 1, 2, 1.5, and 0.
-Level 1 has the greatest average, because its sole node has two children.
-The returned index is therefore 1, even though level 3 contains the most nodes.
+Example 1 has level sizes 1, 1, 2, and 3.
+The root has one child, giving prolificness 1.
+Level 1 contains node 2, which has two children, giving prolificness 2.
+Level 2 has three children across two nodes, giving 1.5.
+The last level has no children, giving zero.
+The maximum ratio belongs to level 1, so the method returns 1.
 
 ## Complexity
 
-Both references visit n nodes once, giving O(n) time.
-They store O(h) level sizes plus O(w) nodes for breadth-first traversal, where h is the number of levels and w is maximum width.
-The worst-case space bound is O(n).
+Each node is visited once, giving O(n) time.
+The breadth-first frontier plus the list of level sizes require O(n) worst-case auxiliary space.
 
 ## Edge cases
 
-A one-node tree returns level zero with average zero.
-A chain ties on all nonleaf levels, so the root level wins.
+A single-node tree returns level 0 with prolificness zero.
+A chain has ratio one on every nonleaf level, so the earliest such level wins.
 
 ## Common mistakes
 
-The largest level is not necessarily the most prolific level.
-Integer division would discard fractional differences and can choose the wrong winner.
+Maximizing the number of nodes on a level is a different problem.
+Use a strict comparison for the smallest-depth tie rule.
 
 ## Language notes
 
-Python integers safely hold cross products.
-Java casts to `long` before multiplying level sizes, preventing intermediate `int` overflow.
+Python integers make cross products exact.
+Java casts to long before multiplication because products of level sizes may overflow int, even though each size itself fits.

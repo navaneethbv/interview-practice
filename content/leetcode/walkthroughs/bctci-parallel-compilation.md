@@ -1,49 +1,47 @@
 ## Intuition
 
-Unlimited parallel workers remove competition for computing resources.
-A package waits only for its slowest prerequisite chain, so its earliest finish is its own duration plus the largest prerequisite finish time.
-The overall answer is the latest finish across all packages.
+With unlimited parallel workers, a package waits only for its slowest dependency chain.
+Its earliest finish is its own duration plus the latest finish among its prerequisites.
+A topological traversal computes these finish times in dependency order.
 
 ## Brute force
 
-Enumerate dependency paths and sum their durations to find the longest.
-A directed acyclic graph can contain exponentially many paths, even though many share the same suffixes.
+Simulate compilation second by second while scanning for newly available packages.
+This makes running time depend on the potentially large total duration instead of only graph size.
 
 ## Approach
 
-Reverse the dependency information into `dependents`, listing which packages each completed package unlocks.
-Store each package's unresolved prerequisite count in `waiting`.
-Enqueue every package with no prerequisites and initialize all earliest starts to zero.
-When a package leaves the queue, calculate `done = start[package] + seconds[package]`.
-Update the global finish time and propagate `done` as a candidate start for each dependent.
-Decrease that dependent's waiting count and enqueue it only when all prerequisites are processed.
-At that moment its stored start is the maximum of all prerequisite finish times.
-The acyclic-input guarantee ensures every package eventually becomes ready.
+Build reverse edges in `dependents` so finishing a package identifies the packages it unblocks.
+Set `waiting[package]` to its number of prerequisites and enqueue packages with none.
+Maintain `start`, initially zero, for the latest prerequisite completion seen so far.
+When processing a package, compute `done = start[package] + seconds[package]` and update overall `finish`.
+For each dependent, maximize its start with done and decrement waiting.
+Enqueue it only when waiting reaches zero, ensuring all prerequisite finish times have contributed.
 
 ## Walkthrough
 
-Example 1 has independent packages 0 and 1 taking 10 and 20 seconds.
-Both start at time zero and finish at 10 and 20 respectively.
-Package 2 imports both, so processing package 0 suggests start 10, then processing package 1 raises it to 20.
-After the second prerequisite finishes, package 2 becomes ready and takes another 30 seconds.
-The final completion time is 50.
+Example 1 has durations `[10, 20, 30]`, with package 2 importing packages 0 and 1.
+Packages 0 and 1 start at time zero and finish at 10 and 20.
+Their updates set `start[2]` first to 10 and then to 20.
+Once both dependencies are processed, package 2 becomes ready.
+It finishes at `20 + 30 = 50`, which is the overall minimum completion time.
 
 ## Complexity
 
-For n packages and e dependency entries, both references take O(n + e) time.
-The reverse adjacency lists, counters, start times, and queue require O(n + e) space.
+For n packages and E dependency entries, graph construction and traversal take O(n + E) time.
+Reverse edges, counters, timing arrays, and the queue require O(n + E) space.
 
 ## Edge cases
 
-With no imports, the answer is the longest individual compilation time.
-A dependency chain has no useful parallelism and its durations add together.
+Independent packages compile together, so the result is their maximum duration.
+The graph is guaranteed acyclic, ensuring every package eventually becomes ready.
 
 ## Common mistakes
 
-Sum a package's own duration with the maximum prerequisite finish, not the sum of prerequisite durations.
-Queue readiness concerns dependency completion, not package index order.
+Use the maximum prerequisite finish time, not their sum.
+Do not start a package after only its first dependency finishes.
 
 ## Language notes
 
-Python uses `deque` and arbitrary-precision totals.
-Java uses `ArrayDeque` and `long` start/finish values to keep accumulated durations safe.
+Python uses `deque` for ready packages.
+Java uses `ArrayDeque`, long timing arrays, and a long result to preserve arithmetic during accumulated dependency chains.

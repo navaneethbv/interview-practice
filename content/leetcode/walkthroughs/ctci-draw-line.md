@@ -1,47 +1,44 @@
 ## Intuition
 
-A horizontal line changes consecutive bits within one row of a byte-packed screen.
-Only the first and last bytes can be partially covered.
-The bytes strictly between them are entirely filled, so they can be set directly to 255.
-
-## Brute force
-
-Set each pixel between x1 and x2 individually using its byte index and bit offset.
-That takes time proportional to the number of pixels.
-Byte masks perform the same work using one operation per covered byte.
+The requested pixels occupy a contiguous range of bits in one screen row.
+The first and last bytes may be partial, while every byte between them is entirely filled.
+Masks let the method set only the requested bits and preserve pixels that were already on.
 
 ## Approach
 
-Copy `screen` into `result` and calculate `row_start = y * (width // 8)`.
-Find `first_byte` and `last_byte` using integer division by eight.
-Construct a start mask covering the first endpoint through its byte's right edge and an end mask covering the final byte's left edge through x2.
-If both endpoints share a byte, OR in their mask intersection.
-Otherwise OR the boundary masks and fill every intervening byte with `0xFF`.
+Compute the row's byte offset as `y * (width // 8)` and locate the first and last affected bytes.
+Build a start mask whose leftmost active bit is `x1`, and an end mask whose rightmost active bit is `x2`.
+If both columns share a byte, combine the masks and OR once.
+Otherwise OR the start mask, fill interior bytes with `0xFF`, and OR the end mask.
+Copy the screen first so the input remains unchanged.
 
 ## Walkthrough
 
-Example 1 has width 16 and y equal to 1, so the row begins at byte 2.
-Columns 3 through 7 occupy the low five bits of byte 2, giving 31.
-Columns 8 through 10 occupy the high three bits of byte 3, giving 224.
-The untouched first row stays zero, yielding `[0, 0, 31, 224]`.
+For Example 1, width 16 means row one begins at byte index two.
+Columns three through seven use the low five bits of the first row byte, giving mask 31.
+Columns eight through ten use the high three bits of the second byte, giving mask 224.
+The result is `[0, 0, 31, 224]`, and the same masks would preserve any existing one bits.
 
 ## Complexity
 
-For s screen bytes and b covered bytes, copying plus drawing takes O(s + b) time, which is O(s).
-The returned copy uses O(s) space; mask calculations need O(1) additional space.
+Let `B` be the number of bytes in the screen row and let `q` be the number of fully covered interior bytes.
+Copying the screen costs `O(screen.length)` and setting the range costs `O(q)`, which is `O(screen.length)` worst case.
+The returned copy uses `O(screen.length)` space.
 
 ## Edge cases
 
-A one-pixel line uses the same-byte case.
-A line covering a full byte sets it to 255.
-Existing set pixels outside the line are preserved.
+A line contained in one byte must intersect the start and end masks before updating.
+An interval aligned to byte boundaries still needs the correct first and last masks.
+Drawing over bytes that are already 255 leaves them unchanged because the operation is OR.
 
 ## Common mistakes
 
-OR the masks into boundary bytes instead of replacing them.
-The leftmost pixel uses the most significant bit, so reversing bit orientation draws the wrong columns.
+Treating the least significant bit as the leftmost pixel reverses the masks.
+Forgetting the row byte offset draws into the wrong row.
+Assigning zeroed masks instead of ORing them can erase pixels outside the requested line or existing set pixels.
 
 ## Language notes
 
-Python copies with `list(screen)` and Java uses `clone()`.
-Both store byte values as integers and mask the left-shifted ending mask to eight bits.
+Python creates `result = list(screen)` and masks the shifted end value back to one byte.
+Java clones the array and uses the same integer masks, with `width / 8` for the row stride.
+Both references follow the spec's inclusive `x1` and `x2` endpoints.

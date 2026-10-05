@@ -1,49 +1,43 @@
 ## Intuition
 
-Multiplication can be reconstructed from doubling and addition.
-Halving one operand shrinks the remaining problem quickly: twice the product of its lower half accounts for an even operand, with one extra copy of the other operand needed when it is odd.
-
-## Brute force
-
-Add b to an accumulator a times.
-Choosing the smaller operand as the repetition count improves this to O(min(a, b)) additions, but recursive halving requires only logarithmically many levels.
+If the smaller factor is even, its product can be computed by halving that factor, recursively multiplying, and doubling the result.
+If it is odd, the same doubled half needs one additional copy of the larger factor.
+Choosing the smaller factor for recursion keeps the depth logarithmic.
 
 ## Approach
 
-Set `smaller` to the smaller input and `bigger` to the other.
-The helper returns zero for a zero multiplier and `bigger` for a multiplier of one.
-Otherwise compute `half` recursively using `smaller >> 1`.
-Double that result by adding it to itself.
-If `smaller` is odd, add `bigger` once more; otherwise return the doubled result directly.
-Only one recursive call is made at each level, so the half-product is never computed twice.
+Set `smaller` and `bigger` so recursion always halves the smaller value.
+Return `0` for a zero factor and `bigger` for a factor of one.
+Recursively compute the product for `smaller >> 1`, double it with addition, and add `bigger` when the original smaller factor was odd.
+This uses only addition, subtraction-free halving, bit shifts, and a parity check.
 
 ## Walkthrough
 
-Example 1 multiplies 7 by 8.
-The recursive smaller operands are 7, 3, and 1.
-The base case returns 8.
-At smaller equal to 3, double 8 to 16 and add 8 to obtain 24.
-At smaller equal to 7, double 24 to 48 and add 8 again to obtain 56.
-This matches `7 * 8` without using multiplication in the recursive calculation.
+For Example 1, the factors are seven and eight, so recursion uses seven as `smaller`.
+It computes the product for three, doubles that result to represent six copies of eight, and adds one more eight because seven is odd.
+The result is fifty six.
+For `1 * 99`, the base case returns 99 immediately.
 
 ## Complexity
 
-For s equal to the smaller operand, time is O(log s).
-The recursive call stack uses O(log s) space.
-Each level performs a constant number of arithmetic operations.
+Each recursive call halves `smaller`, so the running time is `O(log min(a, b))`.
+The recursion stack uses `O(log min(a, b))` space.
+The method does not allocate an array or use multiplication or division in the product recurrence.
 
 ## Edge cases
 
-An operand of one reaches the base case immediately.
-Powers of two use only doubling on the way back up.
-The helper's zero case is defensive even though public inputs are positive.
+The inputs are positive by contract, but the zero base case keeps the helper complete and mirrors the reference.
+A factor of one stops recursion without unnecessary additions.
+When the factors are equal, either can be selected as the smaller value and the result is unchanged.
 
 ## Common mistakes
 
-Calling the helper twice for the half-product changes logarithmic work into a branching recursion.
-Ignoring the odd remainder undercounts every odd multiplier larger than one.
+Recursing on the larger factor can create a deeper call chain than necessary.
+Forgetting the odd remainder loses one copy of `bigger` whenever `smaller` is odd.
+Using multiplication in the recurrence defeats the operation restriction even if the numeric answer is correct.
 
 ## Language notes
 
-Python and Java use a right shift to halve the positive smaller operand.
-The contract bounds the product within a signed 32-bit integer, keeping Java's intermediate nonnegative partial products representable.
+Python uses `smaller >> 1` and `smaller & 1` directly.
+Java uses the same shifts and parity test with `int` arithmetic, and the contract bounds the product below the integer limit.
+Both implementations keep the public method name `multiply` and the two input parameters unchanged.

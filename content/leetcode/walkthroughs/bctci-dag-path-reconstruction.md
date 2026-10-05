@@ -1,53 +1,48 @@
 ## Intuition
 
-Computing a shortest distance also reveals the final edge of a shortest path.
-Remember that predecessor whenever a relaxation improves a vertex, then follow predecessor links backward from the goal.
+Negative edges prevent ordinary greedy shortest-path assumptions, but acyclicity supplies a stronger ordering guarantee.
+When a vertex is processed in topological order, every path that could improve its distance has already reached it through an earlier predecessor.
 
 ## Brute force
 
-Enumerating every start-to-goal path is exponential.
-Storing a full path for every distance update also copies many shared prefixes unnecessarily.
+Enumerate all start-to-goal paths and select the cheapest.
+A DAG can have exponentially many paths, so retaining one best distance per vertex avoids an enormous repeated search.
 
 ## Approach
 
-Build weighted adjacency and a topological order.
-Initialize only start as reachable with distance zero.
-For each reachable node, relax outgoing edges; on improvement, update both `distance[v]` and `previous[v]`.
-After all relaxations, return an empty list if goal is unreachable.
-Otherwise begin at goal and follow previous until reaching start, then reverse the accumulated list.
-Every stored predecessor realizes the associated distance, so the reconstructed chain has the optimal total weight.
+Build weighted `adjacency`, then compute a topological order with indegrees.
+Initialize `distance[start]` to zero and other distances as unreachable.
+For every reachable node in that order, relax each outgoing edge.
+Whenever a distance improves, record the predecessor in `previous`.
+If the goal remains unreachable, return an empty list.
+Otherwise follow predecessor pointers backward from goal to start and reverse the collected path.
+Strict improvements are sufficient because any shortest path is accepted.
 
 ## Walkthrough
 
-```text
-Input: V = 6, edges = [[0, 1, 10], [2, 1, 10], [3, 4, 12], [4, 1, 11], [4, 2, 21], [4, 5, 14], [5, 2, -30]], start = 4, goal = 1
-Output: [4, 5, 2, 1]
-```
-
-Example 1 first reaches node 1 directly from 4 with cost 11.
-The route through 5 improves node 2 to cost 14 - 30 = -16.
-Node 2 then improves node 1 to -6 and becomes its predecessor.
-Following predecessors backward gives 1, 2, 5, 4.
-Reversal produces `[4, 5, 2, 1]`, the stated shortest path.
+Example 1 starts at 4 and targets 1.
+Direct edges give distances 11 to 1, 21 to 2, and 14 to 5.
+The edge from 5 to 2 has weight -30, improving vertex 2 to -16.
+Its edge to 1 then improves that distance to -6.
+Following predecessors gives `1, 2, 5, 4`, reversed into `[4, 5, 2, 1]`.
 
 ## Complexity
 
-Topological sorting and relaxation take O(V + E) time.
-Reconstruction adds O(V) time in the worst case.
-Adjacency and state arrays use O(V + E) space, including the returned path bound.
+Time and auxiliary space are O(V + E), including the constructed adjacency lists and topological order.
+The reconstructed path contains at most V vertices because the graph is acyclic.
 
 ## Edge cases
 
-If start equals goal, the result is the singleton start path.
-Negative edges are supported.
-Equal shortest alternatives need no particular tie-breaking rule.
+An unreachable goal yields `[]`.
+When start equals goal, the empty-edge path is represented by `[start]`.
+Negative weights need no special case in topological relaxation.
 
 ## Common mistakes
 
-Updating a distance without its predecessor produces an inconsistent route.
-Do not begin reconstruction before checking reachability.
+Do not run breadth-first search for weighted distances or stop when first discovering the goal.
+Never relax from an unreachable sentinel.
 
 ## Language notes
 
-Python uses None for unknown distances and predecessors.
-Java uses `Long.MAX_VALUE` for unreachable distances and long arithmetic for path sums; both reverse the backward node sequence.
+Python represents unreachable distances with `None`.
+Java uses `Long.MAX_VALUE`, skips those entries before addition, and stores path totals in `long` to protect accumulated weights.

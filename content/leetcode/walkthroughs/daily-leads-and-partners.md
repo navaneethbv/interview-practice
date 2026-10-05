@@ -1,6 +1,6 @@
 ## Intuition
 The requested counts are distinct leads and distinct partners for each date and make combination.
-Grouping by those two columns allows separate `COUNT(DISTINCT ...)` aggregates.
+Grouping by those two columns allows separate `COUNT(DISTINCT ..)` aggregates.
 
 ## Brute force
 Counting each date-make group with repeated subqueries rescans duplicate rows.

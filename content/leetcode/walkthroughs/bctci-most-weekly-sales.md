@@ -1,48 +1,45 @@
 ## Intuition
 
-A week is exactly seven consecutive days, and adjacent weeks share six of those days.
-The total changes only by the incoming day minus the outgoing day.
-Keeping that running total makes it unnecessary to rescan each overlapping week.
+Consecutive seven day windows overlap in six days.
+Moving the window one step only removes its oldest day and adds the next day, so a running sum avoids adding the same six values again.
 
 ## Brute force
 
-Calculate each seven-day sum independently and retain the greatest.
-Since seven is a fixed constant, that approach is also O(n), but it performs seven additions per window instead of reusing the previous total.
-The sliding formulation also generalizes naturally to larger fixed window lengths.
+Summing each complete week independently performs seven additions per start position.
+Because seven is fixed, that is already O(n), but the rolling sum reduces repeated arithmetic and directly illustrates fixed length sliding windows.
 
 ## Approach
 
-If fewer than seven days are supplied, return zero because no complete week exists.
-Otherwise sum the first seven entries and initialize `best` to that value.
-For every `day` beginning at index seven, add `sales[day]` and subtract `sales[day - 7]`.
-The updated `window` now represents the seven days ending at that index.
-Compare it with `best` and keep the larger sum.
-Return the maximum sum itself, since this problem does not ask for a starting index.
+Return zero immediately when fewer than seven days exist.
+Initialize `window` and `best` from the first seven sales values.
+For every later `day`, add `sales[day] - sales[day - 7]` to the window and update the maximum.
 
 ## Walkthrough
 
-Example 1's first seven-day total is 37.
-Sliding forward produces successive totals 38, 35, 43, 43, 44, and 40.
-The maximum 44 occurs in the window `[5, 0, 1, 0, 15, 12, 11]`.
-When the final day replaces its outgoing value, the total falls to 40, so `best` remains 44.
+Example 1 begins with total 37 for days 0 through 6.
+Sliding produces totals 38, 35, 43, 43, 44, and 40.
+The maximum 44 occurs for days 5 through 11, whose values are `[5, 0, 1, 0, 15, 12, 11]`.
 
 ## Complexity
 
-Both references use O(n) time and O(1) auxiliary space.
-Python creates a seven-element initialization slice, but its fixed size does not grow with the input.
-Each later day requires constant arithmetic and one maximum comparison.
+The initial sum takes constant work for seven entries, then each later day takes O(1).
+Total time is O(n) and auxiliary space is O(1).
+Python's initial seven element slice has bounded size independent of n.
 
 ## Edge cases
 
-Exactly seven days produces their sum without entering the sliding loop.
-Fewer than seven days, including empty input, returns zero rather than a partial-week sum.
+Exactly seven days produces only the initialized sum.
+Zero sales are ordinary contributions and may appear anywhere.
+An empty array, or any input shorter than a week, returns zero rather than summing an incomplete period.
 
 ## Common mistakes
 
-The outgoing index is seven positions behind the incoming day.
-Do not accidentally evaluate six- or eight-day windows at the boundaries.
+Remove `sales[day - 7]`, not yesterday's value.
+Initialize the answer using the first full window so it cannot be skipped.
+The task asks for consecutive days, so sorting or selecting the seven largest daily values would solve a different problem.
 
 ## Language notes
 
-Python initializes with `sum(sales[:7])`; Java sums those entries explicitly.
-Seven bounded daily sales counts fit comfortably in Java's `int`.
+Python initializes both counters with `sum(sales[:7])`.
+Java computes that first sum explicitly in a loop.
+Under the sales bound, a seven day sum is less than 7,000, so Java's integer counters are sufficient.

@@ -1,51 +1,46 @@
 ## Intuition
 
-Sorted order lets us eliminate one endpoint after every unsuccessful comparison.
-The smallest and largest remaining values determine whether the current sum needs to increase or decrease.
+The sorted order tells us which endpoint can safely move after comparing a pair with zero.
+A positive sum needs a smaller right value; a negative sum needs a larger left value.
+The two positions must remain distinct, even when both values are zero.
 
 ## Brute force
 
-Checking every pair of distinct positions takes O(n squared) time.
-A set can detect complements in linear time, but the sorted input allows the same time bound without storing values.
+Checking every pair of indices takes O(n squared) time and needs no auxiliary collection.
+A hash set also solves the problem, but uses extra memory and ignores the ordering already supplied by the statement.
 
 ## Approach
 
-Set `left` to the first index and `right` to the last.
-While `left < right`, compute their sum.
-Return true if it is zero.
-If it is positive, decrement `right`: pairing that largest value with any other remaining value cannot produce a smaller sum than the one just checked.
-If it is negative, increment `left` by the symmetric argument.
-When the pointers meet, every feasible pair has been checked or safely excluded.
+Initialize `left` at zero and `right` at the final index.
+While `left < right`, compute `total` from the two endpoint values.
+Return true immediately for zero.
+If the sum is positive, no pair using this right endpoint and a later left endpoint can work, so decrement `right`.
+The symmetric argument justifies incrementing `left` for a negative sum.
 
 ## Walkthrough
 
-```text
-Input: arr = [-5, -2, -1, 1, 1, 10]
-Output: true
-```
-
-The endpoints -5 and 10 total 5, so the right pointer moves to the last 1.
-Now -5 + 1 is negative, so the left pointer advances through -2 to -1.
-The pair -1 and 1 totals zero, and the reference returns true.
-The two occurrences of 1 do not need special handling because the result only asks whether a pair exists.
+Example 1 starts with `[-5, -2, -1, 1, 1, 10]`.
+The endpoint sum is 5, so `right` moves from the value 10 to 1.
+Now the sum is -4, then -1 as `left` advances from -5 to -2.
+Advancing again gives -1 plus 1, so the reference returns true.
 
 ## Complexity
 
-Each iteration moves at least one pointer inward, giving O(n) time.
-Only indices and the current sum are stored, so extra space is O(1).
+For n elements, time is O(n) because every unsuccessful comparison moves one pointer inward.
+Auxiliary space is O(1); the original array is neither copied nor sorted.
 
 ## Edge cases
 
-Empty arrays and singleton arrays return false.
-A single zero cannot pair with itself, while two zeros can form a valid pair.
-All-positive or all-negative arrays exhaust the search without a match.
+Empty and singleton arrays return false without indexing invalid positions.
+Two zeros return true, while a single zero cannot pair with itself.
+Duplicate negative or positive values require no special treatment.
 
 ## Common mistakes
 
-Using `left <= right` incorrectly permits reusing one position.
-Moving the left pointer after a positive sum discards the wrong candidates.
+Do not move both pointers after a nonzero sum, because that can skip the only valid pair.
+Do not use `left <= right`, which permits reusing an index.
 
 ## Language notes
 
-Python integers safely hold the sum.
-Java promotes one operand to `long` before addition, keeping arithmetic safe when adapting the method to larger integer ranges.
+Python integers accommodate the sum directly.
+Java explicitly casts the first operand to `long` before addition, so evaluation uses wide arithmetic rather than widening an already computed integer result.

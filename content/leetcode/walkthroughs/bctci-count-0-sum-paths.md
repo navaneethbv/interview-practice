@@ -1,53 +1,46 @@
 ## Intuition
 
-Because grid values are binary, a zero-sum path can visit only zero cells.
-Count routes through those cells using the three possible predecessor directions, treating every one cell as blocked.
+Because grid entries are zero or one, a path sums to zero exactly when every visited cell is zero.
+The problem therefore becomes counting paths around blocked cells, with three permitted predecessor directions rather than only the usual two.
 
 ## Brute force
 
-Enumerating every path is exponential because each step can branch right, down, or diagonally.
-Many routes share the same suffix, so dynamic programming combines them into one count per cell.
+Enumerating every right, down, and diagonal move sequence repeats the same suffix problems many times.
+An all-zero grid already has exponentially many paths, so directly visiting each path is impractical.
 
 ## Approach
 
-Process rows from top to bottom and columns left to right.
-For a zero cell, add counts from above, left, and upper-left, reducing modulo `MOD`.
-Initialize the unblocked starting cell with one route.
-Leave blocked cells at zero.
-`previous` holds the preceding row and `current` the row being constructed.
-Each route has one unique final step, so the three predecessor sets are disjoint and their counts can be added.
-Only the preceding row is needed after finishing a row.
+Process rows from top to bottom and columns from left to right.
+`previous[c]` stores paths to the cell directly above; `current[c - 1]` stores paths from the left.
+The diagonal contribution is `previous[c - 1]`.
+A cell containing one retains zero ways.
+The top-left zero cell receives one path as the base case.
+Add available predecessor counts modulo `MOD`, then replace `previous` with the completed row.
 
 ## Walkthrough
 
-```text
-Input: grid = [[0, 1, 1], [0, 0, 0], [1, 0, 0]]
-Output: 7
-```
-
-Example 1 produces first-row counts `[1, 0, 0]` because the two one cells block travel.
-The second-row counts become `[1, 2, 2]`.
-The third row begins with a blocked zero-count position, then counts 3 ways into its middle cell.
-The final cell receives 2 from above, 3 from the left, and 2 diagonally, giving 7.
+For Example 1, the first row `[0, 1, 1]` produces counts `[1, 0, 0]`.
+The second row `[0, 0, 0]` produces `[1, 2, 2]`.
+On the last row `[1, 0, 0]`, the blocked first cell contributes zero.
+The middle count is `0 + 2 + 1 = 3`, and the final count is `3 + 2 + 2 = 7`.
 
 ## Complexity
 
-For R rows and C columns, time is O(RC).
-Two row buffers use O(C) extra space.
-Counts are reduced after each cell, keeping stored values bounded.
+For r rows and c columns, time is O(rc).
+Two row buffers use O(c) auxiliary space; the entire dynamic-programming table is unnecessary.
 
 ## Edge cases
 
-A blocked start or destination yields zero.
-A one-cell zero grid has one path.
-Diagonal movement can bypass blocked orthogonal neighbors when its destination is clear.
+A blocked start or destination yields zero paths.
+A single zero cell has one path.
+Single-row and single-column inputs use only their available predecessor direction.
 
 ## Common mistakes
 
-Do not count only right and down predecessors.
-Do not initialize every first-row cell to one regardless of obstacles.
+Do not allow a path through a one merely because later zeros follow it.
+Do not forget diagonal paths or accidentally reuse the current row as the previous row.
 
 ## Language notes
 
-Python uses its integer arithmetic and a row helper.
-Java uses long intermediates because adding three reduced counts can exceed a signed int before applying the modulus.
+Python integers hold the temporary sum directly.
+Java uses long-valued row buffers before reducing modulo 1,000,000,007 and converts only the final reduced value to an integer.

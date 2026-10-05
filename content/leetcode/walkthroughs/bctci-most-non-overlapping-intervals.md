@@ -1,50 +1,48 @@
 ## Intuition
 
-Among intervals that can be selected next, the one ending earliest leaves the greatest amount of room for all later choices.
-Its starting point matters only for compatibility with the previously selected interval.
-This gives a greedy selection order based on finishing times.
+Among available compatible intervals, finishing earliest leaves the most room for future choices.
+Replacing an optimal solution's first interval with the earliest finishing interval cannot reduce the number of later intervals it can accommodate.
 
 ## Brute force
 
-Enumerate all subsets, reject subsets with overlapping intervals, and maximize the number selected.
-There are exponentially many subsets, even though most choices can be compared using their end times alone.
+Checking every subset of intervals is exponential.
+Sorting by start time alone does not work, because a long early interval may block several shorter ones that together produce a larger selected count.
 
 ## Approach
 
-Sort intervals by their right endpoint.
-Track `last_end`, the end of the most recently selected interval, and `chosen`, the selected count.
-Select an interval only when its start is strictly greater than `last_end`.
-After selection, replace `last_end` with that interval's end.
-The strict comparison is essential because both endpoints belong to the interval.
-The greedy choice is safe by an exchange argument: replacing an optimal solution's first compatible interval with the earliest-finishing compatible interval cannot obstruct any later interval in that solution.
-Repeat the same reasoning after each selection.
+Sort by right endpoint.
+Maintain `last_end`, initialized to -1 under the nonnegative coordinate constraint, and `chosen`.
+Accept an interval only when `start > last_end`, then set `last_end` to its end.
+Skipped intervals do not change the current endpoint.
 
 ## Walkthrough
 
-Example 1 orders the intervals by ends 3, 3, 4, 6, and 9.
-Choose one `[2, 3]` interval first.
-The duplicate overlaps, `[1, 4]` overlaps, and `[3, 6]` also overlaps because it includes the shared point 3.
-The interval `[8, 9]` starts after 3 and is selected.
-The result is two non-overlapping intervals.
+Example 1 first selects an interval `[2, 3]`.
+Its duplicate and `[1, 4]` overlap it.
+The interval `[3, 6]` also overlaps because both include point 3.
+The final `[8, 9]` is compatible, so the answer is 2.
 
 ## Complexity
 
-Sorting n intervals costs O(n log n), and the greedy scan costs O(n).
-Both references copy the outer interval collection before sorting, using O(n) auxiliary space.
-The scan itself uses only a counter and one endpoint.
+Sorting n intervals takes O(n log n), and the greedy scan takes O(n).
+Both references allocate an ordered copy of the interval collection, requiring O(n) auxiliary space.
+Only a count and the last selected endpoint are retained during scanning.
 
 ## Edge cases
 
-Empty input returns zero.
-Single-point intervals are valid, but another interval touching that point cannot be selected with them.
-The initial endpoint -1 is safe because all starts are nonnegative.
+An empty list returns zero.
+Point intervals with identical start and end are valid, but two sharing that point conflict.
+Duplicate intervals cannot both be selected.
+Equal end times do not require a special tie break for the maximum count.
 
 ## Common mistakes
 
-Sorting by start time can choose a long interval that blocks several shorter ones.
-Using greater-than-or-equal would incorrectly allow touching closed intervals.
+The intervals are closed, so `start >= last_end` is incorrect.
+Do not sort by interval length or always choose the earliest start.
+Compare against the end of the last selected interval, not the immediately previous interval in sorted order.
 
 ## Language notes
 
-Python's `sorted` returns a separate list.
-Java clones the outer array and compares right endpoints with a comparator, leaving the original ordering unchanged.
+Python uses `sorted` with an endpoint key.
+Java shallow clones the outer array before sorting, leaving the caller's order intact.
+Neither implementation changes inner endpoint arrays, and the Java `lastEnd` variable uses `long`.

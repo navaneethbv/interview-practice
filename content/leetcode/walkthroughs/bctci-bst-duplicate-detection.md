@@ -1,54 +1,45 @@
 ## Intuition
 
-Inorder traversal of this duplicate-permitting BST produces a nondecreasing sequence.
-If any value repeats, two equal occurrences must therefore be adjacent in that traversal.
-Only the previous visited value is needed to detect repetition.
+An inorder traversal of this nonstrict binary search tree produces a nondecreasing sequence.
+If a value occurs more than once, equal copies must therefore appear next to each other somewhere in that sequence.
 
 ## Brute force
 
-Collecting values in a set would detect duplicates in linear expected time but require space proportional to the number of distinct values.
-Comparing every pair of nodes is quadratic.
-The BST ordering lets adjacent comparisons suffice.
+A hash set could detect repeats while visiting nodes in any order, but would retain up to all n values.
+Comparing adjacent inorder values uses the tree ordering and needs only the traversal stack.
 
 ## Approach
 
-Use `stack` and `node` to perform iterative inorder traversal.
-Push nodes while descending left.
-Pop the next node, compare its value with `previous`, then update previous and move to its right subtree.
-Return true immediately when two consecutive values are equal.
-Return false when both the traversal pointer and stack are empty.
-The stack contains ancestors whose own values still need to be visited, preserving left-node-right order without modifying tree links.
+Use `stack` and `node` to descend through left children.
+Pop the next inorder node, compare its value with `previous`, then save its value and continue through its right child.
+Return true immediately on equality; return false when traversal finishes.
 
 ## Walkthrough
 
-```text
-Input: root = [5, 2, 9, null, 4, 9, 11, null, null, null, 9]
-Output: true
-```
-
-Example 1 visits the initial values 2, 4, 5, and 9.
-The next inorder value is also 9, even though equal nodes need not be directly connected by an edge.
-The comparison with `previous` succeeds at this point and returns true.
-The remaining values do not need to be examined because one repeated value is sufficient evidence.
+Example 1 starts its inorder sequence with 2, 4, and 5.
+The next visited value is 9, which becomes `previous`.
+Another node with value 9 follows it, so the comparison succeeds and returns true without needing to finish the remaining subtree.
 
 ## Complexity
 
-Worst-case time is O(n), with early termination when a duplicate is found.
-The stack uses O(h) space for tree height h.
-A skewed tree can require linear stack space.
+Worst case time is O(n), because each node is pushed and popped once.
+Auxiliary space is O(h) for height h, plus the previous value.
+The tree need not be balanced, so h is not automatically logarithmic.
 
 ## Edge cases
 
-An empty tree and a singleton return false.
-Duplicates may occur on either side under this problem's non-strict BST definition.
-Zero is an ordinary valid value.
+An empty tree and a single node both return false.
+Duplicates may lie in either subtree under the local definition.
+Equal values need not be parent and child, which is why checking only immediate child values is insufficient.
 
 ## Common mistakes
 
-Checking only parent-child equality can miss duplicates separated in the tree.
-A numeric sentinel for previous can collide with an actual node value.
+Do not apply a strict BST assumption that rejects duplicates before searching.
+An ordinary numeric sentinel for `previous` might collide with a legitimate value.
+Always process a node after its entire left subtree and before its right subtree.
 
 ## Language notes
 
-Python uses `None` to represent no previous value.
-Java uses nullable `Integer`; comparison with the primitive node value unboxes it after the null check.
+Python uses `None` to represent the absence of a previous value.
+Java uses nullable `Integer` and checks it before comparing against the primitive `node.val`.
+Both iterative traversals avoid recursive call stack growth on tall trees.

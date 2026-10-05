@@ -1,53 +1,48 @@
 ## Intuition
 
-Partition the array into finished red, white, and blue regions plus one unknown region.
-Each inspection moves one item out of the unknown region without needing another complete pass.
+Maintain regions of confirmed red, white, and blue values around an unknown middle region.
+Each inspection moves one element into its final color region without requiring a full comparison sort.
 
 ## Brute force
 
-Comparison sorting ignores the three-value structure and takes O(n log n).
-Counting colors and rewriting works in linear time but uses two passes, unlike the required partition scan.
+Sorting with a custom comparator takes O(n log n) time.
+Counting each color and rewriting the array uses two passes.
+The requested one pass constant space solution instead partitions the array while scanning.
 
 ## Approach
 
-Maintain `red`, `current`, and `blue`.
-Positions before red are R, positions from red to current - 1 are W, and positions after blue are B.
-An R swaps with red, after which both red and current advance.
-A W only advances current.
-A B swaps with blue and decrements blue, leaving current in place to inspect the previously unknown item received from the right.
-Stop when current passes blue, meaning no unknown positions remain.
+Use `red`, `current`, and `blue` as region boundaries.
+For red, swap with `arr[red]` and advance both left boundaries.
+For blue, swap with `arr[blue]` and shrink the right boundary.
+For white, advance only `current`.
 
 ## Walkthrough
 
-```text
-Input: arr = ["R", "W", "B", "B", "W", "R", "W"]
-Output: ["R", "R", "W", "W", "W", "B", "B"]
-```
-
-Example 1 first accepts R and W.
-The B at index 2 swaps with the final W, which is then accepted.
-The next B swaps with the R at index 5.
-That R swaps into the red boundary, expanding the red prefix to two entries.
-The remaining W completes the middle region, leaving `[R, R, W, W, W, B, B]`.
+Example 1 begins with red and white already handled.
+The blue at index 2 swaps with the final white.
+The next blue swaps with the red near the end, which is then moved into the red region.
+Finishing the scan yields `R R W W W B B`.
 
 ## Complexity
 
-Every iteration reduces the unknown region by one, giving O(n) time.
-Three indices and one temporary swap value use O(1) extra space.
+Each iteration reduces the unknown region by one element, giving O(n) time.
+Only three indices and a temporary swap value are needed, so auxiliary space is O(1).
 The output is the mutated input array.
 
 ## Edge cases
 
-Empty and single-color arrays require no special treatment.
-Swapping a position with itself is harmless.
-A two-element blue-red array must revisit the received red.
+An empty array begins with `blue = -1` and performs no iterations.
+Single color arrays remain valid.
+A swapped element may be the same position as its destination, and such self swaps are harmless.
 
 ## Common mistakes
 
-Advancing current after a blue swap can skip an unprocessed red or blue.
-The loop must include current equal to blue.
+Do not advance `current` after moving a blue element right, because the incoming value is still unclassified.
+The ordering is red, white, blue, not character alphabetic order.
+Keep scanning while `current <= blue`.
 
 ## Language notes
 
-Python uses tuple assignment for swaps.
-Java uses a helper with a temporary char and returns void, matching the mutation-based grading contract.
+Python uses simultaneous assignment for swaps.
+Java's helper exchanges primitive characters and uses postincrement arguments to update boundaries.
+Both methods return no value; the spec grades argument zero after mutation rather than a separate returned collection.

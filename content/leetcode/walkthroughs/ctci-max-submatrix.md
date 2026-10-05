@@ -1,48 +1,43 @@
 ## Intuition
 
-Fixing a rectangle's top and bottom rows reduces the remaining choice to a contiguous range of columns.
-Sum those rows within each column, then find the best contiguous column range using Kadane's algorithm.
-Trying every row pair therefore covers every possible nonempty rectangle.
-
-## Brute force
-
-Enumerate all top, bottom, left, and right boundaries and sum each rectangle from scratch.
-Even with a two-dimensional prefix sum, there are O(r squared c squared) boundary combinations.
-Row compression removes one factor of c from the search.
+Choose the top and bottom rows of a candidate rectangle, then collapse those rows into one column-sum array.
+The best rectangle for that row band is the best contiguous subarray of column sums.
+Kadane's algorithm finds that subarray while preserving negative-only answers.
 
 ## Approach
 
-For each `top`, reset `column_sums` to zero.
-Advance `bottom` downward, adding that row into the column totals.
-Run `_kadane` on the resulting one-dimensional array and maximize the overall `best`.
-Kadane maintains the best nonempty segment ending at the current column, choosing between extending it and starting anew.
-Initialize both local and global answers from actual entries so all-negative matrices remain valid.
+For each `top` row, reset `column_sums` to zero.
+Extend `bottom` one row at a time and add that row into `column_sums`.
+Run `_kadane` on the accumulated columns to find the best left and right boundaries for the current row band.
+Keep the largest result across all row pairs, initializing it to the first matrix value so every rectangle remains nonempty.
 
 ## Walkthrough
 
-Example 1's row band from 0 through 2 compresses to `[12, -5, 3, 9, -5]`.
-Kadane's running best-ending sums are 12, 7, 10, 19, and 14.
-The maximum 19 occurs across columns 0 through 3.
-That corresponds to the statement's rectangle covering all three rows and the first four columns.
-No other row band yields a larger sum, so return 19.
+For Example 1, fixing the top at row zero and extending through the bottom rows produces several column-sum arrays.
+When the bottom reaches row two, the column sums for columns zero through three form the best contiguous total of nineteen.
+Kadane's scan keeps that positive run and rejects a trailing negative contribution when it would reduce the current sum.
+The outer loops compare it with every other row band and return nineteen.
 
 ## Complexity
 
-For r rows and c columns, there are O(r squared) row bands, each requiring O(c) update and Kadane work.
-Time is O(r squared c), and auxiliary space is O(c).
-The reference does not transpose the matrix to choose the smaller dimension for the squared factor.
+There are `O(R^2)` top and bottom row pairs, and each pair updates and scans `C` columns.
+The running time is `O(R^2 C)` and the accumulated column array uses `O(C)` auxiliary space.
+If rows are fewer than columns, transposing the conceptual orientation could improve constants, but the reference intentionally uses the given row order.
 
 ## Edge cases
 
-For all-negative input, the best rectangle is a nonempty least-negative choice, never an empty sum of zero.
-Single-row and single-column matrices reduce naturally to one-dimensional cases.
+A one-cell matrix returns that cell, including when it is negative.
+An all-negative matrix returns the largest individual value rather than zero.
+Zero values can produce a valid zero rectangle, and Kadane still keeps the rectangle nonempty.
 
 ## Common mistakes
 
-Reset column totals for each new top row, but retain them while bottom advances.
-Resetting every row band loses accumulated rows.
+Initializing the answer to zero incorrectly rejects matrices whose best rectangle is negative.
+Resetting `column_sums` inside the bottom loop prevents the row-band accumulation from representing a rectangle.
+Allowing Kadane to restart at an empty subarray violates the nonempty rectangle requirement.
 
 ## Language notes
 
-Python uses list totals and Java uses an int array under the stated sum bounds.
-Both Kadane helpers initialize from the first value instead of zero to enforce nonempty selection.
+Python updates `column_sums` with an inner loop and calls `_kadane` after each bottom row.
+Java mirrors those loops and keeps all arithmetic in `int`, matching the spec's bounded values and expected output type.
+Both references return only the maximum sum, not the rectangle coordinates.

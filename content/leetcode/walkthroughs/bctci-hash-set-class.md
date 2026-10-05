@@ -1,52 +1,49 @@
 ## Intuition
 
-A set represents membership once per distinct key, even when add is called repeatedly.
-Separate chaining stores colliding keys in a list attached to their shared bucket.
+Separate chaining assigns each key to a bucket and searches only that bucket for collisions.
+Growing the bucket array keeps ordinary bucket lengths small as the set grows.
+The set can reuse a small map-like helper by storing `[1]` as a presence marker.
 
 ## Brute force
 
-One unsorted entry list requires linear lookup for every operation.
-A direct-address array across the full signed-integer key range wastes excessive memory.
+Store all distinct keys in one list and scan it for every membership, insertion, or removal operation.
+This needs O(n) time per basic operation even with well-distributed keys.
 
 ## Approach
 
-Buckets begin with eight chains.
-A key's remainder selects its chain, which is searched using exact key equality.
-Put removes an existing entry before appending its replacement and incrementing count.
-When count exceeds twice the bucket count, double the table and rehash every entry.
-
+`Buckets` begins with eight empty buckets and a distinct-key `count`.
+`get` searches the bucket selected by the key's nonnegative remainder.
+`put` first removes an existing key, then appends its replacement and increments the count, so duplicate additions leave size unchanged.
+When count exceeds twice the bucket count, allocate twice as many buckets and rehash all entries.
+`remove` deletes the matching entry if present and adjusts count once.
+`HashSetClass` delegates membership and mutation to this helper and returns `table.count` for size.
 
 ## Walkthrough
 
-```text
-Input: {"ctor": [], "ops": ["size", "add", "contains", "size", "add", "contains", "size", "remove", "contains", "size", "remove", "contains", "size", "remove", "contains", "size", "remove", "contains", "size"], "args": [[], [3], [3], [], [3], [3], [], [3], [3], [], [3], [3], [], [123456], [123456], [], [123456], [123456], []]}
-Output: [0, null, true, 1, null, true, 1, null, false, 0, null, false, 0, null, false, 0, null, false, 0]
-```
-
-Example 1 starts empty, then adds key 3 twice.
-Membership is true but size remains one because replacement does not duplicate the key.
-Removing 3 returns the set to size zero.
-Repeated removals of 3 and absent key 123456 leave it empty.
+Example 1 begins with size zero.
+Adding key 3 stores its presence marker; `contains(3)` is true and size is one.
+Adding 3 again replaces that entry without creating a duplicate, so size stays one.
+Removing 3 makes membership false and size zero.
+Repeated removals of 3 and the never-present key 123456 do nothing.
+Each add or remove reports null in the operation-result list.
 
 ## Complexity
 
-Let n be the current number of distinct keys and B the allocated number of buckets after earlier growth.
-With well-distributed keys, basic operations are expected amortized O(1); size is O(1).
-This deterministic remainder hash can suffer O(n) collision chains on adversarial keys.
-Storage is O(B + n), with B tied to peak occupancy because the table never shrinks.
+With well-distributed keys, basic operations are expected amortized O(1), while size is always O(1).
+Adversarial collisions can make a bucket scan O(n).
+Space is proportional to the maximum table size reached; the implementation grows but does not shrink.
 
 ## Edge cases
 
-Negative keys are valid.
-Removing a missing key changes nothing.
-Repeated insertion must not increase size.
+Negative keys and both signed integer extremes are valid.
+Removing an absent key must not decrement count.
 
 ## Common mistakes
 
-Resizing requires rehashing against the new bucket count.
-Do not assume unequal keys cannot share a bucket.
+Rehash entries after changing bucket count.
+A key's old bucket index is generally incorrect for the new capacity.
 
 ## Language notes
 
-Python's modulo produces nonnegative bucket indices; Java uses `Math.floorMod` for the same behavior.
-The stored singleton marker `[1]` distinguishes membership from an empty lookup result.
+Python `%` produces a nonnegative remainder for positive capacity.
+Java uses `Math.floorMod` for the same behavior instead of raw `%` on negative keys.

@@ -47,6 +47,7 @@ BOOKS = {
         "title": "Grokking the Advanced System Design Interview",
         "short": "Advanced System Design",
         "description": "How real distributed systems work: Dynamo, Cassandra, Kafka, Chubby, GFS, HDFS and BigTable, followed by 20 reusable system design patterns.",
+        "sourceName": "Grokking the Advanced System Design Interview.pdf",
     },
     "notes": {
         "title": "System Design Interview Notes",
@@ -95,9 +96,33 @@ BOOKS = {
             {"label": "ByteByteGo", "url": "https://bytebytego.com/"},
         ],
     },
+    "behavioral": {
+        "title": "Behavioral and Leadership Interviews",
+        "short": "Behavioral Interviews",
+        "description": "Build a factual story bank, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
+        "sourceLinks": [{"label": "Amazon interview preparation", "url": "https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep"}],
+    },
+    "low-level-design": {
+        "title": "Low-Level Design Practice",
+        "short": "Low-Level Design",
+        "description": "Work through parking lots, elevators, vending machines, and schedulers with ownership diagrams, invariants, failure cases, and tests.",
+        "sourceLinks": [{"label": "Amazon technical topics", "url": "https://amazon.jobs/content/en/how-we-hire/interview-prep/software-development-topics"}],
+    },
+    "ai-design": {
+        "title": "AI System Design Practice",
+        "short": "AI System Design",
+        "description": "Design document retrieval and support assistants, evaluate outcomes, and reason about access, freshness, latency, cost, and bounded actions.",
+        "sourceLinks": [{"label": "Anthropic engineering", "url": "https://www.anthropic.com/engineering/building-effective-agents"}],
+    },
+    "testing-debugging": {
+        "title": "Testing, Debugging, and Code Review",
+        "short": "Testing and Debugging",
+        "description": "Practice independent test oracles, debug binary search, review a concurrency defect, and rehearse a complete coding interview.",
+        "sourceLinks": [{"label": "Microsoft technical interviews", "url": "https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing.html"}],
+    },
 }
 
-MARKDOWN_BOOKS = {"notes", "ctci", "data-systems", "domain-design", "linux-operations", "alex-xu"}
+MARKDOWN_BOOKS = set(BOOKS) - {"grokking", "advanced"}
 
 
 # --------------------------------------------------------------------------- text helpers
@@ -1084,6 +1109,24 @@ LATEX = {
 }
 
 
+def escape_note_html(body: str) -> str:
+    """Escape prose HTML without turning code comparisons into literal entities."""
+    lines = []
+    fence = None
+    for line in body.splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if fence:
+            lines.append(line)
+            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence) and not line[marker.end():].strip():
+                fence = None
+        elif marker:
+            fence = marker[1]
+            lines.append(line)
+        else:
+            lines.append(re.sub(r"<(?!/?(br|sub|sup)\b)", "&lt;", line))
+    return "".join(lines)
+
+
 def process_notes(path: Path) -> list[Chapter]:
     text = path.read_text(encoding="utf8").split("<!-- /TOC -->", 1)[-1]
 
@@ -1100,7 +1143,7 @@ def process_notes(path: Path) -> list[Chapter]:
         body = re.sub(r"\$([^$\n]+)\$", latex, body)
         body = re.sub(r"^(#{2,4}) \d+(\.\d+)*\.?\s*", r"\1 ", body, flags=re.M)
         body = re.sub(r"^-{4,}\s*$", "", body, flags=re.M)
-        body = re.sub(r"<(?!/?(br|sub|sup)\b)", "&lt;", body)  # the notes are Markdown, not HTML
+        body = escape_note_html(body)
         ch = Chapter(title=title, part="Notes")
         ch.blocks.append(Block(kind="raw", text=body.strip()))
         chapters.append(ch)
@@ -1137,7 +1180,8 @@ def publish_source(book: str, source: Path) -> str:
     name = f"{book}{original.suffix.lower()}"
     target = ASSET_DIR / "sources" / name
     target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(original, target)
+    if original.resolve() != target.resolve():
+        shutil.copyfile(original, target)
     return f"{ASSET_URL}/sources/{name}"
 
 
@@ -1163,9 +1207,11 @@ def write_book(book: str, chapters: list[Chapter], source: Path):
         parts[-1]["chapters"].append(entry)
         md = ch.blocks[0].text + "\n" if ch.blocks[0].kind == "raw" else chapter_markdown(ch)
         (out / f"{cid}.md").write_text(md, encoding="utf8")
-    index = {"id": book, **BOOKS[book], "source": source.name, "parts": parts}
+    index = {"id": book, **BOOKS[book], "source": BOOKS[book].get("sourceName", source.name)}
+    index.pop("sourceName", None)
     if source.suffix == ".pdf" or source.with_suffix(".pdf").is_file():
         index["download"] = publish_source(book, source)
+    index["parts"] = parts
     (out / "index.json").write_text(json.dumps(index, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
     total = sum(len(p["chapters"]) for p in parts)
     print(f"✓ {book}: {len(parts)} parts, {total} chapters → {out.relative_to(ROOT)}")
@@ -1182,7 +1228,34 @@ def main(argv: list[str]):
         chapters = process_notes(source)
     else:
         chapters = process_pdf(book, source, AdvancedBook() if book == "advanced" else GrokkingBook())
+    apply_editorial_updates(book, chapters)
     write_book(book, chapters, source)
+
+
+def apply_editorial_updates(book: str, chapters: list[Chapter]):
+    """Keep historical Kafka imports versioned and corrections reproducible."""
+    if book != "advanced":
+        return
+    updates = {ch.title: ch for ch in process_notes(Path(__file__).with_name("kafka_updates.md"))}
+    missing = updates.keys() - {ch.title for ch in chapters if ch.part == "Kafka"}
+    if missing:
+        raise ValueError(f"Kafka update titles not found in source: {sorted(missing)}")
+    for chapter in chapters:
+        if chapter.part != "Kafka":
+            continue
+        if chapter.title in updates:
+            chapter.blocks = updates[chapter.title].blocks
+        else:
+            # Keep the imported diagrams explicitly historical instead of presenting
+            # ZooKeeper-era topology as current Kafka architecture.
+            body = chapter_markdown(chapter)
+            note = (
+                "> **Historical architecture:** This imported chapter describes the ZooKeeper-era design.\n"
+                "> Kafka 4.0 and later use KRaft; consult the updated Role of ZooKeeper, Controller Broker, "
+                "and Kafka Delivery Semantics chapters in this collection.\n"
+                "> [Apache Kafka upgrade documentation](https://kafka.apache.org/40/getting-started/upgrade/)\n\n"
+            )
+            chapter.blocks = [Block(kind="raw", text=(note + body).rstrip())]
 
 
 if __name__ == "__main__":

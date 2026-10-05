@@ -1,0 +1,36 @@
+{
+ "id": "behavioral",
+ "title": "Behavioral and Leadership Interviews",
+ "short": "Behavioral Interviews",
+ "description": "Build a factual story bank, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
+ "sourceLinks": [
+  {
+   "label": "Amazon interview preparation",
+   "url": "https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep"
+  }
+ ],
+ "source": "behavioral_interviews.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "build-an-evidence-based-story-bank",
+     "title": "Build an evidence-based story bank"
+    },
+    {
+     "id": "conflict-and-influence-without-authority",
+     "title": "Conflict and influence without authority"
+    },
+    {
+     "id": "failure-ownership-and-learning",
+     "title": "Failure, ownership, and learning"
+    },
+    {
+     "id": "senior-technical-judgment-and-a-mock-interview",
+     "title": "Senior technical judgment and a mock interview"
+    }
+   ]
+  }
+ ]
+}

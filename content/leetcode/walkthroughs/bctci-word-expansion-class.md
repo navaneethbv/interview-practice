@@ -1,53 +1,49 @@
 ## Intuition
 
-Reordering makes character positions irrelevant, but multiplicities still matter.
-A candidate must contain every original letter occurrence and have exactly one additional character overall.
+Reordering does not matter when comparing two words, so only their letter counts matter.
+The target must have exactly one more character and must contain every count from the original word.
 
 ## Brute force
 
-Sorting the original and candidate strings could compare their multisets but costs O(L log L) per candidate.
-A fixed lowercase alphabet allows frequency counting in linear time.
+Generating every permutation after adding each possible letter would be factorial in the word length.
+Sorting both strings would work but costs O(n log n) and hides the fixed alphabet structure.
 
 ## Approach
 
-The constructor saves the original length and per-letter counts.
-A query first rejects any candidate whose length is not original length plus one.
-Count the candidate's letters and verify that every original count is covered.
-The length difference then guarantees that exactly one extra occurrence remains, regardless of which letter it is.
-Python explicitly subtracts the original Counter and checks nonnegative differences summing to one.
-Java verifies coverage using its 26-element arrays; the already-checked length makes a separate sum unnecessary.
+The constructor records the length and a frequency table for s.
+For expands_into, reject immediately unless s2 has length length plus one.
+Count every character in s2.
+If any target count is smaller than the stored count, s2 removed a required character.
+The length check then guarantees that the remaining extra count is exactly one.
 
 ## Walkthrough
 
-```text
-Input: ctor = ["tea"], ops = ["expands_into", "expands_into", "expands_into"], args = [["tea"], ["team"], ["seam"]]
-Output: [false, true, false]
-```
-
-Example 1 constructs the checker from tea, containing one t, one e, and one a.
-Candidate tea has no additional letter and fails the length check.
-Candidate team covers all original counts and adds one m, so it succeeds.
-Candidate seam has the required length but contains no t, so it fails even though several letters match.
+In Example 1, tea has one t, one e, and one a.
+The target team has those three counts plus one m, so it is a valid expansion.
+The target seam has length four but lacks t and introduces both s and m, so at least one original letter would need to be replaced.
+The method returns true only for the target whose multiset is the original multiset plus one letter.
 
 ## Complexity
 
-Construction takes O(length of s) time.
-Each query takes O(length of s2 + 26), or constant time when rejected by length immediately.
-Frequency storage is O(26).
-The Java reference additionally allocates temporary character arrays through toCharArray, so its transient space is linear in the processed string length.
+Counting s2 takes O(m) time for target length m.
+Java checks a fixed 26-letter table after counting, while Python checks the keys present in its counters.
+The stored and temporary tables use O(26) space for Java and O(d) space for Python, where d is the number of distinct letters.
 
 ## Edge cases
 
-An empty original accepts any one-letter candidate.
-An extra occurrence of an existing letter is valid.
-Repeated original letters must all remain present.
+An empty original word expands into any one-letter word.
+A target with the same length is rejected even if it has the same letters.
+Repeated letters are compared by count, so aab requires both copies of a.
+All inputs use lowercase English letters, making the Java array index safe.
 
 ## Common mistakes
 
-Do not compare only distinct-letter sets.
-A substitution plus an insertion is invalid if it removes an original occurrence.
+Comparing sets loses multiplicity and incorrectly accepts missing repeated letters.
+Checking only that every original letter appears ignores extra replacements.
+Allowing a target longer by more than one violates the exact expansion rule.
 
 ## Language notes
 
-Python Counter subtraction can produce negative counts that must be checked.
-Java indexes lowercase letters by subtracting the character a and uses the required expandsInto method name.
+Python uses Counter and subtract, then confirms no resulting count is negative.
+Java uses a 26-element difference table and relies on the length check to establish one extra letter.
+The Java method name expandsInto follows the spec's camelCase mapping.

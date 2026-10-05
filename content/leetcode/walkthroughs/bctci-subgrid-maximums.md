@@ -1,50 +1,62 @@
 ## Intuition
 
-A suffix rectangle beginning at one cell consists of that cell, the suffix rectangle below it, and the suffix rectangle to its right.
-Taking the maximum across those three sources gives the desired answer.
-Their overlap is harmless because repeated consideration does not change a maximum.
+Subgrid Maximums is organized around Bottom-Right Suffix Maximum.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-For every starting cell, scan every cell in its bottom-right suffix rectangle.
-Across an r by c grid, this can require O(r squared times c squared) work.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Copy the input grid into `best`, so every answer initially includes its own cell value.
-Process rows bottom to top and columns right to left.
-If a row below exists, combine its already computed suffix maximum with the current entry.
-If a column to the right exists, combine that suffix maximum too.
-By this processing order, both dependencies are available when needed.
-Their union covers every cell in the target suffix rectangle, so the resulting maximum is complete.
-Unlike suffix sums, this recurrence does not subtract the diagonal overlap because maximum is idempotent.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Bottom-Right Suffix Maximum idea: A cell's answer is the largest of its own value and the answers of the cells just below and just to the right.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named subgridMaximums can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1's bottom row `[2, 0, 2]` becomes suffix maxima `[2, 2, 2]`.
-The middle row `[4, -1, 0]` then becomes `[4, 2, 2]` by combining rightward and downward maxima.
-The top row `[1, 5, 3]` becomes `[5, 5, 3]`.
-Together these rows give the displayed result.
-In particular, cell `(1, 1)` returns 2 from its lower-right rectangle rather than the larger 5 outside that rectangle.
+Example 1 uses input [[[1, 5, 3], [4, -1, 0], [2, 0, 2]]] and expects [[5, 5, 3], [4, 2, 2], [2, 2, 2]].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [[5, 5, 3], [4, 2, 2], [2, 2, 2]].
+The same reasoning handles hidden cases [[[5]]], [[[1], [9], [4]]], [[[-5, -6], [-7, -8]]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Each cell is copied once and combined with at most two neighbors.
-Both references take O(r times c) time and O(r times c) storage for the returned grid.
-Only loop indices are needed beyond that output.
+The imported workbook records the expected time bound as O(R * C).
+The imported workbook records the expected space bound as O(R * C).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A one-cell grid returns its own value.
-Single rows and columns reduce to ordinary suffix maxima.
-Negative-only grids work because initialization copies actual values instead of using zero as a fake candidate.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[[5]]], [[[1], [9], [4]]], [[[-5, -6], [-7, -8]]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Traverse backward so dependencies are already complete.
-Do not subtract an overlapping maximum as if this were a sum recurrence.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python copies rows with slices.
-Java clones each row, preserving the original grid and preventing shared mutable row storage.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

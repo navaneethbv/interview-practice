@@ -1,53 +1,47 @@
 ## Intuition
 
-A qualifying interval exists exactly when some maximal run of equal adjacent titles reaches length k.
-Only the length of the current run is needed while scanning daily best sellers.
+A qualifying streak must be contained in a maximal run of equal consecutive titles.
+The only information needed at each day is the length of the equal-title suffix ending there.
+If that suffix reaches `k`, the requested streak already exists.
 
 ## Brute force
 
-Checking each length-k window by comparing all its titles takes O(nk) time.
-A frequency count over the whole array cannot establish consecutive repetition.
+For every possible starting day, inspect the next k titles for equality.
+In the worst case this performs O(nk) title comparisons, repeatedly checking the same neighboring days.
 
 ## Approach
 
-For each day, compare its title with the preceding day's title.
-If they match, increment `run`; otherwise reset run to one.
-Return true immediately when run reaches k.
-If the scan finishes without that event, return false.
-After each iteration, run is precisely the number of consecutive equal titles ending on that day.
-Every possible qualifying interval ends on some day, so testing this invariant at every endpoint is sufficient.
+Initialize `run` to zero and scan `bestSeller` in order.
+On the first day, or whenever the current title differs from the previous day's title, set `run = 1`.
+Otherwise increment `run`.
+After each update, return true immediately if `run >= k`.
+If the loop finishes, return false.
+By induction, `run` is exactly the consecutive suffix length: an equal title extends the previous suffix, while a changed title can only begin a new suffix of length one.
 
 ## Walkthrough
 
-```text
-Input: bestSeller = ["book3", "book1", "book3", "book3", "book2"], k = 2
-Output: true
-```
-
-Example 1 begins with book3, giving run 1.
-The next title book1 differs, so run resets to 1.
-The following book3 also starts a new run of 1.
-The next book3 extends it to 2, meeting k and returning true.
-The final book2 does not need to be inspected because the required streak has already been found.
+Example 1 has `book3, book1, book3, book3, book2` and `k = 2`.
+Day 0 starts a run of one `book3`.
+Day 1 changes the title and resets the run to one; day 2 resets it again to one `book3`.
+Day 3 matches day 2, making `run = 2`.
+The method returns true immediately without needing to inspect the final `book2`.
 
 ## Complexity
 
-The scan takes O(n) title comparisons and O(1) extra space.
-When title lengths are not treated as bounded, string comparison cost must also be included.
-The method can terminate early after a matching streak.
+The algorithm makes O(n) title comparisons and uses O(1) auxiliary space.
+If title length is not treated as bounded, comparisons contribute up to O(nL) character work for maximum title length L.
 
 ## Edge cases
 
-With k equal to one, the first day is enough.
-A streak ending on the final day still qualifies.
-The same title on separated days does not form a longer consecutive run.
+For `k = 1`, the first day proves the answer true.
+A streak may begin at the first day or end at the final day.
 
 ## Common mistakes
 
-Reset to one after a change, because the current day begins the next run.
-Do not count total title frequency instead of adjacency.
+Global title frequency does not establish consecutiveness.
+Reset the run to one after a change, because the new title already occupies the current day.
 
 ## Language notes
 
-Python compares strings with `==` by content.
-Java correctly uses `.equals` rather than reference equality, so separately allocated equal title strings extend the same streak.
+Python compares strings by value using `==`.
+Java uses `.equals`, since `==` would compare string object identities.

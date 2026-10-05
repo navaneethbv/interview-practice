@@ -35,6 +35,6 @@ Filtering `amount = 0` confuses amount with transaction existence.
 Grouping by visit instead of customer returns the wrong granularity.
 
 ## SQLite notes
-The `LEFT JOIN ... IS NULL` anti-join works with SQLite NULL semantics.
+The `LEFT JOIN .. IS NULL` anti-join works with SQLite NULL semantics.
 `COUNT(*)` counts each unmatched visit exactly once after the join filter.
 The result is unordered, so the query does not add an `ORDER BY` clause.

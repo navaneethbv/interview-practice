@@ -1,49 +1,48 @@
 ## Intuition
 
-A window is valid when it contains no more than three days below ten sales.
-Extending the right end can only increase that count, and removing days from the left can only decrease it.
-This monotonic behavior lets two pointers maintain the longest valid window ending at each day.
+Treat a bad day as cost one and a good day as cost zero.
+The desired run is the longest contiguous window whose total cost does not exceed three.
+Nonnegative costs mean that moving the left boundary forward can always repair an oversized window.
 
 ## Brute force
 
-Consider every start and end position, counting the bad days in each interval.
-Even with incremental counting per start, this requires O(n squared) time.
+Enumerate every pair of endpoints and count bad days inside each interval.
+Even with incremental counting for each starting point, this takes O(n²) time.
 
 ## Approach
 
-Keep `left`, `cost`, and `best`, all initially zero.
-For each new `right` position, add one to `cost` precisely when the new sales value is below ten.
-While the count exceeds three, subtract the contribution of `sales[left]` and advance `left`.
-Once this loop finishes, the window is valid and its length is `right - left + 1`.
-Update `best` with that length.
-The left boundary never needs to move backward: any earlier start rejected for too many bad days remains invalid after further extension.
+Maintain `left`, the current bad-day count `cost`, and `best`.
+When advancing `right`, add one if its sales value is below 10.
+While `cost > 3`, subtract the badness of `sales[left]` and advance `left`.
+After repair, record the window length `right - left + 1`.
+Every earlier left boundary is invalid for this endpoint, while every later one is shorter, so the maintained window is the best candidate ending at `right`.
+Taking the maximum across endpoints gives the global answer.
 
 ## Walkthrough
 
-Example 1 starts with `[0, 14, 7, 9]`, which has three bad days and length four.
-Adding the next 0 creates a fourth bad day, so the first 0 leaves.
-The window can then extend through 20 and 10, producing indices 1 through 6 with length six.
-Adding the next 0 forces the left boundary past 14 and 7.
-The final 10 produces another valid window of length six, so the result remains 6.
+Example 1 first reaches indices 0 through 3 with three bad days and length four.
+Adding index 4 introduces a fourth bad day, so removing index 0 restores validity.
+The window from index 1 through index 6 then has length six and three bad days.
+Adding index 7 forces left past indices 1 and 2.
+The final window from index 3 through index 8 again has length six.
+The maximum is therefore 6.
 
 ## Complexity
 
-Each position enters and leaves the window at most once.
-Both references therefore take O(n) time and O(1) auxiliary space.
-The inner loop does not multiply the runtime by n because `left` only advances.
+Each index is added once and removed at most once.
+The nested loops therefore take O(n) total time and O(1) auxiliary space.
 
 ## Edge cases
 
 Empty input returns zero.
-All-good input returns the full length; all-bad input returns at most three.
-Exactly ten sales counts as good.
+Any input with at most three bad days qualifies in full, including an array consisting of exactly three bad days.
 
 ## Common mistakes
 
-Use a loop, because several good days may precede the bad day that must leave.
-Update the answer only after restoring validity.
+The requirement is at most three, not exactly three.
+Do not reset the whole window at every bad day or charge the number of missing sales instead of one.
 
 ## Language notes
 
-Python expresses the added cost with a conditional integer expression.
-Java uses a `long` counter, although the number of bad days is bounded by the array length.
+Python and Java use explicit zero-or-one contributions.
+Java stores `cost` as long, although the number of days itself already fits in int.

@@ -1,53 +1,48 @@
 ## Intuition
 
-Each ticket needs valid lifecycle events, and each agent must avoid interrupting an open ticket with another ticket.
-These are related but distinct invariants, so the reference tracks both ticket history and each agent's latest action.
+Ticket validity depends on both its own lifecycle and the intervening activity of its agent.
+A ticket can be invalid even when its open and close look correct in isolation.
+Track lifecycle history permanently so duplicate actions cannot erase earlier evidence.
 
 ## Brute force
 
-Grouping events by ticket and rescanning each open-close interval for interference can take quadratic time.
-A chronological scan detects the moment an agent switches away from unfinished work.
+Group each ticket's actions, then scan the interval between its open and close for other actions by that agent.
+Repeated interval scans can take O(n²) time.
 
 ## Approach
 
-`opened_by` remembers the first opener, `closed` records completed or attempted closes, and `bad` permanently records anomalies.
-Before processing an event, inspect that agent's `last_ticket`.
-If it is different and remains open, mark the previous ticket bad.
-Record the new last ticket, then validate the event itself.
-Repeated opens, closes before opens, repeated closes, and a different closing agent all mark the current ticket bad.
-After the scan, mark every opened but unclosed ticket bad.
-Using a set prevents duplicate anomaly entries.
+Maintain `opened_by`, `closed`, `last_ticket`, and the accumulating set `bad`.
+Before processing an event, inspect the agent's previous ticket.
+Switching away from an opened, unclosed ticket marks that previous ticket anomalous.
+An open is invalid if the ticket was already opened or closed; preserve the first opener with `setdefault`.
+A close is invalid when there was no open, a previous close, or a different opener.
+Record every close regardless, because subsequent actions must still see that history.
+Finally mark all opened tickets that never closed.
 
 ## Walkthrough
 
-```text
-Input: agents = ["Drew", "Drew", "Drew"], actions = ["open", "close", "close"], tickets = [32, 2, 32]
-Output: [2, 32]
-```
-
-Drew opens ticket 32, recording Drew as its opener.
-Drew's next event is a close of ticket 2.
-Switching away marks the still-open ticket 32 bad, and closing unopened ticket 2 marks 2 bad.
-The final close of 32 does not erase its earlier interruption.
-The result therefore contains both 2 and 32, in either order.
+In Example 1, Drew opens ticket 32, so its opener and Drew's last ticket are recorded.
+Drew next closes ticket 2.
+The switch marks the still-open ticket 32 bad, and closing unopened ticket 2 marks 2 bad.
+The last close of 32 matches its original opener, but cannot remove its earlier anomaly.
+The returned set of ticket numbers is therefore `[2, 32]` in any order.
 
 ## Complexity
 
-For n log entries, expected time is O(n) with hash tables.
-Ticket and agent histories require O(n) extra space in the worst case.
+For n log entries, hash operations give O(n) expected time.
+The ticket sets and maps plus the per-agent history use O(n) space.
 
 ## Edge cases
 
-Actions by other agents do not interrupt a ticket unless they violate its own open-close rule.
-An opening at the end is anomalous because it never closes.
-An already-bad ticket stays bad.
+An empty log returns an empty list.
+Interleaved work by different agents is allowed when neither agent switches away from their own active ticket.
 
 ## Common mistakes
 
-Do not clear anomaly status after a later valid close.
-Do not overwrite the first opener when a duplicate open arrives.
+Do not clear `bad` when a later event looks valid.
+Do not overwrite the original opener on a repeated open.
 
 ## Language notes
 
-Python uses dictionaries and sets; Java uses their hash-based equivalents.
-Neither implementation promises sorted output, matching the order-insensitive contract.
+Python returns a list converted from a set, and Java returns an `ArrayList` from a `HashSet`.
+The spec compares outputs without requiring ticket order.

@@ -1,49 +1,43 @@
 ## Intuition
 
-XOR can temporarily combine two integer values without losing either one.
-Applying XOR with one original operand cancels that operand and recovers the other.
-Three assignments use this cancellation property to exchange the two local variables without a third temporary value.
-
-## Brute force
-
-A conventional swap stores a in a temporary variable, assigns b to a, and then assigns the temporary value to b.
-That is clearer in ordinary application code, but this exercise demonstrates the no-temporary-variable operation.
+XOR can combine two integers so that applying the same operation again recovers either original value.
+Three XOR assignments move the values through that reversible relationship without a temporary variable.
+The sequence also works when the two inputs are equal because XOR with itself is zero.
 
 ## Approach
 
-First assign `a ^= b`, storing the XOR of both originals in a.
-Then assign `b ^= a`; the original b cancels itself inside the combined value, leaving the original a in b.
-Finally assign `a ^= b`; the original a now cancels from the combined value, leaving the original b in a.
-Return the pair `[a, b]`.
-The proof uses XOR associativity, commutativity, and the identities `x ^ x = 0` and `x ^ 0 = x`.
+First set `a` to `a ^ b`.
+Then set `b` to the new `a ^ b`, which recovers the original `a`.
+Finally set `a` to the current `a ^ b`, which recovers the original `b`.
+Return the swapped pair in `[a, b]` order.
 
 ## Walkthrough
 
-Example 1 starts with a equal to 3 and b equal to 9.
-In four-bit form those are `0011` and `1001`.
-The first assignment makes a equal to `1010`, or 10.
-The second computes `1001 ^ 1010`, giving b equal to 3.
-The third computes `1010 ^ 0011`, giving a equal to 9.
-Return `[9, 3]`.
+For Example 1, starting with `a = 3` and `b = 9`, the first assignment stores their combined XOR in `a`.
+The second assignment uses that combined value to recover three into `b`.
+The third assignment recovers nine into `a`, so the result is `[9, 3]`.
+For equal inputs such as negative four and negative four, the first XOR is zero, and the remaining two operations restore the same value in both positions.
 
 ## Complexity
 
-For fixed-width integer inputs, time is O(1) and auxiliary space is O(1).
-The two-element returned array or list also has constant size.
+The method performs exactly three bitwise operations, so it runs in `O(1)` time.
+It uses `O(1)` auxiliary space and returns a constant-size two-element array.
+The arithmetic is performed in the input integer width, preserving two's complement bit patterns.
 
 ## Edge cases
 
-Equal operands remain equal after the swap.
-Zero and negative values obey the same XOR identities.
-The reference swaps two distinct local variables, even when their values are identical.
+Equal values remain equal after the swap because XOR self-cancels.
+Zero and negative values need no special branch.
+The minimum and maximum signed integers are swapped as bit patterns without arithmetic overflow.
 
 ## Common mistakes
 
-An XOR swap applied twice to the same storage location would destroy its value.
-That aliasing problem does not arise for these separate parameters.
-Changing the assignment order breaks the cancellation sequence.
+Using addition and subtraction can overflow even when the final values would be valid.
+Changing the order of the XOR assignments loses one of the original values.
+Returning the intermediate combined value instead of the final pair does not perform a swap.
 
 ## Language notes
 
-Java int XOR works directly on 32-bit patterns.
-Python's integer XOR also satisfies the cancellation identities, so no mask is needed to recover the original signed values.
+Python's integers are unbounded, but the XOR sequence still gives the same mathematical values for this contract.
+Java's `int` operations naturally preserve 32-bit two's complement behavior.
+Both references return a new two-element result and do not mutate caller-visible variables beyond local parameters.

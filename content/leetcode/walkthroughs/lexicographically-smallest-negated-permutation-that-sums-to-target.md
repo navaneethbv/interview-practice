@@ -1,6 +1,6 @@
 ## Intuition
 
-The signed sum starts at the total `1 + ... + n`.
+The signed sum starts at the total `1 + .. + n`.
 Negating a value reduces the sum by twice that value, so the problem becomes choosing a subset with sum `(total - target) / 2`, then placing negative values first for lexicographic minimality.
 
 ## Brute force

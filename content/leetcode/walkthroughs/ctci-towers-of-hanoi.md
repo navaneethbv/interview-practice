@@ -1,49 +1,62 @@
 ## Intuition
 
-The largest disk cannot move to its destination until every smaller disk has been moved onto the spare peg.
-After moving that largest disk once, the smaller stack must move from the spare peg onto it.
-The same rule applies recursively to every smaller stack.
+Towers of Hanoi is organized around Move n - 1 Aside.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-A search over all legal peg configurations could find a solution, but would store many states and repeatedly examine moves that the disk-order rule already determines.
-The recursive decomposition directly produces the required optimal sequence.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Call `_move(n, 1, 3, 2, moves)` to transfer n disks from peg 1 to peg 3.
-For zero disks, do nothing.
-Otherwise move the top n minus one disks from `source` to `spare`, using `target` temporarily.
-Append the move `[source, target]` for the largest remaining disk.
-Finally move the smaller stack from `spare` to `target`, now using `source` as the spare.
-Each recursive call preserves the rule that a larger disk never sits above a smaller disk.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Move n - 1 Aside idea: Move the top n - 1 disks to the spare tower, move the largest disk, then move the n - 1 disks on top of it.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named hanoi can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 has two disks.
-First move the smaller disk from peg 1 to peg 2.
-Then move the larger disk from peg 1 to peg 3.
-Finally move the smaller disk from peg 2 to peg 3.
-The emitted sequence is `[[1, 2], [1, 3], [2, 3]]`.
-Peg 3 now contains the complete stack in its original size order.
+Example 1 uses input [2] and expects [[1, 2], [1, 3], [2, 3]].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [[1, 2], [1, 3], [2, 3]].
+The same reasoning handles hidden cases [0], [3], [4]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-The recurrence is T(n) equal to twice T(n minus one) plus one.
-Exactly `2^n - 1` moves are generated, taking O(2^n) time and output space.
-The recursion stack uses O(n) additional space.
+The imported workbook records the expected time bound as O(2^n).
+The imported workbook records the expected space bound as O(n).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Zero disks return an empty move list.
-One disk produces a single move from peg 1 to peg 3.
-The maximum input is deliberately small because the output grows exponentially.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [0], [3], [4] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-The peg roles change in each recursive call; merely decrementing the disk count without permuting those roles produces illegal moves.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Both languages append two-element lists for moves.
-Python and Java mutate one shared output collection while recursive arguments describe the current source, target, and spare pegs.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

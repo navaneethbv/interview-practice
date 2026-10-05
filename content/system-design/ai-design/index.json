@@ -1,0 +1,36 @@
+{
+ "id": "ai-design",
+ "title": "AI System Design Practice",
+ "short": "AI System Design",
+ "description": "Design document retrieval and support assistants, evaluate outcomes, and reason about access, freshness, latency, cost, and bounded actions.",
+ "sourceLinks": [
+  {
+   "label": "Anthropic engineering",
+   "url": "https://www.anthropic.com/engineering/building-effective-agents"
+  }
+ ],
+ "source": "ai_system_design.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "design-document-search-with-rag",
+     "title": "Design document search with RAG"
+    },
+    {
+     "id": "design-a-support-assistant-with-bounded-actions",
+     "title": "Design a support assistant with bounded actions"
+    },
+    {
+     "id": "evaluate-quality-latency-and-cost-together",
+     "title": "Evaluate quality, latency, and cost together"
+    },
+    {
+     "id": "run-an-ai-design-mock-interview",
+     "title": "Run an AI design mock interview"
+    }
+   ]
+  }
+ ]
+}

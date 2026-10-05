@@ -1,52 +1,62 @@
 ## Intuition
 
-Treat each furniture rectangle as a graph vertex and every feasible jump as an undirected edge.
-Reachability then becomes a graph search, with geometric distance evaluated only when considering another piece.
+The Floor Is Lava is organized around Implicit Graph over Pieces.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Enumerating complete jump sequences repeats visits and can loop among nearby pieces.
-A visited array records reachable furniture once and prevents redundant exploration.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-For rectangles a and b, compute their horizontal separation as the maximum of zero and the two possible directional gaps.
-Compute vertical separation similarly.
-The closest-point squared distance is `dx * dx + dy * dy`.
-Run BFS from piece zero, testing every unreached rectangle against each dequeued piece and enqueuing it when squared distance is at most d squared.
-Return whether the last piece was reached.
-Overlapping coordinate projections contribute zero separation on that axis.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Implicit Graph over Pieces idea: Two pieces are linked when the gap between their rectangles is at most d; search from piece 0 toward the last piece.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named canCross can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: furniture = [[1, 1, 9, 5], [12, 9, 20, 13], [16, 2, 22, 7], [24, 9, 26, 11], [29, 1, 31, 5]], d = 5
-Output: true
-```
-
-Example 1 can jump from piece 0 to 1 with gaps 3 and 4, giving distance 5.
-Piece 1 can reach piece 3 with horizontal gap 4 and overlapping vertical projections.
-Piece 3 can reach piece 4 with gaps 3 and 4, again distance 5.
-Thus the route 0, 1, 3, 4 reaches the destination within the allowed jump distance.
+Example 1 uses input [[[1, 1, 9, 5], [12, 9, 20, 13], [16, 2, 22, 7], [24, 9, 26, 11], [29, 1, 31, 5]], 5] and expects true.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is true.
+The same reasoning handles hidden cases [[[0, 0, 1, 1]], 1], [[[0, 0, 1, 1], [1, 1, 2, 2]], 1], [[[0, 0, 1, 1], [4, 5, 6, 6]], 5]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-With n pieces, at most n BFS removals each scan n candidates, giving O(n squared) time.
-The reached array and queue use O(n) extra space.
-No complete adjacency matrix is stored.
+The imported workbook records the expected time bound as O(n^2).
+The imported workbook records the expected space bound as O(n).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A single piece is already the destination.
-Touching pieces have distance zero.
-Diagonal separation must combine both axis gaps, while alignment can leave one gap zero.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[[0, 0, 1, 1]], 1], [[[0, 0, 1, 1], [1, 1, 2, 2]], 1], [[[0, 0, 1, 1], [4, 5, 6, 6]], 5] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Comparing rectangle centers gives incorrect distances for large furniture.
-Use less-than-or-equal so jumps exactly at the limit remain valid.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python integers safely hold squared distances.
-Java promotes gaps and the jump limit to long before multiplication, keeping the squared-coordinate arithmetic within range.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

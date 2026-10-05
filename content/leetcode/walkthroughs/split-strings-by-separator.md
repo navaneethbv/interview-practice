@@ -14,9 +14,9 @@ That is already O(total input length), but language string splitting expresses t
 4. Continue with the next word so cross-word order is preserved.
 
 ## Walkthrough
-Example 1 has words `["a.b", "..c."]` and separator `.`.
+Example 1 has words `["a.b", ".c."]` and separator `.`.
 Splitting `"a.b"` produces `"a"` and `"b"`, both of which are appended.
-Splitting `"..c."` produces empty pieces, then `"c"`, then a final empty piece.
+Splitting `".c."` produces empty pieces, then `"c"`, then a final empty piece.
 Only `"c"` survives from the second word, so the result is `["a", "b", "c"]`.
 
 ## Complexity

@@ -49,6 +49,14 @@
     {
      "id": "safe-operational-change",
      "title": "Safe operational change"
+    },
+    {
+     "id": "investigate-a-latency-incident",
+     "title": "Investigate a latency incident"
+    },
+    {
+     "id": "turn-an-availability-objective-into-an-alert",
+     "title": "Turn an availability objective into an alert"
     }
    ]
   }

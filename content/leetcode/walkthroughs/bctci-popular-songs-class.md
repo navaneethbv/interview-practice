@@ -1,49 +1,49 @@
 ## Intuition
 
-Popularity depends on the current median, which changes as songs are registered.
-Two heaps maintain the lower and upper halves of all play counts, exposing the middle values without sorting the entire collection after every insertion.
-A separate map connects each title to its count.
+A song is popular when its play count is strictly above the median of all registered counts.
+Two heaps maintain the lower half and upper half so the middle values are always available.
+The lower heap is a max heap and the upper heap is a min heap.
 
 ## Brute force
 
-Sort all registered counts for every popularity query and compare the requested song with the resulting median.
-This can require O(n log n) work per query.
+Sorting all registered counts during every query costs O(m log m) for m songs.
+Maintaining the two halves incrementally makes each registration logarithmic and each popularity check constant time.
 
 ## Approach
 
-Keep `lower` as a max-heap and `upper` as a min-heap.
-Insert a new count into lower, move lower's maximum to upper, then move upper's minimum back if upper became larger.
-These operations preserve ordering between halves and ensure lower has either the same size as upper or one extra entry.
-For an odd count, lower's root is the median.
-For an even count, the median is the average of both roots.
-Compare doubled song counts with a doubled median to avoid fractional arithmetic.
-Use a strict greater-than comparison because a song equal to the median is not popular.
+1. Store each title's count in `plays`.
+2. Push every new count into `lower`, move its largest value to `upper`, and move one value back if the upper half becomes larger.
+3. The lower heap has one extra value for odd sizes, or both heaps have equal size for even sizes.
+4. Compare twice the title count with twice the median to avoid floating point arithmetic.
 
 ## Walkthrough
 
-Example 1 first registers a with 193 plays.
-Its count equals the sole median, so querying a returns false.
-After registering b with 140 and c with 132, the ordered counts are 132, 140, and 193.
-The median becomes 140.
-Song a is now popular because 193 exceeds 140, while b remains not popular because it equals the median.
+Example 1 registers `a` with 193, so the single median is 193 and `a` is not strictly above it.
+After registering 140 and 132, the sorted counts are 132, 140, 193.
+The lower heap exposes 140 as the median, making 193 popular while 140 is not.
+The heap sizes and roots encode this result without sorting again.
 
 ## Complexity
 
-Registration performs a constant number of heap operations and costs O(log n).
-A popularity query uses map lookup and heap roots, giving expected O(1) time.
-The map and heaps together use O(n) space.
+- Time: `register_plays` is O(log m), and `is_popular` is O(1).
+- Space: O(m) for the title map and the two heaps.
 
 ## Edge cases
 
-Two unequal counts make only the larger song popular.
-Equal counts never become popular merely because of their heap placement.
+With one song, its own count equals the median and is not popular.
+For an even number of songs, the doubled median is the sum of the two middle counts.
+Equal play counts are handled naturally by heap ordering.
+The contract registers each title once, so no update or removal path is required.
 
 ## Common mistakes
 
-Do not use integer division to approximate an even-sized median.
-Preserve both heap ordering and the size invariant after insertion.
+- Using greater than or equal incorrectly marks the median itself as popular.
+- Averaging with floating point can lose precision for large counts.
+- Letting the upper heap contain more values breaks median selection.
+- Forgetting to store titles makes later queries unable to retrieve their counts.
 
 ## Language notes
 
-Python negates lower-half values to implement a max-heap.
-Java uses a reverse comparator and performs doubled arithmetic with `long`.
+Python negates values to use `heapq` as a max heap for `lower`.
+Java supplies `Collections.reverseOrder()` and uses `long` for doubled counts.
+Both implementations keep the same heap invariant after every registration.

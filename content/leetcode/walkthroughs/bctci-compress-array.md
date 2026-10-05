@@ -1,54 +1,46 @@
 ## Intuition
 
-After fully compressing a prefix, the only new equal adjacency can occur where the next value meets the prefix's final value.
-A stack makes that boundary directly accessible and supports repeated merges cascading leftward.
+After the processed prefix is fully compressed, only its last value can merge with the next incoming value.
+A merge can expose another equal neighbor, so the same value may need to travel backward through several completed groups.
 
 ## Brute force
 
-Repeatedly scanning from the beginning for the first equal pair and shifting the array can take quadratic time.
-The stack avoids revisiting settled internal positions.
+Repeatedly search the entire array for its first equal adjacent pair and remove one element after merging.
+Array shifting and rescanning can make this O(n squared), even though every merge reduces the number of values.
 
 ## Approach
 
-For each input value, compare it with the stack top.
-While they are equal, pop the top and add it to the current value.
-The newly doubled value may now equal the next stack top, so keep checking.
-Push the value once no further merge is possible.
-The stack is always the fully compressed form of the processed prefix.
-Completing each cascade before reading another input value preserves the required first-pair order.
+Maintain the compressed prefix in `stack`.
+For each input `value`, repeatedly pop the top while it equals `value`, adding that popped value into the incoming one.
+Append the resulting value when no further merge is possible.
+The stack has no equal adjacent entries before the next input arrives.
+Because all earlier pairs are already resolved, this performs the same leftmost merges required by the statement without rescanning them.
 
 ## Walkthrough
 
-```text
-Input: arr = [8, 4, 2, 2, 2, 4]
-Output: [16, 2, 4]
-Explanation: [8, 4, 2, 2, 2, 4] becomes [8, 4, 4, 2, 4], then [8, 8, 2, 4], then [16, 2, 4].
-```
-
-Example 1 first builds stack `[8, 4, 2]`.
-The next 2 merges with the top 2 to become 4.
-That 4 merges with the earlier 4 to become 8, which merges with the earlier 8 to become 16.
-The remaining input values 2 and 4 append without equality.
+Example 1 begins `[8, 4, 2, 2, 2, 4]`.
+The first three values produce stack `[8, 4, 2]`.
+The next 2 merges with 2 into 4, then with 4 into 8, then with 8 into 16.
+The remaining 2 and 4 do not match their preceding values.
 The final stack is `[16, 2, 4]`.
 
 ## Complexity
 
-Each input value creates at most one push, and each merge removes a stored entry.
-Thus total time is O(n), despite the nested loop.
-The stack and returned result require O(n) space in the worst case.
+Time is O(n) because each pushed entry is popped at most once.
+The stack and returned sequence occupy O(n) space in the worst case, when no values merge.
 
 ## Edge cases
 
 An empty array stays empty.
-Zeros repeatedly merge to zero, still reducing entry count.
-A cascade can consume the entire current stack.
+Zero values still merge and reduce the number of elements, so repeated zero merges terminate.
+A run of equal values may collapse through multiple different doubled values.
 
 ## Common mistakes
 
-A single if statement misses cascading merges.
-Merging all equal values globally would incorrectly combine nonadjacent occurrences.
+A single conditional merge misses cascades such as 2 becoming 4 and then 8.
+Sorting the input destroys the specified adjacency order.
 
 ## Language notes
 
-Python lists support append and pop at the end.
-Java uses a `Deque<Long>` and reconstructs output backward because pushing places the newest compressed value at the deque front.
+Python returns its stack in insertion order.
+Java pushes onto the front of a deque, then fills the result backward to restore the original left-to-right order, using `long` for merged values.

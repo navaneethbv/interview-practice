@@ -1,54 +1,48 @@
 ## Intuition
 
-A bad day ends every good-day interval that reaches it.
-Keep the current good suffix length and the best length seen anywhere, resetting only the current suffix when the threshold is missed.
+A bad day ends every all-good streak that was still active.
+The only useful state for extending a streak is the number of consecutive good days ending immediately before the current day.
+Keep that current run separately from the best run seen anywhere.
 
 ## Brute force
 
-Testing all candidate intervals for all-good membership repeats the same daily checks.
-A single running counter summarizes every good interval ending at the current position.
+For every possible starting day, scan forward until reaching a bad day and measure the run.
+An array containing only good days makes this repeat many scans and take O(n²) time.
 
 ## Approach
 
-Initialize `run` and `best` to zero.
-For each sales value, increment run when the value is at least 10; otherwise set run to zero.
-Update best with the maximum of its old value and run.
-After each day, run is exactly the number of consecutive good days ending there.
-The longest good streak must end at some day, so best captures its length when that endpoint is processed.
-No second boundary or frequency map is required because a bad day completely breaks the suffix.
+Initialize `run = 0` and `best = 0`.
+For each sales value, increment `run` when the value is at least 10; otherwise reset it to zero.
+Update `best` with the maximum of its previous value and the new run length.
+The run invariant follows directly from whether the current day can extend yesterday's all-good suffix.
+The best invariant then follows because every possible consecutive streak ends at some position, and its maximal suffix length is considered at that position.
 
 ## Walkthrough
 
-```text
-Input: sales = [0, 14, 7, 12, 10, 20]
-Output: 3
-```
-
-Example 1 starts with a bad zero-sale day, leaving run zero.
-Sales 14 makes run one, then sales 7 resets it.
-The values 12, 10, and 20 extend a new streak through lengths one, two, and three.
-The best recorded length is therefore 3.
-The earlier isolated good day does not join the later streak across the bad day.
+Example 1 has sales `[0, 14, 7, 12, 10, 20]`.
+The first day resets the run to zero.
+The value 14 starts a run of one and raises best to one.
+The value 7 breaks that streak.
+Values 12, 10, and 20 then produce run lengths one, two, and three.
+The final maximum is 3, representing the last three consecutive days.
 
 ## Complexity
 
-The algorithm visits n days once, giving O(n) time.
-Two integer counters require O(1) extra space.
-The input array is neither modified nor copied.
+A single pass takes O(n) time and uses O(1) auxiliary space.
+The method does not store streak boundaries because the requested output is only a length.
 
 ## Edge cases
 
-An empty input returns zero.
-All-bad input also returns zero.
-All-good input returns its entire length.
-A day with exactly 10 sales is included.
+An empty array returns zero because neither counter changes.
+All bad days also return zero; all good days return the full length.
 
 ## Common mistakes
 
-Reset run to zero on a bad day, because that day cannot start a good streak.
-Do not reset best when a streak ends.
+Exactly 10 sales qualifies as good.
+Do not return the final run alone, since an earlier streak may have been longer.
+Counting all good days ignores the consecutive requirement.
 
 ## Language notes
 
-Python and Java use equivalent conditional updates.
-The returned length fits in an int under the stated maximum array size, and no sales totals need to be accumulated.
+Python uses a conditional expression and `max`.
+Java uses the equivalent ternary expression and `Math.max`; its int counters safely hold the maximum allowed length.

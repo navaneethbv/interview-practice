@@ -24,4 +24,4 @@ Output: 2
 
 - `0 <= sales.length <= 10^5`
 - `0 <= sales[i] <= 10^3`
-- `0 <= k <= sales.length`
+- `k` is a nonnegative integer budget and may exceed `sales.length`.

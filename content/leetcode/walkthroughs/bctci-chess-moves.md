@@ -1,53 +1,47 @@
 ## Intuition
 
-Each piece has a fixed set of movement directions, but only the queen continues along a direction.
-Checking board bounds and occupancy at each landing cell captures the local movement rules.
+Each piece has a small set of possible directions or jumps.
+The only unbounded movement is the queen's distance along a direction.
+Centralizing the bounds and occupancy test makes all three movement rules follow the same definition of a free destination.
 
 ## Brute force
 
-Testing every board cell against the piece's geometry wastes work for kings and knights.
-For queens, testing every candidate while rescanning intervening squares also repeats obstruction checks.
+One could inspect every board cell and test whether the piece can reach it, scanning intervening cells for queen moves.
+That approach performs unnecessary work away from the piece's permitted directions.
 
 ## Approach
 
-Define the eight neighboring direction vectors and the eight knight offsets.
-For a knight, test only each offset's destination; intermediate cells are irrelevant.
-For a king, test each neighboring destination once.
-For a queen, repeatedly step along each neighboring direction until a boundary or occupied cell blocks it.
-Append only empty reachable cells, excluding the starting position.
-Different queen rays do not overlap away from their origin, so no deduplication set is needed.
+For a knight, test the eight offsets in `KNIGHT` and include only free destinations.
+For a king, test the eight adjacent offsets in `KING`, excluding `(0, 0)`.
+For a queen, start one step away in each king direction and repeatedly append free cells, advancing by the same `(dr, dc)`.
+Stop a ray as soon as it leaves the board or reaches an occupied cell.
+A knight ignores intermediate cells, whereas the queen must stop before the first obstacle.
 
 ## Walkthrough
 
-```text
-Input: board = [[0, 0, 0, 1, 0, 0], [0, 1, 1, 1, 0, 0], [0, 1, 0, 1, 1, 0], [1, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]], piece = "king", r = 3, c = 5
-Output: [[2, 5], [3, 4], [4, 4], [4, 5]]
-```
-
-Example 1 places a king at `[3, 5]`, on the right boundary.
-Three neighboring positions with column 6 are out of bounds.
-The position `[2, 4]` is occupied.
-The four remaining empty neighbors are `[2, 5]`, `[3, 4]`, `[4, 4]`, and `[4, 5]`.
-These are exactly the output cells, regardless of enumeration order.
+Example 1 places a king at `(3, 5)` on the six-by-six board.
+All candidates in column 6 are outside the board.
+Cell `(2, 4)` is occupied and cannot be included.
+The remaining free adjacent cells are `(2, 5)`, `(3, 4)`, `(4, 4)`, and `(4, 5)`.
+These four coordinate pairs form the answer, with no required ordering.
 
 ## Complexity
 
-Kings and knights examine eight candidates, taking O(1) time and output space.
-A queen visits at most O(n) cells along eight rays and returns O(n) cells.
-Working storage apart from output is O(1).
+King and knight queries take O(1) time and return at most eight cells.
+A queen visits O(n) cells across eight rays on an n-by-n board.
+Auxiliary working space is O(1), excluding the O(n) possible queen output.
 
 ## Edge cases
 
-A one-cell board offers no move.
-An obstacle blocks every farther queen cell on its ray.
-A knight can jump over occupied cells but cannot land on one.
+A one-cell board has no legal moves.
+A queen surrounded by occupied cells returns an empty list, even if empty cells exist farther away.
 
 ## Common mistakes
 
-Do not allow captures: occupied destinations are excluded by this contract.
-Do not include direction `[0, 0]`.
+Do not include the starting cell.
+Do not allow queen captures: this problem forbids landing on occupied cells entirely.
 
 ## Language notes
 
-Python uses separate comprehensions for jumping pieces.
-Java combines king and queen scanning with a `slides` flag and a helper that appends only valid cells.
+Python's `free` checks bounds before indexing.
+Java's `addIfFree` both validates and appends, and its `slides` flag limits a king to one step.

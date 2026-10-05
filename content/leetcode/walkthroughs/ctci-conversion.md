@@ -1,49 +1,42 @@
 ## Intuition
 
-A bit must change exactly when the corresponding input bits differ.
-XOR marks those positions with ones, so the answer is the population count of the XOR result.
-The actual direction of each change does not matter.
-
-## Brute force
-
-Inspect all 32 positions separately, comparing the corresponding bits of a and b.
-That takes O(B) time for B bits and is already bounded here.
-The reference skips zero positions by clearing one set bit per iteration.
+A bit must be flipped exactly where `a` and `b` differ.
+XOR marks every differing bit with one, so the answer is the number of set bits in `a ^ b`.
+Brian Kernighan's loop removes one set bit per iteration without scanning all bit positions.
 
 ## Approach
 
-Compute `difference = (a ^ b) & 0xFFFFFFFF` in Python.
+Compute `difference = a ^ b`.
 While it is nonzero, replace it with `difference & (difference - 1)` and increment `flips`.
-Subtracting one changes the lowest set bit to zero and turns lower zeros into ones.
-AND with the original therefore removes exactly that lowest set bit while preserving every higher set bit.
-After one iteration per differing position, the mask reaches zero and `flips` is the required count.
+That operation clears the lowest set bit, so the loop count equals the number of required flips.
+Java's signed integer representation already performs XOR over all 32 bits, while Python masks to the same 32-bit unsigned pattern first.
 
 ## Walkthrough
 
-Example 1 uses 29, binary `11101`, and 15, binary `01111`.
-Their XOR is `10010`, decimal 18.
-The first clearing step produces `10000`, decimal 16.
-The second produces zero.
-Exactly two iterations occurred, so return 2.
-Each removed one corresponds to one bit that must be changed to convert the first number into the second.
+For Example 1, `29` is `11101` and `15` is `01111` in the relevant low bits.
+Their XOR has two set bits, and two iterations of the clearing loop produce the answer two.
+For Example 2, `-1` has all 32 bits set and zero has none, so the masked difference contains 32 set bits and the result is 32.
 
 ## Complexity
 
-For d differing positions, time is O(d), bounded by O(B).
-Extra space is O(1).
-B is fixed at 32, so the worst-case iteration count is 32.
+The loop runs once per set bit in the XOR result, so time is `O(p)` where `p` is at most 32.
+The method uses `O(1)` auxiliary space.
+Because the input is fixed-width 32-bit data, this is also constant time in the problem's model.
 
 ## Edge cases
 
-Equal inputs yield a zero XOR and return zero immediately.
-The values -1 and zero differ at all 32 positions and return 32.
+Equal inputs produce zero XOR and require no flips.
+Opposite signs must be compared using their two's complement bit patterns, including the sign bit.
+The minimum integer has only its sign bit set, so it still works with the same operation.
 
 ## Common mistakes
 
-Counting set bits in either input separately does not measure their differences.
-In Python, omitting the width mask for a negative XOR can prevent the clearing loop from terminating.
+Counting set bits in `a` or `b` separately does not count positions where the values differ.
+Using an unbounded Python XOR without the 32-bit mask miscounts negative values.
+Shifting a signed Java value manually can introduce sign extension that the clearing loop avoids.
 
 ## Language notes
 
-Python's mask imposes the required finite two's-complement width.
-Java int arithmetic already operates on 32 bits, so the reference can clear bits directly even when the XOR is negative.
+Python masks `a ^ b` with `0xFFFFFFFF` and returns the count as an ordinary integer.
+Java relies on `int` XOR and uses `difference &= difference - 1`, which works even when the sign bit is set.
+Neither implementation mutates either input value.

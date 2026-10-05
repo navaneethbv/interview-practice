@@ -135,3 +135,103 @@ Expand a schema before switching writers, backfill in bounded batches, verify co
 
 Prefer explicit ownership of data and derived views.
 Document retention, deletion, access control, and recovery expectations beside the design so operational behavior is part of correctness.
+
+# Read a query plan and choose an index
+
+## Interview exercise
+
+A PostgreSQL application frequently requests the latest twenty orders for one customer.
+The fictional table has millions of rows and columns `id`, `customer_id`, `created_at`, `status`, and `total_minor`.
+Explain how you would investigate a slow query before adding an index.
+These notes were reviewed October 4, 2026.
+
+```sql
+EXPLAIN
+SELECT id, created_at, total_minor
+FROM orders
+WHERE customer_id = 42
+ORDER BY created_at DESC, id DESC
+LIMIT 20;
+```
+
+## Reason from the access pattern
+
+The query filters by customer and then orders that customer's rows.
+A candidate B-tree index is `(customer_id, created_at DESC, id DESC)`.
+It can support the equality filter and the requested ordering, allowing early termination after enough qualifying rows.
+The second ordering column makes ties deterministic.
+An index on `created_at` alone may scan many other customers' orders before finding twenty matches.
+An index on `customer_id` alone may still require sorting that customer's matches.
+
+## Inspect evidence
+
+Compare estimated rows with observed rows, scan type, sorting, and the amount of work needed before the limit is satisfied.
+`EXPLAIN ANALYZE` executes the statement, so use representative disposable data for this exercise.
+`BUFFERS` adds information about buffer activity.
+A sequential scan is not automatically a defect: it can be sensible for a small table or a query returning much of the table.
+
+Do not claim that the candidate index improves performance until you measure the same query and data distribution before and after.
+Indexes add storage and write work, and the planner's choice depends on statistics and selectivity.
+A covering index may reduce heap access in suitable conditions, but adding every selected column increases its size and maintenance cost.
+
+## Follow-up and answer criteria
+
+Change the query to filter by `status` as well.
+Ask whether status is selective and whether all customers use the same query before rearranging the index.
+A strong answer connects column order to predicates, considers ordering and limits, and proposes a measurement rather than promising a speedup.
+
+## Source
+
+[PostgreSQL's EXPLAIN documentation](https://www.postgresql.org/docs/current/using-explain.html) explains plan interpretation and the execution behavior of `ANALYZE`.
+The orders example is original.
+
+# Diagnose a transaction conflict
+
+## Exercise
+
+Two workers each attempt to reserve the last available unit of an item.
+The initial quantity is one.
+A broken implementation reads the quantity, computes a new value in the application, and then writes that value in a separate operation.
+Both workers can observe one and both can report a successful reservation even though the stored quantity ends at zero.
+The final number alone does not prove correctness.
+
+## Use an atomic condition
+
+For this single-item exercise, express the precondition in the update itself.
+
+```sql
+UPDATE inventory
+SET quantity = quantity - 1
+WHERE item_id = 7 AND quantity > 0
+RETURNING quantity;
+```
+
+A returned row means this statement reserved a unit.
+No returned row means the item was absent or had no stock; distinguish those cases separately if the contract requires it.
+Record the reservation in the same transaction so stock and ownership cannot diverge on a local failure.
+Use a unique request identifier to recognize a retry of a completed reservation.
+
+## Isolation is not a label that fixes everything
+
+In PostgreSQL, Read Committed gives each statement a new snapshot, while Repeatable Read uses a transaction snapshot and may reject conflicting updates.
+Serializable transactions can also require retries when a serialization anomaly is detected.
+Retry the complete transaction with a bounded policy, not only its final statement.
+Keep irreversible external effects outside a transaction retry loop unless an appropriate idempotency mechanism protects them.
+
+## Reproduction schedule
+
+Use two sessions against a disposable database.
+For the broken version, pause both after reading quantity one, then let both write and record their reported success.
+For the corrected version, run both conditional updates and verify one reservation, quantity zero, and one unsuccessful claim.
+The regression should inspect both persisted state and returned outcomes.
+
+## Follow-up
+
+Now reserve two different items together.
+Acquire locks in a consistent order when appropriate, handle deadlocks as explicit retryable failures, and roll back the entire reservation when either item is unavailable.
+Explain why a single conditional update solved the first exercise but does not automatically solve every multi-row invariant.
+
+## Source
+
+[PostgreSQL transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html) documents snapshot and concurrency behavior.
+This inventory example is an original exercise.

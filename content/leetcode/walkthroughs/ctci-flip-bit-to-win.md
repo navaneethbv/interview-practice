@@ -1,48 +1,48 @@
 ## Intuition
 
-A single flipped zero can join the runs of ones immediately on either side of it.
-Only two adjacent runs matter while scanning the bits.
-Two consecutive zeros prevent an older run from being joined to the next one with a single flip.
+A flipped zero can join a run of ones immediately below it with a run immediately above it.
+While scanning bits from least significant to most significant, current stores the run just seen and previous stores the adjacent run that can be joined across the current zero.
 
 ## Brute force
 
-Flip each of the 32 positions in turn and rescan the entire word to measure its longest run.
-This is O(B squared) work for a B-bit word, compared with one O(B) scan.
+Trying each of the 32 bit positions, flipping it, and measuring the longest run is correct.
+The fixed width makes that acceptable in theory, but the two-run scan is simpler and avoids rebuilding each candidate integer.
 
 ## Approach
 
-Mask n to 32 bits and scan from the least significant end.
-`current` counts the active run of ones.
-On a zero, preserve that run in `previous` only if the following bit is one; otherwise reset `previous` to zero.
-Reset `current` after every zero.
-Update `best` using `previous + current + 1`, where the extra one represents the flipped bit.
-Clamp the final answer to 32 because a full word cannot contain a longer run.
+Treat the input as exactly 32 bits.
+When the current bit is one, extend current.
+When it is zero, keep current as previous only when the next higher bit is one, then reset current.
+At every position, consider previous plus current plus one for flipping the zero there.
+Cap the answer at 32 because no run can exceed the fixed width.
 
 ## Walkthrough
 
-Example 1 has 1775, binary `11011101111`.
-The low run contains four ones.
-The next zero saves those four as `previous` because another run begins immediately afterward.
-That next run grows to three, yielding `4 + 3 + 1 = 8`.
-The higher run cannot produce a longer joined sequence, so the answer remains 8.
+In Example 1, 1775 has a run of three ones beside a zero and a run of four ones on the other side.
+Flipping that zero joins the runs and contributes eight consecutive ones.
+The scan records that candidate when the zero is processed and keeps the maximum over all positions.
+For Example 2, the only zero bit can be flipped to create a run of length one.
 
 ## Complexity
 
-Time is O(B) and extra space is O(1), with B fixed at 32 here.
-No array of bits is allocated.
+The scan always examines 32 positions, so it takes O(1) time.
+It uses O(1) extra space.
 
 ## Edge cases
 
-Zero produces one, because a zero can become a single one.
-An all-one word returns 32 after clamping.
-Negative inputs must be treated as their complete 32-bit patterns.
+An input of zero returns one because exactly one zero can become one.
+An all-one 32-bit value returns 32 even though there is no zero to flip.
+Negative values include a set sign bit and must be scanned using unsigned bit movement.
+Runs at either end are handled by the zero-bit adjacency check.
 
 ## Common mistakes
 
-Retaining a previous run across consecutive zeros incorrectly permits multiple flips.
-An unbounded arithmetic shift of a negative Python integer would never reach zero.
+Scanning only the visible positive bits gives negative inputs the wrong width.
+Always carrying the previous run across a zero incorrectly joins runs separated by multiple zeros.
+Returning previous plus current without the flipped bit undercounts every candidate by one.
 
 ## Language notes
 
-Python first masks with `0xFFFFFFFF`.
-Java uses unsigned right shift `>>>` while processing exactly 32 positions, avoiding sign extension during the scan.
+Python masks n with 0xFFFFFFFF before shifting so its unbounded integers behave like 32-bit values.
+Java uses unsigned right shift so sign extension cannot keep adding one bits.
+Both references maintain the same current, previous, and best state variables.

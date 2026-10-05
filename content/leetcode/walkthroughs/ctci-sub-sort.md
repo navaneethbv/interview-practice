@@ -1,48 +1,62 @@
 ## Intuition
 
-An element smaller than a value already seen belongs inside the unsorted region.
-The last such element determines the right boundary.
-Symmetrically, scanning from the right finds elements larger than a later value, and the earliest such element determines the left boundary.
+Sub Sort is organized around Running Max and Min Scans.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Sort a copy and compare it with the original to find the first and last mismatching positions.
-That takes O(n log n) time and O(n) space, while running extrema identify the same boundaries directly.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Scan left to right with `running_max`.
-Whenever the current value is below that maximum, update `end` to the current index.
-If no violation occurs, return `[-1, -1]`.
-Then scan right to left with `running_min`, updating `start` whenever the current value exceeds the minimum to its right.
-Return both indices.
-Elements outside these boundaries are already correctly ordered relative to every element they must precede or follow.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Running Max and Min Scans idea: Scanning left to right, the last value below the running maximum ends the window; scanning right to left, the last value above the running minimum starts it.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named findUnsortedSequence can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 reaches running maximum 11 before encountering 7 at index 6, setting an initial right boundary.
-Later 6 and 7 below running maximum 12 extend `end` to index 9.
-The reverse scan finds values above a later minimum, ultimately extending `start` to index 3, whose value is 7.
-Sorting indices 3 through 9 places that region between the prefix ending in 4 and the suffix beginning in 16.
-Return `[3, 9]`.
+Example 1 uses input [[1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]] and expects [3, 9].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [3, 9].
+The same reasoning handles hidden cases [[]], [[5]], [[2, 1]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Two scans take O(n) time and require O(1) auxiliary space.
-The reference returns boundaries without sorting or modifying the input.
+The imported workbook records the expected time bound as O(n).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An already sorted array returns two -1 values.
-Equal adjacent values are allowed in sorted order.
-Descending input generally requires sorting the entire array.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[]], [[5]], [[2, 1]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Using non-strict comparisons marks equal values as violations unnecessarily.
-Stopping at the first local inversion misses later values that extend the required interval.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python initializes extrema with infinities.
-Java uses long extrema beyond the int range, ensuring even extreme integer inputs are compared correctly before any running value has been observed.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

@@ -1,53 +1,62 @@
 ## Intuition
 
-Fix the triangle's top node a.
-At each equal distance below it, there is at most one endpoint reached using only left children and one reached using only right children.
-Both endpoints existing is exactly one triangle at that distance.
+Triangle Count is organized around Paired Left and Right Spines.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Trying every triple of nodes and checking ancestry and depth is unnecessarily expensive.
-The restricted left-only and right-only routes identify the only possible endpoints directly.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-For each root, initialize pointers to its left and right children.
-While both pointers exist, increment pairs and advance the left pointer through left children and the right pointer through right children.
-Add the recursively computed triangle counts from both subtrees.
-Every triangle is counted at its unique top node and unique endpoint distance.
-Starting with children ensures all three nodes are distinct; the top node itself is never treated as an endpoint.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Paired Left and Right Spines idea: A node forms one triangle for each depth that both its all-left descent and its all-right descent reach.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named countTriangles can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-```text
-Input: root = [0, 1, 2, null, 3, 4, 5, 6, 7, 8, null, null, 9]
-Output: 4
-```
-
-Example 1 has one triangle topped at node 0 using endpoints 1 and 2.
-Node 3 contributes one using children 6 and 7.
-Node 2 contributes one using children 4 and 5, then another one level farther down using 8 and 9.
-Other nodes lack at least one required branch.
-The total is 1 + 1 + 2 = 4.
+Example 1 uses input [[0, 1, 2, null, 3, 4, 5, 6, 7, 8, null, null, 9]] and expects 4.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 4.
+The same reasoning handles hidden cases [[]], [[1]], [[1, 2, 3]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For n nodes and height h, a conservative bound is O(nh) time because each top node may scan two extreme chains of length h.
-Recursive subtree traversal uses O(h) stack space.
-The algorithm does not store ancestor tables or all candidate triangles.
+The imported workbook records the expected time bound as O(n * h).
+The imported workbook records the expected space bound as O(h).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An empty tree returns zero.
-A one-sided chain contains no triangles.
-Unequal branch lengths contribute only as far as the shorter required chain remains present.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[]], [[1]], [[1, 2, 3]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Ordinary descendants are insufficient: the left endpoint must follow only left edges, and the right endpoint only right edges.
-Do not pair endpoints at different depths.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python and Java use the same paired-pointer scan and recursive decomposition.
-Node values do not influence counting; only tree structure determines the result.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

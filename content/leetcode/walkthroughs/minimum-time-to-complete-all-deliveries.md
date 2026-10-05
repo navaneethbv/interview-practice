@@ -11,7 +11,7 @@ Binary search uses the monotonic feasibility predicate instead.
 ## Approach
 
 1. Compute the least common multiple of the recharge intervals.
-2. Binary-search `left..right`, where the upper bound is twice the total deliveries.
+2. Binary-search `left.right`, where the upper bound is twice the total deliveries.
 3. For `middle`, count available hours for each drone and shared available hours.
 4. Move left when all three demands fit, otherwise move right.
 

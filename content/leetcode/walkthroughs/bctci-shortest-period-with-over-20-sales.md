@@ -1,51 +1,47 @@
 ## Intuition
 
-All sales values are nonnegative.
-Extending a window cannot decrease its sum, and removing its first day cannot increase it.
-Once a window exceeds twenty sales, repeatedly shrinking its left side exposes the shortest qualifying window ending at that right boundary.
+All sales values are nonnegative, so expanding a window never decreases its total.
+Once a window exceeds 20, removing values from the left finds the shortest qualifying window ending at the current right index.
+Taking the best over all right endpoints gives the global minimum.
 
 ## Brute force
 
-Try every interval and track the shortest with a sum above twenty.
-Even with running sums per start, this can take O(n squared) time.
+Checking every consecutive interval takes quadratic time.
+The sliding window advances each endpoint at most once and avoids revisiting sums.
 
 ## Approach
 
-Keep `left`, `total`, and an initially impossible best length of n plus one.
-Extend the right edge one day at a time, adding its sales.
-While total is strictly greater than twenty, record the current length and then remove the leftmost day's contribution.
-Continue shrinking until the sum is no longer sufficient.
-Because values are nonnegative, a removed earlier start cannot later produce a shorter answer than the already recorded valid interval.
-After scanning, return best if it was updated, or -1 if no qualifying interval existed.
+1. Maintain `left`, the current window start, and `total`, its sales sum.
+2. Add each `sales[right]` as the right endpoint advances.
+3. While `total > 20`, record the current length and remove `sales[left]`.
+4. Return the smallest recorded length, or `-1` if no window qualified.
 
 ## Walkthrough
 
-Example 1 begins with 5, then 10, giving totals 5 and 15.
-Adding 15 raises the total to 30, so length three is recorded.
-Removing the first 5 leaves 25, allowing a better length of two.
-Removing 10 then leaves 15, ending that shrink loop.
-Later windows do not beat length two, so the method returns 2.
-A sum of exactly twenty never qualifies.
+Example 1 adds 5, then 10, then 15, reaching a total of 30 at right index 2.
+The window `[10, 15]` has length 2 after removing the first 5, and it is recorded before the sum is reduced again.
+The later values create no shorter qualifying window, so the answer remains 2.
 
 ## Complexity
 
-Each day enters the window once and leaves at most once.
-Both references run in O(n) time and O(1) auxiliary space.
-The nested loop's total left-pointer movement is bounded by n.
+- Time: O(n), because `left` and `right` each move only forward.
+- Space: O(1), using the running sum, pointers, and best length.
 
 ## Edge cases
 
-Empty input returns -1.
-One day above twenty yields answer one.
-Zeros may be removed during shrinking without changing the sum, but still shorten the candidate interval.
+An empty sales list returns `-1`.
+A single value above 20 returns 1.
+A total exactly 20 does not qualify because the rule requires more than 20.
+All-zero or uniformly small values leave the sentinel best length unchanged.
 
 ## Common mistakes
 
-Use strictly greater than twenty, not greater-than-or-equal.
-Record a valid window before subtracting its leftmost value.
-The nonnegative-sales guarantee is essential to this simple sliding-window argument.
+- Shrinking while `total >= 20` incorrectly accepts an exact total of 20.
+- Forgetting to record the window before removing its left value misses the shortest ending window.
+- Using a negative-value sliding-window argument would be invalid, but the constraints guarantee nonnegative sales.
+- Returning the sentinel instead of `-1` leaks an internal state.
 
 ## Language notes
 
-Python subtracts and advances left in separate statements.
-Java combines index advancement with the subtraction; both keep sums safely within the stated input bounds.
+Python uses `len(sales) + 1` as an impossible best length.
+Java uses the same sentinel and integer totals because the maximum window sum fits within the stated bounds.

@@ -1,54 +1,48 @@
 ## Intuition
 
-Every occurrence of a splits the string into independent runs that contain no forbidden letter.
-While scanning one run, its current length equals the number of valid substrings ending at the current position.
+Count valid substrings by where they end.
+If the current suffix contains `run` consecutive characters other than `a`, exactly `run` valid nonempty substrings end at the current position.
+Every substring has one ending position, so adding these counts introduces no duplicates.
 
 ## Brute force
 
-Enumerating every substring and searching it for a takes cubic time in the worst case.
-A running length summarizes all suffixes ending at each position without constructing them.
+Enumerate all start and end positions and check whether each substring contains `a`.
+That can take O(n³) with repeated scans, or O(n²) if each start is extended incrementally.
 
 ## Approach
 
-Initialize `run` and `answer` to zero.
-For each letter, reset run to zero if it is a; otherwise increment run.
-Add run to answer.
-If the current allowed suffix has length t, the valid substrings ending here have lengths 1 through t.
-Longer suffixes would cross the preceding a, while all shorter ones remain inside the run.
-Each positional substring has one ending index, so summing these contributions counts it exactly once.
+Initialize `run = 0` and `answer = 0`.
+Read the letters from left to right.
+When the letter is `a`, reset `run` to zero because no valid substring can end there.
+Otherwise increase `run` by one, extending the uninterrupted suffix that avoids `a`.
+Add the resulting `run` to `answer` at every step.
+The invariant is that `answer` counts every valid substring ending at any processed position, while `run` describes only the suffix ending at the latest position.
 
 ## Walkthrough
 
-```text
-Input: ["bbac"]
-Output: 4
-```
-
-Example 1 is `bbac`.
-The first b gives run 1 and contributes one substring.
-The second b gives run 2 and contributes its singleton plus `bb`.
-The a resets run to zero and contributes nothing.
-The final c starts a new run of length 1 and contributes one.
-The sum is 1 + 2 + 0 + 1 = 4.
+Example 1 is `s = "bbac"`.
+The first `b` sets `run = 1` and `answer = 1`.
+The second `b` sets `run = 2` and `answer = 3`, counting its singleton and `bb`.
+The `a` resets `run` to zero without changing the answer.
+The final `c` makes `run = 1` and `answer = 4`.
+The four occurrences are the two separate `b` singletons, `bb`, and `c`.
 
 ## Complexity
 
-The string is scanned once, so time is O(n).
-Only two counters are maintained, giving O(1) extra space.
-The number of substrings can grow quadratically with n.
+The scan takes O(n) time and O(1) auxiliary space.
+No substring objects or list of qualifying ranges is created.
 
 ## Edge cases
 
-An empty string returns zero.
-A string consisting only of a returns zero.
-A string without a has n(n + 1)/2 valid positional substrings.
+An empty string and a string containing only `a` both return zero.
+A length-n string without `a` returns `n(n + 1) / 2`.
 
 ## Common mistakes
 
-Repeated identical substring text at different positions must count separately.
-Failing to reset run lets intervals cross a forbidden letter.
+Count occurrences by position, not distinct substring text.
+Resetting only the answer would lose earlier valid substrings.
 
 ## Language notes
 
-Python integers naturally hold the count.
-Java uses a long answer while run fits in int under the stated string-length bound.
+Python integers grow as required.
+Java stores `answer` in a `long` because 100,000 allowed characters can produce more than two billion substrings.

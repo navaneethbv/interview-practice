@@ -1,53 +1,46 @@
 ## Intuition
 
-The next shared occurrence must appear at the current position of both sorted streams.
-When the values differ, the smaller one cannot match any future value in the other stream and can be discarded.
+Sorted inputs let us identify an element that can no longer match anything in the other array.
+Matching equal elements consumes one copy from each array, naturally preserving the required minimum multiplicity of every shared value.
 
 ## Brute force
 
-Comparing every occurrence in one array with every occurrence in the other takes quadratic time and requires care not to reuse matches.
-A frequency map would work, but sorted order provides a simpler scan with minimal working state.
+Checking each element against every position in the other array is quadratic and also needs bookkeeping to avoid reusing copies.
+A frequency map works, but ignores the ordering already available in the inputs.
 
 ## Approach
 
-Maintain indices `i` and `j` into the two arrays.
-If their values match, append that value to `common` and advance both indices.
-Otherwise advance only the index pointing to the smaller value.
-Stop when either array is exhausted.
-Every match consumes one occurrence from each input, so a value with frequencies a and b appears exactly `min(a, b)` times.
-Appended values are nondecreasing because neither pointer ever moves backward.
+Keep indices `i` and `j` at the first unconsumed elements.
+When values match, append to `common` and advance both.
+Otherwise advance only the index holding the smaller value, since all remaining values on the other side are at least its current value.
 
 ## Walkthrough
 
-```text
-Input: arr1 = [1, 2, 3], arr2 = [1, 3, 5]
-Output: [1, 3]
-```
-
-Example 1 begins with 1 in both arrays, so append 1 and advance both pointers.
-The current values become 2 and 3; discard the 2 by advancing `i`.
-The current values are now both 3, so append 3.
-The first array is exhausted, ending the scan with `[1, 3]`.
-The remaining 5 has no possible counterpart.
+In Example 1, both pointers begin at 1, so append 1.
+The next comparison is 2 versus 3, which advances `i`.
+Now both values are 3, so append 3 and advance both.
+The first array is exhausted, leaving `[1, 3]`.
 
 ## Complexity
 
-For lengths n and m, time is O(n + m).
-Python uses O(1) working space apart from its O(k) result.
-Java preallocates a buffer of size `min(n, m)` and then copies its filled prefix, so its allocated space is O(min(n, m)).
+For input lengths n and m, the pointer scan takes O(n + m) time.
+Python uses O(k) result space for k matches and constant other space.
+Java allocates a buffer of size min(n, m), then copies the populated prefix.
 
 ## Edge cases
 
-An empty input yields an empty result.
-Repeated values must remain repeated up to the smaller frequency.
-Disjoint value ranges terminate without matches.
+If either array is empty, no comparison can produce a match.
+Repeated equal values are matched one pair at a time.
+Disjoint value ranges return an empty result, and negative values need no special handling.
 
 ## Common mistakes
 
-Using sets loses multiplicity.
-Advancing both pointers after unequal values may skip a later valid match.
+Do not use a set, which would erase duplicate multiplicities.
+Advancing both pointers after an unequal comparison could skip a valid match.
+Stop as soon as either input ends; remaining values cannot contribute without a partner.
 
 ## Language notes
 
-Python appends directly to a list.
-Java tracks the filled count separately and returns `Arrays.copyOf(common, count)` to remove unused buffer entries.
+Python grows `common` using `append`.
+Java tracks the populated buffer length with `count` and returns `Arrays.copyOf(common, count)`.
+Returning the entire Java buffer would expose unused zero entries that are not part of the intersection.

@@ -1,53 +1,43 @@
 ## Intuition
 
-Convert each day into an indicator: one when likes strictly exceed dislikes, zero otherwise.
-A period's positive-day count is then an ordinary range sum over those indicators.
-
-## Brute force
-
-Scanning every requested period independently can take O(nq) time for n days and q periods.
-Prefix sums reuse the daily classifications across all queries.
+Each day can be reduced to one binary fact: it is positive exactly when likes exceed dislikes.
+A prefix sum of these facts lets any inclusive period be answered by subtracting two prefix values.
+This moves the repeated work out of the query loop.
 
 ## Approach
 
-Start prefix with zero.
-For each paired like and dislike count, append the previous prefix plus its positive-day indicator.
-Thus prefix[i] counts positive days strictly before index i.
-For an inclusive period `[l, r]`, return `prefix[r + 1] - prefix[l]`.
-The subtraction removes exactly the days before l and retains the day at r.
-Answer queries in their original order to preserve their correspondence with periods.
+Start `prefix` with zero positive days before the first day.
+For each paired like and dislike count, append the previous prefix plus one when the day is positive, otherwise append the unchanged prefix.
+For a period `[l, r]`, subtract `prefix[l]` from `prefix[r + 1]` and collect the result.
+The extra prefix entry makes both endpoints inclusive without a special case.
 
 ## Walkthrough
 
-```text
-Input: likes = [6, 3, 4, 8, 7, 2, 6, 5, 0, 1], dislikes = [6, 0, 8, 0, 0, 0, 1, 8, 0, 2], periods = [[0, 1], [0, 5], [5, 8], [3, 3]]
-Output: [1, 4, 2, 1]
-```
-
-Example 1 has positive-day indicators `[0, 1, 0, 1, 1, 1, 1, 0, 0, 0]`.
-Period `[0, 1]` contains one positive day.
-Period `[0, 5]` contains four, while `[5, 8]` contains two.
-The single-day period `[3, 3]` contains one because day 3 has eight likes and zero dislikes.
-The result is `[1, 4, 2, 1]`.
+In Example 1, day zero is not positive because six is not greater than six, while day one is positive because three exceeds zero.
+The prefix values therefore increase at day one and at the other positive days.
+The query `[0, 1]` becomes `prefix[2] - prefix[0]` and returns one.
+The query `[3, 3]` subtracts adjacent prefix entries and returns one because day three is positive.
 
 ## Complexity
 
-Building prefix takes O(n) time and each query takes O(1), for O(n + q) total time.
-The prefix array uses O(n) space and the returned counts use O(q).
-No original likes or dislikes values are changed.
+Building the prefix array takes `O(n)` time and `O(n)` space.
+Each of `q` periods is then answered in `O(1)`, so total time is `O(n + q)`.
+The returned counts use `O(q)` additional space, while the prefix structure uses `O(n)`.
 
 ## Edge cases
 
-Equal likes and dislikes do not make a positive day.
-Periods beginning at zero use the initial zero prefix.
-A single-day period may return zero or one.
+Equal likes and dislikes are not positive because the comparison is strict.
+A single-day period works through the `r + 1` prefix boundary.
+Periods covering the entire array use the first and last prefix entries directly.
 
 ## Common mistakes
 
-Do not sum like-dislike differences; the task counts positive days rather than net reception.
-Do not omit the inclusive final day from the query formula.
+Using `>=` incorrectly counts tied days as positive.
+Subtracting `prefix[r]` instead of `prefix[r + 1]` excludes the right endpoint.
+Recounting each period from scratch can take quadratic time when many queries cover long ranges.
 
 ## Language notes
 
-Python converts the comparison into an explicit zero-or-one contribution.
-Java stores prefix counts in int safely because no count exceeds the number of days.
+Python builds a list of counts with a list comprehension over the periods.
+Java fills an `int[]` result and uses the same prefix indices explicitly.
+Both references pair likes and dislikes by index and preserve the period order in the output.

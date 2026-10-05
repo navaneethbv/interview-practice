@@ -1,53 +1,49 @@
 ## Intuition
 
-A node becomes infected on the day equal to its shortest distance from any initially infected node.
-Starting breadth-first search from all infection sources at once models simultaneous daily spread.
+A node becomes infected on the earliest day that any initially infected node can reach it.
+That day is its minimum unweighted distance from the entire initial set.
+Starting breadth-first search from all initial infections models simultaneous spreading.
 
 ## Brute force
 
-Running a separate BFS from each source repeats traversals and then requires taking the minimum distance for every node.
-A multi-source queue merges these waves in one search.
+Simulate one day at a time by scanning all edges for newly infected nodes.
+On a long chain this can repeat nearly the same scan on every day and take O(VE) time.
 
 ## Approach
 
-Initialize every `day` to -1, then assign day zero to all initially infected nodes and enqueue them.
-Pop nodes in FIFO order.
-When a neighbor still has day -1, assign `day[node] + 1` and enqueue it.
-The first discovery is the earliest possible infection because BFS processes nondecreasing distances.
-Return the maximum assigned day after the queue empties.
-Connectedness and a nonempty source set guarantee that every vertex receives a day.
+Initialize `day` to -1 for every node.
+Set each initially infected node to day zero and put all of them into `queue`.
+Pop nodes in queue order and inspect their neighbors.
+An unseen neighbor receives `day[node] + 1` and is enqueued immediately.
+Marking at enqueue time prevents several infected neighbors from scheduling the same node repeatedly.
+Because the queue processes nondecreasing days, the first assigned day is the minimum possible infection day.
+The largest assigned day is the time when the whole connected graph is infected.
 
 ## Walkthrough
 
-```text
-Input: graph = [[1, 2], [0, 2], [0, 1, 3], [2]], infected = [0]
-Output: 2
-```
-
-In Example 1, node 0 starts infected on day 0.
-Its neighbors 1 and 2 receive day 1.
-Processing node 2 reaches node 3, which receives day 2.
-Already infected neighbors are skipped, including the triangle's alternative routes.
-The final day array is `[0, 1, 1, 2]`, whose maximum is 2.
+Example 1 begins with only node 0 infected.
+Set `day[0] = 0` and enqueue 0.
+Processing 0 infects nodes 1 and 2 on day 1.
+Node 1 adds no unseen neighbors; processing node 2 reaches node 3 on day 2.
+The completed day array is `[0, 1, 1, 2]`.
+Its maximum is 2, matching the requested number of days.
 
 ## Complexity
 
-For V vertices and E listed edges, time is O(V + E).
-The day array and queue use O(V) extra space.
-Each vertex is inserted at most once.
+Every vertex is enqueued once and every adjacency entry is inspected once.
+Time is O(V + E), with O(V) auxiliary storage for days and the queue.
 
 ## Edge cases
 
-If every node starts infected, the answer is zero.
-A singleton source vertex also needs zero days.
-Overlapping infection waves do not cause multiple queue entries.
+If every node starts infected, the result is zero.
+Multiple initial infections must all have day zero, regardless of their order in the input.
 
 ## Common mistakes
 
-Do not process initial sources one after another with separate day counters.
-Mark a neighbor when enqueuing it rather than when dequeuing it.
+Do not perform a separate BFS whose distances overwrite other sources.
+Depth-first traversal does not assign minimum infection days on first discovery.
 
 ## Language notes
 
-Python returns `max(day)` after traversal.
-Java maintains the maximum while popping vertices; both approaches measure the same last infection day.
+Python uses `deque.popleft` and returns `max(day)`.
+Java uses `ArrayDeque` and updates `last` during traversal, which yields the same maximum without a separate final scan.

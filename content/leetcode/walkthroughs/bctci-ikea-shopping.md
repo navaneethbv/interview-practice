@@ -1,52 +1,47 @@
 ## Intuition
 
-Each item has two choices: skip it or buy it if the remaining budget permits.
-With at most fifteen items, exhaustive subset search is small enough and avoids unreliable greedy choices based on price or rating ratios.
+At most fifteen items makes exhaustive subset search practical.
+For each item, an optimal subset either includes it or excludes it.
+Tracking remaining budget and accumulated rating lets the search evaluate those choices without rebuilding each subset from scratch.
 
 ## Brute force
 
-The reference uses exhaustive search deliberately.
-A ratio-based greedy strategy can miss an optimal combination because items cannot be purchased fractionally.
+Enumerate all bit masks and independently sum each selected subset's prices and ratings.
+That costs O(n 2ⁿ) time and is already feasible at the given small n.
 
 ## Approach
 
-`choose` tracks the next index, remaining budget, accumulated rating, and selected indices.
-Always recurse on skipping the item.
-If affordable, append its index, recurse on taking it, then pop to restore the selection.
-At the end, copy the selected list when its rating strictly improves best.
-Every feasible subset corresponds to one sequence of skip/take decisions, and the budget guard excludes only unaffordable subsets.
-Thus comparing complete choices finds an optimal selection.
+The reference explores choices recursively with `index`, `remaining`, `rating`, and `picked`.
+First recurse without the current item.
+If its price fits, append its index, recurse with reduced budget and increased rating, then pop it to restore the path.
+At the end of the item list, replace the stored best choice only when the rating strictly improves.
+Copy `picked` when saving it because the working list will continue changing.
+Every feasible subset appears in exactly one branch sequence, ensuring that the best leaf is globally optimal.
 
 ## Walkthrough
 
-```text
-Input: budget = 20, prices = [10, 5, 15, 8, 3], ratings = [7.0, 3.5, 9.0, 6.0, 2.0]
-Output: [0, 3]
-```
-
-Example 1 can choose items 0 and 3 for total price 10 + 8 = 18 and rating 7 + 6 = 13.
-Adding item 4 would exceed budget 20.
-Other feasible combinations include items 2 and 1 with rating 12.5, and items 0, 1, and 4 with rating 12.5.
-The search compares all feasible subsets and retains the higher-rated `[0, 3]` choice.
+Example 1 has budget 20.
+Choosing item 0 costs 10 and contributes rating 7; choosing item 3 adds cost 8 and rating 6.
+Their combined cost is 18 and rating is 13.
+Another feasible combination, items 0, 1, and 4, costs 18 but rates 12.5.
+The complete search finds no feasible subset above 13, so it returns `[0, 3]`.
 
 ## Complexity
 
-The search has O(2 to the power n) branches.
-Copying improved selections gives a conservative O(n times 2 to the power n) time bound.
-Recursion, current selection, and saved best use O(n) space.
+There are O(2ⁿ) recursion nodes; copying a best subset can cost O(n), giving O(n 2ⁿ) worst-case time.
+The recursion, current choice, and saved best choice use O(n) space.
 
 ## Edge cases
 
-No items or no affordable items can return an empty selection.
-Zero ratings are valid.
-Equal-rating optimal selections need no special tie rule.
+No items yields an empty selection with rating zero.
+Multiple optimal subsets are valid; the validator checks budget and optimal rating rather than a fixed index sequence.
 
 ## Common mistakes
 
-Copy best rather than retaining the mutable picked list.
-Do not reuse an item by recursing without advancing index.
+Rating-to-price greedy selection is not guaranteed optimal for indivisible items.
+Always undo the appended index after exploring the include branch.
 
 ## Language notes
 
-Python stores the best rating and selection in a closure-accessible pair.
-Java stores them in fields and uses double arithmetic for ratings.
+Python keeps best state in a local list; Java stores it in fields on its Solution instance.
+Both use floating-point ratings and return original item indices.

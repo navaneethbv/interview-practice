@@ -1,49 +1,62 @@
 ## Intuition
 
-Empty strings interrupt the physical array but do not change the sorted order of its nonempty words.
-A binary-search comparison remains useful after relocating an empty midpoint to a nearby nonempty position.
-An interval containing only empty strings cannot contain the nonempty target.
+Sparse Search is organized around Binary Search Skipping Blanks.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Scan the entire array until the target appears.
-This takes O(n) word checks and is a valid baseline, especially when the sparse layout makes midpoint recovery expensive.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Within the current bounds, `_nearest_word` searches outward from the midpoint, checking the left candidate before the right candidate.
-If it finds no word, return -1.
-Compare the recovered word with target and keep only the appropriate side of that actual index.
-Return the index immediately on equality.
-The algorithm never compares an empty placeholder to target to choose a direction.
-Nonempty values retain their lexicographic ordering across every narrowed interval.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Binary Search Skipping Blanks idea: When the middle is blank, move outward to the nearest non-empty string and compare against that.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named sparseSearch can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 searches for `ball`.
-The initial midpoint is index 6, an empty string.
-Outward searching finds `car` at index 7, so the next interval is indices 0 through 6.
-Its midpoint 3 is empty, but the nearby word `ball` at index 4 is found.
-That word equals target, so return 4.
+Example 1 uses input [["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""], "ball"] and expects 4.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 4.
+The same reasoning handles hidden cases [[], "a"], [["a"], "a"], [["a"], "b"]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Worst-case time is O(n) word positions inspected because long empty stretches can require a linear search.
-String comparisons add their character-comparison cost.
-Auxiliary space is O(1), since both binary search and midpoint recovery are iterative.
+The imported workbook records the expected time bound as O(log n) typical, O(n) worst case.
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-An all-empty array returns -1.
-An empty array skips the main loop.
-The target is guaranteed nonempty, so placeholders never count as a successful match.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[], "a"], [["a"], "a"], [["a"], "b"] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Moving only left from an empty midpoint can overlook the only nonempty word on the right.
-Updating bounds relative to the old midpoint rather than the recovered word can discard a valid region.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses truthiness to detect nonempty strings and native lexicographic comparisons.
-Java uses `isEmpty()` and `compareTo()`; the signed comparison result selects the same search direction.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

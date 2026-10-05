@@ -1,49 +1,47 @@
 ## Intuition
 
-A pointer positioned k nodes ahead of another pointer can reveal the answer without knowing the list length.
-When the leading pointer reaches the end, exactly k nodes remain starting at the trailing pointer.
-The requested result is the trailing node's value.
+Keep two pointers a fixed k nodes apart.
+When the leading pointer reaches the end, the trailing pointer is exactly k nodes from the end.
+This avoids counting the list length first or storing nodes.
 
 ## Brute force
 
-Count the list length n, then walk n minus k links from the head.
-This is also linear time and constant space, but it traverses part of the list twice and needs a separate length calculation.
+Counting the nodes and then walking length minus k steps works in two passes.
+Storing the list values would also work, but both approaches use more traversal or memory than necessary.
 
 ## Approach
 
-Set `lead` to `head` and advance it exactly k times.
-Set `trail` to `head`.
-While `lead` is not null, move both pointers one link forward.
-Their separation remains k nodes throughout the second loop.
-Return `trail.val` when `lead` becomes null.
-The input contract guarantees a valid k, so the initial advances never attempt to dereference a missing node.
+Advance lead by k links before moving trail.
+Then move lead and trail together until lead is null.
+The initial gap ensures that trail reaches the target when lead reaches one position beyond the final node.
+Return trail.val.
 
 ## Walkthrough
 
-Example 1 uses `[1, 2, 3, 4, 5]` and `k = 2`.
-After two initial advances, `lead` points to 3 while `trail` points to 1.
-Moving together gives pointer pairs `(4, 2)`, `(5, 3)`, and finally `(null, 4)`.
-Two nodes remain from 4 onward, namely 4 and 5.
-Return 4, matching the second-to-last position.
+In Example 1, advancing lead by two nodes places it at node 3 while trail remains at node 1.
+Each simultaneous step moves the pair one position.
+When lead passes node 5 and becomes null, trail points to node 4, whose value is 4.
+For the one-node example, lead becomes null during the initial advance and trail remains at the only node.
 
 ## Complexity
 
-For n nodes, the total number of pointer advances is O(n).
-Only two node references are retained, so auxiliary space is O(1).
-The input list is not modified.
+The two pointers traverse the list at most once after the initial gap.
+The algorithm takes O(n) time and O(1) extra space.
 
 ## Edge cases
 
-When k equals one, the answer is the tail.
-When k equals the length, the initial loop reaches null and `trail` remains at the head.
-A one-node list therefore works without special treatment.
+When k equals the list length, the answer is the head value.
+When k is one, the answer is the final node.
+The constraints guarantee a non-empty list and a valid k, so no invalid pointer check is needed.
 
 ## Common mistakes
 
-Advancing the leading pointer k minus one times requires a different stopping condition.
-Mixing that setup with the reference's null-based loop returns the wrong position.
+Advancing lead only k minus one times returns the node before the requested position.
+Moving trail before establishing the gap shifts the answer by one.
+Returning the node instead of its value violates the int return contract.
 
 ## Language notes
 
-Python checks node truthiness; Java explicitly checks for null.
-Both return the integer value, not a node or a suffix list.
+Python and Java both use a lead pointer for the initial k-step advance.
+The Java loop checks lead only after the guaranteed-valid advance supplied by the constraints.
+Neither reference allocates a collection or mutates the linked list.

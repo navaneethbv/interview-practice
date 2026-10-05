@@ -1,51 +1,50 @@
 ## Intuition
 
-The sum missing from the full range equals the sum of the two absent numbers.
-Their average lies between them, so dividing the range at that average isolates exactly one missing number on each side.
-A second sum difference can then recover the smaller missing value directly.
+The sum of 1 through n minus the input sum gives the sum of the two missing values.
+The midpoint of that sum separates the smaller missing value from the larger one.
+Subtracting present values on the smaller side identifies the first missing value directly.
 
 ## Brute force
 
-Build a set of present numbers and scan from one through n for absent entries.
-This takes O(n) time but O(n) auxiliary space.
-The arithmetic method keeps the linear scan while eliminating the presence structure.
+A boolean array or set can mark every present number and then scan 1 through n.
+That uses O(n) extra space, while the arithmetic partition needs only a few variables.
 
 ## Approach
 
-Set n to the input length plus two.
-Subtract the actual input sum from `n * (n + 1) / 2` to obtain `missing_sum`.
-Let `pivot` be its integer half.
-Subtract the sum of supplied values at most pivot from the complete sum of one through pivot.
-The difference is `smaller`; the other missing number is `missing_sum - smaller`.
-Because the missing values are distinct, the smaller lies at or below the pivot and the larger lies above it.
+Set n to nums.length plus two.
+Compute missing_sum from the full range and subtract every input value.
+Let pivot be missing_sum divided by two.
+Compute the sum from 1 through pivot and subtract every input value at most pivot.
+The remainder is the smaller missing number, and subtracting it from missing_sum gives the larger one.
 
 ## Walkthrough
 
-Example 1 supplies `[1, 3, 5]`, so n is 5.
-The full sum is 15 and the present sum is 9, giving missing sum 6.
-The pivot is 3.
-The full lower-range sum is `1 + 2 + 3 = 6`, while present lower values sum to `1 + 3 = 4`.
-The smaller missing value is 2, and the other is `6 - 2 = 4`.
-Return `[2, 4]`.
+In Example 1, n is 5 and the full sum is 15.
+Subtracting 1, 3, and 5 leaves missing_sum equal to 6, so the missing values sum to 6.
+The pivot is 3, and the expected sum from 1 through 3 is 6.
+Present values at most 3 sum to 4, leaving 2, and the other value is 6 minus 2, or 4.
 
 ## Complexity
 
-Two scans of the input take O(n) time.
-Auxiliary space is O(1), excluding the constant-size returned pair.
-No sorting or input mutation is required.
+The input is scanned once for the full sum and once for the pivot partition.
+The algorithm takes O(n) time and O(1) extra space.
+Python and Java use wide intermediate arithmetic to avoid sum overflow.
 
 ## Edge cases
 
-An empty supplied array represents range 1 through 2 and returns both numbers.
-Missing endpoints work with the same split.
-The input guarantees distinct present values within the range.
+An empty input means n is 2 and returns [1, 2].
+If the missing values are consecutive, integer division still puts exactly one on each side of the pivot.
+The result is naturally increasing because smaller is computed from the lower partition.
+The input contains no duplicates by the problem contract.
 
 ## Common mistakes
 
-The range size is length plus two, not the largest present element.
-Dividing the range at n's midpoint does not necessarily separate the missing values.
+Using a pivot based on n instead of missing_sum can place both missing values in one partition.
+Subtracting values greater than pivot from the lower sum distorts the smaller result.
+Returning the two values in discovery order can violate the required increasing order.
 
 ## Language notes
 
-Python arithmetic is arbitrary precision.
-Java promotes n and the triangular-sum calculations to long before multiplication, then casts the guaranteed in-range missing values back to int.
+Python uses a generator expression to subtract values at most pivot.
+Java performs the same partition in a second loop and stores all sums in long variables.
+Both implementations return the larger value as missing_sum minus smaller.

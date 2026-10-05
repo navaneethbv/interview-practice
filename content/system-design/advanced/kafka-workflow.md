@@ -1,3 +1,7 @@
+> **Historical architecture:** This imported chapter describes the ZooKeeper-era design.
+> Kafka 4.0 and later use KRaft; consult the updated Role of ZooKeeper, Controller Broker, and Kafka Delivery Semantics chapters in this collection.
+> [Apache Kafka upgrade documentation](https://kafka.apache.org/40/getting-started/upgrade/)
+
 Kafka provides both pub-sub and queue-based messaging systems in a fast, reliable, persisted, fault-tolerance, and zero downtime manner. In both cases, producers simply send the message to a topic, and consumers can choose any one type of messaging system depending on their need. Let us follow the steps in the next section, to understand how the consumer can choose the messaging system of their choice.
 
 ## Kafka workflow as pub-sub messaging

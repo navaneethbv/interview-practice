@@ -1,49 +1,42 @@
 ## Intuition
 
-The suffix rectangle below a cell and the suffix rectangle to its right jointly cover the desired rectangle except for the current cell.
-They also overlap in the diagonal suffix rectangle.
-Add both sums and the current value, then subtract that overlap once.
-
-## Brute force
-
-Independently sum the bottom-right rectangle for every starting cell.
-This repeatedly visits the same entries and can take O(r squared times c squared) time.
+Every suffix subgrid includes the cell below and the cell to the right, with the diagonally opposite suffix counted twice.
+That gives a two-dimensional suffix-sum recurrence that computes each answer from already completed neighbors.
+Padding the matrix with a zero row and zero column removes boundary branches.
 
 ## Approach
 
-Allocate `sums` with one extra zero row and column.
-Process real rows and columns in reverse order.
-Set each entry to the current grid value plus the suffix below plus the suffix to the right minus the diagonal suffix.
-The padding makes boundary cases use the same formula without separate checks.
-Every dependency lies below or to the right, so the backward traversal guarantees it has already been computed.
-Afterward, copy only the real r by c portion into the returned grid, excluding the padding.
-Inclusion-exclusion ensures every cell of the requested rectangle contributes exactly once.
+Allocate `sums` with one extra row and column.
+Visit rows and columns from bottom right toward top left.
+For each cell, set `sums[r][c]` to the original value plus `sums[r + 1][c]` plus `sums[r][c + 1]` minus `sums[r + 1][c + 1]`.
+Return the top-left `rows x cols` portion of the padded matrix.
 
 ## Walkthrough
 
-Example 1's bottom row `[-2, 0, 9]` produces suffix sums `[7, 9, 9]`.
-The middle row `[4, 0, 0]` produces `[11, 9, 9]`.
-At the top-left cell, combine its value -1 with below 11 and right 14, then subtract diagonal 9.
-The result is `-1 + 11 + 14 - 9 = 15`.
-The complete top row becomes `[15, 14, 12]`, matching the example.
+For Example 1, the bottom-right value nine has suffix sum nine because its suffix contains only itself.
+At row two and column zero, the recurrence adds negative two to the suffix at column one and obtains seven.
+At row zero and column two, it combines three, the suffix below, and the zero padding to obtain twelve.
+Finally, the top-left cell combines its own negative one with the right and below suffixes and subtracts their overlap, producing fifteen.
 
 ## Complexity
 
-Both references fill and copy O(r times c) entries, giving O(r times c) time.
-The padded table and returned grid each occupy O(r times c) space.
-They retain both arrays during result construction rather than reusing the original input.
+Each of the `R * C` cells is processed once, so the running time is `O(RC)`.
+The padded `sums` matrix uses `O(RC)` auxiliary space, and the returned rows are copied or sliced from it.
 
 ## Edge cases
 
-Negative values require no special treatment because the recurrence is additive.
-A single row reduces to a rightward suffix sum, and a single column reduces to a downward suffix sum.
+A one-cell grid returns that cell because all padded neighbors are zero.
+A single row or single column still works because the extra padding supplies the missing direction.
+Negative values require the inclusion-exclusion subtraction to remain exact rather than relying on monotonic sums.
 
 ## Common mistakes
 
-Omitting diagonal subtraction counts the overlapping rectangle twice.
-Do not expose the extra padding row or column in the result.
+Scanning from the top left leaves the needed suffix values unavailable.
+Adding both neighboring suffixes without subtracting their overlap double-counts the bottom-right region.
+Returning the padded boundary would add an unwanted extra row and column.
 
 ## Language notes
 
-Python slices real rows from its padded table.
-Java uses `Arrays.copyOf`; the stated million-cell and value bounds keep these signed totals within `int` capacity.
+Python slices every padded row to the original column count and returns the original row count.
+Java uses `Arrays.copyOf` to remove the padding from each row.
+Both references use integer sums, which are sufficient for the supplied input bounds and contract.

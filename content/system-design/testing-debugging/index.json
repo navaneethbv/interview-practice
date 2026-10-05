@@ -1,0 +1,36 @@
+{
+ "id": "testing-debugging",
+ "title": "Testing, Debugging, and Code Review",
+ "short": "Testing and Debugging",
+ "description": "Practice independent test oracles, debug binary search, review a concurrency defect, and rehearse a complete coding interview.",
+ "sourceLinks": [
+  {
+   "label": "Microsoft technical interviews",
+   "url": "https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing.html"
+  }
+ ],
+ "source": "testing_debugging.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "turn-a-problem-statement-into-a-test-strategy",
+     "title": "Turn a problem statement into a test strategy"
+    },
+    {
+     "id": "debug-a-binary-search-by-preserving-an-invariant",
+     "title": "Debug a binary search by preserving an invariant"
+    },
+    {
+     "id": "review-code-for-boundaries-and-concurrency",
+     "title": "Review code for boundaries and concurrency"
+    },
+    {
+     "id": "practice-a-complete-coding-interview",
+     "title": "Practice a complete coding interview"
+    }
+   ]
+  }
+ ]
+}

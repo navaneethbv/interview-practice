@@ -41,5 +41,5 @@ Filter the rank after the window calculation, not the raw salary globally.
 
 ## SQLite notes
 
-SQLite supports `DENSE_RANK() OVER (PARTITION BY ... ORDER BY ...)` and the aliases used by the reference.
+SQLite supports `DENSE_RANK() OVER (PARTITION BY .. ORDER BY ..)` and the aliases used by the reference.
 The spec compares rows without order, so no `ORDER BY` is promised or needed in the final query.

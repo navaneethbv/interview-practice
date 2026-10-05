@@ -158,24 +158,6 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
                 raise ValueError(f"Missing metadata for {entry['slug']}")
     sets[:0] = custom["sets"]
 
-    apply_workbook_overrides(custom.get("workbookListOverrides", []), sets, problems)
-
-
-def apply_workbook_overrides(overrides: list[dict], sets: list[dict], problems: dict[str, dict]):
-    """Reconcile curated membership while keeping the source workbook untouched."""
-    for override in overrides:
-        matches = [item for item in sets if item["id"] == override["id"]]
-        if len(matches) != 1:
-            raise ValueError(f"Unknown workbook list override: {override['id']}")
-        slugs = [entry["slug"] for entry in override["items"]]
-        if len(slugs) != len(set(slugs)):
-            raise ValueError(f"Duplicate override entries: {override['id']}")
-        missing = set(slugs) - problems.keys()
-        if missing:
-            raise ValueError(f"Missing override metadata: {sorted(missing)}")
-        matches[0].update({key: override[key] for key in
-                          ("items", "sourceUrl", "sourceLabel")})
-
 
 def main(workbook: str):
     import openpyxl
@@ -189,6 +171,7 @@ def main(workbook: str):
     ]
 
     merge_custom_catalog(sets, problems)
+    reconcile_neetcode(sets, problems)
     OUT.mkdir(parents=True, exist_ok=True)
     ordered = dict(sorted(problems.items(), key=lambda kv: kv[1]["number"]))
     (OUT / "problems.json").write_text(json.dumps(ordered, indent=1, ensure_ascii=False) + "\n")
@@ -196,6 +179,22 @@ def main(workbook: str):
     for s in sets:
         print(f"{s['title']}: {len(s['items'])} problems")
     print(f"{len(problems)} unique problems")
+
+
+def reconcile_neetcode(sets: list[dict], problems: dict[str, dict]):
+    """Apply the reviewed official list without renaming existing problem/progress keys."""
+    source = Path(__file__).with_name("neetcode_150.json")
+    catalog = json.loads(source.read_text(encoding="utf8"))
+    slugs = [item["slug"] for item in catalog["items"]]
+    if len(slugs) != 150 or len(set(slugs)) != 150:
+        raise ValueError("NeetCode catalog must contain 150 distinct problems")
+    missing = set(slugs) - problems.keys()
+    if missing:
+        raise ValueError(f"Missing NeetCode metadata: {sorted(missing)}")
+    target = next((item for item in sets if item["id"] == catalog["id"]), None)
+    if target is None:
+        raise ValueError("Missing NeetCode list")
+    target.update(catalog)
 
 
 if __name__ == "__main__":

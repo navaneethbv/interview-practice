@@ -1,50 +1,49 @@
 ## Intuition
 
 Strict containment forces the outer circle to have a larger radius.
-Sorting by decreasing radius therefore fixes the only possible nesting order.
-If every adjacent pair in that order is strictly contained, transitivity guarantees the entire chain is nested.
+Sorting by decreasing radius therefore determines the only possible nesting order.
+It then suffices to check consecutive circles, because strict containment is transitive.
 
 ## Brute force
 
-Try possible orders or compare every larger circle against every smaller one.
-Pairwise checking takes O(n squared) time and repeats containment relationships already implied by a valid chain.
+Check all pairs and attempt to determine which circle contains which.
+This needs O(n²) geometric comparisons and still requires arranging the containment relation into a chain.
 
 ## Approach
 
-Sort a copy of `circles` by descending radius.
-For each adjacent outer and inner circle, calculate the radius gap and the differences between center coordinates.
-Strict containment requires the center distance to be smaller than the radius gap.
-Avoid a square root by comparing `dx * dx + dy * dy` against `gap * gap`.
-Reject if the gap is nonpositive or the squared distance is at least the squared gap.
-If every adjacent pair passes, return true.
-The positive-gap check is essential before squaring because squaring alone loses the sign of the radius difference.
+Create `ordered` sorted by descending radius.
+For each neighboring `outer` and `inner`, compute radius difference `gap` and center displacement `dx, dy`.
+Containment without touching requires center distance strictly less than gap.
+Reject nonpositive gaps immediately, then compare squared quantities: reject when `dx * dx + dy * dy >= gap * gap`.
+Positive gap makes squaring safe and avoids square roots or floating-point tolerances.
+If every adjacent pair passes, each circle contains its successor and consequently every smaller circle after it.
 
 ## Walkthrough
 
-Example 1 has outer circle `(4, 4, 5)` and inner candidate `(8, 4, 2)`.
-The radius gap is 3, while the center displacement is 4 horizontally and zero vertically.
-The squared distance is 16 and the squared gap is 9.
-Since 16 is not smaller than 9, the smaller circle protrudes beyond the larger circle rather than fitting strictly inside.
-The answer is false.
+Example 1 contains circles `[4, 4, 5]` and `[8, 4, 2]`.
+They are already in decreasing-radius order.
+The radius gap is `5 - 2 = 3`, while the center displacement is `dx = -4`, `dy = 0`.
+The squared center distance is 16 and the squared gap is 9.
+Since 16 is not strictly less than 9, the smaller circle extends outside the larger one.
+The method returns false.
 
 ## Complexity
 
-Both references spend O(n log n) time sorting and O(n) time checking neighbors.
-They copy the outer circle collection, giving O(n) auxiliary space.
-The comparisons themselves use constant additional state.
+Sorting takes O(n log n) time and the adjacent scan takes O(n).
+The copied ordering and sorting workspace use O(n) auxiliary space.
 
 ## Edge cases
 
-A single circle is nested by definition.
-Equal-radius circles fail even when their centers coincide.
-Internal tangency also fails because touching is forbidden.
+One circle is nested by definition and performs no pair checks.
+Equal radii always fail for a pair, including identical circles.
+Internal tangency also fails because containment must be strict.
 
 ## Common mistakes
 
-Use a strict inequality for containment.
-Comparing only radii overlooks displaced centers.
+Do not compare only radii while ignoring centers.
+Do not accept equality in the squared-distance test.
 
 ## Language notes
 
-Python integer products have arbitrary precision.
-Java stores gaps and coordinate differences in `long` before squaring, so intermediate products do not overflow `int`.
+Python sorts a new list and uses arbitrary-precision integer arithmetic.
+Java clones the outer array, leaves circle coordinates unchanged, and uses long values for squared geometric expressions.

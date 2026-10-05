@@ -1,44 +1,43 @@
 ## Intuition
 
-An outward square spiral grows its straight-leg length after every two turns.
-Starting downward, the direction cycle is down, left, up, right in row-column coordinates.
-Lengths 1, 1, 2, 2, 3, 3, and so on trace successive expanding boundaries around the center.
+The center already contains zero, so the remaining values can be written by walking a growing square spiral.
+The first move is down, and after two legs the distance traveled on each side increases by one.
+Keeping the current row, column, value, leg length, and direction is enough to reproduce that pattern.
 
 ## Approach
 
-Allocate an n by n grid of zeros and place the current position at its center.
-The zero already there is the first spiral value.
-Initialize the next value to one, the leg length to one, and the direction to down.
-For each leg length, walk two legs, writing one increasing value at every step and rotating direction after each leg.
-Then increment the leg length.
-Stop immediately after placing `n * n - 1`, even if the current leg would otherwise continue outside the completed square.
-The odd-size guarantee provides one unambiguous central cell and a square boundary reached by this outward traversal.
+Create an `n x n` grid initialized with zero and start at its center.
+Use the direction order down, left, up, right, which is clockwise for this coordinate layout.
+For each leg length, walk two legs, turn after each leg, and then increase the leg length.
+Stop immediately if the next value would equal `n * n`, because every valid cell has already been filled.
 
 ## Walkthrough
 
-Example 1 uses n equal to three and starts zero at `(1, 1)`.
-Move down to place 1, then left to place 2.
-The next two-step leg moves upward, placing 3 and 4.
-Moving right twice places 5 and 6 across the top row.
-The next downward leg places 7 and 8 along the right column, completing the grid before another step is attempted.
-The rows are `[4, 5, 6]`, `[3, 0, 7]`, and `[2, 1, 8]`.
+For Example 1, `n = 3` starts at row 1 and column 1 with value zero.
+The first leg moves down to `[2][1]` with one, then the second leg moves left to `[2][0]` with two.
+The next two legs move up twice and right twice, placing three, four, five, and six.
+The final two legs move down three times and left three times, placing seven and eight before the grid is complete.
+The resulting rows are `[4, 5, 6]`, `[3, 0, 7]`, and `[2, 1, 8]`.
 
 ## Complexity
 
-Both references write every grid cell once, taking O(n squared) time.
-The returned grid uses O(n squared) storage, while position, direction, and leg counters use O(1) extra space.
+Every cell is assigned once, so the running time is `O(n^2)`.
+The returned grid uses `O(n^2)` space, apart from the constant traversal state.
 
 ## Edge cases
 
-For n equal to one, the initialized grid is already complete and the traversal never begins.
-Larger odd sizes use the same direction and leg schedule without separate layers.
+When `n` is one, the center is the only cell and the initial zero is already the complete answer.
+The odd-size constraint guarantees that `n // 2` identifies a unique center.
+The stop check prevents a final leg from stepping outside the grid after the last value.
 
 ## Common mistakes
 
-Starting upward or turning in the opposite direction produces a different spiral.
-Check completion inside a leg so the next planned step cannot leave the grid.
+Using right as the first direction produces a rotated spiral that does not match the contract.
+Increasing the leg length after every turn instead of after every pair makes the spiral expand too quickly.
+Writing a value before checking the limit can create an out-of-bounds coordinate on the final partial leg.
 
 ## Language notes
 
-Python checks for completion inside the step loop and returns immediately.
-Java includes the completion condition in its loop headers; both use the same four direction vectors.
+Python stores directions as tuples and updates the row and column together.
+Java uses the same four direction pairs and guards both the leg and step loops with the value limit.
+Both references mutate only the newly allocated grid and leave no dependence on labels or other inputs.

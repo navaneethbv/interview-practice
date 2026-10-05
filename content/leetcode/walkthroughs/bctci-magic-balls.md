@@ -1,48 +1,47 @@
 ## Intuition
 
-The exact number of balls quickly becomes irrelevant; what matters is which colors exist and whether a present color has a spare ball.
-Combining equal colors can reduce an arbitrarily large pile to one representative without introducing another color.
-Combining two different colors introduces the missing third color.
-These observations reduce the search to three small cases.
+Large counts make simulating every merging order impossible.
+Only which colors are present and whether a present color has at least two balls affect attainability.
+Equal-color merges can reduce a color's count while preserving that color, enabling small representative constructions.
 
 ## Brute force
 
-Enumerate every pair of colors, apply the operation, and recursively collect terminal colors.
-This repeats many count states and cannot handle counts approaching a billion.
+Explore every legal pair choice recursively until one ball remains.
+The number of sequences grows rapidly with the total number of balls, which can be billions here.
 
 ## Approach
 
-The references arrange `counts` in B, G, R order so appending valid choices automatically produces alphabetical output.
-With one present color, only that color survives.
-With all three present, any chosen final color is attainable by first reducing each pile and choosing the final combinations appropriately.
-With exactly two present colors, the absent color is always attainable by reducing the piles and combining their representatives.
-A present candidate is attainable only if the other present color has at least two balls, allowing an intermediate third color while retaining another ball of that other color.
-Test that condition independently for each candidate.
+Store counts in alphabetical output order as `[B, G, R]`.
+If only one color is present, all merges preserve it.
+If all three are present, any final color is possible: reduce each color to one ball, combine the other two into the target color, then merge the two target balls.
+For exactly two present colors, the absent color is always attainable by reducing both to singletons and combining them.
+A present target color is attainable precisely when the other present color has at least two balls.
+Keep two of that other color, use one with the target to create the third color, then combine that third color with the remaining other ball.
 
 ## Walkthrough
 
-Example 1 has two red balls, one green ball, and no blue balls.
-Blue is attainable: combine the two reds into red, then red and green into blue.
-Green is attainable: combine one red and green into blue, then blue with the remaining red into green.
-Red is impossible because green has no spare ball.
-The answer is `BG`.
+Example 1 has `R = 2`, `G = 1`, and `B = 0`.
+Blue is attainable by merging the two reds into red, then red with green into blue.
+Green is attainable by merging one red with green into blue, then blue with the remaining red into green.
+Red is not attainable because green has only one ball.
+In alphabetical order, the answer is `BG`.
 
 ## Complexity
 
-Both references take O(1) time and O(1) space.
-They inspect three counters without simulating individual balls.
+The algorithm examines only three counts and a constant number of color pairs.
+Time and auxiliary space are O(1), independent of the total ball count.
 
 ## Edge cases
 
-A single initial ball is already the answer.
-Two singleton piles can produce only the missing color.
+A single existing ball simply keeps its color.
+Two different singleton colors can yield only the missing third color.
 
 ## Common mistakes
 
-Do not use parity alone: equal-color operations also change counts.
-Input argument order is R, G, B, whereas output order is B, G, R.
+Parity is not the deciding invariant because equal-color merges alter counts by one.
+Return all attainable colors, not just one feasible merging outcome.
 
 ## Language notes
 
-Python builds `present` explicitly; Java counts present colors and remembers their index.
-Both use bounded integer comparisons, so no sum of the three large counts is required.
+Both implementations avoid summing all counts, so even their large combined total causes no Java integer overflow.
+They append colors in B, G, R order.

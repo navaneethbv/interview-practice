@@ -1,47 +1,47 @@
 ## Intuition
 
-Every path entering a cell comes from the cell immediately above it or immediately to its left.
-Once the better of those two prefix sums is known, adding the current cell value gives the best sum ending here.
-The history of any inferior prefix cannot improve a future continuation.
+Every path into a cell must come from directly above or directly left.
+The best path into the cell therefore extends the better of those two completed subpaths, giving a local recurrence that also guarantees a globally optimal result.
 
 ## Brute force
 
-Enumerate every sequence of right and down moves and sum its visited cells.
-Many paths share prefixes and suffixes, so this repeats work exponentially in the grid dimensions.
+Enumerate every right/down path and sum its cells.
+The number of move sequences grows combinatorially with grid dimensions, and many paths share the same prefixes and suffixes.
 
 ## Approach
 
-Scan rows from top to bottom and each row from left to right.
-The one-dimensional array `best` holds the previous row's answers before a column is processed.
-At column `c`, `best[c]` still represents the cell above, while `best[c - 1]` already represents the current row's left neighbor.
-Set the new entry to the cell value plus the larger predecessor sum.
-Use zero for a missing predecessor along the top or left boundary.
-This is valid here because values are positive, so a real path prefix is never worse than the missing-predecessor sentinel.
-After the final row, the last entry is the answer.
+Use a single array `best`, one entry per column.
+Process the grid row by row from left to right.
+Before updating `best[c]`, it represents the best sum from above; `best[c - 1]` already represents the updated sum from the left.
+Store the current cell's value plus the larger predecessor sum.
+At boundaries, a missing predecessor contributes zero, which is safe because all grid values are positive.
+The final array entry is the best sum reaching the bottom-right cell.
 
 ## Walkthrough
 
-Example 1 first produces `best = [1, 5, 8]` for the top row.
-The second row transforms it into `[3, 12, 18]`.
-The final row transforms it into `[8, 20, 29]`.
-The sum 29 follows values 1, 4, 7, 8, and 9, choosing the best predecessor at each step.
+Example 1 begins with first-row totals `[1, 5, 8]`.
+Processing the second row produces `[3, 12, 18]`.
+The last row produces `[8, 20, 29]`.
+At the destination, the algorithm prefers the left total 20 over the above total 18 and adds 9.
+One maximizing path is `1, 4, 7, 8, 9`, with total 29.
 
 ## Complexity
 
-For r rows and c columns, both references take O(r times c) time and O(c) auxiliary space.
-They return only the optimal sum, so they do not store predecessor pointers or reconstruct a path.
+For r rows and c columns, time is O(rc).
+The one-dimensional buffer uses O(c) auxiliary space, and the input grid is not modified.
 
 ## Edge cases
 
-A single row or column has exactly one permitted path.
-A one-cell grid returns that cell's value.
+A single cell returns its own value.
+A single row or column has only one path, so every value is included.
+Tied predecessor sums need no special handling because only the total is requested.
 
 ## Common mistakes
 
-Scanning columns in reverse would overwrite the wrong dependency.
-Zero boundary sentinels would need reconsideration if negative cell values were allowed.
+Do not overwrite the above value before using it.
+Scanning columns right to left would break the intended meaning of the left predecessor.
 
 ## Language notes
 
-Python creates a list of column totals; Java uses an `int[]`.
-The stated dimensions and value bounds keep the maximum path sum within Java's signed integer range.
+Both references use the same buffer update order.
+Java integer totals are sufficient under the positive-value and 1,000-by-1,000 bounds because a path visits at most 1,999 cells.

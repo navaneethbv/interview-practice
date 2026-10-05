@@ -1,47 +1,50 @@
 ## Intuition
 
-Synonymy forms connected components, including names that appear only in synonym pairs.
-Each component contributes one total, labeled by its alphabetically smallest member.
-A disjoint-set structure merges those components while preserving the required representative name.
+Synonym pairs define connected groups of names.
+Disjoint set union can join those groups while choosing the alphabetically smallest root as the representative.
+Counts are added only after all synonym relationships are known.
 
 ## Brute force
 
-For each named count, traverse the entire synonym graph again to find its component and representative.
-Repeated traversals redo the same connectivity work for many names in the same group.
+Repeatedly walking synonym edges for every name can revisit the same group many times.
+Building a graph and running a traversal from every name also needs visited bookkeeping to avoid duplicate work.
 
 ## Approach
 
-`find` creates an unseen name as its own parent and follows parent links to the root, compressing paths.
-For each synonym pair, find both roots and attach the alphabetically larger root below the smaller one.
-After all unions, add each supplied count to `totals[find(name)]`.
-Emit one `Name:total` string per total.
-Because roots always merge toward the smaller name, the final root is the minimum across the entire component, even if that name has no direct count entry.
+Use parent to represent a disjoint set of names.
+find creates unseen names as their own roots and applies path compression while following parent links.
+For each synonym pair, find both roots and attach the lexicographically larger root below the smaller root.
+Then find the root for every entry in names and add its count to totals.
+Format only roots that receive a count, using the root itself as the required canonical name.
 
 ## Walkthrough
 
-Example 1 merges Jon with John and then connects Johnny to the same group.
-John is its alphabetically smallest spelling, and counts 15 and 12 sum to 27.
-Chris, Kris, and Christopher form another component represented by Chris.
-Their counts sum to `13 + 4 + 19 = 36`.
-Return `John:27` and `Chris:36` in either order.
+In Example 1, Jon joins John, and Johnny also joins that same John root.
+Their counts become 15 plus 12, while Johnny contributes no count of its own.
+Chris, Kris, and Christopher form a second group rooted at Chris, whose total is 13 plus 4 plus 19.
+The result contains John:27 and Chris:36, and the unordered comparison accepts either output order.
 
 ## Complexity
 
-Space is O(V) for V distinct names plus output.
-Path compression speeds repeated finds, but the reference does not union by rank or size.
-A conservative worst-case bound is O((P + N)V) parent traversals for P synonym pairs and N counted names, excluding string-comparison costs.
+Let N be the number of names and S the number of synonym pairs.
+With path compression, the union and find work is near linear in N plus S for this input scale.
+The parent and totals maps use O(N + S) space because synonym-only names must also be represented.
 
 ## Edge cases
 
-Names absent from every synonym pair remain singleton groups.
-A component appearing only in synonyms produces no output unless a counted name belongs to it.
+A name appearing only in a synonym pair can become the canonical root but contributes zero unless it is listed in names.
+Disconnected names each produce their own total.
+Transitive chains are compressed through repeated find calls.
+A self-synonym pair leaves its root unchanged.
 
 ## Common mistakes
 
-Grouping only directly paired names misses transitive synonym chains.
-Choosing representatives only from counted names can miss a smaller spelling introduced by synonyms.
+Choosing the first synonym endpoint as root can violate the alphabetical canonical-name rule.
+Adding synonym-only names as output groups creates entries with no provided count.
+Summing before resolving all roots can split a transitive group.
 
 ## Language notes
 
-Python uses dictionary parents and path halving.
-Java compresses paths in a second pass and uses a linked map for totals; neither output order is required by the contract.
+Python sorts the two roots and assigns the larger one to the smaller.
+Java compares roots directly and uses LinkedHashMap only to preserve insertion order for output.
+The spec compares results unordered, so output order is not part of the contract.

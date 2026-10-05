@@ -1,53 +1,47 @@
 ## Intuition
 
-Suspicion requires both physical adjacency and identical nonempty mistake signatures.
-A signature must record which questions were wrong and which incorrect answers were chosen, not merely the number of errors.
+A suspect pair needs both a seating relationship and identical nonempty mistake information.
+The signature must include each wrong question's position and the actual wrong answer, since matching only the number of errors loses the evidence required by the statement.
 
 ## Brute force
 
-Comparing every pair of students costs O(n squared times q) for q questions.
-A desk lookup reduces candidate pairs to immediate right neighbors.
+Compare every pair of students, checking their desks and all responses.
+With s students and q questions, that approach can require O(s squared times q) work.
 
 ## Approach
 
-Build `by_desk` and a mistake signature for each student.
-For each occupied desk, look up desk + 1 and verify that both desk numbers belong to the same row.
-Compare their signatures only when the first is nonempty.
-Append the two IDs in increasing order when signatures match.
-Checking only the right neighbor emits each adjacent pair once.
-The row calculation accounts for the statement's one-based desk numbers.
+Build `by_desk` to map occupied desks to student IDs and `mistakes` to map each ID to its error signature.
+For each desk, look only for the occupant of `desk + 1`.
+Check `(desk - 1) // m == desk // m` to exclude adjacency across row boundaries.
+If both signatures are equal and nonempty, append the IDs in ascending order.
+Looking only to the right emits each neighboring pair once.
 
 ## Walkthrough
 
-```text
-Input: answers = "abcc", m = 5, students = [[4, 10], [1, 6], [3, 8], [5, 11], [9, 7], [6, 16]], responses = ["abcd", "abcd", "abdd", "abcd", "abcd", "abdd"]
-Output: [[1, 9]]
-```
-
-In Example 1, IDs 1 and 9 occupy desks 6 and 7.
-Both answer `abcd` instead of `abcc`, giving the same mistake at zero-based question 3: answer d.
-They are adjacent in the same row, so `[1, 9]` qualifies.
-Desks 10 and 11 lie in different rows despite consecutive numbers.
-The other candidate signatures differ, leaving only the stated pair.
+In Example 1, the answer key is `abcc` and rows have five desks.
+Students 1 at desk 6 and 9 at desk 7 both answer `abcd`, making exactly the same error on the final question.
+They form `[1, 9]`.
+Students 4 and 5 also answer `abcd`, but desks 10 and 11 lie in different rows.
+No other adjacent pair has an equal mistake signature.
 
 ## Complexity
 
-For n students and q questions, signature construction and comparisons take O(nq) time.
-Stored signatures require O(nq) space in the worst case, plus O(n) desk lookup and output storage.
-Java's textual question indices also contribute their digit lengths.
+Expected time is O(sq), including constructing and comparing error signatures.
+Python stores O(sq) signature entries in the worst case.
+Java's textual question indices can add a logarithmic factor in q to signature storage and construction.
 
 ## Edge cases
 
-Two perfect responses are never suspect.
-Empty desks break adjacency.
-When m is one, no row contains adjacent desks.
+Perfect scores never produce suspect pairs.
+Missing desks break adjacency, and student IDs need not follow seating order.
+A single student produces no pair.
 
 ## Common mistakes
 
-Equal wrong-question sets are insufficient if the wrong answers differ.
-Do not join the last desk of one row to the first of the next.
+Do not compare only incorrect question positions or treat the boundary between two rows as neighboring seats.
+Do not include identical perfect answers.
 
 ## Language notes
 
-Python stores tuples of index-answer pairs.
-Java serializes signatures with separators and uses string value equality, preserving the same comparison semantics.
+Python uses tuples of `(question index, answer)` pairs.
+Java creates a delimited string with `mistakeKey`; its output pairs are sorted internally, while pair order is unrestricted.

@@ -1,53 +1,47 @@
 ## Intuition
 
-The lookup asks two membership questions: whether an IP hosts the domain and whether that domain owns the subdomain.
-Two mappings of sets model these relationships directly without parsing or combining names.
+A successful lookup must satisfy two separate relationships: the domain belongs to the requested IP, and the requested subdomain belongs to that domain.
+Keeping both relationships explicit prevents a globally known subdomain from being accepted under the wrong address.
 
 ## Brute force
 
-Keeping only registration lists would require scanning potentially many domains and subdomains for each query.
-Hash-based membership makes repeated queries efficient.
+Store every registration in lists and scan those lists on each query.
+This can take linear time per lookup and repeat the same searches over a long sequence of operations.
 
 ## Approach
 
-`domains_at` maps each IP to its registered domain set.
-`subdomains` maps each domain to its subdomain set.
-Registering a domain inserts it into the IP's set and initializes its subdomain set.
-Registering a subdomain inserts into that domain's set, relying on the stated prior-registration guarantee.
-A query returns the conjunction of both membership tests, using empty default sets for missing keys.
-The first condition prevents a valid subdomain from being reported under the wrong host IP.
+`domains_at` maps each IP to a set of registered domains.
+`subdomains` maps each domain to a set of its registered subdomains.
+Registering a domain adds it to the first map and ensures its subdomain set exists.
+Registering a subdomain adds it to that domain's set.
+A query checks both memberships and returns their conjunction.
+The guarantee that each domain is registered at most once makes this separation consistent across IPs.
 
 ## Walkthrough
 
-```text
-Input: ops = ["register_domain", "register_subdomain", "has_subdomain", "has_subdomain"], args = [["1.1.1.1", "test.com"], ["test.com", "www"], ["1.1.1.1", "test.com", "www"], ["1.1.1.2", "test.com", "www"]]
-Output: [null, null, true, false]
-```
-
-Example 1 registers test.com at 1.1.1.1, then adds www to test.com's subdomain set.
-The query for that exact IP, domain, and subdomain passes both membership checks and returns true.
-The next query uses 1.1.1.2, whose domain set does not contain test.com.
-It returns false even though the domain's www subdomain exists elsewhere.
-Registration methods contribute null results in the operation transcript.
+Example 1 first registers `test.com` at `1.1.1.1`, then adds `www` under that domain.
+These two operations return null.
+The query for `1.1.1.1`, `test.com`, and `www` passes both membership tests and returns true.
+Changing only the queried IP to `1.1.1.2` fails the first test and returns false.
+The operation results are `[null, null, true, false]`.
 
 ## Complexity
 
-With ordinary hash behavior, each registration and query uses expected O(1) table operations.
-String hashing and equality also depend on the input text lengths.
-Storage is proportional to registered IP-domain and domain-subdomain relationships.
+Each operation takes expected O(1) hash-table work, excluding the cost of hashing its strings.
+Space is O(d + s) stored memberships for d domains and s distinct subdomain registrations, plus IP keys and string storage.
 
 ## Edge cases
 
 Queries for unknown IPs or domains return false.
-Repeated subdomain registration is idempotent because sets discard duplicates.
-Several domains can share one IP.
+Repeated subdomain registration has no effect because membership is stored in a set.
+Subdomains are registered only after their parent domain exists.
 
 ## Common mistakes
 
-Checking only the subdomain map ignores host ownership.
-Do not treat all occurrences of a subdomain label as one global registration.
+Do not check subdomain membership without validating the IP-to-domain relationship.
+Do not treat identical subdomain text under different domains as one registration.
 
 ## Language notes
 
-Python uses `setdefault` and `get` with defaults.
-Java uses `computeIfAbsent`, `getOrDefault`, and camelCase method names as required by the harness.
+Python uses snake_case operation names and `setdefault` for initialization.
+Java exposes camelCase names and uses `computeIfAbsent`; the operation adapter maps between those names.

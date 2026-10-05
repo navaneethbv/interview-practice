@@ -1,47 +1,49 @@
 ## Intuition
 
-A square matrix rotation can be decomposed into two simpler transformations that use swaps.
-Transposition exchanges the row and column roles.
-A subsequent reflection chooses whether the resulting rotation is clockwise or anticlockwise.
-This avoids allocating another full matrix during a transformation.
+Square-matrix rotations can be decomposed into a transpose followed by a reflection.
+Each primitive transformation exchanges pairs of cells or row references.
+This permits in-place transformations without allocating another matrix for every operation.
+
+## Brute force
+
+Allocate a new n-by-n matrix and place each old cell at its transformed coordinates.
+That gives O(n²) temporary space, violating the transformation requirement.
 
 ## Approach
 
-The constructor copies the input into the stored `grid`.
-For transposition, visit only positions above the main diagonal and exchange each value with its mirrored position below the diagonal.
-Reflecting vertically reverses every row's column order.
-Reflecting horizontally reverses the order of whole rows.
-A clockwise rotation transposes first and then reflects vertically.
-An anticlockwise rotation transposes first and then reflects horizontally.
-Every operation mutates the same instance, so later operations observe earlier transformations.
-`get_grid` returns a fresh copy, preventing a caller from modifying the stored matrix through a returned value.
+`transpose` swaps only cells above the diagonal with their reflected positions below it.
+`reflect_horizontally` reverses the order of rows, matching this problem's explicit naming convention.
+`reflect_vertically` reverses each row's columns.
+Clockwise rotation performs transpose followed by vertical reflection; anticlockwise rotation performs transpose followed by horizontal reflection.
+For example, clockwise mapping sends old `(r, c)` to `(c, n - 1 - r)`.
+The constructor copies the input grid, and `get_grid` returns a fresh copy so callers receive a snapshot rather than a mutable alias.
 
 ## Walkthrough
 
-Example 1 starts with rows `[1, 2]` and `[3, 4]`.
-Transposition exchanges 2 and 3, creating rows `[1, 3]` and `[2, 4]`.
-Vertical reflection reverses those rows into `[3, 1]` and `[4, 2]`.
-The rotation operation produces `null`, and the following grid query returns that transformed matrix.
+Example 1 constructs the matrix `[[1, 2], [3, 4]]` and rotates clockwise.
+Transposing swaps 2 and 3, giving `[[1, 3], [2, 4]]`.
+Reversing each row then produces `[[3, 1], [4, 2]]`.
+The transformation's operation result is null.
+The following getter returns that two-row grid, giving the stated result list.
 
 ## Complexity
 
-For an n by n grid, transpose, either rotation, and vertical reflection take O(n squared) time.
-Horizontal reflection takes O(n) time because both references exchange row references.
-Transformations require O(1) auxiliary space, excluding the matrix owned by the instance.
-Construction and `get_grid` each require O(n squared) time and additional storage for their copies.
+Transpose, either rotation, and vertical reflection take O(n²) time.
+Horizontal reflection swaps row references and takes O(n).
+Transformations use O(1) extra space.
+Construction and getters take O(n²) time and space for their required copies.
 
 ## Edge cases
 
 A one-cell matrix remains unchanged under every transformation.
-Four clockwise rotations restore the original matrix, while two identical reflections cancel.
+Repeated operations compose on the current grid, so four clockwise rotations recover the original values.
 
 ## Common mistakes
 
-Swapping both halves during transposition undoes every exchange.
-Changing the order of transpose and reflection can reverse the rotation direction.
+Swapping both halves during transpose would undo the operation.
+Respect the statement's row-swapping definition of horizontal reflection.
 
 ## Language notes
 
-Python uses slice copies and list reversal.
-Java clones each row separately; cloning only the outer array would still share mutable rows.
-Java exposes camelCase operation names through the harness mapping.
+Python uses tuple assignment and list reversal.
+Java uses temporary variables for cell swaps and temporary row references for horizontal reflection.

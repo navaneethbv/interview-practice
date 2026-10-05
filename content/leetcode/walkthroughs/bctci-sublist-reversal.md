@@ -1,48 +1,48 @@
 ## Intuition
 
-Keep the first node of the selected segment in place as its eventual tail.
-Repeatedly detach the node immediately after it and insert that node at the segment's front.
-This reverses the segment while maintaining connections to both surrounding portions of the list.
+The nodes before the requested range should stay attached to the same prefix, while each later node in the range can be moved directly after that prefix.
+Repeatedly removing the node after the current range head and inserting it at the front reverses the range in place.
 
 ## Brute force
 
-Copy all nodes into an array, reverse the selected index range, and reconnect them.
-That uses O(n) additional storage, whereas pointer manipulation needs only a few references.
+Copying the values into an array, reversing a slice, and rebuilding links is straightforward.
+It uses O(n) extra memory and loses the useful property that the existing nodes can be rearranged directly.
 
 ## Approach
 
-Create a dummy node pointing to head so reversal beginning at index zero uses the same logic as an interior segment.
-Advance `before` to the node immediately preceding left, returning the original head if left lies beyond the list.
-Set `first` to the segment's initial node.
-Up to `right - left` times, detach `first.next` as `moved`, reconnect first to moved's successor, and insert moved immediately after before.
-Stop early if first has no next node, handling right beyond the list.
-Return `dummy.next`, which may differ from the original head.
+Place a dummy node before head so that the range has a predecessor even when left is zero.
+Advance before until it points to the node immediately before index left.
+Keep first at the first node in the range.
+For each possible move, detach first.next, insert that moved node after before, and leave first as the tail of the reversed prefix.
+Stop naturally when the list ends, so a right index beyond the list reverses through the final node.
 
 ## Walkthrough
 
-Example 1 selects indices one through three in `[1, 2, 3, 4, 5]`.
-Before points to node 1 and first points to node 2.
-Move node 3 before node 2, producing `[1, 3, 2, 4, 5]`.
-Then move node 4 before node 3, producing `[1, 4, 3, 2, 5]`.
-Node 2 remains the reversed segment's tail and still connects to node 5.
+In Example 1, before first points to node 1 and first points to node 2.
+The first move takes 3 out and places it after 1, producing 1, 3, 2, 4, 5.
+The second move takes 4 out and places it after 1, producing 1, 4, 3, 2, 5.
+The dummy's next pointer is returned, which also handles a range beginning at the head.
 
 ## Complexity
 
-At most n nodes are traversed or moved, so both references take O(n) time.
-Huge supplied indices do not force huge loops because traversal stops at the list boundary.
-Auxiliary space is O(1), including the single dummy node.
+The pointer walk and each link change take O(n) time in total.
+The algorithm uses O(1) extra space besides the existing list nodes.
 
 ## Edge cases
 
-An empty list or a left index beyond the final node remains unchanged.
-A right index beyond the end reverses the available suffix.
+An empty list returns null.
+If left is past the list, the early check returns the original head unchanged.
+If right is past the list, the loop stops when first.next is null.
+Reversing the whole list works because the dummy remains before the changing head.
 
 ## Common mistakes
 
-Save and reconnect moved's successor before inserting moved at the front, or links may be lost or cyclic.
-Return the dummy's next pointer when the head can change.
+Advancing first after moving a node skips part of the range because first is intentionally kept at the reversed prefix tail.
+Forgetting to update first.next before inserting moved can create a cycle.
+Returning head instead of dummy.next fails when index zero is included.
 
 ## Language notes
 
-Both languages manipulate the harness-provided `ListNode` links directly.
-Python breaks inside the loop at the end; Java includes that condition in the loop header.
+Python uses a ListNode dummy and a range loop guarded by moved being non-null.
+Java expresses the same splice with a loop condition that checks first.next.
+Both references mutate links and return the original node objects in their new order.

@@ -1,55 +1,47 @@
 ## Intuition
 
-For a fixed right endpoint, a subarray contains each remainder exactly when its start is no later than the most recent occurrence of every remainder.
-The earliest of those three latest positions determines all valid starts.
+For a fixed right endpoint, the latest occurrence of each remainder tells us how far right a valid starting position may be.
+A start must include all three latest occurrences, so the earliest of those occurrences is the limiting boundary.
 
 ## Brute force
 
-Enumerating all subarrays and checking their remainders takes at least quadratic time.
-Only the latest index for each of the three classes is needed while scanning.
+Try each start and extend the end while maintaining which remainders have appeared.
+This avoids recounting each interval from scratch but still inspects O(n squared) intervals.
 
 ## Approach
 
-Initialize `last` to `[-1, -1, -1]`.
-At each index, update `last[value % 3]`.
-Add `min(last) + 1` to `total`.
-If the minimum is p, starts 0 through p include the latest occurrence of every class.
-Any later start excludes the class whose most recent index is p, so it cannot qualify.
-A missing class retains -1 and therefore contributes zero valid starts.
-Each subarray is counted once at its own right endpoint.
+Initialize `last` to `[-1, -1, -1]` and `total` to zero.
+At each `index`, replace the entry for `value % 3` with that index.
+All starts from zero through `min(last)` produce a valid interval ending here, giving `min(last) + 1` new subarrays.
+If a remainder has never appeared, the minimum stays -1 and contributes zero.
+Each subarray has one right endpoint, so summing these contributions neither omits nor duplicates any answer.
 
 ## Walkthrough
 
-```text
-Input: arr = [1, 2, 3, 4, 5]
-Output: 6
-```
-
-Example 1 sees remainders 1, 2, 0, 1, 2.
-The first two positions contribute zero because remainder 0 is missing.
-After value 3, the latest indices are `[2, 0, 1]`, giving one valid start.
-After value 4 they are `[2, 3, 1]`, giving two.
-After value 5 they are `[2, 3, 4]`, giving three.
-The total is 1 + 2 + 3 = 6.
+Example 1 is `[1, 2, 3, 4, 5]`.
+After 1 and 2, some remainder is missing, contributing zero.
+At 3, `last` is `[2, 0, 1]`, so one start qualifies.
+At 4 it becomes `[2, 3, 1]`, adding two.
+At 5 it becomes `[2, 3, 4]`, adding three.
+The total is `1 + 2 + 3 = 6`.
 
 ## Complexity
 
-Each element updates and inspects three fixed entries, giving O(n) time.
-The latest-position array uses O(1) extra space.
-The answer may reach O(n squared).
+Time is O(n), since taking the minimum of three entries is constant work.
+Auxiliary space is O(1), independent of how many subarrays qualify.
 
 ## Edge cases
 
-Fewer than three elements cannot cover all classes.
-If any remainder is absent entirely, the answer is zero.
-Repeated values still create distinct positional subarrays.
+An empty array contributes zero.
+An array missing any remainder has no valid interval.
+Repeated occurrences replace only their own remainder's latest index.
 
 ## Common mistakes
 
-Use the minimum latest index, not the maximum.
-Initialize unseen classes to -1 rather than zero.
+Using the maximum latest index allows starts that exclude another required remainder.
+Initializing missing positions to zero would falsely count early intervals.
 
 ## Language notes
 
-Inputs are positive, so Python and Java remainder operators agree directly.
-Java returns long to hold the potentially large count.
+The statement restricts values to positive integers, so Python and Java remainder indexing agree.
+Java stores `total` in a `long` because the number of subarrays can exceed the signed integer range.

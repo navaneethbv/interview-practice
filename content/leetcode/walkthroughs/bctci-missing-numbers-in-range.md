@@ -1,50 +1,49 @@
 ## Intuition
 
-The requested output is ordered, and the input is ordered too.
-A pointer into the input can therefore move only forward while candidate values increase from `low` through `high`.
-Values passed by that pointer can never become relevant again.
+Both the requested values and the input array are ordered.
+While requested values increase, array entries smaller than the current value can be discarded permanently.
+A single advancing index identifies whether each requested number appears.
 
 ## Brute force
 
-For every integer in the requested range, search the entire array for a match.
-With n array elements and w range values, that can require O(n times w) comparisons.
+For every integer from low through high, linearly search the entire input array.
+For range length R and n input elements, that costs O(nR) time.
 
 ## Approach
 
-Initialize `index` to zero and an empty result `missing`.
-For each candidate `value`, advance `index` while the pointed-to input value is smaller than the candidate.
-After this loop, either the input is exhausted or its current value is at least the candidate.
-If the current value equals the candidate, it is present and should be skipped.
-Otherwise no later input value can equal it, so append the candidate.
-There is no need to increment the pointer immediately after a match; the next candidate's advance loop moves beyond that value and any duplicates.
+Initialize `index = 0` and an empty `missing` list.
+For each `value` in the inclusive requested range, advance index while the current array entry is smaller.
+If index has reached the end, the value is missing.
+Otherwise compare `arr[index]` with value and append the value if they differ.
+When equal, leave the index where it is; the next larger requested value will advance past that occurrence and any duplicates.
+Sorted order guarantees no earlier discarded entry or later larger entry could be a missed match.
 
 ## Walkthrough
 
-Example 1 asks for integers 9 through 13 in `[6, 9, 12, 15, 18]`.
-The pointer first skips 6 and finds 9, so 9 is omitted.
-For candidate 10 it advances to 12, proving 10 is missing.
-The same 12 also proves 11 is missing, then matches candidate 12.
-Candidate 13 advances to 15 and is appended.
-The resulting list is `[10, 11, 13]`.
+Example 1 uses `[6, 9, 12, 15, 18]` over range 9 through 13.
+At 9, skip 6 and find 9, so nothing is emitted.
+At 10, skip 9 and stop at 12; emit 10.
+The same current entry proves 11 absent, then matches 12.
+At 13, skip 12 and stop at 15, proving 13 absent.
+The answer is `[10, 11, 13]`.
 
 ## Complexity
 
-Let w equal `high - low + 1`.
-Both references take O(n + w) worst-case time because the input pointer advances at most n times.
-Auxiliary working space is O(1), with O(w) possible output storage.
-Java additionally uses a temporary boxed list before creating the returned primitive array.
+Let R be `high - low + 1`.
+The range loop takes O(R), and the input pointer advances at most n times, for O(n + R) time.
+Working space is O(1), excluding up to O(R) output values.
 
 ## Edge cases
 
-An empty input makes every candidate missing.
-Duplicates and values outside the range are harmless because pointer advancement compares values rather than indices.
+An empty input emits the full range.
+Duplicate entries and values outside the requested range do not require separate filtering.
 
 ## Common mistakes
 
-The upper range endpoint is inclusive.
-Do not append a candidate merely because earlier array entries are smaller; first finish advancing the pointer.
+Include high in the iteration.
+Do not append duplicate missing values while skipping repeated input entries.
 
 ## Language notes
 
-Python's `range` ends at `high + 1`.
-Java uses a `long` loop variable so incrementing a large upper endpoint is safe.
+Python uses `range(low, high + 1)`.
+Java uses a long loop variable and converts each emitted value to int; the stated bounds keep output values representable.

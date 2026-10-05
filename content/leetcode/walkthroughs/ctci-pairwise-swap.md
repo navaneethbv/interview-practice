@@ -1,47 +1,43 @@
 ## Intuition
 
-Each bit has exactly one partner: positions zero and one swap, positions two and three swap, and so on.
-Separating the two position classes lets every pair be exchanged simultaneously without individual bit tests.
-The result must retain signed 32-bit interpretation.
-
-## Brute force
-
-Loop over sixteen bit pairs and explicitly copy each low bit to the high position and each high bit to the low position.
-That takes O(B) operations for B bits; masks perform the same permutation in constant word operations.
+Every even-positioned bit must move one place left, and every odd-positioned bit must move one place right.
+Masks isolate those two groups before shifting, so no bit can cross into the wrong group.
+Combining the shifted groups performs all sixteen swaps in one expression.
 
 ## Approach
 
-Mask the input to its 32-bit representation.
-`ODD_BITS = 0xAAAAAAAA` selects positions 1, 3, 5, and so forth; shift those bits right once.
-`EVEN_BITS = 0x55555555` selects positions 0, 2, 4, and so forth; shift them left once.
-OR the two disjoint results.
-Python masks the combined value again and subtracts `2^32` when its sign bit is set, converting the unsigned representation back to a signed integer.
+Mask `n` with `0x55555555` to keep bits at positions 0, 2, 4, and so on.
+Mask it with `0xAAAAAAAA` to keep positions 1, 3, 5, and so on.
+Shift the even group left by one and the odd group right by one, then OR the results.
+The Python reference normalizes the result back to signed 32-bit form, while Java's `int` result already has that representation.
 
 ## Walkthrough
 
-Example 1 is 10, binary `1010` in the low four positions.
-Both ones lie at odd-numbered positions, so the odd mask retains `1010` and the even mask retains zero.
-Shifting the retained odd bits right gives `0101`.
-The OR result is therefore 5.
-Bits above this four-bit illustration are zero and remain zero.
+For Example 1, ten is binary `1010` in its low bits.
+The odd mask keeps the one at bit three and shifts it to bit two, while the even mask keeps the one at bit one and shifts it to bit zero.
+The combined result is `0101`, which is five.
+For input one, the bit at position zero moves to position one and the result is two.
 
 ## Complexity
 
-For the fixed 32-bit word, time and auxiliary space are O(1).
-The algorithm does not create a string representation or allocate a collection of bits.
+The algorithm uses a constant number of masks, shifts, and bitwise operations.
+Its running time is `O(1)` and its auxiliary space is `O(1)`.
+Because the input is a fixed-width 32-bit integer, the bound is independent of the numeric magnitude.
 
 ## Edge cases
 
-Zero remains zero.
-Swapping an all-one pattern leaves it unchanged.
-A bit moved into position 31 makes the returned signed result negative.
+Zero remains zero because no bits are set.
+All one bits remain one after paired swaps, so negative one maps to itself.
+The sign bit can move into or out of the highest position, which is why results such as negative values are valid.
 
 ## Common mistakes
 
-Using an arithmetic right shift on a signed odd-bit mask result can insert unwanted leading ones.
-Bit positions are counted from zero at the least significant end.
+Using the masks in the opposite shift directions swaps the wrong neighboring positions.
+Java's signed right shift `>>` would copy the sign bit, so the reference correctly uses `>>>` for the odd group.
+Failing to normalize Python's result can expose an unsigned value instead of the specified signed integer.
 
 ## Language notes
 
-Java uses `>>>` for the right shift and naturally returns a signed int.
-Python explicitly controls the width and signed conversion because its integers have arbitrary precision.
+Python masks to 32 bits before shifting and converts values with the high bit set back to signed form.
+Java's bitwise operations already operate on 32-bit `int` values, and `>>>` keeps zeroes entering from the left.
+Both references use the exact even and odd masks required to swap every adjacent pair.

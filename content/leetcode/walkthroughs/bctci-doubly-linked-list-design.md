@@ -1,53 +1,49 @@
 ## Intuition
 
-Permanent head and tail sentinels make front and back edits ordinary insertions or removals between two nodes.
-Both directions of every link must stay consistent after each operation.
+Two sentinel nodes make every real node have both a predecessor and a successor.
+The same pointer rewiring can therefore insert or remove an endpoint without separate empty-list and single-node cases.
+A stored length supplies constant-time size queries.
 
 ## Brute force
 
-A singly linked list needs a traversal to locate the predecessor when removing the tail.
-An array needs shifts for front operations, violating the constant-time endpoint requirement.
+An array supports membership and size, but inserting or removing at its front shifts all remaining values.
+That violates the required constant-time endpoint operations.
 
 ## Approach
 
-Initialize head.next to tail and tail.prev to head.
-`_insert_after` connects a fresh node between an existing node and its successor, then increments length.
-`_remove` reconnects the two neighbors and decrements length, but returns -1 for either sentinel.
-Front methods operate next to head, and back methods next to tail.
-`contains` walks only real nodes, while `size` returns the stored length.
-The sentinels themselves never represent user values or contribute to size.
+Connect `head.next` to `tail` and `tail.prev` to `head` initially.
+The insertion helper allocates `fresh`, links it between `node` and `node.next`, and increments `length`.
+Front insertion uses `head`; back insertion uses `tail.prev`.
+The removal helper refuses either sentinel, otherwise connects the node's predecessor directly to its successor in both directions and decrements `length`.
+Front and back removals pass `head.next` and `tail.prev` respectively.
+Membership walks real nodes until reaching `tail`, comparing values along the way.
 
 ## Walkthrough
 
-```text
-Input: ops = ["push_front", "push_front", "push_back", "contains", "contains", "size", "pop_front", "pop_back"], args = [[1], [2], [3], [2], [4], [], [], []]
-Output: [null, null, null, true, false, 3, 2, 3]
-```
-
-Example 1 pushes 1 at the front, then 2 at the front, then 3 at the back, forming `[2, 1, 3]`.
-Contains returns true for 2 and false for 4; size is 3.
-Popping the front removes 2 and reconnects head to 1.
-Popping the back removes 3 and reconnects 1 to tail.
-The remaining list contains only 1.
+Example 1 pushes 1 at the front, then 2 at the front, then 3 at the back.
+The real-node sequence is `[2, 1, 3]`.
+Searching for 2 returns true, searching for 4 returns false, and size returns 3.
+Removing the front returns 2 and leaves `[1, 3]`.
+Removing the back returns 3 and leaves `[1]`.
+Insertion operations have no result, so their output entries are null.
 
 ## Complexity
 
-All endpoint operations and size queries take O(1) time.
-Contains takes O(n) time in the worst case.
-The list stores O(n) nodes plus two sentinels.
+Each push, pop, and size operation takes O(1) time.
+`contains` takes O(n) time in the worst case.
+The structure stores O(n) nodes, with O(1) temporary space per operation.
 
 ## Edge cases
 
-Popping an empty list returns -1 without changing length.
-Removing the only real node restores the initial sentinel links.
-Duplicate values are allowed and remain separate nodes.
+Removing from an empty list passes a sentinel and returns -1 without changing length.
+Duplicate values occupy separate nodes and are allowed.
 
 ## Common mistakes
 
-Updating only next links leaves reverse traversal inconsistent.
-Do not identify sentinels by value, since zero is a valid stored value.
+Update both forward and backward links.
+Sentinels must never count toward size or be considered valid membership matches.
 
 ## Language notes
 
-Python uses object identity for sentinel checks.
-Java uses reference equality and a private node class; its public methods use camelCase names.
+Python identifies sentinels with `is`, while Java compares node references with `==`.
+The runner maps snake_case Python operation names to camelCase Java methods.

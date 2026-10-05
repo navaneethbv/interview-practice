@@ -1,0 +1,40 @@
+{
+ "id": "low-level-design",
+ "title": "Low-Level Design Practice",
+ "short": "Low-Level Design",
+ "description": "Work through parking lots, elevators, vending machines, and schedulers with ownership diagrams, invariants, failure cases, and tests.",
+ "sourceLinks": [
+  {
+   "label": "Amazon technical topics",
+   "url": "https://amazon.jobs/content/en/how-we-hire/interview-prep/software-development-topics"
+  }
+ ],
+ "source": "low_level_design.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "model-behavior-before-drawing-classes",
+     "title": "Model behavior before drawing classes"
+    },
+    {
+     "id": "design-a-parking-lot",
+     "title": "Design a parking lot"
+    },
+    {
+     "id": "design-an-elevator-controller",
+     "title": "Design an elevator controller"
+    },
+    {
+     "id": "design-a-vending-machine",
+     "title": "Design a vending machine"
+    },
+    {
+     "id": "design-a-task-scheduler",
+     "title": "Design a task scheduler"
+    }
+   ]
+  }
+ ]
+}

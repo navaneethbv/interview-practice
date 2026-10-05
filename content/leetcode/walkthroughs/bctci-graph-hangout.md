@@ -1,52 +1,47 @@
 ## Intuition
 
-For a fixed meeting node, each friend should take a shortest route to it.
-The total cost is the sum of three independent shortest-path distances, so evaluate that sum at every possible destination.
+For any proposed meeting vertex, each friend can independently take a shortest path there.
+The total cost is therefore the sum of three shortest-path distances, and the best meeting location minimizes that sum across all vertices.
 
 ## Brute force
 
-Trying every meeting node and running searches from it repeats graph traversal V times.
-Three searches from the friends' fixed starting positions provide all the same distance information.
+Run a shortest-path search separately for every possible meeting node.
+That would require O(V times (V + E)) work, even though there are only three fixed starting locations whose distances matter.
 
 ## Approach
 
-Initialize `totals` to zero.
-For each of the three starts, run BFS to compute its distance to every vertex, then add those distances into totals.
-Return the minimum total across vertices.
-BFS is correct because every edge costs one traversal.
-The graph is connected, so each distance exists and no unreachable sentinel participates in the minimum.
-Friends can share routes or starting positions; their individual travel costs still add independently.
+Initialize `totals` to zero for every node.
+Run `_distances` once from each of `node1`, `node2`, and `node3`.
+Each search uses breadth-first traversal, marking distance when a neighbor is first enqueued.
+Add its distance array into `totals`, then return the minimum accumulated total.
+Unweighted edges make the first BFS discovery shortest, and the connected-graph guarantee ensures every distance is available for every proposed meeting location.
 
 ## Walkthrough
 
-```text
-Input: graph = [[1, 4], [0, 2], [1, 3], [2, 4], [0, 3]], node1 = 0, node2 = 2, node3 = 4
-Output: 3
-```
-
-Example 1 is a five-node cycle.
+Example 1 is a five-node cycle with starts 0, 2, and 4.
 Distances from 0 are `[0, 1, 2, 2, 1]`.
-Distances from 2 are `[2, 1, 0, 1, 2]`, and from 4 are `[1, 2, 2, 1, 0]`.
-The totals are `[3, 4, 4, 4, 3]`.
-Meeting at either 0 or 4 costs three traversed edges in total, so the returned minimum is 3.
+Distances from 2 are `[2, 1, 0, 1, 2]`.
+Distances from 4 are `[1, 2, 2, 1, 0]`.
+Adding gives `[3, 4, 4, 4, 3]`.
+Meeting at 0 or 4 costs three total edge traversals, so the output is 3.
 
 ## Complexity
 
-Three BFS traversals still take O(V + E) time because the number of friends is fixed.
-Distances, totals, and the queue require O(V) extra space.
+Three BFS runs take O(V + E) time overall because three is constant.
+Distances, totals, and the queue use O(V) auxiliary space beyond the input adjacency list.
 
 ## Edge cases
 
-If all friends start together, zero is optimal.
-Two friends sharing a start contribute that distance twice.
-The best meeting point need not be one of their starting vertices in a general graph.
+All friends may start at the same node, giving zero cost.
+A single-node graph also returns zero.
+The graph need not be a tree and may contain cycles.
 
 ## Common mistakes
 
-Minimizing the maximum distance answers a different objective.
-A multi-source BFS gives only the nearest-source distance, not the required sum.
+Count each friend's travel separately even when their routes share edges.
+Do not minimize the largest individual distance, which optimizes a different objective.
 
 ## Language notes
 
-Both references use a FIFO deque and mark distances on enqueue.
-Java computes the final minimum with a stream; Python uses `min`.
+Python uses `deque.popleft` and Java uses queue operations on `ArrayDeque`.
+Both initialize distances to -1 so visited state and shortest distance share one array.

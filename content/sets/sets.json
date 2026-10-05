@@ -2402,15 +2402,15 @@
     "category": "Arrays & Hashing"
    },
    {
-    "slug": "encode-and-decode-strings",
-    "category": "Arrays & Hashing"
-   },
-   {
     "slug": "product-of-array-except-self",
     "category": "Arrays & Hashing"
    },
    {
     "slug": "valid-sudoku",
+    "category": "Arrays & Hashing"
+   },
+   {
+    "slug": "encode-and-decode-strings",
     "category": "Arrays & Hashing"
    },
    {
@@ -2474,6 +2474,10 @@
     "category": "Stack"
    },
    {
+    "slug": "generate-parentheses",
+    "category": "Stack"
+   },
+   {
     "slug": "daily-temperatures",
     "category": "Stack"
    },
@@ -2522,10 +2526,6 @@
     "category": "Linked List"
    },
    {
-    "slug": "linked-list-cycle",
-    "category": "Linked List"
-   },
-   {
     "slug": "reorder-list",
     "category": "Linked List"
    },
@@ -2539,6 +2539,10 @@
    },
    {
     "slug": "add-two-numbers",
+    "category": "Linked List"
+   },
+   {
+    "slug": "linked-list-cycle",
     "category": "Linked List"
    },
    {
@@ -2618,6 +2622,18 @@
     "category": "Trees"
    },
    {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Tries"
+   },
+   {
+    "slug": "add-and-search-word-data-structure-design",
+    "category": "Tries"
+   },
+   {
+    "slug": "word-search-ii",
+    "category": "Tries"
+   },
+   {
     "slug": "kth-largest-element-in-a-stream",
     "category": "Heap / Priority Queue"
    },
@@ -2654,10 +2670,6 @@
     "category": "Backtracking"
    },
    {
-    "slug": "combination-sum-ii",
-    "category": "Backtracking"
-   },
-   {
     "slug": "permutations",
     "category": "Backtracking"
    },
@@ -2666,7 +2678,7 @@
     "category": "Backtracking"
    },
    {
-    "slug": "generate-parentheses",
+    "slug": "combination-sum-ii",
     "category": "Backtracking"
    },
    {
@@ -2686,23 +2698,7 @@
     "category": "Backtracking"
    },
    {
-    "slug": "implement-trie-prefix-tree",
-    "category": "Tries"
-   },
-   {
-    "slug": "add-and-search-word-data-structure-design",
-    "category": "Tries"
-   },
-   {
-    "slug": "word-search-ii",
-    "category": "Tries"
-   },
-   {
     "slug": "number-of-islands",
-    "category": "Graphs"
-   },
-   {
-    "slug": "max-area-of-island",
     "category": "Graphs"
    },
    {
@@ -2710,11 +2706,7 @@
     "category": "Graphs"
    },
    {
-    "slug": "walls-and-gates",
-    "category": "Graphs"
-   },
-   {
-    "slug": "rotting-oranges",
+    "slug": "max-area-of-island",
     "category": "Graphs"
    },
    {
@@ -2726,6 +2718,14 @@
     "category": "Graphs"
    },
    {
+    "slug": "rotting-oranges",
+    "category": "Graphs"
+   },
+   {
+    "slug": "walls-and-gates",
+    "category": "Graphs"
+   },
+   {
     "slug": "course-schedule",
     "category": "Graphs"
    },
@@ -2734,7 +2734,7 @@
     "category": "Graphs"
    },
    {
-    "slug": "graph-valid-tree",
+    "slug": "redundant-connection",
     "category": "Graphs"
    },
    {
@@ -2742,7 +2742,7 @@
     "category": "Graphs"
    },
    {
-    "slug": "redundant-connection",
+    "slug": "graph-valid-tree",
     "category": "Graphs"
    },
    {
@@ -2750,15 +2750,15 @@
     "category": "Graphs"
    },
    {
-    "slug": "network-delay-time",
-    "category": "Advanced Graphs"
-   },
-   {
     "slug": "reconstruct-itinerary",
     "category": "Advanced Graphs"
    },
    {
     "slug": "min-cost-to-connect-all-points",
+    "category": "Advanced Graphs"
+   },
+   {
+    "slug": "network-delay-time",
     "category": "Advanced Graphs"
    },
    {
@@ -2982,8 +2982,8 @@
     "category": "Bit Manipulation"
    }
   ],
-  "sourceUrl": "https://neetcode.io/practice/practice/neetcode150",
-  "sourceLabel": "Official NeetCode 150"
+  "sourceUrl": "https://github.com/neetcode-gh/leetcode/blob/5a3c1b2d59b4e5c6252006343d73849ebc75f796/.problemSiteData.json",
+  "sourceLabel": "Official NeetCode catalog, reviewed October 4, 2026"
  },
  {
   "id": "grind-169",

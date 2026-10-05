@@ -1,54 +1,48 @@
 ## Intuition
 
-A binary heap stores a complete tree in an array, with each parent outranking its children.
-Only one root-to-leaf path can violate that invariant after inserting or removing a value.
+A heap stores a complete binary tree in an array and ensures each parent has priority over its children.
+A shared comparison helper reverses that priority rule for minimum versus maximum heaps.
 
 ## Brute force
 
-Keeping the entire collection sorted makes insertion linear.
-Building a heap by repeated insertion takes O(n log n), while bottom-up heapification meets the required linear construction time.
+Keeping the array completely sorted makes insertion linear.
+Building a heap through repeated pushes takes O(n log n), whereas repairing internal nodes from the bottom upward satisfies the required linear construction time.
 
 ## Approach
 
-Copy initial values and sift down every internal node in reverse order.
-`_before` defines higher priority according to min or max mode.
-Push appends a value and swaps it upward while it outranks its parent.
-Pop saves the root, moves the final element to the root, and sifts it down by choosing the better child.
-Top and size read stored state without restructuring.
-Already-heapified child subtrees make each bottom-up construction step valid.
+Construction calls `_sift_down` from the last parent toward zero.
+`push` appends and swaps upward while it outranks its parent.
+`pop` replaces the root with the last element and sifts downward through the higher priority child.
+`top` reads the root.
 
 ## Walkthrough
 
-```text
-Input: ctor = ["min", []], ops = ["push", "push", "push", "pop", "top", "size"], args = [[4], [8], [2], [], [], []]
-Output: [null, null, null, 2, 4, 2]
-```
-
-Example 1 builds a min heap from empty input.
-Pushing 4 then 8 leaves 4 at the root.
-Pushing 2 swaps it above 4, making 2 the highest-priority value.
-Pop returns 2 and restores heap order among 4 and 8.
-Top then returns 4 and size returns 2.
+Example 1 creates an empty min heap.
+Pushing 4 and 8 leaves 4 at the root.
+Pushing 2 swaps it above 4, giving root 2.
+Popping returns 2 and repairs the remaining heap, so `top()` returns 4 and `size()` returns 2.
 
 ## Complexity
 
-Construction is O(n), since most nodes have very small subtree height.
-Push and pop perform O(log n) heap work; array growth makes push amortized O(log n), with an occasional O(n) resize.
-Top and size are O(1).
-Storage is linear in allocated capacity.
+Bottom up construction takes O(n), because most nodes are near the leaves.
+Pop costs O(log n), while push costs amortized O(log n), allowing occasional backing array growth.
+Top and size take O(1).
+Storage is O(p), where p is peak heap size.
 
 ## Edge cases
 
-Empty top and pop return -1.
-Duplicate values remain separate heap elements.
-Removing the final value leaves an empty heap without a valid root to inspect.
+Empty `top` and `pop` return -1, which cannot conflict with the nonnegative input domain.
+Duplicates are valid and need not swap when equal.
+Removing the only element leaves an empty heap.
 
 ## Common mistakes
 
-During sift-down, choose the best child rather than the first child violating order.
-Use `(index - 1) / 2` for the parent.
+During sift down, compare both children before choosing a swap.
+Use children `2 * index + 1` and `2 * index + 2`.
+A heap is not globally sorted, and constructor heapification must begin at the last internal node.
 
 ## Language notes
 
-Python uses a list; Java explicitly doubles its backing array.
-Java retains capacity after removals, so allocated space reflects peak size.
+Python uses a growable `items` list and Boolean `is_min`.
+Java manages an integer buffer and logical `length`, doubling capacity when necessary.
+Both implement their own heap operations without using a built in priority queue.

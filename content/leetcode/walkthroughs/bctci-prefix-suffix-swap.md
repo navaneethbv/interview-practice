@@ -1,50 +1,46 @@
 ## Intuition
 
-Write the original array as A followed by B, where A is the first third and B the remaining two thirds.
-The desired result is B followed by A with each block's internal order preserved.
-Reversal moves blocks while a second reversal within each block restores their orientation.
+Write the array as prefix A followed by suffix B.
+Reversing the whole array produces reversed B followed by reversed A; reversing those two pieces individually then produces B followed by A in their original internal orders.
 
 ## Brute force
 
-Copy the suffix followed by the prefix into a new array and overwrite the input.
-This is linear in time but uses O(n) additional space, violating the requested constant-space transformation.
+Copying the first third into temporary storage makes rotation simple but violates constant extra space.
+Moving the first element to the end repeatedly shifts many values and can take quadratic time.
 
 ## Approach
 
-Reverse the entire array first.
-This changes AB into reversed B followed by reversed A.
-The first two thirds now hold reversed B, so reverse that segment to recover B.
-Reverse the final third to recover A.
-The helper swaps the two endpoint characters and moves inward until the segment is reversed.
-All three reversals operate on the same array, and no temporary array is created.
-The block boundaries are determined after the whole-array reversal, which explains why the first corrected segment has length two thirds rather than one third.
+Let n be the length.
+Reverse indices 0 through n - 1, then reverse 0 through `2 * n // 3 - 1`, and finally reverse `2 * n // 3` through n - 1.
+The helper swaps endpoints while moving inward.
 
 ## Walkthrough
 
-Example 1 spells `badreview`, with prefix `bad` and suffix `review`.
-Reversing the whole array produces `weiverdab`.
-Reversing its first six characters produces `reviewdab`.
-Reversing the last three characters produces `reviewbad`, the required output.
-The letters within both `review` and `bad` end in their original relative order.
+Example 1 splits `badreview` into `bad` and `review`.
+The whole reversal gives `weiverdab`.
+Reversing its first six letters restores `review`, leaving `reviewdab`.
+Reversing the final three letters gives `reviewbad`, matching the required character array.
 
 ## Complexity
 
-The whole-array reversal takes O(n), and the two segment reversals together take another O(n).
-Both references therefore use O(n) time and O(1) auxiliary space.
-The method mutates the provided character array and does not return a replacement array.
+The first reversal touches n elements and the two smaller reversals together touch n elements.
+Total time is O(n), and the index variables plus one swap temporary use O(1) auxiliary space.
+No second array is created.
 
 ## Edge cases
 
-An empty array makes all reversal loops terminate immediately.
-A three-character array rotates its first character to the end.
-The divisible-by-three guarantee fixes an exact prefix size.
+For length three, one initial character moves to the end.
+An empty array causes each reversal loop to do nothing.
+Repeated letters do not affect correctness because the operation depends on positions, not character uniqueness.
 
 ## Common mistakes
 
-Reversing only the whole array reverses each block's contents incorrectly.
-Use inclusive reversal endpoints consistently to avoid moving a boundary character into the wrong block.
+After reversing everything, the leading region has the old suffix's length, which is two thirds of n.
+Do not split the reversed array after one third.
+The helper accepts inclusive endpoints, so each region's end must be one less than its boundary.
 
 ## Language notes
 
-Python swaps characters directly with tuple assignment.
-Java uses a temporary `char`, and integer division gives the exact block boundaries under the length constraint.
+Python uses integer division and simultaneous swaps.
+Java uses character arrays and integer arithmetic with a temporary character.
+Both methods return void, and the local spec reads the mutated first argument as the graded result.

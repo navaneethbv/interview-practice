@@ -1,48 +1,62 @@
 ## Intuition
 
-Replacing a bit interval requires two independent operations: clear the destination interval, then place the source bits there.
-OR alone is insufficient because an existing one in N must become zero wherever M contains a zero.
-The promised source width lets the insertion avoid spilling outside the interval.
+Insertion is organized around Clear Then Merge.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Visit every position from i through j, clear that position in N, and copy the corresponding bit of M.
-This takes time proportional to the interval width and is easy to verify, but a mask performs all replacements together.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Compute `width = j - i + 1` because both endpoints belong to the interval.
-`(1 << width) - 1` creates width low one bits.
-Shift that mask left by i to obtain `window`.
-AND N with the complement of `window`, clearing exactly the destination positions.
-Finally OR in `M << i`.
-Bits outside the window survive the clearing operation and are unaffected by the shifted source.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Clear Then Merge idea: Clear bits i through j of N with a mask, then OR in M shifted left by i.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named insertBits can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 has `N = 1024`, `M = 19`, `i = 2`, and `j = 6`.
-The width is 5, and the window is binary `1111100`, or 124.
-Those positions of 1024 are already zero.
-Shifting 19, binary `10011`, left twice gives 76.
-Combining 1024 and 76 yields 1100, binary `10001001100`.
+Example 1 uses input [1024, 19, 2, 6] and expects 1100.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 1100.
+The same reasoning handles hidden cases [0, 0, 0, 0], [0, 1, 0, 0], [1, 0, 0, 0]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-With the fixed 31-bit nonnegative input range, time and extra space are O(1).
-Only a constant number of arithmetic and bitwise operations is used.
+The imported workbook records the expected time bound as O(1).
+The imported workbook records the expected space bound as O(1).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-M can be zero, in which case the interval is simply cleared.
-A one-bit window has width one.
-The largest legal window spans positions zero through thirty.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [0, 0, 0, 0], [0, 1, 0, 0], [1, 0, 0, 0] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Forgetting the inclusive endpoint loses one mask bit.
-Using XOR to clear the interval merely toggles existing bits and can introduce unwanted ones.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python integers support the mask directly.
-Java uses `1L` while constructing the window so a width of 31 is computed safely before casting the finished mask to int.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

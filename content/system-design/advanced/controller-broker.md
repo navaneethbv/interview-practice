@@ -1,13 +1,42 @@
-## What is the controller broker?
+## Historical terminology and current roles
 
-Within the Kafka cluster, one broker is elected as the Controller. This Controller broker is responsible for admin operations, such as creating/deleting a topic, adding partitions, assigning leaders to partitions, monitoring broker failures, etc. Furthermore, the Controller periodically checks the health of other brokers in the system. In case it does not receive a response from a particular broker, it performs a failover to another broker. It also communicates the result of the partition leader election to other brokers in the system.
+The course's “controller broker” terminology comes from the ZooKeeper-based architecture.
+For Kafka 4.0 and later, explain the controller role in the KRaft metadata quorum separately from the broker role that serves partition data.
+A machine can be configured with both roles, but the responsibilities remain distinct.
+Reviewed October 4, 2026.
 
-## Split brain
+## Reason about two kinds of leadership
 
-When a controller broker dies, Kafka elects a new controller. One of the problems is that we cannot truly know if the leader has stopped for good and has experienced an intermittent failure like a stop-the-world GC pause or a temporary network disruption. Nevertheless, the cluster has to move on and pick a new controller. If the original Controller had an intermittent failure, the cluster would end up having a so-called **zombie controller**. A zombie controller can be defined as a controller node that had been previously deemed dead by the cluster and has come back online. Another broker has taken its place, but the zombie controller might not know that yet. This common scenario in distributed systems with two or more active controllers (or central servers) is called split-brain.
+A partition leader handles the record stream for one partition.
+The active metadata controller coordinates cluster metadata changes through its quorum.
+Do not treat these as one global data leader: different partitions may have leaders on different brokers.
 
-We will have two controllers under split-brain, which will be giving out potentially conflicting commands in parallel. If something like this happens in a cluster, it can result in major inconsistencies. How do we handle this situation?
+```text
+Metadata: controller leader -> quorum replication -> committed metadata
+Records:  partition leader -> in-sync replicas    -> record acknowledgment
+```
 
-## Generation clock
+The metadata quorum uses majority agreement.
+That rule is not a definition of the producer's `acks=all` setting.
+For record writes, the in-sync replica set and topic durability configuration determine the relevant acknowledgment conditions.
+Mixing these concepts can lead to incorrect claims about which failures a write survives.
 
-Split-brain is commonly solved with a **generation clock,** which is simply a monotonically increasing number to indicate a server’s generation. In Kafka, the generation clock is implemented through an epoch number. If the old leader had an epoch number of ‘1’, the new one would have ‘2’. This epoch is included in every request that is sent from the Controller to other brokers. This way, brokers can now easily differentiate the real Controller by simply trusting the Controller with the highest number. The Controller with the highest number is undoubtedly the latest one, since the epoch number is always increasing. This epoch number is stored in ZooKeeper.
+## Worked discussion
+
+Imagine three controller voters and three replicas of an application partition.
+Losing one controller can leave a controller majority available.
+Losing a broker requires examining partition leadership, surviving replicas, and their synchronization state.
+The same number of failed machines can have different consequences depending on role placement.
+A topology diagram should label these roles rather than simply drawing three interchangeable boxes.
+
+## Follow-up questions
+
+- Which operations need the controller to commit a metadata change?
+- Where are application records stored after a controller failure?
+- What is the operational reason to isolate controllers from heavily loaded brokers?
+- How would you detect lagging metadata replication versus lagging partition replication?
+
+## Source
+
+[Apache Kafka's KRaft documentation](https://kafka.apache.org/40/operations/kraft/) describes controller and broker roles and quorum operation.
+The topology exercise is original.

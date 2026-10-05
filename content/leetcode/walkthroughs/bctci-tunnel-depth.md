@@ -1,52 +1,43 @@
 ## Intuition
 
-Connected excavation reaching a lower row must pass through every intermediate row on its way from the ground.
-Therefore rows containing any excavated cell form a prefix, even though the columns occupied within those rows may vary arbitrarily.
-
-## Brute force
-
-Inspecting every cell takes O(n squared) time and misses the required improvement.
-Flood-filling the entire excavation can also visit that many cells when nearly everything is excavated.
+The connected tunnel and excavated top corners make the rows monotone for this question: once a row has no excavated cell, deeper rows cannot contain one.
+Therefore the last occupied row is the boundary between rows containing a one and rows containing only zeroes.
+Binary search can locate that boundary while inspecting only one candidate row per search step.
 
 ## Approach
 
-Keep low at a known occupied row, initially zero, and high at the exclusive upper boundary n.
-Inspect the middle row by checking whether it contains any one.
-If occupied, move low to middle; otherwise move high to middle.
-Stop when the boundaries are adjacent and return low.
-The connected-component guarantee makes the row-occupancy predicate monotone, so an empty middle row rules out every deeper row.
-The excavated top corners guarantee the initial low row is valid.
+Set `low` to row zero, which is guaranteed to contain excavation, and set `high` to the row count as an exclusive false boundary.
+While the two boundaries are not adjacent, inspect the middle row with `any` or a loop over its cells.
+If that row contains a one, move `low` down to it; otherwise move `high` up to it.
+When the search stops, `low` is the greatest row index containing an excavated cell.
 
 ## Walkthrough
 
-```text
-Input: [[[1, 1, 1], [0, 1, 0], [0, 0, 0]]]
-Output: 1
-```
-
-Example 1 starts with low zero and high three.
-Middle row one contains the central excavated cell, so low becomes one.
-The next middle row is two, which contains only zeros, so high becomes two.
-The boundaries are now adjacent and the deepest occupied row is index 1.
+For Example 1, row zero contains ones, row one contains a one, and row two is all zeroes.
+The first midpoint is row one, so `low` moves to one because excavation reaches that depth.
+The remaining boundary is row two, and the method returns row one.
+For a full 3 by 3 network, every checked row is occupied and the lower boundary eventually becomes row two.
 
 ## Complexity
 
-Each binary-search step scans at most n cells and halves the row interval.
-Worst-case time is O(n log(n + 1)), with O(1) extra space.
-The bound concerns examined cells after the matrix is supplied, not the cost of reading an external matrix representation.
+There are `O(log n)` binary-search iterations, and checking one row can scan `n` cells.
+The worst-case running time is therefore `O(n log n)` for an `n x n` matrix.
+The search uses `O(1)` auxiliary space.
 
 ## Edge cases
 
-For a one-row matrix, return zero without another search step.
-A completely excavated matrix returns n - 1.
-Rows need only contain one excavated cell to count as occupied.
+The one-row matrix returns zero because the guaranteed top row is also the deepest possible row.
+If only row zero is occupied, every deeper check is false and `low` remains zero.
+The exclusive `high = n` boundary avoids reading a row beyond the matrix.
 
 ## Common mistakes
 
-Do not binary-search individual columns, whose occupancy need not be monotone.
-Without the connectivity guarantee, an empty row would not rule out a disconnected deeper tunnel.
+A full matrix scan satisfies correctness but violates the stated subquadratic goal.
+Moving `high` to a false middle row is essential; moving it past that row can skip the answer.
+Searching individual columns or assuming the tunnel's shape is rectangular is unnecessary because only row occupancy matters.
 
 ## Language notes
 
-Python's any can stop at the first one.
-Java's row loop examines every entry, preserving the same worst-case time bound.
+Python uses `any(tunnel_network[middle])` to test a row.
+Java accumulates a boolean while scanning the row and uses integer division for the midpoint.
+Both implementations rely on the problem's monotone row guarantee supplied by connectivity and the top-corner condition.

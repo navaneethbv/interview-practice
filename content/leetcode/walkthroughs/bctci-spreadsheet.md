@@ -1,45 +1,48 @@
 ## Intuition
 
-Sorting rows or columns must move entire records across the grid, not just sort the selected key cells.
-For column sorting, compute one permutation from the chosen row and apply it to every row.
-For row sorting, the rows themselves are the movable records.
+Sorting a spreadsheet rearranges entire rows or columns, preserving associations among all their cells.
+The selected row or column supplies sort keys, and equal keys must retain their current relative order.
+
+## Brute force
+
+Sorting only the selected cells destroys the relationship with other cells in their rows or columns.
+A column permutation records the required rearrangement once and applies it consistently to every row.
 
 ## Approach
 
-Store the current integer matrix in `cells`, initialized to zero.
-Set and get access one indexed cell directly.
-To sort columns, create their current indices and stably sort those indices by the values in the selected row.
-Build a new matrix by reading each original row in that shared index order.
-To sort rows, stably sort the outer collection using the selected column's value as the key.
-Stability always refers to the order immediately before the operation, including any earlier sorts.
-These transformations preserve each whole column or row's internal associations while changing its position.
+Store the grid in `cells`.
+For column sorting, stably sort column indices by the chosen row's values, then rebuild every row using that `order`.
+For row sorting, stably sort the row objects by their chosen column value.
+Get and set use current coordinates.
 
 ## Walkthrough
 
-Example 1's set operations create rows `[5, 3, 8]`, `[6, 0, 0]`, and `[0, 1, 0]`.
-Sorting columns by row zero chooses original column order one, zero, two.
-The rows become `[3, 5, 8]`, `[0, 6, 0]`, and `[1, 0, 0]`.
-Sorting rows by column one then orders their keys zero, five, six.
-The cell at row one, column one is now 5, which the final get returns.
+Example 1 first forms rows `[5,3,8]`, `[6,0,0]`, and `[0,1,0]`.
+Sorting columns by row 0 uses order `[1,0,2]`, yielding `[3,5,8]`, `[0,6,0]`, and `[1,0,0]`.
+Sorting rows by column 1 orders keys 0, 5, 6, so `get(1,1)` returns 5.
 
 ## Complexity
 
-Set and get take O(1) time.
-For r rows and c columns, column sorting costs O(c log c + r times c) time and O(r times c) additional space for the replacement grid.
-Row sorting costs O(r log r) time and up to O(r) sorting workspace.
-The stored matrix occupies O(r times c) space.
+Get and set take O(1).
+For R rows and C columns, column sorting takes O(C log C + RC) time and O(RC) temporary space.
+Row sorting takes O(R log R) time and O(R) sorting space.
+Persistent grid storage is O(RC).
 
 ## Edge cases
 
-All-zero keys leave their current relative order unchanged.
-A one-row or one-column spreadsheet still obeys the same whole-record movement rules.
+All cells initially contain zero.
+Equal keys keep their prior relative ordering, including ordering established by earlier operations.
+A one row or one column sheet still uses the same methods.
+Negative values follow ordinary numeric ordering.
 
 ## Common mistakes
 
-Do not sort each row independently during a column reorder.
-An unstable sort can violate equal-key order after earlier operations.
+Apply a column permutation uniformly to every row.
+Do not read keys from a partially rearranged grid while rebuilding it.
+Stability refers to current order at the time of the operation, not immutable original coordinates.
 
 ## Language notes
 
-Python uses stable `sorted` and list sorting.
-Java sorts object arrays of boxed indices or row arrays, whose sort preserves equal-key order.
+Python's `sorted` and list sort are stable.
+Java sorts boxed column indices and row array references using stable object array sorting.
+The spec maps snake case sorting methods to their Java camelCase counterparts.

@@ -1,51 +1,62 @@
 ## Intuition
 
-The small strings often share prefixes, so one trie can represent all of them together.
-Starting a trie walk at every position in the big string finds every pattern beginning there.
-Terminal markers identify which original small-string entries end at the current trie node.
+Multi Search is organized around Trie of Small Strings.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Search for every small string independently at every possible starting position.
-This repeats comparisons for shared prefixes and needs extra care to retain overlapping matches.
-A trie shares those prefix comparisons across patterns.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Insert each small string into `trie`, recording its input index in the terminal list under `$`.
-Create one result list per small string.
-For each `start` in the big string, walk forward through trie edges until the next character has no edge.
-At every reached terminal node, append start to all associated pattern result lists.
-Continue beyond a terminal because a longer small string may share that prefix.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Trie of Small Strings idea: Insert all small strings into a trie, then walk the trie from every starting position of the big string.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named multiSearch can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 searches `mississippi`.
-Starting at index 1 follows `i` and then `s`, recording both `i` and `is`.
-The same patterns match again at index 4.
-Starting at 3 finds `sis`; starting at 5 finds `ssippi`; starting at 8 finds `ppi`.
-The single-letter `i` also matches at 7 and 10.
-No start matches `hi`, so its result remains empty.
-The output lists remain aligned with the original `smalls` order.
+Example 1 uses input ["mississippi", ["is", "ppi", "hi", "sis", "i", "ssippi"]] and expects [[1, 4], [8], [], [3], [1, 4, 7, 10], [5]].
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is [[1, 4], [8], [], [3], [1, 4, 7, 10], [5]].
+The same reasoning handles hidden cases ["abc", []], ["aaaa", ["aa", "a", "aaaaa"]], ["abcabc", ["abc", "abc", "cab"]]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-Let C be total small-string characters, n big-string length, L longest pattern length, and R total matches.
-Java takes expected O(C + nL + R) time.
-Python creates `big[start:]` slices, adding O(n squared) copying, so its conservative time is O(C + n squared + R).
-Trie and results use O(C + R) space, with O(n) temporary suffix space in Python.
+The imported workbook records the expected time bound as O(b * k).
+The imported workbook records the expected space bound as O(total length of smalls).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-Overlapping matches are retained because every start is tried.
-Duplicate small strings share trie paths but keep separate result lists.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases ["abc", []], ["aaaa", ["aa", "a", "aaaaa"]], ["abcabc", ["abc", "abc", "cab"]] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Stopping at the first terminal loses longer patterns.
-Recording the current endpoint instead of start returns incorrect indices.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python uses nested dictionaries and terminal index lists.
-Java uses explicit Node objects with child maps and terminal lists, and scans the big string by index without suffix copies.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

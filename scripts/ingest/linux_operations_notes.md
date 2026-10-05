@@ -122,3 +122,91 @@ Before a risky change, define the target, expected result, backup or rollback, o
 Stabilize the user impact first, preserve evidence, communicate scope, and make one controlled change at a time.
 After recovery, identify the contributing conditions and improve detection, automation, or documentation.
 Do not turn a one-off manual command into permanent policy without understanding why it was needed.
+
+# Investigate a latency incident
+
+## Scenario
+
+A fictional service's p95 request latency increases from 200 milliseconds to two seconds after a release.
+Error rate remains low, CPU is moderate, and database connection-pool waiting time rises.
+Your task is to propose the next investigation and a reversible mitigation, not to guess the final root cause.
+Reviewed October 4, 2026.
+
+## Follow the request path
+
+```text
+Incoming request -> application queue -> connection-pool wait
+                 -> database execution -> serialization -> response
+```
+
+Break total latency into stages before optimizing one component.
+Low CPU does not rule out saturation of a smaller shared resource such as the connection pool.
+Compare affected endpoints, release cohorts, traffic volume, query duration, active connections, and time spent waiting for a connection.
+Check whether the application holds a connection while performing unrelated remote work.
+
+## Hypothesis and discriminating evidence
+
+A release may have lengthened transactions, leaked connections, or increased query count per request.
+These hypotheses imply different evidence.
+Long transaction duration supports the first; a steadily growing borrowed-connection count after traffic subsides supports the second; query count per request supports the third.
+One correlated metric is a starting point, not proof.
+
+## Mitigate and verify
+
+If the previous version is known to handle the current workload and rollback is compatible with data changes, reverting the release may reduce impact while investigation continues.
+Reducing concurrency or shedding lower-priority work may help when the database is overloaded.
+Increasing the pool without checking database capacity can move the queue downstream and worsen the incident.
+
+After mitigation, inspect latency distributions, queue age, request volume, and errors together.
+A lower latency caused by dropping most requests is not an unqualified recovery.
+Record the affected period, evidence, decision, and remaining uncertainty for the handoff.
+
+## Interview follow-up
+
+What changes if only one customer is affected?
+Consider a hot tenant, unusually expensive queries, skewed data, or a tenant-specific dependency.
+Propose a safe way to compare affected and unaffected requests without logging sensitive payloads.
+A strong answer narrows the fault domain and chooses measurements that separate competing explanations.
+
+# Turn an availability objective into an alert
+
+## Define a useful objective
+
+Suppose a fictional service targets 99.9 percent successful eligible requests over a rolling 30-day window.
+Define eligibility and success precisely before calculating anything.
+For a request-based objective, a period containing one million eligible requests permits one thousand unsuccessful requests at that target.
+This is a request budget, not automatically a downtime allowance.
+
+## Burn-rate example
+
+The allowed error fraction is 0.001.
+If the observed error fraction is 0.01 over an alert window, the burn rate is 10 because `0.01 / 0.001 = 10`.
+At a stable eligible-request rate and stable error fraction, that pace would consume a full 30-day allowance in roughly three days.
+Changing traffic rates or existing budget consumption changes the interpretation.
+State those assumptions when doing interview arithmetic.
+
+## Design the response
+
+Use a short window to detect an urgent change and a longer window to check persistence.
+Choose thresholds based on how much budget can be lost before a human or automated mitigation can respond.
+Do not copy a threshold from another service without comparing its traffic and response needs.
+At low volume, one failure can dominate a fraction, so combine the objective with suitable minimum evidence or other availability signals.
+
+## Exercise
+
+A deployment causes errors for five minutes, then recovers.
+Explain why a short-window alert may fire while a long-window alert does not.
+Now consider a smaller error rate lasting for hours and explain how it can consume more total budget.
+Propose different response urgency for a fast large failure and a slow persistent degradation.
+
+## Runbook and review
+
+Every paging alert should identify the affected objective, show the relevant evidence, and suggest a safe first investigation.
+After an incident, review whether the alert was timely and actionable.
+Separate symptoms visible to users from internal metrics that help diagnosis.
+A busy processor matters operationally, but it is not the same as an unavailable service.
+
+## Source
+
+[Google's SRE workbook on alerting](https://sre.google/workbook/alerting-on-slos/) develops error-budget and multiwindow burn-rate alerting.
+The numbers and exercises here are illustrative, not production recommendations.

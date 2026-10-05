@@ -1,52 +1,48 @@
 ## Intuition
 
-At most k bad days is a monotone window condition: removing days cannot make a valid interval invalid.
-Counting interval occurrences is different from finding just the longest acceptable window.
+For a fixed right endpoint, every suffix of a valid window also has at most `k` bad days.
+Once the earliest valid left endpoint is known, the number of valid subarrays ending there is simply the window length.
 
 ## Brute force
 
-Checking every start and end with a running bad-day count takes O(n squared) time.
-Repeated full scans of each interval are even more expensive.
+Enumerating all start and end pairs requires quadratic time even if bad day counts are available through prefixes.
+A sliding window exploits the fact that adding days cannot reduce the number of bad days.
 
 ## Approach
 
-Return `_at_most(sales, k)` directly.
-The helper `_at_most` counts subarrays by their right endpoint.
-It maintains `left` and the number of bad days in the current window, shrinking while that count exceeds the supplied limit.
-After shrinking, all `right - left + 1` suffixes of the window are valid, since removing days cannot increase the bad-day count.
-Starts before left are invalid because the loop already discarded them while the budget was exceeded.
-A negative limit returns zero immediately.
+The helper `_at_most` tracks `left`, `bad`, and `total`.
+For each `right`, add whether the new sales value is below 10.
+Advance `left` while `bad > k`, removing each departing day's contribution.
+Add `right - left + 1` to the total.
 
 ## Walkthrough
 
-```text
-Input: sales = [0, 20, 5], k = 1
-Output: 5
-```
-
-Example 1 contributes one valid interval ending at day 0.
-At day 1, both `[20]` and `[0, 20]` qualify, adding two.
-At day 2 the full window has two bad days, so remove the first zero-sale day.
-The remaining window `[20, 5]` contributes two more, for total 5.
+For `[0, 20, 5]` with `k = 1`, endpoint 0 contributes one interval.
+Endpoint 1 contributes two, `[0, 20]` and `[20]`.
+Endpoint 2 first removes day 0, then contributes `[20, 5]` and `[5]`.
+The contributions 1, 2, and 2 sum to 5.
 
 ## Complexity
 
-Each helper pass takes O(n) time because both boundaries only move forward.
-The overall method uses at most two linear passes and O(1) extra space.
-The answer can grow quadratically even though the computation is linear.
+Both pointers advance at most n positions, giving O(n) total time.
+Only a constant number of counters is stored, so auxiliary space is O(1).
+The answer may be as large as n(n + 1)/2 when every interval is valid.
 
 ## Edge cases
 
-When k is zero, the helper counts all subarrays contained entirely within good-day runs.
-An empty sales array contributes zero.
-A day with exactly 10 sales is good.
+An empty array contributes zero subarrays.
+With `k = 0`, only intervals composed entirely of good days count.
+A budget exceeding the total number of bad days includes every nonempty subarray.
+The helper returns zero for a negative budget.
 
 ## Common mistakes
 
-Do not add only one per endpoint; every valid suffix must be counted.
-Keep threshold comparisons strict at fewer than 10 sales.
+Count all valid suffixes at each endpoint, rather than adding only one for the current window.
+Sales equal to 10 are good.
+Repair the window completely before counting, otherwise intervals that exceed the budget would be included.
 
 ## Language notes
 
-Python treats comparisons as zero-or-one values in the counter.
-Java uses explicit branches and long result arithmetic to avoid overflow when counting many intervals.
+Python adds and subtracts Boolean comparisons directly because they behave as zero or one.
+Java uses explicit conditionals and stores `total` as `long` to avoid overflow.
+The local spec also declares a `long` return value.

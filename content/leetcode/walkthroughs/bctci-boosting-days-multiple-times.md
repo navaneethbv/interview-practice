@@ -1,54 +1,49 @@
 ## Intuition
 
-Each day has a precise repair cost: the number of additional sales required to reach 10.
-Because boosts can be repeated on one day, an interval is feasible exactly when the sum of these deficits is at most k.
+Each day has a fixed cost to become good: `max(0, 10 - value)`.
+A consecutive run is achievable exactly when the sum of its day costs is at most `k`.
+Because those costs are nonnegative, a sliding window can maintain the longest affordable run.
 
 ## Brute force
 
-Trying every interval and recomputing its total deficit takes cubic time.
-Even maintaining a running sum for each starting point remains quadratic.
-Nonnegative deficits allow a single sliding-window pass.
+Try every starting day and extend the run while adding its deficits.
+This straightforward enumeration needs O(n²) time in the worst case.
 
 ## Approach
 
-For each new `right` endpoint, add `max(0, 10 - value)` to `cost`.
-While cost exceeds k, subtract the same deficit expression for `sales[left]` and increment left.
-Then update `best` with the feasible window length.
-A day already above the threshold costs zero; its surplus cannot be transferred to another day.
-Shrinking never increases cost, so the left boundary moves monotonically and retains the longest affordable suffix for each endpoint.
+Keep `left`, the current deficit sum `cost`, and the best length `best`.
+For each `right`, add the new day's deficit.
+While `cost > k`, remove the deficit at `sales[left]` and advance `left`.
+The resulting window is affordable, and every earlier starting position would still be unaffordable.
+Update `best` using `right - left + 1`.
+Removing zero-cost days is sometimes necessary to reach a costly day, but each position leaves the window at most once.
 
 ## Walkthrough
 
-```text
-Input: sales = [5, 5, 15, 0, 10], k = 12
-Output: 3
-```
-
-Example 1 has deficits `[5, 5, 0, 10, 0]` and budget 12.
-The first three days cost 10, giving a feasible length of 3.
-Adding the fourth day raises cost to 20.
-Removing the first two days reduces it to 10, leaving the interval beginning at the original 15-sale day.
-Adding the final good day produces another length-3 interval.
-No longer interval fits, so the answer is 3.
+Example 1 uses sales `[5, 5, 15, 0, 10]` and budget 12.
+Their deficits are `[5, 5, 0, 10, 0]`.
+The first three days cost 10, giving `best = 3`.
+Adding the fourth day raises the cost to 20.
+Removing the first two days lowers it to 10 and leaves the window starting at index 2.
+Adding the final day costs nothing, producing another length-three window.
+The answer remains 3.
 
 ## Complexity
 
-Each index enters and leaves the window at most once.
-Time is O(n) and extra space is O(1).
-The code does not materialize a deficit array or mutate sales.
+Both pointers move forward at most n times, giving O(n) time.
+Only counters are stored, so auxiliary space is O(1).
 
 ## Edge cases
 
-With zero boosts, the result is the longest existing good streak.
-A single zero-sale day needs ten boosts, not one.
-Already-good days can extend a window for free.
+An empty array returns 0.
+With no boosts, only existing good-day runs qualify; enough boosts can make the whole array qualify.
 
 ## Common mistakes
 
-Counting only bad days solves the different large-boost variant.
-Subtracting sales above 10 from the cost would incorrectly create transferable credit.
+Count missing sales, not bad days.
+A day with zero sales requires ten boosts, while a day with nine requires one.
 
 ## Language notes
 
-Python uses arbitrary-precision integer arithmetic.
-Java uses a long cost accumulator while indices and the returned length remain ints.
+Python computes deficits with `max`; Java uses `Math.max` and a `long cost`.
+Neither reference modifies the sales array.

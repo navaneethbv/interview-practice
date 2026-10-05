@@ -24,7 +24,7 @@ The pair at value 2 crosses that threshold, and moving values to 2 costs 2, 0, 3
 ## Complexity
 
 Sorting costs O(n log n), and the two scans cost O(n).
-Python's `sorted(zip(...))` creates O(n) pair storage; Java creates an O(n) two-column pair array.
+Python's `sorted(zip(..))` creates O(n) pair storage; Java creates an O(n) two-column pair array.
 The final cost uses Python integers or Java `long` arithmetic.
 
 ## Edge cases

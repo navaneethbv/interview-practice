@@ -1,52 +1,48 @@
 ## Intuition
 
-A queue removes the oldest inserted value.
-Keeping pointers to both the first and last linked nodes supports removal at the front and insertion at the back without traversing the list.
+A queue removes from the front and adds at the back.
+Keeping direct references to both ends of a singly linked chain makes both operations constant time without shifting any existing elements.
 
 ## Brute force
 
-A singly linked list with only a head pointer must scan to append at the end.
-Removing from the front of an array instead shifts all later values.
-Both choices violate the constant-time requirement for some operations.
+An array that removes its first element by shifting takes O(n) per pop.
+A linked list with only a head also needs O(n) to append.
+The reference avoids both costs with `head` and `tail`.
 
 ## Approach
 
-Maintain head, tail, and length.
-Push creates a node, links it after the current tail when present, and updates tail.
-If the queue was empty, also set head to the new node.
-Pop saves head's value and advances head to its next node; if the queue becomes empty, clear tail too.
-Peek reads head without moving it.
-Size and empty use length, which changes only on successful insertions and removals.
+`push` allocates a node, links it after `tail` when present, and moves `tail` to it.
+`pop` reads `head.val` and advances `head`.
+If the queue becomes empty, clear `tail` too.
+Maintain `length` for constant time size and emptiness queries.
 
 ## Walkthrough
 
-```text
-Input: ops = ["push", "push", "push", "peek", "size", "empty", "pop", "pop"], args = [[1], [2], [3], [], [], [], [], []]
-Output: [null, null, null, 1, 3, false, 1, 2]
-```
-
-Example 1 pushes 1, 2, and 3, building the chain 1 to 2 to 3.
-Head remains at 1 while tail moves to 3.
+Example 1 pushes 1, 2, and 3, forming a chain with head 1 and tail 3.
 Peek returns 1, size returns 3, and empty returns false.
-The next two pops remove 1 and then 2, leaving both head and tail at node 3.
+Two pops then return 1 and 2, leaving the single node containing 3.
 
 ## Complexity
 
-Every operation performs a fixed number of pointer or counter updates, giving O(1) time.
-A queue with n live values uses O(n) node storage and O(1) metadata.
+Push, pop, peek, size, and empty each perform O(1) work.
+A queue holding n values uses O(n) node storage plus constant bookkeeping.
+Removed nodes become unreachable from the queue and can be reclaimed by the runtime.
 
 ## Edge cases
 
-Empty pop and peek return -1.
-Popping the final node must restore both endpoint pointers to null.
-Pushing after that transition must create a fresh one-node queue.
+Popping or peeking an empty queue returns -1.
+A first push sets both endpoints to the same node.
+Popping the last element must restore both endpoints to empty.
+Duplicate values remain separate queue entries in insertion order.
 
 ## Common mistakes
 
-Failing to clear tail after the last pop can attach future nodes to a detached chain.
-Do not decrement length when an empty pop fails.
+Do not forget to reset `tail` when removing the final node.
+Do not decrement `length` for an empty pop.
+Peek must not move `head`, and size should use its maintained counter instead of traversing the chain.
 
 ## Language notes
 
-Python defines ListItem nodes explicitly.
-Java uses a private Node class; neither relies on a built-in list or deque for storing queue contents.
+Python defines a small `ListItem` class.
+Java uses a private static `Node` with a final value and mutable next link.
+The local design spec preserves one queue instance across operations, and void pushes appear as null outputs.

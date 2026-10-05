@@ -1,47 +1,62 @@
 ## Intuition
 
-Each prime generates an increasing stream: p, p squared, p cubed, and so on.
-The combined sequence is a multiway merge of those streams.
-A min-heap needs only the next unused power from each prime to identify the next global value.
+Sum of First K Prime Powers is organized around Merge Power Sequences.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Generate many powers from every prime, sort them together, and take the first k.
-Choosing a safe generation limit wastes work and can construct powers far beyond the needed range.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Initialize the heap with one `(value, prime)` entry for every supplied prime, beginning at its first positive power.
-Repeat k times: remove the smallest value, add it to the running total modulo 1,000,000,007, and push the next power obtained by multiplying by its prime.
-Distinct primes cannot have equal positive powers, so this contract needs no deduplication step.
-Apply the modulo only to the accumulated sum, never to values used for ordering the heap.
-Java skips a successor multiplication if it would overflow `long`; such a value exceeds every required value under the promised kth-element bound.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Merge Power Sequences idea: Start with each prime in a min-heap; after popping p^e, push p^(e+1).
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named sumPrimePowers can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 starts with heap values 2 and 3.
-Removing 2 exposes 4; removing 3 exposes 9; removing 4 exposes 8.
-Continuing the merge yields 8, 9, 16, and 27 for the next four values.
-The seven selected powers sum to `2 + 3 + 4 + 8 + 9 + 16 + 27 = 69`.
-The result remains 69 after taking the modulus.
+Example 1 uses input [[2, 3], 7] and expects 69.
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is 69.
+The same reasoning handles hidden cases [[2], 1], [[2], 0], [[2], 59]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For p input primes, Python heapifies in O(p) and performs O(k log p) merge work.
-Java inserts initial entries individually, giving O((p + k) log p) worst-case time.
-Both keep O(p) heap entries and constant additional accumulation state.
+The imported workbook records the expected time bound as O((m + k) log m).
+The imported workbook records the expected space bound as O(m).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-For k equal to zero, no powers are consumed and the answer is zero.
-One prime produces its successive powers directly.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [[2], 1], [[2], 0], [[2], 59] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Do not include one, since only positive exponents are allowed.
-Reducing heap values modulo the answer modulus destroys numerical ordering.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python supports arbitrary-precision successor products.
-Java checks `Long.MAX_VALUE / prime` before multiplication and returns the reduced total as an integer.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

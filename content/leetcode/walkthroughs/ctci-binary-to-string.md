@@ -1,50 +1,62 @@
 ## Intuition
 
-Multiplying a fraction by two exposes its next binary digit.
-If the result is at least one, that digit is one and the integral part is removed.
-Otherwise the digit is zero.
-Repeating this operation converts the fractional remainder directly into its binary expansion.
+Binary to String is organized around Repeated Doubling.
+The key is to preserve the information needed when the next input element or operation is processed.
+The local contract and reference implementation define valid inputs, outputs, and mutation behavior.
+A useful invariant is that every retained value or partial result already satisfies the part of the contract that cannot be repaired later.
 
 ## Brute force
 
-Testing many candidate bit strings against the input would explore exponentially many strings as the permitted length grows.
-Repeated doubling chooses each next digit deterministically, avoiding that search altogether.
+A direct solution enumerates every candidate result or repeatedly rescans the input.
+That approach is useful as a small oracle because it is easy to explain, but it repeats work.
+Its cost grows with the number of candidates and the amount of input examined for each candidate.
+Use it to validate small examples before relying on the optimized state transition.
 
 ## Approach
 
-Start with an empty `digits` collection and the input fraction as the remainder.
-Before each doubling, return `ERROR` if 32 digits have already been generated and the remainder is still nonzero.
-Double the remainder, append the appropriate digit, and subtract one when needed.
-When the remainder reaches zero, prepend `0.` to the collected digits.
-After each step, the emitted prefix represents the consumed part and the remainder describes the unrepresented suffix.
+1. Read the arguments and identify boundary conditions before changing state.
+2. Apply the Repeated Doubling idea: Double the fraction repeatedly; each time it reaches 1, emit a 1 and subtract 1.
+3. Keep only the state needed to distinguish the next valid transition from a rejected one.
+4. Return the exact order, type, and mutation form declared by the spec.
+5. Stop when the invariant proves that no later input can change the answer.
+
+This is why the method named printBinary can make progress without enumerating every complete candidate.
+When multiple answers are allowed, preserve the comparison rule from the spec instead of assuming one ordering.
+When an empty input or boundary value appears, follow the explicit contract rather than the general loop.
 
 ## Walkthrough
 
-Example 1 begins with 0.625.
-Doubling gives 1.25, so append 1 and keep remainder 0.25.
-Doubling that gives 0.5, so append 0 and keep 0.5.
-The next doubling gives 1, so append 1 and reduce the remainder to zero.
-The result is `0.101`, representing one half plus one eighth.
+Example 1 uses input [0.625] and expects "0.101".
+Start with the initial state implied by the arguments.
+Process the first meaningful value using the transition above, then update retained state before considering the next value.
+At the point where the invariant is complete, the returned value is "0.101".
+The same reasoning handles hidden cases [0.5], [0.75], [0.25]; they exercise a boundary, repeated value, or alternate branch rather than a new algorithm.
 
 ## Complexity
 
-For a limit B on fractional digits, time and temporary output storage are O(B).
-Here B is fixed at 32, so both are bounded constants.
-The `0.` prefix does not count toward the fractional-digit limit.
+The imported workbook records the expected time bound as O(32).
+The imported workbook records the expected space bound as O(32).
+Check those claims against actual loops, allocations, recursion, and helper structures.
+A slower brute-force oracle remains useful in tests even though it is not the submitted approach.
 
 ## Edge cases
 
-A number terminating after exactly 32 fractional digits succeeds because the loop stops when its remainder reaches zero.
-A nonzero remainder after those digits returns `ERROR`.
-Inputs are strictly between zero and one.
+Check empty input when permitted, the smallest valid scalar, repeated values, and the largest valid input.
+Check hidden cases [0.5], [0.75], [0.25] independently instead of assuming the visible example is sufficient.
+For mutation problems, verify both the returned object and the original structure required by the output contract.
+For multiple valid answers, compare with the declared validator or unordered mode.
 
 ## Common mistakes
 
-Counting the prefix toward the limit rejects valid results prematurely.
-Do not add a tolerance that silently converts a nonzero remainder into zero; the implementation uses exact floating-point zero.
+- Losing original indices, identities, or ordering when the contract requires them.
+- Updating state before checking the condition that uses previous state.
+- Claiming a stronger complexity bound than the reference actually provides.
+- Treating an impossible case as if the statement guaranteed a result.
+- Returning an equivalent value with the wrong serialized shape.
 
 ## Language notes
 
-Python joins a list of digit strings.
-Java accumulates characters in `StringBuilder`.
-Both operate on binary floating-point inputs, whose stored values determine the repeated-doubling sequence.
+The Python reference is the expected-output source used by the judge.
+The Java reference, when present, must preserve the same helper types, mutation rules, and comparison mode.
+Keep integer bounds and string indexing rules explicit when translating the transition between languages.
+The targeted judge is the final check for both references.

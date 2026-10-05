@@ -1,49 +1,50 @@
 ## Intuition
 
-First learn the best remaining subsequence length for every pair of suffixes.
-Then walk through those suffix states, choosing matching characters or skipping a character along a direction that preserves the optimal length.
-This separates measuring the optimum from reconstructing one concrete answer.
+A longest common subsequence can be reconstructed from the best answer for every pair of suffixes.
+When the current characters match, that character belongs to an optimal continuation.
+When they differ, skip the character whose suffix preserves the larger optimal length.
 
 ## Brute force
 
-Enumerate all subsequences of one string and test which are subsequences of the other.
-There are exponentially many choices, with extensive repetition among suffix comparisons.
+Trying every subset of either string is exponential.
+The dynamic programming table records overlapping suffix decisions once and makes reconstruction deterministic on ties.
 
 ## Approach
 
-Define `table[i][j]` as the LCS length of suffixes beginning at i and j.
-Fill backward, using one plus the diagonal entry when characters match and the maximum of the two skip entries otherwise.
-The extra bottom row and right column represent empty suffixes with length zero.
-For reconstruction, begin at `(0, 0)`.
-Append a matching character and advance both indices.
-On a mismatch, skip from the first string when its next-row value is at least the next-column value; otherwise skip from the second.
-Stop when either string is exhausted.
+1. Create `table[i][j]` as the LCS length for `s1[i:]` and `s2[j:]`.
+2. Fill the table from the end toward the beginning.
+3. Start at `(0, 0)` and append matching characters while advancing both indices.
+4. On a mismatch, advance `i` when `table[i + 1][j]` is at least `table[i][j + 1]`, otherwise advance `j`.
+5. Join the collected characters.
 
 ## Walkthrough
 
-Example 1 compares `HAHAH` with `AAAAHH`.
-The initial H can be skipped while preserving length three.
-The next A matches an A, the intervening H is skipped, and the next A supplies a second match.
-A later H matches one of the final H characters in the second string.
-The references reconstruct `AAH`, whose length three is certified by the table's initial entry.
+Example 1 compares `s1 = "HAHAH"` with `s2 = "AAAAHH"`.
+The table first computes the best lengths for short suffixes, then combines them for the full strings.
+During reconstruction, equal characters are appended in order, and equal-length choices prefer advancing in `s1` because of the `>=` rule.
+The collected subsequence is `"AAH"`, which is valid in both inputs and has maximum length.
 
 ## Complexity
 
-For lengths n and m, table construction takes O(n times m) time and space.
-Reconstruction takes O(n + m) time and O(min(n, m)) output storage.
-Both references retain the full table because reconstruction needs future skip choices.
+- Time: O(nm), for the table and the reconstruction scan.
+- Space: O(nm), for the suffix length table.
 
 ## Edge cases
 
-An empty string yields an empty subsequence.
-Several different optimal strings may exist; the checker accepts any longest common subsequence.
+If either string is empty, the table yields an empty result.
+Repeated characters can produce several valid longest subsequences.
+The validator accepts any common subsequence with the optimal length.
+The extra row and column of zeros handle suffixes that have ended.
 
 ## Common mistakes
 
-A subsequence may skip characters, unlike a substring.
-Do not require the reconstructed string to equal one particular sample when another optimal answer exists.
+- Filling forward with the wrong state can read uninitialized suffix values.
+- Returning the length instead of reconstructing the string violates the method contract.
+- Advancing both indices on a mismatch skips possible matches.
+- Treating one valid subsequence as the only accepted spelling ignores the validator.
 
 ## Language notes
 
-Python collects characters in a list and joins once.
-Java uses `StringBuilder`, avoiding repeated immutable-string concatenation during reconstruction.
+Python collects characters in a list and joins them once.
+Java uses `StringBuilder` for the same linear reconstruction.
+Both implementations choose the `s1` side on equal table values.

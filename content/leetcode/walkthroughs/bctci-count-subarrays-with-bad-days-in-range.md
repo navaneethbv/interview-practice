@@ -1,53 +1,46 @@
 ## Intuition
 
-Counts within the inclusive range from k1 to k2 form the difference between two nested sets of intervals.
-Count everything with at most k2 bad days, then remove everything with fewer than k1.
+Counting intervals with an upper bound is easier than maintaining both bounds at once.
+The desired inclusive range equals the number with at most `k2` bad days minus the number with at most `k1 - 1` bad days.
 
 ## Brute force
 
-Enumerating all intervals and tracking each one's bad-day count takes O(n squared) time.
-Two monotone sliding-window passes avoid considering every interval individually.
+Enumerate every starting position and extend each interval while counting sales below 10.
+That gives a straightforward O(n squared) method, but repeats window work across adjacent starts.
 
 ## Approach
 
-Return `_at_most(sales, k2) - _at_most(sales, k1 - 1)`.
-The helper `_at_most` counts subarrays by their right endpoint.
-It maintains `left` and the number of bad days in the current window, shrinking while that count exceeds the supplied limit.
-After shrinking, all `right - left + 1` suffixes of the window are valid, since removing days cannot increase the bad-day count.
-Starts before left are invalid because the loop already discarded them while the budget was exceeded.
-A negative limit returns zero immediately.
+`_at_most` maintains `left`, `bad`, and `total` while advancing `right`.
+Add the entering day's bad-day indicator, then advance `left` until the count fits the budget.
+Every suffix of this valid window ending at `right` is also valid, so add `right - left + 1`.
+Return zero immediately for a negative budget.
+Subtract the two upper-bound counts to exclude exactly the intervals with too few bad days.
 
 ## Walkthrough
 
-```text
-Input: sales = [0, 20, 5], k1 = 1, k2 = 2
-Output: 5
-```
-
-Example 1 has bad-day indicators `[1, 0, 1]`.
-All six nonempty subarrays have at most two bad days.
-Only `[20]` has at most zero bad days.
-Subtracting the latter group gives 6 - 1 = 5 intervals with between one and two bad days, inclusive.
-The full three-day interval is included because the upper bound allows its two bad days.
+Example 1 uses `[0, 20, 5]`, `k1 = 1`, and `k2 = 2`.
+All six nonempty subarrays contain at most two bad days.
+With budget zero, only `[20]` qualifies, so the second helper returns one.
+Subtracting gives five.
+The interval `[0, 20, 5]` remains included because the upper bound is inclusive.
 
 ## Complexity
 
-Each helper moves both pointers forward at most n times.
-Two such passes still take O(n) time and O(1) extra space.
-The number returned can be as large as n(n + 1)/2.
+Each helper takes O(n) time because both window boundaries move only forward.
+Two helper calls still take O(n) overall, with O(1) auxiliary space.
 
 ## Edge cases
 
-When k1 is zero, the lower helper receives -1 and removes nothing.
-Equal k1 and k2 reduce the task to an exact-count query.
-An upper bound exceeding all bad days admits every interval before subtraction.
+When `k1` is zero, the negative-budget helper returns zero rather than attempting to shrink an impossible window.
+Empty inputs return zero.
+A bound larger than the number of bad days permits every interval.
 
 ## Common mistakes
 
-Subtract at most k1 - 1, not at most k1, because the lower endpoint is inclusive.
-Do not count only maximal windows.
+Subtracting the count at `k1` would incorrectly exclude intervals with exactly the lower-bound number of bad days.
+Classify sales equal to 10 as good.
 
 ## Language notes
 
-Python uses arbitrary-precision integer counts.
-Java returns long and computes the lower limit with `k1 - 1L`, preserving the helper's signed boundary behavior.
+Python adds and subtracts Boolean indicators as integers.
+Java uses explicit branches for those updates and a long-valued total to accommodate quadratically many qualifying intervals.

@@ -1,52 +1,44 @@
 ## Intuition
 
-Each sentence position independently chooses among its listed synonyms, or keeps its original word when no entry exists.
-The complete result is the Cartesian product of those per-position choices.
-
-## Brute force
-
-Repeatedly copying and expanding whole partial sentences works but duplicates prefixes many times.
-Backtracking keeps one mutable selection and copies only when a complete sentence is ready.
+Each sentence position is an independent choice between its listed synonyms or its original word.
+The complete answer set is therefore a Cartesian product of those per-position choices.
+Depth-first backtracking explores one choice at a time while reusing a single partial sentence.
 
 ## Approach
 
-Build `options` from each entry's first word to its remaining synonyms.
-Split the input sentence into words.
-At position index, iterate its available choices, append one to chosen, recurse to the next position, then pop it.
-At the end, join chosen with single spaces and append the sentence to results.
-Every sequence of per-position choices is visited once, and no unrelated synonym substitutions are introduced.
-Words with entries must use one of the supplied replacements; the original word is not an extra implicit choice.
+Map each entry's first word to the list that follows it.
+Split `sentence` into words and recursively process positions from left to right.
+At a position with synonyms, append each synonym, recurse, and remove it when returning.
+At a position without an entry, append the original word and recurse once.
+When every position has been processed, join the selected words and append the completed sentence to `results`.
 
 ## Walkthrough
 
-```text
-Input: sentence = "one does not simply walk into mordor", synonyms = [["walk", "stroll", "hike", "wander"], ["simply", "just", "merely"]]
-Output: 6 sentences such as "one does not just stroll into mordor"
-```
-
-Example 1 gives simply two options, just and merely, and walk three options, stroll, hike, and wander.
-The unchanged prefix is `one does not` and the unchanged suffix is `into mordor`.
-Choosing just and stroll yields the example sentence.
-The other combinations pair each of the two adverbs with each of the three verbs, producing six sentences in total.
+For Example 1, `simply` has three choices and `walk` has three choices, while every other word has one choice.
+The recursion first chooses `just`, then tries `stroll`, `hike`, and `wander`, producing three complete sentences.
+It backtracks to choose `merely` and repeats the three `walk` choices, yielding six results.
+The local judge compares this list without requiring a particular order, so the traversal order can remain the map and input order.
 
 ## Complexity
 
-Let R be the product of option counts across sentence positions and L the maximum rendered sentence length.
-Generating and joining outputs takes O(RL) time, plus input parsing and dictionary construction.
-Output storage is O(RL); recursion and chosen use O(W) space for W words, excluding stored options.
+Let `W` be the number of sentence words and `C` the product of the available choices at those positions.
+There are `C` output sentences, and constructing each one costs `O(W)`, for `O(CW)` output-sensitive time.
+The recursion and chosen path use `O(W)` auxiliary space, excluding the returned `results` list.
 
 ## Edge cases
 
-A word without an entry stays unchanged.
-Repeated positions choose independently.
-One synonym per replaceable word produces one sentence.
+An empty synonym list leaves every sentence word unchanged and produces one result.
+Repeated occurrences of the same word are processed independently, so each occurrence can choose a different synonym.
+The example with one word returns only synonym choices because an entry replaces the original word rather than adding it as an option.
 
 ## Common mistakes
 
-Do not take a transitive synonym closure; entries provide direct replacement options only.
-Undo the chosen word before exploring its sibling alternatives.
+Keeping the original word alongside synonyms would create extra sentences that the contract excludes.
+Failing to pop after recursion leaks a previous choice into later branches.
+Using a set for results can accidentally discard duplicate sentences when repeated words produce the same text.
 
 ## Language notes
 
-Python uses list append/pop and join.
-Java uses an ArrayList selection and String.join, returning complete strings whose contents are unaffected by later backtracking.
+Python uses a nested `build` function and mutates `chosen` with append and pop.
+Java passes the same mutable `chosen` list through a helper and uses `String.join` at the leaf.
+Both references preserve the method name `thesaurusly` and return `List<String>` values as required.
