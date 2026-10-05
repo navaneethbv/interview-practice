@@ -206,7 +206,12 @@ const VALIDATORS: Record<ValidatorName, Validator> = {
     const graph=input[0] as number[][];
     if(!Array.isArray(output)||output.length!==Math.max(graph.length-1,0))return false;
     const parent=graph.map((_,i)=>i);
-    const find=(x:number):number=>{while(parent[x]!==x)x=parent[x]=parent[parent[x]];return x;};
+    const find = (x: number): number => {
+      while (parent[x] !== x) {
+        x = parent[x] = parent[parent[x]];
+      }
+      return x;
+    };
     return output.every((edge)=>{
       if(!Array.isArray(edge)||edge.length!==2)return false;
       const [u,v]=edge as number[];

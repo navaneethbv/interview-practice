@@ -1114,10 +1114,10 @@ def escape_note_html(body: str) -> str:
     lines = []
     fence = None
     for line in body.splitlines(keepends=True):
-        marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line)
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
         if fence:
             lines.append(line)
-            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence) and not marker[2].strip():
+            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence) and not line[marker.end():].strip():
                 fence = None
         elif marker:
             fence = marker[1]

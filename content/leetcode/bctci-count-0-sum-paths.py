@@ -12,8 +12,9 @@ class Solution:
                 if r == 0 and c == 0:
                     current[c] = 1
                     continue
-                ways = (current[c - 1] if c > 0 else 0) + (previous[c] if r > 0 else 0)
-                ways += previous[c - 1] if r > 0 and c > 0 else 0
+                ways = previous[c]
+                if c > 0:
+                    ways += current[c - 1] + previous[c - 1]
                 current[c] = ways % self.MOD
             previous = current
         return previous[-1]

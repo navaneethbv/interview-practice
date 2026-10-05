@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from system_design import Block, Chapter, apply_editorial_updates, process_notes
+from system_design import Block, Chapter, apply_editorial_updates, escape_note_html, process_notes
 
 
 class SystemDesignUpdatesTests(unittest.TestCase):
@@ -20,6 +20,15 @@ class SystemDesignUpdatesTests(unittest.TestCase):
         self.assertIn("x < y", body)
         self.assertNotIn("<script>", body)
         self.assertIn("&lt;script>", body)
+
+    def test_fences_close_only_with_a_matching_marker_and_blank_suffix(self):
+        bodies = [
+            "  ````python\nif a < b:\n```\n~~~\n````text\nx < y\n   ````` \t\n<script>bad()</script>\n",
+            "~~~text\nx < y\n```\n~~~text\na < b\n~~~~ \t\n<script>bad()</script>\n",
+        ]
+        for body in bodies:
+            with self.subTest(body=body):
+                self.assertEqual(escape_note_html(body), body.replace("<script>", "&lt;script>").replace("</script>", "&lt;/script>"))
 
     def test_kafka_reimport_applies_replacements_and_versions_historical_chapters(self):
         titles = ["Role of ZooKeeper", "Controller Broker", "Kafka Delivery Semantics", "Kafka Workflow"]

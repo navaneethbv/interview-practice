@@ -9,14 +9,12 @@ class Solution:
         for right, letter in enumerate(s1):
             if letter in need:
                 need[letter] -= 1
-                if need[letter] == 0:
-                    missing -= 1
+                missing -= int(need[letter] == 0)
             while missing == 0:
                 best = min(best, right - left + 1)
                 leaving = s1[left]
                 if leaving in need:
                     need[leaving] += 1
-                    if need[leaving] == 1:
-                        missing += 1
+                    missing += int(need[leaving] == 1)
                 left += 1
         return best if best <= len(s1) else -1

@@ -6,7 +6,7 @@ class Solution:
                 return False
             for first, second in zip(word, word[1:]):
                 edges[first].add(second)
-        indegree = {letter: 0 for letter in edges}
+        indegree = dict.fromkeys(edges, 0)
         for targets in edges.values():
             for letter in targets:
                 indegree[letter] += 1

@@ -19,10 +19,14 @@ class Solution:
                 if coordinate in mapping:
                     a, b = find(index), find(mapping[coordinate])
                     if a != b:
-                        if sizes[a] < sizes[b]:
-                            a, b = b, a
-                        parent[b] = a
-                        sizes[a] += sizes[b]
+                        self._merge(parent, sizes, a, b)
                         groups -= 1
                 mapping[coordinate] = index
         return groups
+
+    @staticmethod
+    def _merge(parent, sizes, a, b):
+        if sizes[a] < sizes[b]:
+            a, b = b, a
+        parent[b] = a
+        sizes[a] += sizes[b]

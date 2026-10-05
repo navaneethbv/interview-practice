@@ -16,8 +16,8 @@ class CuratedCatalogTests(unittest.TestCase):
         self.assertEqual(sets[0], other)
         slugs = {item["slug"] for item in sets[1]["items"]}
         self.assertEqual(len(slugs), 150)
-        self.assertTrue({"add-two-numbers", "happy-number", "powx-n",
-                         "redundant-connection", "partition-equal-subset-sum"} <= slugs)
+        self.assertLessEqual({"add-two-numbers", "happy-number", "powx-n",
+                             "redundant-connection", "partition-equal-subset-sum"}, slugs)
         self.assertIn("add-and-search-word-data-structure-design", slugs)
         self.assertNotIn("design-add-and-search-words-data-structure", slugs)
         previous = copy.deepcopy(sets)
