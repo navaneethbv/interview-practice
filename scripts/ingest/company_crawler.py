@@ -349,21 +349,21 @@ def follow_matcher(template: str | None) -> Callable[[str], bool] | None:
     """Match a literal HTTPS URL with one {slug} or {number}; no configurable regex."""
     if not template:
         return None
-    tokens = [token for token in ("{slug}", "{number}") if token in template]
-    if len(tokens) != 1 or template.count(tokens[0]) != 1:
+    placeholders = [placeholder for placeholder in ("{slug}", "{number}") if placeholder in template]
+    if len(placeholders) != 1 or template.count(placeholders[0]) != 1:
         raise ValueError("Follow URL must contain one {slug} or {number} placeholder")
     parts = urllib.parse.urlsplit(template)
     if parts.scheme != "https" or not parts.netloc or "{" in parts.netloc:
         raise ValueError("Follow URL must have a literal HTTPS host")
-    token = tokens[0]
-    prefix, suffix = template.split(token)
+    placeholder = placeholders[0]
+    prefix, suffix = template.split(placeholder)
 
     def matches(target: str) -> bool:
         if len(target) > 8192 or not target.startswith(prefix) or not target.endswith(suffix):
             return False
         end = len(target) - len(suffix) if suffix else len(target)
         identifier = target[len(prefix):end]
-        if token == "{number}":
+        if placeholder == "{number}":
             return identifier.isascii() and identifier.isdecimal()
         return COMPANY_ID.fullmatch(identifier) is not None
 
