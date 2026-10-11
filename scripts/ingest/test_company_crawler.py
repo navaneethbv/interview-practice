@@ -81,6 +81,14 @@ class FetcherTests(unittest.TestCase):
             self.assertIsNone(offline.get("https://c.test/other"))
             self.assertEqual(log, [])
 
+    def test_cache_symlink_cannot_escape_cache_directory(self):
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
+            fetcher = make_fetcher({}, [], cache=Path(directory))
+            target = fetcher._cache_path("https://c.test/a")
+            target.symlink_to(Path(outside) / "entry.json")
+            with self.assertRaises(ValueError):
+                fetcher._cached("https://c.test/a")
+
 
 class OpenerTests(unittest.TestCase):
     def test_non_https_urls_are_refused_without_network(self):
@@ -100,13 +108,17 @@ class ExtractionTests(unittest.TestCase):
     def test_title_must_be_whole_words(self):
         self.assertEqual(self.index.find("subnumber of islandsx"), set())
 
+    def test_number_mentions_handle_long_whitespace_and_reject_long_numbers(self):
+        self.assertEqual(self.index.find("LC" + " " * 10000 + "# 146"), {"lru-cache"})
+        self.assertEqual(self.index.find("LC 14600"), set())
+
 
 class RunTests(unittest.TestCase):
     config = {
         "sources": {
             "snap": {"label": "Snap", "home": "https://s.test/", "kind": "snapshot", "verified": True, "base": "https://s.test/data"},
             "forum": {"label": "Forum", "home": "https://f.test/", "kind": "pages", "verified": True, "start": ["https://f.test/{company}?p={page}"],
-                      "pages": 1, "follow": r"^https://f\.test/post/\d+$", "max_follow": 5},
+                      "pages": 1, "follow": "https://f.test/post/{number}", "max_follow": 5},
         }
     }
     sets = [{"id": "acme", "kind": "company", "items": [{"slug": "two-sum", "category": "Last 30 days"}]}]
@@ -142,8 +154,44 @@ class RunTests(unittest.TestCase):
     def test_path_like_company_ids_are_rejected_before_writing(self):
         with tempfile.TemporaryDirectory() as directory:
             pages = {"https://s.test/data/../x/all.csv": HEADER}
+            fetcher = make_fetcher(pages, [])
             with self.assertRaises(ValueError):
-                cc.run(self.config, ["snap"], ["../x"], make_fetcher(pages, []), self.sets, KNOWN, Path(directory), 25)
+                cc.run(self.config, ["snap"], ["../x"], fetcher, self.sets, KNOWN, Path(directory), 25)
+
+    def test_snapshot_symlink_cannot_escape_output_directory(self):
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
+            (Path(directory) / "acme").symlink_to(outside, target_is_directory=True)
+            pages = {"https://s.test/data/acme/all.csv": HEADER}
+            fetcher = make_fetcher(pages, [])
+            with self.assertRaises(ValueError):
+                cc.run(self.config, ["snap"], ["acme"], fetcher, self.sets, KNOWN, Path(directory), 25)
+
+    def test_page_count_is_bounded_before_fetching(self):
+        source = dict(self.config["sources"]["forum"], pages=101)
+        config = {"sources": {"forum": source}}
+        log = []
+        fetcher = make_fetcher({}, log)
+        with self.assertRaises(ValueError):
+            cc.run(config, ["forum"], ["acme"], fetcher, self.sets, KNOWN, None, 25)
+        self.assertEqual(log, [])
+
+    def test_unsafe_follow_regex_is_rejected_before_fetching(self):
+        source = dict(self.config["sources"]["forum"], follow=r"(a+)+$")
+        config = {"sources": {"forum": source}}
+        log = []
+        fetcher = make_fetcher({}, log)
+        with self.assertRaises(ValueError):
+            cc.run(config, ["forum"], ["acme"], fetcher, self.sets, KNOWN, None, 25)
+        self.assertEqual(log, [])
+
+    def test_follow_limit_is_bounded_before_fetching(self):
+        source = dict(self.config["sources"]["forum"], max_follow=501)
+        config = {"sources": {"forum": source}}
+        log = []
+        fetcher = make_fetcher({}, log)
+        with self.assertRaises(ValueError):
+            cc.run(config, ["forum"], ["acme"], fetcher, self.sets, KNOWN, None, 25)
+        self.assertEqual(log, [])
 
     def test_listed_only_sources_skip_other_companies(self):
         source = {"listed_only": True, "companies": {"acme": "Acme"}}
@@ -152,6 +200,16 @@ class RunTests(unittest.TestCase):
 
 
 class ConfigTests(unittest.TestCase):
+    def test_follow_templates_match_only_the_declared_host_and_identifier(self):
+        slug = cc.follow_matcher("https://f.test/questions/{slug}")
+        number = cc.follow_matcher("https://f.test/thread-{number}-1.html")
+        self.assertTrue(slug("https://f.test/questions/two-sum"))
+        self.assertFalse(slug("https://other.test/questions/two-sum"))
+        self.assertFalse(slug("https://f.test/questions/../two-sum"))
+        self.assertFalse(slug("https://f.test/questions/two-sum?next=x"))
+        self.assertTrue(number("https://f.test/thread-123-1.html"))
+        self.assertFalse(number("https://f.test/thread-abc-1.html"))
+
     def test_shipped_config_is_well_formed(self):
         config = json.loads(cc.CONFIG.read_text(encoding="utf8"))
         for name, source in config["sources"].items():
@@ -162,6 +220,7 @@ class ConfigTests(unittest.TestCase):
                     self.assertTrue(template.startswith("https://"), name)
                     self.assertIn("{company}", template, name)
                 self.assertIn("follow", source, name)
+                self.assertIsNotNone(cc.follow_matcher(source["follow"]))
 
 
 class MergeTests(unittest.TestCase):

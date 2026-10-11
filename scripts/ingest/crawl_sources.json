@@ -17,7 +17,7 @@
    "verified": false,
    "start": ["https://www.hellointerview.com/community/questions?company={company}&type=coding&page={page}"],
    "pages": 3,
-   "follow": "^https://www\\.hellointerview\\.com/community/questions/[a-z0-9-]+$",
+   "follow": "https://www.hellointerview.com/community/questions/{slug}",
    "max_follow": 40
   },
   "1point3acres": {
@@ -29,7 +29,7 @@
    "companies": {"meta": "Meta", "google": "Google", "amazon": "Amazon", "apple": "Apple", "microsoft": "Microsoft", "uber": "Uber", "nvidia": "NVIDIA", "openai": "OpenAI", "anthropic": "Anthropic"},
    "start": ["https://www.1point3acres.com/bbs/tag/{company}-{page}.html"],
    "pages": 2,
-   "follow": "^https://www\\.1point3acres\\.com/bbs/thread-\\d+-1-1\\.html$",
+   "follow": "https://www.1point3acres.com/bbs/thread-{number}-1-1.html",
    "max_follow": 40
   },
   "gothamloop": {
@@ -39,7 +39,7 @@
    "verified": false,
    "start": ["https://www.gothamloop.com/companies/{company}"],
    "pages": 1,
-   "follow": "^https://www\\.gothamloop\\.com/questions/[a-z0-9-]+$",
+   "follow": "https://www.gothamloop.com/questions/{slug}",
    "max_follow": 40
   },
   "interviewdb": {
@@ -49,7 +49,7 @@
    "verified": false,
    "start": ["https://www.interviewdb.io/company/{company}"],
    "pages": 1,
-   "follow": "^https://www\\.interviewdb\\.io/question/[a-z0-9-]+$",
+   "follow": "https://www.interviewdb.io/question/{slug}",
    "max_follow": 40
   }
  }

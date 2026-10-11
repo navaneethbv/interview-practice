@@ -34,6 +34,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import urllib.robotparser
+from collections import deque
 from dataclasses import dataclass, field
 from datetime import date
 from html.parser import HTMLParser
@@ -51,7 +52,11 @@ REPORT_CATEGORY = "Recent reports"
 COMPANY_ID = re.compile(r"[a-z0-9][a-z0-9-]*")
 LC_LINK = re.compile(r"leetcode\.(?:com|cn)/problems/([a-z0-9]+(?:-[a-z0-9]+)*)")
 # "LC 200", "LeetCode #200", "力扣 200": a problem cited by number, common in forum posts.
-LC_NUMBER = re.compile(r"(?<![a-z0-9])(?:lc|leetcode|力扣)\s*#?\s*(\d{1,4})(?!\d)")
+# TitleIndex.find normalizes whitespace before matching number citations.
+LC_NUMBER = re.compile(r"(?<![a-z0-9])(?:lc|leetcode|力扣) ?#? ?(\d{1,4})(?!\d)")
+MAX_LISTING_PAGES = 100
+MAX_FOLLOWED_PAGES = 500
+MAX_START_URLS = 20
 DIFFICULTY = {"easy": "easy", "medium": "medium", "hard": "hard"}
 # Recency buckets of a snapshot source and the weight a listing in each one carries.
 SNAPSHOT_BUCKETS = [("thirty-days.csv", 3), ("three-months.csv", 2), ("six-months.csv", 1)]
@@ -88,12 +93,13 @@ def urllib_opener(url: str, headers: dict) -> tuple[int, str, dict]:
         return 0, "", {}
     request = urllib.request.Request(url, headers=headers)
     try:
-        with _OPENER.open(request, timeout=30) as response:  # NOSONAR(S5144): https-only, same-host redirects; URLs come from crawl_sources.json plus validated company ids
+        # Operator-configured HTTPS URLs; redirects cannot change hosts or schemes.
+        with _OPENER.open(request, timeout=30) as response:  # NOSONAR(S5144)
             charset = response.headers.get_content_charset() or "utf-8"
             return response.status, response.read().decode(charset, "replace"), dict(response.headers)
     except urllib.error.HTTPError as error:
         return error.code, "", dict(error.headers or {})
-    except (urllib.error.URLError, TimeoutError, OSError) as error:
+    except OSError as error:
         log(f"  network error for {url}: {error}")
         return 0, "", {}
 
@@ -115,7 +121,13 @@ class Fetcher:
     _failures: dict = field(default_factory=dict)
 
     def _cache_path(self, url: str) -> Path | None:
-        return self.cache / hashlib.sha256(url.encode()).hexdigest()[:32] if self.cache else None
+        if self.cache is None:
+            return None
+        root = self.cache.resolve()
+        path = (root / hashlib.sha256(url.encode()).hexdigest()[:32]).resolve()
+        if not path.is_relative_to(root):
+            raise ValueError("Cache file must stay inside the cache directory")
+        return path
 
     def _request(self, url: str) -> tuple[int, str, dict]:
         host = urllib.parse.urlsplit(url).netloc
@@ -145,7 +157,8 @@ class Fetcher:
     def _cached(self, url: str) -> tuple[int, str]:
         path = self._cache_path(url)
         if path and path.is_file():
-            entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083): cache file name is a sha256 digest inside the operator-chosen cache directory
+            # _cache_path validates the digest filename and resolved path containment.
+            entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083)
             return entry["status"], entry["text"]
         if self.offline:
             return 0, ""
@@ -160,8 +173,9 @@ class Fetcher:
         if status == 200 or 400 <= status < 500:
             self._failures[host] = 0
             if path:
-                path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083): cache directory is operator-chosen; file names are digests
-                path.write_text(json.dumps({"url": url, "status": status, "text": text}), encoding="utf8")  # NOSONAR(S2083): cache directory is operator-chosen; file names are digests
+                # Cache root is operator-selected; _cache_path enforces containment.
+                path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083)
+                path.write_text(json.dumps({"url": url, "status": status, "text": text}), encoding="utf8")  # NOSONAR(S2083)
         else:
             self._failures[host] = self._failures.get(host, 0) + 1
             if self._failures[host] == self.max_failures:
@@ -271,6 +285,38 @@ def company_key(source: dict, company: str) -> str | None:
     return None if source.get("listed_only") else company
 
 
+def save_snapshot(root: Path, company: str, filename: str, text: str):
+    if not COMPANY_ID.fullmatch(company) or filename not in SNAPSHOT_FILES:
+        raise ValueError("Invalid snapshot company or filename")
+    root = root.resolve()
+    folder = (root / company).resolve()
+    path = (folder / filename).resolve()
+    if not folder.is_relative_to(root) or not path.is_relative_to(folder):
+        raise ValueError("Snapshot file must stay inside the output directory")
+    # Company and filename are validated above, including symlink containment.
+    folder.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083)
+    path.write_text(text, encoding="utf8")  # NOSONAR(S2083)
+
+
+def record_snapshot(text: str, name: str, company: str, weight: int, tally: Tally, seen: set[str]):
+    for row in csv.DictReader(io.StringIO(text)):
+        match = LC_LINK.search(row.get("URL") or "")
+        difficulty = DIFFICULTY.get((row.get("Difficulty") or "").strip().lower())
+        if not match or not difficulty or not (row.get("ID") or "").strip().isdigit():
+            continue
+        slug = match.group(1)
+        tally.meta.setdefault(slug, {
+            "number": int(row["ID"]),
+            "title": row["Title"].strip(),
+            "difficulty": difficulty,
+            "topics": [],
+            "acceptance": _percent(row.get("Acceptance %")),
+        })
+        if weight and slug not in seen:
+            seen.add(slug)
+            tally.add(company, slug, name, weight)
+
+
 def crawl_snapshot(name: str, source: dict, company: str, fetcher: Fetcher, tally: Tally, snapshot_out: Path | None):
     key = company_key(source, company)
     if key is None:
@@ -282,27 +328,8 @@ def crawl_snapshot(name: str, source: dict, company: str, fetcher: Fetcher, tall
         if text is None:
             continue
         if snapshot_out:
-            if not COMPANY_ID.fullmatch(company):
-                raise ValueError(f"Invalid company id: {company!r}")
-            folder = snapshot_out / company
-            folder.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083): company id is validated by COMPANY_ID
-            (folder / filename).write_text(text, encoding="utf8")  # NOSONAR(S2083): company id is validated and filename comes from a fixed list
-        for row in csv.DictReader(io.StringIO(text)):
-            match = LC_LINK.search(row.get("URL") or "")
-            difficulty = DIFFICULTY.get((row.get("Difficulty") or "").strip().lower())
-            if not match or not difficulty or not (row.get("ID") or "").strip().isdigit():
-                continue
-            slug = match.group(1)
-            tally.meta.setdefault(slug, {
-                "number": int(row["ID"]),
-                "title": row["Title"].strip(),
-                "difficulty": difficulty,
-                "topics": [],
-                "acceptance": _percent(row.get("Acceptance %")),
-            })
-            if filename in weights and slug not in seen:
-                seen.add(slug)
-                tally.add(company, slug, name, weights[filename])
+            save_snapshot(snapshot_out, company, filename, text)
+        record_snapshot(text, name, company, weights.get(filename, 0), tally, seen)
 
 
 def _percent(value: str | None) -> float:
@@ -312,36 +339,91 @@ def _percent(value: str | None) -> float:
         return 0.0
 
 
+def bounded_count(value: int, minimum: int, maximum: int, label: str) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or not minimum <= value <= maximum:
+        raise ValueError(f"{label} must be an integer between {minimum} and {maximum}")
+    return value
+
+
+def follow_matcher(template: str | None) -> Callable[[str], bool] | None:
+    """Match a literal HTTPS URL with one {slug} or {number}; no configurable regex."""
+    if not template:
+        return None
+    tokens = [token for token in ("{slug}", "{number}") if token in template]
+    if len(tokens) != 1 or template.count(tokens[0]) != 1:
+        raise ValueError("Follow URL must contain one {slug} or {number} placeholder")
+    parts = urllib.parse.urlsplit(template)
+    if parts.scheme != "https" or not parts.netloc or "{" in parts.netloc:
+        raise ValueError("Follow URL must have a literal HTTPS host")
+    token = tokens[0]
+    prefix, suffix = template.split(token)
+
+    def matches(target: str) -> bool:
+        if len(target) > 8192 or not target.startswith(prefix) or not target.endswith(suffix):
+            return False
+        end = len(target) - len(suffix) if suffix else len(target)
+        identifier = target[len(prefix):end]
+        if token == "{number}":
+            return identifier.isascii() and identifier.isdecimal()
+        return COMPANY_ID.fullmatch(identifier) is not None
+
+    return matches
+
+
+def start_urls(source: dict, key: str) -> list[str]:
+    pages = bounded_count(source.get("pages", 1), 1, MAX_LISTING_PAGES, "pages")
+    templates = source["start"]
+    if not 1 <= len(templates) <= MAX_START_URLS:
+        raise ValueError(f"start must contain between 1 and {MAX_START_URLS} URL templates")
+    urls = []
+    for template in templates:
+        for page in range(1, MAX_LISTING_PAGES + 1):
+            if page > pages:
+                break
+            urls.append(template.format(company=urllib.parse.quote(key), page=page))
+    return urls
+
+
+def page_mentions(url: str, name: str, company: str, fetcher: Fetcher, tally: Tally, index: TitleIndex) -> list[str]:
+    document = fetcher.get(url)
+    if document is None:
+        return []
+    text, links = page_text(document)
+    for slug in index.find(text, links):
+        tally.add(company, slug, name)
+    return links
+
+
+def follow_targets(url: str, links: list[str], matches: Callable | None, visited: set[str], remaining: int) -> list[str]:
+    if matches is None or remaining <= 0:
+        return []
+    targets = []
+    for href in links:
+        target = urllib.parse.urljoin(url, href).split("#")[0]
+        if target not in visited and matches(target):
+            targets.append(target)
+            if len(targets) >= remaining:
+                break
+    return targets
+
+
 def crawl_pages(name: str, source: dict, company: str, fetcher: Fetcher, tally: Tally, index: TitleIndex):
     key = company_key(source, company)
     if key is None:
         return
-    follow = re.compile(source["follow"]) if source.get("follow") else None
-    max_follow = int(source.get("max_follow", 30))
+    matches = follow_matcher(source.get("follow"))
+    remaining = bounded_count(source.get("max_follow", 30), 0, MAX_FOLLOWED_PAGES, "max_follow")
+    queue = deque(start_urls(source, key))
     visited: set[str] = set()
-    queue: list[str] = []
-    for template in source["start"]:
-        for page in range(1, int(source.get("pages", 1)) + 1):
-            queue.append(template.format(company=urllib.parse.quote(key), page=page))
-    followed = 0
     while queue:
-        url = queue.pop(0)
+        url = queue.popleft()
         if url in visited:
             continue
         visited.add(url)
-        document = fetcher.get(url)
-        if document is None:
-            continue
-        text, links = page_text(document)
-        for slug in index.find(text, links):
-            tally.add(company, slug, name)
-        if not follow:
-            continue
-        for href in links:
-            target = urllib.parse.urljoin(url, href).split("#")[0]
-            if followed < max_follow and target not in visited and follow.search(target):
-                queue.append(target)
-                followed += 1
+        links = page_mentions(url, name, company, fetcher, tally, index)
+        targets = follow_targets(url, links, matches, visited, remaining)
+        queue.extend(targets)
+        remaining -= len(targets)
 
 
 # --------------------------------------------------------------------------- report
@@ -430,7 +512,8 @@ def main(argv: list[str]):
     if args.dry_run:
         print(text)
         return
-    OUT.write_text(text, encoding="utf8")  # NOSONAR(S2083): fixed output path next to this script
+    # OUT is the fixed module-owned report path, never a CLI argument.
+    OUT.write_text(text, encoding="utf8")  # NOSONAR(S2083)
     for company, items in report["companies"].items():
         print(f"{company}: {len(items)} reported problems not yet listed")
 

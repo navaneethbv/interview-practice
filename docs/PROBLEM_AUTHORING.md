@@ -131,5 +131,6 @@ Rerun `problem_sets.py` afterwards; reported problems a list lacks are appended 
 - Only facts are stored (problem, company, source counts). Statements and write-ups are never copied; problems are matched by LeetCode link, exact title or "LC 123" mentions against the catalog.
 - The crawler sends no cookies or credentials, honours robots.txt, waits `delay_seconds` between requests to a host, backs off on 429/503, stops a host after repeated failures and skips login or paywalled pages. Do not add URLs behind a login or paywall, and check each site's terms before enabling it.
 - Use `--cache DIR` to reuse fetched pages and `--offline` to rebuild from the cache. `--snapshot-out DIR` saves the LeetCode CSVs so `company_lists.py` can rebuild recency-ordered lists.
+- `follow` is a literal HTTPS URL template with one `{slug}` or `{number}` placeholder. It does not accept regular expressions. Listing pages are limited to 100 per start template, with at most 20 start templates and 500 followed links per source and company. Cache and snapshot paths must stay within their selected directories, including when symlinks are present.
 - Tests use a fake web and need no network: `python3 -m unittest discover -s scripts/ingest -p 'test_*.py'`.
 
