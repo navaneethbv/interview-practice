@@ -97,7 +97,8 @@ def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str)
 
 def write_company_lists(data: dict):
     """Persist imported facts to the fixed module-owned output file."""
-    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
+    # The destination is defined from __file__, never from snapshot or company arguments.
+    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")  # NOSONAR(S2083)
 
 
 def main(argv: list[str]):
