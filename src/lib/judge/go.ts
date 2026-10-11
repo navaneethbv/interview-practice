@@ -1,6 +1,7 @@
 import type { AnyTestCase, DesignSpec, FunctionSpec, OutputSpec, Param, ProblemSpec, ValueType } from "./types";
 import { RESULT_MARKER } from "./types";
 import { goMethodName, safeName, usesCoreFeatures } from "./languages";
+import { GO_CONCURRENCY_SUPPORT, goConcurrencyBody } from "./concurrency";
 
 /**
  * Go harness. The user's code is its own file (solution.go) in package main, so it keeps its own
@@ -70,11 +71,13 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"math/rand"
 	"os"
 	"reflect"
 	"regexp"
 	"runtime/debug"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -409,6 +412,8 @@ func main() {
 	}
 }
 
+__JUDGE_CONCURRENCY__
+
 __JUDGE_BODY__
 
 const judgeTests = __JUDGE_TESTS__
@@ -493,11 +498,15 @@ export function prepareGoUserCode(code: string) {
 }
 
 export function buildGoProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): { harness: string; solution: string } {
-  if (spec.kind === "sql" || !usesCoreFeatures(spec)) throw new Error("This problem is not available in Go yet");
+  const concurrent = spec.kind === "function" || spec.kind === undefined ? spec.concurrency : undefined;
+  if (spec.kind === "sql" || (!usesCoreFeatures(spec) && !concurrent)) throw new Error("This problem is not available in Go yet");
   const field = listFieldForGo(spec.style);
-  const body = spec.kind === "design" ? designBody(spec) : functionBody(spec);
+  let body: string;
+  if (spec.kind === "design") body = designBody(spec);
+  else body = concurrent ? goConcurrencyBody(spec) : functionBody(spec);
   const inputs = JSON.stringify(tests.map((t) => t.input));
   const harness = GO_HARNESS.replace("__JUDGE_BODY__", () => body)
+    .replace("__JUDGE_CONCURRENCY__", () => GO_CONCURRENCY_SUPPORT)
     .replace("__JUDGE_MARKER__", () => JSON.stringify(RESULT_MARKER))
     .replace("__JUDGE_TESTS__", () => "`" + inputs.replaceAll("`", "` + \"`\" + `") + "`")
     .replaceAll(FIELD, field)

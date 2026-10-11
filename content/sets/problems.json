@@ -8363,6 +8363,54 @@
   "space": "O(n)",
   "acceptance": 72.5
  },
+ "print-in-order": {
+  "number": 1114,
+  "title": "Print in Order",
+  "difficulty": "easy",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "One-shot gates",
+  "hint": "One-shot gates: Each method waits for a signal from the previous one before printing, then signals the next.",
+  "time": "O(1) per call",
+  "space": "O(1)"
+ },
+ "print-foobar-alternately": {
+  "number": 1115,
+  "title": "Print FooBar Alternately",
+  "difficulty": "medium",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "Turn handoff",
+  "hint": "Turn handoff: Track whose turn it is; each thread prints on its turn and hands the turn to the other.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ "print-zero-even-odd": {
+  "number": 1116,
+  "title": "Print Zero Even Odd",
+  "difficulty": "medium",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "Coordinator thread",
+  "hint": "Coordinator thread: Zero prints and decides whether odd or even goes next; both hand the turn back to zero.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
+ "building-h2o": {
+  "number": 1117,
+  "title": "Building H2O",
+  "difficulty": "medium",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "Counting barrier",
+  "hint": "Counting barrier: Admit at most two hydrogens and one oxygen per molecule and reset the counts once it is complete.",
+  "time": "O(1) per atom",
+  "space": "O(1)"
+ },
  "parallel-courses": {
   "number": 1136,
   "title": "Parallel Courses",
@@ -8565,6 +8613,18 @@
   "space": "O(n)",
   "acceptance": 59.1
  },
+ "fizz-buzz-multithreaded": {
+  "number": 1195,
+  "title": "Fizz Buzz Multithreaded",
+  "difficulty": "medium",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "Shared counter with condition",
+  "hint": "Shared counter with condition: All threads follow one counter; the owner of the current number prints it and wakes the others.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
  "minimum-knight-moves": {
   "number": 1197,
   "title": "Minimum Knight Moves",
@@ -8685,6 +8745,18 @@
   "hint": "Greedy Balanced String: Count R and L while scanning. Every time counts equal, increment result split count.",
   "time": "O(n)",
   "space": "O(n)"
+ },
+ "the-dining-philosophers": {
+  "number": 1226,
+  "title": "The Dining Philosophers",
+  "difficulty": "medium",
+  "topics": [
+   "Concurrency"
+  ],
+  "pattern": "Lock ordering",
+  "hint": "Lock ordering: Always lock the lower-numbered fork first so no cycle of waiting philosophers can form.",
+  "time": "O(1) per meal",
+  "space": "O(1)"
  },
  "missing-number-in-arithmetic-progression": {
   "number": 1228,

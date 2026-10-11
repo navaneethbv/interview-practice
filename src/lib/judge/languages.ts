@@ -1,4 +1,5 @@
 import type { CodeLang } from "../content-types";
+import { CONCURRENCY_LANGS } from "./concurrency";
 import type { DesignSpec, FunctionSpec, OutputSpec, Param, ProblemSpec, ValueType } from "./types";
 
 /**
@@ -51,6 +52,7 @@ function coreOutput(output: OutputSpec | undefined) {
 }
 
 function coreFunction(spec: FunctionSpec) {
+  if (spec.concurrency) return false;
   if (spec.environment || spec.roundTrip || spec.returnTree !== undefined) return false;
   return spec.params.every(coreParam) && CORE_TYPES.has(spec.returns) && coreOutput(spec.output);
 }
@@ -73,6 +75,7 @@ export function usesCoreFeatures(spec: ProblemSpec) {
 export function languagesFor(spec: ProblemSpec | null): CodeLang[] {
   if (spec?.kind === "sql") return ["sql"];
   if (!spec) return ["python", "java"];
+  if (spec.kind !== "design" && spec.concurrency) return CONCURRENCY_LANGS;
   return usesCoreFeatures(spec) ? ["python", "java", ...EXTRA_LANGS] : ["python", "java"];
 }
 

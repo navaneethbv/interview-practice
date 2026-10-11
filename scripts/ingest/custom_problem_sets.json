@@ -1969,6 +1969,38 @@
      "category": "Advanced String Functions / Regex / Clause"
     }
    ]
+  },
+  {
+   "id": "concurrency",
+   "title": "Concurrency",
+   "kind": "curated",
+   "description": "LeetCode's multithreading problems, judged on real threads in Java, C++ and Go. Each test repeats with random start delays to surface races, and deadlocks are reported instead of hanging.",
+   "items": [
+    {
+     "slug": "print-in-order",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "print-foobar-alternately",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "print-zero-even-odd",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "building-h2o",
+     "category": "Resource sharing"
+    },
+    {
+     "slug": "fizz-buzz-multithreaded",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "the-dining-philosophers",
+     "category": "Resource sharing"
+    }
+   ]
   }
  ],
  "problems": {
@@ -5686,6 +5718,78 @@
    ],
    "pattern": "Pattern matching",
    "hint": "Pattern matching: Check the first letter and domain with GLOB, then reject any invalid prefix character."
+  },
+  "print-in-order": {
+   "number": 1114,
+   "title": "Print in Order",
+   "difficulty": "easy",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "One-shot gates",
+   "hint": "One-shot gates: Each method waits for a signal from the previous one before printing, then signals the next.",
+   "time": "O(1) per call",
+   "space": "O(1)"
+  },
+  "print-foobar-alternately": {
+   "number": 1115,
+   "title": "Print FooBar Alternately",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Turn handoff",
+   "hint": "Turn handoff: Track whose turn it is; each thread prints on its turn and hands the turn to the other.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "print-zero-even-odd": {
+   "number": 1116,
+   "title": "Print Zero Even Odd",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Coordinator thread",
+   "hint": "Coordinator thread: Zero prints and decides whether odd or even goes next; both hand the turn back to zero.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "building-h2o": {
+   "number": 1117,
+   "title": "Building H2O",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Counting barrier",
+   "hint": "Counting barrier: Admit at most two hydrogens and one oxygen per molecule and reset the counts once it is complete.",
+   "time": "O(1) per atom",
+   "space": "O(1)"
+  },
+  "fizz-buzz-multithreaded": {
+   "number": 1195,
+   "title": "Fizz Buzz Multithreaded",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Shared counter with condition",
+   "hint": "Shared counter with condition: All threads follow one counter; the owner of the current number prints it and wakes the others.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "the-dining-philosophers": {
+   "number": 1226,
+   "title": "The Dining Philosophers",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Lock ordering",
+   "hint": "Lock ordering: Always lock the lower-numbered fork first so no cycle of waiting philosophers can form.",
+   "time": "O(1) per meal",
+   "space": "O(1)"
   }
  },
  "workbookListOverrides": [

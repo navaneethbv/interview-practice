@@ -5,6 +5,7 @@ import { RESULT_MARKER } from "./types";
 import { JAVA_GRAPH, usesGraph } from "./graph";
 import { JAVA_NARY, JAVA_RANDOM, JAVA_NEXT, JAVA_MULTI, nodeType } from "./nodes";
 import { javaEnvironment } from "./environment";
+import { JAVA_CONCURRENCY_IMPORTS, JAVA_CONCURRENCY_SUPPORT, javaConcurrencyBody } from "./concurrency";
 
 /** Lines of harness code placed before the user's code; used to map line numbers back. */
 export const JAVA_USER_LINE_OFFSET = 1;
@@ -547,7 +548,10 @@ export function prepareJavaUserCode(code: string) {
 
 export function buildJavaProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): string {
   if (spec.kind === "sql") throw new Error("SQL problems must use SQLite");
-  const body = spec.kind === "design" ? designBody(spec) : functionBody(spec);
+  const concurrent = spec.kind !== "design" && spec.concurrency;
+  let body: string;
+  if (spec.kind === "design") body = designBody(spec);
+  else body = spec.concurrency ? javaConcurrencyBody(spec) : functionBody(spec);
   const inputs = JSON.stringify(tests.map((t) => t.input));
   const chunks = b64(inputs).match(/.{1,60000}/g) ?? [""];
   const listField = listFieldFor(spec.style);
@@ -555,7 +559,7 @@ export function buildJavaProgram(spec: ProblemSpec, userCode: string, tests: Any
   const marker = JSON.stringify(RESULT_MARKER);
   const okLine = String.raw`        line = "{\"i\":" + i + ",\"status\":\"ok\",\"output\":" + output + ",\"ms\":" + ms + ",\"stdout\":" + JudgeJson.quote(trim(buf)) + "}";`;
   const errorLine = String.raw`        line = "{\"i\":" + i + ",\"status\":\"error\",\"error\":" + JudgeJson.quote(msg) + ",\"stdout\":" + JudgeJson.quote(trim(buf)) + "}";`;
-  return `${IMPORTS}
+  return `${IMPORTS}${concurrent ? JAVA_CONCURRENCY_IMPORTS : ""}
 ${prepareJavaUserCode(userCode)}
 ${JAVA_HELPERS.replaceAll(LIST_FIELD, listField)}
 ${usesGraph(spec) ? JAVA_GRAPH : ""}
@@ -564,6 +568,7 @@ ${usesCollectionHelpers(spec) ? JAVA_COLLECTION_HELPERS : ""}
 ${usesInteractive(spec) ? JAVA_INTERACTIVE : ""}
 ${javaEnvironment(spec)}
 ${JAVA_RUNTIME.replaceAll(LIST_FIELD, listField)}
+${concurrent ? JAVA_CONCURRENCY_SUPPORT : ""}
 public class Main {
   static final String MARKER = ${marker};
 ${body}
@@ -571,7 +576,7 @@ ${body}
   static String userFrame(Throwable e) {
     for (StackTraceElement el : e.getStackTrace()) {
       String c = el.getClassName();
-      if ("Main.java".equals(el.getFileName()) && !c.equals("Main") && !c.equals("J") && !c.equals("JudgeJson")) {
+      if ("Main.java".equals(el.getFileName()) && !c.equals("Main") && !c.equals("J") && !c.equals("JudgeJson") && !c.startsWith("Conc")) {
         return " (line " + (el.getLineNumber() - ${JAVA_USER_LINE_OFFSET}) + ")";
       }
     }

@@ -1,0 +1,27 @@
+{
+  "id": "print-in-order",
+  "style": "leetcode",
+  "function": {
+    "python": "Foo",
+    "java": "Foo"
+  },
+  "params": [
+    {
+      "name": "order",
+      "type": "int[]"
+    }
+  ],
+  "returns": "string",
+  "concurrency": {
+    "driver": "printInOrder",
+    "className": "Foo"
+  },
+  "tests": [
+    {"input": [[1, 2, 3]], "expected": "firstsecondthird", "sample": true},
+    {"input": [[1, 3, 2]], "expected": "firstsecondthird", "sample": true},
+    {"input": [[2, 1, 3]], "expected": "firstsecondthird"},
+    {"input": [[2, 3, 1]], "expected": "firstsecondthird"},
+    {"input": [[3, 1, 2]], "expected": "firstsecondthird"},
+    {"input": [[3, 2, 1]], "expected": "firstsecondthird"}
+  ]
+}

@@ -2,6 +2,7 @@ import { javaType, listFieldFor } from "./java";
 import type { CodeLang } from "../content-types";
 import type { Param, ProblemSpec, ValueType } from "./types";
 import { environmentBase } from "./environment";
+import { concurrencyStarter } from "./concurrency";
 import { cppParam, cppType } from "./cpp";
 import { goType, listFieldForGo } from "./go";
 import { goMethodName, languagesFor, safeName, type ExtraLang } from "./languages";
@@ -185,6 +186,7 @@ function javaParams(params: Param[]) {
 export function generateStarter(spec: ProblemSpec, lang: CodeLang): string {
   if (spec.kind === "sql") return "-- Write a SQLite query below.\n";
   if (lang === "sql") throw new Error("This problem requires Python or Java");
+  if (spec.kind !== "design" && spec.concurrency) return concurrencyStarter(spec, lang);
   if (lang !== "python" && lang !== "java") return extraStarter(spec, lang);
   const docs = usedHelpers(allTypes(spec))
     .map((h) => HELPER_DOCS[h][lang].replaceAll("VAL", listFieldFor(spec.style)))

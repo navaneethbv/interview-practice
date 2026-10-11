@@ -4,6 +4,8 @@
  * are compared in TypeScript, so a test behaves identically in either language.
  */
 
+import type { ConcurrencyDriver } from "./concurrency";
+
 export type ValueType =
   | "int"
   | "long"
@@ -111,6 +113,8 @@ export interface FunctionSpec {
   /** The final test input configures this environment and is not passed to Solution. */
   environment?: { kind: "badVersion" | "guess" | "celebrity" | "read4" | "parentTree"; param: Param };
   compare?: Compare;
+  /** Multithreaded problem: the named driver runs `className` on real threads (Java, C++ and Go only). */
+  concurrency?: { driver: ConcurrencyDriver; className: string };
   tests: TestCase[];
 }
 

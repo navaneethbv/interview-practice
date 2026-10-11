@@ -1970,6 +1970,38 @@
   ]
  },
  {
+  "id": "concurrency",
+  "title": "Concurrency",
+  "kind": "curated",
+  "description": "LeetCode's multithreading problems, judged on real threads in Java, C++ and Go. Each test repeats with random start delays to surface races, and deadlocks are reported instead of hanging.",
+  "items": [
+   {
+    "slug": "print-in-order",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "print-foobar-alternately",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "print-zero-even-odd",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "building-h2o",
+    "category": "Resource sharing"
+   },
+   {
+    "slug": "fizz-buzz-multithreaded",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "the-dining-philosophers",
+    "category": "Resource sharing"
+   }
+  ]
+ },
+ {
   "id": "blind-75",
   "title": "Blind 75",
   "kind": "curated",

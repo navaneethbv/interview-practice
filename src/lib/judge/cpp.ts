@@ -2,6 +2,7 @@ import type { AnyTestCase, DesignSpec, FunctionSpec, OutputSpec, Param, ProblemS
 import { RESULT_MARKER } from "./types";
 import { listFieldFor } from "./java";
 import { safeName, usesCoreFeatures } from "./languages";
+import { CPP_CONCURRENCY_SUPPORT, cppConcurrencyBody } from "./concurrency";
 
 /**
  * C++17 harness. User code is placed after a `#line 1 "solution.cpp"` directive so compiler
@@ -348,9 +349,12 @@ function cMarker() {
 }
 
 export function buildCppProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): string {
-  if (spec.kind === "sql" || !usesCoreFeatures(spec)) throw new Error("This problem is not available in C++ yet");
+  const concurrent = spec.kind === "function" || spec.kind === undefined ? spec.concurrency : undefined;
+  if (spec.kind === "sql" || (!usesCoreFeatures(spec) && !concurrent)) throw new Error("This problem is not available in C++ yet");
   const field = listFieldFor(spec.style);
-  const body = spec.kind === "design" ? designBody(spec) : functionBody(spec);
+  let body: string;
+  if (spec.kind === "design") body = designBody(spec);
+  else body = concurrent ? CPP_CONCURRENCY_SUPPORT + cppConcurrencyBody(spec) : functionBody(spec);
   const inputs = JSON.stringify(tests.map((t) => t.input));
   return [
     CPP_PRELUDE.replaceAll(FIELD, field),

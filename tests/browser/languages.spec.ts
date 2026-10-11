@@ -21,6 +21,9 @@ const SOLUTIONS = {
 
 for (const [lang, code] of Object.entries(SOLUTIONS)) {
   test(`${lang} solutions are judged and accepted`, async ({ page }) => {
+    // CI serves a production build without a sandbox snapshot, so compiled languages have no runner there;
+    // their harnesses are covered by the unit tests with local compilers.
+    test.skip(!!process.env.CI && (lang === "cpp" || lang === "go"), "no code runner sandbox in CI");
     test.setTimeout(120_000);
     // Seed the saved draft directly; typing into Monaco would add auto-closed brackets and indentation.
     await page.addInitScript(([l, c]) => {
@@ -101,4 +104,15 @@ test("practice pages fit a phone screen", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
+});
+
+test("concurrency problems offer threaded languages and run on real threads", async ({ page }) => {
+  test.skip(!!process.env.CI, "no code runner sandbox in CI");
+  test.setTimeout(120_000);
+  const code = await (await import("node:fs/promises")).readFile("content/leetcode/print-in-order.java", "utf8");
+  await page.addInitScript((c) => localStorage.setItem("ip:code:lc:print-in-order:java", c), code);
+  await page.goto("/problems/lc/print-in-order");
+  await expect(language(page).locator("option")).toHaveText(["Java", "C++", "Go"]);
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(page.getByRole("heading", { name: "Accepted" })).toBeVisible({ timeout: 90_000 });
 });

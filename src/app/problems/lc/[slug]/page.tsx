@@ -40,8 +40,8 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
   if (!problem) notFound();
   const { meta, spec, reference, javaReference, walkthroughHtml } = problem;
   const title = `${meta.number}. ${meta.title}`;
-  const referenceBlocks = reference && spec.kind !== "sql"
-    ? await renderBlocks([{ t: "code", python: reference, java: javaReference ?? undefined }]) : [];
+  const referenceBlocks = (reference || javaReference) && spec.kind !== "sql"
+    ? await renderBlocks([{ t: "code", python: reference ?? undefined, java: javaReference ?? undefined }]) : [];
 
   return (
     <Workspace
