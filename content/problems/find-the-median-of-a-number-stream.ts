@@ -1,5 +1,5 @@
 class MedianOfAStream {
-    private values: number[] = [];
+    private readonly values: number[] = [];
 
     insertNum(num: number): void {
         let lo = 0, hi = this.values.length;

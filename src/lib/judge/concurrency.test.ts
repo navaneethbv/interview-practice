@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import fs from "node:fs";
+import printInOrder from "../../../content/leetcode/print-in-order.json";
+import fooBar from "../../../content/leetcode/print-foobar-alternately.json";
+import zeroEvenOdd from "../../../content/leetcode/print-zero-even-odd.json";
 
 import { describe, it } from "node:test";
 import { grade } from "./grade";
@@ -21,10 +23,8 @@ const has = (cmd: string, flag: string) => {
 };
 const available = { java: has("javac", "-version"), cpp: has("g++", "--version"), go: has("go", "version") };
 
-const spec = (id: string) => {
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) throw new Error("Invalid problem ID");
-  return JSON.parse(fs.readFileSync(new URL(`../../../content/leetcode/${id}.json`, import.meta.url), "utf8")) as FunctionSpec;
-};
+const specs = { "print-in-order": printInOrder, "print-foobar-alternately": fooBar, "print-zero-even-odd": zeroEvenOdd };
+const spec = (id: keyof typeof specs) => specs[id] as FunctionSpec;
 
 async function run(lang: "java" | "cpp" | "go", s: FunctionSpec, code: string): Promise<RunOutcome> {
   if (lang !== "java") return runExtraLocally(s, lang, code, s.tests);
@@ -56,6 +56,21 @@ describe("concurrency problems", () => {
     assert.match(generateStarter(spec("print-zero-even-odd"), "go"), /func NewZeroEvenOdd\(n int\) \*ZeroEvenOdd/);
   });
 
+  it("rejects an incorrect first trial even when the next trial is correct", { skip: !available.java }, async () => {
+    const s = spec("print-in-order");
+    const one = { ...s, tests: s.tests.slice(0, 1) };
+    const code = `class Foo {
+      static final AtomicInteger instances = new AtomicInteger();
+      final boolean omitFirst = instances.incrementAndGet() == 1;
+      final CountDownLatch firstDone = new CountDownLatch(1), secondDone = new CountDownLatch(1);
+      public void first(Runnable p) { if (!omitFirst) p.run(); firstDone.countDown(); }
+      public void second(Runnable p) throws InterruptedException { firstDone.await(); p.run(); secondDone.countDown(); }
+      public void third(Runnable p) throws InterruptedException { secondDone.await(); p.run(); }
+    }`;
+    const outcome = await run("java", one, code);
+    assert.notEqual(outcome.verdict, "Accepted", JSON.stringify(outcome));
+  });
+
   for (const lang of ["java", "cpp", "go"] as const) {
     const options = { skip: !available[lang] && `${lang} toolchain not installed` };
     it(`${lang}: reports a deadlock instead of hanging`, options, async () => {
@@ -68,7 +83,7 @@ describe("concurrency problems", () => {
       const reversed = { ...s, tests: s.tests.filter((t) => JSON.stringify(t.input) === "[[3,2,1]]") };
       assert.equal(reversed.tests.length, 1);
       const outcome = await run(lang, reversed, UNORDERED[lang]);
-      assert.equal(outcome.verdict, "Wrong Answer", JSON.stringify(outcome));
+      assert.ok(["Wrong Answer", "Runtime Error"].includes(outcome.verdict), JSON.stringify(outcome));
     });
   }
 });

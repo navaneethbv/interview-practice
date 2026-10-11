@@ -36,11 +36,14 @@ export function listSummaries(): ListSummary[] {
   };
   const sets = listSets().map((set): ListSummary => {
     const rows = setRows(set).filter((r) => r.available);
+    let group: ListSummary["group"] = "plans";
+    if (set.kind === "company") group = "companies";
+    else if (TRACKS.has(set.id)) group = "tracks";
     return {
       id: set.id,
       title: set.title,
       href: `/problems/sets/${set.id}`,
-      group: set.kind === "company" ? "companies" : TRACKS.has(set.id) ? "tracks" : "plans",
+      group,
       kind: set.kind,
       description: set.description.split(/(?<=\.)\s/)[0],
       ids: rows.map((r) => lcProgressId(r.slug)),

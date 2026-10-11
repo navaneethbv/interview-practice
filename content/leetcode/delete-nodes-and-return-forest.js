@@ -1,4 +1,4 @@
-var delNodes = function(root, to_delete) {
+const delNodes = function(root, to_delete) {
     const deleted = new Set(to_delete);
     const forest = [];
     const visit = (node, isRoot) => {

@@ -494,7 +494,8 @@ export function listFieldForGo(style: ProblemSpec["style"]) {
 
 /** Prepends the package clause on the user's first line when it is missing, keeping line numbers. */
 export function prepareGoUserCode(code: string) {
-  return /^\s*package\s+main\b/m.test(code) ? code : `package main; ${code}`;
+  const hasPackage = code.split("\n").some((line) => /^package\s+main\b/.test(line.trimStart()));
+  return hasPackage ? code : `package main; ${code}`;
 }
 
 export function buildGoProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): { harness: string; solution: string } {

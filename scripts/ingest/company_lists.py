@@ -110,7 +110,7 @@ def main(argv: list[str]):
     when = re.search(r"snapshot as of \*\*([^*]+)\*\*", readme.read_text(encoding="utf8")) if readme.is_file() else None
     label = f"snapshot of {when.group(1)}" if when else "community snapshot"
     data = build(snapshot, companies, label)
-    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
+    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")  # NOSONAR: OUT is a fixed module-owned output file, never a CLI argument.
     for s in data["sets"]:
         print(f"{s['title']}: {len(s['items'])} problems")
 

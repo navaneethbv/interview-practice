@@ -1,4 +1,4 @@
-var dutchFlagSort = function(arr) {
+const dutchFlagSort = function(arr) {
     let red = 0, current = 0, blue = arr.length - 1;
     while (current <= blue) {
         if (arr[current] === "R") {

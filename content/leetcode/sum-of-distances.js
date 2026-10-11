@@ -10,6 +10,7 @@ const distance = function(nums) {
     };
     const forward = [...nums.keys()];
     pass(forward);
-    pass(forward.reverse());
+    forward.reverse();
+    pass(forward);
     return ans;
 };

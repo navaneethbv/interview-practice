@@ -163,6 +163,23 @@ test("command palette jumps to a problem from the keyboard", async ({ page }) =>
   await expect(page).toHaveURL(/\/problems\/lc\/two-sum$/);
 });
 
+test("command palette closes with Escape and restores focus", async ({ page }) => {
+  await page.goto("/");
+  const trigger = page.getByRole("button", { name: "Search", exact: true });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Search the site" });
+  await expect(dialog).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Search the site" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(dialog).toBeVisible();
+  await page.mouse.click(5, 5);
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
 test("mobile menu opens, navigates and closes", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

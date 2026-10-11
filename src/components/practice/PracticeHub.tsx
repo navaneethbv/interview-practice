@@ -258,7 +258,7 @@ function Debrief({ session, entries }: Readonly<{ session: MockSession; entries:
         ))}
       </div>
       <label className="mt-3 block text-xs font-medium text-fg-2">
-        What would you do differently next time?
+        <span>What would you do differently next time?</span>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}

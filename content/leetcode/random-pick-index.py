@@ -1,4 +1,4 @@
-import random
+import secrets
 
 
 class Solution:
@@ -10,6 +10,6 @@ class Solution:
         for i, x in enumerate(self.nums):
             if x == target:
                 seen += 1
-                if random.randrange(seen) == 0:
+                if secrets.randbelow(seen) == 0:
                     chosen = i
         return chosen

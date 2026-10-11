@@ -30,11 +30,14 @@ export function MockTimer({ id }: Readonly<{ id: string }>) {
   if (!active?.problems.includes(id)) return null;
   const left = sessionDeadline(active) - now;
   const index = active.problems.indexOf(id) + 1;
+  let tone = "text-fg-1";
+  if (left <= 0) tone = "text-bad";
+  else if (left < 5 * 60_000) tone = "text-medium";
   return (
     <Link
       href="/practice#mock"
       className={`flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium tabular-nums ring-1 ring-line hover:bg-layer-2 ${
-        left <= 0 ? "text-bad" : left < 5 * 60_000 ? "text-medium" : "text-fg-1"
+        tone
       }`}
       title="Mock interview: walkthroughs are hidden until you finish"
     >

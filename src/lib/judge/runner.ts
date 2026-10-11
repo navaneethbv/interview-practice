@@ -163,16 +163,21 @@ interface ServerResponse {
   error?: string;
 }
 
-const SERVER_ENDPOINT = { java: "/api/run/java", cpp: "/api/run/cpp", go: "/api/run/go" } as const;
 const SERVER_NAME = { java: "Java", cpp: "C++", go: "Go" } as const;
 
 async function runOnServer(lang: keyof typeof SERVER_NAME, body: object): Promise<ServerResponse> {
   try {
-    const res = await fetch(SERVER_ENDPOINT[lang], {
+    const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
-    });
+    };
+    let res: Response;
+    switch (lang) {
+      case "java": res = await fetch("/api/run/java", options); break;
+      case "cpp": res = await fetch("/api/run/cpp", options); break;
+      case "go": res = await fetch("/api/run/go", options); break;
+    }
     const data = (await res.json().catch(() => ({}))) as ServerResponse;
     if (!res.ok) return { error: data.error ?? `${SERVER_NAME[lang]} runner returned HTTP ${res.status}` };
     return data;

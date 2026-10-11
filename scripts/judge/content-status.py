@@ -28,7 +28,11 @@ for file in CONTENT.glob('*.json'):
     spec = json.loads(file.read_text())
     slug = file.stem
     # Concurrency problems need real threads, so their Java reference is the source of truth.
-    extension = 'sql' if spec.get('kind') == 'sql' else 'java' if spec.get('concurrency') else 'py'
+    extension = 'py'
+    if spec.get('kind') == 'sql':
+        extension = 'sql'
+    elif spec.get('concurrency'):
+        extension = 'java'
     if slug in meta and spec.get('id') == slug and (CONTENT / f'{slug}.md').is_file() and (CONTENT / f'{slug}.{extension}').is_file() and spec.get('tests') and all('expected' in case for case in spec['tests']):
         ready.add(slug)
     if slug in meta and spec.get('kind') != 'sql':

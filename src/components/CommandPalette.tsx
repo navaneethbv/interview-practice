@@ -67,20 +67,24 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const deferred = useDeferredValue(query);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const restoreRef = useRef<Element | null>(null);
 
   useEffect(() => {
     restoreRef.current = document.activeElement;
+    const dialog = dialogRef.current;
+    dialog?.showModal();
     inputRef.current?.focus();
     let live = true;
-    loadIndex().then((entries) => live && setIndex(entries));
+    void loadIndex().then((entries) => live && setIndex(entries));
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       live = false;
       document.body.style.overflow = overflow;
+      dialog?.close();
       if (restoreRef.current instanceof HTMLElement) restoreRef.current.focus();
     };
   }, []);
@@ -111,16 +115,15 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]">
-      <button type="button" aria-label="Close search" tabIndex={-1} onClick={onClose} className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Search the site"
-        tabIndex={-1}
-        className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay"
-        onKeyDown={onKeyDown}
-      >
+    <dialog
+      ref={dialogRef}
+      aria-label="Search the site"
+      onCancel={onClose}
+      onKeyDown={onKeyDown}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-transparent px-4 pt-[12vh] text-fg-1 backdrop:bg-black/40 backdrop:backdrop-blur-[2px]"
+    >
+      <div className="mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay">
         <div className="flex items-center gap-3 border-b border-line px-4">
           <Search size={17} className="shrink-0 text-fg-3" />
           <input
@@ -169,6 +172,6 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
           <span className="ml-auto">{index ? `${index.length.toLocaleString()} entries` : ""}</span>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

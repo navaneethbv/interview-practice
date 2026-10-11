@@ -1,4 +1,4 @@
-var mergeKLists = function(lists) {
+const mergeKLists = function(lists) {
     const values = [];
     for (let node of lists) {
         for (; node; node = node.next) values.push(node.val);

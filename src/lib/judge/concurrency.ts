@@ -22,7 +22,7 @@ const TIMEOUT_MESSAGE = `Threads did not finish within ${THREAD_TIMEOUT_MS / 100
 
 export const JAVA_CONCURRENCY_IMPORTS = " import java.util.concurrent.*; import java.util.concurrent.atomic.*; import java.util.concurrent.locks.*;";
 
-export const JAVA_CONCURRENCY_SUPPORT = String.raw`
+export const JAVA_CONCURRENCY_SUPPORT = `
 final class Conc {
   interface Task { void run() throws Exception; }
   /** Starts every task on its own thread in the given order, then waits for all of them. */
@@ -47,10 +47,10 @@ final class Conc {
     }
     for (Thread t : threads) if (t.isAlive()) throw new IllegalStateException(${JSON.stringify(TIMEOUT_MESSAGE)});
   }
-  /** Runs one trial ${REPEATS} times; returns the first result that differs from the first trial. */
+  /** Runs one trial ${REPEATS} times; rejects inconsistent outputs across trials. */
   static String repeat(Callable<String> trial) throws Exception {
     String first = trial.call();
-    for (int i = 1; i < ${REPEATS}; i++) { String next = trial.call(); if (!next.equals(first)) return next; }
+    for (int i = 1; i < ${REPEATS}; i++) { String next = trial.call(); if (!next.equals(first)) throw new IllegalStateException("Output changed across repeated trials: check thread synchronization"); }
     return first;
   }
 }
@@ -177,7 +177,7 @@ inline void runThreads(const vector<function<void()>>& tasks) {
 
 inline string repeatTrials(const function<string()>& trial) {
   string first = trial();
-  for (int i = 1; i < ${REPEATS}; i++) { string next = trial(); if (next != first) return next; }
+  for (int i = 1; i < ${REPEATS}; i++) { string next = trial(); if (next != first) throw runtime_error("Output changed across repeated trials: check thread synchronization"); }
   return first;
 }
 
@@ -317,7 +317,7 @@ func judgeRepeat(trial func() any) any {
 		next := trial()
 		nextJSON, _ := json.Marshal(next)
 		if string(nextJSON) != string(firstJSON) {
-			return next
+			panic("Output changed across repeated trials: check thread synchronization")
 		}
 	}
 	return first

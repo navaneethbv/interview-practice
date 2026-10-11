@@ -28,5 +28,6 @@ export function search(index: SearchEntry[], query: string): SearchEntry[] {
     const s = score(e, words);
     if (s !== null) hits.push([s, e]);
   }
-  return hits.sort((a, b) => a[0] - b[0]).slice(0, LIMIT).map(([, e]) => e);
+  hits.sort((a, b) => a[0] - b[0]);
+  return hits.slice(0, LIMIT).map(([, e]) => e);
 }

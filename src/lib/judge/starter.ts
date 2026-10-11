@@ -240,7 +240,7 @@ function tsType(t: ValueType) {
 
 /** JSDoc type names, as in LeetCode's JavaScript stubs. */
 function jsDocType(t: ValueType) {
-  return tsType(t).replace(/Array<(.+)>/, "$1[]").replace(/ \| null/g, "");
+  return tsType(t).replace(/Array<(.+)>/, "$1[]").replaceAll(" | null", "");
 }
 
 const EXTRA_HELPER_DOCS: Record<string, Record<ExtraLang, string>> = {

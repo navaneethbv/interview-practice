@@ -35,7 +35,7 @@ class CompanyListTests(unittest.TestCase):
 
     def test_rejects_company_path_traversal(self):
         with tempfile.TemporaryDirectory() as directory:
-            for company in ("../outside", "/tmp", "..", "acme/../other"):
+            for company in ("../outside", "/outside", "..", "acme/../other"):
                 with self.subTest(company=company), self.assertRaises(ValueError):
                     company_lists.build(Path(directory), [(company, "Bad")], "test")
 

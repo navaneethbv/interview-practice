@@ -1,4 +1,4 @@
-var numIslands = function(grid) {
+const numIslands = function(grid) {
     let count = 0;
     const sink = (r, c) => {
         if (r < 0 || c < 0 || r >= grid.length || c >= grid[0].length || grid[r][c] !== "1") return;

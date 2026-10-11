@@ -90,6 +90,6 @@ self.onmessage = async (event) => {
     }
     self.postMessage({ id, type: "done" });
   } catch (e) {
-    self.postMessage({ id, type: "done", error: String(e && e.stack ? e.stack : e) });
+    self.postMessage({ id, type: "done", error: String(e?.stack ?? e) });
   }
 };

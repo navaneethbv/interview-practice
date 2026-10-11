@@ -183,8 +183,7 @@ def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
             problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
         items = list(item["items"])
         listed = {entry["slug"] for entry in items}
-        for extra in company_extras(extras, item["id"], problems, listed):
-            items.append(extra)
+        items.extend(company_extras(extras, item["id"], problems, listed))
         description = item["description"]
         if len(items) > len(item["items"]):
             description += " Also includes problems described in candidate write-ups, marked by their category."

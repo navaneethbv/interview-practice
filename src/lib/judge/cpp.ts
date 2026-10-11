@@ -347,7 +347,7 @@ function designBody(spec: DesignSpec) {
 function cMarker() {
   const escaped = [...RESULT_MARKER].map((c) => {
     const point = c.codePointAt(0)!;
-    return point < 0x20 ? "\\x" + point.toString(16).padStart(2, "0") + '\" \"' : c;
+    return point < 0x20 ? String.raw`\x` + point.toString(16).padStart(2, "0") + '" "' : c;
   }).join("");
   return '"' + escaped + '"';
 }

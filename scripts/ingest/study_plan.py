@@ -65,7 +65,7 @@ NAMES = {
 
 
 def rows(sheet):
-    return [[c for c in r] for r in sheet.iter_rows(values_only=True) if any(c is not None for c in r)]
+    return [list(r) for r in sheet.iter_rows(values_only=True) if any(c is not None for c in r)]
 
 
 def text(value):
