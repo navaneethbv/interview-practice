@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { BACKUP_LIMIT, exportPractice, importPractice, parseBackup, type PracticeBackup } from "@/lib/practice-backup";
 import { downloadText } from "@/lib/download";
 
@@ -11,6 +11,10 @@ export function PracticeDataControls() {
   const confirm = useRef<HTMLButtonElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (backup) confirm.current?.focus();
+  }, [backup]);
 
   function cancelRestore() {
     setBackup(null);
@@ -44,7 +48,6 @@ export function PracticeDataControls() {
             try {
               if (file.size > BACKUP_LIMIT) throw new Error("Backup is too large (maximum 20 MB).");
               setBackup(parseBackup(await file.text()));
-              requestAnimationFrame(() => confirm.current?.focus());
             } catch (error) { setMessage((error as Error).message); }
             finally {
               if (input.current) input.current.value = "";

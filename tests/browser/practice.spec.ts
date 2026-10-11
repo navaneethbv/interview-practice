@@ -154,8 +154,13 @@ test("problem hub groups lists and the switcher moves between them", async ({ pa
 
 test("command palette jumps to a problem from the keyboard", async ({ page }) => {
   await page.goto("/");
-  await page.keyboard.press("Control+k");
   const input = page.getByRole("combobox", { name: "Search the site" });
+  // Establish hydration before sending a shortcut to the document event listener.
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(input).toBeFocused();
+  await input.press("Escape");
+  await expect(input).toHaveCount(0);
+  await page.keyboard.press("Control+k");
   await expect(input).toBeFocused();
   await input.fill("two sum");
   await expect(page.getByRole("option").first()).toContainText("1. Two Sum");
