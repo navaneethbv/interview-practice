@@ -1,0 +1,62 @@
+{
+  "kind": "design",
+  "id": "design-a-food-rating-system",
+  "style": "leetcode",
+  "className": "FoodRatings",
+  "ctorParams": [
+    {
+      "name": "foods",
+      "type": "string[]"
+    },
+    {
+      "name": "cuisines",
+      "type": "string[]"
+    },
+    {
+      "name": "ratings",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "changeRating",
+      "java": "changeRating",
+      "params": [
+        {
+          "name": "food",
+          "type": "string"
+        },
+        {
+          "name": "newRating",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "highestRated",
+      "java": "highestRated",
+      "params": [
+        {
+          "name": "cuisine",
+          "type": "string"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[["kimchi","miso","sushi","moussaka","ramen","bulgogi"],["korean","japanese","japanese","greek","japanese","korean"],[9,12,8,15,14,7]],"ops":["highestRated","highestRated","changeRating","highestRated","changeRating","highestRated"],"args":[["korean"],["japanese"],["sushi",16],["japanese"],["ramen",16],["japanese"]]},"sample":true,"expected":["kimchi","ramen",null,"sushi",null,"ramen"]},
+    {"input":{"ctor":[["a"],["x"],[1]],"ops":["changeRating","highestRated"],"args":[["a",5],["x"]]},"sample":true,"expected":[null,"a"]},
+    {"input":{"ctor":[["eh","dbhdg","cf","ahh","begb","aff","ba"],["italian","korean","thai","italian","korean","italian","thai"],[5,10,4,5,5,10,5]],"ops":["changeRating","highestRated","highestRated","highestRated","highestRated","changeRating","highestRated","changeRating","changeRating","highestRated","highestRated","highestRated","highestRated","changeRating","highestRated","highestRated","changeRating","changeRating"],"args":[["cf",7],["thai"],["thai"],["thai"],["thai"],["dbhdg",9],["korean"],["cf",10],["ahh",3],["thai"],["korean"],["thai"],["italian"],["ahh",9],["thai"],["italian"],["dbhdg",9],["ba",6]]},"expected":[null,"cf","cf","cf","cf",null,"dbhdg",null,null,"cf","dbhdg","cf","aff",null,"cf","aff",null,null]},
+    {"input":{"ctor":[["dfdcd","fbdd"],["thai","italian"],[1,1]],"ops":["changeRating","changeRating","highestRated","changeRating","highestRated","highestRated","highestRated","highestRated"],"args":[["fbdd",3],["fbdd",10],["thai"],["dfdcd",2],["italian"],["thai"],["italian"],["thai"]]},"expected":[null,null,"dfdcd",null,"fbdd","dfdcd","fbdd","dfdcd"]},
+    {"input":{"ctor":[["ec","eedeh","db","efha"],["korean","thai","thai","korean"],[4,8,10,7]],"ops":["highestRated","highestRated","highestRated","changeRating","highestRated","highestRated","changeRating","changeRating","highestRated","changeRating","highestRated","highestRated","changeRating"],"args":[["thai"],["korean"],["thai"],["eedeh",7],["korean"],["thai"],["eedeh",4],["efha",5],["thai"],["db",3],["thai"],["korean"],["eedeh",3]]},"expected":["db","efha","db",null,"efha","db",null,null,"db",null,"eedeh","efha",null]},
+    {"input":{"ctor":[["ef","egfb","fabf","acf"],["italian","thai","thai","korean"],[2,9,8,4]],"ops":["changeRating","changeRating","highestRated","highestRated","highestRated","highestRated","changeRating","highestRated","changeRating","highestRated","changeRating","changeRating","changeRating","changeRating","changeRating","highestRated","highestRated","highestRated","highestRated","highestRated","highestRated","changeRating"],"args":[["egfb",9],["acf",5],["thai"],["korean"],["italian"],["italian"],["acf",6],["thai"],["ef",9],["korean"],["ef",10],["ef",4],["fabf",2],["egfb",7],["ef",8],["korean"],["korean"],["korean"],["korean"],["italian"],["thai"],["ef",7]]},"expected":[null,null,"egfb","acf","ef","ef",null,"egfb",null,"acf",null,null,null,null,null,"acf","acf","acf","acf","ef","egfb",null]},
+    {"input":{"ctor":[["gech","feb","gbde","hhdce"],["thai","italian","italian","italian"],[3,5,2,3]],"ops":["changeRating","highestRated","changeRating","changeRating","highestRated"],"args":[["feb",1],["thai"],["feb",3],["gech",7],["italian"]]},"expected":[null,"gech",null,null,"feb"]},
+    {"input":{"ctor":[["a","cb","gaab","faggg","fde"],["thai","italian","italian","italian","italian"],[7,8,4,2,10]],"ops":["highestRated","highestRated","highestRated","changeRating","changeRating","changeRating","highestRated","changeRating","changeRating"],"args":[["thai"],["italian"],["italian"],["a",1],["a",6],["a",5],["italian"],["gaab",2],["a",7]]},"expected":["a","fde","fde",null,null,null,"fde",null,null]},
+    {"input":{"ctor":[["fb"],["thai"],[7]],"ops":["highestRated","highestRated","highestRated","changeRating","highestRated","highestRated","highestRated","changeRating","highestRated","highestRated","changeRating","highestRated","changeRating"],"args":[["thai"],["thai"],["thai"],["fb",1],["thai"],["thai"],["thai"],["fb",5],["thai"],["thai"],["fb",4],["thai"],["fb",6]]},"expected":["fb","fb","fb",null,"fb","fb","fb",null,"fb","fb",null,"fb",null]},
+    {"input":{"ctor":[["hbdh","bgah","acha","gf","ahh","dg","b","gb"],["korean","korean","italian","italian","korean","thai","italian","thai"],[6,2,1,8,2,1,1,8]],"ops":["highestRated","highestRated","changeRating","changeRating","changeRating","highestRated","changeRating","changeRating","changeRating","changeRating","highestRated","changeRating","highestRated","highestRated","highestRated","highestRated","changeRating","changeRating"],"args":[["korean"],["italian"],["bgah",2],["b",4],["gb",9],["thai"],["dg",8],["b",4],["hbdh",5],["hbdh",2],["italian"],["hbdh",6],["italian"],["thai"],["thai"],["korean"],["dg",9],["ahh",10]]},"expected":["hbdh","gf",null,null,null,"gb",null,null,null,null,"gf",null,"gf","gb","gb","hbdh",null,null]},
+    {"input":{"ctor":[["hdhf","bc","cffbh","f","gah","ce","geceg","cb"],["mexican","thai","italian","korean","thai","mexican","italian","korean"],[2,7,7,2,3,2,9,5]],"ops":["changeRating","highestRated","changeRating","highestRated","highestRated","changeRating","highestRated","changeRating","changeRating","changeRating","highestRated","highestRated","highestRated","changeRating","changeRating","changeRating","changeRating"],"args":[["geceg",7],["thai"],["hdhf",6],["mexican"],["italian"],["cffbh",5],["thai"],["bc",2],["f",8],["geceg",8],["korean"],["thai"],["thai"],["bc",10],["bc",10],["cffbh",9],["gah",7]]},"expected":[null,"bc",null,"hdhf","cffbh",null,"bc",null,null,null,"f","gah","gah",null,null,null,null]},
+    {"input":{"ctor":[["cfca","bab"],["thai","thai"],[6,10]],"ops":["changeRating","changeRating","highestRated","highestRated","highestRated","changeRating","highestRated","changeRating","changeRating","changeRating","highestRated","highestRated","highestRated","highestRated","highestRated","highestRated","highestRated","changeRating"],"args":[["bab",2],["bab",1],["thai"],["thai"],["thai"],["bab",1],["thai"],["bab",8],["bab",5],["cfca",4],["thai"],["thai"],["thai"],["thai"],["thai"],["thai"],["thai"],["bab",6]]},"expected":[null,null,"cfca","cfca","cfca",null,"cfca",null,null,null,"bab","bab","bab","bab","bab","bab","bab",null]}
+  ]
+}

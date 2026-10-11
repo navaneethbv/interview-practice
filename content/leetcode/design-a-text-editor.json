@@ -1,0 +1,67 @@
+{
+  "kind": "design",
+  "id": "design-a-text-editor",
+  "style": "leetcode",
+  "className": "TextEditor",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "addText",
+      "java": "addText",
+      "params": [
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "deleteText",
+      "java": "deleteText",
+      "params": [
+        {
+          "name": "k",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "cursorLeft",
+      "java": "cursorLeft",
+      "params": [
+        {
+          "name": "k",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "cursorRight",
+      "java": "cursorRight",
+      "params": [
+        {
+          "name": "k",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[],"ops":["addText","deleteText","addText","cursorRight","cursorLeft","deleteText","cursorLeft","cursorRight"],"args":[["leetcode"],[4],["practice"],[3],[8],[10],[2],[6]]},"sample":true,"expected":[null,4,null,"etpractice","leet",4,"","practi"]},
+    {"input":{"ctor":[],"ops":["deleteText","cursorLeft","addText","cursorLeft"],"args":[[3],[1],["abcdefghijkl"],[1]]},"sample":true,"expected":[0,"",null,"bcdefghijk"]},
+    {"input":{"ctor":[],"ops":["cursorLeft","cursorRight","addText","cursorRight","deleteText","addText","addText","cursorLeft","cursorLeft","addText","addText","cursorRight","addText","addText","deleteText","cursorLeft","cursorRight","deleteText","addText","cursorLeft","deleteText"],"args":[[11],[11],["fkqfwmqgr"],[8],[4],["ixqt"],["pslfffeh"],[8],[11],["kvhqroodcecc"],["clkwnflymnr"],[9],["owfrz"],["o"],[6],[13],[10],[4],["xhpexjeudbb"],[14],[12]]},"expected":["","",null,"fkqfwmqgr",4,null,null,"fkqfwixqt","",null,null,"rfkqfwixqt",null,null,6,"eccclkwnfl","ymnrfkqfwi",4,null,"clkwnflymn",12]},
+    {"input":{"ctor":[],"ops":["deleteText","deleteText","deleteText","deleteText","addText","cursorRight","cursorLeft","addText","deleteText","addText","deleteText","cursorRight","cursorLeft","addText","cursorRight","cursorLeft","addText","cursorLeft","addText","addText","addText"],"args":[[7],[6],[2],[3],["jov"],[12],[4],["ycy"],[5],["opbnqgticn"],[1],[8],[9],["bnmpef"],[15],[11],["ewzsccgctnc"],[12],["eppclq"],["aimfexezqeqr"],["udwlym"]]},"expected":[0,0,0,0,null,"jov","",null,3,null,1,"bnqgticjov","opb",null,"fnqgticjov","opbbnmp",null,"opbbnm",null,null,null]},
+    {"input":{"ctor":[],"ops":["addText","cursorRight","addText","addText","cursorRight","cursorLeft","addText","addText","addText","cursorLeft","cursorRight","cursorRight","addText","cursorLeft","cursorLeft"],"args":[["qy"],[3],["aeljmbage"],["iyrbqxzn"],[15],[4],["xb"],["pzskb"],["jtzv"],[14],[1],[15],["iepmlabfxdvx"],[3],[5]]},"expected":[null,"qy",null,null,"geiyrbqxzn","jmbageiyrb",null,null,null,"aeljmbagei","eljmbageiy","zskbjtzvqx",null,"xiepmlabfx","jtzvqxiepm"]},
+    {"input":{"ctor":[],"ops":["cursorRight","addText","cursorRight","cursorRight","addText","addText","cursorRight","addText","cursorLeft","addText","addText","cursorLeft","cursorRight","cursorLeft","addText","deleteText","deleteText","cursorRight","cursorRight","addText"],"args":[[12],["i"],[13],[1],["rxrwdu"],["borup"],[15],["aoprid"],[5],["gorzy"],["udmalxswa"],[3],[2],[7],["lipqolaw"],[5],[1],[10],[14],["xl"]]},"expected":["",null,"i","i",null,null,"xrwduborup",null,"rwduborupa",null,null,"orzyudmalx","zyudmalxsw","rupagorzyu",null,5,1,"dmalxswaop","lxswaoprid",null]},
+    {"input":{"ctor":[],"ops":["cursorLeft","addText","deleteText","cursorLeft","deleteText","cursorLeft","cursorLeft","deleteText","addText","addText","deleteText","deleteText","deleteText","addText","cursorLeft","cursorLeft","addText"],"args":[[12],["zzcr"],[4],[14],[4],[7],[13],[4],["hffjxkqszymk"],["qxbfmxmgzwd"],[7],[9],[2],["adaimqpr"],[2],[8],["fzpwsn"]]},"expected":["",null,4,"",0,"","",0,null,null,7,9,2,null,"ffjxadaimq","hff",null]},
+    {"input":{"ctor":[],"ops":["addText","addText","addText","addText","addText","deleteText","cursorRight"],"args":[["ipo"],["reee"],["rwu"],["ncjmx"],["gcms"],[6],[12]]},"expected":[null,null,null,null,null,6,"reeerwuncj"]},
+    {"input":{"ctor":[],"ops":["cursorRight","deleteText","cursorLeft","cursorLeft","cursorLeft","addText","cursorLeft","deleteText","deleteText","cursorLeft","deleteText","addText","addText","addText","cursorLeft","addText","addText"],"args":[[9],[5],[13],[9],[2],["utartbpb"],[15],[8],[7],[1],[5],["wnzqhsmkj"],["chngzwqsu"],["rquyaighluj"],[5],["qk"],["uucevhovsv"]]},"expected":["",0,"","","",null,"",0,0,"",0,null,null,null,"wqsurquyai",null,null]},
+    {"input":{"ctor":[],"ops":["addText","cursorLeft","addText","deleteText","addText","cursorLeft","addText","addText","cursorRight","cursorRight","cursorRight","addText","addText"],"args":[["v"],[15],["qinwf"],[5],["qyqfwqomtm"],[8],["azvfonqmp"],["s"],[7],[14],[1],["nwdll"],["qffpz"]]},"expected":[null,"",null,5,null,"qy",null,null,"mpsqfwqomt","sqfwqomtmv","sqfwqomtmv",null,null]},
+    {"input":{"ctor":[],"ops":["cursorLeft","addText","addText","cursorRight","deleteText","cursorRight","deleteText","addText","addText","cursorRight","cursorLeft","cursorLeft"],"args":[[13],["wjabmkp"],["gbyujlt"],[6],[8],[5],[3],["hyatvy"],["xi"],[9],[4],[11]]},"expected":["",null,null,"mkpgbyujlt",8,"wjabmk",3,null,null,"jahyatvyxi","wjahyat",""]},
+    {"input":{"ctor":[],"ops":["cursorLeft","addText","addText","deleteText","deleteText","deleteText","cursorLeft","addText","cursorRight","addText","cursorLeft","addText","addText"],"args":[[15],["snffxqoetc"],["cmzvpcujhlbo"],[1],[7],[14],[3],["kcondndrrw"],[3],["rg"],[5],["yz"],["rptcy"]]},"expected":["",null,null,1,7,14,"",null,"kcondndrrw",null,"kcondnd",null,null]}
+  ]
+}

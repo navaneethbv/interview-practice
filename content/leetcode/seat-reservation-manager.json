@@ -1,0 +1,45 @@
+{
+  "kind": "design",
+  "id": "seat-reservation-manager",
+  "style": "leetcode",
+  "className": "SeatManager",
+  "ctorParams": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "reserve",
+      "java": "reserve",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "unreserve",
+      "java": "unreserve",
+      "params": [
+        {
+          "name": "seatNumber",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[5],"ops":["reserve","reserve","unreserve","reserve","reserve","reserve","reserve","unreserve"],"args":[[],[],[2],[],[],[],[],[5]]},"sample":true,"expected":[1,2,null,2,3,4,5,null]},
+    {"input":{"ctor":[1],"ops":["reserve","unreserve","reserve"],"args":[[],[1],[]]},"sample":true,"expected":[1,null,1]},
+    {"input":{"ctor":[1],"ops":["reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve"],"args":[[],[1],[],[1],[],[1],[],[1],[],[1],[],[1],[],[1],[],[1],[],[1],[]]},"expected":[1,null,1,null,1,null,1,null,1,null,1,null,1,null,1,null,1,null,1]},
+    {"input":{"ctor":[11],"ops":["reserve","reserve","reserve","reserve","reserve","reserve","reserve","unreserve","reserve","reserve","reserve","reserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve"],"args":[[],[],[],[],[],[],[],[5],[],[],[],[],[],[5],[],[9],[],[10],[]]},"expected":[1,2,3,4,5,6,7,null,5,8,9,10,11,null,5,null,9,null,10]},
+    {"input":{"ctor":[10],"ops":["reserve","reserve","reserve","unreserve","reserve","unreserve","reserve","reserve","reserve","reserve","reserve","reserve","reserve","reserve","unreserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","unreserve","unreserve","reserve"],"args":[[],[],[],[2],[],[1],[],[],[],[],[],[],[],[],[10],[3],[],[5],[],[8],[],[],[6],[],[2],[],[3],[2],[10],[]]},"expected":[1,2,3,null,2,null,1,4,5,6,7,8,9,10,null,null,3,null,5,null,8,10,null,6,null,2,null,null,null,2]},
+    {"input":{"ctor":[11],"ops":["reserve","reserve","unreserve","reserve","reserve","reserve","unreserve","unreserve","unreserve","reserve","reserve","reserve","reserve","reserve","reserve","unreserve"],"args":[[],[],[1],[],[],[],[1],[3],[4],[],[],[],[],[],[],[2]]},"expected":[1,2,null,1,3,4,null,null,null,1,3,4,5,6,7,null]},
+    {"input":{"ctor":[8],"ops":["reserve","unreserve","reserve","reserve","reserve","reserve","unreserve","unreserve","reserve","reserve","reserve","unreserve","unreserve","reserve","unreserve","reserve","unreserve","unreserve","reserve","reserve","unreserve","unreserve","reserve","unreserve","unreserve"],"args":[[],[1],[],[],[],[],[1],[4],[],[],[],[3],[2],[],[4],[],[5],[1],[],[],[3],[4],[],[1],[2]]},"expected":[1,null,1,2,3,4,null,null,1,4,5,null,null,2,null,3,null,null,1,4,null,null,3,null,null]},
+    {"input":{"ctor":[10],"ops":["reserve","unreserve","reserve","reserve","reserve"],"args":[[],[1],[],[],[]]},"expected":[1,null,1,2,3]},
+    {"input":{"ctor":[6],"ops":["reserve","reserve","reserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","reserve","reserve","unreserve","unreserve","reserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","reserve","unreserve","unreserve","reserve","reserve"],"args":[[],[],[],[],[2],[],[2],[],[4],[],[],[],[3],[1],[],[],[3],[],[2],[],[6],[],[6],[5],[],[]]},"expected":[1,2,3,4,null,2,null,2,null,4,5,6,null,null,1,3,null,3,null,2,null,6,null,null,5,6]},
+    {"input":{"ctor":[9],"ops":["reserve","reserve","reserve","unreserve","unreserve","unreserve","reserve","reserve","unreserve","unreserve","reserve"],"args":[[],[],[],[1],[2],[3],[],[],[2],[1],[]]},"expected":[1,2,3,null,null,null,1,2,null,null,1]},
+    {"input":{"ctor":[10],"ops":["reserve","unreserve","reserve","unreserve","reserve"],"args":[[],[1],[],[1],[]]},"expected":[1,null,1,null,1]},
+    {"input":{"ctor":[7],"ops":["reserve","unreserve","reserve","unreserve","reserve","reserve","unreserve","reserve","reserve","unreserve","reserve","unreserve","unreserve","reserve","reserve","reserve","reserve","reserve","reserve","unreserve","reserve","unreserve","reserve"],"args":[[],[1],[],[1],[],[],[1],[],[],[2],[],[2],[3],[],[],[],[],[],[],[1],[],[5],[]]},"expected":[1,null,1,null,1,2,null,1,3,null,2,null,null,2,3,4,5,6,7,null,1,null,5]}
+  ]
+}

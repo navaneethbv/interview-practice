@@ -2002,6 +2002,182 @@
   ]
  },
  {
+  "id": "object-oriented-design",
+  "title": "Object-Oriented Design",
+  "kind": "curated",
+  "description": "Executable low-level design: classes with state and invariants, judged by sequences of method calls. Pair them with the Low-Level Design Practice guide for the modeling discussion.",
+  "items": [
+   {
+    "slug": "lru-cache",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "snapshot-array",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "logger-rate-limiter",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-authentication-manager",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-parking-system",
+    "category": "Allocation"
+   },
+   {
+    "slug": "seat-reservation-manager",
+    "category": "Allocation"
+   },
+   {
+    "slug": "exam-room",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-a-number-container-system",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-leaderboard",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-a-food-rating-system",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-task-manager",
+    "category": "Ranking"
+   },
+   {
+    "slug": "all-oone-data-structure",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-underground-system",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "stock-price-fluctuation",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "online-stock-span",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "design-browser-history",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-a-text-editor",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-search-autocomplete-system",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-file-system",
+    "category": "File systems"
+   },
+   {
+    "slug": "design-in-memory-file-system",
+    "category": "File systems"
+   },
+   {
+    "slug": "design-tic-tac-toe",
+    "category": "Games"
+   },
+   {
+    "slug": "design-snake-game",
+    "category": "Games"
+   },
+   {
+    "slug": "simple-bank-system",
+    "category": "Transactions"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Core structures"
+   },
+   {
+    "slug": "design-circular-queue",
+    "category": "Core structures"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Core structures"
+   }
+  ]
+ },
+ {
+  "id": "ml-coding",
+  "title": "ML Coding",
+  "kind": "curated",
+  "description": "Original problems for machine learning coding rounds: implement softmax, attention, k-means, logistic regression, retrieval and evaluation metrics from scratch with only the standard library.",
+  "items": [
+   {
+    "slug": "ml-softmax",
+    "category": "Building blocks"
+   },
+   {
+    "slug": "ml-scaled-dot-product-attention",
+    "category": "Building blocks"
+   },
+   {
+    "slug": "ml-k-means",
+    "category": "Unsupervised learning"
+   },
+   {
+    "slug": "ml-logistic-regression",
+    "category": "Supervised learning"
+   },
+   {
+    "slug": "ml-cosine-top-k",
+    "category": "Retrieval"
+   },
+   {
+    "slug": "ml-roc-auc",
+    "category": "Evaluation"
+   },
+   {
+    "slug": "ml-precision-recall-at-k",
+    "category": "Evaluation"
+   }
+  ]
+ },
+ {
   "id": "blind-75",
   "title": "Blind 75",
   "kind": "curated",
