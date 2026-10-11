@@ -19,6 +19,7 @@ See README.md for features and setup.
 - `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`
 - `npm run tests:build [-- --java] [-- --langs] [ids...]` fills and verifies expected outputs for problem specs; `--langs` also runs `<id>.js/.ts/.cpp/.go` references.
 - `python3 scripts/ingest/company_lists.py <snapshot-dir> nvidia=NVIDIA ...` rebuilds `scripts/ingest/company_lists.json` from a LeetCode company-tag snapshot (facts only: which problems, how recently); `company_extras.json` adds problems from candidate write-ups. Then rerun `problem_sets.py`.
+- `python3 scripts/ingest/company_crawler.py [--sources a,b] [--companies x,y] [--cache DIR] [--dry-run]` collects which problems public pages report per company into `scripts/ingest/company_reports.json` (sources in `crawl_sources.json`: LeetCode tags, Hello Interview, 1point3acres, Gotham Loop, interviewDB); `problem_sets.py` merges them as "Recent reports". Facts only; honours robots.txt, rate limits, no logins.
 - `python3 scripts/ingest/study_plan.py` regenerates `content/study-plan.json` from `Interview_Prep_Plan_ENRICHED.xlsx`.
 - `npm run ingest:grokking -- <folder>` regenerates `content/courses/grokking/` and `public/course-assets/grokking/`.
 - `npm run ingest:system-design -- <grokking|advanced|notes> <source>` regenerates one system design book in `content/system-design/<book>/` (needs `pip install pdfplumber`).

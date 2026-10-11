@@ -121,3 +121,15 @@ The coverage report includes walkthrough counts, Java counts, and readable-Java 
 Readable-Java coverage is a conservative formatting heuristic, not proof of algorithm quality or judge correctness.
 It checks for more than three nonblank lines, a maximum line length of 120 characters, and no inline statements except for-loop headers.
 Manual review must still check names, explanations, complexity, and edge cases.
+
+## Crawling company reports
+
+`python3 scripts/ingest/company_crawler.py` records which problems public pages report at each company list and writes `scripts/ingest/company_reports.json`.
+Rerun `problem_sets.py` afterwards; reported problems a list lacks are appended under the "Recent reports" category, ranked by how many sources mention them.
+
+- Sources live in `scripts/ingest/crawl_sources.json`. `leetcode` reads the community company-tag CSV snapshot and is verified. The Hello Interview, 1point3acres, Gotham Loop and interviewDB entries are marked `verified: false`: their URL patterns could not be checked from the build sandbox, so open each site, confirm a public listing URL, set `start` and `follow`, then set `verified: true`.
+- Only facts are stored (problem, company, source counts). Statements and write-ups are never copied; problems are matched by LeetCode link, exact title or "LC 123" mentions against the catalog.
+- The crawler sends no cookies or credentials, honours robots.txt, waits `delay_seconds` between requests to a host, backs off on 429/503, stops a host after repeated failures and skips login or paywalled pages. Do not add URLs behind a login or paywall, and check each site's terms before enabling it.
+- Use `--cache DIR` to reuse fetched pages and `--offline` to rebuild from the cache. `--snapshot-out DIR` saves the LeetCode CSVs so `company_lists.py` can rebuild recency-ordered lists.
+- Tests use a fake web and need no network: `python3 -m unittest discover -s scripts/ingest -p 'test_*.py'`.
+

@@ -1,0 +1,56 @@
+{
+ "_comment": "Sources for company_crawler.py. 'companies' maps a list id to the name a source uses in its URLs; with 'listed_only' a source covers only those companies. Sources marked verified=false have URL patterns that could not be checked from the build sandbox: open the site, confirm the public listing URL, then update 'start' and 'follow' and set verified=true. Never add cookies, tokens or URLs behind a login or paywall.",
+ "user_agent": "interview-practice-crawler/1.0 (+https://github.com/navaneethbv/interview-practice)",
+ "delay_seconds": 3,
+ "sources": {
+  "leetcode": {
+   "label": "LeetCode company tags",
+   "home": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
+   "kind": "snapshot",
+   "verified": true,
+   "base": "https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master"
+  },
+  "hellointerview": {
+   "label": "Hello Interview",
+   "home": "https://www.hellointerview.com/community/questions",
+   "kind": "pages",
+   "verified": false,
+   "start": ["https://www.hellointerview.com/community/questions?company={company}&type=coding&page={page}"],
+   "pages": 3,
+   "follow": "^https://www\\.hellointerview\\.com/community/questions/[a-z0-9-]+$",
+   "max_follow": 40
+  },
+  "1point3acres": {
+   "label": "1point3acres",
+   "home": "https://www.1point3acres.com/bbs/",
+   "kind": "pages",
+   "verified": false,
+   "listed_only": true,
+   "companies": {"meta": "Meta", "google": "Google", "amazon": "Amazon", "apple": "Apple", "microsoft": "Microsoft", "uber": "Uber", "nvidia": "NVIDIA", "openai": "OpenAI", "anthropic": "Anthropic"},
+   "start": ["https://www.1point3acres.com/bbs/tag/{company}-{page}.html"],
+   "pages": 2,
+   "follow": "^https://www\\.1point3acres\\.com/bbs/thread-\\d+-1-1\\.html$",
+   "max_follow": 40
+  },
+  "gothamloop": {
+   "label": "Gotham Loop",
+   "home": "https://www.gothamloop.com/",
+   "kind": "pages",
+   "verified": false,
+   "start": ["https://www.gothamloop.com/companies/{company}"],
+   "pages": 1,
+   "follow": "^https://www\\.gothamloop\\.com/questions/[a-z0-9-]+$",
+   "max_follow": 40
+  },
+  "interviewdb": {
+   "label": "interviewDB",
+   "home": "https://www.interviewdb.io/",
+   "kind": "pages",
+   "verified": false,
+   "start": ["https://www.interviewdb.io/company/{company}"],
+   "pages": 1,
+   "follow": "^https://www\\.interviewdb\\.io/question/[a-z0-9-]+$",
+   "max_follow": 40
+  }
+ }
+}
