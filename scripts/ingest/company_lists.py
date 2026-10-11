@@ -68,9 +68,14 @@ def read_company(folder: Path):
 
 
 def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str) -> dict:
+    snapshot = snapshot.resolve(strict=True)
     data = json.loads(OUT.read_text(encoding="utf8")) if OUT.is_file() else {"sets": [], "problems": {}}
     for company_id, title in companies:
-        folder = snapshot / company_id
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", company_id):
+            raise ValueError("Company ID must be a lowercase slug")
+        folder = (snapshot / company_id).resolve()
+        if not folder.is_relative_to(snapshot):
+            raise ValueError("Company folder must stay inside the snapshot")
         if not folder.is_dir():
             raise SystemExit(f"No folder for {company_id} in {snapshot}")
         items, problems = read_company(folder)
@@ -94,12 +99,14 @@ def main(argv: list[str]):
     if len(argv) < 2:
         print(__doc__)
         sys.exit(1)
-    snapshot = Path(argv[0])
+    snapshot = Path(argv[0]).resolve(strict=True)
     companies = []
     for arg in argv[1:]:
         company_id, _, title = arg.partition("=")
         companies.append((company_id, title or company_id.replace("-", " ").title()))
-    readme = snapshot / "README.md"
+    readme = (snapshot / "README.md").resolve()
+    if not readme.is_relative_to(snapshot):
+        raise ValueError("Snapshot README must stay inside the snapshot")
     when = re.search(r"snapshot as of \*\*([^*]+)\*\*", readme.read_text(encoding="utf8")) if readme.is_file() else None
     label = f"snapshot of {when.group(1)}" if when else "community snapshot"
     data = build(snapshot, companies, label)

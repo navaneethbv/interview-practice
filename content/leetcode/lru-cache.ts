@@ -1,7 +1,7 @@
 class LRUCache {
-    private map = new Map<number, number>();
+    private readonly map = new Map<number, number>();
 
-    constructor(private capacity: number) {}
+    constructor(private readonly capacity: number) {}
 
     get(key: number): number {
         const value = this.map.get(key);

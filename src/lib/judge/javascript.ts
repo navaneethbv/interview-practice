@@ -113,7 +113,7 @@ function __format(args) {
   return args.map((a) => (typeof a === "string" ? a : (() => { try { return JSON.stringify(__plain(a)); } catch { return String(a); } })())).join(" ");
 }
 function __where(e) {
-  const m = /solution\.js:(\d+)/.exec((e && e.stack) || "");
+  const m = /(?:solution\.js|<input>):(\d+)/.exec((e && e.stack) || "");
   return m ? " (line " + Math.max(1, Number(m[1]) - __JUDGE_LINE_OFFSET__) + ")" : "";
 }
 

@@ -1,4 +1,4 @@
-var distance = function(nums) {
+const distance = function(nums) {
     const ans = new Array(nums.length).fill(0);
     const pass = (indices) => {
         const seen = new Map();

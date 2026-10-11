@@ -92,7 +92,7 @@ Map lookups return an empty list for a missing key or a singleton list for a sto
 Collection enumeration is ordered, union-find representatives are component minima, and MST reconstruction uses input order to break equal-weight ties.
 The string-labeled binary-tree problem uses child-index arrays so labels retain their original type without changing the shared numeric TreeNode helper.
 
-All 1,141 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
+All 1,214 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
 The remaining seven require JavaScript, shell, or pandas runners.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
 

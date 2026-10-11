@@ -33,6 +33,18 @@ class CompanyListTests(unittest.TestCase):
         self.assertEqual(data["problems"]["lru-cache"], {"number": 146, "title": "LRU Cache", "difficulty": "medium", "topics": [], "acceptance": 40.0})
         self.assertNotIn("frequency", json.dumps(data["problems"]))
 
+    def test_rejects_company_path_traversal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for company in ("../outside", "/tmp", "..", "acme/../other"):
+                with self.subTest(company=company), self.assertRaises(ValueError):
+                    company_lists.build(Path(directory), [(company, "Bad")], "test")
+
+    def test_rejects_company_symlink_outside_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
+            (Path(directory) / "acme").symlink_to(outside, target_is_directory=True)
+            with self.assertRaises(ValueError):
+                company_lists.build(Path(directory), [("acme", "Acme")], "test")
+
     def test_committed_company_lists_reference_known_problems(self):
         root = Path(__file__).resolve().parents[2]
         sets = json.loads((root / "content/sets/sets.json").read_text())

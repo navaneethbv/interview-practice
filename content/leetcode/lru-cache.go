@@ -21,7 +21,7 @@ func (this *LRUCache) Get(key int) int {
 	return el.Value.(*entry).value
 }
 
-func (this *LRUCache) Put(key int, value int) {
+func (this *LRUCache) Put(key, value int) {
 	if el, ok := this.index[key]; ok {
 		el.Value.(*entry).value = value
 		this.order.MoveToFront(el)

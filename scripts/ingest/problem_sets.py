@@ -159,6 +159,14 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
     sets[:0] = custom["sets"]
 
 
+def company_extras(extras, company_id, problems, listed):
+    for extra in extras.get(company_id, []):
+        if extra["slug"] not in problems:
+            raise ValueError(f"Missing metadata for company extra {extra['slug']}")
+        if extra["slug"] not in listed:
+            yield extra
+
+
 def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
     """Append company lists built by company_lists.py; workbook and authored metadata take precedence."""
     source = Path(__file__).with_name("company_lists.json")
@@ -175,11 +183,8 @@ def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
             problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
         items = list(item["items"])
         listed = {entry["slug"] for entry in items}
-        for extra in extras.get(item["id"], []):
-            if extra["slug"] not in problems:
-                raise ValueError(f"Missing metadata for company extra {extra['slug']}")
-            if extra["slug"] not in listed:
-                items.append(extra)
+        for extra in company_extras(extras, item["id"], problems, listed):
+            items.append(extra)
         description = item["description"]
         if len(items) > len(item["items"]):
             description += " Also includes problems described in candidate write-ups, marked by their category."

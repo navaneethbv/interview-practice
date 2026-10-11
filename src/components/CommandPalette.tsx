@@ -111,13 +111,14 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-[12vh] backdrop-blur-[2px]" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]">
+      <button type="button" aria-label="Close search" tabIndex={-1} onClick={onClose} className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Search the site"
-        className="w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay"
-        onMouseDown={(e) => e.stopPropagation()}
+        tabIndex={-1}
+        className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay"
         onKeyDown={onKeyDown}
       >
         <div className="flex items-center gap-3 border-b border-line px-4">
@@ -149,16 +150,16 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
               data-index={i}
               role="option"
               aria-selected={i === current}
-              onMouseMove={() => setActive(i)}
-              onClick={() => go(r)}
-              className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm ${i === current ? "bg-layer-2" : ""}`}
+              className={`rounded-lg text-sm ${i === current ? "bg-layer-2" : ""}`}
             >
+              <button type="button" tabIndex={-1} onMouseMove={() => setActive(i)} onClick={() => go(r)} className="flex w-full items-center gap-3 px-3 py-2 text-left">
               <span className="grid size-7 shrink-0 place-items-center rounded-md bg-layer-2 text-fg-2">{KIND[r.k].icon}</span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-fg-1">{r.t}</span>
                 {r.s && <span className="block truncate text-xs text-fg-3 capitalize">{r.s}</span>}
               </span>
               <span className="shrink-0 text-xs text-fg-3">{KIND[r.k].label}</span>
+              </button>
             </li>
           ))}
         </ul>

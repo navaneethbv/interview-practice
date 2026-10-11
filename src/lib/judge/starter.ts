@@ -349,16 +349,18 @@ function extraStarter(spec: Exclude<ProblemSpec, { kind: "sql" }>, lang: ExtraLa
   const params = spec.params;
   const name = safeName(spec.function.java, lang);
   const n = (p: Param) => safeName(p.name, lang);
+  const typedTs = (p: Param) => `${n(p)}: ${tsType(p.type)}`;
+  const typedGo = (p: Param) => `${n(p)} ${goType(p.type)}`;
   switch (lang) {
     case "javascript":
       return `${head}${jsDoc(params, spec.returns)}var ${name} = function(${params.map(n).join(", ")}) {\n    \n};\n`;
     case "typescript":
-      return `${head}function ${name}(${params.map((p) => `${n(p)}: ${tsType(p.type)}`).join(", ")}): ${tsType(spec.returns)} {\n    \n};\n`;
+      return `${head}function ${name}(${params.map(typedTs).join(", ")}): ${tsType(spec.returns)} {\n    \n};\n`;
     case "cpp":
       return `${head}class Solution {\npublic:\n    ${cppType(spec.returns)} ${name}(${params.map(cppParam).join(", ")}) {\n        \n    }\n};\n`;
     case "go": {
       const ret = spec.returns === "void" ? "" : ` ${goType(spec.returns)}`;
-      return `${head}func ${name}(${params.map((p) => `${n(p)} ${goType(p.type)}`).join(", ")})${ret} {\n    \n}\n`;
+      return `${head}func ${name}(${params.map(typedGo).join(", ")})${ret} {\n    \n}\n`;
     }
   }
 }
@@ -366,6 +368,8 @@ function extraStarter(spec: Exclude<ProblemSpec, { kind: "sql" }>, lang: ExtraLa
 function designStarter(spec: Extract<ProblemSpec, { kind: "design" }>, lang: ExtraLang): string {
   const cls = spec.className;
   const n = (p: Param) => safeName(p.name, lang);
+  const typedTs = (p: Param) => `${n(p)}: ${tsType(p.type)}`;
+  const typedGo = (p: Param) => `${n(p)} ${goType(p.type)}`;
   const ps = (params: Param[], typed?: (p: Param) => string) => params.map((p) => (typed ? typed(p) : n(p))).join(", ");
   switch (lang) {
     case "javascript": {
@@ -374,8 +378,8 @@ function designStarter(spec: Extract<ProblemSpec, { kind: "design" }>, lang: Ext
       return `class ${cls} {\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n}\n`;
     }
     case "typescript": {
-      const ctor = `constructor(${ps(spec.ctorParams, (p) => `${n(p)}: ${tsType(p.type)}`)}) {\n    \n}`;
-      const methods = spec.methods.map((m) => `${m.java}(${ps(m.params, (p) => `${n(p)}: ${tsType(p.type)}`)}): ${tsType(m.returns)} {\n    \n}`);
+      const ctor = `constructor(${ps(spec.ctorParams, typedTs)}) {\n    \n}`;
+      const methods = spec.methods.map((m) => `${m.java}(${ps(m.params, typedTs)}): ${tsType(m.returns)} {\n    \n}`);
       return `class ${cls} {\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n}\n`;
     }
     case "cpp": {
@@ -384,10 +388,10 @@ function designStarter(spec: Extract<ProblemSpec, { kind: "design" }>, lang: Ext
       return `class ${cls} {\npublic:\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n};\n`;
     }
     case "go": {
-      const ctor = `func Constructor(${ps(spec.ctorParams, (p) => `${n(p)} ${goType(p.type)}`)}) ${cls} {\n    \n}`;
+      const ctor = `func Constructor(${ps(spec.ctorParams, typedGo)}) ${cls} {\n    \n}`;
       const methods = spec.methods.map((m) => {
         const ret = m.returns === "void" ? "" : ` ${goType(m.returns)}`;
-        return `func (this *${cls}) ${goMethodName(m.java)}(${ps(m.params, (p) => `${n(p)} ${goType(p.type)}`)})${ret} {\n    \n}`;
+        return `func (this *${cls}) ${goMethodName(m.java)}(${ps(m.params, typedGo)})${ret} {\n    \n}`;
       });
       return `type ${cls} struct {\n    \n}\n\n${[ctor, ...methods].join("\n\n")}\n`;
     }

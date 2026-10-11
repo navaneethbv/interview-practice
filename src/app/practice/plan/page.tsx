@@ -1,5 +1,4 @@
-import fs from "node:fs";
-import path from "node:path";
+import studyPlan from "../../../../content/study-plan.json";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NavBar, SiteFooter } from "@/components/NavBar";
@@ -33,7 +32,7 @@ interface StudyPlan {
 }
 
 function loadPlan(): StudyPlan {
-  return JSON.parse(fs.readFileSync(path.join(process.cwd(), "content", "study-plan.json"), "utf8")) as StudyPlan;
+  return studyPlan as StudyPlan;
 }
 
 function Table({ rows, columns }: Readonly<{ rows: Record<string, string>[]; columns: string[] }>) {

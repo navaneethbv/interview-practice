@@ -42,12 +42,13 @@ export function TodayActions() {
   const mock = useMock();
   const [now] = useState(() => Date.now());
   const due = dueReviews(review, now).length;
+  const reviewTitle = due === 1 ? "1 review due" : `${due} reviews due`;
   const actions = [
     {
       href: "/practice#review",
       icon: <History size={18} />,
       tone: "bg-blue-soft text-blue",
-      title: due ? `${due} review${due === 1 ? "" : "s"} due` : "Review queue",
+      title: due ? reviewTitle : "Review queue",
       body: due ? "Re-solve problems at spaced intervals while they are still fresh." : "Solved problems come back here at 1, 3, 7, 21 and 60 days.",
     },
     {

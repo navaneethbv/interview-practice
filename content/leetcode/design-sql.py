@@ -1,7 +1,7 @@
 class SQL:
     def __init__(self, names, columns):
         self.tables = {name: {} for name in names}
-        self.next_id = {name: 1 for name in names}
+        self.next_id = dict.fromkeys(names, 1)
 
     def insertRow(self, name, row):
         self.tables[name][self.next_id[name]] = list(row)

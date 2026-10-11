@@ -1,4 +1,4 @@
-func findTheDifference(s string, t string) byte {
+func findTheDifference(s, t string) byte {
 	var code byte
 	for i := 0; i < len(t); i++ {
 		code += t[i]

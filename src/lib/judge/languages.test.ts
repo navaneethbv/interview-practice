@@ -145,7 +145,7 @@ describe("extra language support", () => {
     it(`${lang}: reports runtime errors on the user's line`, options, async () => {
       const outcome = await runExtraLocally(mixed, lang, CRASH[lang].code, mixed.tests);
       assert.equal(outcome.verdict, "Runtime Error", JSON.stringify(outcome));
-      if (CRASH[lang].line) assert.match(outcome.cases[0].error ?? "", new RegExp(`line ${CRASH[lang].line}\\)`));
+      if (CRASH[lang].line) assert.ok((outcome.cases[0].error ?? "").includes(`line ${CRASH[lang].line})`));
     });
     it(`${lang}: reports syntax errors as compile errors`, options, async () => {
       const outcome = await runExtraLocally(mixed, lang, SYNTAX[lang], mixed.tests);

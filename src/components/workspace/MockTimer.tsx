@@ -27,7 +27,7 @@ export function MockTimer({ id }: Readonly<{ id: string }>) {
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
-  if (!active || !active.problems.includes(id)) return null;
+  if (!active?.problems.includes(id)) return null;
   const left = sessionDeadline(active) - now;
   const index = active.problems.indexOf(id) + 1;
   return (

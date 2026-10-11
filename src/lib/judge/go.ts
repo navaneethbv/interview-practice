@@ -516,12 +516,14 @@ export function buildGoProgram(spec: ProblemSpec, userCode: string, tests: AnyTe
 
 /** Keeps diagnostics about solution.go with editor line numbers. */
 export function mapGoCompileErrors(stderr: string): string {
-  return stderr
-    .split("\n")
-    .filter((line) => !/^# /.test(line))
-    .join("\n")
-    .replace(/(^|\n)[^\n]*?solution\.go:(\d+):(\d+):/g, "$1Line $2:$3:")
-    .replace(/(^|\n)[^\n]*?judge\.go:\d+:\d+:/g, "$1judge:")
-    .trim()
-    .slice(0, 20000);
+  return stderr.split("\n")
+    .filter((line) => !line.startsWith("# "))
+    .map((line) => {
+      const solution = line.indexOf("solution.go:");
+      if (solution !== -1) return line.slice(solution).replace(/^solution\.go:(\d+):(\d+):/, "Line $1:$2:");
+      const judge = line.indexOf("judge.go:");
+      if (judge !== -1) return line.slice(judge).replace(/^judge\.go:\d+:\d+:/, "judge:");
+      return line;
+    })
+    .join("\n").trim().slice(0, 20000);
 }

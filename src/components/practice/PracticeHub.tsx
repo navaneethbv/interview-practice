@@ -173,10 +173,13 @@ function Field({ label, children }: Readonly<{ label: string; children: React.Re
 function ActiveMock({ session, entries, now, log }: Readonly<{ session: MockSession; entries: Record<string, CatalogEntry>; now: number; log: Record<string, [number, 0 | 1][]> }>) {
   const left = sessionDeadline(session) - now;
   const solved = new Set(solvedDuring(session, log));
+  let timerTone = "text-fg-1";
+  if (left <= 0) timerTone = "text-bad";
+  else if (left < 5 * 60_000) timerTone = "text-medium";
   return (
     <div className="rounded-lg border border-line bg-layer-1 p-4">
       <div className="flex flex-wrap items-center gap-3">
-        <span className={`text-2xl font-semibold tabular-nums ${left <= 0 ? "text-bad" : left < 5 * 60_000 ? "text-medium" : "text-fg-1"}`}>
+        <span className={`text-2xl font-semibold tabular-nums ${timerTone}`}>
           {left > 0 ? clock(left) : "Time's up"}
         </span>
         <span className="text-sm text-fg-3">

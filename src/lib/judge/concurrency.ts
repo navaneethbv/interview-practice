@@ -274,7 +274,7 @@ export function cppConcurrencyBody(spec: FunctionSpec) {
 /* ---------------------------------------------------------------- Go */
 
 /** Always part of the Go harness so its imports are used in every program. */
-export const GO_CONCURRENCY_SUPPORT = String.raw`
+export const GO_CONCURRENCY_SUPPORT = `
 // judgeRunTasks starts each task on its own goroutine and waits for all of them.
 func judgeRunTasks(tasks ...func()) {
 	var wg sync.WaitGroup
@@ -510,35 +510,50 @@ const SIGNATURES: Record<ConcurrencyDriver, ClassSig> = {
 
 const capital = (s: string) => s[0].toUpperCase() + s.slice(1);
 
+function javaConcurrencyStarter(sig: ClassSig): string {
+  const { className, ctorParam } = sig;
+  const javaCtorParam = ctorParam ? `int ${ctorParam}` : "";
+  const javaAssignment = ctorParam ? `this.${ctorParam} = ${ctorParam};` : "";
+  const fields = ctorParam ? `    private int ${ctorParam};\n\n` : "";
+  const ctor = `    public ${className}(${javaCtorParam}) {\n        ${javaAssignment}\n    }`;
+  const methods = sig.methods.map((m) => {
+    const params = [...(m.intParam ? [`int ${m.intParam}`] : []), ...m.callbacks.map((c) => `${c.int ? "IntConsumer" : "Runnable"} ${c.name}`)];
+    return `    public void ${m.name}(${params.join(", ")}) throws InterruptedException {\n        \n    }`;
+  });
+  return `class ${className} {\n${fields}${[ctor, ...methods].join("\n\n")}\n}\n`;
+}
+
+function cppConcurrencyStarter(sig: ClassSig): string {
+  const { className, ctorParam } = sig;
+  const cppCtorParam = ctorParam ? `int ${ctorParam}` : "";
+  const cppInitializer = ctorParam ? ` : ${ctorParam}(${ctorParam})` : "";
+  const ctor = `    ${className}(${cppCtorParam})${cppInitializer} {\n        \n    }`;
+  const methods = sig.methods.map((m) => {
+    const params = [...(m.intParam ? [`int ${m.intParam}`] : []), ...m.callbacks.map((c) => `function<void(${c.int ? "int" : ""})> ${c.name}`)];
+    return `    void ${m.name}(${params.join(", ")}) {\n        \n    }`;
+  });
+  const fields = ctorParam ? `private:\n    int ${ctorParam};\n\n` : "";
+  return `class ${className} {\n${fields}public:\n${[ctor, ...methods].join("\n\n")}\n};\n`;
+}
+
+function goConcurrencyStarter(sig: ClassSig): string {
+  const { className, ctorParam } = sig;
+  const goCtorParam = ctorParam ? `${ctorParam} int` : "";
+  const goInitializer = ctorParam ? `${ctorParam}: ${ctorParam}` : "";
+  const fields = ctorParam ? `    ${ctorParam} int\n` : "    \n";
+  const ctor = `func New${className}(${goCtorParam}) *${className} {\n    return &${className}{${goInitializer}}\n}`;
+  const methods = sig.methods.map((m) => {
+    const params = [...(m.intParam ? [`${m.intParam} int`] : []), ...m.callbacks.map((c) => `${c.name} func(${c.int ? "int" : ""})`)];
+    return `func (this *${className}) ${capital(m.name)}(${params.join(", ")}) {\n    \n}`;
+  });
+  return `type ${className} struct {\n${fields}}\n\n${[ctor, ...methods].join("\n\n")}\n`;
+}
+
+
 export function concurrencyStarter(spec: FunctionSpec, lang: CodeLang): string {
   const sig = SIGNATURES[spec.concurrency!.driver];
-  const { className, ctorParam } = sig;
-  if (lang === "java") {
-    const fields = ctorParam ? `    private int ${ctorParam};\n\n` : "";
-    const ctor = `    public ${className}(${ctorParam ? `int ${ctorParam}` : ""}) {\n        ${ctorParam ? `this.${ctorParam} = ${ctorParam};` : ""}\n    }`;
-    const methods = sig.methods.map((m) => {
-      const params = [...(m.intParam ? [`int ${m.intParam}`] : []), ...m.callbacks.map((c) => `${c.int ? "IntConsumer" : "Runnable"} ${c.name}`)];
-      return `    public void ${m.name}(${params.join(", ")}) throws InterruptedException {\n        \n    }`;
-    });
-    return `class ${className} {\n${fields}${[ctor, ...methods].join("\n\n")}\n}\n`;
-  }
-  if (lang === "cpp") {
-    const ctor = `    ${className}(${ctorParam ? `int ${ctorParam}` : ""})${ctorParam ? ` : ${ctorParam}(${ctorParam})` : ""} {\n        \n    }`;
-    const methods = sig.methods.map((m) => {
-      const params = [...(m.intParam ? [`int ${m.intParam}`] : []), ...m.callbacks.map((c) => `function<void(${c.int ? "int" : ""})> ${c.name}`)];
-      return `    void ${m.name}(${params.join(", ")}) {\n        \n    }`;
-    });
-    const fields = ctorParam ? `private:\n    int ${ctorParam};\n\n` : "";
-    return `class ${className} {\n${fields}public:\n${[ctor, ...methods].join("\n\n")}\n};\n`;
-  }
-  if (lang === "go") {
-    const fields = ctorParam ? `    ${ctorParam} int\n` : "    \n";
-    const ctor = `func New${className}(${ctorParam ? `${ctorParam} int` : ""}) *${className} {\n    return &${className}{${ctorParam ? `${ctorParam}: ${ctorParam}` : ""}}\n}`;
-    const methods = sig.methods.map((m) => {
-      const params = [...(m.intParam ? [`${m.intParam} int`] : []), ...m.callbacks.map((c) => `${c.name} func(${c.int ? "int" : ""})`)];
-      return `func (this *${className}) ${capital(m.name)}(${params.join(", ")}) {\n    \n}`;
-    });
-    return `type ${className} struct {\n${fields}}\n\n${[ctor, ...methods].join("\n\n")}\n`;
-  }
+  if (lang === "java") return javaConcurrencyStarter(sig);
+  if (lang === "cpp") return cppConcurrencyStarter(sig);
+  if (lang === "go") return goConcurrencyStarter(sig);
   throw new Error(`Concurrency problems are not available in ${lang}`);
 }

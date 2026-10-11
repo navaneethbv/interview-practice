@@ -21,7 +21,7 @@ Live: https://interview-practice-sandy-eight.vercel.app
 | Language | Where | Notes |
 | --- | --- | --- |
 | Python 3.13 | In the browser, with [Pyodide](https://pyodide.org) in a Web Worker | No server needed. The first run downloads the runtime (about 10 MB); later runs are instant. |
-| JavaScript, TypeScript | In the browser, in a Web Worker | TypeScript is transpiled in the worker by the TypeScript compiler, downloaded on first use; type errors do not block a run, as on LeetCode. |
+| JavaScript, TypeScript | In the browser, in an isolated QuickJS WebAssembly interpreter inside a Web Worker | TypeScript is transpiled in the worker by the TypeScript compiler, downloaded on first use; type errors do not block a run, as on LeetCode. |
 | Java 21, C++17, Go | `/api/run/<lang>` on Vercel, inside a [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) microVM | Booted from one snapshot with the JDK, g++ and Go installed, no network access, 10 second run limit. About 5 seconds per run. |
 
 Every language uses the same test data.
@@ -117,7 +117,8 @@ The run endpoint accepts only same-origin browser requests, but it is not authen
 ```
 content/                  course lessons, problem specs, system design books (JSON + Markdown)
 public/pyodide-worker.js  Python runner (Web Worker)
-public/js-worker.js       JavaScript runner and TypeScript transpiler (Web Worker)
+scripts/judge/js-worker.mjs  authored isolated JavaScript runner and TypeScript transpiler
+public/js-worker.js       generated QuickJS worker bundle (npm run worker:build)
 scripts/ingest/           course and document importers
 scripts/judge/            expected-output generator and verifier
 scripts/sandbox/          snapshot builder for the Java, C++ and Go runner
@@ -139,3 +140,5 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm run ingest:grokking` | Import the coding course |
 | `npm run ingest:system-design` | Import a system design book |
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |
+
+The JavaScript worker is generated before development, production builds and unit tests. Submitted code runs in a fresh QuickJS context with no browser globals, networking or module loader; only output and a clock are exposed. The interpreter has a 128 MiB memory limit, and the page terminates the worker after 10 seconds. TypeScript is transpiled before execution.

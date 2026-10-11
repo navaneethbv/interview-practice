@@ -1,4 +1,4 @@
-import random
+import secrets
 
 
 class Solution:
@@ -9,7 +9,7 @@ class Solution:
         chosen, node, seen = None, self.head, 0
         while node:
             seen += 1
-            if random.randrange(seen) == 0:
+            if secrets.randbelow(seen) == 0:
                 chosen = node.val
             node = node.next
         return chosen

@@ -5,7 +5,7 @@ class Solution:
         for _ in range(iterations):
             changed = False
             for i, (x, y) in enumerate(points):
-                best = min(range(k), key=lambda j: ((x - centroids[j][0]) ** 2 + (y - centroids[j][1]) ** 2, j))
+                best = min(range(k), key=lambda j, x=x, y=y: ((x - centroids[j][0]) ** 2 + (y - centroids[j][1]) ** 2, j))
                 if best != labels[i]:
                     labels[i] = best
                     changed = True

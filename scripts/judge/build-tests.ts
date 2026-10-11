@@ -60,6 +60,10 @@ function applyReference(spec: ProblemSpec, t: AnyTestCase, i: number, r: Harness
   return true;
 }
 
+function isConcurrent(spec: ProblemSpec): spec is Extract<ProblemSpec, { params: unknown }> {
+  return spec.kind !== "sql" && spec.kind !== "design" && !!spec.concurrency;
+}
+
 async function processSpec(file: string): Promise<string[]> {
   const errors: string[] = [];
   const spec = JSON.parse(fs.readFileSync(file, "utf8")) as ProblemSpec;
@@ -67,7 +71,7 @@ async function processSpec(file: string): Promise<string[]> {
   const dir = path.dirname(file);
   if (id !== path.basename(file, ".json")) return [`${id}: spec id does not match its file name ${path.basename(file)}`];
   const tests = spec.tests as AnyTestCase[];
-  if (spec.kind !== "sql" && spec.kind !== "design" && spec.concurrency) return processConcurrency(spec, dir, tests);
+  if (isConcurrent(spec)) return processConcurrency(spec, dir, tests);
   const extension = spec.kind === "sql" ? "sql" : "py";
   const pyRef = path.join(dir, `${id}.${extension}`);
   if (!fs.existsSync(pyRef)) return [`${id}: missing reference ${id}.${extension}`]; // nosemgrep -- build script reading repo problem files
@@ -132,20 +136,20 @@ async function processConcurrency(spec: ProblemSpec, dir: string, tests: AnyTest
 /** Runs every extra-language reference that exists for a spec; returns error lines. */
 async function verifyExtraLanguages(spec: ProblemSpec, dir: string, tests: AnyTestCase[]): Promise<string[]> {
   const errors: string[] = [];
-  for (const lang of EXTRA_LANGS) {
+  await Promise.all(EXTRA_LANGS.map(async (lang) => {
     const file = path.join(dir, `${spec.id}.${EXTRA_EXTENSIONS[lang]}`);
-    if (!fs.existsSync(file)) continue; // nosemgrep -- build script reading repo problem files
+    if (!fs.existsSync(file)) return; // nosemgrep -- build script reading repo problem files
     if (!languagesFor(spec).includes(lang)) {
       errors.push(`${spec.id}: has a ${lang} reference but uses features ${lang} does not support`);
-      continue;
+      return;
     }
     const outcome = await runExtraLocally(spec, lang, fs.readFileSync(file, "utf8"), tests); // nosemgrep -- build script reading repo problem files
     executions.other++;
-    if (outcome.verdict === "Accepted") continue;
+    if (outcome.verdict === "Accepted") return;
     const bad = outcome.cases.find((c) => !c.passed);
     const detail = bad ? `case ${bad.index}: ${bad.error ?? JSON.stringify(bad.output)}` : "";
     errors.push(`${spec.id}: ${lang} reference ${outcome.verdict} ${outcome.compileError ?? ""} ${detail} ${outcome.message ?? ""}`);
-  }
+  }));
   return errors;
 }
 

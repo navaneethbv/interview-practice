@@ -345,7 +345,11 @@ function designBody(spec: DesignSpec) {
 
 /** The result marker as a C string literal; C++ forbids `\u` escapes for control characters. */
 function cMarker() {
-  return `"${[...RESULT_MARKER].map((c) => (c.charCodeAt(0) < 0x20 ? `\\x${c.charCodeAt(0).toString(16).padStart(2, "0")}" "` : c)).join("")}"`;
+  const escaped = [...RESULT_MARKER].map((c) => {
+    const point = c.codePointAt(0)!;
+    return point < 0x20 ? "\\x" + point.toString(16).padStart(2, "0") + '\" \"' : c;
+  }).join("");
+  return '"' + escaped + '"';
 }
 
 export function buildCppProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]): string {

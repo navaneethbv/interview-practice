@@ -60,7 +60,7 @@ test("a mock interview hides walkthroughs and accepted problems join the review 
   const link = page.locator("#mock ol a").first();
   const href = await link.getAttribute("href");
   await link.click();
-  await expect(page).toHaveURL(new RegExp(href!));
+  await expect(page).toHaveURL(new URL(href!, page.url()).href);
   await expect(page.getByTitle("Mock interview: walkthroughs are hidden until you finish")).toBeVisible();
   await page.getByRole("tab", { name: "Solution" }).click();
   await expect(page.getByText("The walkthrough is hidden during your mock interview")).toBeVisible();

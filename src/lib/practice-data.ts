@@ -173,9 +173,9 @@ export function endSession(state: MockState, log: Record<string, [number, 0 | 1]
 export function normalizeComplexity(value: string) {
   return value
     .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[*·×]/g, "")
-    .replace(/²/g, "^2")
+    .replaceAll(/\s+/g, "")
+    .replaceAll(/[*·×]/g, "")
+    .replaceAll("²", "^2")
     .replace(/^o\((.*)\)$/, "$1")
-    .replace(/[()]/g, "");
+    .replaceAll(/[()]/g, "");
 }

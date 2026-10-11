@@ -15,7 +15,8 @@ export function transpileTypeScript(code: string): { js: string; error?: string 
     const message = errors
       .map((d) => {
         const line = d.file && d.start !== undefined ? d.file.getLineAndCharacterOfPosition(d.start).line + 1 : undefined;
-        return `${line ? `Line ${line}: ` : ""}${ts.flattenDiagnosticMessageText(d.messageText, "\n")}`;
+        const prefix = line ? `Line ${line}: ` : "";
+        return prefix + ts.flattenDiagnosticMessageText(d.messageText, "\n");
       })
       .join("\n");
     return { js: "", error: message };

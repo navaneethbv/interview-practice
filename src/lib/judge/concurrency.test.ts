@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
-import path from "node:path";
+
 import { describe, it } from "node:test";
 import { grade } from "./grade";
 import { buildJavaProgram } from "./java";
@@ -21,7 +21,10 @@ const has = (cmd: string, flag: string) => {
 };
 const available = { java: has("javac", "-version"), cpp: has("g++", "--version"), go: has("go", "version") };
 
-const spec = (id: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), "content/leetcode", `${id}.json`), "utf8")) as FunctionSpec;
+const spec = (id: string) => {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) throw new Error("Invalid problem ID");
+  return JSON.parse(fs.readFileSync(new URL(`../../../content/leetcode/${id}.json`, import.meta.url), "utf8")) as FunctionSpec;
+};
 
 async function run(lang: "java" | "cpp" | "go", s: FunctionSpec, code: string): Promise<RunOutcome> {
   if (lang !== "java") return runExtraLocally(s, lang, code, s.tests);

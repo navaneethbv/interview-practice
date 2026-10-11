@@ -1,4 +1,4 @@
-var groupAnagrams = function(strs) {
+const groupAnagrams = function(strs) {
     const groups = new Map();
     for (const s of strs) {
         const key = [...s].sort().join("");

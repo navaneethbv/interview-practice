@@ -163,11 +163,12 @@ interface ServerResponse {
   error?: string;
 }
 
+const SERVER_ENDPOINT = { java: "/api/run/java", cpp: "/api/run/cpp", go: "/api/run/go" } as const;
 const SERVER_NAME = { java: "Java", cpp: "C++", go: "Go" } as const;
 
 async function runOnServer(lang: keyof typeof SERVER_NAME, body: object): Promise<ServerResponse> {
   try {
-    const res = await fetch(`/api/run/${lang}`, {
+    const res = await fetch(SERVER_ENDPOINT[lang], {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
