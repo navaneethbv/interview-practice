@@ -4,7 +4,7 @@
   "java_references": 1151,
   "coding_problems": 1151,
   "walkthroughs": 1214,
-  "readable_java_references": 1146,
+  "readable_java_references": 1151,
   "readable_java_definition": "Formatting heuristic: more than 3 nonblank lines, at most 120 characters per line, no inline statements except for-loop headers. Manual review and judge verification are separate.",
   "lists": [
     {
@@ -22,7 +22,7 @@
       "total": 232,
       "coding_problems": 232,
       "java_references": 232,
-      "readable_java_references": 230,
+      "readable_java_references": 232,
       "walkthroughs": 232
     },
     {
@@ -49,7 +49,7 @@
       "total": 33,
       "coding_problems": 33,
       "java_references": 33,
-      "readable_java_references": 32,
+      "readable_java_references": 33,
       "walkthroughs": 33
     },
     {
@@ -58,7 +58,7 @@
       "total": 7,
       "coding_problems": 7,
       "java_references": 7,
-      "readable_java_references": 6,
+      "readable_java_references": 7,
       "walkthroughs": 7
     },
     {
@@ -166,7 +166,7 @@
       "total": 18,
       "coding_problems": 18,
       "java_references": 18,
-      "readable_java_references": 17,
+      "readable_java_references": 18,
       "walkthroughs": 18
     },
     {
@@ -181,7 +181,7 @@
   ],
   "next_walkthrough": null,
   "next_java": null,
-  "next_readable_java": "design-snake-game",
+  "next_readable_java": null,
   "next": null,
   "done": [
     "01-matrix",

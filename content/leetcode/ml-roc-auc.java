@@ -6,7 +6,8 @@ class Solution {
             positives += label;
         }
         long negatives = n - positives;
-        // Count correctly ordered pairs directly; fine for the test sizes and independent of the rank-sum form.
+        // Count correctly ordered pairs directly.
+        // This suits the test sizes and stays independent of the rank-sum implementation.
         double correct = 0;
         for (int i = 0; i < n; i++) {
             if (labels[i] != 1) {

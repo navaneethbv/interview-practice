@@ -10,7 +10,12 @@ class Solution {
         return results;
     }
 
-    private void build(String[] words, Map<String, List<String>> options, int index, List<String> chosen, List<String> results) {
+    private void build(
+            String[] words,
+            Map<String, List<String>> options,
+            int index,
+            List<String> chosen,
+            List<String> results) {
         if (index == words.length) {
             results.add(String.join(" ", chosen));
             return;

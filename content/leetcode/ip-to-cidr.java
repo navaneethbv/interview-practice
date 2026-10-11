@@ -11,7 +11,11 @@ class Solution {
                 size /= 2;
             }
             int prefix = 32 - Long.numberOfTrailingZeros(size);
-            blocks.add((start >> 24 & 255) + "." + (start >> 16 & 255) + "." + (start >> 8 & 255) + "." + (start & 255) + "/" + prefix);
+            String address = (start >> 24 & 255) + "."
+                    + (start >> 16 & 255) + "."
+                    + (start >> 8 & 255) + "."
+                    + (start & 255);
+            blocks.add(address + "/" + prefix);
             start += size;
             n -= size;
         }

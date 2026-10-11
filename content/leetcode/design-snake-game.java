@@ -19,10 +19,17 @@ class SnakeGame {
         int r = head / width;
         int c = head % width;
         switch (direction) {
-            case "U": r--; break;
-            case "D": r++; break;
-            case "L": c--; break;
-            default: c++;
+            case "U":
+                r--;
+                break;
+            case "D":
+                r++;
+                break;
+            case "L":
+                c--;
+                break;
+            default:
+                c++;
         }
         if (r < 0 || r >= height || c < 0 || c >= width) {
             return -1;
