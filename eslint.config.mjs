@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Reference solutions are standalone files spliced into judge harnesses.
+    "content/**",
   ]),
 ]);
 

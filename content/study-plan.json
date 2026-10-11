@@ -1,0 +1,581 @@
+{
+  "title": "16-Week Interview Plan",
+  "summary": "Target: 500+ Problems  |  Daily: 2 hrs DSA + 1 hr System Design  |  Total Duration: ~16 Weeks",
+  "phases": [
+    {
+      "Phase": "Phase 1",
+      "Weeks": "Wks 1–2",
+      "DSA Focus Area": "Foundations",
+      "Key Concepts": "Arrays, Strings, Hashing, Two Pointers, Sliding Window",
+      "Problem Count Target": "60",
+      "System Design Topic": "Scalability & Basics",
+      "Daily DSA Time": "90 min",
+      "Daily SD Time": "30 min",
+      "Difficulty Mix": "80% Easy / 20% Med",
+      "Cumulative Problems": "60"
+    },
+    {
+      "Phase": "Phase 2",
+      "Weeks": "Wks 3–4",
+      "DSA Focus Area": "Linear Structures",
+      "Key Concepts": "Linked Lists, Stacks, Queues, Monotonic Structures",
+      "Problem Count Target": "60",
+      "System Design Topic": "Storage & Caching",
+      "Daily DSA Time": "90 min",
+      "Daily SD Time": "30 min",
+      "Difficulty Mix": "60% Easy / 40% Med",
+      "Cumulative Problems": "120"
+    },
+    {
+      "Phase": "Phase 3",
+      "Weeks": "Wks 5–6",
+      "DSA Focus Area": "Trees & Graphs",
+      "Key Concepts": "Binary Trees, BST, Tries, Graph BFS/DFS, Union-Find",
+      "Problem Count Target": "80",
+      "System Design Topic": "Distributed Systems Intro",
+      "Daily DSA Time": "80 min",
+      "Daily SD Time": "40 min",
+      "Difficulty Mix": "40% Easy / 50% Med / 10% Hard",
+      "Cumulative Problems": "200"
+    },
+    {
+      "Phase": "Phase 4",
+      "Weeks": "Wks 7–8",
+      "DSA Focus Area": "Recursion & DP",
+      "Key Concepts": "Backtracking, 1D DP, 2D DP, Greedy",
+      "Problem Count Target": "80",
+      "System Design Topic": "Design Deep Dives I",
+      "Daily DSA Time": "70 min",
+      "Daily SD Time": "50 min",
+      "Difficulty Mix": "20% Easy / 60% Med / 20% Hard",
+      "Cumulative Problems": "280"
+    },
+    {
+      "Phase": "Phase 5",
+      "Weeks": "Wks 9–10",
+      "DSA Focus Area": "Advanced Algorithms",
+      "Key Concepts": "Heaps, Advanced Graphs, Intervals, Bit Manipulation",
+      "Problem Count Target": "70",
+      "System Design Topic": "Design Deep Dives II",
+      "Daily DSA Time": "60 min",
+      "Daily SD Time": "60 min",
+      "Difficulty Mix": "10% Easy / 60% Med / 30% Hard",
+      "Cumulative Problems": "350"
+    },
+    {
+      "Phase": "Phase 6",
+      "Weeks": "Wks 11–12",
+      "DSA Focus Area": "Hard & Patterns",
+      "Key Concepts": "Hard DP, Advanced Trees, Segment Trees, Math",
+      "Problem Count Target": "60",
+      "System Design Topic": "Design Deep Dives III",
+      "Daily DSA Time": "60 min",
+      "Daily SD Time": "60 min",
+      "Difficulty Mix": "5% Easy / 50% Med / 45% Hard",
+      "Cumulative Problems": "410"
+    },
+    {
+      "Phase": "Phase 7",
+      "Weeks": "Wks 13–14",
+      "DSA Focus Area": "Mock & Review",
+      "Key Concepts": "Mixed company-tagged sets, timed contests",
+      "Problem Count Target": "50",
+      "System Design Topic": "Full Mock System Designs",
+      "Daily DSA Time": "50 min",
+      "Daily SD Time": "70 min",
+      "Difficulty Mix": "Company-Specific Mix",
+      "Cumulative Problems": "460"
+    },
+    {
+      "Phase": "Phase 8",
+      "Weeks": "Wks 15–16",
+      "DSA Focus Area": "Final Sprint",
+      "Key Concepts": "Weak-area revisit, top 75 NeetCode revisit",
+      "Problem Count Target": "40",
+      "System Design Topic": "Behavioral + SD Combos",
+      "Daily DSA Time": "45 min",
+      "Daily SD Time": "75 min",
+      "Difficulty Mix": "Interview-Intensity",
+      "Cumulative Problems": "500+"
+    }
+  ],
+  "daily": [
+    {
+      "Time Block": "Block 1",
+      "Duration": "30 min",
+      "Activity": "Warm-up / Review",
+      "What To Do": "Re-read yesterday's notes, review 2–3 solved problems",
+      "Notes": "Active recall, not passive reading"
+    },
+    {
+      "Time Block": "Block 2",
+      "Duration": "60 min",
+      "Activity": "New DSA Topic",
+      "What To Do": "Study concept deeply → understand intuition → code from scratch",
+      "Notes": "No copy-paste; understand WHY"
+    },
+    {
+      "Time Block": "Block 3",
+      "Duration": "30 min",
+      "Activity": "Practice Problems",
+      "What To Do": "Solve 2–4 problems on current topic (timed: 20–25 min each)",
+      "Notes": "Track in Problem Log sheet"
+    },
+    {
+      "Time Block": "Block 4",
+      "Duration": "60 min",
+      "Activity": "System Design",
+      "What To Do": "Study 1 SD concept + design a system end-to-end with trade-offs",
+      "Notes": "Use the SD sheet as checklist"
+    },
+    {
+      "Time Block": "Buffer",
+      "Duration": "—",
+      "Activity": "Spaced Repetition",
+      "What To Do": "Flag hard problems for re-attempt in 3/7/14 days",
+      "Notes": "Use the Retry Tracker sheet"
+    }
+  ],
+  "weeks": [
+    {
+      "week": 1,
+      "phase": "Phase 1",
+      "dsaTopic": "Arrays & Hashing",
+      "problemsText": "",
+      "problems": [
+        "two-sum",
+        "valid-anagram",
+        "contains-duplicate",
+        "group-anagrams",
+        "top-k-frequent-elements",
+        "product-of-array-except-self",
+        "longest-consecutive-sequence"
+      ],
+      "target": "25",
+      "systemDesign": "Scalability 101: vertical vs horizontal, CAP theorem basics",
+      "deepDive": "Understand SLA, SLO, SLI; latency vs throughput",
+      "goal": "Nail HashMap O(1) lookups",
+      "checkpoint": "Can you solve Two Sum 5 ways?"
+    },
+    {
+      "week": 2,
+      "phase": "Phase 1",
+      "dsaTopic": "Two Pointers + Sliding Window",
+      "problemsText": "",
+      "problems": [
+        "valid-palindrome",
+        "3sum",
+        "container-with-most-water",
+        "best-time-to-buy-and-sell-stock",
+        "longest-substring-without-repeating-characters",
+        "minimum-window-substring"
+      ],
+      "target": "20",
+      "systemDesign": "Load Balancers deep dive: L4 vs L7, algorithms",
+      "deepDive": "Design a simple API gateway",
+      "goal": "Master variable-window pattern",
+      "checkpoint": "Solve Min Window Substring from scratch"
+    },
+    {
+      "week": 3,
+      "phase": "Phase 2",
+      "dsaTopic": "Stack + Queues",
+      "problemsText": "",
+      "problems": [
+        "valid-parentheses",
+        "min-stack",
+        "daily-temperatures",
+        "car-fleet",
+        "largest-rectangle-in-histogram",
+        "sliding-window-maximum"
+      ],
+      "target": "20",
+      "systemDesign": "Caching: Redis internals, eviction, cache patterns",
+      "deepDive": "Design a distributed cache (Redis-like)",
+      "goal": "Monotonic stack mastery",
+      "checkpoint": "Implement LRU Cache from memory"
+    },
+    {
+      "week": 4,
+      "phase": "Phase 2",
+      "dsaTopic": "Linked Lists",
+      "problemsText": "",
+      "problems": [
+        "reverse-linked-list",
+        "merge-two-sorted-lists",
+        "reorder-list",
+        "remove-nth-node-from-end-of-list",
+        "lru-cache",
+        "merge-k-sorted-lists"
+      ],
+      "target": "20",
+      "systemDesign": "Databases: SQL indexing, query planning, ACID",
+      "deepDive": "Design URL shortener",
+      "goal": "Pointer manipulation fluency",
+      "checkpoint": "No bugs in LL reversal"
+    },
+    {
+      "week": 5,
+      "phase": "Phase 3",
+      "dsaTopic": "Binary Search",
+      "problemsText": "",
+      "problems": [
+        "binary-search",
+        "search-in-rotated-sorted-array",
+        "find-minimum-in-rotated-sorted-array",
+        "search-a-2d-matrix",
+        "koko-eating-bananas",
+        "median-of-two-sorted-arrays"
+      ],
+      "target": "20",
+      "systemDesign": "NoSQL: DynamoDB, Cassandra, consistency models",
+      "deepDive": "Design a KV store",
+      "goal": "Master search on answer",
+      "checkpoint": "Solve Median Two Arrays without hints"
+    },
+    {
+      "week": 6,
+      "phase": "Phase 3",
+      "dsaTopic": "Trees — BFS/DFS",
+      "problemsText": "",
+      "problems": [
+        "invert-binary-tree",
+        "maximum-depth-of-binary-tree",
+        "diameter-of-binary-tree",
+        "binary-tree-level-order-traversal",
+        "binary-tree-right-side-view",
+        "balanced-binary-tree",
+        "same-tree",
+        "subtree-of-another-tree"
+      ],
+      "target": "20",
+      "systemDesign": "API Design: REST principles, pagination, versioning",
+      "deepDive": "Design Twitter API",
+      "goal": "Tree recursion mental model",
+      "checkpoint": "Implement iterative in-order traversal"
+    },
+    {
+      "week": 7,
+      "phase": "Phase 3",
+      "dsaTopic": "BST + Trie",
+      "problemsText": "",
+      "problems": [
+        "lowest-common-ancestor-of-a-binary-search-tree",
+        "validate-binary-search-tree",
+        "kth-smallest-element-in-a-bst",
+        "implement-trie-prefix-tree",
+        "add-and-search-word-data-structure-design",
+        "word-search-ii"
+      ],
+      "target": "20",
+      "systemDesign": "Message Queues: Kafka architecture, partitions, consumer groups",
+      "deepDive": "Design notification system",
+      "goal": "BST in-order = sorted; Trie prefix power",
+      "checkpoint": "Build Trie from scratch"
+    },
+    {
+      "week": 8,
+      "phase": "Phase 3",
+      "dsaTopic": "Graphs — BFS/DFS",
+      "problemsText": "",
+      "problems": [
+        "number-of-islands",
+        "clone-graph",
+        "course-schedule",
+        "course-schedule-ii",
+        "pacific-atlantic-water-flow",
+        "rotting-oranges",
+        "word-ladder"
+      ],
+      "target": "25",
+      "systemDesign": "Consistent Hashing + Sharding",
+      "deepDive": "Design distributed cache with sharding",
+      "goal": "DFS/BFS template mastery",
+      "checkpoint": "Topological sort both BFS & DFS"
+    },
+    {
+      "week": 9,
+      "phase": "Phase 4",
+      "dsaTopic": "1D DP",
+      "problemsText": "",
+      "problems": [
+        "climbing-stairs",
+        "house-robber",
+        "house-robber-ii",
+        "longest-increasing-subsequence",
+        "coin-change",
+        "word-break",
+        "decode-ways",
+        "palindromic-substrings",
+        "maximum-product-subarray"
+      ],
+      "target": "25",
+      "systemDesign": "Rate Limiting deep dive: token bucket, leaky bucket",
+      "deepDive": "Design API rate limiter",
+      "goal": "Define dp[i] precisely before coding",
+      "checkpoint": "Coin Change bottom-up and top-down"
+    },
+    {
+      "week": 10,
+      "phase": "Phase 4",
+      "dsaTopic": "Backtracking + Greedy",
+      "problemsText": "",
+      "problems": [
+        "subsets",
+        "combination-sum",
+        "combination-sum-ii",
+        "permutations",
+        "palindrome-partitioning",
+        "n-queens",
+        "jump-game",
+        "jump-game-ii",
+        "gas-station"
+      ],
+      "target": "25",
+      "systemDesign": "Blob Storage + CDN: S3, CloudFront, presigned URLs",
+      "deepDive": "Design photo sharing (Instagram)",
+      "goal": "Decision tree visualization",
+      "checkpoint": "N-Queens with pruning from memory"
+    },
+    {
+      "week": 11,
+      "phase": "Phase 4",
+      "dsaTopic": "2D DP",
+      "problemsText": "",
+      "problems": [
+        "unique-paths",
+        "longest-common-subsequence",
+        "edit-distance",
+        "interleaving-string",
+        "burst-balloons",
+        "best-time-to-buy-and-sell-stock-iii",
+        "best-time-to-buy-and-sell-stock-iv",
+        "distinct-subsequences"
+      ],
+      "target": "20",
+      "systemDesign": "Search systems: Elasticsearch, inverted index, ranking",
+      "deepDive": "Design type-ahead / autocomplete",
+      "goal": "DP table transitions clarity",
+      "checkpoint": "Edit Distance with DP table drawn out"
+    },
+    {
+      "week": 12,
+      "phase": "Phase 5",
+      "dsaTopic": "Heaps + Intervals",
+      "problemsText": "",
+      "problems": [
+        "k-closest-points-to-origin",
+        "task-scheduler",
+        "find-median-from-data-stream",
+        "merge-k-sorted-lists",
+        "non-overlapping-intervals",
+        "meeting-rooms-ii"
+      ],
+      "target": "20",
+      "systemDesign": "Real-time systems: WebSockets, long-polling, SSE",
+      "deepDive": "Design chat application (WhatsApp)",
+      "goal": "Heap invariants; interval sweep line",
+      "checkpoint": "Implement heap from scratch in Java"
+    },
+    {
+      "week": 13,
+      "phase": "Phase 5",
+      "dsaTopic": "Advanced Graphs",
+      "problemsText": "",
+      "problems": [
+        "path-with-minimum-effort",
+        "redundant-connection",
+        "number-of-connected-components-in-an-undirected-graph",
+        "min-cost-to-connect-all-points",
+        "network-delay-time",
+        "cheapest-flights-within-k-stops",
+        "alien-dictionary"
+      ],
+      "target": "20",
+      "systemDesign": "Video Streaming: HLS, DASH, transcoding pipeline",
+      "deepDive": "Design YouTube",
+      "goal": "Dijkstra vs BFS: weighted vs unweighted",
+      "checkpoint": "Implement Union-Find with path compression"
+    },
+    {
+      "week": 14,
+      "phase": "Phase 6",
+      "dsaTopic": "Hard DP + Bit Manip",
+      "problemsText": "",
+      "problems": [
+        "regular-expression-matching",
+        "wildcard-matching",
+        "counting-bits",
+        "single-number",
+        "single-number-ii",
+        "sum-of-two-integers"
+      ],
+      "target": "15",
+      "systemDesign": "Distributed transactions: Saga, 2PC; Observability stack",
+      "deepDive": "Design booking system (Airbnb/Hotels)",
+      "goal": "Hard DP pattern recognition",
+      "checkpoint": "Solve 3 hard DP in one sitting timed"
+    },
+    {
+      "week": 15,
+      "phase": "Phase 7",
+      "dsaTopic": "Mock Interviews — Mixed",
+      "problemsText": "FAANG-tagged problems: Amazon 40, Google 40, Meta 30, Microsoft 30 — timed 45-min sessions per problem",
+      "problems": [],
+      "target": "20",
+      "systemDesign": "Full mock SDs: 60-min timed — Uber, Google Drive, Twitter",
+      "deepDive": "Practice talking through design out loud",
+      "goal": "Interview simulation under pressure",
+      "checkpoint": "Complete 2 full mock interviews"
+    },
+    {
+      "week": 16,
+      "phase": "Phase 8",
+      "dsaTopic": "Final Sprint + Revision",
+      "problemsText": "Re-solve all flagged retry problems; NeetCode 75 speed run; any weak areas",
+      "problems": [],
+      "target": "20+",
+      "systemDesign": "Review all SD building blocks; practice trade-off discussions",
+      "deepDive": "Behavioral + SD combos",
+      "goal": "Confidence & polish",
+      "checkpoint": "Can you do any problem in under 25 min?"
+    }
+  ],
+  "patterns": [
+    {
+      "Pattern": "Sliding Window (Variable)",
+      "Recognize When…": "Max/min subarray satisfying a constraint; 'longest substring with...'",
+      "Template / Approach": "Expand right pointer always; shrink left when constraint violated; track window state with map/int",
+      "Time Complexity": "O(n)",
+      "Space Complexity": "O(k) window size",
+      "Key Problems": "Min Window Substring, Longest Substring No Repeat, Fruit Into Baskets",
+      "Gotchas": "Define precisely when to shrink; avoid over-shrinking"
+    },
+    {
+      "Pattern": "Two Pointers (Opposite Ends)",
+      "Recognize When…": "Sorted array + pair/triplet sum; palindrome check; container problems",
+      "Template / Approach": "lo=0, hi=n-1; move based on comparison to target; sort first if needed",
+      "Time Complexity": "O(n log n) with sort",
+      "Space Complexity": "O(1)",
+      "Key Problems": "3Sum, Container With Water, Trapping Rain Water",
+      "Gotchas": "Sort destroys index — use values; watch duplicate skipping in 3Sum"
+    },
+    {
+      "Pattern": "Fast & Slow Pointers",
+      "Recognize When…": "Cycle detection, finding middle, kth from end",
+      "Template / Approach": "slow=head, fast=head; slow moves 1, fast moves 2; check fast==slow for cycle",
+      "Time Complexity": "O(n)",
+      "Space Complexity": "O(1)",
+      "Key Problems": "Linked List Cycle, Find Duplicate Number, Happy Number",
+      "Gotchas": "For find duplicate: Floyd's cycle = detect, find entry = cycle start"
+    },
+    {
+      "Pattern": "BFS (Level Order / Shortest Path)",
+      "Recognize When…": "Shortest path in unweighted graph; level-by-level processing",
+      "Template / Approach": "Queue with (node, dist/level); mark visited before enqueue not after dequeue",
+      "Time Complexity": "O(V+E)",
+      "Space Complexity": "O(V)",
+      "Key Problems": "Word Ladder, Rotting Oranges, Shortest Path in Binary Matrix",
+      "Gotchas": "Mark visited at enqueue time to avoid TLE"
+    },
+    {
+      "Pattern": "DFS + Backtracking",
+      "Recognize When…": "Generate all combinations/permutations/subsets; constraint satisfaction",
+      "Template / Approach": "Choose → recurse → unchoose; prune early; track current path",
+      "Time Complexity": "O(2^n) or O(n!)",
+      "Space Complexity": "O(n) stack depth",
+      "Key Problems": "Subsets, Permutations, N-Queens, Sudoku Solver",
+      "Gotchas": "Draw decision tree first; add index param to avoid reuse"
+    },
+    {
+      "Pattern": "Monotonic Stack (Decreasing)",
+      "Recognize When…": "Next Greater Element; temperatures; histogram rectangle",
+      "Template / Approach": "Maintain decreasing stack; pop when current > stack top; record answer at pop time",
+      "Time Complexity": "O(n)",
+      "Space Complexity": "O(n)",
+      "Key Problems": "Daily Temperatures, Largest Rect Histogram, Trapping Rain Water",
+      "Gotchas": "Know whether to store index vs value in stack"
+    },
+    {
+      "Pattern": "Binary Search on Answer",
+      "Recognize When…": "'Minimum maximum' or 'Maximum minimum'; feasibility function exists",
+      "Template / Approach": "lo=min_val, hi=max_val; binary search; write isValid(mid) function",
+      "Time Complexity": "O(n log(range))",
+      "Space Complexity": "O(1)",
+      "Key Problems": "Koko Eating Bananas, Split Array Largest Sum, Capacity to Ship",
+      "Gotchas": "isValid() must be monotonic; think about lo/hi edge cases"
+    },
+    {
+      "Pattern": "Top-K with Heap",
+      "Recognize When…": "Kth largest/smallest; K most frequent; K closest",
+      "Template / Approach": "Min-heap of size K for Kth largest; pop when size>K; heap top = answer",
+      "Time Complexity": "O(n log k)",
+      "Space Complexity": "O(k)",
+      "Key Problems": "Kth Largest, K Closest Points, Top K Frequent, Find Median Stream",
+      "Gotchas": "Min-heap for top-K largest (counter-intuitive); max-heap for Kth smallest"
+    },
+    {
+      "Pattern": "1D DP — Knapsack",
+      "Recognize When…": "Include/exclude decision; optimal value with constraint",
+      "Template / Approach": "dp[i] = max/min considering first i items; dp[i] = max(dp[i-1], dp[i-w]+val)",
+      "Time Complexity": "O(n*W)",
+      "Space Complexity": "O(n) or O(W) optimized",
+      "Key Problems": "0/1 Knapsack, Coin Change, House Robber, Partition Equal Subset",
+      "Gotchas": "Traverse inner loop backwards for 0/1 (avoid reuse)"
+    },
+    {
+      "Pattern": "2D DP — Two Sequences",
+      "Recognize When…": "LCS, Edit Distance, Interleaving — comparing two strings/arrays",
+      "Template / Approach": "dp[i][j] = answer for s1[:i] and s2[:j]; fill row by row",
+      "Time Complexity": "O(m*n)",
+      "Space Complexity": "O(m*n) or O(n) optimized",
+      "Key Problems": "LCS, Edit Distance, Regex Match, Distinct Subsequences",
+      "Gotchas": "Define dp[0][j] and dp[i][0] base cases carefully"
+    },
+    {
+      "Pattern": "Union-Find",
+      "Recognize When…": "Connected components; dynamic connectivity; cycle in undirected graph",
+      "Template / Approach": "find() with path compression; union() with rank; detect cycle if find(u)==find(v) before union",
+      "Time Complexity": "O(α(n)) ≈ O(1)",
+      "Space Complexity": "O(n)",
+      "Key Problems": "Redundant Connection, Number of Islands II, Accounts Merge",
+      "Gotchas": "Always implement both path compression AND union by rank"
+    },
+    {
+      "Pattern": "Trie",
+      "Recognize When…": "Prefix matching; word search; autocomplete",
+      "Template / Approach": "TrieNode has children[26] and isEnd; insert char by char; search/startsWith iterate",
+      "Time Complexity": "O(L) per op",
+      "Space Complexity": "O(L*N) total nodes",
+      "Key Problems": "Implement Trie, Word Search II, Design Search Autocomplete",
+      "Gotchas": "Use HashMap<Character, TrieNode> for flexible char sets"
+    },
+    {
+      "Pattern": "Graph Topological Sort",
+      "Recognize When…": "Dependency ordering; course scheduling; build order",
+      "Template / Approach": "BFS (Kahn's): in-degree array + queue; DFS: post-order reversal",
+      "Time Complexity": "O(V+E)",
+      "Space Complexity": "O(V+E)",
+      "Key Problems": "Course Schedule I/II, Alien Dictionary, Task Scheduler",
+      "Gotchas": "Cycle = no valid topological order; check result size == V"
+    },
+    {
+      "Pattern": "Dijkstra's Algorithm",
+      "Recognize When…": "Shortest path in weighted graph with non-negative weights",
+      "Template / Approach": "Min-heap (dist, node); relax neighbors; skip stale entries",
+      "Time Complexity": "O((V+E) log V)",
+      "Space Complexity": "O(V)",
+      "Key Problems": "Network Delay Time, Cheapest Flights K Stops, Path With Min Effort",
+      "Gotchas": "Does NOT work with negative edges; use Bellman-Ford then"
+    },
+    {
+      "Pattern": "Interval Merge/Overlap",
+      "Recognize When…": "Merging overlapping intervals; scheduling conflicts",
+      "Template / Approach": "Sort by start; if curr.start <= prev.end → merge (update end); else add to result",
+      "Time Complexity": "O(n log n)",
+      "Space Complexity": "O(n)",
+      "Key Problems": "Merge Intervals, Non-Overlapping Intervals, Meeting Rooms II",
+      "Gotchas": "Sort by start for merge; sort by end for greedy scheduling"
+    }
+  ]
+}

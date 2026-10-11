@@ -20,7 +20,7 @@ export default function ProblemsPage() {
         <SetTabs sets={listSets()} active={COURSE_SCOPE} />
         <h1 className="mb-1 text-2xl font-semibold tracking-tight">Grokking Patterns</h1>
         <p className="mb-6 text-fg-2">
-          Every coding problem from the pattern course. Solve in Python or Java against hidden edge-case tests.
+          Every coding problem from the pattern course. Solve in Python, Java, JavaScript, TypeScript, C++ or Go against hidden edge-case tests.
         </p>
         <div className="mb-6">
           <ProgressPanel

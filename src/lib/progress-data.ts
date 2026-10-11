@@ -46,7 +46,8 @@ export function normalizeProgress(value: unknown): ProgressState {
 function parse(raw: string | null): unknown {
   try { return JSON.parse(raw ?? "null"); } catch { return null; }
 }
-const isLang = (value: unknown) => value === "python" || value === "java" || value === "sql";
+const LANGS = new Set<unknown>(["python", "java", "javascript", "typescript", "cpp", "go", "sql"]);
+const isLang = (value: unknown) => LANGS.has(value);
 const verdicts = new Set(["Accepted", "Wrong Answer", "Runtime Error", "Compile Error", "Time Limit Exceeded", "Internal Error"]);
 export function isSubmission(value: unknown): value is Submission {
   if (!isRecord(value)) return false;

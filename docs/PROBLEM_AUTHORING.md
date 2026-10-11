@@ -15,6 +15,8 @@ Include two or three sample cases with independently calculated expected values 
 Use the original LeetCode method and parameter names.
 A Java reference is optional but is required to claim that a particular problem's Java reference has been checked.
 Run `npm run tests:build -- --java <slugs...>` after each batch.
+References in other languages (`<slug>.js`, `.ts`, `.cpp`, `.go`) are optional and checked with `--langs`; they are useful when changing those harnesses.
+Function and method names come from the spec's `java` names; Go capitalizes design methods, and names that are keywords in a language get a trailing underscore (C++ `union_`).
 The builder checks fixed sample expectations and fills missing outputs from the Python reference.
 Only problems with a statement, reference, and all expected outputs appear as available.
 

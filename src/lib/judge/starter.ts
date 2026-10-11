@@ -2,6 +2,9 @@ import { javaType, listFieldFor } from "./java";
 import type { CodeLang } from "../content-types";
 import type { Param, ProblemSpec, ValueType } from "./types";
 import { environmentBase } from "./environment";
+import { cppParam, cppType } from "./cpp";
+import { goType, listFieldForGo } from "./go";
+import { goMethodName, languagesFor, safeName, type ExtraLang } from "./languages";
 
 const PY_TYPE: Record<ValueType, string> = {
   int: "int",
@@ -182,6 +185,7 @@ function javaParams(params: Param[]) {
 export function generateStarter(spec: ProblemSpec, lang: CodeLang): string {
   if (spec.kind === "sql") return "-- Write a SQLite query below.\n";
   if (lang === "sql") throw new Error("This problem requires Python or Java");
+  if (lang !== "python" && lang !== "java") return extraStarter(spec, lang);
   const docs = usedHelpers(allTypes(spec))
     .map((h) => HELPER_DOCS[h][lang].replaceAll("VAL", listFieldFor(spec.style)))
     .join("\n\n");
@@ -211,4 +215,184 @@ export function generateStarter(spec: ProblemSpec, lang: CodeLang): string {
     return `${head}class ${spec.className}${environmentBase(spec)} {\n\n${methods.join("\n\n")}\n}\n`;
   }
   return `${head}class Solution${environmentBase(spec)} {\n    public ${javaType(spec.returns)} ${spec.function.java}(${javaParams(spec.params)}) {\n        \n    }\n}\n`;
+}
+
+/* ---------------------------------------------------------------- JavaScript, TypeScript, C++, Go */
+
+const TS_TYPE: Partial<Record<ValueType, string>> = {
+  int: "number", long: "number", double: "number", boolean: "boolean", string: "string", char: "string",
+  "int[]": "number[]", "long[]": "number[]", "double[]": "number[]", "char[]": "string[]", "string[]": "string[]",
+  "boolean[]": "boolean[]", "int[][]": "number[][]", "char[][]": "string[][]",
+  "List<int>": "number[]", "List<double>": "number[]", "List<boolean>": "boolean[]", "List<string>": "string[]",
+  "List<List<int>>": "number[][]", "List<List<string>>": "string[][]", "List<int[]>": "number[][]",
+  ListNode: "ListNode | null", "ListNode[]": "Array<ListNode | null>", TreeNode: "TreeNode | null",
+  "List<TreeNode>": "Array<TreeNode | null>", Interval: "Interval", "Interval[]": "Interval[]", "List<Interval>": "Interval[]",
+  void: "void",
+};
+
+function tsType(t: ValueType) {
+  const name = TS_TYPE[t];
+  if (!name) throw new Error(`Type ${t} is not supported in TypeScript`);
+  return name;
+}
+
+/** JSDoc type names, as in LeetCode's JavaScript stubs. */
+function jsDocType(t: ValueType) {
+  return tsType(t).replace(/Array<(.+)>/, "$1[]").replace(/ \| null/g, "");
+}
+
+const EXTRA_HELPER_DOCS: Record<string, Record<ExtraLang, string>> = {
+  ListNode: {
+    javascript: `/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */`,
+    typescript: `/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null)
+ * }
+ */`,
+    cpp: `/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int VAL;
+ *     ListNode *next;
+ *     ListNode() : VAL(0), next(nullptr) {}
+ *     ListNode(int x) : VAL(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : VAL(x), next(next) {}
+ * };
+ */`,
+    go: `/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     GOVAL int
+ *     Next *ListNode
+ * }
+ */`,
+  },
+  TreeNode: {
+    javascript: `/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */`,
+    typescript: `/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null)
+ * }
+ */`,
+    cpp: `/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */`,
+    go: `/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */`,
+  },
+  Interval: {
+    javascript: "/**\n * Definition for an interval.\n * class Interval { constructor(start, end) { this.start = start; this.end = end; } }\n */",
+    typescript: "/**\n * Definition for an interval.\n * class Interval { start: number; end: number; constructor(start: number, end: number) }\n */",
+    cpp: "/**\n * Definition for an interval.\n * class Interval {\n * public:\n *     int start, end;\n *     Interval(int start, int end);\n * };\n */",
+    go: "/**\n * Definition for an interval.\n * type Interval struct {\n *     Start int\n *     End int\n * }\n */",
+  },
+};
+
+function extraHead(spec: ProblemSpec, lang: ExtraLang) {
+  const docs = usedHelpers(allTypes(spec))
+    .map((h) => EXTRA_HELPER_DOCS[h]?.[lang])
+    .filter(Boolean)
+    .map((doc) => doc!.replaceAll("GOVAL", listFieldForGo(spec.style)).replaceAll("VAL", listFieldFor(spec.style)))
+    .join("\n\n");
+  return docs ? `${docs}\n\n` : "";
+}
+
+function jsDoc(params: Param[], returns?: ValueType) {
+  const lines = params.map((p) => ` * @param {${jsDocType(p.type)}} ${p.name}`);
+  if (returns) lines.push(` * @return {${jsDocType(returns)}}`);
+  return lines.length ? `/**\n${lines.join("\n")}\n */\n` : "";
+}
+
+function indent(text: string, by: string) {
+  return text.split("\n").map((l) => (l ? by + l : l)).join("\n");
+}
+
+function extraStarter(spec: Exclude<ProblemSpec, { kind: "sql" }>, lang: ExtraLang): string {
+  const head = extraHead(spec, lang);
+  if (spec.kind === "design") return head + designStarter(spec, lang);
+  const params = spec.params;
+  const name = safeName(spec.function.java, lang);
+  const n = (p: Param) => safeName(p.name, lang);
+  switch (lang) {
+    case "javascript":
+      return `${head}${jsDoc(params, spec.returns)}var ${name} = function(${params.map(n).join(", ")}) {\n    \n};\n`;
+    case "typescript":
+      return `${head}function ${name}(${params.map((p) => `${n(p)}: ${tsType(p.type)}`).join(", ")}): ${tsType(spec.returns)} {\n    \n};\n`;
+    case "cpp":
+      return `${head}class Solution {\npublic:\n    ${cppType(spec.returns)} ${name}(${params.map(cppParam).join(", ")}) {\n        \n    }\n};\n`;
+    case "go": {
+      const ret = spec.returns === "void" ? "" : ` ${goType(spec.returns)}`;
+      return `${head}func ${name}(${params.map((p) => `${n(p)} ${goType(p.type)}`).join(", ")})${ret} {\n    \n}\n`;
+    }
+  }
+}
+
+function designStarter(spec: Extract<ProblemSpec, { kind: "design" }>, lang: ExtraLang): string {
+  const cls = spec.className;
+  const n = (p: Param) => safeName(p.name, lang);
+  const ps = (params: Param[], typed?: (p: Param) => string) => params.map((p) => (typed ? typed(p) : n(p))).join(", ");
+  switch (lang) {
+    case "javascript": {
+      const ctor = `${jsDoc(spec.ctorParams)}constructor(${ps(spec.ctorParams)}) {\n    \n}`;
+      const methods = spec.methods.map((m) => `${jsDoc(m.params, m.returns)}${m.java}(${ps(m.params)}) {\n    \n}`);
+      return `class ${cls} {\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n}\n`;
+    }
+    case "typescript": {
+      const ctor = `constructor(${ps(spec.ctorParams, (p) => `${n(p)}: ${tsType(p.type)}`)}) {\n    \n}`;
+      const methods = spec.methods.map((m) => `${m.java}(${ps(m.params, (p) => `${n(p)}: ${tsType(p.type)}`)}): ${tsType(m.returns)} {\n    \n}`);
+      return `class ${cls} {\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n}\n`;
+    }
+    case "cpp": {
+      const ctor = `${cls}(${spec.ctorParams.map(cppParam).join(", ")}) {\n    \n}`;
+      const methods = spec.methods.map((m) => `${cppType(m.returns)} ${safeName(m.java, "cpp")}(${m.params.map(cppParam).join(", ")}) {\n    \n}`);
+      return `class ${cls} {\npublic:\n${[ctor, ...methods].map((b) => indent(b, "    ")).join("\n\n")}\n};\n`;
+    }
+    case "go": {
+      const ctor = `func Constructor(${ps(spec.ctorParams, (p) => `${n(p)} ${goType(p.type)}`)}) ${cls} {\n    \n}`;
+      const methods = spec.methods.map((m) => {
+        const ret = m.returns === "void" ? "" : ` ${goType(m.returns)}`;
+        return `func (this *${cls}) ${goMethodName(m.java)}(${ps(m.params, (p) => `${n(p)} ${goType(p.type)}`)})${ret} {\n    \n}`;
+      });
+      return `type ${cls} struct {\n    \n}\n\n${[ctor, ...methods].join("\n\n")}\n`;
+    }
+  }
+}
+
+/** Starter code for every language the problem can be solved in. */
+export function generateStarters(spec: ProblemSpec): Partial<Record<CodeLang, string>> {
+  return Object.fromEntries(languagesFor(spec).map((lang) => [lang, generateStarter(spec, lang)]));
 }

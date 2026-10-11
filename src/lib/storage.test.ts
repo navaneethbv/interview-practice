@@ -63,7 +63,7 @@ it("refuses reset without a saved recovery copy and restores a successful reset 
 
 it("filters malformed submissions and repairs preference and progress fields independently", () => {
   const valid = { at: 10, lang: "python", verdict: "Accepted", passed: 2, total: 2, code: "pass" };
-  data.set("ip:subs:p", JSON.stringify([null, valid, { ...valid, passed: 3 }, { ...valid, lang: "javascript" }]));
+  data.set("ip:subs:p", JSON.stringify([null, valid, { ...valid, passed: 3 }, { ...valid, lang: "ruby" }]));
   assert.deepEqual(loadSubmissions("p"), [valid]);
   assert.deepEqual(parsePrefs('{"lang":null,"fontSize":"huge"}'), { lang: "python", fontSize: 14 });
   assert.deepEqual(parsePrefs('{"lang":"java","fontSize":500}'), { lang: "java", fontSize: 22 });

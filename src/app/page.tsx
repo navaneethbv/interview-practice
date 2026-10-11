@@ -54,7 +54,7 @@ export default function Home() {
               tone="bg-ok-soft text-ok"
               title="Coding problems"
               meta={`${problems.length} problems`}
-              body="Write Python or Java, run hidden edge-case tests, and track what you solve."
+              body="Write Python, Java, JavaScript, TypeScript, C++ or Go, run hidden edge-case tests, and track what you solve."
             />
             <TrackRow
               href="/learn"

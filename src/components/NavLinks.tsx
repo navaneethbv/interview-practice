@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const LINKS = [
+const LINKS: { href: string; label: string; short?: string }[] = [
   { href: "/problems", label: "Problems" },
   { href: "/learn", label: "Patterns" },
-  { href: "/system-design", label: "Interview Guides" },
+  { href: "/practice", label: "Practice" },
+  { href: "/system-design", label: "Interview Guides", short: "Guides" },
 ];
 
 export function NavLinks() {
@@ -24,7 +25,14 @@ export function NavLinks() {
               active ? "font-medium text-fg-1" : "text-fg-2 hover:bg-layer-2 hover:text-fg-1"
             }`}
           >
-            {l.label}
+            {l.short ? (
+              <>
+                <span className="sm:hidden">{l.short}</span>
+                <span className="hidden sm:inline">{l.label}</span>
+              </>
+            ) : (
+              l.label
+            )}
           </Link>
         );
       })}

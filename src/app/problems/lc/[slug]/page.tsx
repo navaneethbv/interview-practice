@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LessonContent } from "@/components/LessonContent";
+import { ProblemCoach } from "@/components/workspace/ProblemCoach";
 import { Workspace, type WorkspaceNav } from "@/components/workspace/Workspace";
 import { DifficultyPill, Tag } from "@/components/ui";
 import { getLcProblem, lcAuthored, renderBlocks, setsContaining } from "@/lib/content";
 import { lcProgressId } from "@/lib/content-types";
-import { generateStarter } from "@/lib/judge/starter";
+import { generateStarters } from "@/lib/judge/starter";
 
 export const dynamicParams = false;
 
@@ -49,7 +50,7 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
       title={title}
       spec={spec}
       reference={reference}
-      starters={spec.kind === "sql" ? { sql: generateStarter(spec, "sql") } : { python: generateStarter(spec, "python"), java: generateStarter(spec, "java") }}
+      starters={generateStarters(spec)}
       nav={defaultNav(slug)}
       description={
         <>
@@ -62,11 +63,8 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
             ))}
           </div>
           <LessonContent blocks={[{ t: "html", html: problem.statementHtml }]} />
-          {meta.pattern && (
-            <details className="mt-6 rounded-lg border border-line px-4 py-2.5 text-sm">
-              <summary className="cursor-pointer font-medium text-fg-1">Hint</summary>
-              <p className="mt-2 text-fg-2">Think about: {meta.pattern}.</p>
-            </details>
+          {spec.kind !== "sql" && (
+            <ProblemCoach info={{ topics: meta.topics, pattern: meta.pattern, hint: meta.hint, time: meta.time, space: meta.space }} />
           )}
         </>
       }

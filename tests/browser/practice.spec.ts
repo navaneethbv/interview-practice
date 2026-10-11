@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { serveCdnFromNodeModules } from "./cdn";
 
 const problem = "/problems/lc/two-sum?set=blind-75";
 const draft = "# browser regression draft\nclass Solution:\n    pass";
@@ -10,6 +11,8 @@ async function edit(page: Page, text: string) {
   await page.keyboard.press("Control+a");
   await page.keyboard.insertText(text);
 }
+
+test.beforeEach(({ context }) => serveCdnFromNodeModules(context));
 
 test("drafts survive reload, language switches, cancelled resets and recovery", async ({ page }) => {
   await page.goto(problem);

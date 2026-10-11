@@ -11,7 +11,7 @@ import {
   listProblems,
   renderBlocks,
 } from "@/lib/content";
-import { generateStarter } from "@/lib/judge/starter";
+import { generateStarters } from "@/lib/judge/starter";
 
 export function generateStaticParams() {
   return listProblems().map((p) => ({ id: p.id }));
@@ -37,7 +37,7 @@ export default async function ProblemPage({ params }: PageProps) {
   const [statement, solution] = await Promise.all([renderBlocks(lesson.statement), renderBlocks(lesson.solution)]);
 
   const starters = spec
-    ? { python: generateStarter(spec, "python"), java: generateStarter(spec, "java") }
+    ? generateStarters(spec)
     : { python: lesson.starter?.python ?? "", java: lesson.starter?.java ?? "" };
 
   return (

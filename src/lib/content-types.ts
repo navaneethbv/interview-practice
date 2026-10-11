@@ -2,7 +2,7 @@
 
 export type Difficulty = "easy" | "medium" | "hard";
 export type LessonType = "lesson" | "problem";
-export type CodeLang = "python" | "java" | "sql";
+export type CodeLang = "python" | "java" | "javascript" | "typescript" | "cpp" | "go" | "sql";
 
 export type Block =
   | { t: "html"; html: string }
