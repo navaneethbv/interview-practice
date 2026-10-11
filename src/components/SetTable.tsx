@@ -27,8 +27,8 @@ export function SetTable(props: Props) {
 function SetTableContent({ setId, kind, rows }: Props) {
   const progress = useProgress();
   const router = useRouter();
-  // Curated lists come with categories; company lists are filtered by topic.
-  const byCategory = kind === "curated";
+  // Curated lists and recency-bucketed company lists come with categories; other company lists are filtered by topic.
+  const byCategory = useMemo(() => kind === "curated" || rows.every((r) => r.category), [kind, rows]);
   const groups = useMemo(() => {
     const groupsOf = (r: SetRow) => {
       if (!byCategory) return r.topics;
@@ -119,7 +119,7 @@ function SetTableContent({ setId, kind, rows }: Props) {
         {available < rows.length && ` · ${available} ready to solve here, the rest are being added`}
       </p>
 
-      <div className="overflow-x-auto rounded-xl border border-line bg-layer-1">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-layer-1 shadow-card">
         <table className="w-full text-sm">
           <thead className="border-b border-line text-left text-xs text-fg-3">
             <tr>

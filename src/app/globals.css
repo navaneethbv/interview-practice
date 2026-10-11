@@ -3,9 +3,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Soft, low-glare palette inspired by LeetCode. Dark mode avoids pure black and pure white. */
+/* Soft, low-glare palette. Dark mode avoids pure black and pure white. */
 :root {
-  --bg: #f4f5f7;
+  --bg: #f5f6f8;
   --layer-1: #ffffff;
   --layer-2: #f2f3f5;
   --layer-3: #e8eaed;
@@ -27,6 +27,11 @@
   --medium: #d99a00;
   --hard: #e0344d;
   --code-bg: #f6f7f9;
+  --violet: #6d4fd8;
+  --violet-soft: #efebfc;
+  --shadow-sm: 0 1px 2px rgb(16 24 40 / 0.05);
+  --shadow-md: 0 1px 2px rgb(16 24 40 / 0.04), 0 4px 16px -4px rgb(16 24 40 / 0.08);
+  --shadow-lg: 0 12px 40px -8px rgb(16 24 40 / 0.18);
   color-scheme: light;
 }
 
@@ -53,6 +58,11 @@
   --medium: #f2c14e;
   --hard: #f2687c;
   --code-bg: #1d1e22;
+  --violet: #a48ff5;
+  --violet-soft: #2a2440;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 1px 2px rgb(0 0 0 / 0.25), 0 6px 20px -6px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 16px 48px -8px rgb(0 0 0 / 0.6);
   color-scheme: dark;
 }
 
@@ -79,6 +89,11 @@
   --color-medium: var(--medium);
   --color-hard: var(--hard);
   --color-code: var(--code-bg);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --shadow-card: var(--shadow-sm);
+  --shadow-raised: var(--shadow-md);
+  --shadow-overlay: var(--shadow-lg);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
@@ -91,6 +106,13 @@ body {
 
 body {
   -webkit-font-smoothing: antialiased;
+}
+
+/* Soft brand glow behind page headers. */
+.hero-glow {
+  background-image:
+    radial-gradient(1200px 400px at 10% -10%, var(--brand-soft) 0%, transparent 60%),
+    radial-gradient(900px 380px at 95% 0%, var(--blue-soft) 0%, transparent 55%);
 }
 
 ::selection {

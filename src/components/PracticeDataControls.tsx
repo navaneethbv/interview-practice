@@ -28,7 +28,7 @@ export function PracticeDataControls() {
     } catch (error) { setMessage((error as Error).message); }
   }
 
-  return <details className="mt-8 rounded-xl border border-line bg-layer-1 px-5 py-4">
+  return <details className="rounded-xl border border-line bg-layer-1 px-5 py-4">
     <summary className="cursor-pointer text-sm font-medium">Back up or restore practice data</summary>
     <p className="mt-3 text-sm text-fg-2">Save a copy of your code, progress, submissions, and last opened pages. Files stay on your device.</p>
     <div className="mt-3 flex flex-wrap gap-2">

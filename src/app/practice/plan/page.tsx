@@ -2,7 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { NavBar } from "@/components/NavBar";
+import { NavBar, SiteFooter } from "@/components/NavBar";
+import { PageHeader } from "@/components/PageHeader";
 import { PlanProblems, type PlanProblem } from "@/components/practice/PlanProblems";
 import { lcAuthored, lcMetaAll } from "@/lib/content";
 import { lcProgressId } from "@/lib/content-types";
@@ -76,15 +77,10 @@ export default function StudyPlanPage() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <p className="mb-2 text-sm">
-          <Link href="/practice" className="text-blue hover:underline">
-            Practice
-          </Link>{" "}
-          / Study plan
-        </p>
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight">{plan.title}</h1>
-        <p className="mb-8 text-fg-2">{plan.summary}. Problems link to the workspace and show your progress.</p>
+      <PageHeader crumbs={[{ href: "/practice", label: "Practice" }]} title={plan.title}>
+        {plan.summary}. Problems link to the workspace and show your progress.
+      </PageHeader>
+      <main className="mx-auto max-w-6xl px-4 py-8">
 
         <h2 className="mb-3 text-lg font-semibold">Phases</h2>
         <Table rows={plan.phases} columns={["Phase", "Weeks", "DSA Focus Area", "Key Concepts", "System Design Topic", "Difficulty Mix", "Cumulative Problems"]} />
@@ -149,6 +145,7 @@ export default function StudyPlanPage() {
         <h2 className="mb-3 mt-10 text-lg font-semibold">Pattern recognition cheatsheet</h2>
         <Table rows={plan.patterns} columns={["Pattern", "Recognize When…", "Template / Approach", "Time Complexity", "Space Complexity", "Gotchas"]} />
       </main>
+      <SiteFooter />
     </>
   );
 }

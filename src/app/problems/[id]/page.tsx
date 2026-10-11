@@ -48,7 +48,7 @@ export default async function ProblemPage({ params }: PageProps) {
       reference={getPythonReference(id)}
       starters={starters}
       nav={{
-        list: "/problems",
+        list: "/problems/grokking",
         prev: idx > 0 ? `/problems/${problems[idx - 1].id}` : null,
         next: idx < problems.length - 1 ? `/problems/${problems[idx + 1].id}` : null,
       }}

@@ -1,111 +1,136 @@
 import Link from "next/link";
 import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
-import { NavBar } from "@/components/NavBar";
-import { PracticeDataControls } from "@/components/PracticeDataControls";
-import { ProgressPanel } from "@/components/ProgressPanel";
+import { FeaturedLists, HomeStats, TodayActions } from "@/components/home/Dashboard";
+import { NavBar, SiteFooter } from "@/components/NavBar";
 import { ResumePractice } from "@/components/ResumePractice";
-import { designChapters, getCourse, listDesignBooks, listProblems } from "@/lib/content";
-import { COURSE_SCOPE } from "@/lib/content-types";
+import { listSummaries } from "@/lib/catalog";
+import { designChapters, getCourse, listDesignBooks } from "@/lib/content";
+
+const FEATURED = ["grokking", "blind-75", "neetcode-150", "sql-50"];
 
 export default function Home() {
-  const course = getCourse();
-  const problems = listProblems();
+  const lists = listSummaries();
+  const featured = FEATURED.map((id) => lists.find((l) => l.id === id)).filter((l): l is NonNullable<typeof l> => !!l);
+  const companies = lists.filter((l) => l.group === "companies");
+  const problemCount = new Set(lists.flatMap((l) => l.ids)).size;
   const designBooks = listDesignBooks();
   const designChapterCount = designBooks.reduce((sum, book) => sum + designChapters(book).length, 0);
-  const patterns = course.chapters.filter((c) => c.title.startsWith("Pattern"));
+  const patterns = getCourse().chapters.filter((c) => c.title.startsWith("Pattern"));
 
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
-        <section className="mb-8 max-w-3xl">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand">Interview Practice</p>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Practice the questions that move you forward.</h1>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-fg-2">
-            Coding drills, pattern lessons, and interview guides in one focused workspace.
-          </p>
-        </section>
-
-        <section className="mb-10">
-          <div className="mb-3 flex items-baseline justify-between gap-4">
-            <h2 className="text-lg font-semibold tracking-tight">Keep going</h2>
-            <Link href="/problems" className="text-sm text-blue hover:underline">
-              Open problems
-            </Link>
+      <div className="hero-glow border-b border-line">
+        <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:py-14 lg:grid-cols-[1fr_minmax(0,26rem)] lg:items-end">
+          <div className="max-w-2xl">
+            <p className="mb-3 text-xs font-semibold tracking-[0.16em] text-brand uppercase">Interview Practice</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-[2.6rem] sm:leading-[1.1]">
+              Practice the questions that move you forward.
+            </h1>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-fg-2">
+              {problemCount.toLocaleString()} coding problems in six languages, {patterns.length} pattern lessons, mock interviews and{" "}
+              {designBooks.length} interview guides, all in one focused workspace.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Link
+                href="/problems"
+                className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 shadow-raised hover:opacity-90"
+              >
+                Browse problem lists <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/practice#mock"
+                className="inline-flex h-10 items-center rounded-xl border border-line-strong bg-layer-1 px-4 text-sm font-medium hover:bg-layer-2"
+              >
+                Start a mock interview
+              </Link>
+            </div>
           </div>
+          <HomeStats />
+        </section>
+      </div>
+
+      <main className="mx-auto max-w-6xl px-4 py-10">
+        <Section title="Pick up where you left off">
           <ResumePractice />
-          <ProgressPanel
-            ids={problems.map((p) => p.id)}
-            difficulties={problems.map((p) => p.difficulty)}
-            scope={COURSE_SCOPE}
-            scopeLabel="Coding practice"
-          />
-        </section>
+          <TodayActions />
+        </Section>
 
-        <section className="overflow-hidden rounded-2xl border border-line bg-layer-1">
-          <div className="border-b border-line px-5 py-4">
-            <h2 className="text-lg font-semibold tracking-tight">Choose a track</h2>
-            <p className="mt-1 text-sm text-fg-2">Start with the kind of practice you need today.</p>
+        <Section title="Popular lists" link={{ href: "/problems", label: "All lists" }}>
+          <FeaturedLists lists={featured} />
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+            <span className="mr-1 text-fg-3">Company lists:</span>
+            {companies.map((c) => (
+              <Link key={c.id} href={c.href} className="rounded-full border border-line bg-layer-1 px-3 py-1 text-fg-2 hover:border-line-strong hover:text-fg-1">
+                {c.title}
+              </Link>
+            ))}
           </div>
-          <div className="divide-y divide-line">
-            <TrackRow
+        </Section>
+
+        <Section title="Explore">
+          <div className="grid gap-3 md:grid-cols-3">
+            <Track
               href="/problems"
               icon={<Code2 size={20} />}
               tone="bg-ok-soft text-ok"
               title="Coding problems"
-              meta={`${problems.length} problems`}
-              body="Write Python, Java, JavaScript, TypeScript, C++ or Go, run hidden edge-case tests, and track what you solve."
+              meta={`${lists.length} lists`}
+              body="Python, Java, JavaScript, TypeScript, C++ or Go, judged against hidden edge-case tests."
             />
-            <TrackRow
+            <Track
               href="/learn"
               icon={<Boxes size={20} />}
               tone="bg-blue-soft text-blue"
               title="Pattern lessons"
               meta={`${patterns.length} patterns`}
-              body="Build the mental models behind the problems, from sliding window to topological sort."
+              body="The mental models behind the problems, from sliding window to topological sort."
             />
-            <TrackRow
+            <Track
               href="/system-design"
               icon={<Network size={20} />}
               tone="bg-brand-soft text-brand"
               title="Interview guides"
-              meta={designBooks.length ? `${designBooks.length} books · ${designChapterCount} chapters` : "Reading notes"}
-              body="Practice system design, AI architecture, testing, and behavioral interviews with worked examples."
+              meta={`${designBooks.length} guides · ${designChapterCount} chapters`}
+              body="System design, AI architecture, object-oriented design, behavioral and the job search."
             />
           </div>
-        </section>
-        <PracticeDataControls />
+        </Section>
       </main>
+      <SiteFooter />
     </>
   );
 }
 
-function TrackRow({
-  href,
-  icon,
-  tone,
-  title,
-  meta,
-  body,
-}: Readonly<{
-  href: string;
-  icon: React.ReactNode;
-  tone: string;
-  title: string;
-  meta: string;
-  body: string;
-}>) {
+function Section({ title, link, children }: Readonly<{ title: string; link?: { href: string; label: string }; children: React.ReactNode }>) {
   return (
-    <Link href={href} className="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-layer-2">
-      <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${tone}`}>{icon}</span>
-      <span className="min-w-0 flex-1">
-        <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          <span className="font-semibold">{title}</span>
-          <span className="text-xs text-fg-3">{meta}</span>
-        </span>
-        <span className="mt-0.5 block text-sm text-fg-2">{body}</span>
+    <section className="mb-12">
+      <div className="mb-4 flex items-baseline justify-between gap-4">
+        <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+        {link && (
+          <Link href={link.href} className="text-sm text-blue hover:underline">
+            {link.label}
+          </Link>
+        )}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Track({ href, icon, tone, title, meta, body }: Readonly<{ href: string; icon: React.ReactNode; tone: string; title: string; meta: string; body: string }>) {
+  return (
+    <Link
+      href={href}
+      className="group flex h-full flex-col rounded-2xl border border-line bg-layer-1 p-5 shadow-card transition hover:-translate-y-px hover:border-line-strong hover:shadow-raised"
+    >
+      <span className={`mb-4 grid size-10 place-items-center rounded-xl ${tone}`}>{icon}</span>
+      <span className="flex items-center gap-1.5 font-semibold">
+        {title}
+        <ArrowRight size={15} aria-hidden className="text-fg-3 transition-transform group-hover:translate-x-0.5" />
       </span>
-      <ArrowRight size={17} className="shrink-0 text-fg-3 transition-transform group-hover:translate-x-0.5" />
+      <span className="mt-0.5 text-xs text-fg-3">{meta}</span>
+      <span className="mt-2 text-sm leading-relaxed text-fg-2">{body}</span>
     </Link>
   );
 }

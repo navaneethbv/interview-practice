@@ -22,10 +22,10 @@ export function ResumePractice() {
   if (!visits.length) return null;
 
   return (
-    <div className="mb-5 grid gap-3 sm:grid-cols-2" aria-label="Resume practice">
+    <div className="mb-3 grid gap-3 sm:grid-cols-2" aria-label="Resume practice">
       {visits.map((visit) => (
         <Link key={visit.kind} href={visit.href}
-          className="group flex min-w-0 items-center gap-3 rounded-xl border border-line bg-layer-1 p-4 transition-colors hover:bg-layer-2">
+          className="group flex min-w-0 items-center gap-3 rounded-2xl border border-line bg-layer-1 p-4 shadow-card transition-colors hover:bg-layer-2">
           <span className="min-w-0 flex-1">
             <span className="block text-xs text-fg-3">{visit.kind === "problem" ? "Last problem" : "Last chapter"} · {visit.context}</span>
             <span className="mt-1 block truncate font-medium">{visit.title}</span>

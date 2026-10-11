@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpenCheck, CalendarRange, Sparkles } from "lucide-react";
-import { NavBar } from "@/components/NavBar";
+import { NavBar, SiteFooter } from "@/components/NavBar";
+import { PageHeader } from "@/components/PageHeader";
 import { PracticeHub } from "@/components/practice/PracticeHub";
 import { practiceCatalog } from "@/lib/practice-catalog";
 
@@ -18,15 +19,14 @@ export default function PracticePage() {
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight">Practice</h1>
-        <p className="mb-6 text-fg-2">
-          Turn solved problems into interview readiness: timed mock rounds, spaced-repetition reviews and a structured plan. Everything
-          is saved in this browser.
-        </p>
+      <PageHeader eyebrow="Practice" title="Practice">
+        Turn solved problems into interview readiness: timed mock rounds, spaced-repetition reviews and a structured plan. Everything is
+        saved in this browser.
+      </PageHeader>
+      <main className="mx-auto max-w-6xl px-4 py-8">
         <div className="mb-10 grid gap-3 sm:grid-cols-3">
           {GUIDES.map((g) => (
-            <Link key={g.href} href={g.href} className="rounded-lg border border-line bg-layer-1 p-4 transition-colors hover:border-line-strong">
+            <Link key={g.href} href={g.href} className="rounded-2xl border border-line bg-layer-1 p-4 shadow-card transition hover:-translate-y-px hover:border-line-strong hover:shadow-raised">
               <g.icon size={18} className="mb-2 text-brand" aria-hidden />
               <div className="font-medium">{g.title}</div>
               <p className="mt-1 text-sm text-fg-2">{g.text}</p>
@@ -35,6 +35,7 @@ export default function PracticePage() {
         </div>
         <PracticeHub entries={entries} sources={sources} />
       </main>
+      <SiteFooter />
     </>
   );
 }

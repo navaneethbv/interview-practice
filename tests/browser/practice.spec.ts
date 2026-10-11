@@ -138,3 +138,40 @@ test("mobile home and workbook remain within the viewport", async ({ page }) => 
     }
   }
 });
+
+test("problem hub groups lists and the switcher moves between them", async ({ page }) => {
+  await page.goto("/problems");
+  await expect(page.getByRole("heading", { name: "Company lists" })).toBeVisible();
+  await page.getByRole("textbox", { name: "Filter lists" }).fill("nvidia");
+  await expect(page.getByRole("heading", { name: "Study plans" })).toHaveCount(0);
+  await page.getByRole("link", { name: /NVIDIA/ }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "NVIDIA" })).toBeVisible();
+  await page.getByRole("combobox", { name: "Switch list" }).selectOption("/problems/sets/blind-75");
+  await expect(page.getByRole("heading", { level: 1, name: "Blind 75" })).toBeVisible();
+  await page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: "Problems" }).click();
+  await expect(page).toHaveURL(/\/problems$/);
+});
+
+test("command palette jumps to a problem from the keyboard", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Control+k");
+  const input = page.getByRole("combobox", { name: "Search the site" });
+  await expect(input).toBeFocused();
+  await input.fill("two sum");
+  await expect(page.getByRole("option").first()).toContainText("1. Two Sum");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/problems\/lc\/two-sum$/);
+});
+
+test("mobile menu opens, navigates and closes", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await page.locator("#mobile-menu").getByRole("link", { name: /Guides/ }).click();
+  await expect(page).toHaveURL(/\/system-design$/);
+  await expect(page.locator("#mobile-menu")).toHaveCount(0);
+  for (const path of ["/problems", "/problems/sets/nvidia", "/system-design"]) {
+    await page.goto(path);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
+});

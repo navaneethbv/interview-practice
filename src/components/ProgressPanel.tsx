@@ -35,7 +35,7 @@ export function ProgressPanel({
 
   return (
     <section
-      className="grid gap-5 rounded-2xl border border-line bg-layer-1 p-5 sm:grid-cols-[auto_1fr_auto] sm:gap-8"
+      className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-4 rounded-2xl border border-line bg-layer-1 p-4 shadow-card sm:grid-cols-[auto_1fr_auto] sm:gap-8 sm:p-5"
       aria-label={scopeLabel ? `${scopeLabel} progress` : "Your progress"}
     >
       <div
@@ -51,7 +51,7 @@ export function ProgressPanel({
           </div>
         </div>
       </div>
-      <div className="flex min-w-0 flex-col justify-center gap-3">
+      <div className="flex min-w-0 flex-col justify-center gap-2.5 sm:gap-3">
         {LABELS.map(({ key, label, color, bar }) => {
           const group = ids.filter((_, i) => difficulties[i] === key);
           if (!group.length) return null;
@@ -71,7 +71,7 @@ export function ProgressPanel({
           );
         })}
       </div>
-      <div className="flex flex-col justify-center gap-3 border-t border-line pt-4 sm:min-w-44 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-6">
+      <div className="col-span-2 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4 sm:col-span-1 sm:min-w-44 sm:flex-col sm:flex-nowrap sm:items-stretch sm:justify-center sm:border-t-0 sm:border-l sm:pt-0 sm:pl-6">
         <div>
           <div className="text-xs text-fg-3">Accuracy</div>
           <div className="text-xl font-semibold tabular-nums">{accuracy === null ? "–" : `${accuracy}%`}</div>
