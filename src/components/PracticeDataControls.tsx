@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { BACKUP_LIMIT, exportPractice, importPractice, parseBackup, type PracticeBackup } from "@/lib/practice-backup";
 import { downloadText } from "@/lib/download";
 
@@ -11,6 +11,10 @@ export function PracticeDataControls() {
   const confirm = useRef<HTMLButtonElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (backup) confirm.current?.focus();
+  }, [backup]);
 
   function cancelRestore() {
     setBackup(null);
@@ -28,7 +32,7 @@ export function PracticeDataControls() {
     } catch (error) { setMessage((error as Error).message); }
   }
 
-  return <details className="mt-8 rounded-xl border border-line bg-layer-1 px-5 py-4">
+  return <details className="rounded-xl border border-line bg-layer-1 px-5 py-4">
     <summary className="cursor-pointer text-sm font-medium">Back up or restore practice data</summary>
     <p className="mt-3 text-sm text-fg-2">Save a copy of your code, progress, submissions, and last opened pages. Files stay on your device.</p>
     <div className="mt-3 flex flex-wrap gap-2">
@@ -44,7 +48,6 @@ export function PracticeDataControls() {
             try {
               if (file.size > BACKUP_LIMIT) throw new Error("Backup is too large (maximum 20 MB).");
               setBackup(parseBackup(await file.text()));
-              requestAnimationFrame(() => confirm.current?.focus());
             } catch (error) { setMessage((error as Error).message); }
             finally {
               if (input.current) input.current.value = "";

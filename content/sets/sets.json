@@ -1760,6 +1760,424 @@
   ]
  },
  {
+  "id": "sql-50",
+  "title": "SQL 50",
+  "kind": "curated",
+  "description": "LeetCode's SQL 50 study plan in SQLite: selection, joins, aggregation, grouping, subqueries and string functions. Statements and tests are written for this site.",
+  "sourceUrl": "https://leetcode.com/studyplan/top-sql-50/",
+  "sourceLabel": "LeetCode SQL 50 study plan",
+  "items": [
+   {
+    "slug": "recyclable-and-low-fat-products",
+    "category": "Select"
+   },
+   {
+    "slug": "find-customer-referee",
+    "category": "Select"
+   },
+   {
+    "slug": "big-countries",
+    "category": "Select"
+   },
+   {
+    "slug": "article-views-i",
+    "category": "Select"
+   },
+   {
+    "slug": "invalid-tweets",
+    "category": "Select"
+   },
+   {
+    "slug": "replace-employee-id-with-the-unique-identifier",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "product-sales-analysis-i",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "customer-who-visited-but-did-not-make-any-transactions",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "rising-temperature",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "average-time-of-process-per-machine",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "employee-bonus",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "students-and-examinations",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "managers-with-at-least-5-direct-reports",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "confirmation-rate",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "not-boring-movies",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "average-selling-price",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "project-employees-i",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "percentage-of-users-attended-a-contest",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "queries-quality-and-percentage",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "monthly-transactions-i",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "immediate-food-delivery-ii",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "game-play-analysis-iv",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "number-of-unique-subjects-taught-by-each-teacher",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "user-activity-for-the-past-30-days-i",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "product-sales-analysis-iii",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "classes-more-than-5-students",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "find-followers-count",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "biggest-single-number",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "customers-who-bought-all-products",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "the-number-of-employees-which-report-to-each-employee",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "primary-department-for-each-employee",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "triangle-judgement",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "consecutive-numbers",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "product-price-at-a-given-date",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "last-person-to-fit-in-the-bus",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "count-salary-categories",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "employees-whose-manager-left-the-company",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "exchange-seats",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "movie-rating",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "restaurant-growth",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "friend-requests-ii-who-has-the-most-friends",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "investments-in-2016",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "department-top-three-salaries",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "fix-names-in-a-table",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "find-users-with-valid-e-mails",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "patients-with-a-condition",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "delete-duplicate-emails",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "second-highest-salary",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "group-sold-products-by-the-date",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "list-the-products-ordered-in-a-period",
+    "category": "Advanced String Functions / Regex / Clause"
+   }
+  ]
+ },
+ {
+  "id": "concurrency",
+  "title": "Concurrency",
+  "kind": "curated",
+  "description": "LeetCode's multithreading problems, judged on real threads in Java, C++ and Go. Each test repeats with random start delays to surface races, and deadlocks are reported instead of hanging.",
+  "items": [
+   {
+    "slug": "print-in-order",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "print-foobar-alternately",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "print-zero-even-odd",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "building-h2o",
+    "category": "Resource sharing"
+   },
+   {
+    "slug": "fizz-buzz-multithreaded",
+    "category": "Thread coordination"
+   },
+   {
+    "slug": "the-dining-philosophers",
+    "category": "Resource sharing"
+   }
+  ]
+ },
+ {
+  "id": "object-oriented-design",
+  "title": "Object-Oriented Design",
+  "kind": "curated",
+  "description": "Executable low-level design: classes with state and invariants, judged by sequences of method calls. Pair them with the Low-Level Design Practice guide for the modeling discussion.",
+  "items": [
+   {
+    "slug": "lru-cache",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "lfu-cache",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "snapshot-array",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "design-hashmap",
+    "category": "Caching and storage"
+   },
+   {
+    "slug": "logger-rate-limiter",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-authentication-manager",
+    "category": "Rate limiting and expiry"
+   },
+   {
+    "slug": "design-parking-system",
+    "category": "Allocation"
+   },
+   {
+    "slug": "seat-reservation-manager",
+    "category": "Allocation"
+   },
+   {
+    "slug": "exam-room",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-a-number-container-system",
+    "category": "Allocation"
+   },
+   {
+    "slug": "design-leaderboard",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-a-food-rating-system",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-task-manager",
+    "category": "Ranking"
+   },
+   {
+    "slug": "all-oone-data-structure",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-twitter",
+    "category": "Ranking"
+   },
+   {
+    "slug": "design-underground-system",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "stock-price-fluctuation",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "online-stock-span",
+    "category": "Tracking and analytics"
+   },
+   {
+    "slug": "design-browser-history",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-a-text-editor",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-search-autocomplete-system",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "implement-trie-prefix-tree",
+    "category": "Editors and navigation"
+   },
+   {
+    "slug": "design-file-system",
+    "category": "File systems"
+   },
+   {
+    "slug": "design-in-memory-file-system",
+    "category": "File systems"
+   },
+   {
+    "slug": "design-tic-tac-toe",
+    "category": "Games"
+   },
+   {
+    "slug": "design-snake-game",
+    "category": "Games"
+   },
+   {
+    "slug": "simple-bank-system",
+    "category": "Transactions"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Core structures"
+   },
+   {
+    "slug": "design-circular-queue",
+    "category": "Core structures"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Core structures"
+   }
+  ]
+ },
+ {
+  "id": "ml-coding",
+  "title": "ML Coding",
+  "kind": "curated",
+  "description": "Original problems for machine learning coding rounds: implement softmax, attention, k-means, logistic regression, retrieval and evaluation metrics from scratch with only the standard library.",
+  "items": [
+   {
+    "slug": "ml-softmax",
+    "category": "Building blocks"
+   },
+   {
+    "slug": "ml-scaled-dot-product-attention",
+    "category": "Building blocks"
+   },
+   {
+    "slug": "ml-k-means",
+    "category": "Unsupervised learning"
+   },
+   {
+    "slug": "ml-logistic-regression",
+    "category": "Supervised learning"
+   },
+   {
+    "slug": "ml-cosine-top-k",
+    "category": "Retrieval"
+   },
+   {
+    "slug": "ml-roc-auc",
+    "category": "Evaluation"
+   },
+   {
+    "slug": "ml-precision-recall-at-k",
+    "category": "Evaluation"
+   }
+  ]
+ },
+ {
   "id": "blind-75",
   "title": "Blind 75",
   "kind": "curated",
@@ -11197,5 +11615,691 @@
     "category": "Sliding Window"
    }
   ]
+ },
+ {
+  "id": "nvidia",
+  "title": "NVIDIA",
+  "kind": "company",
+  "description": "Problems tagged NVIDIA on LeetCode, most recent first (snapshot of 12th July 2026).",
+  "items": [
+   {
+    "slug": "koko-eating-bananas",
+    "category": "Last 30 days"
+   },
+   {
+    "slug": "group-anagrams",
+    "category": "Last 3 months"
+   },
+   {
+    "slug": "restore-ip-addresses",
+    "category": "Last 3 months"
+   },
+   {
+    "slug": "network-delay-time",
+    "category": "Last 3 months"
+   },
+   {
+    "slug": "longest-substring-without-repeating-characters",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "merge-k-sorted-lists",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "longest-consecutive-sequence",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "special-binary-string",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "two-sum",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "valid-parentheses",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "best-time-to-buy-and-sell-stock",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "copy-list-with-random-pointer",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "min-stack",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "house-robber",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "count-primes",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "palindrome-linked-list",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "sliding-window-maximum",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "decode-string",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "design-circular-queue",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "binary-subarrays-with-sum",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "minimum-absolute-difference",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "break-a-palindrome",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "search-in-rotated-sorted-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-subarray",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "number-of-islands",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "fizz-buzz",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "last-stone-weight",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximize-greatness-of-an-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "container-with-most-water",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "4sum",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "merge-intervals",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "rotate-list",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "unique-paths-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "reverse-words-in-a-string",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "reverse-bits",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "reverse-linked-list",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "rectangle-area",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "product-of-array-except-self",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "missing-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "move-zeroes",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-the-duplicate-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "fibonacci-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "dot-product-of-two-sparse-vectors",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "max-sum-of-a-pair-with-equal-sum-of-digits",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "task-scheduler-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-the-original-array-of-prefix-xor",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "add-two-numbers",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "string-to-integer-atoi",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "generate-parentheses",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "rotate-image",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "spiral-matrix",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "jump-game",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "minimum-path-sum",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "climbing-stairs",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "set-matrix-zeroes",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "merge-sorted-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "reverse-linked-list-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-peak-element",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "course-schedule",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "course-schedule-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximal-square",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "power-of-two",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "valid-anagram",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "integer-to-english-words",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "serialize-and-deserialize-binary-tree",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "counting-bits",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "top-k-frequent-elements",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "insert-delete-getrandom-o1",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "string-compression",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "subarray-sum-equals-k",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-number-of-events-that-can-be-attended",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "remove-stones-to-minimize-the-total",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "minimum-operations-to-reduce-an-integer-to-0",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "median-of-two-sorted-arrays",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "longest-palindromic-substring",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "longest-common-prefix",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "3sum",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "letter-combinations-of-a-phone-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "merge-two-sorted-lists",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "powx-n",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "unique-paths",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "sqrtx",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "sort-colors",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "remove-duplicates-from-sorted-list-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "clone-graph",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "linked-list-cycle",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "max-points-on-a-line",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-product-subarray",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "compare-version-numbers",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "largest-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "number-of-1-bits",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "minimum-size-subarray-sum",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "kth-largest-element-in-an-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "contains-duplicate",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "the-skyline-problem",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "h-index",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-the-celebrity",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "word-pattern",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-median-from-data-stream",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "longest-increasing-subsequence",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "reverse-string",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "linked-list-random-node",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "shuffle-an-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "first-unique-character-in-a-string",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "random-pick-index",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "third-maximum-number",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "serialize-and-deserialize-n-ary-tree",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "add-two-numbers-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "the-maze",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "next-greater-element-ii",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "diameter-of-binary-tree",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "task-scheduler",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-product-of-three-numbers",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-k-closest-elements",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "daily-temperatures",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "sliding-puzzle",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "number-of-lines-to-write-string",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "all-nodes-distance-k-in-binary-tree",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "middle-of-the-linked-list",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "all-possible-full-binary-trees",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "rotting-oranges",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "previous-permutation-with-one-swap",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "fizz-buzz-multithreaded",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "minimum-knight-moves",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-number-of-visible-points",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "merge-in-between-linked-lists",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "number-of-visible-people-in-a-queue",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "delete-duplicate-folders-in-system",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "number-of-ways-to-split-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "longest-cycle-in-a-graph",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "maximum-sum-of-distinct-subarrays-with-length-k",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "count-the-number-of-good-subsequences",
+    "category": "Older than 6 months"
+   }
+  ],
+  "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
+  "sourceLabel": "Community LeetCode company-tag snapshot"
+ },
+ {
+  "id": "openai",
+  "title": "OpenAI",
+  "kind": "company",
+  "description": "Problems tagged OpenAI on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category.",
+  "items": [
+   {
+    "slug": "rotting-oranges",
+    "category": "Last 3 months"
+   },
+   {
+    "slug": "design-authentication-manager",
+    "category": "Last 3 months"
+   },
+   {
+    "slug": "design-memory-allocator",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "ip-to-cidr",
+    "category": "Last 6 months"
+   },
+   {
+    "slug": "design-sql",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "encode-and-decode-strings",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "flatten-nested-list-iterator",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "design-excel-sum-formula",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "time-based-key-value-store",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "simplify-path",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "trapping-rain-water",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "asteroid-collision",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "snapshot-array",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "web-crawler-multithreaded",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "largest-local-values-in-a-matrix",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "design-spreadsheet",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "resumable-iterator",
+    "category": "Reported in candidate write-ups"
+   }
+  ],
+  "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
+  "sourceLabel": "Community LeetCode company-tag snapshot"
+ },
+ {
+  "id": "anthropic",
+  "title": "Anthropic",
+  "kind": "company",
+  "description": "Problems tagged Anthropic on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category.",
+  "items": [
+   {
+    "slug": "web-crawler-multithreaded",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "find-duplicate-file-in-system",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "exclusive-time-of-functions",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "web-crawler",
+    "category": "Older than 6 months"
+   },
+   {
+    "slug": "convert-stack-samples-to-trace",
+    "category": "Reported in candidate write-ups"
+   },
+   {
+    "slug": "lru-cache",
+    "category": "Reported in candidate write-ups"
+   },
+   {
+    "slug": "simple-bank-system",
+    "category": "Reported in candidate write-ups"
+   }
+  ],
+  "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
+  "sourceLabel": "Community LeetCode company-tag snapshot"
  }
 ]

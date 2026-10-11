@@ -1,0 +1,57 @@
+{
+  "kind": "design",
+  "id": "resumable-iterator",
+  "style": "leetcode",
+  "className": "ResumableIterator",
+  "ctorParams": [
+    {
+      "name": "files",
+      "type": "int[][]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "hasNext",
+      "java": "hasNext",
+      "params": [],
+      "returns": "boolean"
+    },
+    {
+      "name": "next",
+      "java": "next",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "getState",
+      "java": "getState",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "setState",
+      "java": "setState",
+      "params": [
+        {
+          "name": "state",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[[[1,2],[],[3]]],"ops":["next","getState","next","next","hasNext","setState","next"],"args":[[],[],[],[],[],[1],[]]},"sample":true,"expected":[1,1,2,3,false,null,2]},
+    {"input":{"ctor":[[[],[]]],"ops":["hasNext","getState"],"args":[[],[]]},"sample":true,"expected":[false,0]},
+    {"input":{"ctor":[[[31,47,40]]],"ops":["next","next","next","getState","hasNext","hasNext"],"args":[[],[],[],[],[],[]]},"expected":[31,47,40,3,false,false]},
+    {"input":{"ctor":[[[17,10,39],[12,11],[2],[36]]],"ops":["next","hasNext","getState","next","next","next","setState","hasNext","next","getState","getState","setState"],"args":[[],[],[],[],[],[],[1],[],[],[],[],[2]]},"expected":[17,true,1,10,39,12,null,true,10,2,2,null]},
+    {"input":{"ctor":[[[15,44],[]]],"ops":["getState","next","setState","setState","next","next","hasNext","hasNext","hasNext","hasNext","getState","hasNext","hasNext","hasNext"],"args":[[],[],[0],[0],[],[],[],[],[],[],[],[],[],[]]},"expected":[0,15,null,null,15,44,false,false,false,false,2,false,false,false]},
+    {"input":{"ctor":[[[40,2,7]]],"ops":["getState","getState","next","hasNext","next","setState","getState","setState","next","next","getState","next","setState"],"args":[[],[],[],[],[],[0],[],[0],[],[],[],[],[0]]},"expected":[0,0,40,true,2,null,0,null,40,2,2,7,null]},
+    {"input":{"ctor":[[[],[],[39,14,4,38],[40,26,3]]],"ops":["getState","hasNext","hasNext","next","setState","getState","setState","hasNext","getState","next","next","getState","next","next","next","next"],"args":[[],[],[],[],[0],[],[0],[],[],[],[],[],[],[],[],[]]},"expected":[0,true,true,39,null,0,null,true,0,39,14,2,4,38,40,26]},
+    {"input":{"ctor":[[[43,28],[]]],"ops":["getState","next","next","getState","hasNext","hasNext","hasNext","hasNext","hasNext","hasNext"],"args":[[],[],[],[],[],[],[],[],[],[]]},"expected":[0,43,28,2,false,false,false,false,false,false]},
+    {"input":{"ctor":[[[44]]],"ops":["hasNext","next","hasNext","getState","hasNext","hasNext","hasNext","hasNext","setState"],"args":[[],[],[],[],[],[],[],[],[1]]},"expected":[true,44,false,1,false,false,false,false,null]},
+    {"input":{"ctor":[[[47,44,39,16],[26,25,7],[2,2,29],[32,2]]],"ops":["getState","getState","getState","setState"],"args":[[],[],[],[0]]},"expected":[0,0,0,null]},
+    {"input":{"ctor":[[[15,20,41],[24,33],[]]],"ops":["hasNext","next","hasNext","next","getState","setState","next","next","next","getState"],"args":[[],[],[],[],[],[2],[],[],[],[]]},"expected":[true,15,true,20,2,null,41,24,33,5]},
+    {"input":{"ctor":[[[17,19],[25,11],[11,28]]],"ops":["next","next","hasNext","getState","next"],"args":[[],[],[],[],[]]},"expected":[17,19,true,2,25]}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "the-dining-philosophers",
+  "style": "leetcode",
+  "function": {
+    "python": "DiningPhilosophers",
+    "java": "DiningPhilosophers"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int[]",
+  "concurrency": {
+    "driver": "diningPhilosophers",
+    "className": "DiningPhilosophers"
+  },
+  "tests": [
+    {"input": [1], "expected": [1, 1, 1, 1, 1], "sample": true},
+    {"input": [2], "expected": [2, 2, 2, 2, 2], "sample": true},
+    {"input": [3], "expected": [3, 3, 3, 3, 3]},
+    {"input": [5], "expected": [5, 5, 5, 5, 5]},
+    {"input": [10], "expected": [10, 10, 10, 10, 10]},
+    {"input": [20], "expected": [20, 20, 20, 20, 20]},
+    {"input": [40], "expected": [40, 40, 40, 40, 40]}
+  ]
+}

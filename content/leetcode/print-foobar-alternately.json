@@ -1,0 +1,30 @@
+{
+  "id": "print-foobar-alternately",
+  "style": "leetcode",
+  "function": {
+    "python": "FooBar",
+    "java": "FooBar"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "concurrency": {
+    "driver": "fooBar",
+    "className": "FooBar"
+  },
+  "tests": [
+    {"input": [1], "expected": "foobar", "sample": true},
+    {"input": [2], "expected": "foobarfoobar", "sample": true},
+    {"input": [3], "expected": "foobarfoobarfoobar"},
+    {"input": [4], "expected": "foobarfoobarfoobarfoobar"},
+    {"input": [7], "expected": "foobarfoobarfoobarfoobarfoobarfoobarfoobar"},
+    {"input": [10], "expected": "foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar"},
+    {"input": [25], "expected": "foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar"},
+    {"input": [50], "expected": "foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar"},
+    {"input": [100], "expected": "foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobar"}
+  ]
+}

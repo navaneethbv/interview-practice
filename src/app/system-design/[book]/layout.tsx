@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { NavBar } from "@/components/NavBar";
+import { NavBar, SiteFooter } from "@/components/NavBar";
 import { BookNav } from "@/components/design/BookNav";
 import { getDesignBook, listDesignBooks } from "@/lib/content";
 
@@ -28,6 +28,7 @@ export default async function BookLayout({ children, params }: LayoutProps) {
         <BookNav book={nav} books={books} />
         <div className="min-w-0">{children}</div>
       </div>
+      <SiteFooter />
     </>
   );
 }

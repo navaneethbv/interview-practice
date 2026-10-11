@@ -1,0 +1,30 @@
+{
+  "id": "building-h2o",
+  "style": "leetcode",
+  "function": {
+    "python": "H2O",
+    "java": "H2O"
+  },
+  "params": [
+    {
+      "name": "water",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "concurrency": {
+    "driver": "h2o",
+    "className": "H2O"
+  },
+  "tests": [
+    {"input": ["HOH"], "expected": 1, "sample": true},
+    {"input": ["OOHHHH"], "expected": 2, "sample": true},
+    {"input": ["HHO"], "expected": 1},
+    {"input": ["OHH"], "expected": 1},
+    {"input": ["HHHHHHOOO"], "expected": 3},
+    {"input": ["OOOHHHHHH"], "expected": 3},
+    {"input": ["HOHHOH"], "expected": 2},
+    {"input": ["HHHHOOHHOHHO"], "expected": 4},
+    {"input": ["OOOOOOOOOOHHHHHHHHHHHHHHHHHHHH"], "expected": 10}
+  ]
+}

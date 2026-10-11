@@ -1,0 +1,29 @@
+{
+  "id": "count-the-number-of-good-subsequences",
+  "style": "leetcode",
+  "function": {
+    "python": "countGoodSubsequences",
+    "java": "countGoodSubsequences"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":["aabb"],"sample":true,"expected":11},
+    {"input":["leet"],"sample":true,"expected":12},
+    {"input":["acaacb"],"expected":31},
+    {"input":["bbcaaa"],"expected":31},
+    {"input":["cbaabbcba"],"expected":124},
+    {"input":["aba"],"expected":6},
+    {"input":["acba"],"expected":12},
+    {"input":["bc"],"expected":3},
+    {"input":["caababcc"],"expected":81},
+    {"input":["cbab"],"expected":12},
+    {"input":["cacbccb"],"expected":47},
+    {"input":["ccbacabcacc"],"expected":273}
+  ]
+}

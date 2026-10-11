@@ -9,12 +9,17 @@ The importer reconciles that sheet with the 150-entry official snapshot in `scri
 The reconciliation reuses existing slugs, including the historical Add and Search Word slug, so saved progress is preserved.
 LC 659 is merged into LC 271 as the workbook's duplicate entry.
 
+Company lists beyond the workbook (NVIDIA, OpenAI, Anthropic) come from `scripts/ingest/company_lists.json`, built by `company_lists.py` from a recency-bucketed LeetCode company-tag snapshot, plus `company_extras.json` for problems described in candidate write-ups.
+Rebuild with `python3 scripts/ingest/company_lists.py <snapshot-dir> <id>=<Title> ...`, then rerun the workbook importer.
+
 For each slug, author an original `content/leetcode/<slug>.md` statement, a `<slug>.json` spec, and a Python `<slug>.py` reference.
 Set `id` to the filename slug and `style` to `leetcode`.
 Include two or three sample cases with independently calculated expected values and eight to fifteen hidden cases covering valid boundary inputs.
 Use the original LeetCode method and parameter names.
 A Java reference is optional but is required to claim that a particular problem's Java reference has been checked.
 Run `npm run tests:build -- --java <slugs...>` after each batch.
+References in other languages (`<slug>.js`, `.ts`, `.cpp`, `.go`) are optional and checked with `--langs`; they are useful when changing those harnesses.
+Function and method names come from the spec's `java` names; Go capitalizes design methods, and names that are keywords in a language get a trailing underscore (C++ `union_`).
 The builder checks fixed sample expectations and fills missing outputs from the Python reference.
 Only problems with a statement, reference, and all expected outputs appear as available.
 
@@ -87,7 +92,7 @@ Map lookups return an empty list for a missing key or a singleton list for a sto
 Collection enumeration is ordered, union-find representatives are component minima, and MST reconstruction uses input order to break equal-weight ties.
 The string-labeled binary-tree problem uses child-index arrays so labels retain their original type without changing the shared numeric TreeNode helper.
 
-All 1,141 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
+All 1,214 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
 The remaining seven require JavaScript, shell, or pandas runners.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
 
@@ -116,3 +121,16 @@ The coverage report includes walkthrough counts, Java counts, and readable-Java 
 Readable-Java coverage is a conservative formatting heuristic, not proof of algorithm quality or judge correctness.
 It checks for more than three nonblank lines, a maximum line length of 120 characters, and no inline statements except for-loop headers.
 Manual review must still check names, explanations, complexity, and edge cases.
+
+## Crawling company reports
+
+`python3 scripts/ingest/company_crawler.py` records which problems public pages report at each company list and writes `scripts/ingest/company_reports.json`.
+Rerun `problem_sets.py` afterwards; reported problems a list lacks are appended under the "Recent reports" category, ranked by how many sources mention them.
+
+- Sources live in `scripts/ingest/crawl_sources.json`. `leetcode` reads the community company-tag CSV snapshot and is verified. The Hello Interview, 1point3acres, Gotham Loop and interviewDB entries are marked `verified: false`: their URL patterns could not be checked from the build sandbox, so open each site, confirm a public listing URL, set `start` and `follow`, then set `verified: true`.
+- Only facts are stored (problem, company, source counts). Statements and write-ups are never copied; problems are matched by LeetCode link, exact title or "LC 123" mentions against the catalog.
+- The crawler sends no cookies or credentials, honours robots.txt, waits `delay_seconds` between requests to a host, backs off on 429/503, stops a host after repeated failures and skips login or paywalled pages. Do not add URLs behind a login or paywall, and check each site's terms before enabling it.
+- Use `--cache DIR` to reuse fetched pages and `--offline` to rebuild from the cache. `--snapshot-out DIR` saves the LeetCode CSVs so `company_lists.py` can rebuild recency-ordered lists.
+- `follow` is a literal HTTPS URL template with one `{slug}` or `{number}` placeholder. It does not accept regular expressions. Listing pages are limited to 100 per start template, with at most 20 start templates and 500 followed links per source and company. Cache and snapshot paths must stay within their selected directories, including when symlinks are present.
+- Tests use a fake web and need no network: `python3 -m unittest discover -s scripts/ingest -p 'test_*.py'`.
+

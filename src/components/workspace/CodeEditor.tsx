@@ -4,6 +4,7 @@ import Editor, { type BeforeMount, type OnMount } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
 import type { CodeLang } from "@/lib/content-types";
+import { MONACO_LANG } from "@/lib/judge/languages";
 
 const defineThemes: BeforeMount = (monaco) => {
   monaco.editor.defineTheme("ip-dark", {
@@ -85,7 +86,7 @@ export function CodeEditor({ value, lang, fontSize, onChange, onRun, onSubmit }:
   return (
     <Editor
       height="100%"
-      language={lang}
+      language={MONACO_LANG[lang]}
       value={value}
       theme={resolvedTheme === "dark" ? "ip-dark" : "ip-light"}
       beforeMount={defineThemes}

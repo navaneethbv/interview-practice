@@ -1,0 +1,34 @@
+{
+  "kind": "design",
+  "id": "linked-list-random-node",
+  "style": "leetcode",
+  "className": "Solution",
+  "ctorParams": [
+    {
+      "name": "head",
+      "type": "ListNode"
+    }
+  ],
+  "methods": [
+    {
+      "name": "getRandom",
+      "java": "getRandom",
+      "params": [],
+      "returns": "int"
+    }
+  ],
+  "compare": {
+    "validator": "listRandom"
+  },
+  "tests": [
+    {"input":{"ctor":[[1,2,3]],"ops":["getRandom","getRandom","getRandom"],"args":[[],[],[]]},"sample":true,"expected":[1,2,2]},
+    {"input":{"ctor":[[3,1,4,5]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[]]},"expected":[5,4,1,5,3,4,3,5,3]},
+    {"input":{"ctor":[[3,4,1,2,4,3]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[]]},"expected":[4,2,2,2,3]},
+    {"input":{"ctor":[[2]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[],[],[],[],[],[]]},"expected":[2,2,2,2,2,2,2,2,2,2,2,2,2,2]},
+    {"input":{"ctor":[[2]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[],[],[],[],[],[]]},"expected":[2,2,2,2,2,2,2,2,2,2,2,2,2,2]},
+    {"input":{"ctor":[[5,2,5,2,5,1]],"ops":["getRandom","getRandom","getRandom"],"args":[[],[],[]]},"expected":[2,5,5]},
+    {"input":{"ctor":[[5,2]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[]]},"expected":[5,2,2,2,5,5,2,5,5]},
+    {"input":{"ctor":[[3,5]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[]]},"expected":[3,3,5,3,5,5,3,3,5]},
+    {"input":{"ctor":[[2]],"ops":["getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom","getRandom"],"args":[[],[],[],[],[],[],[],[],[],[],[]]},"expected":[2,2,2,2,2,2,2,2,2,2,2]}
+  ]
+}

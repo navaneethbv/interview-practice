@@ -1,0 +1,40 @@
+{
+ "id": "frontend",
+ "title": "Frontend Interviews",
+ "short": "Frontend Interviews",
+ "description": "JavaScript fundamentals, the event loop, browser rendering and performance, accessible UI components, and frontend system design.",
+ "sourceLinks": [
+  {
+   "label": "web.dev Core Web Vitals",
+   "url": "https://web.dev/articles/vitals"
+  }
+ ],
+ "source": "frontend_interviews.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "javascript-language-fundamentals",
+     "title": "JavaScript language fundamentals"
+    },
+    {
+     "id": "the-event-loop-and-asynchronous-code",
+     "title": "The event loop and asynchronous code"
+    },
+    {
+     "id": "the-browser-rendering-pipeline-and-performance",
+     "title": "The browser rendering pipeline and performance"
+    },
+    {
+     "id": "building-ui-components",
+     "title": "Building UI components"
+    },
+    {
+     "id": "frontend-system-design",
+     "title": "Frontend system design"
+    }
+   ]
+  }
+ ]
+}

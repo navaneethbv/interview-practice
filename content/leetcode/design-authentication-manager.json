@@ -1,0 +1,69 @@
+{
+  "kind": "design",
+  "id": "design-authentication-manager",
+  "style": "leetcode",
+  "className": "AuthenticationManager",
+  "ctorParams": [
+    {
+      "name": "timeToLive",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "generate",
+      "java": "generate",
+      "params": [
+        {
+          "name": "tokenId",
+          "type": "string"
+        },
+        {
+          "name": "currentTime",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "renew",
+      "java": "renew",
+      "params": [
+        {
+          "name": "tokenId",
+          "type": "string"
+        },
+        {
+          "name": "currentTime",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "countUnexpiredTokens",
+      "java": "countUnexpiredTokens",
+      "params": [
+        {
+          "name": "currentTime",
+          "type": "int"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[5],"ops":["renew","generate","countUnexpiredTokens","generate","renew","renew","countUnexpiredTokens"],"args":[["aaa",1],["aaa",2],[6],["bbb",7],["aaa",8],["bbb",10],[15]]},"sample":true,"expected":[null,null,1,null,null,null,0]},
+    {"input":{"ctor":[3],"ops":["generate","countUnexpiredTokens","countUnexpiredTokens"],"args":[["x",1],[3],[4]]},"sample":true,"expected":[null,1,0]},
+    {"input":{"ctor":[2],"ops":["countUnexpiredTokens","generate","generate","generate","generate","renew","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","renew","renew","countUnexpiredTokens"],"args":[[1],["bb",4],["cc",6],["aac",10],["a",11],["cc",14],[15],[16],[20],["a",24],["aac",26],[27]]},"expected":[0,null,null,null,null,null,0,0,0,null,null,0]},
+    {"input":{"ctor":[3],"ops":["generate","countUnexpiredTokens","countUnexpiredTokens","generate","generate","countUnexpiredTokens","countUnexpiredTokens","renew","generate","countUnexpiredTokens"],"args":[["ac",2],[6],[8],["aba",10],["bba",14],[18],[21],["bba",25],["ba",27],[29]]},"expected":[null,0,0,null,null,0,0,null,null,1]},
+    {"input":{"ctor":[4],"ops":["generate","countUnexpiredTokens","generate","countUnexpiredTokens","generate","generate","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","renew","countUnexpiredTokens","countUnexpiredTokens","generate","generate","countUnexpiredTokens","generate","generate","countUnexpiredTokens"],"args":[["b",3],[5],["cac",7],[10],["ac",12],["cb",15],[16],[19],[20],["cac",24],[27],[29],["bb",31],["ccc",33],[34],["bac",38],["aa",42],[43]]},"expected":[null,1,null,1,null,null,1,0,0,null,0,0,null,null,2,null,null,1]},
+    {"input":{"ctor":[5],"ops":["countUnexpiredTokens","generate","generate","generate","generate","countUnexpiredTokens","countUnexpiredTokens"],"args":[[2],["cb",4],["aa",6],["ba",7],["b",11],[13],[14]]},"expected":[0,null,null,null,null,1,1]},
+    {"input":{"ctor":[1],"ops":["countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","generate","generate","renew"],"args":[[2],[6],[9],["cbb",11],["cbc",13],["cbc",14]]},"expected":[0,0,0,null,null,null]},
+    {"input":{"ctor":[5],"ops":["countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","generate","countUnexpiredTokens","renew","renew","generate","generate","countUnexpiredTokens","generate","renew","renew","countUnexpiredTokens","generate","countUnexpiredTokens","renew","countUnexpiredTokens","countUnexpiredTokens","generate","renew","generate","countUnexpiredTokens","generate","countUnexpiredTokens","renew","countUnexpiredTokens","renew"],"args":[[3],[4],[6],["c",7],[8],["c",12],["c",13],["bba",17],["cba",18],[19],["acb",23],["bba",25],["cba",27],[29],["cbc",30],[33],["cbc",36],[40],[42],["bca",43],["bca",45],["a",49],[53],["ab",55],[58],["a",62],[63],["bba",64]]},"expected":[0,0,0,null,1,null,null,null,null,2,null,null,null,0,null,1,null,0,0,null,null,null,1,null,1,null,0,null]},
+    {"input":{"ctor":[6],"ops":["countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","generate","generate","generate","countUnexpiredTokens","generate","countUnexpiredTokens","renew","countUnexpiredTokens","renew","countUnexpiredTokens","generate","renew","generate","countUnexpiredTokens","generate","renew","countUnexpiredTokens","renew","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","generate","renew"],"args":[[3],[4],[7],[9],["bca",12],["acc",15],["bbb",16],[19],["b",23],[26],["bbb",28],[31],["b",34],[35],["aa",37],["b",40],["ab",43],[47],["c",51],["ab",54],[58],["ab",59],[63],[65],[68],[72],[75],[76],["ca",77],["c",80]]},"expected":[0,0,0,0,null,null,null,2,null,1,null,0,null,0,null,null,null,1,null,null,0,null,0,0,0,0,0,0,null,null]},
+    {"input":{"ctor":[5],"ops":["countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens"],"args":[[2],[6],[9],[13],[14],[18],[22]]},"expected":[0,0,0,0,0,0,0]},
+    {"input":{"ctor":[1],"ops":["generate","countUnexpiredTokens","renew","countUnexpiredTokens","renew","renew","countUnexpiredTokens","generate","countUnexpiredTokens","countUnexpiredTokens","renew","renew","generate","renew","countUnexpiredTokens","renew","countUnexpiredTokens","generate","renew","renew","generate","renew","countUnexpiredTokens"],"args":[["b",1],[4],["b",7],[11],["b",15],["b",17],[20],["ac",24],[27],[28],["ac",30],["ac",31],["abc",35],["b",39],[42],["b",43],[47],["bab",51],["ac",52],["abc",56],["c",57],["ac",59],[60]]},"expected":[null,0,null,0,null,null,0,null,0,0,null,null,null,null,0,null,0,null,null,null,null,null,0]},
+    {"input":{"ctor":[10],"ops":["countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","countUnexpiredTokens","generate","renew","renew","generate","generate"],"args":[[2],[4],[5],[6],[9],["ccb",12],["ccb",14],["ccb",17],["ba",20],["ca",22]]},"expected":[0,0,0,0,0,null,null,null,null,null]}
+  ]
+}

@@ -1,6 +1,11 @@
 class Solution {
     public List<String> kMostPlayed(String[] titles, int[] plays, int k) {
-        Comparator<Integer> rank = (a, b) -> plays[a] != plays[b] ? Integer.compare(plays[b], plays[a]) : titles[a].compareTo(titles[b]);
+        Comparator<Integer> rank = (first, second) -> {
+            if (plays[first] != plays[second]) {
+                return Integer.compare(plays[second], plays[first]);
+            }
+            return titles[first].compareTo(titles[second]);
+        };
         PriorityQueue<Integer> weakest = new PriorityQueue<>(rank.reversed());
         for (int i = 0; i < titles.length; i++) {
             weakest.add(i);

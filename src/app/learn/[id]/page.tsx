@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { NavBar } from "@/components/NavBar";
+import { NavBar, SiteFooter } from "@/components/NavBar";
 import { LessonContent } from "@/components/LessonContent";
 import { MarkRead } from "@/components/MarkRead";
 import { getCourse, getLesson, hrefFor, neighbors, renderBlocks } from "@/lib/content";
@@ -68,6 +68,7 @@ export default async function LessonPage({ params }: PageProps) {
           )}
         </div>
       </main>
+      <SiteFooter />
     </>
   );
 }

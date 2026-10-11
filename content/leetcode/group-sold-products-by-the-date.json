@@ -1,0 +1,32 @@
+{
+  "kind": "sql",
+  "id": "group-sold-products-by-the-date",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Activities",
+      "columns": [
+        {
+          "name": "sell_date",
+          "type": "TEXT"
+        },
+        {
+          "name": "product",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "sell_date",
+    "num_sold",
+    "products"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Activities":[["2020-05-30","Headphone"],["2020-06-01","Pencil"],["2020-06-02","Mask"],["2020-05-30","Basketball"],["2020-06-01","Bible"],["2020-06-02","Mask"],["2020-05-30","T-Shirt"]]}},"sample":true,"expected":[["2020-05-30",3,"Basketball,Headphone,T-Shirt"],["2020-06-01",2,"Bible,Pencil"],["2020-06-02",1,"Mask"]]},
+    {"input":{"tables":{"Activities":[["2021-01-01","b"],["2021-01-01","a"]]}},"sample":true,"expected":[["2021-01-01",2,"a,b"]]},
+    {"input":{"tables":{"Activities":[]}},"expected":[]},
+    {"input":{"tables":{"Activities":[["2020-01-02","x"],["2020-01-01","y"],["2020-01-01","x"],["2020-01-01","x"]]}},"expected":[["2020-01-01",2,"x,y"],["2020-01-02",1,"x"]]}
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "kind": "design",
+  "id": "design-spreadsheet",
+  "style": "leetcode",
+  "className": "Spreadsheet",
+  "ctorParams": [
+    {
+      "name": "rows",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "setCell",
+      "java": "setCell",
+      "params": [
+        {
+          "name": "cell",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "resetCell",
+      "java": "resetCell",
+      "params": [
+        {
+          "name": "cell",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "getValue",
+      "java": "getValue",
+      "params": [
+        {
+          "name": "formula",
+          "type": "string"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3],"ops":["getValue","setCell","getValue","setCell","getValue","resetCell","getValue"],"args":[["=5+7"],["A1",10],["=A1+6"],["B2",15],["=A1+B2"],["A1"],["=A1+B2"]]},"sample":true,"expected":[12,null,16,null,25,null,15]},
+    {"input":{"ctor":[1],"ops":["getValue"],"args":[["=Z1+0"]]},"sample":true,"expected":[0]},
+    {"input":{"ctor":[4],"ops":["getValue","resetCell","resetCell","setCell","setCell"],"args":[["=A4+33"],["B1"],["B3"],["B2",17],["A1",23]]},"expected":[33,null,null,null,null]},
+    {"input":{"ctor":[2],"ops":["setCell","getValue","resetCell","setCell","setCell","resetCell","getValue","resetCell","getValue","setCell","setCell"],"args":[["C1",5],["=B1+A2"],["C2"],["A1",63],["B2",70],["B2"],["=C1+7"],["A1"],["=1+33"],["C1",38],["B2",21]]},"expected":[null,0,null,null,null,null,12,null,34,null,null]},
+    {"input":{"ctor":[4],"ops":["setCell","setCell","setCell","getValue","setCell","setCell","setCell","getValue","setCell","setCell","getValue","getValue"],"args":[["C1",84],["B3",98],["A4",60],["=A3+B1"],["C1",67],["A2",30],["C4",32],["=40+C4"],["B2",42],["C1",76],["=A3+B1"],["=16+A1"]]},"expected":[null,null,null,0,null,null,null,72,null,null,0,16]},
+    {"input":{"ctor":[3],"ops":["getValue","setCell","getValue","setCell","resetCell","getValue","getValue"],"args":[["=C3+30"],["C1",71],["=42+A2"],["B2",34],["B3"],["=B3+B1"],["=C2+1"]]},"expected":[30,null,42,null,null,0,1]},
+    {"input":{"ctor":[3],"ops":["setCell","getValue","getValue","getValue","setCell","getValue","setCell","getValue","setCell","getValue","setCell","setCell","setCell","getValue","setCell"],"args":[["C1",75],["=5+B2"],["=46+C2"],["=B3+32"],["A1",93],["=27+C2"],["B1",65],["=29+C2"],["A1",85],["=45+31"],["B3",95],["A3",80],["C1",54],["=38+22"],["A2",99]]},"expected":[null,5,46,32,null,27,null,29,null,76,null,null,null,60,null]},
+    {"input":{"ctor":[5],"ops":["getValue","setCell","setCell","setCell"],"args":[["=2+C4"],["B3",22],["C3",96],["A5",44]]},"expected":[2,null,null,null]},
+    {"input":{"ctor":[5],"ops":["resetCell","setCell","setCell","resetCell","setCell","resetCell"],"args":[["B1"],["C2",2],["C1",23],["B4"],["A3",11],["A1"]]},"expected":[null,null,null,null,null,null]},
+    {"input":{"ctor":[2],"ops":["getValue","setCell","getValue","getValue","setCell","getValue","getValue"],"args":[["=1+B1"],["B1",43],["=44+C2"],["=49+15"],["A2",0],["=4+A1"],["=8+A1"]]},"expected":[1,null,44,64,null,4,8]},
+    {"input":{"ctor":[2],"ops":["setCell","getValue","getValue","setCell","setCell","getValue","resetCell","getValue","resetCell","resetCell","getValue","resetCell","setCell","getValue"],"args":[["B2",50],["=37+39"],["=22+14"],["B2",95],["C1",98],["=A2+34"],["B2"],["=28+5"],["A1"],["A2"],["=C2+38"],["C2"],["C2",6],["=B1+8"]]},"expected":[null,76,36,null,null,34,null,33,null,null,38,null,null,8]},
+    {"input":{"ctor":[3],"ops":["setCell","getValue","getValue","resetCell","setCell","resetCell","setCell","getValue"],"args":[["A2",28],["=19+A3"],["=C3+B3"],["B2"],["A1",13],["A3"],["C1",57],["=A2+B1"]]},"expected":[null,19,0,null,null,null,null,28]}
+  ]
+}

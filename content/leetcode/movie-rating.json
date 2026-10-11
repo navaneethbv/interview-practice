@@ -1,0 +1,64 @@
+{
+  "kind": "sql",
+  "id": "movie-rating",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Movies",
+      "columns": [
+        {
+          "name": "movie_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "title",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "MovieRating",
+      "columns": [
+        {
+          "name": "movie_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "rating",
+          "type": "INTEGER"
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "results"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Movies":[[1,"Avengers"],[2,"Frozen 2"],[3,"Joker"]],"Users":[[1,"Daniel"],[2,"Monica"],[3,"Maria"],[4,"James"]],"MovieRating":[[1,1,3,"2020-01-12"],[1,2,4,"2020-02-11"],[1,3,2,"2020-02-12"],[1,4,1,"2020-01-01"],[2,1,5,"2020-02-17"],[2,2,2,"2020-02-01"],[2,3,2,"2020-03-01"],[3,1,3,"2020-02-22"],[3,2,4,"2020-02-25"]]}},"sample":true,"expected":[["Daniel"],["Frozen 2"]]},
+    {"input":{"tables":{"Movies":[[1,"B"],[2,"A"]],"Users":[[1,"Zed"]],"MovieRating":[[1,1,5,"2020-02-10"],[2,1,5,"2020-02-11"]]}},"sample":true,"expected":[["Zed"],["A"]]},
+    {"input":{"tables":{"Movies":[[1,"M"]],"Users":[[1,"U"],[2,"V"]],"MovieRating":[[1,1,1,"2020-02-29"],[1,2,5,"2020-02-01"]]}},"expected":[["U"],["M"]]},
+    {"input":{"tables":{"Movies":[[1,"M"],[2,"N"]],"Users":[[1,"b"],[2,"a"]],"MovieRating":[[1,1,2,"2020-02-05"],[2,2,3,"2020-02-06"],[2,1,4,"2020-01-31"]]}},"expected":[["b"],["N"]]}
+  ]
+}

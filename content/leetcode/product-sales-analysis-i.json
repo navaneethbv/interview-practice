@@ -1,0 +1,58 @@
+{
+  "kind": "sql",
+  "id": "product-sales-analysis-i",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Sales",
+      "columns": [
+        {
+          "name": "sale_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "year",
+          "type": "INTEGER"
+        },
+        {
+          "name": "quantity",
+          "type": "INTEGER"
+        },
+        {
+          "name": "price",
+          "type": "INTEGER"
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "product_name",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "product_name",
+    "year",
+    "price"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Sales":[[1,100,2008,10,5000],[2,100,2009,12,5000],[7,200,2011,15,9000]],"Product":[[100,"Nokia"],[200,"Apple"],[300,"Samsung"]]}},"sample":true,"expected":[["Nokia",2008,5000],["Nokia",2009,5000],["Apple",2011,9000]]},
+    {"input":{"tables":{"Sales":[],"Product":[[1,"Pen"]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Sales":[[1,1,2020,1,10]],"Product":[[1,"A"]]}},"expected":[["A",2020,10]]},
+    {"input":{"tables":{"Sales":[[1,1,2020,1,10],[2,1,2020,3,10],[3,2,2021,1,7]],"Product":[[1,"A"],[2,"B"]]}},"expected":[["A",2020,10],["A",2020,10],["B",2021,7]]},
+    {"input":{"tables":{"Sales":[[5,9,1999,2,1]],"Product":[[9,"Old"],[8,"New"]]}},"expected":[["Old",1999,1]]}
+  ]
+}

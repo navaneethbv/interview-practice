@@ -99,20 +99,50 @@ BOOKS = {
     "behavioral": {
         "title": "Behavioral and Leadership Interviews",
         "short": "Behavioral Interviews",
-        "description": "Build a factual story bank, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
+        "description": "Build a factual story bank, prepare introductions and company-specific answers, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
         "sourceLinks": [{"label": "Amazon interview preparation", "url": "https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep"}],
     },
     "low-level-design": {
         "title": "Low-Level Design Practice",
         "short": "Low-Level Design",
-        "description": "Work through parking lots, elevators, vending machines, and schedulers with ownership diagrams, invariants, failure cases, and tests.",
+        "description": "Work through parking lots, elevators, vending machines, schedulers, expense splitting, ticket booking, chess, libraries, rate limiters, pub/sub, ATMs and room booking with invariants, failure cases, and tests.",
         "sourceLinks": [{"label": "Amazon technical topics", "url": "https://amazon.jobs/content/en/how-we-hire/interview-prep/software-development-topics"}],
     },
     "ai-design": {
         "title": "AI System Design Practice",
         "short": "AI System Design",
-        "description": "Design document retrieval and support assistants, evaluate outcomes, and reason about access, freshness, latency, cost, and bounded actions.",
+        "description": "Design retrieval and support assistants, recommendation feeds, feature stores, LLM inference, moderation and fraud detection, and reason about evaluation, freshness, latency and cost.",
         "sourceLinks": [{"label": "Anthropic engineering", "url": "https://www.anthropic.com/engineering/building-effective-agents"}],
+    },
+    "ai-assisted": {
+        "title": "AI-Assisted Coding Interviews",
+        "short": "AI-Assisted Coding",
+        "description": "The newer round where you may use an AI assistant: how it is graded, a 60-minute workflow, reading unfamiliar code, verifying generated code, and two worked exercises with a rubric.",
+        "sourceLinks": [
+            {"label": "Formation on AI-assisted interviews", "url": "https://formation.dev/blog/ai-assisted-coding-interviews"},
+            {"label": "Exponent on Google's AI coding interview", "url": "https://www.tryexponent.com/blog/google-ai-coding-interview"},
+        ],
+    },
+    "case-studies": {
+        "title": "System Design Case Studies",
+        "short": "Design Case Studies",
+        "description": "Original worked designs for frequently asked prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.",
+    },
+    "fundamentals": {
+        "title": "CS Fundamentals Quick Reference",
+        "short": "CS Fundamentals",
+        "description": "Operating systems, networking, databases, concurrency primitives, complexity tables and latency numbers, each with questions to answer aloud.",
+    },
+    "frontend": {
+        "title": "Frontend Interviews",
+        "short": "Frontend Interviews",
+        "description": "JavaScript fundamentals, the event loop, browser rendering and performance, accessible UI components, and frontend system design.",
+        "sourceLinks": [{"label": "web.dev Core Web Vitals", "url": "https://web.dev/articles/vitals"}],
+    },
+    "career": {
+        "title": "Resume, Job Search and Offers",
+        "short": "Job Search and Offers",
+        "description": "Write a resume that earns interviews, navigate the hiring process, prepare on a schedule, and evaluate and negotiate offers.",
     },
     "testing-debugging": {
         "title": "Testing, Debugging, and Code Review",

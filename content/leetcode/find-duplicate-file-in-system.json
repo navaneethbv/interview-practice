@@ -1,0 +1,30 @@
+{
+  "id": "find-duplicate-file-in-system",
+  "style": "leetcode",
+  "function": {
+    "python": "findDuplicate",
+    "java": "findDuplicate"
+  },
+  "params": [
+    {
+      "name": "paths",
+      "type": "string[]"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unorderedDeep",
+  "tests": [
+    {"input":[["root/a 1.txt(abcd) 2.txt(efgh)","root/c 3.txt(abcd)","root/c/d 4.txt(efgh)","root 4.txt(efgh)"]],"sample":true,"expected":[["root/a/1.txt","root/c/3.txt"],["root/a/2.txt","root/c/d/4.txt","root/4.txt"]]},
+    {"input":[["root/a 1.txt(x)","root/b 2.txt(y)"]],"sample":true,"expected":[]},
+    {"input":[["root/d0 e0.txt(y) e1.txt(x)"]],"expected":[]},
+    {"input":[["root/d0 a0.txt(x)","root/d1 a0.txt(y) a1.txt(x)","root/d2 e0.txt(efgh) d1.txt(efgh)","root/d3 a0.txt(x) a1.txt(x) e2.txt(x)"]],"expected":[["root/d0/a0.txt","root/d1/a1.txt","root/d3/a0.txt","root/d3/a1.txt","root/d3/e2.txt"],["root/d2/e0.txt","root/d2/d1.txt"]]},
+    {"input":[["root/d0 e0.txt(abcd) c1.txt(x)","root/d1 e0.txt(abcd) c1.txt(efgh) d2.txt(y)","root/d2 b0.txt(y) c1.txt(abcd)","root/d3 b0.txt(efgh) a1.txt(y) b2.txt(abcd)"]],"expected":[["root/d0/e0.txt","root/d1/e0.txt","root/d2/c1.txt","root/d3/b2.txt"],["root/d1/c1.txt","root/d3/b0.txt"],["root/d1/d2.txt","root/d2/b0.txt","root/d3/a1.txt"]]},
+    {"input":[["root/d0 c0.txt(efgh)","root/d1 a0.txt(efgh) b1.txt(x) a2.txt(efgh)"]],"expected":[["root/d0/c0.txt","root/d1/a0.txt","root/d1/a2.txt"]]},
+    {"input":[["root/d0 b0.txt(abcd) a1.txt(abcd) b2.txt(y)"]],"expected":[["root/d0/b0.txt","root/d0/a1.txt"]]},
+    {"input":[["root/d0 d0.txt(abcd)","root/d1 c0.txt(y) d1.txt(x)","root/d2 a0.txt(efgh) c1.txt(efgh)","root/d3 c0.txt(y) a1.txt(abcd)"]],"expected":[["root/d0/d0.txt","root/d3/a1.txt"],["root/d1/c0.txt","root/d3/c0.txt"],["root/d2/a0.txt","root/d2/c1.txt"]]},
+    {"input":[["root/d0 b0.txt(y) e1.txt(x)","root/d1 d0.txt(x) d1.txt(efgh) a2.txt(efgh)","root/d2 c0.txt(efgh)","root/d3 e0.txt(y)"]],"expected":[["root/d0/b0.txt","root/d3/e0.txt"],["root/d0/e1.txt","root/d1/d0.txt"],["root/d1/d1.txt","root/d1/a2.txt","root/d2/c0.txt"]]},
+    {"input":[["root/d0 b0.txt(abcd) b1.txt(x)","root/d1 a0.txt(y) d1.txt(efgh)","root/d2 b0.txt(x) d1.txt(y) d2.txt(y)"]],"expected":[["root/d0/b1.txt","root/d2/b0.txt"],["root/d1/a0.txt","root/d2/d1.txt","root/d2/d2.txt"]]},
+    {"input":[["root/d0 e0.txt(abcd) e1.txt(y) e2.txt(abcd)","root/d1 d0.txt(abcd)","root/d2 c0.txt(y) e1.txt(y) e2.txt(abcd)","root/d3 e0.txt(abcd) e1.txt(x) d2.txt(x)"]],"expected":[["root/d0/e0.txt","root/d0/e2.txt","root/d1/d0.txt","root/d2/e2.txt","root/d3/e0.txt"],["root/d0/e1.txt","root/d2/c0.txt","root/d2/e1.txt"],["root/d3/e1.txt","root/d3/d2.txt"]]},
+    {"input":[["root/d0 b0.txt(x)","root/d1 d0.txt(x) e1.txt(efgh)","root/d2 a0.txt(abcd)"]],"expected":[["root/d0/b0.txt","root/d1/d0.txt"]]}
+  ]
+}

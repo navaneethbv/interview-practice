@@ -6,11 +6,13 @@ Live: https://interview-practice-sandy-eight.vercel.app
 
 ## Features
 
-- **Problems**: every coding problem from the Grokking pattern course, with difficulty, pattern and status filters.
-- **Workspace**: problem description, worked solution and your submission history on the left; a Monaco editor (Python 3 or Java) and a Testcase / Test Result console on the right.
+- **Problems**: every coding problem from the Grokking pattern course, plus curated and company lists (Blind 75, NeetCode 150, Grind, CTCI, BCTCI, SQL 50, Concurrency, Object-Oriented Design, ML Coding and company lists), with difficulty, pattern and status filters.
+- **Workspace**: problem description, worked solution and your submission history on the left; a Monaco editor (Python 3, Java, JavaScript, TypeScript, C++ or Go) and a Testcase / Test Result console on the right.
+- **Hints and complexity check**: hints reveal one step at a time (topics, pattern, approach), and you state the time and space complexity before comparing with the reference.
 - **Run** checks your code against the sample cases and any cases you add or edit (expected output comes from a tested reference solution).
 - **Submit** checks it against every case, including hidden edge cases, and reports Accepted, Wrong Answer, Runtime Error, Compile Error or Time Limit Exceeded.
 - **Patterns**: the course lessons, with diagrams, math and highlighted code in both languages.
+- **Practice**: timed mock interviews drawn from any list (walkthroughs stay hidden until the round ends, followed by a self-rated debrief), a spaced-repetition review queue for solved problems, and a 16-week study plan.
 - **Interview Guides**: system design books plus focused practice for low-level design, AI architecture, testing and debugging, and behavioral interviews.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
 
@@ -19,9 +21,11 @@ Live: https://interview-practice-sandy-eight.vercel.app
 | Language | Where | Notes |
 | --- | --- | --- |
 | Python 3.13 | In the browser, with [Pyodide](https://pyodide.org) in a Web Worker | No server needed. The first run downloads the runtime (about 10 MB); later runs are instant. |
-| Java 21 | `/api/run/java` on Vercel, inside a [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) microVM | Booted from a snapshot with the JDK installed, no network access, 10 second run limit. About 5 seconds per run. |
+| JavaScript, TypeScript | In the browser, in an isolated QuickJS WebAssembly interpreter inside a Web Worker | TypeScript is transpiled in the worker by the TypeScript compiler, downloaded on first use; type errors do not block a run, as on LeetCode. |
+| Java 21, C++17, Go | `/api/run/<lang>` on Vercel, inside a [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox) microVM | Booted from one snapshot with the JDK, g++ and Go installed, no network access, 10 second run limit. About 5 seconds per run. |
 
-Both languages use the same test data.
+Every language uses the same test data.
+JavaScript, TypeScript, C++ and Go cover problems built from the core types (numbers, strings, arrays, lists, `ListNode`, `TreeNode`, `Interval`) and design classes, which is about 96% of the problems; the rest, which need graph nodes, interactive APIs or codecs, offer Python and Java.
 A problem's spec (`content/problems/<id>.json`) declares the signature and test inputs.
 The site generates a harness for each language that converts JSON inputs into typed arguments (including `ListNode`, `TreeNode` and `Interval`), calls your `Solution`, and prints JSON results.
 Outputs are compared in TypeScript, with order-insensitive checks and validators for problems that have several correct answers.
@@ -36,7 +40,7 @@ npm run dev
 ```
 
 Open http://localhost:3000.
-In development, Java runs with your local JDK unless `JAVA_SANDBOX_SNAPSHOT_ID` is set.
+In development, Java, C++ and Go run with your local `javac`, `g++` and `go` unless `CODE_SANDBOX_SNAPSHOT_ID` is set.
 
 ## Content
 
@@ -61,6 +65,7 @@ Each problem has a spec and a Python reference solution in `content/problems/`:
 ```bash
 npm run tests:build              # fill in missing expected outputs and verify the rest
 npm run tests:build -- --java    # also compile and run the Java references
+npm run tests:build -- --langs   # also run JavaScript, TypeScript, C++ and Go references (<id>.js/.ts/.cpp/.go)
 npm run tests:build -- some-id   # only some problems
 ```
 
@@ -68,7 +73,10 @@ npm run tests:build -- some-id   # only some problems
 
 The Interview Guides section is a read-only reader: pick a collection, then a chapter from the contents on the left.
 The original practice collections are maintained as Markdown sources under `scripts/ingest/` and imported into `content/system-design/`.
-They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories.
+They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories, plus:
+
+- System Design Case Studies: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.
+- AI-Assisted Coding Interviews, CS Fundamentals, Frontend Interviews, and Resume, Job Search and Offers.
 Each book is imported once into `content/system-design/<book>/` (an `index.json` plus one Markdown file per chapter).
 
 ```bash
@@ -91,27 +99,30 @@ The LibreOffice export of the classic course is the same text as the `pdf-free` 
 
 The project deploys to Vercel; pushes to `main` deploy to production.
 
-One-time setup for the Java runner:
+One-time setup for the Java, C++ and Go runner:
 
 ```bash
 vercel link
 vercel env pull .env.local          # provides VERCEL_OIDC_TOKEN for the Sandbox SDK
-npm run sandbox:snapshot            # prints JAVA_SANDBOX_SNAPSHOT_ID=snap_...
-vercel env add JAVA_SANDBOX_SNAPSHOT_ID production
+npm run sandbox:snapshot            # prints CODE_SANDBOX_SNAPSHOT_ID=snap_...
+vercel env add CODE_SANDBOX_SNAPSHOT_ID production
 ```
 
+An existing `JAVA_SANDBOX_SNAPSHOT_ID` keeps Java working; C++ and Go need the new snapshot.
 Sandbox usage is billed to the Vercel account.
-The Java endpoint accepts only same-origin browser requests, but it is not authenticated; enable Vercel Deployment Protection if the site should be private.
+The run endpoint accepts only same-origin browser requests, but it is not authenticated; enable Vercel Deployment Protection if the site should be private.
 
 ## Project layout
 
 ```
 content/                  course lessons, problem specs, system design books (JSON + Markdown)
 public/pyodide-worker.js  Python runner (Web Worker)
+scripts/judge/js-worker.mjs  authored isolated JavaScript runner and TypeScript transpiler
+public/js-worker.js       generated QuickJS worker bundle (npm run worker:build)
 scripts/ingest/           course and document importers
 scripts/judge/            expected-output generator and verifier
-scripts/sandbox/          Java snapshot builder
-src/app/                  pages and the /api/run/java route
+scripts/sandbox/          snapshot builder for the Java, C++ and Go runner
+src/app/                  pages and the /api/run/[lang] route
 src/components/           UI, including the problem workspace
 src/lib/judge/            spec types, harness generators, grading and runners
 ```
@@ -129,3 +140,5 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm run ingest:grokking` | Import the coding course |
 | `npm run ingest:system-design` | Import a system design book |
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |
+
+The JavaScript worker is generated before development, production builds and unit tests. Submitted code runs in a fresh QuickJS context with no browser globals, networking or module loader; only output and a clock are exposed. The interpreter has a 128 MiB memory limit, and the page terminates the worker after 10 seconds. TypeScript is transpiled before execution.

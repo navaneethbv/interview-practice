@@ -159,6 +159,68 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
     sets[:0] = custom["sets"]
 
 
+def company_extras(extras, company_id, problems, listed):
+    for extra in extras.get(company_id, []):
+        if extra["slug"] not in problems:
+            raise ValueError(f"Missing metadata for company extra {extra['slug']}")
+        if extra["slug"] not in listed:
+            yield extra
+
+
+def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
+    """Append company lists built by company_lists.py; workbook and authored metadata take precedence."""
+    source = Path(__file__).with_name("company_lists.json")
+    if not source.is_file():
+        return
+    data = json.loads(source.read_text(encoding="utf8"))
+    extras_file = source.with_name("company_extras.json")
+    extras = json.loads(extras_file.read_text(encoding="utf8")) if extras_file.is_file() else {}
+    existing = {item["id"] for item in sets}
+    for item in data["sets"]:
+        if item["id"] in existing:
+            raise ValueError(f"Duplicate company list: {item['id']}")
+        for entry in item["items"]:
+            problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
+        items = list(item["items"])
+        listed = {entry["slug"] for entry in items}
+        items.extend(company_extras(extras, item["id"], problems, listed))
+        description = item["description"]
+        if len(items) > len(item["items"]):
+            description += " Also includes problems described in candidate write-ups, marked by their category."
+        sets.append({**item, "description": description, "items": items, "sourceUrl": SNAPSHOT_URL, "sourceLabel": "Community LeetCode company-tag snapshot"})
+
+
+SNAPSHOT_URL = "https://github.com/snehasishroy/leetcode-companywise-interview-questions"
+REPORT_CATEGORY = "Recent reports"
+
+
+def merge_company_reports(sets: list[dict], problems: dict[str, dict]):
+    """Append problems that company_crawler.py found reported at a company but missing from its list."""
+    source = Path(__file__).with_name("company_reports.json")
+    if not source.is_file():
+        return
+    data = json.loads(source.read_text(encoding="utf8"))
+    for item in sets:
+        reports = data["companies"].get(item["id"]) if item["kind"] == "company" else None
+        if not reports:
+            continue
+        listed = {entry["slug"] for entry in item["items"]}
+        added = 0
+        for report in reports:
+            slug = report["slug"]
+            meta = problems.get(slug) or data["problems"].get(slug)
+            if slug in listed or meta is None:
+                continue
+            problems.setdefault(slug, meta)
+            item["items"].append({"slug": slug, "category": REPORT_CATEGORY})
+            listed.add(slug)
+            added += 1
+        if added:
+            labels = sorted({data["sources"][name]["label"] for report in reports for name in report["sources"]})
+            item["description"] += (f" The \"{REPORT_CATEGORY}\" category adds {added} problems reported on {', '.join(labels)}"
+                                    f" as of {data['generatedAt']}.")
+
+
 def main(workbook: str):
     import openpyxl
 
@@ -171,6 +233,8 @@ def main(workbook: str):
     ]
 
     merge_custom_catalog(sets, problems)
+    merge_company_lists(sets, problems)
+    merge_company_reports(sets, problems)
     reconcile_neetcode(sets, problems)
     OUT.mkdir(parents=True, exist_ok=True)
     ordered = dict(sorted(problems.items(), key=lambda kv: kv[1]["number"]))

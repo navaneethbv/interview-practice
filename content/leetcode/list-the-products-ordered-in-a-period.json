@@ -1,0 +1,52 @@
+{
+  "kind": "sql",
+  "id": "list-the-products-ordered-in-a-period",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Products",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "product_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "product_category",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "order_date",
+          "type": "TEXT"
+        },
+        {
+          "name": "unit",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "product_name",
+    "unit"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Products":[[1,"Leetcode Solutions","Book"],[2,"Jewels of Stringology","Book"],[3,"HP","Laptop"],[4,"Lenovo","Laptop"],[5,"Leetcode Kit","T-shirt"]],"Orders":[[1,"2020-02-05",60],[1,"2020-02-10",70],[2,"2020-01-18",30],[2,"2020-02-11",80],[3,"2020-02-17",2],[3,"2020-02-24",3],[4,"2020-03-01",20],[4,"2020-03-04",30],[4,"2020-03-04",60],[5,"2020-02-25",50],[5,"2020-02-27",50],[5,"2020-03-01",50]]}},"sample":true,"expected":[["Leetcode Solutions",130],["Leetcode Kit",100]]},
+    {"input":{"tables":{"Products":[[1,"A","c"]],"Orders":[[1,"2020-01-31",500]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Products":[[1,"A","c"]],"Orders":[]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,"A","c"],[2,"B","c"]],"Orders":[[1,"2020-02-29",100],[2,"2020-02-01",99]]}},"expected":[["A",100]]}
+  ]
+}

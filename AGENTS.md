@@ -17,7 +17,10 @@ See README.md for features and setup.
 ## Commands
 
 - `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`
-- `npm run tests:build [-- --java] [ids...]` fills and verifies expected outputs for problem specs.
+- `npm run tests:build [-- --java] [-- --langs] [ids...]` fills and verifies expected outputs for problem specs; `--langs` also runs `<id>.js/.ts/.cpp/.go` references.
+- `python3 scripts/ingest/company_lists.py <snapshot-dir> nvidia=NVIDIA ...` rebuilds `scripts/ingest/company_lists.json` from a LeetCode company-tag snapshot (facts only: which problems, how recently); `company_extras.json` adds problems from candidate write-ups. Then rerun `problem_sets.py`.
+- `python3 scripts/ingest/company_crawler.py [--sources a,b] [--companies x,y] [--cache DIR] [--dry-run]` collects which problems public pages report per company into `scripts/ingest/company_reports.json` (sources in `crawl_sources.json`: LeetCode tags, Hello Interview, 1point3acres, Gotham Loop, interviewDB); `problem_sets.py` merges them as "Recent reports". Facts only; honours robots.txt, rate limits, no logins.
+- `python3 scripts/ingest/study_plan.py` regenerates `content/study-plan.json` from `Interview_Prep_Plan_ENRICHED.xlsx`.
 - `npm run ingest:grokking -- <folder>` regenerates `content/courses/grokking/` and `public/course-assets/grokking/`.
 - `npm run ingest:system-design -- <grokking|advanced|notes> <source>` regenerates one system design book in `content/system-design/<book>/` (needs `pip install pdfplumber`).
   Do not hand-edit `content/system-design/**`; change `scripts/ingest/system_design.py` and re-run it.
@@ -34,11 +37,14 @@ After touching the judge or any spec, run `npm run tests:build -- --java`.
   Tests marked `"sample": true` are shown in the Testcase panel; the rest stay hidden until they fail.
 - `src/lib/judge/`:
   - `types.ts` spec, value type and result types
+  - `languages.ts` decides which languages a spec supports: JavaScript, TypeScript, C++ and Go cover specs that only use the core types (`usesCoreFeatures`)
+  - `javascript.ts`, `cpp.ts`, `go.ts` generate harnesses for those languages; `local-extra.ts` runs them with local toolchains for scripts and tests
   - `python.ts` / `java.ts` generate harnesses that convert JSON into typed args, call `Solution`, and print one `RESULT_MARKER` JSON line per test
   - `grade.ts` parses those lines into verdicts; `compare.ts` holds comparison modes and validators
-  - `runner.ts` (browser) runs Python in `public/pyodide-worker.js` and Java through `POST /api/run/java`
+  - `runner.ts` (browser) runs Python in `public/pyodide-worker.js`, JavaScript and TypeScript in `public/js-worker.js`, and Java, C++ and Go through `POST /api/run/[lang]`
   - `starter.ts` generates the LeetCode-style starter code shown in the editor
-- `src/app/api/run/java/route.ts` runs Java in a Vercel Sandbox booted from `JAVA_SANDBOX_SNAPSHOT_ID` with networking disabled; in development without that variable it uses the local JDK.
+- `src/app/api/run/[lang]/route.ts` runs Java, C++ and Go in a Vercel Sandbox booted from `CODE_SANDBOX_SNAPSHOT_ID` (Java also accepts `JAVA_SANDBOX_SNAPSHOT_ID`) with networking disabled; in development without a snapshot it uses the local toolchains.
+- Practice modes (`/practice`): `src/lib/practice-data.ts` holds the pure review-queue and mock-interview logic, `src/lib/practice.ts` its guarded storage; both keys are validated by `practice-backup.ts`.
 - Per-user state (progress, code, submissions, notes) lives in localStorage via `src/lib/progress.ts`.
   Always go through its guarded helpers; storage can be unavailable.
 
@@ -50,8 +56,8 @@ Run `python3 scripts/judge/content-status.py` to report list coverage and the ne
 
 1. Write `content/problems/<id>.json` with `function`, `params`, `returns`, optional `output`/`compare`, and `tests` with inputs only.
 2. Write `content/problems/<id>.py` with a correct `class Solution`.
-3. Optionally add `<id>.java` to exercise the Java harness.
-4. Run `npm run tests:build -- --java <id>`; it writes `expected` values and fails on disagreements.
+3. Optionally add `<id>.java` (and `<id>.js`, `.ts`, `.cpp`, `.go`) to exercise the other harnesses.
+4. Run `npm run tests:build -- --java --langs <id>`; it writes `expected` values and fails on disagreements.
 
 Helper classes use the course's field names: `ListNode.value/next`, `TreeNode.val/left/right/next`, `Interval.start/end`.
 Linked lists are JSON arrays, or `{"values": [...], "pos": k}` for a cycle; trees are LeetCode level-order arrays with `null`.

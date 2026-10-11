@@ -5,9 +5,10 @@
  *  - runs the Python reference (<id>.py) against every test case with the same harness the site uses;
  *  - fills `expected` where it is missing (or everywhere with --regen);
  *  - fails when a hand-written `expected` disagrees with the reference;
- *  - with --java, also runs the Java reference (<id>.java) and requires every case to pass.
+ *  - with --java, also runs the Java reference (<id>.java) and requires every case to pass;
+ *  - with --langs, also runs any JavaScript, TypeScript, C++ and Go references (<id>.js/.ts/.cpp/.go).
  *
- * Usage: npm run tests:build -- [--java] [--regen] [id ...]
+ * Usage: npm run tests:build -- [--java] [--langs] [--regen] [id ...]
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -16,14 +17,17 @@ import { buildJavaProgram, mapJavaCompileErrors } from "../../src/lib/judge/java
 import { grade, parseHarnessOutput } from "../../src/lib/judge/grade";
 import { judgeSpecOutput } from "../../src/lib/judge/compare";
 import { runJavaLocally, runPythonLocally } from "../../src/lib/judge/local-java";
+import { EXTRA_EXTENSIONS, runExtraLocally } from "../../src/lib/judge/local-extra";
+import { EXTRA_LANGS, languagesFor } from "../../src/lib/judge/languages";
 import type { AnyTestCase, ProblemSpec } from "../../src/lib/judge/types";
 
 const DIRS = ["content/problems", "content/leetcode"].map((d) => path.join(process.cwd(), d));
 const args = process.argv.slice(2);
 const withJava = args.includes("--java");
+const withLangs = args.includes("--langs");
 const regen = args.includes("--regen");
 const only = new Set(args.filter((a) => !a.startsWith("--")));
-const executions = { python: 0, java: 0, sqlite: 0 };
+const executions = { python: 0, java: 0, sqlite: 0, other: 0 };
 
 function formatSpec(spec: ProblemSpec): string {
   const { tests, ...rest } = spec;
@@ -56,16 +60,21 @@ function applyReference(spec: ProblemSpec, t: AnyTestCase, i: number, r: Harness
   return true;
 }
 
+function isConcurrent(spec: ProblemSpec): spec is Extract<ProblemSpec, { params: unknown }> {
+  return spec.kind !== "sql" && spec.kind !== "design" && !!spec.concurrency;
+}
+
 async function processSpec(file: string): Promise<string[]> {
   const errors: string[] = [];
   const spec = JSON.parse(fs.readFileSync(file, "utf8")) as ProblemSpec;
   const id = spec.id;
   const dir = path.dirname(file);
   if (id !== path.basename(file, ".json")) return [`${id}: spec id does not match its file name ${path.basename(file)}`];
+  const tests = spec.tests as AnyTestCase[];
+  if (isConcurrent(spec)) return processConcurrency(spec, dir, tests);
   const extension = spec.kind === "sql" ? "sql" : "py";
   const pyRef = path.join(dir, `${id}.${extension}`);
   if (!fs.existsSync(pyRef)) return [`${id}: missing reference ${id}.${extension}`]; // nosemgrep -- build script reading repo problem files
-  const tests = spec.tests as AnyTestCase[];
 
   const py = await runPythonLocally(buildPythonScript(spec, fs.readFileSync(pyRef, "utf8"), tests));
   executions[spec.kind === "sql" ? "sqlite" : "python"]++;
@@ -82,6 +91,7 @@ async function processSpec(file: string): Promise<string[]> {
     const javaError = await verifyJava(spec, fs.readFileSync(javaRef, "utf8"), tests); // nosemgrep -- build script reading repo problem files
     if (javaError) errors.push(javaError);
   }
+  if (withLangs && spec.kind !== "sql") errors.push(...(await verifyExtraLanguages(spec, dir, tests)));
   return errors;
 }
 
@@ -101,6 +111,46 @@ async function verifyJava(spec: ProblemSpec, reference: string, tests: AnyTestCa
   const bad = outcome.cases.find((c) => !c.passed);
   const detail = bad ? `case ${bad.index}: ${bad.error ?? JSON.stringify(bad.output)}` : "";
   return `${spec.id}: Java reference ${outcome.verdict} ${outcome.compileError ?? ""} ${detail} ${outcome.message ?? ""}`;
+}
+
+/**
+ * Concurrency problems have no Python reference (Pyodide has no threads): their expected outputs are
+ * written by hand and the Java reference, required, is checked with --java; C++ and Go with --langs.
+ */
+async function processConcurrency(spec: ProblemSpec, dir: string, tests: AnyTestCase[]): Promise<string[]> {
+  const errors: string[] = [];
+  const javaRef = path.join(dir, `${spec.id}.java`);
+  if (!fs.existsSync(javaRef)) return [`${spec.id}: missing reference ${spec.id}.java`]; // nosemgrep -- build script reading repo problem files
+  tests.forEach((t, i) => {
+    if (t.expected === undefined) errors.push(`${spec.id}#${i}: concurrency tests need a hand-written expected value`);
+  });
+  if (errors.length) return errors;
+  if (withJava) {
+    const javaError = await verifyJava(spec, fs.readFileSync(javaRef, "utf8"), tests); // nosemgrep -- build script reading repo problem files
+    if (javaError) errors.push(javaError);
+  }
+  if (withLangs) errors.push(...(await verifyExtraLanguages(spec, dir, tests)));
+  return errors;
+}
+
+/** Runs every extra-language reference that exists for a spec; returns error lines. */
+async function verifyExtraLanguages(spec: ProblemSpec, dir: string, tests: AnyTestCase[]): Promise<string[]> {
+  const errors: string[] = [];
+  await Promise.all(EXTRA_LANGS.map(async (lang) => {
+    const file = path.join(dir, `${spec.id}.${EXTRA_EXTENSIONS[lang]}`);
+    if (!fs.existsSync(file)) return; // nosemgrep -- build script reading repo problem files
+    if (!languagesFor(spec).includes(lang)) {
+      errors.push(`${spec.id}: has a ${lang} reference but uses features ${lang} does not support`);
+      return;
+    }
+    const outcome = await runExtraLocally(spec, lang, fs.readFileSync(file, "utf8"), tests); // nosemgrep -- build script reading repo problem files
+    executions.other++;
+    if (outcome.verdict === "Accepted") return;
+    const bad = outcome.cases.find((c) => !c.passed);
+    const detail = bad ? `case ${bad.index}: ${bad.error ?? JSON.stringify(bad.output)}` : "";
+    errors.push(`${spec.id}: ${lang} reference ${outcome.verdict} ${outcome.compileError ?? ""} ${detail} ${outcome.message ?? ""}`);
+  }));
+  return errors;
 }
 
 async function main() {
@@ -132,7 +182,7 @@ async function main() {
   );
   for (const e of errors) console.error(`✗ ${e}`);
   console.log(`${done} specs processed, ${errors.length} problems found.`);
-  console.log(`Reference executions: ${executions.python} Python, ${executions.java} Java, ${executions.sqlite} SQLite.`);
+  console.log(`Reference executions: ${executions.python} Python, ${executions.java} Java, ${executions.sqlite} SQLite, ${executions.other} other languages.`);
   if (errors.length) process.exit(1);
 }
 

@@ -419,6 +419,7 @@ function b64(s: string) {
  */
 export function buildPythonProgram(spec: ProblemSpec, userCode: string, tests: AnyTestCase[]) {
   if (spec.kind === "sql") return buildSqlProgram(spec, userCode, tests);
+  if (spec.kind !== "design" && spec.concurrency) throw new Error("Concurrency problems need real threads; solve them in Java, C++ or Go");
   const runner = PYTHON_RUNNER.replace("__JUDGE_SPEC__", JSON.stringify(b64(JSON.stringify(spec))))
     .replace("__JUDGE_TESTS__", JSON.stringify(b64(JSON.stringify(tests))))
     .replace("__JUDGE_MARKER__", JSON.stringify(RESULT_MARKER));

@@ -1,0 +1,30 @@
+{
+  "id": "all-possible-full-binary-trees",
+  "style": "leetcode",
+  "function": {
+    "python": "allPossibleFBT",
+    "java": "allPossibleFBT"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "List<TreeNode>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[3],"sample":true,"expected":[[0,0,0]]},
+    {"input":[2],"sample":true,"expected":[]},
+    {"input":[4],"expected":[]},
+    {"input":[4],"expected":[]},
+    {"input":[2],"expected":[]},
+    {"input":[5],"expected":[[0,0,0,null,null,0,0],[0,0,0,0,0]]},
+    {"input":[5],"expected":[[0,0,0,null,null,0,0],[0,0,0,0,0]]},
+    {"input":[7],"expected":[[0,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0]]},
+    {"input":[9],"expected":[[0,0,0,null,null,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,0,0,0,0],[0,0,0,null,null,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0,null,null,0,0]]},
+    {"input":[9],"expected":[[0,0,0,null,null,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,0,0,0,0],[0,0,0,null,null,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0,null,null,0,0]]},
+    {"input":[3],"expected":[[0,0,0]]},
+    {"input":[11],"expected":[[0,0,0,null,null,0,0,null,null,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,null,null,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,null,null,0,0,0,0,0,0],[0,0,0,null,null,0,0,null,null,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,null,null,0,0,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0,0,0,null,null,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0,0,0,0,0],[0,0,0,null,null,0,0,0,0,null,null,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0,null,null,null,null,0,0,0,0],[0,0,0,null,null,0,0,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,0,0,null,null,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0,null,null,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,null,null,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,null,null,0,0,0,0],[0,0,0,0,0,0,0,null,null,null,null,0,0,0,0],[0,0,0,0,0,0,0,null,null,null,null,0,0,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,null,null,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0,0,0],[0,0,0,0,0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,0,0,0,0,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0,null,null,null,null,null,null,0,0],[0,0,0,0,0,0,0,null,null,0,0,null,null,null,null,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,null,null,null,null,null,null,null,null,0,0],[0,0,0,0,0,0,0,0,0,null,null,null,null,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0,null,null,0,0,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0,null,null,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0,0,0,null,null,0,0],[0,0,0,0,0,null,null,0,0,0,0,null,null,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0,0,0,null,null,0,0],[0,0,0,0,0,null,null,0,0,0,0,0,0],[0,0,0,0,0,null,null,0,0,null,null,null,null,0,0,null,null,0,0],[0,0,0,0,0,null,null,0,0,null,null,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,null,null,0,0,0,0],[0,0,0,0,0,null,null,0,0,null,null,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0,null,null,0,0,null,null,0,0]]}
+  ]
+}

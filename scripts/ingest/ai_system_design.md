@@ -149,6 +149,191 @@ Keep failed examples as regression cases after correcting their cause.
 [Anthropic's guide to agent evaluations](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) describes outcome-based evaluation and different grading approaches.
 The budget, scenarios, and comparison exercise here are original practice material.
 
+# Design a recommendation feed
+
+## Prompt and requirements
+
+Design the ranking behind a home feed of items (videos, posts or products) for 100 million daily users.
+Each request returns 50 items in under 200 milliseconds, chosen from a catalog of tens of millions.
+Clarify the objective first: clicks, watch time, purchases, or a blend with guardrails for quality and diversity.
+This is an original design exercise reviewed October 11, 2026.
+
+## Multi-stage architecture
+
+```text
+Request (user, context)
+  -> candidate generation: several sources, ~1,000s of items
+       two-tower embedding retrieval (approximate nearest neighbours), co-occurrence, follows, trending
+  -> lightweight ranker: ~500 items, cheap features
+  -> heavy ranker: ~100 items, rich features, multi-task model (p(click), p(long watch), p(hide))
+  -> re-ranking: business rules, diversity, freshness, deduplication, policy filters
+  -> response + impression logging
+```
+
+Each stage trades recall for precision as the item count drops and the model cost rises.
+
+## Data and training
+
+Log impressions with the features used at serving time, then join later engagement as labels.
+Training on features recomputed later causes training-serving skew; logging served features avoids it.
+Negative examples come from impressions without engagement, which are biased by what earlier models chose to show; mention exploration traffic or inverse propensity weighting.
+
+## Evaluation
+
+Offline: recall@k for retrieval, AUC or log loss for rankers, on a time-based split so the model never trains on the future.
+Online: A/B tests on the business metric with guardrail metrics such as hides, reports and session length.
+Offline gains often fail to transfer, so the online test decides.
+
+## Cold start and freshness
+
+New users: popularity in their region plus fast onboarding signals.
+New items: content embeddings so retrieval can find them before they have engagement, plus a small exploration budget.
+
+## Follow-up questions
+
+- How do you avoid filter bubbles? (Diversity constraints in re-ranking and exploration.)
+- How do you serve embeddings at this scale? (An ANN index such as HNSW or IVF, sharded and refreshed as items change.)
+
+# Design a feature store
+
+## Prompt and requirements
+
+Several ML teams train and serve models on shared features such as "orders by this user in the last 7 days".
+They need the same definition offline for training and online at low latency for serving, without leaking future data into training.
+
+## Architecture
+
+```text
+Feature definitions (code, versioned) -> batch pipelines (warehouse) -> offline store (historical values with timestamps)
+                                      -> streaming pipelines (events) -> online store (latest value per entity, key-value)
+Training: point-in-time join of labels with the offline store
+Serving: online lookups by entity id within a few milliseconds
+```
+
+## Point-in-time correctness
+
+For a label at time t, use each feature's value as it was known at t, not its latest value.
+The offline store keeps a timeline per entity, and the training join selects the latest value with a timestamp at or before t.
+Getting this wrong leaks the future and produces models that look excellent offline and fail in production.
+
+## Consistency between offline and online
+
+Define each feature once and generate both pipelines from that definition.
+Monitor skew by sampling online values at serving time and comparing them with offline values for the same entity and time.
+
+## Follow-up questions
+
+- How do you backfill a new feature? (Run the batch pipeline over history and write timestamped values to the offline store.)
+- How fresh must features be? (Streaming for fraud and ranking signals measured in seconds; daily batch for slow-moving aggregates.)
+
+# Design an LLM inference service
+
+## Prompt and requirements
+
+Serve a large language model to many internal applications with streaming responses.
+Targets: time to first token under 500 milliseconds at the median, steady tokens per second, and high accelerator utilization to control cost.
+
+## The two phases of generation
+
+**Prefill** processes the whole prompt in parallel and is compute-bound.
+**Decode** produces one token at a time per request and is memory-bandwidth-bound, reading the model weights and the KV cache for every step.
+Most serving optimizations target decode efficiency.
+
+## Architecture
+
+```text
+Clients -> gateway (auth, quotas, routing by model and priority)
+        -> scheduler (continuous batching) -> model servers on GPU/TPU replicas
+        -> streamed tokens back through the gateway
+Shared: prompt-prefix cache, request queue metrics, autoscaler
+```
+
+## Key techniques
+
+- **Continuous batching:** add new requests to the running batch at each decode step instead of waiting for a whole batch to finish.
+- **Paged KV cache:** allocate attention cache in fixed blocks so memory is not wasted on maximum-length reservations.
+- **Prefix caching:** reuse the KV cache for shared prompt prefixes such as system prompts.
+- **Quantization and speculative decoding:** reduce memory and per-token latency, verifying quality on your own evaluations.
+- **Routing:** send small, latency-sensitive tasks to a smaller model and reserve the large model for hard ones.
+
+## Capacity and reliability
+
+Plan capacity in tokens per second, not requests per second, because prompt and output lengths vary widely.
+Apply per-tenant quotas and priority classes so batch jobs cannot starve interactive users.
+Time out and cancel abandoned streams to free capacity.
+
+## Follow-up questions
+
+- How do you roll out a new model version? (Shadow traffic, then a canary with quality and latency gates.)
+- What do you log? (Token counts, latency per phase, and errors; store prompts only according to the data policy.)
+
+# Design a content moderation system
+
+## Prompt and requirements
+
+A social platform receives 50 million posts per day with text and images.
+Remove clearly violating content quickly, send uncertain cases to human reviewers, and let users appeal.
+Errors in both directions matter: missed harm and wrongly removed speech.
+
+## Architecture
+
+```text
+New post -> synchronous checks (hash matching against known bad media, high-precision classifiers)
+         -> publish or block
+         -> asynchronous classifiers per policy area -> risk score
+         -> actions by threshold: remove, reduce distribution, queue for review, allow
+Review queue (prioritized by risk x reach) -> human decisions -> labels for retraining
+Appeals -> second review -> reversal and audit trail
+```
+
+## Decision thresholds
+
+For each policy area, pick thresholds from precision and recall measured on a labeled sample:
+auto-remove only above a high-precision threshold, queue the uncertain band for humans, and allow below.
+Prioritize review by expected harm, so a borderline post going viral is reviewed before one with ten views.
+
+## Feedback and measurement
+
+Reviewer decisions become training labels, but they are biased toward what the model flagged.
+Sample a slice of all content for unbiased prevalence estimates, and measure reviewer agreement to keep labels reliable.
+
+## Follow-up questions
+
+- How do you handle adversarial edits such as altered images? (Perceptual hashing and robust embeddings rather than exact hashes.)
+- How do you support many languages? (Multilingual models plus language-specific review teams for high-risk areas.)
+
+# Design real-time fraud detection
+
+## Prompt and requirements
+
+Score every card payment for fraud in under 100 milliseconds before authorization.
+Blocking good customers costs revenue and trust; missing fraud costs chargebacks.
+
+## Architecture
+
+```text
+Payment request -> feature service (online store: velocity counts, device, merchant risk, user history)
+                -> rules engine (hard blocks, allowlists) + model score
+                -> decision: approve, challenge (step-up auth), or decline
+Event stream -> streaming aggregations (counts per card per 1 min / 1 h / 1 day) -> online store
+Chargebacks and analyst labels (arrive weeks later) -> training data
+```
+
+## Features that matter
+
+Velocity features dominate: attempts per card, per device and per IP over several windows, and distance from the user's usual location and merchants.
+They must be computed in streaming with low latency, and the same definitions must be used for training with point-in-time joins.
+
+## Labels and evaluation
+
+Fraud labels arrive late and are incomplete: chargebacks take weeks, and declined transactions never get a label.
+Evaluate on matured data, and measure precision at the operating threshold, approval rate and fraud loss in money, not just AUC.
+
+## Follow-up questions
+
+- How do you adapt to new attack patterns? (Rules for fast response, frequent retraining, and anomaly detection on feature distributions.)
+- How do you explain a decline to support staff? (Log the top contributing features and rules with each decision.)
+
 # Run an AI design mock interview
 
 ## Scenario

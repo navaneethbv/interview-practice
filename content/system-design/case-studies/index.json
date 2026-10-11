@@ -1,0 +1,62 @@
+{
+ "id": "case-studies",
+ "title": "System Design Case Studies",
+ "short": "Design Case Studies",
+ "description": "Original worked designs for frequently asked prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.",
+ "source": "system_design_case_studies.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "how-to-use-these-case-studies",
+     "title": "How to use these case studies"
+    },
+    {
+     "id": "design-a-payment-system",
+     "title": "Design a payment system"
+    },
+    {
+     "id": "design-a-distributed-job-scheduler",
+     "title": "Design a distributed job scheduler"
+    },
+    {
+     "id": "design-a-collaborative-document-editor",
+     "title": "Design a collaborative document editor"
+    },
+    {
+     "id": "design-a-real-time-leaderboard",
+     "title": "Design a real-time leaderboard"
+    },
+    {
+     "id": "design-a-stock-exchange-matching-engine",
+     "title": "Design a stock exchange matching engine"
+    },
+    {
+     "id": "design-ad-click-aggregation",
+     "title": "Design ad click aggregation"
+    },
+    {
+     "id": "design-a-metrics-and-monitoring-system",
+     "title": "Design a metrics and monitoring system"
+    },
+    {
+     "id": "design-an-object-storage-service",
+     "title": "Design an object storage service"
+    },
+    {
+     "id": "design-a-hotel-booking-system",
+     "title": "Design a hotel booking system"
+    },
+    {
+     "id": "design-a-distributed-cache",
+     "title": "Design a distributed cache"
+    },
+    {
+     "id": "design-an-email-service",
+     "title": "Design an email service"
+    }
+   ]
+  }
+ ]
+}

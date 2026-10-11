@@ -1,0 +1,81 @@
+{
+  "kind": "design",
+  "id": "design-sql",
+  "style": "leetcode",
+  "className": "SQL",
+  "ctorParams": [
+    {
+      "name": "names",
+      "type": "string[]"
+    },
+    {
+      "name": "columns",
+      "type": "int[]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "insertRow",
+      "java": "insertRow",
+      "params": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "row",
+          "type": "string[]"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "deleteRow",
+      "java": "deleteRow",
+      "params": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "rowId",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "selectCell",
+      "java": "selectCell",
+      "params": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "rowId",
+          "type": "int"
+        },
+        {
+          "name": "columnId",
+          "type": "int"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[["one","two","three"],[2,3,1]],"ops":["insertRow","selectCell","insertRow","deleteRow","selectCell"],"args":[["two",["first","second","third"]],["two",1,3],["two",["fourth","fifth","sixth"]],["two",1],["two",2,2]]},"sample":true,"expected":[null,"third",null,null,"fifth"]},
+    {"input":{"ctor":[["t"],[1]],"ops":["insertRow","deleteRow","insertRow","selectCell"],"args":[["t",["a"]],["t",1],["t",["b"]],["t",2,1]]},"sample":true,"expected":[null,null,null,"b"]},
+    {"input":{"ctor":[["users","orders","logs"],[2,1,1]],"ops":["insertRow","insertRow","insertRow","insertRow"],"args":[["orders",["y4"]],["users",["y0","x8"]],["logs",["y8"]],["logs",["y3"]]]},"expected":[null,null,null,null]},
+    {"input":{"ctor":[["users","orders","logs"],[1,2,1]],"ops":["insertRow","insertRow","insertRow","selectCell","insertRow","insertRow","deleteRow","selectCell","insertRow","insertRow","selectCell","deleteRow","insertRow","deleteRow","insertRow","deleteRow","insertRow","selectCell"],"args":[["orders",["y3","a4"]],["users",["b4"]],["orders",["a2","a3"]],["orders",2,1],["orders",["a3","c8"]],["logs",["b3"]],["users",1],["orders",3,2],["users",["y0"]],["orders",["a3","x4"]],["logs",1,1],["orders",1],["logs",["x7"]],["users",2],["users",["a7"]],["logs",2],["users",["c9"]],["orders",4,1]]},"expected":[null,null,null,"a2",null,null,null,"c8",null,null,"b3",null,null,null,null,null,null,"a3"]},
+    {"input":{"ctor":[["users","orders"],[2,2]],"ops":["insertRow","insertRow","insertRow","insertRow","deleteRow","selectCell","insertRow","insertRow","insertRow","insertRow","insertRow","insertRow","selectCell","insertRow","selectCell","selectCell","selectCell"],"args":[["orders",["b5","c2"]],["orders",["a5","a0"]],["users",["b3","x9"]],["orders",["c4","a4"]],["orders",3],["orders",2,2],["users",["x3","a1"]],["users",["c8","c2"]],["users",["y3","c7"]],["users",["a9","b8"]],["orders",["c4","a9"]],["orders",["b7","c9"]],["orders",2,2],["orders",["a5","b9"]],["users",3,1],["users",4,1],["orders",2,1]]},"expected":[null,null,null,null,null,"a0",null,null,null,null,null,null,"a0",null,"c8","y3","a5"]},
+    {"input":{"ctor":[["users","orders"],[1,1]],"ops":["insertRow","insertRow","deleteRow","insertRow","deleteRow","selectCell","insertRow","deleteRow","deleteRow","insertRow","selectCell","deleteRow"],"args":[["orders",["a1"]],["users",["c1"]],["orders",1],["orders",["a6"]],["orders",2],["users",1,1],["orders",["c1"]],["users",1],["orders",3],["users",["x4"]],["users",2,1],["users",2]]},"expected":[null,null,null,null,null,"c1",null,null,null,null,"x4",null]},
+    {"input":{"ctor":[["users"],[1]],"ops":["insertRow","insertRow","insertRow","selectCell","insertRow","deleteRow","insertRow"],"args":[["users",["c4"]],["users",["y5"]],["users",["a3"]],["users",1,1],["users",["a4"]],["users",1],["users",["c9"]]]},"expected":[null,null,null,"c4",null,null,null]},
+    {"input":{"ctor":[["users","orders","logs"],[3,1,3]],"ops":["insertRow","insertRow","deleteRow","insertRow"],"args":[["users",["a0","a9","a5"]],["users",["a4","y6","y4"]],["users",1],["orders",["b5"]]]},"expected":[null,null,null,null]},
+    {"input":{"ctor":[["users","orders","logs"],[2,3,2]],"ops":["insertRow","insertRow","insertRow"],"args":[["logs",["y0","a6"]],["orders",["b1","x1","b3"]],["users",["y8","c0"]]]},"expected":[null,null,null]},
+    {"input":{"ctor":[["users"],[2]],"ops":["insertRow","selectCell","selectCell","insertRow","selectCell","insertRow","selectCell","selectCell","insertRow","selectCell","selectCell"],"args":[["users",["a7","a6"]],["users",1,2],["users",1,1],["users",["c9","b1"]],["users",1,2],["users",["a0","a4"]],["users",3,2],["users",1,2],["users",["a2","c5"]],["users",3,2],["users",4,1]]},"expected":[null,"a6","a7",null,"a6",null,"a4","a6",null,"a4","a2"]},
+    {"input":{"ctor":[["users"],[2]],"ops":["insertRow","insertRow","selectCell","selectCell","deleteRow","insertRow","selectCell","selectCell","insertRow","deleteRow","insertRow","selectCell"],"args":[["users",["a8","c1"]],["users",["a9","x0"]],["users",2,2],["users",2,1],["users",2],["users",["a6","b2"]],["users",1,1],["users",1,1],["users",["y7","a4"]],["users",4],["users",["b8","b3"]],["users",5,1]]},"expected":[null,null,"x0","a9",null,null,"a8","a8",null,null,null,"b8"]},
+    {"input":{"ctor":[["users","orders","logs"],[3,1,2]],"ops":["insertRow","insertRow","deleteRow","insertRow","selectCell","selectCell","insertRow","deleteRow","insertRow","insertRow","insertRow","insertRow","insertRow"],"args":[["logs",["b2","c3"]],["orders",["x3"]],["orders",1],["logs",["x2","b4"]],["logs",1,2],["logs",1,1],["orders",["y6"]],["logs",2],["logs",["a9","y6"]],["orders",["y1"]],["users",["a7","c1","y4"]],["orders",["c9"]],["orders",["b3"]]]},"expected":[null,null,null,null,"c3","b2",null,null,null,null,null,null,null]}
+  ]
+}

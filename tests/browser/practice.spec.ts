@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { serveCdnFromNodeModules } from "./cdn";
 
 const problem = "/problems/lc/two-sum?set=blind-75";
 const draft = "# browser regression draft\nclass Solution:\n    pass";
@@ -10,6 +11,8 @@ async function edit(page: Page, text: string) {
   await page.keyboard.press("Control+a");
   await page.keyboard.insertText(text);
 }
+
+test.beforeEach(({ context }) => serveCdnFromNodeModules(context));
 
 test("drafts survive reload, language switches, cancelled resets and recovery", async ({ page }) => {
   await page.goto(problem);
@@ -133,5 +136,64 @@ test("mobile home and workbook remain within the viewport", async ({ page }) => 
       await page.getByText("Back up or restore practice data", { exact: true }).click();
       await expect(page.getByRole("button", { name: "Export backup", exact: true })).toBeVisible();
     }
+  }
+});
+
+test("problem hub groups lists and the switcher moves between them", async ({ page }) => {
+  await page.goto("/problems");
+  await expect(page.getByRole("heading", { name: "Company lists" })).toBeVisible();
+  await page.getByRole("textbox", { name: "Filter lists" }).fill("nvidia");
+  await expect(page.getByRole("heading", { name: "Study plans" })).toHaveCount(0);
+  await page.getByRole("link", { name: /NVIDIA/ }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "NVIDIA" })).toBeVisible();
+  await page.getByRole("combobox", { name: "Switch list" }).selectOption("/problems/sets/blind-75");
+  await expect(page.getByRole("heading", { level: 1, name: "Blind 75" })).toBeVisible();
+  await page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: "Problems" }).click();
+  await expect(page).toHaveURL(/\/problems$/);
+});
+
+test("command palette jumps to a problem from the keyboard", async ({ page }) => {
+  await page.goto("/");
+  const input = page.getByRole("combobox", { name: "Search the site" });
+  // Establish hydration before sending a shortcut to the document event listener.
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(input).toBeFocused();
+  await input.press("Escape");
+  await expect(input).toHaveCount(0);
+  await page.keyboard.press("Control+k");
+  await expect(input).toBeFocused();
+  await input.fill("two sum");
+  await expect(page.getByRole("option").first()).toContainText("1. Two Sum");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/problems\/lc\/two-sum$/);
+});
+
+test("command palette closes with Escape and restores focus", async ({ page }) => {
+  await page.goto("/");
+  const trigger = page.getByRole("button", { name: "Search", exact: true });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Search the site" });
+  await expect(dialog).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Search the site" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(dialog).toBeVisible();
+  await page.mouse.click(5, 5);
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test("mobile menu opens, navigates and closes", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await page.locator("#mobile-menu").getByRole("link", { name: /Guides/ }).click();
+  await expect(page).toHaveURL(/\/system-design$/);
+  await expect(page.locator("#mobile-menu")).toHaveCount(0);
+  for (const path of ["/problems", "/problems/sets/nvidia", "/system-design"]) {
+    await page.goto(path);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
 });

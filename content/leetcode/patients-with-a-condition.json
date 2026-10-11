@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "patients-with-a-condition",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Patients",
+      "columns": [
+        {
+          "name": "patient_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "patient_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "conditions",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "patient_id",
+    "patient_name",
+    "conditions"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Patients":[[1,"Daniel","YFEV COUGH"],[2,"Alice",""],[3,"Bob","DIAB100 MYOP"],[4,"George","ACNE DIAB100"],[5,"Alain","DIAB201"]]}},"sample":true,"expected":[[3,"Bob","DIAB100 MYOP"],[4,"George","ACNE DIAB100"]]},
+    {"input":{"tables":{"Patients":[[6,"Eve","SADIAB100"]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Patients":[]}},"expected":[]},
+    {"input":{"tables":{"Patients":[[1,"A","DIAB1"]]}},"expected":[[1,"A","DIAB1"]]},
+    {"input":{"tables":{"Patients":[[1,"A","X DIAB12 Y"],[2,"B","XDIAB1"],[3,"C","DIA B1"]]}},"expected":[[1,"A","X DIAB12 Y"]]}
+  ]
+}

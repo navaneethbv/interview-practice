@@ -1,0 +1,37 @@
+{
+  "kind": "sql",
+  "id": "find-users-with-valid-e-mails",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "mail",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "user_id",
+    "name",
+    "mail"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Users":[[1,"Winston","winston@leetcode.com"],[2,"Jonathan","jonathanisgreat"],[3,"Annabelle","bella-@leetcode.com"],[4,"Sally","sally.come@leetcode.com"],[5,"Marwan","quarz#2020@leetcode.com"],[6,"David","david69@gmail.com"],[7,"Shapiro",".shapo@leetcode.com"]]}},"sample":true,"expected":[[1,"Winston","winston@leetcode.com"],[3,"Annabelle","bella-@leetcode.com"],[4,"Sally","sally.come@leetcode.com"]]},
+    {"input":{"tables":{"Users":[[8,"Kim","k@LEETCODE.com"]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Users":[]}},"expected":[]},
+    {"input":{"tables":{"Users":[[1,"a","a@leetcode.com"],[2,"b","@leetcode.com"],[3,"c","c@leetcode.comx"],[4,"d","d d@leetcode.com"]]}},"expected":[[1,"a","a@leetcode.com"]]},
+    {"input":{"tables":{"Users":[[5,"e","e_1.2-3@leetcode.com"],[6,"f","9f@leetcode.com"],[7,"g","g@leetcodexcom"]]}},"expected":[[5,"e","e_1.2-3@leetcode.com"]]}
+  ]
+}

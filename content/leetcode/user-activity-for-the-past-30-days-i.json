@@ -1,0 +1,40 @@
+{
+  "kind": "sql",
+  "id": "user-activity-for-the-past-30-days-i",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Activity",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "session_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "activity_date",
+          "type": "TEXT"
+        },
+        {
+          "name": "activity_type",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "day",
+    "active_users"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Activity":[[1,1,"2019-07-20","open_session"],[1,1,"2019-07-20","scroll_down"],[1,1,"2019-07-20","end_session"],[2,4,"2019-07-20","open_session"],[2,4,"2019-07-21","send_message"],[2,4,"2019-07-21","end_session"],[3,2,"2019-07-21","open_session"],[3,2,"2019-07-21","send_message"],[3,2,"2019-07-21","end_session"],[4,3,"2019-06-25","open_session"],[4,3,"2019-06-25","end_session"]]}},"sample":true,"expected":[["2019-07-20",2],["2019-07-21",2]]},
+    {"input":{"tables":{"Activity":[[1,1,"2019-06-28","open_session"],[2,2,"2019-06-27","open_session"]]}},"sample":true,"expected":[["2019-06-28",1]]},
+    {"input":{"tables":{"Activity":[]}},"expected":[]},
+    {"input":{"tables":{"Activity":[[1,1,"2019-07-27","scroll_down"],[1,2,"2019-07-27","end_session"],[2,3,"2019-07-28","open_session"]]}},"expected":[["2019-07-27",1]]},
+    {"input":{"tables":{"Activity":[[5,1,"2019-07-01","open_session"],[6,2,"2019-07-01","open_session"],[5,3,"2019-07-02","open_session"]]}},"expected":[["2019-07-01",2],["2019-07-02",1]]}
+  ]
+}

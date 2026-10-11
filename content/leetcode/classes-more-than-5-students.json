@@ -1,0 +1,31 @@
+{
+  "kind": "sql",
+  "id": "classes-more-than-5-students",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Courses",
+      "columns": [
+        {
+          "name": "student",
+          "type": "TEXT"
+        },
+        {
+          "name": "class",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "class"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Courses":[["A","Math"],["B","English"],["C","Math"],["D","Biology"],["E","Math"],["F","Computer"],["G","Math"],["H","Math"],["I","Math"]]}},"sample":true,"expected":[["Math"]]},
+    {"input":{"tables":{"Courses":[["A","Art"],["B","Art"],["C","Art"],["D","Art"]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Courses":[]}},"expected":[]},
+    {"input":{"tables":{"Courses":[["a","X"],["b","X"],["c","X"],["d","X"],["e","X"],["a","Y"],["b","Y"],["c","Y"],["d","Y"],["e","Y"]]}},"expected":[["X"],["Y"]]},
+    {"input":{"tables":{"Courses":[["a","Z"],["b","Z"],["c","Z"],["d","Z"],["e","Z"],["f","Z"],["g","Z"],["h","Z"],["i","Z"],["j","Z"],["a","Q"]]}},"expected":[["Z"]]}
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "design",
+  "id": "design-snake-game",
+  "style": "leetcode",
+  "className": "SnakeGame",
+  "ctorParams": [
+    {
+      "name": "width",
+      "type": "int"
+    },
+    {
+      "name": "height",
+      "type": "int"
+    },
+    {
+      "name": "food",
+      "type": "int[][]"
+    }
+  ],
+  "methods": [
+    {
+      "name": "move",
+      "java": "move",
+      "params": [
+        {
+          "name": "direction",
+          "type": "string"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3,2,[[1,2],[0,1]]],"ops":["move","move","move","move","move","move"],"args":[["R"],["D"],["R"],["U"],["L"],["U"]]},"sample":true,"expected":[0,0,1,1,2,-1]},
+    {"input":{"ctor":[2,2,[[0,1],[1,1],[1,0]]],"ops":["move","move","move","move"],"args":[["R"],["D"],["L"],["U"]]},"sample":true,"expected":[1,2,3,3]},
+    {"input":{"ctor":[3,6,[[2,0]]],"ops":["move"],"args":[["L"]]},"expected":[-1]},
+    {"input":{"ctor":[2,4,[[3,1],[0,1],[3,1],[3,0],[2,1]]],"ops":["move"],"args":[["U"]]},"expected":[-1]},
+    {"input":{"ctor":[4,4,[[3,2],[1,0]]],"ops":["move"],"args":[["U"]]},"expected":[-1]},
+    {"input":{"ctor":[6,4,[[3,1],[3,3],[1,1]]],"ops":["move","move","move","move"],"args":[["R"],["R"],["L"],["U"]]},"expected":[0,0,0,-1]},
+    {"input":{"ctor":[4,3,[[1,0],[0,1],[2,2],[2,3]]],"ops":["move","move"],"args":[["D"],["L"]]},"expected":[1,-1]},
+    {"input":{"ctor":[6,3,[]],"ops":["move","move","move","move","move","move"],"args":[["D"],["D"],["R"],["L"],["R"],["D"]]},"expected":[0,0,0,0,0,-1]},
+    {"input":{"ctor":[5,3,[]],"ops":["move","move"],"args":[["R"],["U"]]},"expected":[0,-1]},
+    {"input":{"ctor":[5,5,[[4,3],[1,3],[4,4]]],"ops":["move","move","move"],"args":[["R"],["R"],["U"]]},"expected":[0,0,-1]},
+    {"input":{"ctor":[5,4,[[2,0],[0,3],[0,4],[2,4],[3,0]]],"ops":["move"],"args":[["L"]]},"expected":[-1]},
+    {"input":{"ctor":[5,4,[[1,4],[2,0],[1,0],[1,2],[3,1]]],"ops":["move"],"args":[["U"]]},"expected":[-1]}
+  ]
+}

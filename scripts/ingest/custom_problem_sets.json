@@ -1759,6 +1759,424 @@
      "category": "Booster Problems"
     }
    ]
+  },
+  {
+   "id": "sql-50",
+   "title": "SQL 50",
+   "kind": "curated",
+   "description": "LeetCode's SQL 50 study plan in SQLite: selection, joins, aggregation, grouping, subqueries and string functions. Statements and tests are written for this site.",
+   "sourceUrl": "https://leetcode.com/studyplan/top-sql-50/",
+   "sourceLabel": "LeetCode SQL 50 study plan",
+   "items": [
+    {
+     "slug": "recyclable-and-low-fat-products",
+     "category": "Select"
+    },
+    {
+     "slug": "find-customer-referee",
+     "category": "Select"
+    },
+    {
+     "slug": "big-countries",
+     "category": "Select"
+    },
+    {
+     "slug": "article-views-i",
+     "category": "Select"
+    },
+    {
+     "slug": "invalid-tweets",
+     "category": "Select"
+    },
+    {
+     "slug": "replace-employee-id-with-the-unique-identifier",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "product-sales-analysis-i",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "customer-who-visited-but-did-not-make-any-transactions",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "rising-temperature",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "average-time-of-process-per-machine",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "employee-bonus",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "students-and-examinations",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "managers-with-at-least-5-direct-reports",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "confirmation-rate",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "not-boring-movies",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "average-selling-price",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "project-employees-i",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "percentage-of-users-attended-a-contest",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "queries-quality-and-percentage",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "monthly-transactions-i",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "immediate-food-delivery-ii",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "game-play-analysis-iv",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "number-of-unique-subjects-taught-by-each-teacher",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "user-activity-for-the-past-30-days-i",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "product-sales-analysis-iii",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "classes-more-than-5-students",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "find-followers-count",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "biggest-single-number",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "customers-who-bought-all-products",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "the-number-of-employees-which-report-to-each-employee",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "primary-department-for-each-employee",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "triangle-judgement",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "consecutive-numbers",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "product-price-at-a-given-date",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "last-person-to-fit-in-the-bus",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "count-salary-categories",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "employees-whose-manager-left-the-company",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "exchange-seats",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "movie-rating",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "restaurant-growth",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "friend-requests-ii-who-has-the-most-friends",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "investments-in-2016",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "department-top-three-salaries",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "fix-names-in-a-table",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "find-users-with-valid-e-mails",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "patients-with-a-condition",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "delete-duplicate-emails",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "second-highest-salary",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "group-sold-products-by-the-date",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "list-the-products-ordered-in-a-period",
+     "category": "Advanced String Functions / Regex / Clause"
+    }
+   ]
+  },
+  {
+   "id": "concurrency",
+   "title": "Concurrency",
+   "kind": "curated",
+   "description": "LeetCode's multithreading problems, judged on real threads in Java, C++ and Go. Each test repeats with random start delays to surface races, and deadlocks are reported instead of hanging.",
+   "items": [
+    {
+     "slug": "print-in-order",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "print-foobar-alternately",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "print-zero-even-odd",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "building-h2o",
+     "category": "Resource sharing"
+    },
+    {
+     "slug": "fizz-buzz-multithreaded",
+     "category": "Thread coordination"
+    },
+    {
+     "slug": "the-dining-philosophers",
+     "category": "Resource sharing"
+    }
+   ]
+  },
+  {
+   "id": "object-oriented-design",
+   "title": "Object-Oriented Design",
+   "kind": "curated",
+   "description": "Executable low-level design: classes with state and invariants, judged by sequences of method calls. Pair them with the Low-Level Design Practice guide for the modeling discussion.",
+   "items": [
+    {
+     "slug": "lru-cache",
+     "category": "Caching and storage"
+    },
+    {
+     "slug": "lfu-cache",
+     "category": "Caching and storage"
+    },
+    {
+     "slug": "time-based-key-value-store",
+     "category": "Caching and storage"
+    },
+    {
+     "slug": "snapshot-array",
+     "category": "Caching and storage"
+    },
+    {
+     "slug": "design-hashmap",
+     "category": "Caching and storage"
+    },
+    {
+     "slug": "logger-rate-limiter",
+     "category": "Rate limiting and expiry"
+    },
+    {
+     "slug": "design-hit-counter",
+     "category": "Rate limiting and expiry"
+    },
+    {
+     "slug": "design-authentication-manager",
+     "category": "Rate limiting and expiry"
+    },
+    {
+     "slug": "design-parking-system",
+     "category": "Allocation"
+    },
+    {
+     "slug": "seat-reservation-manager",
+     "category": "Allocation"
+    },
+    {
+     "slug": "exam-room",
+     "category": "Allocation"
+    },
+    {
+     "slug": "design-memory-allocator",
+     "category": "Allocation"
+    },
+    {
+     "slug": "design-a-number-container-system",
+     "category": "Allocation"
+    },
+    {
+     "slug": "design-leaderboard",
+     "category": "Ranking"
+    },
+    {
+     "slug": "design-a-food-rating-system",
+     "category": "Ranking"
+    },
+    {
+     "slug": "design-task-manager",
+     "category": "Ranking"
+    },
+    {
+     "slug": "all-oone-data-structure",
+     "category": "Ranking"
+    },
+    {
+     "slug": "design-twitter",
+     "category": "Ranking"
+    },
+    {
+     "slug": "design-underground-system",
+     "category": "Tracking and analytics"
+    },
+    {
+     "slug": "stock-price-fluctuation",
+     "category": "Tracking and analytics"
+    },
+    {
+     "slug": "online-stock-span",
+     "category": "Tracking and analytics"
+    },
+    {
+     "slug": "design-browser-history",
+     "category": "Editors and navigation"
+    },
+    {
+     "slug": "design-a-text-editor",
+     "category": "Editors and navigation"
+    },
+    {
+     "slug": "design-search-autocomplete-system",
+     "category": "Editors and navigation"
+    },
+    {
+     "slug": "implement-trie-prefix-tree",
+     "category": "Editors and navigation"
+    },
+    {
+     "slug": "design-file-system",
+     "category": "File systems"
+    },
+    {
+     "slug": "design-in-memory-file-system",
+     "category": "File systems"
+    },
+    {
+     "slug": "design-tic-tac-toe",
+     "category": "Games"
+    },
+    {
+     "slug": "design-snake-game",
+     "category": "Games"
+    },
+    {
+     "slug": "simple-bank-system",
+     "category": "Transactions"
+    },
+    {
+     "slug": "insert-delete-getrandom-o1",
+     "category": "Core structures"
+    },
+    {
+     "slug": "design-circular-queue",
+     "category": "Core structures"
+    },
+    {
+     "slug": "min-stack",
+     "category": "Core structures"
+    }
+   ]
+  },
+  {
+   "id": "ml-coding",
+   "title": "ML Coding",
+   "kind": "curated",
+   "description": "Original problems for machine learning coding rounds: implement softmax, attention, k-means, logistic regression, retrieval and evaluation metrics from scratch with only the standard library.",
+   "items": [
+    {
+     "slug": "ml-softmax",
+     "category": "Building blocks"
+    },
+    {
+     "slug": "ml-scaled-dot-product-attention",
+     "category": "Building blocks"
+    },
+    {
+     "slug": "ml-k-means",
+     "category": "Unsupervised learning"
+    },
+    {
+     "slug": "ml-logistic-regression",
+     "category": "Supervised learning"
+    },
+    {
+     "slug": "ml-cosine-top-k",
+     "category": "Retrieval"
+    },
+    {
+     "slug": "ml-roc-auc",
+     "category": "Evaluation"
+    },
+    {
+     "slug": "ml-precision-recall-at-k",
+     "category": "Evaluation"
+    }
+   ]
   }
  ],
  "problems": {
@@ -5256,6 +5674,885 @@
    "hint": "Each set bit identifies a round in which the index lies in the incremented half.",
    "time": "O(log(n + 1))",
    "space": "O(1)"
+  },
+  "invalid-tweets": {
+   "number": 1683,
+   "title": "Invalid Tweets",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Filtering",
+   "hint": "Filtering: Filter rows with LENGTH(content) > 15."
+  },
+  "product-sales-analysis-i": {
+   "number": 1068,
+   "title": "Product Sales Analysis I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Inner join",
+   "hint": "Inner join: Join Sales to Product on product_id."
+  },
+  "project-employees-i": {
+   "number": 1075,
+   "title": "Project Employees I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Group and average",
+   "hint": "Group and average: Join, group by project, and ROUND(AVG(...), 2)."
+  },
+  "percentage-of-users-attended-a-contest": {
+   "number": 1633,
+   "title": "Percentage of Users Attended a Contest",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Scalar subquery ratio",
+   "hint": "Scalar subquery ratio: Divide each contest's count by (SELECT COUNT(*) FROM Users)."
+  },
+  "number-of-unique-subjects-taught-by-each-teacher": {
+   "number": 2356,
+   "title": "Number of Unique Subjects Taught by Each Teacher",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "COUNT DISTINCT",
+   "hint": "COUNT DISTINCT: Group by teacher_id and count distinct subject_id."
+  },
+  "user-activity-for-the-past-30-days-i": {
+   "number": 1141,
+   "title": "User Activity for the Past 30 Days I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Date window grouping",
+   "hint": "Date window grouping: Filter the 30-day window, then count distinct users per day."
+  },
+  "classes-more-than-5-students": {
+   "number": 596,
+   "title": "Classes More Than 5 Students",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "GROUP BY with HAVING",
+   "hint": "GROUP BY with HAVING: Group by class and keep groups with COUNT(*) >= 5."
+  },
+  "biggest-single-number": {
+   "number": 619,
+   "title": "Biggest Single Number",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Aggregate over a filtered group",
+   "hint": "Aggregate over a filtered group: Keep numbers with COUNT(*) = 1, then take MAX; MAX of no rows is null."
+  },
+  "customers-who-bought-all-products": {
+   "number": 1045,
+   "title": "Customers Who Bought All Products",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Relational division",
+   "hint": "Relational division: Compare each customer's distinct product count with the total product count."
+  },
+  "the-number-of-employees-which-report-to-each-employee": {
+   "number": 1731,
+   "title": "The Number of Employees Which Report to Each Employee",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Self join",
+   "hint": "Self join: Join each employee to their manager and aggregate per manager."
+  },
+  "primary-department-for-each-employee": {
+   "number": 1789,
+   "title": "Primary Department for Each Employee",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "UNION of two cases",
+   "hint": "UNION of two cases: Take 'Y' rows, plus employees with exactly one row."
+  },
+  "product-price-at-a-given-date": {
+   "number": 1164,
+   "title": "Product Price at a Given Date",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Latest row before a date",
+   "hint": "Latest row before a date: For each product take the most recent change on or before the date, defaulting to 10."
+  },
+  "last-person-to-fit-in-the-bus": {
+   "number": 1204,
+   "title": "Last Person to Fit in the Bus",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Running total",
+   "hint": "Running total: Use SUM(weight) OVER (ORDER BY turn) and keep the last row within the limit."
+  },
+  "employees-whose-manager-left-the-company": {
+   "number": 1978,
+   "title": "Employees Whose Manager Left the Company",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "NOT IN subquery",
+   "hint": "NOT IN subquery: Filter salary and keep manager ids missing from the table."
+  },
+  "movie-rating": {
+   "number": 1341,
+   "title": "Movie Rating",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Two ordered subqueries",
+   "hint": "Two ordered subqueries: Compute each answer with ORDER BY ... LIMIT 1 and combine them with UNION ALL."
+  },
+  "restaurant-growth": {
+   "number": 1321,
+   "title": "Restaurant Growth",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Moving window",
+   "hint": "Moving window: Aggregate per day, then sum each day's trailing seven days."
+  },
+  "friend-requests-ii-who-has-the-most-friends": {
+   "number": 602,
+   "title": "Friend Requests II: Who Has the Most Friends",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "UNION ALL then group",
+   "hint": "UNION ALL then group: Count each person's appearances on either side of a request."
+  },
+  "investments-in-2016": {
+   "number": 585,
+   "title": "Investments in 2016",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Correlated counts",
+   "hint": "Correlated counts: Keep a policy when its tiv_2015 repeats and its location does not."
+  },
+  "patients-with-a-condition": {
+   "number": 1527,
+   "title": "Patients With a Condition",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Word-prefix matching",
+   "hint": "Word-prefix matching: Match DIAB1 at the start of the string or after a space."
+  },
+  "group-sold-products-by-the-date": {
+   "number": 1484,
+   "title": "Group Sold Products By The Date",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Ordered string aggregation",
+   "hint": "Ordered string aggregation: Deduplicate and sort first, then GROUP_CONCAT per date."
+  },
+  "list-the-products-ordered-in-a-period": {
+   "number": 1327,
+   "title": "List the Products Ordered in a Period",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Filter, group, HAVING",
+   "hint": "Filter, group, HAVING: Filter February, group by product and keep totals of at least 100."
+  },
+  "find-users-with-valid-e-mails": {
+   "number": 1517,
+   "title": "Find Users With Valid E-Mails",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Pattern matching",
+   "hint": "Pattern matching: Check the first letter and domain with GLOB, then reject any invalid prefix character."
+  },
+  "print-in-order": {
+   "number": 1114,
+   "title": "Print in Order",
+   "difficulty": "easy",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "One-shot gates",
+   "hint": "One-shot gates: Each method waits for a signal from the previous one before printing, then signals the next.",
+   "time": "O(1) per call",
+   "space": "O(1)"
+  },
+  "print-foobar-alternately": {
+   "number": 1115,
+   "title": "Print FooBar Alternately",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Turn handoff",
+   "hint": "Turn handoff: Track whose turn it is; each thread prints on its turn and hands the turn to the other.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "print-zero-even-odd": {
+   "number": 1116,
+   "title": "Print Zero Even Odd",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Coordinator thread",
+   "hint": "Coordinator thread: Zero prints and decides whether odd or even goes next; both hand the turn back to zero.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "building-h2o": {
+   "number": 1117,
+   "title": "Building H2O",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Counting barrier",
+   "hint": "Counting barrier: Admit at most two hydrogens and one oxygen per molecule and reset the counts once it is complete.",
+   "time": "O(1) per atom",
+   "space": "O(1)"
+  },
+  "fizz-buzz-multithreaded": {
+   "number": 1195,
+   "title": "Fizz Buzz Multithreaded",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Shared counter with condition",
+   "hint": "Shared counter with condition: All threads follow one counter; the owner of the current number prints it and wakes the others.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "the-dining-philosophers": {
+   "number": 1226,
+   "title": "The Dining Philosophers",
+   "difficulty": "medium",
+   "topics": [
+    "Concurrency"
+   ],
+   "pattern": "Lock ordering",
+   "hint": "Lock ordering: Always lock the lower-numbered fork first so no cycle of waiting philosophers can form.",
+   "time": "O(1) per meal",
+   "space": "O(1)"
+  },
+  "design-underground-system": {
+   "number": 1396,
+   "title": "Design Underground System",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Hash maps keyed by entity and route",
+   "hint": "Hash maps keyed by entity and route: Keep open check-ins by customer and running (total, count) per route.",
+   "time": "O(1) per call",
+   "space": "O(customers + routes)"
+  },
+  "design-snake-game": {
+   "number": 353,
+   "title": "Design Snake Game",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Deque plus hash set",
+   "hint": "Deque plus hash set: Keep the body in a deque for head and tail updates and a set for O(1) collision checks.",
+   "time": "O(1) per move",
+   "space": "O(width * height)"
+  },
+  "design-leaderboard": {
+   "number": 1244,
+   "title": "Design A Leaderboard",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Hash map plus ordered multiset",
+   "hint": "Hash map plus ordered multiset: Map players to totals and keep totals in a sorted multiset so top(K) reads the K largest.",
+   "time": "O(log n) per update, O(K) per top",
+   "space": "O(n)"
+  },
+  "design-a-food-rating-system": {
+   "number": 2353,
+   "title": "Design a Food Rating System",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Ordered set per group",
+   "hint": "Ordered set per group: Keep each cuisine's foods ordered by (rating descending, name); update by remove and reinsert.",
+   "time": "O(log n) per call",
+   "space": "O(n)"
+  },
+  "design-authentication-manager": {
+   "number": 1797,
+   "title": "Design Authentication Manager",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Expiry ordered by insertion",
+   "hint": "Expiry ordered by insertion: Because time only increases, keeping tokens in renewal order also keeps them in expiry order; drop expired ones from the front.",
+   "time": "O(1) amortized per call",
+   "space": "O(tokens)"
+  },
+  "simple-bank-system": {
+   "number": 2043,
+   "title": "Simple Bank System",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Validate, then apply",
+   "hint": "Validate, then apply: Check every precondition before mutating any balance so invalid operations change nothing.",
+   "time": "O(1) per call",
+   "space": "O(n)"
+  },
+  "design-a-text-editor": {
+   "number": 2296,
+   "title": "Design a Text Editor",
+   "difficulty": "hard",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Two stacks around a cursor",
+   "hint": "Two stacks around a cursor: Keep text left of the cursor in one stack and text right of it, reversed, in another; every operation touches only the stack tops.",
+   "time": "O(k) per call",
+   "space": "O(text length)"
+  },
+  "seat-reservation-manager": {
+   "number": 1845,
+   "title": "Seat Reservation Manager",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Min-heap of freed slots",
+   "hint": "Min-heap of freed slots: Hand out seats in order with a counter; returned seats go into a min-heap that is used first.",
+   "time": "O(log n) per call",
+   "space": "O(freed seats)"
+  },
+  "stock-price-fluctuation": {
+   "number": 2034,
+   "title": "Stock Price Fluctuation",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Map plus ordered multiset",
+   "hint": "Map plus ordered multiset: Keep the price per timestamp and a sorted multiset of current prices; corrections remove the old price.",
+   "time": "O(log n) per call",
+   "space": "O(n)"
+  },
+  "design-a-number-container-system": {
+   "number": 2349,
+   "title": "Design a Number Container System",
+   "difficulty": "medium",
+   "topics": [
+    "Design"
+   ],
+   "pattern": "Map of ordered sets",
+   "hint": "Map of ordered sets: Map each number to a sorted set of indexes holding it; a change moves the index between sets.",
+   "time": "O(log n) per call",
+   "space": "O(n)"
+  },
+  "ml-softmax": {
+   "number": 5001,
+   "title": "Numerically Stable Softmax",
+   "difficulty": "easy",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Shift by the maximum",
+   "hint": "Shift by the maximum: softmax(x) equals softmax(x - c) for any c; subtracting the maximum keeps every exponent at most 0.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "ml-k-means": {
+   "number": 5002,
+   "title": "K-Means Clustering",
+   "difficulty": "medium",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Alternate assignment and update",
+   "hint": "Alternate assignment and update: Assign each point to its nearest centroid, then move each centroid to the mean of its points; stop when no label changes.",
+   "time": "O(iterations * n * k)",
+   "space": "O(n + k)"
+  },
+  "ml-logistic-regression": {
+   "number": 5003,
+   "title": "Train Logistic Regression",
+   "difficulty": "medium",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Batch gradient descent",
+   "hint": "Batch gradient descent: Compute every prediction with the current parameters, average the errors times the features, then update all parameters together.",
+   "time": "O(epochs * n * d)",
+   "space": "O(d)"
+  },
+  "ml-cosine-top-k": {
+   "number": 5004,
+   "title": "Top-K Cosine Similarity Search",
+   "difficulty": "easy",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Score, then partial sort",
+   "hint": "Score, then partial sort: Cosine similarity is the dot product divided by both norms; sort indices by score descending, then index.",
+   "time": "O(n * d + n log n)",
+   "space": "O(n)"
+  },
+  "ml-scaled-dot-product-attention": {
+   "number": 5005,
+   "title": "Scaled Dot-Product Attention",
+   "difficulty": "medium",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Scores, softmax, weighted sum",
+   "hint": "Scores, softmax, weighted sum: Score each key by the scaled dot product, softmax the scores stably, and mix the value rows with those weights.",
+   "time": "O(n * (d + d_v))",
+   "space": "O(n + d_v)"
+  },
+  "ml-roc-auc": {
+   "number": 5006,
+   "title": "ROC AUC",
+   "difficulty": "medium",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Rank statistics",
+   "hint": "Rank statistics: AUC equals the Mann-Whitney U statistic: sum the ranks of positives (ties get average ranks), subtract P(P+1)/2, divide by P·N.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "ml-precision-recall-at-k": {
+   "number": 5007,
+   "title": "Precision and Recall at K",
+   "difficulty": "easy",
+   "topics": [
+    "Machine Learning",
+    "Math"
+   ],
+   "pattern": "Set membership over a prefix",
+   "hint": "Set membership over a prefix: Count relevant items among the first k; precision divides by k and recall by the number of relevant items.",
+   "time": "O(k + |relevant|)",
+   "space": "O(|relevant|)"
+  },
+  "break-a-palindrome": {
+   "number": 1328,
+   "title": "Break a Palindrome",
+   "difficulty": "medium",
+   "topics": [
+    "String",
+    "Greedy"
+   ],
+   "pattern": "Greedy first position",
+   "hint": "Greedy first position: Replace the first non-'a' in the first half with 'a'; if there is none, change the last character to 'b'.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "minimum-operations-to-reduce-an-integer-to-0": {
+   "number": 2571,
+   "title": "Minimum Operations to Reduce an Integer to 0",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation",
+    "Greedy"
+   ],
+   "pattern": "Greedy on low bits",
+   "hint": "Greedy on low bits: Look at the two lowest bits: a single 1 is removed by subtracting, a run of 1s is cheaper to clear by adding 1.",
+   "time": "O(log n)",
+   "space": "O(1)"
+  },
+  "maximum-number-of-visible-points": {
+   "number": 1610,
+   "title": "Maximum Number of Visible Points",
+   "difficulty": "hard",
+   "topics": [
+    "Geometry",
+    "Sliding Window",
+    "Sorting"
+   ],
+   "pattern": "Angular sweep",
+   "hint": "Angular sweep: Convert points to angles around you, sort, append each angle plus 360, and slide a window no wider than the view angle.",
+   "time": "O(n log n)",
+   "space": "O(n)"
+  },
+  "all-possible-full-binary-trees": {
+   "number": 894,
+   "title": "All Possible Full Binary Trees",
+   "difficulty": "medium",
+   "topics": [
+    "Tree",
+    "Recursion",
+    "Dynamic Programming"
+   ],
+   "pattern": "Memoized recursion over sizes",
+   "hint": "Memoized recursion over sizes: A full tree with n nodes has a root plus full left and right subtrees whose sizes are odd and sum to n - 1.",
+   "time": "O(C(n/2) * n), where C is the Catalan number",
+   "space": "Proportional to the output"
+  },
+  "task-scheduler-ii": {
+   "number": 2365,
+   "title": "Task Scheduler II",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Hash Table",
+    "Simulation"
+   ],
+   "pattern": "Next allowed day per type",
+   "hint": "Next allowed day per type: Track, for each task type, the first day it may run again; jump the current day forward when needed.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "delete-duplicate-folders-in-system": {
+   "number": 1948,
+   "title": "Delete Duplicate Folders in System",
+   "difficulty": "hard",
+   "topics": [
+    "Trie",
+    "Hashing",
+    "String"
+   ],
+   "pattern": "Serialize subtrees",
+   "hint": "Serialize subtrees: Build a trie of folders, serialize each folder's subfolder structure, and delete every folder whose non-empty structure appears more than once.",
+   "time": "O(total path length * log)",
+   "space": "O(total path length)"
+  },
+  "count-the-number-of-good-subsequences": {
+   "number": 2539,
+   "title": "Count the Number of Good Subsequences",
+   "difficulty": "medium",
+   "topics": [
+    "Combinatorics",
+    "Hash Table",
+    "Math"
+   ],
+   "pattern": "Count by common frequency",
+   "hint": "Count by common frequency: Fix the shared frequency f; each letter independently contributes C(count, f) ways or is left out.",
+   "time": "O(26 * n) with precomputed binomials",
+   "space": "O(n)"
+  },
+  "maximize-greatness-of-an-array": {
+   "number": 2592,
+   "title": "Maximize Greatness of an Array",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Greedy",
+    "Sorting",
+    "Two Pointers"
+   ],
+   "pattern": "Sorted two pointers",
+   "hint": "Sorted two pointers: Sort; match each element with the smallest unused element strictly greater than it.",
+   "time": "O(n log n)",
+   "space": "O(1) beyond sorting"
+  },
+  "merge-in-between-linked-lists": {
+   "number": 1669,
+   "title": "Merge In Between Linked Lists",
+   "difficulty": "medium",
+   "topics": [
+    "Linked List"
+   ],
+   "pattern": "Splice with two pointers",
+   "hint": "Splice with two pointers: Find the node before index a and the node after index b, then link list2 between them.",
+   "time": "O(n + m)",
+   "space": "O(1)"
+  },
+  "remove-stones-to-minimize-the-total": {
+   "number": 1962,
+   "title": "Remove Stones to Minimize the Total",
+   "difficulty": "medium",
+   "topics": [
+    "Heap",
+    "Greedy"
+   ],
+   "pattern": "Max-heap greedy",
+   "hint": "Max-heap greedy: Each operation should halve the currently largest pile, because that removes the most stones.",
+   "time": "O(n + k log n)",
+   "space": "O(n)"
+  },
+  "max-sum-of-a-pair-with-equal-sum-of-digits": {
+   "number": 2342,
+   "title": "Max Sum of a Pair With Equal Sum of Digits",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Hash Table"
+   ],
+   "pattern": "Best partner per key",
+   "hint": "Best partner per key: Group by digit sum and remember the largest value seen for each sum.",
+   "time": "O(n log max)",
+   "space": "O(n)"
+  },
+  "find-the-original-array-of-prefix-xor": {
+   "number": 2433,
+   "title": "Find The Original Array of Prefix Xor",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Bit Manipulation"
+   ],
+   "pattern": "Inverse of prefix XOR",
+   "hint": "Inverse of prefix XOR: Since pref[i] = pref[i - 1] ^ arr[i], arr[i] = pref[i - 1] ^ pref[i].",
+   "time": "O(n)",
+   "space": "O(n) for the output"
+  },
+  "number-of-ways-to-split-array": {
+   "number": 2270,
+   "title": "Number of Ways to Split Array",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Prefix Sum"
+   ],
+   "pattern": "Prefix sum versus total",
+   "hint": "Prefix sum versus total: A split after index i is valid when the prefix sum is at least the remaining sum; use 64-bit sums.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "minimum-absolute-difference": {
+   "number": 1200,
+   "title": "Minimum Absolute Difference",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sorting"
+   ],
+   "pattern": "Sort and compare neighbours",
+   "hint": "Sort and compare neighbours: After sorting, the minimum difference occurs between adjacent elements.",
+   "time": "O(n log n)",
+   "space": "O(n) for the output"
+  },
+  "third-maximum-number": {
+   "number": 414,
+   "title": "Third Maximum Number",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Sorting"
+   ],
+   "pattern": "Track three distinct maxima",
+   "hint": "Track three distinct maxima: Keep the three largest distinct values seen so far; fall back to the maximum when fewer than three exist.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "number-of-lines-to-write-string": {
+   "number": 806,
+   "title": "Number of Lines To Write String",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "String"
+   ],
+   "pattern": "Greedy line filling",
+   "hint": "Greedy line filling: Add letters to the current line until the next one would exceed 100 pixels, then start a new line.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "longest-cycle-in-a-graph": {
+   "number": 2360,
+   "title": "Longest Cycle in a Graph",
+   "difficulty": "hard",
+   "topics": [
+    "Graph",
+    "Depth-First Search"
+   ],
+   "pattern": "Walk functional graph with timestamps",
+   "hint": "Walk functional graph with timestamps: Each node has at most one outgoing edge; walk from every unvisited node, stamping visit times, and detect a cycle when the walk revisits a node from the current walk.",
+   "time": "O(n)",
+   "space": "O(n)"
+  },
+  "previous-permutation-with-one-swap": {
+   "number": 1053,
+   "title": "Previous Permutation With One Swap",
+   "difficulty": "medium",
+   "topics": [
+    "Array",
+    "Greedy"
+   ],
+   "pattern": "Rightmost descent",
+   "hint": "Rightmost descent: Find the rightmost i with arr[i] > arr[i + 1]; swap it with the largest smaller value to its right, taking the leftmost copy of that value.",
+   "time": "O(n)",
+   "space": "O(1)"
+  },
+  "linked-list-random-node": {
+   "number": 382,
+   "title": "Linked List Random Node",
+   "difficulty": "medium",
+   "topics": [
+    "Linked List",
+    "Reservoir Sampling",
+    "Randomized"
+   ],
+   "pattern": "Reservoir sampling",
+   "hint": "Reservoir sampling: Walk the list once; replace the current choice with the k-th node with probability 1/k.",
+   "time": "O(n) per call",
+   "space": "O(1)"
+  },
+  "random-pick-index": {
+   "number": 398,
+   "title": "Random Pick Index",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "Reservoir Sampling",
+    "Randomized"
+   ],
+   "pattern": "Reservoir sampling over matches",
+   "hint": "Reservoir sampling over matches: Scan the array; for the k-th index holding the target, keep it with probability 1/k.",
+   "time": "O(n) per pick",
+   "space": "O(1)"
+  },
+  "design-excel-sum-formula": {
+   "number": 631,
+   "title": "Design Excel Sum Formula",
+   "difficulty": "hard",
+   "topics": [
+    "Design",
+    "Graph",
+    "Matrix"
+   ],
+   "pattern": "Formula references evaluated on demand",
+   "hint": "Formula references evaluated on demand: Store each cell as either a value or a formula (a multiset of referenced cells); evaluate formulas recursively when read.",
+   "time": "O(cells referenced, transitively) per get",
+   "space": "O(height * width + formula size)"
+  },
+  "design-sql": {
+   "number": 2408,
+   "title": "Design SQL",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Hash Table"
+   ],
+   "pattern": "Table per name with auto-increment ids",
+   "hint": "Table per name with auto-increment ids: Keep, per table, a map from row id to row and a counter for the next id that never reuses deleted ids.",
+   "time": "O(row length) per insert, O(1) otherwise",
+   "space": "O(total cells)"
+  },
+  "largest-local-values-in-a-matrix": {
+   "number": 2373,
+   "title": "Largest Local Values in a Matrix",
+   "difficulty": "easy",
+   "topics": [
+    "Array",
+    "Matrix"
+   ],
+   "pattern": "Sliding 3x3 maximum",
+   "hint": "Sliding 3x3 maximum: For each top-left corner (i, j) of a 3x3 block, take the maximum of its nine cells.",
+   "time": "O(n^2)",
+   "space": "O(n^2) for the output"
+  },
+  "ip-to-cidr": {
+   "number": 751,
+   "title": "IP to CIDR",
+   "difficulty": "medium",
+   "topics": [
+    "Bit Manipulation",
+    "String"
+   ],
+   "pattern": "Largest aligned block",
+   "hint": "Largest aligned block: At each step, the block size is limited by the lowest set bit of the current address and by how many addresses remain.",
+   "time": "O(log n)",
+   "space": "O(log n) for the output"
+  },
+  "design-spreadsheet": {
+   "number": 3484,
+   "title": "Design Spreadsheet",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Sparse cell map",
+   "hint": "Sparse cell map: Store only cells that were set; parse each formula term as a number or a cell reference that defaults to 0.",
+   "time": "O(length of formula) per getValue",
+   "space": "O(cells set)"
+  },
+  "find-duplicate-file-in-system": {
+   "number": 609,
+   "title": "Find Duplicate File in System",
+   "difficulty": "medium",
+   "topics": [
+    "Hash Table",
+    "String"
+   ],
+   "pattern": "Group by content",
+   "hint": "Group by content: Parse each directory entry into full file paths and contents, then group paths by content and keep groups of two or more.",
+   "time": "O(total input length)",
+   "space": "O(total input length)"
+  },
+  "convert-stack-samples-to-trace": {
+   "number": 6001,
+   "title": "Convert Stack Samples to Trace Events",
+   "difficulty": "medium",
+   "topics": [
+    "Stack",
+    "Simulation",
+    "Design"
+   ],
+   "pattern": "Diff consecutive stacks",
+   "hint": "Diff consecutive stacks: Compare each sample with the previous one: end the frames below the common prefix (innermost first), then begin the new frames (outermost first).",
+   "time": "O(total stack depth)",
+   "space": "O(max depth)"
+  },
+  "resumable-iterator": {
+   "number": 6002,
+   "title": "Resumable Multi-File Iterator",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Iterator",
+    "Binary Search"
+   ],
+   "pattern": "Global position with prefix sums",
+   "hint": "Global position with prefix sums: Represent the state as the number of values consumed; map it back to (file, offset) with prefix sums and binary search.",
+   "time": "O(1) for next and hasNext, O(log files) for setState",
+   "space": "O(files)"
   }
  },
  "workbookListOverrides": [

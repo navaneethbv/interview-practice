@@ -1,0 +1,33 @@
+{
+  "id": "remove-stones-to-minimize-the-total",
+  "style": "leetcode",
+  "function": {
+    "python": "minStoneSum",
+    "java": "minStoneSum"
+  },
+  "params": [
+    {
+      "name": "piles",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[[5,4,9],2],"sample":true,"expected":12},
+    {"input":[[4,3,6,7],3],"sample":true,"expected":12},
+    {"input":[[44,16,29,47,14],2],"expected":105},
+    {"input":[[44,34,34],7],"expected":24},
+    {"input":[[20,16,19,34,30,41,41],10],"expected":74},
+    {"input":[[9],10],"expected":1},
+    {"input":[[40,8,4],4],"expected":13},
+    {"input":[[16],2],"expected":4},
+    {"input":[[2,27,31,41,35],2],"expected":99},
+    {"input":[[44,9,49],8],"expected":15},
+    {"input":[[49,6],7],"expected":4},
+    {"input":[[22,39],5],"expected":11}
+  ]
+}

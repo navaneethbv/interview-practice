@@ -204,7 +204,7 @@ export function resetScope(scope: string, ids: string[], clearSavedCode: boolean
 
 /* ---------------------------------------------------------------- code & submissions */
 
-const LANGS: CodeLang[] = ["python", "java", "sql"];
+const LANGS: CodeLang[] = ["python", "java", "javascript", "typescript", "cpp", "go", "sql"];
 const codeKey = (id: string, lang: CodeLang) => `ip:code:${id}:${lang}`;
 const subsKey = (id: string) => `ip:subs:${id}`;
 

@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "product-price-at-a-given-date",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Products",
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "new_price",
+          "type": "INTEGER"
+        },
+        {
+          "name": "change_date",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "product_id",
+    "price"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Products":[[1,20,"2019-08-14"],[2,50,"2019-08-14"],[1,30,"2019-08-15"],[1,35,"2019-08-16"],[2,65,"2019-08-17"],[3,20,"2019-08-18"]]}},"sample":true,"expected":[[1,35],[2,50],[3,10]]},
+    {"input":{"tables":{"Products":[[4,99,"2019-08-16"]]}},"sample":true,"expected":[[4,99]]},
+    {"input":{"tables":{"Products":[]}},"expected":[]},
+    {"input":{"tables":{"Products":[[1,5,"2020-01-01"]]}},"expected":[[1,10]]},
+    {"input":{"tables":{"Products":[[1,5,"2019-01-01"],[1,6,"2019-02-01"],[2,7,"2019-08-17"]]}},"expected":[[1,6],[2,10]]}
+  ]
+}

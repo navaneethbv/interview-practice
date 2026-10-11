@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Reference solutions are standalone files spliced into judge harnesses.
+    "content/**",
+    // Generated QuickJS vendor bundle; lint the authored worker in scripts/judge instead.
+    "public/js-worker.js",
   ]),
 ]);
 

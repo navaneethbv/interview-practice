@@ -1,0 +1,43 @@
+{
+  "kind": "sql",
+  "id": "investments-in-2016",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Insurance",
+      "columns": [
+        {
+          "name": "pid",
+          "type": "INTEGER"
+        },
+        {
+          "name": "tiv_2015",
+          "type": "REAL"
+        },
+        {
+          "name": "tiv_2016",
+          "type": "REAL"
+        },
+        {
+          "name": "lat",
+          "type": "REAL"
+        },
+        {
+          "name": "lon",
+          "type": "REAL"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "tiv_2016"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Insurance":[[1,10,5,10,10],[2,20,20,20,20],[3,10,30,20,20],[4,10,40,40,40]]}},"sample":true,"expected":[[45]]},
+    {"input":{"tables":{"Insurance":[[1,1.5,2.25,0,0],[2,1.5,3.25,1,1]]}},"sample":true,"expected":[[5.5]]},
+    {"input":{"tables":{"Insurance":[[1,1,1,1,1]]}},"expected":[[null]]},
+    {"input":{"tables":{"Insurance":[[1,5,1.111,1,1],[2,5,2.222,2,2],[3,5,3.333,2,2]]}},"expected":[[1.11]]},
+    {"input":{"tables":{"Insurance":[[1,1,9,1,1],[2,2,9,2,2]]}},"expected":[[null]]}
+  ]
+}

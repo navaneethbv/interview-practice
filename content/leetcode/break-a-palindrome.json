@@ -1,0 +1,29 @@
+{
+  "id": "break-a-palindrome",
+  "style": "leetcode",
+  "function": {
+    "python": "breakPalindrome",
+    "java": "breakPalindrome"
+  },
+  "params": [
+    {
+      "name": "palindrome",
+      "type": "string"
+    }
+  ],
+  "returns": "string",
+  "tests": [
+    {"input":["abccba"],"sample":true,"expected":"aaccba"},
+    {"input":["a"],"sample":true,"expected":""},
+    {"input":["aaaaaaa"],"expected":"aaaaaab"},
+    {"input":["aa"],"expected":"ab"},
+    {"input":["aaa"],"expected":"aab"},
+    {"input":["b"],"expected":""},
+    {"input":["b"],"expected":""},
+    {"input":["aaabaaa"],"expected":"aaabaab"},
+    {"input":["aaabbaaa"],"expected":"aaaabaaa"},
+    {"input":["aa"],"expected":"ab"},
+    {"input":["bb"],"expected":"ab"},
+    {"input":["aabbaa"],"expected":"aaabaa"}
+  ]
+}

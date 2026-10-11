@@ -1,0 +1,30 @@
+{
+  "id": "print-zero-even-odd",
+  "style": "leetcode",
+  "function": {
+    "python": "ZeroEvenOdd",
+    "java": "ZeroEvenOdd"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "string",
+  "concurrency": {
+    "driver": "zeroEvenOdd",
+    "className": "ZeroEvenOdd"
+  },
+  "tests": [
+    {"input": [2], "expected": "0102", "sample": true},
+    {"input": [5], "expected": "0102030405", "sample": true},
+    {"input": [1], "expected": "01"},
+    {"input": [3], "expected": "010203"},
+    {"input": [4], "expected": "01020304"},
+    {"input": [9], "expected": "010203040506070809"},
+    {"input": [10], "expected": "010203040506070809010"},
+    {"input": [20], "expected": "010203040506070809010011012013014015016017018019020"},
+    {"input": [50], "expected": "010203040506070809010011012013014015016017018019020021022023024025026027028029030031032033034035036037038039040041042043044045046047048049050"}
+  ]
+}

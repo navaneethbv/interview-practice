@@ -32,8 +32,10 @@ class CustomCatalogTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[2]
         sets = json.loads((root / "content/sets/sets.json").read_text())
         problems = json.loads((root / "content/sets/problems.json").read_text())
-        workbook_sets = [item for item in sets if item["id"] not in ("ctci", "bctci")]
-        workbook_problems = {slug: meta for slug, meta in problems.items() if not slug.startswith(("ctci-", "bctci-"))}
+        custom = json.loads((root / "scripts/ingest/custom_problem_sets.json").read_text())
+        custom_ids = {item["id"] for item in custom["sets"]}
+        workbook_sets = [item for item in sets if item["id"] not in custom_ids]
+        workbook_problems = {slug: meta for slug, meta in problems.items() if slug not in custom["problems"]}
         merge_custom_catalog(workbook_sets, workbook_problems)
         self.assertEqual(workbook_sets, sets)
         self.assertEqual(workbook_problems, problems)

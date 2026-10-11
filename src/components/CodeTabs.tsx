@@ -6,7 +6,9 @@ import type { CodeLang } from "@/lib/content-types";
 import { AccessibleTab } from "./AccessibleTab";
 import { loadPrefs, savePrefs } from "@/lib/progress";
 
-const LABEL: Record<CodeLang, string> = { python: "Python", java: "Java", sql: "SQLite" };
+const LABEL: Record<CodeLang, string> = {
+  python: "Python", java: "Java", javascript: "JavaScript", typescript: "TypeScript", cpp: "C++", go: "Go", sql: "SQLite",
+};
 
 /* A tiny shared store so every code block on the page follows the chosen language. */
 const langListeners = new Set<() => void>();
@@ -41,14 +43,16 @@ export function usePreferredLang(): CodeLang {
 
 /** Raw source used by the copy button for each rendered language. */
 const SOURCE_PROP = { java: "javaSrc", python: "pythonSrc", sql: "sqlSrc" } as const;
+/** Walkthrough code is written in these languages; other editor languages fall back to the first. */
+const TAB_LANGS = ["python", "java", "sql"] as const;
 
 export function CodeTabs(props: Readonly<{ java?: string; python?: string; sql?: string; javaSrc?: string; pythonSrc?: string; sqlSrc?: string }>) {
   const preferred = usePreferredLang();
   const tabId = useId();
   const [copied, setCopied] = useState(false);
-  const available = (["python", "java", "sql"] as const).filter((l) => props[l]);
+  const available = TAB_LANGS.filter((l) => props[l]);
   if (!available.length) return null;
-  const lang = available.includes(preferred) ? preferred : available[0];
+  const lang = available.find((l) => l === preferred) ?? available[0];
   const src = props[SOURCE_PROP[lang]];
 
   async function copy() {

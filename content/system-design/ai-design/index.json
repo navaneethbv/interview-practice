@@ -2,7 +2,7 @@
  "id": "ai-design",
  "title": "AI System Design Practice",
  "short": "AI System Design",
- "description": "Design document retrieval and support assistants, evaluate outcomes, and reason about access, freshness, latency, cost, and bounded actions.",
+ "description": "Design retrieval and support assistants, recommendation feeds, feature stores, LLM inference, moderation and fraud detection, and reason about evaluation, freshness, latency and cost.",
  "sourceLinks": [
   {
    "label": "Anthropic engineering",
@@ -25,6 +25,26 @@
     {
      "id": "evaluate-quality-latency-and-cost-together",
      "title": "Evaluate quality, latency, and cost together"
+    },
+    {
+     "id": "design-a-recommendation-feed",
+     "title": "Design a recommendation feed"
+    },
+    {
+     "id": "design-a-feature-store",
+     "title": "Design a feature store"
+    },
+    {
+     "id": "design-an-llm-inference-service",
+     "title": "Design an LLM inference service"
+    },
+    {
+     "id": "design-a-content-moderation-system",
+     "title": "Design a content moderation system"
+    },
+    {
+     "id": "design-real-time-fraud-detection",
+     "title": "Design real-time fraud detection"
     },
     {
      "id": "run-an-ai-design-mock-interview",

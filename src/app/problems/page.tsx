@@ -1,38 +1,25 @@
 import type { Metadata } from "next";
-import { NavBar } from "@/components/NavBar";
-import { ProblemTable } from "@/components/ProblemTable";
-import { ProgressPanel } from "@/components/ProgressPanel";
-import { SetTabs } from "@/components/SetTabs";
-import { getCourse, listProblems, listSets } from "@/lib/content";
-import { COURSE_SCOPE } from "@/lib/content-types";
+import { ListHub } from "@/components/lists/ListHub";
+import { NavBar, SiteFooter } from "@/components/NavBar";
+import { PageHeader } from "@/components/PageHeader";
+import { listSummaries } from "@/lib/catalog";
 
-export const metadata: Metadata = { title: "Problems" };
+export const metadata: Metadata = { title: "Problem lists" };
 
 export default function ProblemsPage() {
-  const problems = listProblems();
-  const patterns = getCourse()
-    .chapters.filter((c) => c.items.some((i) => i.type === "problem"))
-    .map((c) => ({ id: c.id, title: c.title.replace(/^Pattern:\s*/, "") }));
+  const lists = listSummaries();
+  const problems = new Set(lists.flatMap((l) => l.ids)).size;
   return (
     <>
       <NavBar />
+      <PageHeader eyebrow="Problems" title="Problem lists">
+        {problems.toLocaleString()} problems across {lists.length} lists. Solve in Python, Java, JavaScript, TypeScript, C++ or Go against hidden
+        edge-case tests; each list tracks its own progress.
+      </PageHeader>
       <main className="mx-auto max-w-6xl px-4 py-8">
-        <SetTabs sets={listSets()} active={COURSE_SCOPE} />
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight">Grokking Patterns</h1>
-        <p className="mb-6 text-fg-2">
-          Every coding problem from the pattern course. Solve in Python or Java against hidden edge-case tests.
-        </p>
-        <div className="mb-6">
-          <ProgressPanel
-            ids={problems.map((p) => p.id)}
-            difficulties={problems.map((p) => p.difficulty)}
-            scope={COURSE_SCOPE}
-            scopeLabel="Grokking Patterns"
-            resettable
-          />
-        </div>
-        <ProblemTable problems={problems} patterns={patterns} />
+        <ListHub lists={lists} />
       </main>
+      <SiteFooter />
     </>
   );
 }

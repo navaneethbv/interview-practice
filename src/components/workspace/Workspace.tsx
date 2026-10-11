@@ -20,7 +20,8 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { CodeLang } from "@/lib/content-types";
 import { compareNote } from "@/lib/judge/compare";
-import { expectedFor, preloadPython, runCode } from "@/lib/judge/runner";
+import { isServerLang, LANG_LABEL, languagesFor } from "@/lib/judge/languages";
+import { expectedFor, preloadPython, preloadTypeScript, runCode } from "@/lib/judge/runner";
 import type { AnyTestCase, ProblemSpec, RunOutcome } from "@/lib/judge/types";
 import {
   addSubmission,
@@ -43,13 +44,14 @@ import { downloadText } from "@/lib/download";
 import { usePendingWrites } from "@/lib/storage";
 import { ThemeToggle } from "../ThemeProvider";
 import { CodeEditor } from "./CodeEditor";
+import { MockTimer, useInMock } from "./MockTimer";
+import { reviewAccepted } from "@/lib/practice";
 import { ResultPanel, TestcaseEditor, type ResultView } from "./Console";
 import { fieldNames, inputFields, isPristine, parseCase, toEditable, type EditableCase } from "./cases";
 
 type LeftTab = "description" | "solution" | "submissions";
 type ConsoleTab = "testcase" | "result";
 
-const LANG_LABEL: Record<CodeLang, string> = { python: "Python3", java: "Java", sql: "SQLite" };
 
 interface Props {
   id: string;
@@ -72,6 +74,11 @@ export interface WorkspaceNav {
 }
 
 const SET_ID = /^[a-z0-9-]+$/;
+
+/** Languages the problem supports that also have starter code. */
+function availableLanguages(spec: ProblemSpec | null, starters: Props["starters"]): CodeLang[] {
+  return languagesFor(spec).filter((l) => starters[l] !== undefined);
+}
 
 /** Previous/next links within the problem list named in the page's ?set= parameter. */
 function useListNav(initial: WorkspaceNav, slug: string | undefined): WorkspaceNav {
@@ -240,7 +247,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const isDesktop = useIsDesktop();
   const nav = useListNav(initialNav, listSlug);
   const [prefs] = useState(loadPrefs);
-  const languages: CodeLang[] = spec?.kind === "sql" ? ["sql"] : ["python", "java"];
+  const languages = useMemo(() => availableLanguages(spec, starters), [spec, starters]);
   const initialLang = languages.includes(prefs.lang) ? prefs.lang : languages[0];
   const [leftTab, setLeftTab] = useState<LeftTab>("description");
   const [consoleTab, setConsoleTab] = useState<ConsoleTab>("testcase");
@@ -259,12 +266,14 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const [running, setRunning] = useState<string | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>(() => loadSubmissions(id));
 
+  const inMock = useInMock(id);
   const [colFrac, colRef, colHandle] = useSplit(0.45, "x", 0.25, 0.75);
   const [rowFrac, rowRef, rowHandle] = useSplit(0.62, "y", 0.2, 0.85);
 
   // Start loading the Python runtime in the background so the first Run is quick.
   useEffect(() => {
     if (lang === "python" || lang === "sql") preloadPython();
+    if (lang === "typescript") preloadTypeScript();
   }, [lang]);
 
   const onCodeChange = useCallback(
@@ -346,7 +355,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         if (bad) throw new Error(bad.error);
         custom.forEach(({ i }, k) => (tests[i].expected = exp[k].output));
       }
-      setRunning(lang === "java" ? "Compiling and running…" : "Running…");
+      setRunning(isServerLang(lang) ? "Compiling and running…" : "Running…");
       const outcome = await runCode(spec, lang, code, tests);
       setActiveResult(0);
       setResult({ mode: "run", outcome, tests, inputs: inputsFor(tests), note });
@@ -360,7 +369,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const submit = useCallback(async () => {
     if (!spec || running) return;
     setConsoleTab("result");
-    setRunning(lang === "java" ? "Judging: compiling and running all tests…" : "Judging all tests…");
+    setRunning(isServerLang(lang) ? "Judging: compiling and running all tests…" : "Judging all tests…");
     try {
       const tests = spec.tests as AnyTestCase[];
       const outcome = await runCode(spec, lang, code, tests);
@@ -379,6 +388,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         addSubmission(id, sub);
         setSubmissions((s) => [sub, ...s].slice(0, 30));
         recordSubmission(id, outcome.verdict === "Accepted");
+        if (outcome.verdict === "Accepted") reviewAccepted(id);
       }
     } catch (e) {
       setResult({ mode: "submit", tests: [], inputs: [], outcome: errorOutcome((e as Error).message) });
@@ -421,10 +431,19 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
       <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
         <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>{description}</div>
         <div id="workspace-solution-panel" role="tabpanel" aria-labelledby="workspace-solution-tab" tabIndex={0} hidden={leftTab !== "solution"}>
-          <p className="mb-5 rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">
-            Spoiler: this is the full walkthrough. Give the problem a real try first.
-          </p>
-          {solution}
+          {inMock ? (
+            <p className="rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">
+              The walkthrough is hidden during your mock interview. Finish or end the interview on the{" "}
+              <Link href="/practice#mock" className="text-blue hover:underline">Practice</Link> page to see it.
+            </p>
+          ) : (
+            <>
+              <p className="mb-5 rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">
+                Spoiler: this is the full walkthrough. Give the problem a real try first.
+              </p>
+              {solution}
+            </>
+          )}
         </div>
         <div id="workspace-submissions-panel" role="tabpanel" aria-labelledby="workspace-submissions-tab" tabIndex={0} hidden={leftTab !== "submissions"}>
           <SubmissionList
@@ -590,6 +609,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           </button>
         </div>
 
+        <MockTimer id={id} />
         <span className="hidden max-w-[28%] truncate text-sm text-fg-3 xl:inline">{title}</span>
         <ThemeToggle />
       </header>

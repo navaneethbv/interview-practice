@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { NavBar } from "@/components/NavBar";
+import { ListSwitcher } from "@/components/lists/ListSwitcher";
+import { NavBar, SiteFooter } from "@/components/NavBar";
+import { PageHeader } from "@/components/PageHeader";
 import { ProgressPanel } from "@/components/ProgressPanel";
 import { SetTable } from "@/components/SetTable";
-import { SetTabs } from "@/components/SetTabs";
+import { switcherOptions } from "@/lib/catalog";
 import { getSet, listSets, setRows } from "@/lib/content";
 import { lcProgressId } from "@/lib/content-types";
 
@@ -26,17 +28,20 @@ export default async function SetPage({ params }: Readonly<{ params: Promise<{ s
   return (
     <>
       <NavBar />
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        <SetTabs sets={listSets()} active={set.id} />
-        <h1 className="mb-1 text-2xl font-semibold tracking-tight">{set.title}</h1>
-        <p className="mb-6 text-fg-2">
-          {set.description} Solve coding problems in Python or Java and database problems in SQLite; progress is tracked for this list on its own.{" "}
-          {set.sourceUrl && (
-            <a href={set.sourceUrl} target="_blank" rel="noreferrer" className="text-brand underline-offset-2 hover:underline">
-              {set.sourceLabel ?? "Source"}
-            </a>
-          )}
-        </p>
+      <PageHeader
+        crumbs={[{ href: "/problems", label: "Problems" }]}
+        eyebrow={set.kind === "company" ? "Company list" : undefined}
+        title={set.title}
+        actions={<ListSwitcher options={switcherOptions()} current={`/problems/sets/${set.id}`} />}
+      >
+        {set.description}{" "}
+        {set.sourceUrl && (
+          <a href={set.sourceUrl} target="_blank" rel="noreferrer" className="text-blue underline-offset-2 hover:underline">
+            {set.sourceLabel ?? "Source"}
+          </a>
+        )}
+      </PageHeader>
+      <main className="mx-auto max-w-6xl px-4 py-6">
         <div className="mb-6">
           <ProgressPanel
             ids={rows.map((r) => lcProgressId(r.slug))}
@@ -48,6 +53,7 @@ export default async function SetPage({ params }: Readonly<{ params: Promise<{ s
         </div>
         <SetTable setId={set.id} kind={set.kind} rows={rows} />
       </main>
+      <SiteFooter />
     </>
   );
 }

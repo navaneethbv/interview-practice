@@ -120,11 +120,17 @@ export const lcAuthored = cache((): Set<string> => {
       if (!f.endsWith(".md")) return false;
       const slug = f.slice(0, -3);
       const spec = readJson<ProblemSpec>(path.join(LC_DIR, `${slug}.json`));
-      return spec?.id === slug && files.has(`${slug}.${spec.kind === "sql" ? "sql" : "py"}`) &&
+      return spec?.id === slug && files.has(`${slug}.${referenceExtension(spec)}`) &&
         spec.tests.length > 0 && spec.tests.every((test) => test.expected !== undefined);
     }).map((f) => f.slice(0, -3)),
   );
 });
+
+/** The reference that defines a problem's answers: SQLite, Java for concurrency problems, otherwise Python. */
+function referenceExtension(spec: ProblemSpec) {
+  if (spec.kind === "sql") return "sql";
+  return spec.kind !== "design" && spec.concurrency ? "java" : "py";
+}
 
 export function setRows(set: ProblemSet): SetRow[] {
   const meta = lcMetaAll();
@@ -148,7 +154,7 @@ export interface LcProblem {
   meta: LcMeta;
   statementHtml: string;
   spec: ProblemSpec;
-  /** Python or SQLite reference; the source of truth for expected outputs. */
+  /** Python or SQLite reference; the source of truth for expected outputs (null for concurrency problems). */
   reference: string | null;
   javaReference: string | null;
   walkthroughHtml: string | null;
@@ -170,9 +176,9 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
   if (!meta || !spec) return null;
   // The page supplies the numbered heading; retain the standalone Markdown title on disk.
   const md = fs.readFileSync(path.join(LC_DIR, `${slug}.md`), "utf8").replace(/^# [^\n]+\r?\n/, ""); // nosemgrep -- repo content directory; slugs are validated
-  const reference = spec.kind === "sql"
-    ? fs.readFileSync(path.join(LC_DIR, `${slug}.sql`), "utf8") // nosemgrep -- repo content directory; slugs are validated
-    : fs.readFileSync(path.join(LC_DIR, `${slug}.py`), "utf8"); // nosemgrep -- repo content directory; slugs are validated
+  const extension = referenceExtension(spec);
+  // Concurrency problems have no Python reference; their Java reference is shown instead.
+  const reference = extension === "java" ? null : fs.readFileSync(path.join(LC_DIR, `${slug}.${extension}`), "utf8"); // nosemgrep -- repo content directory; slugs are validated
   const javaReference = spec.kind === "sql" ? null : readOptionalText(path.join(LC_DIR, `${slug}.java`));
   const walkthrough = readOptionalText(path.join(LC_DIR, "walkthroughs", `${slug}.md`));
   return {
@@ -186,7 +192,7 @@ export const getLcProblem = cache((slug: string): LcProblem | null => {
 
 const DESIGN_DIR = path.join(ROOT, "system-design");
 /** Reading order on the landing page; books missing from disk are skipped. */
-const DESIGN_BOOK_ORDER = ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "notes", "low-level-design", "ai-design", "testing-debugging", "behavioral"];
+const DESIGN_BOOK_ORDER = ["grokking", "advanced", "ctci", "alex-xu", "data-systems", "domain-design", "linux-operations", "case-studies", "notes", "low-level-design", "ai-design", "ai-assisted", "testing-debugging", "fundamentals", "frontend", "behavioral", "career"];
 
 export const listDesignBooks = cache((): DesignBook[] =>
   DESIGN_BOOK_ORDER.map((id) => readJson<DesignBook>(path.join(DESIGN_DIR, id, "index.json"))).filter(
