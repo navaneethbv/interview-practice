@@ -139,6 +139,12 @@ class RunTests(unittest.TestCase):
             cc.run(self.config, ["snap"], ["acme"], make_fetcher(pages, []), self.sets, KNOWN, Path(directory), 25)
             self.assertTrue((Path(directory) / "acme" / "all.csv").is_file())
 
+    def test_path_like_company_ids_are_rejected_before_writing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            pages = {"https://s.test/data/../x/all.csv": HEADER}
+            with self.assertRaises(ValueError):
+                cc.run(self.config, ["snap"], ["../x"], make_fetcher(pages, []), self.sets, KNOWN, Path(directory), 25)
+
     def test_listed_only_sources_skip_other_companies(self):
         source = {"listed_only": True, "companies": {"acme": "Acme"}}
         self.assertEqual(cc.company_key(source, "acme"), "Acme")

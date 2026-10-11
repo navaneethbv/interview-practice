@@ -48,6 +48,7 @@ SETS = ROOT / "content" / "sets" / "sets.json"
 PROBLEMS = ROOT / "content" / "sets" / "problems.json"
 
 REPORT_CATEGORY = "Recent reports"
+COMPANY_ID = re.compile(r"[a-z0-9][a-z0-9-]*")
 LC_LINK = re.compile(r"leetcode\.(?:com|cn)/problems/([a-z0-9]+(?:-[a-z0-9]+)*)")
 # "LC 200", "LeetCode #200", "力扣 200": a problem cited by number, common in forum posts.
 LC_NUMBER = re.compile(r"(?<![a-z0-9])(?:lc|leetcode|力扣)\s*#?\s*(\d{1,4})(?!\d)")
@@ -281,9 +282,11 @@ def crawl_snapshot(name: str, source: dict, company: str, fetcher: Fetcher, tall
         if text is None:
             continue
         if snapshot_out:
+            if not COMPANY_ID.fullmatch(company):
+                raise ValueError(f"Invalid company id: {company!r}")
             folder = snapshot_out / company
             folder.mkdir(parents=True, exist_ok=True)
-            (folder / filename).write_text(text, encoding="utf8")
+            (folder / filename).write_text(text, encoding="utf8")  # NOSONAR(S2083): company id is validated and filename comes from a fixed list
         for row in csv.DictReader(io.StringIO(text)):
             match = LC_LINK.search(row.get("URL") or "")
             difficulty = DIFFICULTY.get((row.get("Difficulty") or "").strip().lower())
@@ -418,13 +421,16 @@ def main(argv: list[str]):
     if unknown:
         parser.error(f"unknown sources: {', '.join(unknown)}")
     companies = [c for c in args.companies.split(",") if c]
+    bad = [c for c in companies if not COMPANY_ID.fullmatch(c)]
+    if bad:
+        parser.error(f"invalid company ids: {', '.join(bad)}")
     fetcher = Fetcher(config["user_agent"], delay=args.delay, cache=args.cache, offline=args.offline)
     report = run(config, names, companies, fetcher, sets, known, args.snapshot_out, args.max_new)
     text = json.dumps(report, indent=1, ensure_ascii=False) + "\n"
     if args.dry_run:
         print(text)
         return
-    OUT.write_text(text, encoding="utf8")
+    OUT.write_text(text, encoding="utf8")  # NOSONAR(S2083): fixed output path next to this script
     for company, items in report["companies"].items():
         print(f"{company}: {len(items)} reported problems not yet listed")
 
