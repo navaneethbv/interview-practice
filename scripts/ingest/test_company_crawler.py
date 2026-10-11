@@ -82,6 +82,12 @@ class FetcherTests(unittest.TestCase):
             self.assertEqual(log, [])
 
 
+class OpenerTests(unittest.TestCase):
+    def test_non_https_urls_are_refused_without_network(self):
+        for url in ("file:///etc/passwd", "http://example.com/", "ftp://example.com/x"):
+            self.assertEqual(cc.urllib_opener(url, {}), (0, "", {}))
+
+
 class ExtractionTests(unittest.TestCase):
     index = cc.TitleIndex({s: m["title"] for s, m in KNOWN.items()}, {m["number"]: s for s, m in KNOWN.items()})
 

@@ -67,10 +67,27 @@ def log(message: str):
 Opener = Callable[[str, dict], "tuple[int, str, dict]"]
 
 
+class _SameHostRedirects(urllib.request.HTTPRedirectHandler):
+    """Follows redirects only within the requested host, over HTTPS."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        old, new = urllib.parse.urlsplit(req.full_url), urllib.parse.urlsplit(newurl)
+        if new.scheme != "https" or new.netloc != old.netloc:
+            raise urllib.error.HTTPError(req.full_url, code, "cross-host redirect refused", headers, fp)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+_OPENER = urllib.request.build_opener(urllib.request.HTTPSHandler(), _SameHostRedirects())
+
+
 def urllib_opener(url: str, headers: dict) -> tuple[int, str, dict]:
+    """HTTPS-only GET. Other schemes (file:, ftp:, http:) are refused, so a bad config entry cannot read local files."""
+    if urllib.parse.urlsplit(url).scheme != "https":
+        log(f"  refusing non-HTTPS URL {url}")
+        return 0, "", {}
     request = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        with _OPENER.open(request, timeout=30) as response:
             charset = response.headers.get_content_charset() or "utf-8"
             return response.status, response.read().decode(charset, "replace"), dict(response.headers)
     except urllib.error.HTTPError as error:
