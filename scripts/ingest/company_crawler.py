@@ -88,7 +88,7 @@ def urllib_opener(url: str, headers: dict) -> tuple[int, str, dict]:
         return 0, "", {}
     request = urllib.request.Request(url, headers=headers)
     try:
-        with _OPENER.open(request, timeout=30) as response:
+        with _OPENER.open(request, timeout=30) as response:  # NOSONAR(S5144): https-only, same-host redirects; URLs come from crawl_sources.json plus validated company ids
             charset = response.headers.get_content_charset() or "utf-8"
             return response.status, response.read().decode(charset, "replace"), dict(response.headers)
     except urllib.error.HTTPError as error:
@@ -145,7 +145,7 @@ class Fetcher:
     def _cached(self, url: str) -> tuple[int, str]:
         path = self._cache_path(url)
         if path and path.is_file():
-            entry = json.loads(path.read_text(encoding="utf8"))
+            entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083): cache file name is a sha256 digest inside the operator-chosen cache directory
             return entry["status"], entry["text"]
         if self.offline:
             return 0, ""
@@ -160,8 +160,8 @@ class Fetcher:
         if status == 200 or 400 <= status < 500:
             self._failures[host] = 0
             if path:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(json.dumps({"url": url, "status": status, "text": text}), encoding="utf8")
+                path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083): cache directory is operator-chosen; file names are digests
+                path.write_text(json.dumps({"url": url, "status": status, "text": text}), encoding="utf8")  # NOSONAR(S2083): cache directory is operator-chosen; file names are digests
         else:
             self._failures[host] = self._failures.get(host, 0) + 1
             if self._failures[host] == self.max_failures:
@@ -285,7 +285,7 @@ def crawl_snapshot(name: str, source: dict, company: str, fetcher: Fetcher, tall
             if not COMPANY_ID.fullmatch(company):
                 raise ValueError(f"Invalid company id: {company!r}")
             folder = snapshot_out / company
-            folder.mkdir(parents=True, exist_ok=True)
+            folder.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083): company id is validated by COMPANY_ID
             (folder / filename).write_text(text, encoding="utf8")  # NOSONAR(S2083): company id is validated and filename comes from a fixed list
         for row in csv.DictReader(io.StringIO(text)):
             match = LC_LINK.search(row.get("URL") or "")
