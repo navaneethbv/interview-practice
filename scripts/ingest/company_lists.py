@@ -95,6 +95,11 @@ def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str)
     return data
 
 
+def write_company_lists(data: dict):
+    """Persist imported facts to the fixed module-owned output file."""
+    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
+
+
 def main(argv: list[str]):
     if len(argv) < 2:
         print(__doc__)
@@ -110,7 +115,7 @@ def main(argv: list[str]):
     when = re.search(r"snapshot as of \*\*([^*]+)\*\*", readme.read_text(encoding="utf8")) if readme.is_file() else None
     label = f"snapshot of {when.group(1)}" if when else "community snapshot"
     data = build(snapshot, companies, label)
-    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")  # NOSONAR: OUT is a fixed module-owned output file, never a CLI argument.
+    write_company_lists(data)
     for s in data["sets"]:
         print(f"{s['title']}: {len(s['items'])} problems")
 

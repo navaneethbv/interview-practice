@@ -119,15 +119,15 @@ function PaletteDialog({ onClose }: Readonly<{ onClose: () => void }>) {
       ref={dialogRef}
       aria-label="Search the site"
       onCancel={onClose}
-      onKeyDown={onKeyDown}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       className="fixed inset-0 m-0 h-full max-h-none w-full max-w-none bg-transparent px-4 pt-[12vh] text-fg-1 backdrop:bg-black/40 backdrop:backdrop-blur-[2px]"
     >
-      <div className="mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay">
+      <button type="button" aria-label="Close search" tabIndex={-1} onClick={onClose} className="absolute inset-0" />
+      <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-overlay">
         <div className="flex items-center gap-3 border-b border-line px-4">
           <Search size={17} className="shrink-0 text-fg-3" />
           <input
             ref={inputRef}
+            onKeyDown={onKeyDown}
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
