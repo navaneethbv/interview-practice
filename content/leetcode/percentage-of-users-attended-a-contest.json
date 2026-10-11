@@ -1,0 +1,45 @@
+{
+  "kind": "sql",
+  "id": "percentage-of-users-attended-a-contest",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "user_name",
+          "type": "TEXT"
+        }
+      ]
+    },
+    {
+      "name": "Register",
+      "columns": [
+        {
+          "name": "contest_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "contest_id",
+    "percentage"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Users":[[6,"Alice"],[2,"Bob"],[7,"Alex"]],"Register":[[215,6],[209,2],[208,2],[210,6],[208,6],[209,7],[209,6],[215,7],[208,7],[210,2],[207,2],[210,7]]}},"sample":true,"expected":[[208,100],[209,100],[210,100],[215,66.67],[207,33.33]]},
+    {"input":{"tables":{"Users":[[1,"A"],[2,"B"],[3,"C"]],"Register":[[1,1]]}},"sample":true,"expected":[[1,33.33]]},
+    {"input":{"tables":{"Users":[[1,"A"]],"Register":[[5,1],[4,1]]}},"expected":[[4,100],[5,100]]},
+    {"input":{"tables":{"Users":[[1,"A"],[2,"B"],[3,"C"],[4,"D"],[5,"E"],[6,"F"]],"Register":[[1,1],[1,2],[2,3],[2,4],[2,5],[3,6]]}},"expected":[[2,50],[1,33.33],[3,16.67]]},
+    {"input":{"tables":{"Users":[[1,"A"],[2,"B"]],"Register":[]}},"expected":[]}
+  ]
+}

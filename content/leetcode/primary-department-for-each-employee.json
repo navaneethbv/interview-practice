@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "primary-department-for-each-employee",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "employee_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "department_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "primary_flag",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "employee_id",
+    "department_id"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Employee":[[1,1,"N"],[2,1,"Y"],[2,2,"N"],[3,3,"N"],[4,2,"N"],[4,3,"Y"],[4,4,"N"]]}},"sample":true,"expected":[[1,1],[2,1],[3,3],[4,3]]},
+    {"input":{"tables":{"Employee":[[7,5,"Y"]]}},"sample":true,"expected":[[7,5]]},
+    {"input":{"tables":{"Employee":[]}},"expected":[]},
+    {"input":{"tables":{"Employee":[[1,1,"N"],[1,2,"Y"],[2,9,"N"]]}},"expected":[[1,2],[2,9]]},
+    {"input":{"tables":{"Employee":[[3,1,"N"],[3,2,"N"],[3,4,"Y"],[5,4,"N"]]}},"expected":[[3,4],[5,4]]}
+  ]
+}

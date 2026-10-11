@@ -1,0 +1,39 @@
+{
+  "kind": "sql",
+  "id": "last-person-to-fit-in-the-bus",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Queue",
+      "columns": [
+        {
+          "name": "person_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "person_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "weight",
+          "type": "INTEGER"
+        },
+        {
+          "name": "turn",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "person_name"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Queue":[[5,"Alice",250,1],[4,"Bob",175,5],[3,"Alex",350,2],[6,"John Cena",400,3],[1,"Winston",500,6],[2,"Marie",200,4]]}},"sample":true,"expected":[["John Cena"]]},
+    {"input":{"tables":{"Queue":[[1,"Solo",1000,1],[2,"Late",1,2]]}},"sample":true,"expected":[["Solo"]]},
+    {"input":{"tables":{"Queue":[[1,"A",1,1]]}},"expected":[["A"]]},
+    {"input":{"tables":{"Queue":[[1,"A",400,2],[2,"B",400,1],[3,"C",300,3]]}},"expected":[["A"]]},
+    {"input":{"tables":{"Queue":[[1,"A",999,1],[2,"B",2,2],[3,"C",1,3]]}},"expected":[["A"]]}
+  ]
+}

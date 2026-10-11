@@ -1,0 +1,36 @@
+{
+  "kind": "sql",
+  "id": "number-of-unique-subjects-taught-by-each-teacher",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Teacher",
+      "columns": [
+        {
+          "name": "teacher_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "dept_id",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "teacher_id",
+    "cnt"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Teacher":[[1,2,3],[1,2,4],[1,3,3],[2,1,1],[2,2,1],[2,3,1],[2,4,1]]}},"sample":true,"expected":[[1,2],[2,4]]},
+    {"input":{"tables":{"Teacher":[[9,1,1]]}},"sample":true,"expected":[[9,1]]},
+    {"input":{"tables":{"Teacher":[]}},"expected":[]},
+    {"input":{"tables":{"Teacher":[[1,1,1],[1,1,2],[1,1,3]]}},"expected":[[1,1]]},
+    {"input":{"tables":{"Teacher":[[1,1,1],[2,1,1],[3,2,2],[3,3,2]]}},"expected":[[1,1],[2,1],[3,2]]}
+  ]
+}

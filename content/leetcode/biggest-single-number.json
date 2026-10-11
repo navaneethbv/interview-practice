@@ -1,0 +1,28 @@
+{
+  "kind": "sql",
+  "id": "biggest-single-number",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "MyNumbers",
+      "columns": [
+        {
+          "name": "num",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "num"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"MyNumbers":[[8],[8],[3],[3],[1],[4],[5],[6]]}},"sample":true,"expected":[[6]]},
+    {"input":{"tables":{"MyNumbers":[[8],[8],[7],[7],[3],[3],[3]]}},"sample":true,"expected":[[null]]},
+    {"input":{"tables":{"MyNumbers":[]}},"expected":[[null]]},
+    {"input":{"tables":{"MyNumbers":[[-5]]}},"expected":[[-5]]},
+    {"input":{"tables":{"MyNumbers":[[2],[2],[-1],[0]]}},"expected":[[0]]},
+    {"input":{"tables":{"MyNumbers":[[10],[9],[10]]}},"expected":[[9]]}
+  ]
+}

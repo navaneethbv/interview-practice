@@ -1,0 +1,33 @@
+{
+  "kind": "sql",
+  "id": "invalid-tweets",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Tweets",
+      "columns": [
+        {
+          "name": "tweet_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "content",
+          "type": "TEXT"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "tweet_id"
+  ],
+  "compare": "unordered",
+  "tests": [
+    {"input":{"tables":{"Tweets":[[1,"Let us Code"],[2,"More than fifteen chars are here!"]]}},"sample":true,"expected":[[2]]},
+    {"input":{"tables":{"Tweets":[[3,"exactly 15 char"],[4,"sixteen chars!!!"]]}},"sample":true,"expected":[[4]]},
+    {"input":{"tables":{"Tweets":[]}},"expected":[]},
+    {"input":{"tables":{"Tweets":[[1,""]]}},"expected":[]},
+    {"input":{"tables":{"Tweets":[[1,"aaaaaaaaaaaaaaaa"],[2,"bbbbbbbbbbbbbbb"],[3,"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"]]}},"expected":[[1],[3]]},
+    {"input":{"tables":{"Tweets":[[7,"xxxxxxxxxxxxxx"],[8,"yyyyyyyyyyyyyyyyy"],[9,"zzzzzzzzzzzzzzzz"]]}},"expected":[[8],[9]]},
+    {"input":{"tables":{"Tweets":[[5,"hello world, how are you"]]}},"expected":[[5]]}
+  ]
+}

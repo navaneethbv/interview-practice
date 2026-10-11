@@ -5750,6 +5750,16 @@
   "space": "O(n)",
   "acceptance": 72.8
  },
+ "investments-in-2016": {
+  "number": 585,
+  "title": "Investments in 2016",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Correlated counts",
+  "hint": "Correlated counts: Keep a policy when its tiv_2015 repeats and its location does not."
+ },
  "design-in-memory-file-system": {
   "number": 588,
   "title": "Design In-Memory File System",
@@ -5777,6 +5787,16 @@
   "space": "O(total characters)",
   "acceptance": 68.5
  },
+ "classes-more-than-5-students": {
+  "number": 596,
+  "title": "Classes More Than 5 Students",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "GROUP BY with HAVING",
+  "hint": "GROUP BY with HAVING: Group by class and keep groups with COUNT(*) >= 5."
+ },
  "minimum-index-sum-of-two-lists": {
   "number": 599,
   "title": "Minimum Index Sum of Two Lists",
@@ -5790,6 +5810,16 @@
   "time": "O(n+m)",
   "space": "O(n)",
   "acceptance": 59.9
+ },
+ "friend-requests-ii-who-has-the-most-friends": {
+  "number": 602,
+  "title": "Friend Requests II: Who Has the Most Friends",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "UNION ALL then group",
+  "hint": "UNION ALL then group: Count each person's appearances on either side of a request."
  },
  "can-place-flowers": {
   "number": 605,
@@ -5817,6 +5847,16 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 74.8
+ },
+ "biggest-single-number": {
+  "number": 619,
+  "title": "Biggest Single Number",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Aggregate over a filtered group",
+  "hint": "Aggregate over a filtered group: Keep numbers with COUNT(*) = 1, then take MAX; MAX of no rows is null."
  },
  "not-boring-movies": {
   "number": 620,
@@ -8155,6 +8195,16 @@
   "space": "O(n)",
   "acceptance": 77.4
  },
+ "customers-who-bought-all-products": {
+  "number": 1045,
+  "title": "Customers Who Bought All Products",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Relational division",
+  "hint": "Relational division: Compare each customer's distinct product count with the total product count."
+ },
  "last-stone-weight": {
   "number": 1046,
   "title": "Last Stone Weight",
@@ -8196,6 +8246,16 @@
   "space": "O(n)",
   "acceptance": 71.1
  },
+ "product-sales-analysis-i": {
+  "number": 1068,
+  "title": "Product Sales Analysis I",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Inner join",
+  "hint": "Inner join: Join Sales to Product on product_id."
+ },
  "product-sales-analysis-iii": {
   "number": 1070,
   "title": "Product Sales Analysis III",
@@ -8222,6 +8282,16 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 53.7
+ },
+ "project-employees-i": {
+  "number": 1075,
+  "title": "Project Employees I",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Group and average",
+  "hint": "Group and average: Join, group by project, and ROUND(AVG(...), 2)."
  },
  "brace-expansion": {
   "number": 1087,
@@ -8306,6 +8376,16 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 62.2
+ },
+ "user-activity-for-the-past-30-days-i": {
+  "number": 1141,
+  "title": "User Activity for the Past 30 Days I",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Date window grouping",
+  "hint": "Date window grouping: Filter the 30-day window, then count distinct users per day."
  },
  "longest-common-subsequence": {
   "number": 1143,
@@ -8392,6 +8472,16 @@
   "time": "O(n^2)",
   "space": "O(n^2)",
   "acceptance": 52.3
+ },
+ "product-price-at-a-given-date": {
+  "number": 1164,
+  "title": "Product Price at a Given Date",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Latest row before a date",
+  "hint": "Latest row before a date: For each product take the most recent change on or before the date, defaulting to 10."
  },
  "design-file-system": {
   "number": 1166,
@@ -8488,6 +8578,16 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 41.9
+ },
+ "last-person-to-fit-in-the-bus": {
+  "number": 1204,
+  "title": "Last Person to Fit in the Bus",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Running total",
+  "hint": "Running total: Use SUM(weight) OVER (ORDER BY turn) and keep the last row within the limit."
  },
  "unique-number-of-occurrences": {
   "number": 1207,
@@ -8896,6 +8996,16 @@
   "space": "O(n)",
   "acceptance": 66.5
  },
+ "restaurant-growth": {
+  "number": 1321,
+  "title": "Restaurant Growth",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Moving window",
+  "hint": "Moving window: Aggregate per day, then sum each day's trailing seven days."
+ },
  "minimum-number-of-taps-to-open-to-water-a-garden": {
   "number": 1326,
   "title": "Minimum Number of Taps to Open to Water a Garden",
@@ -8910,6 +9020,16 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 51.0
+ },
+ "list-the-products-ordered-in-a-period": {
+  "number": 1327,
+  "title": "List the Products Ordered in a Period",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Filter, group, HAVING",
+  "hint": "Filter, group, HAVING: Filter February, group by product and keep totals of at least 100."
  },
  "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance": {
   "number": 1334,
@@ -8939,6 +9059,16 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 55.7
+ },
+ "movie-rating": {
+  "number": 1341,
+  "title": "Movie Rating",
+  "difficulty": "medium",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Two ordered subqueries",
+  "hint": "Two ordered subqueries: Compute each answer with ORDER BY ... LIMIT 1 and combine them with UNION ALL."
  },
  "number-of-steps-to-reduce-a-number-to-zero": {
   "number": 1342,
@@ -9375,6 +9505,16 @@
   "space": "O(1)",
   "acceptance": 56.5
  },
+ "group-sold-products-by-the-date": {
+  "number": 1484,
+  "title": "Group Sold Products By The Date",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Ordered string aggregation",
+  "hint": "Ordered string aggregation: Deduplicate and sort first, then GROUP_CONCAT per date."
+ },
  "can-make-arithmetic-progression-from-sequence": {
   "number": 1502,
   "title": "Can Make Arithmetic Progression From Sequence",
@@ -9403,6 +9543,16 @@
   "space": "O(n)",
   "acceptance": 89.8
  },
+ "find-users-with-valid-e-mails": {
+  "number": 1517,
+  "title": "Find Users With Valid E-Mails",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Pattern matching",
+  "hint": "Pattern matching: Check the first letter and domain with GLOB, then reject any invalid prefix character."
+ },
  "number-of-nodes-in-the-sub-tree-with-the-same-label": {
   "number": 1519,
   "title": "Number of Nodes in the Sub-Tree With the Same Label",
@@ -9417,6 +9567,16 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 55.4
+ },
+ "patients-with-a-condition": {
+  "number": 1527,
+  "title": "Patients With a Condition",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Word-prefix matching",
+  "hint": "Word-prefix matching: Match DIAB1 at the start of the string or after a space."
  },
  "minimum-swaps-to-arrange-a-binary-grid": {
   "number": 1536,
@@ -9686,6 +9846,16 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "percentage-of-users-attended-a-contest": {
+  "number": 1633,
+  "title": "Percentage of Users Attended a Contest",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Scalar subquery ratio",
+  "hint": "Scalar subquery ratio: Divide each contest's count by (SELECT COUNT(*) FROM Users)."
+ },
  "sort-array-by-increasing-frequency": {
   "number": 1636,
   "title": "Sort Array by Increasing Frequency",
@@ -9884,6 +10054,16 @@
   "space": "O(1)",
   "acceptance": 66.6
  },
+ "invalid-tweets": {
+  "number": 1683,
+  "title": "Invalid Tweets",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Filtering",
+  "hint": "Filtering: Filter rows with LENGTH(content) > 15."
+ },
  "sum-of-absolute-differences-in-a-sorted-array": {
   "number": 1685,
   "title": "Sum of Absolute Differences in a Sorted Array",
@@ -10009,6 +10189,16 @@
   "time": "O(m*n)",
   "space": "O(m*n)"
  },
+ "the-number-of-employees-which-report-to-each-employee": {
+  "number": 1731,
+  "title": "The Number of Employees Which Report to Each Employee",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "Self join",
+  "hint": "Self join: Join each employee to their manager and aggregate per manager."
+ },
  "maximum-absolute-sum-of-any-subarray": {
   "number": 1749,
   "title": "Maximum Absolute Sum of Any Subarray",
@@ -10130,6 +10320,16 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 49.1
+ },
+ "primary-department-for-each-employee": {
+  "number": 1789,
+  "title": "Primary Department for Each Employee",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "UNION of two cases",
+  "hint": "UNION of two cases: Take 'Y' rows, plus employees with exactly one row."
  },
  "find-center-of-star-graph": {
   "number": 1791,
@@ -10503,6 +10703,16 @@
   "space": "O(n)",
   "acceptance": 67.5
  },
+ "employees-whose-manager-left-the-company": {
+  "number": 1978,
+  "title": "Employees Whose Manager Left the Company",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "NOT IN subquery",
+  "hint": "NOT IN subquery: Filter salary and keep manager ids missing from the table."
+ },
  "find-unique-binary-string": {
   "number": 1980,
   "title": "Find Unique Binary String",
@@ -10854,6 +11064,16 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 75.0
+ },
+ "number-of-unique-subjects-taught-by-each-teacher": {
+  "number": 2356,
+  "title": "Number of Unique Subjects Taught by Each Teacher",
+  "difficulty": "easy",
+  "topics": [
+   "Database"
+  ],
+  "pattern": "COUNT DISTINCT",
+  "hint": "COUNT DISTINCT: Group by teacher_id and count distinct subject_id."
  },
  "make-array-zero-by-subtracting-equal-amounts": {
   "number": 2357,

@@ -1,0 +1,39 @@
+{
+  "kind": "sql",
+  "id": "employees-whose-manager-left-the-company",
+  "style": "leetcode",
+  "tables": [
+    {
+      "name": "Employees",
+      "columns": [
+        {
+          "name": "employee_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "name",
+          "type": "TEXT"
+        },
+        {
+          "name": "manager_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "salary",
+          "type": "INTEGER"
+        }
+      ]
+    }
+  ],
+  "resultColumns": [
+    "employee_id"
+  ],
+  "compare": "exact",
+  "tests": [
+    {"input":{"tables":{"Employees":[[3,"Mila",9,60301],[12,"Antonella",null,31000],[13,"Emery",null,67084],[1,"Kalel",11,21241],[9,"Mikaela",null,50937],[11,"Joziah",6,28485]]}},"sample":true,"expected":[[11]]},
+    {"input":{"tables":{"Employees":[[1,"A",7,30000]]}},"sample":true,"expected":[]},
+    {"input":{"tables":{"Employees":[]}},"expected":[]},
+    {"input":{"tables":{"Employees":[[1,"A",null,10]]}},"expected":[]},
+    {"input":{"tables":{"Employees":[[5,"E",99,1],[4,"D",98,2],[6,"F",5,3]]}},"expected":[[4],[5]]}
+  ]
+}

@@ -1759,6 +1759,216 @@
      "category": "Booster Problems"
     }
    ]
+  },
+  {
+   "id": "sql-50",
+   "title": "SQL 50",
+   "kind": "curated",
+   "description": "LeetCode's SQL 50 study plan in SQLite: selection, joins, aggregation, grouping, subqueries and string functions. Statements and tests are written for this site.",
+   "sourceUrl": "https://leetcode.com/studyplan/top-sql-50/",
+   "sourceLabel": "LeetCode SQL 50 study plan",
+   "items": [
+    {
+     "slug": "recyclable-and-low-fat-products",
+     "category": "Select"
+    },
+    {
+     "slug": "find-customer-referee",
+     "category": "Select"
+    },
+    {
+     "slug": "big-countries",
+     "category": "Select"
+    },
+    {
+     "slug": "article-views-i",
+     "category": "Select"
+    },
+    {
+     "slug": "invalid-tweets",
+     "category": "Select"
+    },
+    {
+     "slug": "replace-employee-id-with-the-unique-identifier",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "product-sales-analysis-i",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "customer-who-visited-but-did-not-make-any-transactions",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "rising-temperature",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "average-time-of-process-per-machine",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "employee-bonus",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "students-and-examinations",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "managers-with-at-least-5-direct-reports",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "confirmation-rate",
+     "category": "Basic Joins"
+    },
+    {
+     "slug": "not-boring-movies",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "average-selling-price",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "project-employees-i",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "percentage-of-users-attended-a-contest",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "queries-quality-and-percentage",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "monthly-transactions-i",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "immediate-food-delivery-ii",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "game-play-analysis-iv",
+     "category": "Basic Aggregate Functions"
+    },
+    {
+     "slug": "number-of-unique-subjects-taught-by-each-teacher",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "user-activity-for-the-past-30-days-i",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "product-sales-analysis-iii",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "classes-more-than-5-students",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "find-followers-count",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "biggest-single-number",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "customers-who-bought-all-products",
+     "category": "Sorting and Grouping"
+    },
+    {
+     "slug": "the-number-of-employees-which-report-to-each-employee",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "primary-department-for-each-employee",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "triangle-judgement",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "consecutive-numbers",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "product-price-at-a-given-date",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "last-person-to-fit-in-the-bus",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "count-salary-categories",
+     "category": "Advanced Select and Joins"
+    },
+    {
+     "slug": "employees-whose-manager-left-the-company",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "exchange-seats",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "movie-rating",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "restaurant-growth",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "friend-requests-ii-who-has-the-most-friends",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "investments-in-2016",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "department-top-three-salaries",
+     "category": "Subqueries"
+    },
+    {
+     "slug": "fix-names-in-a-table",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "find-users-with-valid-e-mails",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "patients-with-a-condition",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "delete-duplicate-emails",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "second-highest-salary",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "group-sold-products-by-the-date",
+     "category": "Advanced String Functions / Regex / Clause"
+    },
+    {
+     "slug": "list-the-products-ordered-in-a-period",
+     "category": "Advanced String Functions / Regex / Clause"
+    }
+   ]
   }
  ],
  "problems": {
@@ -5256,6 +5466,226 @@
    "hint": "Each set bit identifies a round in which the index lies in the incremented half.",
    "time": "O(log(n + 1))",
    "space": "O(1)"
+  },
+  "invalid-tweets": {
+   "number": 1683,
+   "title": "Invalid Tweets",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Filtering",
+   "hint": "Filtering: Filter rows with LENGTH(content) > 15."
+  },
+  "product-sales-analysis-i": {
+   "number": 1068,
+   "title": "Product Sales Analysis I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Inner join",
+   "hint": "Inner join: Join Sales to Product on product_id."
+  },
+  "project-employees-i": {
+   "number": 1075,
+   "title": "Project Employees I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Group and average",
+   "hint": "Group and average: Join, group by project, and ROUND(AVG(...), 2)."
+  },
+  "percentage-of-users-attended-a-contest": {
+   "number": 1633,
+   "title": "Percentage of Users Attended a Contest",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Scalar subquery ratio",
+   "hint": "Scalar subquery ratio: Divide each contest's count by (SELECT COUNT(*) FROM Users)."
+  },
+  "number-of-unique-subjects-taught-by-each-teacher": {
+   "number": 2356,
+   "title": "Number of Unique Subjects Taught by Each Teacher",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "COUNT DISTINCT",
+   "hint": "COUNT DISTINCT: Group by teacher_id and count distinct subject_id."
+  },
+  "user-activity-for-the-past-30-days-i": {
+   "number": 1141,
+   "title": "User Activity for the Past 30 Days I",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Date window grouping",
+   "hint": "Date window grouping: Filter the 30-day window, then count distinct users per day."
+  },
+  "classes-more-than-5-students": {
+   "number": 596,
+   "title": "Classes More Than 5 Students",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "GROUP BY with HAVING",
+   "hint": "GROUP BY with HAVING: Group by class and keep groups with COUNT(*) >= 5."
+  },
+  "biggest-single-number": {
+   "number": 619,
+   "title": "Biggest Single Number",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Aggregate over a filtered group",
+   "hint": "Aggregate over a filtered group: Keep numbers with COUNT(*) = 1, then take MAX; MAX of no rows is null."
+  },
+  "customers-who-bought-all-products": {
+   "number": 1045,
+   "title": "Customers Who Bought All Products",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Relational division",
+   "hint": "Relational division: Compare each customer's distinct product count with the total product count."
+  },
+  "the-number-of-employees-which-report-to-each-employee": {
+   "number": 1731,
+   "title": "The Number of Employees Which Report to Each Employee",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Self join",
+   "hint": "Self join: Join each employee to their manager and aggregate per manager."
+  },
+  "primary-department-for-each-employee": {
+   "number": 1789,
+   "title": "Primary Department for Each Employee",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "UNION of two cases",
+   "hint": "UNION of two cases: Take 'Y' rows, plus employees with exactly one row."
+  },
+  "product-price-at-a-given-date": {
+   "number": 1164,
+   "title": "Product Price at a Given Date",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Latest row before a date",
+   "hint": "Latest row before a date: For each product take the most recent change on or before the date, defaulting to 10."
+  },
+  "last-person-to-fit-in-the-bus": {
+   "number": 1204,
+   "title": "Last Person to Fit in the Bus",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Running total",
+   "hint": "Running total: Use SUM(weight) OVER (ORDER BY turn) and keep the last row within the limit."
+  },
+  "employees-whose-manager-left-the-company": {
+   "number": 1978,
+   "title": "Employees Whose Manager Left the Company",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "NOT IN subquery",
+   "hint": "NOT IN subquery: Filter salary and keep manager ids missing from the table."
+  },
+  "movie-rating": {
+   "number": 1341,
+   "title": "Movie Rating",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Two ordered subqueries",
+   "hint": "Two ordered subqueries: Compute each answer with ORDER BY ... LIMIT 1 and combine them with UNION ALL."
+  },
+  "restaurant-growth": {
+   "number": 1321,
+   "title": "Restaurant Growth",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Moving window",
+   "hint": "Moving window: Aggregate per day, then sum each day's trailing seven days."
+  },
+  "friend-requests-ii-who-has-the-most-friends": {
+   "number": 602,
+   "title": "Friend Requests II: Who Has the Most Friends",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "UNION ALL then group",
+   "hint": "UNION ALL then group: Count each person's appearances on either side of a request."
+  },
+  "investments-in-2016": {
+   "number": 585,
+   "title": "Investments in 2016",
+   "difficulty": "medium",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Correlated counts",
+   "hint": "Correlated counts: Keep a policy when its tiv_2015 repeats and its location does not."
+  },
+  "patients-with-a-condition": {
+   "number": 1527,
+   "title": "Patients With a Condition",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Word-prefix matching",
+   "hint": "Word-prefix matching: Match DIAB1 at the start of the string or after a space."
+  },
+  "group-sold-products-by-the-date": {
+   "number": 1484,
+   "title": "Group Sold Products By The Date",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Ordered string aggregation",
+   "hint": "Ordered string aggregation: Deduplicate and sort first, then GROUP_CONCAT per date."
+  },
+  "list-the-products-ordered-in-a-period": {
+   "number": 1327,
+   "title": "List the Products Ordered in a Period",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Filter, group, HAVING",
+   "hint": "Filter, group, HAVING: Filter February, group by product and keep totals of at least 100."
+  },
+  "find-users-with-valid-e-mails": {
+   "number": 1517,
+   "title": "Find Users With Valid E-Mails",
+   "difficulty": "easy",
+   "topics": [
+    "Database"
+   ],
+   "pattern": "Pattern matching",
+   "hint": "Pattern matching: Check the first letter and domain with GLOB, then reject any invalid prefix character."
   }
  },
  "workbookListOverrides": [

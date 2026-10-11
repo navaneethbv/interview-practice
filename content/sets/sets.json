@@ -1760,6 +1760,216 @@
   ]
  },
  {
+  "id": "sql-50",
+  "title": "SQL 50",
+  "kind": "curated",
+  "description": "LeetCode's SQL 50 study plan in SQLite: selection, joins, aggregation, grouping, subqueries and string functions. Statements and tests are written for this site.",
+  "sourceUrl": "https://leetcode.com/studyplan/top-sql-50/",
+  "sourceLabel": "LeetCode SQL 50 study plan",
+  "items": [
+   {
+    "slug": "recyclable-and-low-fat-products",
+    "category": "Select"
+   },
+   {
+    "slug": "find-customer-referee",
+    "category": "Select"
+   },
+   {
+    "slug": "big-countries",
+    "category": "Select"
+   },
+   {
+    "slug": "article-views-i",
+    "category": "Select"
+   },
+   {
+    "slug": "invalid-tweets",
+    "category": "Select"
+   },
+   {
+    "slug": "replace-employee-id-with-the-unique-identifier",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "product-sales-analysis-i",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "customer-who-visited-but-did-not-make-any-transactions",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "rising-temperature",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "average-time-of-process-per-machine",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "employee-bonus",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "students-and-examinations",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "managers-with-at-least-5-direct-reports",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "confirmation-rate",
+    "category": "Basic Joins"
+   },
+   {
+    "slug": "not-boring-movies",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "average-selling-price",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "project-employees-i",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "percentage-of-users-attended-a-contest",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "queries-quality-and-percentage",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "monthly-transactions-i",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "immediate-food-delivery-ii",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "game-play-analysis-iv",
+    "category": "Basic Aggregate Functions"
+   },
+   {
+    "slug": "number-of-unique-subjects-taught-by-each-teacher",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "user-activity-for-the-past-30-days-i",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "product-sales-analysis-iii",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "classes-more-than-5-students",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "find-followers-count",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "biggest-single-number",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "customers-who-bought-all-products",
+    "category": "Sorting and Grouping"
+   },
+   {
+    "slug": "the-number-of-employees-which-report-to-each-employee",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "primary-department-for-each-employee",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "triangle-judgement",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "consecutive-numbers",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "product-price-at-a-given-date",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "last-person-to-fit-in-the-bus",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "count-salary-categories",
+    "category": "Advanced Select and Joins"
+   },
+   {
+    "slug": "employees-whose-manager-left-the-company",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "exchange-seats",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "movie-rating",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "restaurant-growth",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "friend-requests-ii-who-has-the-most-friends",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "investments-in-2016",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "department-top-three-salaries",
+    "category": "Subqueries"
+   },
+   {
+    "slug": "fix-names-in-a-table",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "find-users-with-valid-e-mails",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "patients-with-a-condition",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "delete-duplicate-emails",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "second-highest-salary",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "group-sold-products-by-the-date",
+    "category": "Advanced String Functions / Regex / Clause"
+   },
+   {
+    "slug": "list-the-products-ordered-in-a-period",
+    "category": "Advanced String Functions / Regex / Clause"
+   }
+  ]
+ },
+ {
   "id": "blind-75",
   "title": "Blind 75",
   "kind": "curated",
