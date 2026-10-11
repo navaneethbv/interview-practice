@@ -6,7 +6,7 @@ Live: https://interview-practice-sandy-eight.vercel.app
 
 ## Features
 
-- **Problems**: every coding problem from the Grokking pattern course, with difficulty, pattern and status filters.
+- **Problems**: every coding problem from the Grokking pattern course, plus curated and company lists (Blind 75, NeetCode 150, Grind, CTCI, BCTCI, SQL 50, Concurrency, Object-Oriented Design, ML Coding and company lists), with difficulty, pattern and status filters.
 - **Workspace**: problem description, worked solution and your submission history on the left; a Monaco editor (Python 3, Java, JavaScript, TypeScript, C++ or Go) and a Testcase / Test Result console on the right.
 - **Hints and complexity check**: hints reveal one step at a time (topics, pattern, approach), and you state the time and space complexity before comparing with the reference.
 - **Run** checks your code against the sample cases and any cases you add or edit (expected output comes from a tested reference solution).
@@ -73,7 +73,10 @@ npm run tests:build -- some-id   # only some problems
 
 The Interview Guides section is a read-only reader: pick a collection, then a chapter from the contents on the left.
 The original practice collections are maintained as Markdown sources under `scripts/ingest/` and imported into `content/system-design/`.
-They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories.
+They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories, plus:
+
+- System Design Case Studies: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.
+- AI-Assisted Coding Interviews, CS Fundamentals, Frontend Interviews, and Resume, Job Search and Offers.
 Each book is imported once into `content/system-design/<book>/` (an `index.json` plus one Markdown file per chapter).
 
 ```bash

@@ -2,7 +2,7 @@
  "id": "low-level-design",
  "title": "Low-Level Design Practice",
  "short": "Low-Level Design",
- "description": "Work through parking lots, elevators, vending machines, and schedulers with ownership diagrams, invariants, failure cases, and tests.",
+ "description": "Work through parking lots, elevators, vending machines, schedulers, expense splitting, ticket booking, chess, libraries, rate limiters, pub/sub, ATMs and room booking with invariants, failure cases, and tests.",
  "sourceLinks": [
   {
    "label": "Amazon technical topics",
@@ -33,6 +33,38 @@
     {
      "id": "design-a-task-scheduler",
      "title": "Design a task scheduler"
+    },
+    {
+     "id": "design-an-expense-splitting-app",
+     "title": "Design an expense-splitting app"
+    },
+    {
+     "id": "design-a-movie-ticket-booking-system",
+     "title": "Design a movie ticket booking system"
+    },
+    {
+     "id": "design-a-chess-game",
+     "title": "Design a chess game"
+    },
+    {
+     "id": "design-a-library-management-system",
+     "title": "Design a library management system"
+    },
+    {
+     "id": "design-a-rate-limiter-class",
+     "title": "Design a rate limiter class"
+    },
+    {
+     "id": "design-a-publish-subscribe-message-broker",
+     "title": "Design a publish-subscribe message broker"
+    },
+    {
+     "id": "design-an-atm",
+     "title": "Design an ATM"
+    },
+    {
+     "id": "design-a-meeting-room-scheduler",
+     "title": "Design a meeting room scheduler"
     }
    ]
   }

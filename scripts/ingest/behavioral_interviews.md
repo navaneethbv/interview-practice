@@ -144,6 +144,129 @@ This four-point checklist is a rehearsal aid, not an employer's assessment rubri
 An answer can be strong without dramatic impact or impressive numbers.
 Specific reasoning is more useful than the size of the incident.
 
+# Introductions: "Tell me about yourself" and "Why us?"
+
+Almost every interview opens with one of these.
+They are not small talk: they set the frame the interviewer uses for the rest of the conversation.
+Reviewed October 11, 2026.
+
+## "Tell me about yourself" in 90 seconds
+
+Use three parts and stop:
+
+1. **Now:** your current role and the problems you work on, in one or two sentences.
+2. **Evidence:** one or two achievements that match the job, each with your contribution and a result.
+3. **Next:** why this role is the logical next step.
+
+```text
+I'm a backend engineer at a logistics company, where I own the routing service that plans about
+40,000 deliveries a day. Last year I led the move from nightly batch planning to incremental
+re-planning, which cut late deliveries by a third. I've enjoyed the distributed-systems side most,
+and this role's focus on high-throughput event processing is where I want to go deeper.
+```
+
+Avoid reciting your resume in date order, personal history unrelated to the job, and anything you are not ready to be asked about in depth.
+
+## "Why this company?" and "Why this role?"
+
+A strong answer is specific enough that it could not be pasted into another company's interview.
+Connect something concrete about the company (a product, an engineering problem, a published practice) to something concrete about you.
+Read the company's engineering blog, recent product launches and the job description before the interview.
+
+Weak: "You're a leader in the industry and I want to grow."
+Stronger: "Your payments team writes about moving the ledger to an event-sourced model. I built the reconciliation pipeline for our ledger, and I'd like to work on that problem at a larger scale."
+
+## Exercise
+
+Write both answers, read them aloud with a timer, and cut until each fits in 90 seconds.
+Ask a friend which single sentence they remember; that sentence should be the one you most want them to remember.
+
+# Company-specific preparation
+
+Companies describe what they look for in behavioral interviews on their own careers pages.
+Read those pages for each company in your loop, then map your stories to the stated values.
+This chapter summarizes public material; it is not an internal rubric.
+
+## Amazon: Leadership Principles
+
+Amazon's behavioral questions are organized around its 16 Leadership Principles, and interviewers commonly probe several in one loop:
+Customer Obsession; Ownership; Invent and Simplify; Are Right, A Lot; Learn and Be Curious; Hire and Develop the Best;
+Insist on the Highest Standards; Think Big; Bias for Action; Frugality; Earn Trust; Dive Deep;
+Have Backbone, Disagree and Commit; Deliver Results; Strive to be Earth's Best Employer; Success and Scale Bring Broad Responsibility.
+
+Prepare at least two stories per principle you expect for your level, and expect deep follow-ups asking for data and your exact role.
+Amazon's guidance asks for STAR-structured answers: see its [interview preparation pages](https://amazon.jobs/content/en/how-we-hire/interview-prep).
+
+## Google: general qualities
+
+Google's hiring pages describe assessing general cognitive ability, leadership, role-related knowledge, and "Googleyness",
+which covers working well with others, comfort with ambiguity and doing the right thing.
+Expect hypothetical questions ("What would you do if...") as well as questions about past behavior; answer hypotheticals with a structured approach and an example from your experience.
+See [How we hire](https://www.google.com/about/careers/applications/how-we-hire/).
+
+## Meta and others
+
+Many companies run a dedicated behavioral round covering conflict, collaboration, feedback, growth and impact.
+Read each company's interview preparation page, ask your recruiter which round types you have, and prepare stories for each theme.
+
+## Mapping stories to values
+
+| Your story | Values it can support | The follow-up to expect |
+| --- | --- | --- |
+| Migrating a service with no downtime | Ownership, Deliver Results, Dive Deep | What could have gone wrong, and how did you know it didn't? |
+| Pushing back on a launch date | Have Backbone, Customer Obsession, Earn Trust | What did you lose by delaying? |
+| Mentoring a new hire | Hire and Develop the Best | How did you measure their progress? |
+
+Use each story for its strongest two or three values rather than stretching one story across everything.
+
+# Common questions and your story map
+
+Interviewers rephrase the same handful of themes.
+If your story bank covers the themes, you can answer most questions without a new story.
+
+| Question as asked | Theme | Story from your bank |
+| --- | --- | --- |
+| Tell me about a time you disagreed with your manager. | Conflict | |
+| Describe a project that failed. | Failure | |
+| Tell me about a time you missed a deadline. | Failure, ownership | |
+| When did you go beyond your role? | Ownership | |
+| Tell me about a decision you made with incomplete information. | Ambiguity | |
+| Describe the most technically complex thing you built. | Technical judgment | |
+| Tell me about a time you received critical feedback. | Learning | |
+| How have you helped someone on your team grow? | Mentoring | |
+| Tell me about a time you simplified something. | Technical judgment | |
+| Describe a time you had to influence another team. | Conflict, influence | |
+| When did you have to say no to a stakeholder? | Conflict, prioritization | |
+| Tell me about a time you used data to change a decision. | Technical judgment | |
+
+Fill in the last column from your own bank.
+A blank cell shows which story to prepare next.
+
+## Handling a question you have no story for
+
+Say so briefly, then give the closest real example, or explain how you would approach the situation and why.
+An honest near match is better than an invented story, which tends to collapse under follow-up questions.
+
+# Questions to ask your interviewers
+
+Most rounds end with time for your questions.
+Good questions help you decide whether to join, and show what you care about.
+
+## By interviewer
+
+- **Engineer:** What does a typical week look like? How do changes get reviewed and deployed? What broke recently and how was it handled?
+- **Manager:** How do you measure success for this role in the first six months? How are projects chosen? How do people get promoted here?
+- **Senior leader:** What are the team's biggest bets this year? What would make you say this team succeeded?
+- **Recruiter:** What are the next steps and timeline? How is the team matched? What is the compensation structure?
+
+## Questions that reveal how the team works
+
+- When two teams disagree on priorities, how is it resolved?
+- How much on-call does the team carry, and how has that changed?
+- What did the last person in this role move on to?
+
+Avoid questions answered on the first page of the company's website, and do not ask about compensation in technical rounds.
+
 # Senior technical judgment and a mock interview
 
 ## Choose a decision with competing goals

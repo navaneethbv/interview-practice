@@ -15,7 +15,7 @@ export default function SystemDesignPage() {
         <header className="mb-10 max-w-2xl">
           <h1 className="mb-2 text-3xl font-semibold tracking-tight">Interview Guides</h1>
           <p className="text-lg text-fg-2">
-            System design, object-oriented exercises, AI architecture, testing, and behavioral preparation.
+            System design, object-oriented exercises, AI architecture and AI-assisted coding, CS fundamentals, frontend, testing, behavioral preparation, and the job search itself.
             Read a worked example, practice the follow-ups, and review your reasoning.
           </p>
         </header>

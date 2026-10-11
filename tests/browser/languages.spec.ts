@@ -116,3 +116,11 @@ test("concurrency problems offer threaded languages and run on real threads", as
   await page.getByRole("button", { name: "Submit" }).click();
   await expect(page.getByRole("heading", { name: "Accepted" })).toBeVisible({ timeout: 90_000 });
 });
+
+test("new interview guides render", async ({ page }) => {
+  for (const [book, heading] of [["ai-assisted", "What changed and how these rounds are graded"], ["case-studies", "How to use these case studies"], ["career", "Write a resume that gets interviews"]]) {
+    await page.goto(`/system-design/${book}`);
+    await page.getByRole("link", { name: heading }).first().click();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(heading);
+  }
+});

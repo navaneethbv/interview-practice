@@ -1,0 +1,30 @@
+{
+ "id": "career",
+ "title": "Resume, Job Search and Offers",
+ "short": "Job Search and Offers",
+ "description": "Write a resume that earns interviews, navigate the hiring process, prepare on a schedule, and evaluate and negotiate offers.",
+ "source": "career_job_search.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "write-a-resume-that-gets-interviews",
+     "title": "Write a resume that gets interviews"
+    },
+    {
+     "id": "navigate-the-hiring-process",
+     "title": "Navigate the hiring process"
+    },
+    {
+     "id": "prepare-on-a-schedule",
+     "title": "Prepare on a schedule"
+    },
+    {
+     "id": "evaluate-and-negotiate-offers",
+     "title": "Evaluate and negotiate offers"
+    }
+   ]
+  }
+ ]
+}

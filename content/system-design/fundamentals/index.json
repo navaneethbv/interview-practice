@@ -1,0 +1,38 @@
+{
+ "id": "fundamentals",
+ "title": "CS Fundamentals Quick Reference",
+ "short": "CS Fundamentals",
+ "description": "Operating systems, networking, databases, concurrency primitives, complexity tables and latency numbers, each with questions to answer aloud.",
+ "source": "cs_fundamentals.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "operating-systems-essentials",
+     "title": "Operating systems essentials"
+    },
+    {
+     "id": "networking-essentials",
+     "title": "Networking essentials"
+    },
+    {
+     "id": "database-essentials",
+     "title": "Database essentials"
+    },
+    {
+     "id": "concurrency-primitives",
+     "title": "Concurrency primitives"
+    },
+    {
+     "id": "complexity-cheat-sheet",
+     "title": "Complexity cheat sheet"
+    },
+    {
+     "id": "latency-and-estimation-numbers",
+     "title": "Latency and estimation numbers"
+    }
+   ]
+  }
+ ]
+}

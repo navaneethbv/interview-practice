@@ -42,4 +42,4 @@ For every new requirement, ask whether it changes a domain rule or only an imple
 ## Source and scope
 
 [Amazon lists object-oriented design among interview topics](https://amazon.jobs/content/en/how-we-hire/interview-prep/software-development-topics).
-The four exercises in this guide are original practice scenarios, not claims about questions asked by a particular employer.
+The exercises in this guide are original practice scenarios, not claims about questions asked by a particular employer.

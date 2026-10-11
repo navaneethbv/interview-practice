@@ -2,7 +2,7 @@
  "id": "behavioral",
  "title": "Behavioral and Leadership Interviews",
  "short": "Behavioral Interviews",
- "description": "Build a factual story bank, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
+ "description": "Build a factual story bank, prepare introductions and company-specific answers, practice conflict and failure discussions, and rehearse senior technical decisions with review rubrics.",
  "sourceLinks": [
   {
    "label": "Amazon interview preparation",
@@ -25,6 +25,22 @@
     {
      "id": "failure-ownership-and-learning",
      "title": "Failure, ownership, and learning"
+    },
+    {
+     "id": "introductions-tell-me-about-yourself-and-why-us",
+     "title": "Introductions: \"Tell me about yourself\" and \"Why us?\""
+    },
+    {
+     "id": "company-specific-preparation",
+     "title": "Company-specific preparation"
+    },
+    {
+     "id": "common-questions-and-your-story-map",
+     "title": "Common questions and your story map"
+    },
+    {
+     "id": "questions-to-ask-your-interviewers",
+     "title": "Questions to ask your interviewers"
     },
     {
      "id": "senior-technical-judgment-and-a-mock-interview",

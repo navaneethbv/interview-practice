@@ -1,0 +1,52 @@
+{
+ "id": "ai-assisted",
+ "title": "AI-Assisted Coding Interviews",
+ "short": "AI-Assisted Coding",
+ "description": "The newer round where you may use an AI assistant: how it is graded, a 60-minute workflow, reading unfamiliar code, verifying generated code, and two worked exercises with a rubric.",
+ "sourceLinks": [
+  {
+   "label": "Formation on AI-assisted interviews",
+   "url": "https://formation.dev/blog/ai-assisted-coding-interviews"
+  },
+  {
+   "label": "Exponent on Google's AI coding interview",
+   "url": "https://www.tryexponent.com/blog/google-ai-coding-interview"
+  }
+ ],
+ "source": "ai_assisted_coding.md",
+ "parts": [
+  {
+   "title": "Notes",
+   "chapters": [
+    {
+     "id": "what-changed-and-how-these-rounds-are-graded",
+     "title": "What changed and how these rounds are graded"
+    },
+    {
+     "id": "a-workflow-for-a-60-minute-round",
+     "title": "A workflow for a 60-minute round"
+    },
+    {
+     "id": "reading-an-unfamiliar-codebase-quickly",
+     "title": "Reading an unfamiliar codebase quickly"
+    },
+    {
+     "id": "verifying-ai-output",
+     "title": "Verifying AI output"
+    },
+    {
+     "id": "worked-exercise-add-a-feature-to-an-existing-service",
+     "title": "Worked exercise: add a feature to an existing service"
+    },
+    {
+     "id": "worked-exercise-debug-with-an-assistant",
+     "title": "Worked exercise: debug with an assistant"
+    },
+    {
+     "id": "rubric-and-a-mock-interview-plan",
+     "title": "Rubric and a mock interview plan"
+    }
+   ]
+  }
+ ]
+}
