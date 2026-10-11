@@ -4375,6 +4375,20 @@
   "space": "O(n)",
   "acceptance": 55.4
  },
+ "linked-list-random-node": {
+  "number": 382,
+  "title": "Linked List Random Node",
+  "difficulty": "medium",
+  "topics": [
+   "Linked List",
+   "Reservoir Sampling",
+   "Randomized"
+  ],
+  "pattern": "Reservoir sampling",
+  "hint": "Reservoir sampling: Walk the list once; replace the current choice with the k-th node with probability 1/k.",
+  "time": "O(n) per call",
+  "space": "O(1)"
+ },
  "ransom-note": {
   "number": 383,
   "title": "Ransom Note",
@@ -4530,6 +4544,20 @@
   "space": "O(n)",
   "acceptance": 54.1
  },
+ "random-pick-index": {
+  "number": 398,
+  "title": "Random Pick Index",
+  "difficulty": "medium",
+  "topics": [
+   "Hash Table",
+   "Reservoir Sampling",
+   "Randomized"
+  ],
+  "pattern": "Reservoir sampling over matches",
+  "hint": "Reservoir sampling over matches: Scan the array; for the k-th index holding the target, keep it with probability 1/k.",
+  "time": "O(n) per pick",
+  "space": "O(1)"
+ },
  "evaluate-division": {
   "number": 399,
   "title": "Evaluate Division",
@@ -4672,6 +4700,19 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 64.8
+ },
+ "third-maximum-number": {
+  "number": 414,
+  "title": "Third Maximum Number",
+  "difficulty": "easy",
+  "topics": [
+   "Array",
+   "Sorting"
+  ],
+  "pattern": "Track three distinct maxima",
+  "hint": "Track three distinct maxima: Keep the three largest distinct values seen so far; fall back to the maximum when fewer than three exist.",
+  "time": "O(n)",
+  "space": "O(1)"
  },
  "add-strings": {
   "number": 415,
@@ -5847,6 +5888,19 @@
   "space": "O(1) to O(n)",
   "acceptance": 29.1
  },
+ "find-duplicate-file-in-system": {
+  "number": 609,
+  "title": "Find Duplicate File in System",
+  "difficulty": "medium",
+  "topics": [
+   "Hash Table",
+   "String"
+  ],
+  "pattern": "Group by content",
+  "hint": "Group by content: Parse each directory entry into full file paths and contents, then group paths by content and keep groups of two or more.",
+  "time": "O(total input length)",
+  "space": "O(total input length)"
+ },
  "triangle-judgement": {
   "number": 610,
   "title": "Triangle Judgement",
@@ -5937,6 +5991,20 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 45.9
+ },
+ "design-excel-sum-formula": {
+  "number": 631,
+  "title": "Design Excel Sum Formula",
+  "difficulty": "hard",
+  "topics": [
+   "Design",
+   "Graph",
+   "Matrix"
+  ],
+  "pattern": "Formula references evaluated on demand",
+  "hint": "Formula references evaluated on demand: Store each cell as either a value or a formula (a multiset of referenced cells); evaluate formulas recursively when read.",
+  "time": "O(cells referenced, transitively) per get",
+  "space": "O(height * width + formula size)"
  },
  "smallest-range-covering-elements-from-k-lists": {
   "number": 632,
@@ -6685,6 +6753,19 @@
   "space": "O(1)",
   "acceptance": 68.3
  },
+ "ip-to-cidr": {
+  "number": 751,
+  "title": "IP to CIDR",
+  "difficulty": "medium",
+  "topics": [
+   "Bit Manipulation",
+   "String"
+  ],
+  "pattern": "Largest aligned block",
+  "hint": "Largest aligned block: At each step, the block size is limited by the lowest set bit of the current address and by how many addresses remain.",
+  "time": "O(log n)",
+  "space": "O(log n) for the output"
+ },
  "open-the-lock": {
   "number": 752,
   "title": "Open the Lock",
@@ -7013,6 +7094,19 @@
   "time": "O(n*L)",
   "space": "O(n*L)",
   "acceptance": 83.6
+ },
+ "number-of-lines-to-write-string": {
+  "number": 806,
+  "title": "Number of Lines To Write String",
+  "difficulty": "easy",
+  "topics": [
+   "Array",
+   "String"
+  ],
+  "pattern": "Greedy line filling",
+  "hint": "Greedy line filling: Add letters to the current line until the next one would exceed 100 pixels, then start a new line.",
+  "time": "O(n)",
+  "space": "O(1)"
  },
  "bus-routes": {
   "number": 815,
@@ -7469,6 +7563,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 78.0
+ },
+ "all-possible-full-binary-trees": {
+  "number": 894,
+  "title": "All Possible Full Binary Trees",
+  "difficulty": "medium",
+  "topics": [
+   "Tree",
+   "Recursion",
+   "Dynamic Programming"
+  ],
+  "pattern": "Memoized recursion over sizes",
+  "hint": "Memoized recursion over sizes: A full tree with n nodes has a root plus full left and right subtrees whose sizes are odd and sum to n - 1.",
+  "time": "O(C(n/2) * n), where C is the Catalan number",
+  "space": "Proportional to the output"
  },
  "maximum-frequency-stack": {
   "number": 895,
@@ -8258,6 +8366,19 @@
   "space": "O(n)",
   "acceptance": 71.1
  },
+ "previous-permutation-with-one-swap": {
+  "number": 1053,
+  "title": "Previous Permutation With One Swap",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Greedy"
+  ],
+  "pattern": "Rightmost descent",
+  "hint": "Rightmost descent: Find the rightmost i with arr[i] > arr[i + 1]; swap it with the largest smaller value to its right, taking the leftmost copy of that value.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
  "product-sales-analysis-i": {
   "number": 1068,
   "title": "Product Sales Analysis I",
@@ -8650,6 +8771,19 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 41.9
+ },
+ "minimum-absolute-difference": {
+  "number": 1200,
+  "title": "Minimum Absolute Difference",
+  "difficulty": "easy",
+  "topics": [
+   "Array",
+   "Sorting"
+  ],
+  "pattern": "Sort and compare neighbours",
+  "hint": "Sort and compare neighbours: After sorting, the minimum difference occurs between adjacent elements.",
+  "time": "O(n log n)",
+  "space": "O(n) for the output"
  },
  "last-person-to-fit-in-the-bus": {
   "number": 1204,
@@ -9126,6 +9260,19 @@
   ],
   "pattern": "Filter, group, HAVING",
   "hint": "Filter, group, HAVING: Filter February, group by product and keep totals of at least 100."
+ },
+ "break-a-palindrome": {
+  "number": 1328,
+  "title": "Break a Palindrome",
+  "difficulty": "medium",
+  "topics": [
+   "String",
+   "Greedy"
+  ],
+  "pattern": "Greedy first position",
+  "hint": "Greedy first position: Replace the first non-'a' in the first half with 'a'; if there is none, change the last character to 'b'.",
+  "time": "O(n)",
+  "space": "O(n)"
  },
  "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance": {
   "number": 1334,
@@ -9911,6 +10058,20 @@
   "space": "O(k)",
   "acceptance": 45.4
  },
+ "maximum-number-of-visible-points": {
+  "number": 1610,
+  "title": "Maximum Number of Visible Points",
+  "difficulty": "hard",
+  "topics": [
+   "Geometry",
+   "Sliding Window",
+   "Sorting"
+  ],
+  "pattern": "Angular sweep",
+  "hint": "Angular sweep: Convert points to angles around you, sort, append each angle plus 360, and slide a window no wider than the view angle.",
+  "time": "O(n log n)",
+  "space": "O(n)"
+ },
  "maximum-nesting-depth-of-the-parentheses": {
   "number": 1614,
   "title": "Maximum Nesting Depth of the Parentheses",
@@ -10117,6 +10278,18 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 60.6
+ },
+ "merge-in-between-linked-lists": {
+  "number": 1669,
+  "title": "Merge In Between Linked Lists",
+  "difficulty": "medium",
+  "topics": [
+   "Linked List"
+  ],
+  "pattern": "Splice with two pointers",
+  "hint": "Splice with two pointers: Find the node before index a and the node after index b, then link list2 between them.",
+  "time": "O(n + m)",
+  "space": "O(1)"
  },
  "minimum-moves-to-make-array-complementary": {
   "number": 1674,
@@ -10793,6 +10966,20 @@
   "space": "O(n)",
   "acceptance": 73.1
  },
+ "delete-duplicate-folders-in-system": {
+  "number": 1948,
+  "title": "Delete Duplicate Folders in System",
+  "difficulty": "hard",
+  "topics": [
+   "Trie",
+   "Hashing",
+   "String"
+  ],
+  "pattern": "Serialize subtrees",
+  "hint": "Serialize subtrees: Build a trie of folders, serialize each folder's subfolder structure, and delete every folder whose non-empty structure appears more than once.",
+  "time": "O(total path length * log)",
+  "space": "O(total path length)"
+ },
  "maximum-number-of-weeks-for-which-you-can-work": {
   "number": 1953,
   "title": "Maximum Number of Weeks for Which You Can Work",
@@ -10806,6 +10993,19 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 42.5
+ },
+ "remove-stones-to-minimize-the-total": {
+  "number": 1962,
+  "title": "Remove Stones to Minimize the Total",
+  "difficulty": "medium",
+  "topics": [
+   "Heap",
+   "Greedy"
+  ],
+  "pattern": "Max-heap greedy",
+  "hint": "Max-heap greedy: Each operation should halve the currently largest pile, because that removes the most stones.",
+  "time": "O(n + k log n)",
+  "space": "O(n)"
  },
  "find-if-path-exists-in-graph": {
   "number": 1971,
@@ -11136,6 +11336,19 @@
   "space": "O(n)",
   "acceptance": 88.0
  },
+ "number-of-ways-to-split-array": {
+  "number": 2270,
+  "title": "Number of Ways to Split Array",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Prefix Sum"
+  ],
+  "pattern": "Prefix sum versus total",
+  "hint": "Prefix sum versus total: A split after index i is valid when the prefix sum is at least the remaining sum; use 64-bit sums.",
+  "time": "O(n)",
+  "space": "O(1)"
+ },
  "find-resultant-array-after-removing-anagrams": {
   "number": 2273,
   "title": "Find Resultant Array After Removing Anagrams",
@@ -11189,6 +11402,19 @@
   "time": "O(n log n)",
   "space": "O(1)",
   "acceptance": 26.9
+ },
+ "max-sum-of-a-pair-with-equal-sum-of-digits": {
+  "number": 2342,
+  "title": "Max Sum of a Pair With Equal Sum of Digits",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Hash Table"
+  ],
+  "pattern": "Best partner per key",
+  "hint": "Best partner per key: Group by digit sum and remember the largest value seen for each sum.",
+  "time": "O(n log max)",
+  "space": "O(n)"
  },
  "minimum-deletions-to-make-array-divisible": {
   "number": 2344,
@@ -11295,6 +11521,46 @@
   "space": "O(n)",
   "acceptance": 53.0
  },
+ "longest-cycle-in-a-graph": {
+  "number": 2360,
+  "title": "Longest Cycle in a Graph",
+  "difficulty": "hard",
+  "topics": [
+   "Graph",
+   "Depth-First Search"
+  ],
+  "pattern": "Walk functional graph with timestamps",
+  "hint": "Walk functional graph with timestamps: Each node has at most one outgoing edge; walk from every unvisited node, stamping visit times, and detect a cycle when the walk revisits a node from the current walk.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ "task-scheduler-ii": {
+  "number": 2365,
+  "title": "Task Scheduler II",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Hash Table",
+   "Simulation"
+  ],
+  "pattern": "Next allowed day per type",
+  "hint": "Next allowed day per type: Track, for each task type, the first day it may run again; jump the current day forward when needed.",
+  "time": "O(n)",
+  "space": "O(n)"
+ },
+ "largest-local-values-in-a-matrix": {
+  "number": 2373,
+  "title": "Largest Local Values in a Matrix",
+  "difficulty": "easy",
+  "topics": [
+   "Array",
+   "Matrix"
+  ],
+  "pattern": "Sliding 3x3 maximum",
+  "hint": "Sliding 3x3 maximum: For each top-left corner (i, j) of a 3x3 block, take the maximum of its nine cells.",
+  "time": "O(n^2)",
+  "space": "O(n^2) for the output"
+ },
  "largest-palindromic-number": {
   "number": 2384,
   "title": "Largest Palindromic Number",
@@ -11379,6 +11645,19 @@
   "space": "O(k)",
   "acceptance": 51.5
  },
+ "design-sql": {
+  "number": 2408,
+  "title": "Design SQL",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Hash Table"
+  ],
+  "pattern": "Table per name with auto-increment ids",
+  "hint": "Table per name with auto-increment ids: Keep, per table, a map from row id to row and a counter for the next id that never reuses deleted ids.",
+  "time": "O(row length) per insert, O(1) otherwise",
+  "space": "O(total cells)"
+ },
  "smallest-even-multiple": {
   "number": 2413,
   "title": "Smallest Even Multiple",
@@ -11405,6 +11684,19 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 47.2
+ },
+ "find-the-original-array-of-prefix-xor": {
+  "number": 2433,
+  "title": "Find The Original Array of Prefix Xor",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Bit Manipulation"
+  ],
+  "pattern": "Inverse of prefix XOR",
+  "hint": "Inverse of prefix XOR: Since pref[i] = pref[i - 1] ^ arr[i], arr[i] = pref[i - 1] ^ pref[i].",
+  "time": "O(n)",
+  "space": "O(n) for the output"
  },
  "minimum-cost-to-make-array-equal": {
   "number": 2448,
@@ -11505,6 +11797,20 @@
   "space": "O(1)",
   "acceptance": 51.5
  },
+ "count-the-number-of-good-subsequences": {
+  "number": 2539,
+  "title": "Count the Number of Good Subsequences",
+  "difficulty": "medium",
+  "topics": [
+   "Combinatorics",
+   "Hash Table",
+   "Math"
+  ],
+  "pattern": "Count by common frequency",
+  "hint": "Count by common frequency: Fix the shared frequency f; each letter independently contributes C(count, f) ways or is left out.",
+  "time": "O(26 * n) with precomputed binomials",
+  "space": "O(n)"
+ },
  "rearranging-fruits": {
   "number": 2561,
   "title": "Rearranging Fruits",
@@ -11518,6 +11824,19 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 57.3
+ },
+ "minimum-operations-to-reduce-an-integer-to-0": {
+  "number": 2571,
+  "title": "Minimum Operations to Reduce an Integer to 0",
+  "difficulty": "medium",
+  "topics": [
+   "Bit Manipulation",
+   "Greedy"
+  ],
+  "pattern": "Greedy on low bits",
+  "hint": "Greedy on low bits: Look at the two lowest bits: a single 1 is removed by subtracting, a run of 1s is cheaper to clear by adding 1.",
+  "time": "O(log n)",
+  "space": "O(1)"
  },
  "kth-largest-sum-in-a-binary-tree": {
   "number": 2583,
@@ -11546,6 +11865,21 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 20.6
+ },
+ "maximize-greatness-of-an-array": {
+  "number": 2592,
+  "title": "Maximize Greatness of an Array",
+  "difficulty": "medium",
+  "topics": [
+   "Array",
+   "Greedy",
+   "Sorting",
+   "Two Pointers"
+  ],
+  "pattern": "Sorted two pointers",
+  "hint": "Sorted two pointers: Sort; match each element with the smallest unused element strictly greater than it.",
+  "time": "O(n log n)",
+  "space": "O(1) beyond sorting"
  },
  "find-score-of-an-array-after-marking-all-elements": {
   "number": 2593,
@@ -12284,6 +12618,20 @@
   "time": "O(n^3)",
   "space": "O(n)",
   "acceptance": 69.7
+ },
+ "design-spreadsheet": {
+  "number": 3484,
+  "title": "Design Spreadsheet",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Hash Table",
+   "String"
+  ],
+  "pattern": "Sparse cell map",
+  "hint": "Sparse cell map: Store only cells that were set; parse each formula term as a number or a cell reference that defaults to 0.",
+  "time": "O(length of formula) per getValue",
+  "space": "O(cells set)"
  },
  "closest-equal-element-queries": {
   "number": 3488,
@@ -13661,6 +14009,20 @@
   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
   "space": "O(n)"
  },
+ "convert-stack-samples-to-trace": {
+  "number": 6001,
+  "title": "Convert Stack Samples to Trace Events",
+  "difficulty": "medium",
+  "topics": [
+   "Stack",
+   "Simulation",
+   "Design"
+  ],
+  "pattern": "Diff consecutive stacks",
+  "hint": "Diff consecutive stacks: Compare each sample with the previous one: end the frames below the common prefix (innermost first), then begin the new frames (outermost first).",
+  "time": "O(total stack depth)",
+  "space": "O(max depth)"
+ },
  "bctci-hash-set-class-extensions": {
   "number": 6002,
   "title": "Hash Set Class Extensions",
@@ -13672,6 +14034,20 @@
   "hint": "Use separate chaining, grow the bucket array, and track the number of entries.",
   "time": "Expected amortized O(1) basic operations; O(n log n) sorted enumeration",
   "space": "O(n)"
+ },
+ "resumable-iterator": {
+  "number": 6002,
+  "title": "Resumable Multi-File Iterator",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Iterator",
+   "Binary Search"
+  ],
+  "pattern": "Global position with prefix sums",
+  "hint": "Global position with prefix sums: Represent the state as the number of values consumed; map it back to (file, offset) with prefix sums and binary search.",
+  "time": "O(1) for next and hasNext, O(log files) for setState",
+  "space": "O(files)"
  },
  "bctci-multiset": {
   "number": 6003,

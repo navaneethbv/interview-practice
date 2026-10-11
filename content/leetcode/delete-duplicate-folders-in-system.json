@@ -1,0 +1,30 @@
+{
+  "id": "delete-duplicate-folders-in-system",
+  "style": "leetcode",
+  "function": {
+    "python": "deleteDuplicateFolder",
+    "java": "deleteDuplicateFolder"
+  },
+  "params": [
+    {
+      "name": "paths",
+      "type": "List<List<string>>"
+    }
+  ],
+  "returns": "List<List<string>>",
+  "compare": "unordered",
+  "tests": [
+    {"input":[[["a"],["c"],["d"],["a","b"],["c","b"],["d","a"]]],"sample":true,"expected":[["d"],["d","a"]]},
+    {"input":[[["a"],["a","x"],["b"],["b","x"],["b","x","y"]]],"sample":true,"expected":[["a"],["a","x"],["b"],["b","x"],["b","x","y"]]},
+    {"input":[[["a"],["a","x"],["b"],["b","b"],["b","d"],["d"],["d","c"],["x"],["x","a"],["x","c"],["x","c","b"]]],"expected":[["a"],["a","x"],["b"],["b","b"],["b","d"],["d"],["d","c"],["x"],["x","a"],["x","c"],["x","c","b"]]},
+    {"input":[[["a"],["a","c"],["a","c","x"],["b"],["b","a"],["b","a","x"],["c"],["c","b"],["c","b","b"],["d"],["d","c"],["d","c","b"],["x"],["x","b"]]],"expected":[["a"],["b"],["c"],["d"]]},
+    {"input":[[["a"],["a","c"],["a","d"],["a","d","x"]]],"expected":[["a"],["a","c"],["a","d"],["a","d","x"]]},
+    {"input":[[["a"],["a","c"],["b"],["b","x"],["b","x","x"],["d"],["d","b"],["d","b","a"]]],"expected":[["a"],["a","c"],["b"],["b","x"],["b","x","x"],["d"],["d","b"],["d","b","a"]]},
+    {"input":[[["a"],["b"],["b","x"],["b","x","d"],["d"],["d","d"],["x"],["x","a"],["x","a","b"],["x","b"]]],"expected":[["a"],["b"],["x"],["x","a"],["x","a","b"],["x","b"]]},
+    {"input":[[["d"],["x"]]],"expected":[["d"],["x"]]},
+    {"input":[[["c"]]],"expected":[["c"]]},
+    {"input":[[["a"],["c"],["c","a"],["c","a","a"]]],"expected":[["a"],["c"],["c","a"],["c","a","a"]]},
+    {"input":[[["b"],["b","x"],["c"],["c","x"],["c","x","a"],["d"],["d","d"],["d","d","b"]]],"expected":[["b"],["b","x"],["c"],["c","x"],["c","x","a"],["d"],["d","d"],["d","d","b"]]},
+    {"input":[[["a"],["a","a"],["a","a","c"],["d"]]],"expected":[["a"],["a","a"],["a","a","c"],["d"]]}
+  ]
+}

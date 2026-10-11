@@ -174,7 +174,37 @@ function isSubsequence(small: string, big: string): boolean {
   return index === small.length;
 }
 
+/** Samples should follow the given weights once there are enough of them to tell. */
+function samplesProportional(samples: unknown[], weights: Map<unknown, number>): boolean {
+  if (samples.length < 500 || weights.size < 2) return true;
+  const total = [...weights.values()].reduce((a, b) => a + b, 0);
+  return [...weights].every(([value, weight]) => withinTolerance(samples.filter((x) => x === value).length, (samples.length * weight) / total));
+}
+
 const VALIDATORS: Record<ValidatorName, Validator> = {
+  listRandom: (input, output) => {
+    const { ctor, ops } = input as unknown as DesignTestCase["input"];
+    const values = ctor[0] as number[];
+    if (!Array.isArray(output) || output.length !== ops.length) return false;
+    const weights = new Map<unknown, number>();
+    for (const v of values) weights.set(v, (weights.get(v) ?? 0) + 1);
+    const samples = output.filter((_, i) => ops[i] === "getRandom");
+    return samples.every((x) => weights.has(x)) && samplesProportional(samples, weights);
+  },
+  pickIndex: (input, output) => {
+    const { ctor, ops, args } = input as unknown as DesignTestCase["input"];
+    const nums = ctor[0] as number[];
+    if (!Array.isArray(output) || output.length !== ops.length) return false;
+    const byTarget = new Map<number, unknown[]>();
+    for (let i = 0; i < ops.length; i++) {
+      const target = args[i][0] as number;
+      const index = output[i];
+      if (typeof index !== "number" || nums[index] !== target) return false;
+      byTarget.set(target, [...(byTarget.get(target) ?? []), index]);
+    }
+    return [...byTarget].every(([target, samples]) =>
+      samplesProportional(samples, new Map(nums.flatMap((n, i) => (n === target ? [[i, 1] as [number, number]] : [])))));
+  },
   fairCandySwap: (input,output) => {
     const [alice,bob]=input as number[][];
     if(!Array.isArray(output)||output.length!==2||!alice.includes(output[0])||!bob.includes(output[1]))return false;

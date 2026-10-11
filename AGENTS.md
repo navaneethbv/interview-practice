@@ -18,6 +18,7 @@ See README.md for features and setup.
 
 - `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`
 - `npm run tests:build [-- --java] [-- --langs] [ids...]` fills and verifies expected outputs for problem specs; `--langs` also runs `<id>.js/.ts/.cpp/.go` references.
+- `python3 scripts/ingest/company_lists.py <snapshot-dir> nvidia=NVIDIA ...` rebuilds `scripts/ingest/company_lists.json` from a LeetCode company-tag snapshot (facts only: which problems, how recently); `company_extras.json` adds problems from candidate write-ups. Then rerun `problem_sets.py`.
 - `python3 scripts/ingest/study_plan.py` regenerates `content/study-plan.json` from `Interview_Prep_Plan_ENRICHED.xlsx`.
 - `npm run ingest:grokking -- <folder>` regenerates `content/courses/grokking/` and `public/course-assets/grokking/`.
 - `npm run ingest:system-design -- <grokking|advanced|notes> <source>` regenerates one system design book in `content/system-design/<book>/` (needs `pip install pdfplumber`).

@@ -1,0 +1,23 @@
+{
+ "_comment": "Problems added to company lists beyond the LeetCode tag snapshot: original exercises modeled on candidate write-ups, and problems those write-ups mention. Kept separate so rebuilding the snapshot never drops them.",
+ "openai": [
+  {
+   "slug": "resumable-iterator",
+   "category": "Reported in candidate write-ups"
+  }
+ ],
+ "anthropic": [
+  {
+   "slug": "convert-stack-samples-to-trace",
+   "category": "Reported in candidate write-ups"
+  },
+  {
+   "slug": "lru-cache",
+   "category": "Reported in candidate write-ups"
+  },
+  {
+   "slug": "simple-bank-system",
+   "category": "Reported in candidate write-ups"
+  }
+ ]
+}

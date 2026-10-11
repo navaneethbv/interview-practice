@@ -1,0 +1,29 @@
+{
+  "id": "minimum-operations-to-reduce-an-integer-to-0",
+  "style": "leetcode",
+  "function": {
+    "python": "minOperations",
+    "java": "minOperations"
+  },
+  "params": [
+    {
+      "name": "n",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {"input":[39],"sample":true,"expected":3},
+    {"input":[54],"sample":true,"expected":3},
+    {"input":[54],"expected":3},
+    {"input":[54],"expected":3},
+    {"input":[54],"expected":3},
+    {"input":[54],"expected":3},
+    {"input":[3],"expected":2},
+    {"input":[39],"expected":3},
+    {"input":[7],"expected":2},
+    {"input":[1],"expected":1},
+    {"input":[89998],"expected":6},
+    {"input":[3],"expected":2}
+  ]
+}

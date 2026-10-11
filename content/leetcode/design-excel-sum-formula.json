@@ -1,0 +1,85 @@
+{
+  "kind": "design",
+  "id": "design-excel-sum-formula",
+  "style": "leetcode",
+  "className": "Excel",
+  "ctorParams": [
+    {
+      "name": "height",
+      "type": "int"
+    },
+    {
+      "name": "width",
+      "type": "char"
+    }
+  ],
+  "methods": [
+    {
+      "name": "set",
+      "java": "set",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        },
+        {
+          "name": "column",
+          "type": "char"
+        },
+        {
+          "name": "val",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        },
+        {
+          "name": "column",
+          "type": "char"
+        }
+      ],
+      "returns": "int"
+    },
+    {
+      "name": "sum",
+      "java": "sum",
+      "params": [
+        {
+          "name": "row",
+          "type": "int"
+        },
+        {
+          "name": "column",
+          "type": "char"
+        },
+        {
+          "name": "numbers",
+          "type": "string[]"
+        }
+      ],
+      "returns": "int"
+    }
+  ],
+  "tests": [
+    {"input":{"ctor":[3,"C"],"ops":["set","sum","set","get"],"args":[[1,"A",2],[3,"C",["A1","A1:B2"]],[2,"B",2],[3,"C"]]},"sample":true,"expected":[null,4,null,6]},
+    {"input":{"ctor":[2,"B"],"ops":["sum","set","get"],"args":[[1,"A",["B1"]],[1,"A",5],[1,"A"]]},"sample":true,"expected":[0,null,5]},
+    {"input":{"ctor":[2,"D"],"ops":["set","set","sum","get","set","get","set","sum","set","get"],"args":[[2,"B",7],[1,"D",3],[1,"C",["B1"]],[2,"D"],[1,"A",-1],[2,"B"],[2,"A",1],[2,"B",["A2","D1:D2"]],[1,"C",1],[1,"D"]]},"expected":[null,null,0,0,null,7,null,4,null,3]},
+    {"input":{"ctor":[3,"D"],"ops":["get","sum","get","get","get","get","get","get","set","set","set","set","get","set"],"args":[[1,"C"],[2,"A",["C3"]],[3,"C"],[3,"A"],[3,"B"],[2,"D"],[3,"B"],[3,"B"],[3,"D",5],[3,"B",-3],[1,"D",3],[3,"B",-5],[2,"B"],[1,"A",0]]},"expected":[0,0,0,0,0,0,0,0,null,null,null,null,0,null]},
+    {"input":{"ctor":[3,"C"],"ops":["sum","sum","get","get","set","get","set","set","get","sum","get","get","get"],"args":[[1,"C",["B1","B1"]],[3,"B",["C1"]],[2,"A"],[3,"A"],[1,"A",-3],[3,"A"],[3,"A",2],[1,"A",4],[3,"B"],[3,"C",["A2:C2"]],[3,"C"],[1,"B"],[2,"A"]]},"expected":[0,0,0,0,null,0,null,null,0,0,0,0,0]},
+    {"input":{"ctor":[2,"D"],"ops":["get","set","sum","sum","set","set","set","get","get","set","set","set","get","get","set"],"args":[[2,"B"],[1,"D",0],[1,"A",["B2:C2"]],[1,"A",["B2","B1"]],[2,"A",-5],[1,"C",-5],[1,"A",7],[1,"B"],[1,"A"],[1,"A",-3],[1,"C",1],[1,"D",-5],[1,"B"],[1,"B"],[2,"B",6]]},"expected":[0,null,0,0,null,null,null,0,7,null,null,null,0,0,null]},
+    {"input":{"ctor":[2,"B"],"ops":["get","set","get","get","set","get","set"],"args":[[1,"B"],[2,"B",-3],[2,"A"],[1,"B"],[1,"A",-2],[2,"B"],[2,"B",2]]},"expected":[0,null,0,0,null,-3,null]},
+    {"input":{"ctor":[4,"C"],"ops":["set","sum","set","set","set","set","get","sum","get","get","get","get"],"args":[[3,"B",-2],[1,"C",["C3:C3","C2"]],[3,"A",-4],[4,"C",6],[2,"A",0],[2,"B",0],[2,"B"],[3,"A",["B2"]],[1,"B"],[2,"A"],[4,"A"],[3,"C"]]},"expected":[null,0,null,null,null,null,0,0,0,0,0,0]},
+    {"input":{"ctor":[2,"D"],"ops":["get","set","set","get","set","get","set","get","get"],"args":[[1,"A"],[2,"A",8],[1,"C",3],[1,"A"],[1,"C",-1],[2,"A"],[1,"D",-4],[1,"A"],[2,"D"]]},"expected":[0,null,null,0,null,8,null,0,0]},
+    {"input":{"ctor":[3,"B"],"ops":["get","get","set","get"],"args":[[3,"B"],[1,"A"],[2,"B",2],[2,"B"]]},"expected":[0,0,null,2]},
+    {"input":{"ctor":[4,"B"],"ops":["sum","set","set","set","sum","set"],"args":[[2,"A",["B3"]],[1,"B",3],[4,"B",7],[1,"B",9],[3,"B",["B4:B4"]],[1,"A",9]]},"expected":[0,null,null,null,7,null]},
+    {"input":{"ctor":[2,"C"],"ops":["get","get","get","sum","get","set","set","get","get","set","get","set"],"args":[[2,"C"],[1,"C"],[1,"A"],[2,"B",["C2:C2","C2"]],[2,"C"],[2,"C",3],[2,"C",-1],[1,"C"],[2,"C"],[1,"A",-2],[2,"A"],[1,"B",7]]},"expected":[0,0,0,0,0,null,null,0,-1,null,0,null]}
+  ]
+}

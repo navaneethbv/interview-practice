@@ -159,6 +159,36 @@ def merge_custom_catalog(sets: list[dict], problems: dict[str, dict]):
     sets[:0] = custom["sets"]
 
 
+def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
+    """Append company lists built by company_lists.py; workbook and authored metadata take precedence."""
+    source = Path(__file__).with_name("company_lists.json")
+    if not source.is_file():
+        return
+    data = json.loads(source.read_text(encoding="utf8"))
+    extras_file = source.with_name("company_extras.json")
+    extras = json.loads(extras_file.read_text(encoding="utf8")) if extras_file.is_file() else {}
+    existing = {item["id"] for item in sets}
+    for item in data["sets"]:
+        if item["id"] in existing:
+            raise ValueError(f"Duplicate company list: {item['id']}")
+        for entry in item["items"]:
+            problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
+        items = list(item["items"])
+        listed = {entry["slug"] for entry in items}
+        for extra in extras.get(item["id"], []):
+            if extra["slug"] not in problems:
+                raise ValueError(f"Missing metadata for company extra {extra['slug']}")
+            if extra["slug"] not in listed:
+                items.append(extra)
+        description = item["description"]
+        if len(items) > len(item["items"]):
+            description += " Also includes problems described in candidate write-ups, marked by their category."
+        sets.append({**item, "description": description, "items": items, "sourceUrl": SNAPSHOT_URL, "sourceLabel": "Community LeetCode company-tag snapshot"})
+
+
+SNAPSHOT_URL = "https://github.com/snehasishroy/leetcode-companywise-interview-questions"
+
+
 def main(workbook: str):
     import openpyxl
 
@@ -171,6 +201,7 @@ def main(workbook: str):
     ]
 
     merge_custom_catalog(sets, problems)
+    merge_company_lists(sets, problems)
     reconcile_neetcode(sets, problems)
     OUT.mkdir(parents=True, exist_ok=True)
     ordered = dict(sorted(problems.items(), key=lambda kv: kv[1]["number"]))

@@ -1,0 +1,1748 @@
+{
+ "sets": [
+  {
+   "id": "nvidia",
+   "title": "NVIDIA",
+   "kind": "company",
+   "description": "Problems tagged NVIDIA on LeetCode, most recent first (snapshot of 12th July 2026).",
+   "items": [
+    {
+     "slug": "koko-eating-bananas",
+     "category": "Last 30 days"
+    },
+    {
+     "slug": "group-anagrams",
+     "category": "Last 3 months"
+    },
+    {
+     "slug": "restore-ip-addresses",
+     "category": "Last 3 months"
+    },
+    {
+     "slug": "network-delay-time",
+     "category": "Last 3 months"
+    },
+    {
+     "slug": "longest-substring-without-repeating-characters",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "merge-k-sorted-lists",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "longest-consecutive-sequence",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "lru-cache",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "special-binary-string",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "two-sum",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "valid-parentheses",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "best-time-to-buy-and-sell-stock",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "copy-list-with-random-pointer",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "min-stack",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "house-robber",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "count-primes",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "palindrome-linked-list",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "sliding-window-maximum",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "decode-string",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "design-circular-queue",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "binary-subarrays-with-sum",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "minimum-absolute-difference",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "break-a-palindrome",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "search-in-rotated-sorted-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-subarray",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "number-of-islands",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "fizz-buzz",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "last-stone-weight",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximize-greatness-of-an-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "container-with-most-water",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "4sum",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "trapping-rain-water",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "merge-intervals",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "rotate-list",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "unique-paths-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "reverse-words-in-a-string",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "reverse-bits",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "reverse-linked-list",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "rectangle-area",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "product-of-array-except-self",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "missing-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "move-zeroes",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-the-duplicate-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "fibonacci-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "dot-product-of-two-sparse-vectors",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "max-sum-of-a-pair-with-equal-sum-of-digits",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "task-scheduler-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-the-original-array-of-prefix-xor",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "add-two-numbers",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "string-to-integer-atoi",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "generate-parentheses",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "rotate-image",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "spiral-matrix",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "jump-game",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "minimum-path-sum",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "climbing-stairs",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "set-matrix-zeroes",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "remove-duplicates-from-sorted-list",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "merge-sorted-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "reverse-linked-list-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-peak-element",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "course-schedule",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "course-schedule-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximal-square",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "power-of-two",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "valid-anagram",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "integer-to-english-words",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "serialize-and-deserialize-binary-tree",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "counting-bits",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "top-k-frequent-elements",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "insert-delete-getrandom-o1",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "string-compression",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "subarray-sum-equals-k",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "asteroid-collision",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-number-of-events-that-can-be-attended",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "remove-stones-to-minimize-the-total",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "minimum-operations-to-reduce-an-integer-to-0",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "median-of-two-sorted-arrays",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "longest-palindromic-substring",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "longest-common-prefix",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "3sum",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "letter-combinations-of-a-phone-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "merge-two-sorted-lists",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "powx-n",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "unique-paths",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "sqrtx",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "simplify-path",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "sort-colors",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "remove-duplicates-from-sorted-list-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "clone-graph",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "linked-list-cycle",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "max-points-on-a-line",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-product-subarray",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "compare-version-numbers",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "largest-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "number-of-1-bits",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "minimum-size-subarray-sum",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "kth-largest-element-in-an-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "contains-duplicate",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "the-skyline-problem",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "h-index",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-the-celebrity",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "word-pattern",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-median-from-data-stream",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "longest-increasing-subsequence",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "reverse-string",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "linked-list-random-node",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "shuffle-an-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "first-unique-character-in-a-string",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "random-pick-index",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "third-maximum-number",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "serialize-and-deserialize-n-ary-tree",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "add-two-numbers-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "the-maze",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "next-greater-element-ii",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "diameter-of-binary-tree",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "task-scheduler",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-product-of-three-numbers",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-k-closest-elements",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "daily-temperatures",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "sliding-puzzle",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "number-of-lines-to-write-string",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "all-nodes-distance-k-in-binary-tree",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "middle-of-the-linked-list",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "all-possible-full-binary-trees",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "rotting-oranges",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "previous-permutation-with-one-swap",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "fizz-buzz-multithreaded",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "minimum-knight-moves",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-number-of-visible-points",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "merge-in-between-linked-lists",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "number-of-visible-people-in-a-queue",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "delete-duplicate-folders-in-system",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "number-of-ways-to-split-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "longest-cycle-in-a-graph",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "maximum-sum-of-distinct-subarrays-with-length-k",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "design-memory-allocator",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "count-the-number-of-good-subsequences",
+     "category": "Older than 6 months"
+    }
+   ]
+  },
+  {
+   "id": "openai",
+   "title": "OpenAI",
+   "kind": "company",
+   "description": "Problems tagged OpenAI on LeetCode, most recent first (snapshot of 12th July 2026).",
+   "items": [
+    {
+     "slug": "rotting-oranges",
+     "category": "Last 3 months"
+    },
+    {
+     "slug": "design-authentication-manager",
+     "category": "Last 3 months"
+    },
+    {
+     "slug": "design-memory-allocator",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "design-hit-counter",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "ip-to-cidr",
+     "category": "Last 6 months"
+    },
+    {
+     "slug": "design-sql",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "encode-and-decode-strings",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "flatten-nested-list-iterator",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "design-excel-sum-formula",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "time-based-key-value-store",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "simplify-path",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "trapping-rain-water",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "asteroid-collision",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "snapshot-array",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "web-crawler-multithreaded",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "largest-local-values-in-a-matrix",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "design-spreadsheet",
+     "category": "Older than 6 months"
+    }
+   ]
+  },
+  {
+   "id": "anthropic",
+   "title": "Anthropic",
+   "kind": "company",
+   "description": "Problems tagged Anthropic on LeetCode, most recent first (snapshot of 12th July 2026).",
+   "items": [
+    {
+     "slug": "web-crawler-multithreaded",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "find-duplicate-file-in-system",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "exclusive-time-of-functions",
+     "category": "Older than 6 months"
+    },
+    {
+     "slug": "web-crawler",
+     "category": "Older than 6 months"
+    }
+   ]
+  }
+ ],
+ "problems": {
+  "3sum": {
+   "number": 15,
+   "title": "3Sum",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 39.4
+  },
+  "4sum": {
+   "number": 18,
+   "title": "4Sum",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 41.1
+  },
+  "add-two-numbers": {
+   "number": 2,
+   "title": "Add Two Numbers",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 48.8
+  },
+  "add-two-numbers-ii": {
+   "number": 445,
+   "title": "Add Two Numbers II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 62.8
+  },
+  "all-nodes-distance-k-in-binary-tree": {
+   "number": 863,
+   "title": "All Nodes Distance K in Binary Tree",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 67.8
+  },
+  "all-possible-full-binary-trees": {
+   "number": 894,
+   "title": "All Possible Full Binary Trees",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 82.8
+  },
+  "asteroid-collision": {
+   "number": 735,
+   "title": "Asteroid Collision",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 48.4
+  },
+  "best-time-to-buy-and-sell-stock": {
+   "number": 121,
+   "title": "Best Time to Buy and Sell Stock",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 57.0
+  },
+  "binary-subarrays-with-sum": {
+   "number": 930,
+   "title": "Binary Subarrays With Sum",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 69.3
+  },
+  "break-a-palindrome": {
+   "number": 1328,
+   "title": "Break a Palindrome",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 51.6
+  },
+  "climbing-stairs": {
+   "number": 70,
+   "title": "Climbing Stairs",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 54.2
+  },
+  "clone-graph": {
+   "number": 133,
+   "title": "Clone Graph",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.7
+  },
+  "compare-version-numbers": {
+   "number": 165,
+   "title": "Compare Version Numbers",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 46.7
+  },
+  "container-with-most-water": {
+   "number": 11,
+   "title": "Container With Most Water",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 60.4
+  },
+  "contains-duplicate": {
+   "number": 217,
+   "title": "Contains Duplicate",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 64.5
+  },
+  "copy-list-with-random-pointer": {
+   "number": 138,
+   "title": "Copy List with Random Pointer",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 63.3
+  },
+  "count-primes": {
+   "number": 204,
+   "title": "Count Primes",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 36.2
+  },
+  "count-the-number-of-good-subsequences": {
+   "number": 2539,
+   "title": "Count the Number of Good Subsequences",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 48.5
+  },
+  "counting-bits": {
+   "number": 338,
+   "title": "Counting Bits",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 80.7
+  },
+  "course-schedule": {
+   "number": 207,
+   "title": "Course Schedule",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 51.8
+  },
+  "course-schedule-ii": {
+   "number": 210,
+   "title": "Course Schedule II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 55.9
+  },
+  "daily-temperatures": {
+   "number": 739,
+   "title": "Daily Temperatures",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 68.9
+  },
+  "decode-string": {
+   "number": 394,
+   "title": "Decode String",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 62.9
+  },
+  "delete-duplicate-folders-in-system": {
+   "number": 1948,
+   "title": "Delete Duplicate Folders in System",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 77.4
+  },
+  "design-authentication-manager": {
+   "number": 1797,
+   "title": "Design Authentication Manager",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 58.7
+  },
+  "design-circular-queue": {
+   "number": 622,
+   "title": "Design Circular Queue",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 55.0
+  },
+  "design-excel-sum-formula": {
+   "number": 631,
+   "title": "Design Excel Sum Formula",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 39.6
+  },
+  "design-hit-counter": {
+   "number": 362,
+   "title": "Design Hit Counter",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 69.7
+  },
+  "design-memory-allocator": {
+   "number": 2502,
+   "title": "Design Memory Allocator",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 50.4
+  },
+  "design-spreadsheet": {
+   "number": 3484,
+   "title": "Design Spreadsheet",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 73.9
+  },
+  "design-sql": {
+   "number": 2408,
+   "title": "Design SQL",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 64.0
+  },
+  "diameter-of-binary-tree": {
+   "number": 543,
+   "title": "Diameter of Binary Tree",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 65.8
+  },
+  "dot-product-of-two-sparse-vectors": {
+   "number": 1570,
+   "title": "Dot Product of Two Sparse Vectors",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 89.9
+  },
+  "encode-and-decode-strings": {
+   "number": 271,
+   "title": "Encode and Decode Strings",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 51.7
+  },
+  "exclusive-time-of-functions": {
+   "number": 636,
+   "title": "Exclusive Time of Functions",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 66.3
+  },
+  "fibonacci-number": {
+   "number": 509,
+   "title": "Fibonacci Number",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 74.3
+  },
+  "find-duplicate-file-in-system": {
+   "number": 609,
+   "title": "Find Duplicate File in System",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 67.5
+  },
+  "find-k-closest-elements": {
+   "number": 658,
+   "title": "Find K Closest Elements",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 49.9
+  },
+  "find-median-from-data-stream": {
+   "number": 295,
+   "title": "Find Median from Data Stream",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 54.7
+  },
+  "find-peak-element": {
+   "number": 162,
+   "title": "Find Peak Element",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 47.1
+  },
+  "find-the-celebrity": {
+   "number": 277,
+   "title": "Find the Celebrity",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 49.0
+  },
+  "find-the-duplicate-number": {
+   "number": 287,
+   "title": "Find the Duplicate Number",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 64.6
+  },
+  "find-the-original-array-of-prefix-xor": {
+   "number": 2433,
+   "title": "Find The Original Array of Prefix Xor",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 88.4
+  },
+  "first-unique-character-in-a-string": {
+   "number": 387,
+   "title": "First Unique Character in a String",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 65.8
+  },
+  "fizz-buzz": {
+   "number": 412,
+   "title": "Fizz Buzz",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 75.7
+  },
+  "fizz-buzz-multithreaded": {
+   "number": 1195,
+   "title": "Fizz Buzz Multithreaded",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 74.9
+  },
+  "flatten-nested-list-iterator": {
+   "number": 341,
+   "title": "Flatten Nested List Iterator",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.8
+  },
+  "generate-parentheses": {
+   "number": 22,
+   "title": "Generate Parentheses",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 78.9
+  },
+  "group-anagrams": {
+   "number": 49,
+   "title": "Group Anagrams",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 72.9
+  },
+  "h-index": {
+   "number": 274,
+   "title": "H-Index",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 41.6
+  },
+  "house-robber": {
+   "number": 198,
+   "title": "House Robber",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 53.4
+  },
+  "insert-delete-getrandom-o1": {
+   "number": 380,
+   "title": "Insert Delete GetRandom O(1)",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 55.4
+  },
+  "integer-to-english-words": {
+   "number": 273,
+   "title": "Integer to English Words",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 35.1
+  },
+  "ip-to-cidr": {
+   "number": 751,
+   "title": "IP to CIDR",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 53.8
+  },
+  "jump-game": {
+   "number": 55,
+   "title": "Jump Game",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 41.2
+  },
+  "koko-eating-bananas": {
+   "number": 875,
+   "title": "Koko Eating Bananas",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 50.2
+  },
+  "kth-largest-element-in-an-array": {
+   "number": 215,
+   "title": "Kth Largest Element in an Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 69.1
+  },
+  "largest-local-values-in-a-matrix": {
+   "number": 2373,
+   "title": "Largest Local Values in a Matrix",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 87.6
+  },
+  "largest-number": {
+   "number": 179,
+   "title": "Largest Number",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 43.3
+  },
+  "last-stone-weight": {
+   "number": 1046,
+   "title": "Last Stone Weight",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 66.6
+  },
+  "letter-combinations-of-a-phone-number": {
+   "number": 17,
+   "title": "Letter Combinations of a Phone Number",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 66.4
+  },
+  "linked-list-cycle": {
+   "number": 141,
+   "title": "Linked List Cycle",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 54.7
+  },
+  "linked-list-random-node": {
+   "number": 382,
+   "title": "Linked List Random Node",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.0
+  },
+  "longest-common-prefix": {
+   "number": 14,
+   "title": "Longest Common Prefix",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 47.9
+  },
+  "longest-consecutive-sequence": {
+   "number": 128,
+   "title": "Longest Consecutive Sequence",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 47.2
+  },
+  "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit": {
+   "number": 1438,
+   "title": "Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 57.8
+  },
+  "longest-cycle-in-a-graph": {
+   "number": 2360,
+   "title": "Longest Cycle in a Graph",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 50.9
+  },
+  "longest-increasing-subsequence": {
+   "number": 300,
+   "title": "Longest Increasing Subsequence",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 59.7
+  },
+  "longest-palindromic-substring": {
+   "number": 5,
+   "title": "Longest Palindromic Substring",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 38.2
+  },
+  "longest-substring-without-repeating-characters": {
+   "number": 3,
+   "title": "Longest Substring Without Repeating Characters",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 39.4
+  },
+  "lru-cache": {
+   "number": 146,
+   "title": "LRU Cache",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 47.6
+  },
+  "max-points-on-a-line": {
+   "number": 149,
+   "title": "Max Points on a Line",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 31.0
+  },
+  "max-sum-of-a-pair-with-equal-sum-of-digits": {
+   "number": 2342,
+   "title": "Max Sum of a Pair With Equal Sum of Digits",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.9
+  },
+  "maximal-square": {
+   "number": 221,
+   "title": "Maximal Square",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 50.6
+  },
+  "maximize-greatness-of-an-array": {
+   "number": 2592,
+   "title": "Maximize Greatness of an Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 61.9
+  },
+  "maximum-number-of-events-that-can-be-attended": {
+   "number": 1353,
+   "title": "Maximum Number of Events That Can Be Attended",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 39.0
+  },
+  "maximum-number-of-visible-points": {
+   "number": 1610,
+   "title": "Maximum Number of Visible Points",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 38.3
+  },
+  "maximum-product-of-three-numbers": {
+   "number": 628,
+   "title": "Maximum Product of Three Numbers",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 46.1
+  },
+  "maximum-product-subarray": {
+   "number": 152,
+   "title": "Maximum Product Subarray",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 36.7
+  },
+  "maximum-subarray": {
+   "number": 53,
+   "title": "Maximum Subarray",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 53.5
+  },
+  "maximum-sum-of-distinct-subarrays-with-length-k": {
+   "number": 2461,
+   "title": "Maximum Sum of Distinct Subarrays With Length K",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 43.2
+  },
+  "median-of-two-sorted-arrays": {
+   "number": 4,
+   "title": "Median of Two Sorted Arrays",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 47.0
+  },
+  "merge-in-between-linked-lists": {
+   "number": 1669,
+   "title": "Merge In Between Linked Lists",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 83.1
+  },
+  "merge-intervals": {
+   "number": 56,
+   "title": "Merge Intervals",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 52.3
+  },
+  "merge-k-sorted-lists": {
+   "number": 23,
+   "title": "Merge k Sorted Lists",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 60.0
+  },
+  "merge-sorted-array": {
+   "number": 88,
+   "title": "Merge Sorted Array",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 55.2
+  },
+  "merge-two-sorted-lists": {
+   "number": 21,
+   "title": "Merge Two Sorted Lists",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 68.5
+  },
+  "middle-of-the-linked-list": {
+   "number": 876,
+   "title": "Middle of the Linked List",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 82.1
+  },
+  "min-stack": {
+   "number": 155,
+   "title": "Min Stack",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 58.4
+  },
+  "minimum-absolute-difference": {
+   "number": 1200,
+   "title": "Minimum Absolute Difference",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 75.2
+  },
+  "minimum-knight-moves": {
+   "number": 1197,
+   "title": "Minimum Knight Moves",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 42.0
+  },
+  "minimum-operations-to-reduce-an-integer-to-0": {
+   "number": 2571,
+   "title": "Minimum Operations to Reduce an Integer to 0",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 62.8
+  },
+  "minimum-path-sum": {
+   "number": 64,
+   "title": "Minimum Path Sum",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 68.5
+  },
+  "minimum-size-subarray-sum": {
+   "number": 209,
+   "title": "Minimum Size Subarray Sum",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 52.2
+  },
+  "missing-number": {
+   "number": 268,
+   "title": "Missing Number",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 72.3
+  },
+  "move-zeroes": {
+   "number": 283,
+   "title": "Move Zeroes",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 64.1
+  },
+  "network-delay-time": {
+   "number": 743,
+   "title": "Network Delay Time",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 61.0
+  },
+  "next-greater-element-ii": {
+   "number": 503,
+   "title": "Next Greater Element II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 68.7
+  },
+  "number-of-1-bits": {
+   "number": 191,
+   "title": "Number of 1 Bits",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 77.1
+  },
+  "number-of-islands": {
+   "number": 200,
+   "title": "Number of Islands",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 64.7
+  },
+  "number-of-lines-to-write-string": {
+   "number": 806,
+   "title": "Number of Lines To Write String",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 72.8
+  },
+  "number-of-visible-people-in-a-queue": {
+   "number": 1944,
+   "title": "Number of Visible People in a Queue",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 73.3
+  },
+  "number-of-ways-to-split-array": {
+   "number": 2270,
+   "title": "Number of Ways to Split Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 55.8
+  },
+  "palindrome-linked-list": {
+   "number": 234,
+   "title": "Palindrome Linked List",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 58.3
+  },
+  "power-of-two": {
+   "number": 231,
+   "title": "Power of Two",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 50.3
+  },
+  "powx-n": {
+   "number": 50,
+   "title": "Pow(x, n)",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 38.9
+  },
+  "previous-permutation-with-one-swap": {
+   "number": 1053,
+   "title": "Previous Permutation With One Swap",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 49.2
+  },
+  "product-of-array-except-self": {
+   "number": 238,
+   "title": "Product of Array Except Self",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 69.1
+  },
+  "random-pick-index": {
+   "number": 398,
+   "title": "Random Pick Index",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.1
+  },
+  "rectangle-area": {
+   "number": 223,
+   "title": "Rectangle Area",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 49.8
+  },
+  "remove-duplicates-from-sorted-list": {
+   "number": 83,
+   "title": "Remove Duplicates from Sorted List",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 57.1
+  },
+  "remove-duplicates-from-sorted-list-ii": {
+   "number": 82,
+   "title": "Remove Duplicates from Sorted List II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 52.1
+  },
+  "remove-stones-to-minimize-the-total": {
+   "number": 1962,
+   "title": "Remove Stones to Minimize the Total",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 65.9
+  },
+  "restore-ip-addresses": {
+   "number": 93,
+   "title": "Restore IP Addresses",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 56.4
+  },
+  "reverse-bits": {
+   "number": 190,
+   "title": "Reverse Bits",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 68.8
+  },
+  "reverse-linked-list": {
+   "number": 206,
+   "title": "Reverse Linked List",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 80.8
+  },
+  "reverse-linked-list-ii": {
+   "number": 92,
+   "title": "Reverse Linked List II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 51.9
+  },
+  "reverse-string": {
+   "number": 344,
+   "title": "Reverse String",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 81.0
+  },
+  "reverse-words-in-a-string": {
+   "number": 151,
+   "title": "Reverse Words in a String",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 57.0
+  },
+  "rotate-image": {
+   "number": 48,
+   "title": "Rotate Image",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 80.4
+  },
+  "rotate-list": {
+   "number": 61,
+   "title": "Rotate List",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 42.9
+  },
+  "rotting-oranges": {
+   "number": 994,
+   "title": "Rotting Oranges",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 59.0
+  },
+  "search-in-rotated-sorted-array": {
+   "number": 33,
+   "title": "Search in Rotated Sorted Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 45.2
+  },
+  "serialize-and-deserialize-binary-tree": {
+   "number": 297,
+   "title": "Serialize and Deserialize Binary Tree",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 61.1
+  },
+  "serialize-and-deserialize-n-ary-tree": {
+   "number": 428,
+   "title": "Serialize and Deserialize N-ary Tree",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 68.9
+  },
+  "set-matrix-zeroes": {
+   "number": 73,
+   "title": "Set Matrix Zeroes",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 63.3
+  },
+  "shuffle-an-array": {
+   "number": 384,
+   "title": "Shuffle an Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 59.8
+  },
+  "simplify-path": {
+   "number": 71,
+   "title": "Simplify Path",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 50.9
+  },
+  "sliding-puzzle": {
+   "number": 773,
+   "title": "Sliding Puzzle",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 74.5
+  },
+  "sliding-window-maximum": {
+   "number": 239,
+   "title": "Sliding Window Maximum",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 49.0
+  },
+  "snapshot-array": {
+   "number": 1146,
+   "title": "Snapshot Array",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 36.8
+  },
+  "sort-colors": {
+   "number": 75,
+   "title": "Sort Colors",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 70.0
+  },
+  "special-binary-string": {
+   "number": 761,
+   "title": "Special Binary String",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 79.4
+  },
+  "spiral-matrix": {
+   "number": 54,
+   "title": "Spiral Matrix",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 57.2
+  },
+  "sqrtx": {
+   "number": 69,
+   "title": "Sqrt(x)",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 42.1
+  },
+  "string-compression": {
+   "number": 443,
+   "title": "String Compression",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 60.3
+  },
+  "string-to-integer-atoi": {
+   "number": 8,
+   "title": "String to Integer (atoi)",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 21.3
+  },
+  "subarray-sum-equals-k": {
+   "number": 560,
+   "title": "Subarray Sum Equals K",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 47.7
+  },
+  "task-scheduler": {
+   "number": 621,
+   "title": "Task Scheduler",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 63.4
+  },
+  "task-scheduler-ii": {
+   "number": 2365,
+   "title": "Task Scheduler II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 54.9
+  },
+  "the-maze": {
+   "number": 490,
+   "title": "The Maze",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 60.5
+  },
+  "the-skyline-problem": {
+   "number": 218,
+   "title": "The Skyline Problem",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 45.6
+  },
+  "third-maximum-number": {
+   "number": 414,
+   "title": "Third Maximum Number",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 39.8
+  },
+  "time-based-key-value-store": {
+   "number": 981,
+   "title": "Time Based Key-Value Store",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 50.0
+  },
+  "top-k-frequent-elements": {
+   "number": 347,
+   "title": "Top K Frequent Elements",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 66.8
+  },
+  "trapping-rain-water": {
+   "number": 42,
+   "title": "Trapping Rain Water",
+   "difficulty": "hard",
+   "topics": [],
+   "acceptance": 67.7
+  },
+  "two-sum": {
+   "number": 1,
+   "title": "Two Sum",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 57.8
+  },
+  "unique-paths": {
+   "number": 62,
+   "title": "Unique Paths",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 67.0
+  },
+  "unique-paths-ii": {
+   "number": 63,
+   "title": "Unique Paths II",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 44.7
+  },
+  "valid-anagram": {
+   "number": 242,
+   "title": "Valid Anagram",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 68.3
+  },
+  "valid-parentheses": {
+   "number": 20,
+   "title": "Valid Parentheses",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 44.5
+  },
+  "web-crawler": {
+   "number": 1236,
+   "title": "Web Crawler",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 68.8
+  },
+  "web-crawler-multithreaded": {
+   "number": 1242,
+   "title": "Web Crawler Multithreaded",
+   "difficulty": "medium",
+   "topics": [],
+   "acceptance": 51.3
+  },
+  "word-pattern": {
+   "number": 290,
+   "title": "Word Pattern",
+   "difficulty": "easy",
+   "topics": [],
+   "acceptance": 44.3
+  }
+ }
+}
