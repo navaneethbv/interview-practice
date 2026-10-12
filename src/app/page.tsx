@@ -61,7 +61,7 @@ export default function Home() {
           <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
             <span className="mr-1 text-fg-3">Company lists:</span>
             {companies.map((c) => (
-              <Link key={c.id} href={c.href} className="rounded-full border border-line bg-layer-1 px-3 py-1 text-fg-2 hover:border-line-strong hover:text-fg-1">
+              <Link key={c.id} href={c.href} className="rounded-full border border-line bg-layer-1 px-3 py-2 text-fg-2 hover:border-line-strong hover:text-fg-1">
                 {c.title}
               </Link>
             ))}
@@ -108,7 +108,7 @@ function Section({ title, link, children }: Readonly<{ title: string; link?: { h
       <div className="mb-4 flex items-baseline justify-between gap-4">
         <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
         {link && (
-          <Link href={link.href} className="text-sm text-blue hover:underline">
+          <Link href={link.href} className="-my-2 py-2 text-sm text-blue hover:underline">
             {link.label}
           </Link>
         )}

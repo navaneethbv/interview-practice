@@ -25,7 +25,7 @@ export function PlanProblems({ problems }: Readonly<{ problems: PlanProblem[] }>
         {problems.map((p) => (
           <li key={p.id} className="flex min-w-0 items-center gap-2 text-sm">
             <StatusIcon status={statusOf(progress, p.id)} />
-            <Link href={p.href} className="min-w-0 truncate text-fg-1 hover:text-blue hover:underline">
+            <Link href={p.href} className="-my-1.5 min-w-0 truncate py-1.5 text-fg-1 hover:text-blue hover:underline">
               {p.title}
             </Link>
             <DifficultyText difficulty={p.difficulty} />
