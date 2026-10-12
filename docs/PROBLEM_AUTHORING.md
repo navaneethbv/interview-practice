@@ -127,11 +127,21 @@ Manual review must still check names, explanations, complexity, and edge cases.
 `python3 scripts/ingest/company_crawler.py` records which problems public pages report at each company list and writes `scripts/ingest/company_reports.json`.
 Rerun `problem_sets.py` afterwards; reported problems a list lacks are appended under the "Recent reports" category, ranked by how many sources mention them.
 
-- Sources live in `scripts/ingest/crawl_sources.json`. `leetcode` reads the community company-tag CSV snapshot and is verified. The Hello Interview, 1point3acres, Gotham Loop and interviewDB entries are marked `verified: false`: their URL patterns could not be checked from the build sandbox, so open each site, confirm a public listing URL, set `start` and `follow`, then set `verified: true`.
+- Sources live in `scripts/ingest/crawl_sources.json`. `leetcode` reads the community company-tag CSV snapshot and is verified. The Hello Interview, 1point3acres, Gotham Loop and interviewDB listing URLs were checked on October 12, 2026, but remain `verified: false` for automatic extraction. Confirming a URL is not enough: validate rendered question scope, company attribution, and access restrictions before enabling automatic import.
 - Only facts are stored (problem, company, source counts). Statements and write-ups are never copied; problems are matched by LeetCode link, exact title or "LC 123" mentions against the catalog.
 - The crawler sends no cookies or credentials, honours robots.txt, waits `delay_seconds` between requests to a host, backs off on 429/503, stops a host after repeated failures and skips login or paywalled pages. Do not add URLs behind a login or paywall, and check each site's terms before enabling it.
 - A default run crawls only sources marked `verified: true`; pass `--sources a,b` to opt in to others.
 - Use `--cache DIR` to reuse fetched pages and `--offline` to rebuild from the cache. `--snapshot-out DIR` saves the LeetCode CSVs so `company_lists.py` can rebuild recency-ordered lists.
 - `follow` is a literal HTTPS URL template with one `{slug}` or `{number}` placeholder. It does not accept regular expressions. Listing pages are limited to 100 per start template, with at most 20 start templates and 500 followed links per source and company. Cache and snapshot paths must stay within their selected directories, including when symlinks are present.
 - Tests use a fake web and need no network: `python3 -m unittest discover -s scripts/ingest -p 'test_*.py'`.
+
+### Reviewed website observations
+
+Use `--dry-run` for live discovery, then review candidate matches against public question cards or company-scoped coding lists. Page-wide matching can confuse a topic with a question title or confuse two variants (for example, Meeting Rooms versus Meeting Rooms II).
+
+Store reviewed mappings in `company_report_observations.json`: catalog slug, existing company IDs, source ID, exact public source URL, and ISO `observedAt`. Optional `lastAsked` must retain the source's wording and `dateScope` must explain whether that label aggregates several companies. Never substitute retrieval time for the interview date.
+
+Run the workbook importer to load new authored metadata, `company_crawler.py --reviewed` to rebuild the report offline, then the importer again to merge the report into company lists. `--sources` and `--companies` optionally narrow reviewed imports too. Source counts count distinct observed URLs, not candidate reports. Existing company entries are deduplicated. Unsupported mappings and unknown IDs fail validation.
+
+The six October 12 exercises are original practice adaptations with explicit contracts, two fixed samples, at least eight hidden cases, and Python/Java references. Their source links are in the statements and reviewed observations. Full statements and solutions from source websites are not stored. See `COMPANY_CRAWL_2026-10-12.md` for the source-by-source result.
 

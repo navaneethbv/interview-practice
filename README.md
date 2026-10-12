@@ -82,7 +82,19 @@ python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
 ```
 
 The crawler stores facts only (problem, company, how many sources mention it), honours robots.txt, rate-limits each host and skips login or paywalled pages.
-Only the LeetCode tag source is verified; confirm the public listing URLs and terms of any other source in `scripts/ingest/crawl_sources.json` before enabling it.
+Only the LeetCode tag source is verified for automatic extraction. The four website listing URLs were checked on October 12, 2026, but JavaScript rendering, locked content and ambiguous title matches still require review before importing.
+
+The October 12 refresh adds six original, runnable exercises and 16 company-list entries from reviewed public Hello Interview, 1point3acres and Gotham Loop observations. interviewDB was checked but yielded no reliably mapped additions. See [the crawl review](docs/COMPANY_CRAWL_2026-10-12.md) for coverage and limitations.
+
+To reproduce this reviewed refresh without a network crawl:
+
+```bash
+python3 -B scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
+python3 -B scripts/ingest/company_crawler.py --reviewed
+python3 -B scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
+```
+
+`company_report_observations.json` preserves exact source links, retrieval dates and source-reported last-asked labels where available. `--reviewed` imports those reviewed observations offline; it does not imply that the HTTP crawler can render the website. Discovery runs should use `--dry-run` so unreviewed matches do not replace the checked report.
 
 ### System design books
 

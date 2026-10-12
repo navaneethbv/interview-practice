@@ -1,0 +1,411 @@
+{
+  "kind": "design",
+  "className": "FollowGraph",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "follow",
+      "java": "follow",
+      "params": [
+        {
+          "name": "user",
+          "type": "int"
+        },
+        {
+          "name": "target",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "unfollow",
+      "java": "unfollow",
+      "params": [
+        {
+          "name": "user",
+          "type": "int"
+        },
+        {
+          "name": "target",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "snapshot",
+      "java": "snapshot",
+      "params": [],
+      "returns": "int"
+    },
+    {
+      "name": "following",
+      "java": "following",
+      "params": [
+        {
+          "name": "user",
+          "type": "int"
+        },
+        {
+          "name": "snapshotId",
+          "type": "int"
+        }
+      ],
+      "returns": "int[]"
+    },
+    {
+      "name": "recommend",
+      "java": "recommend",
+      "params": [
+        {
+          "name": "user",
+          "type": "int"
+        }
+      ],
+      "returns": "int[]"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "snapshot",
+          "unfollow",
+          "following",
+          "following"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            -1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        0,
+        null,
+        [
+          2
+        ],
+        []
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "follow",
+          "follow",
+          "recommend"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        [
+          3
+        ]
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "snapshot",
+          "following",
+          "recommend"
+        ],
+        "args": [
+          [],
+          [
+            8,
+            0
+          ],
+          [
+            8
+          ]
+        ]
+      },
+      "expected": [
+        0,
+        [],
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "follow",
+          "following"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            -1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "recommend"
+        ],
+        "args": [
+          [
+            1,
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "unfollow",
+          "following"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            -1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "follow",
+          "follow",
+          "recommend"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "follow",
+          "follow",
+          "follow",
+          "recommend"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        [
+          9
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "snapshot",
+          "follow",
+          "snapshot",
+          "following",
+          "following"
+        ],
+        "args": [
+          [
+            1,
+            3
+          ],
+          [],
+          [
+            1,
+            2
+          ],
+          [],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        0,
+        null,
+        1,
+        [
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "follow",
+          "follow",
+          "follow",
+          "recommend"
+        ],
+        "args": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null,
+        [
+          3,
+          9
+        ]
+      ]
+    }
+  ],
+  "id": "follow-graph-snapshots",
+  "style": "leetcode"
+}

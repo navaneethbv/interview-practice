@@ -1,0 +1,381 @@
+{
+  "kind": "design",
+  "className": "SlidingWindowLimiter",
+  "ctorParams": [
+    {
+      "name": "limit",
+      "type": "int"
+    },
+    {
+      "name": "window",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "allow",
+      "java": "allow",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [
+          2,
+          10
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            1
+          ],
+          [
+            "a",
+            9
+          ],
+          [
+            "a",
+            10
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          5
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "b",
+            0
+          ],
+          [
+            "a",
+            1
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          1
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            1
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          10
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            5
+          ],
+          [
+            "a",
+            5
+          ],
+          [
+            "a",
+            5
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          10
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            9
+          ],
+          [
+            "a",
+            10
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          3
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            1
+          ],
+          [
+            "a",
+            3
+          ],
+          [
+            "a",
+            4
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          10
+        ],
+        "ops": [
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            100
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          1000000000
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            999999999
+          ],
+          [
+            "a",
+            1000000000
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          3,
+          5
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            0
+          ],
+          [
+            "a",
+            4
+          ],
+          [
+            "a",
+            5
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          5
+        ],
+        "ops": [
+          "allow",
+          "allow",
+          "allow",
+          "allow"
+        ],
+        "args": [
+          [
+            "a",
+            0
+          ],
+          [
+            "b",
+            1
+          ],
+          [
+            "a",
+            5
+          ],
+          [
+            "b",
+            5
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        false
+      ]
+    }
+  ],
+  "id": "sliding-window-rate-limiter",
+  "style": "leetcode"
+}

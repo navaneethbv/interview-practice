@@ -1,0 +1,407 @@
+{
+  "kind": "design",
+  "className": "CircuitBreaker",
+  "ctorParams": [
+    {
+      "name": "threshold",
+      "type": "int"
+    },
+    {
+      "name": "window",
+      "type": "int"
+    },
+    {
+      "name": "cooldown",
+      "type": "int"
+    }
+  ],
+  "methods": [
+    {
+      "name": "call",
+      "java": "call",
+      "params": [
+        {
+          "name": "timestamp",
+          "type": "int"
+        },
+        {
+          "name": "success",
+          "type": "boolean"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [
+          3,
+          10,
+          5
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            1,
+            false
+          ],
+          [
+            2,
+            false
+          ],
+          [
+            6,
+            true
+          ],
+          [
+            7,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        false,
+        true
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          10,
+          3
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            5,
+            true
+          ],
+          [
+            10,
+            false
+          ],
+          [
+            11,
+            false
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          5,
+          3
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            2,
+            false
+          ],
+          [
+            3,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          10,
+          5
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            1,
+            true
+          ],
+          [
+            2,
+            false
+          ],
+          [
+            3,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          2,
+          3
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            2,
+            false
+          ],
+          [
+            4,
+            false
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          10,
+          5
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            0,
+            false
+          ],
+          [
+            0,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          1,
+          2
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            1,
+            false
+          ],
+          [
+            2,
+            false
+          ],
+          [
+            3,
+            true
+          ],
+          [
+            4,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          3,
+          10,
+          5
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            true
+          ],
+          [
+            0,
+            true
+          ],
+          [
+            1,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          2,
+          10,
+          5
+        ],
+        "ops": [
+          "call",
+          "call",
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            0,
+            false
+          ],
+          [
+            1,
+            false
+          ],
+          [
+            6,
+            false
+          ],
+          [
+            7,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "input": {
+        "ctor": [
+          1,
+          1000000000,
+          1000000000
+        ],
+        "ops": [
+          "call",
+          "call"
+        ],
+        "args": [
+          [
+            1000000000,
+            false
+          ],
+          [
+            1000000000,
+            true
+          ]
+        ]
+      },
+      "expected": [
+        true,
+        false
+      ]
+    }
+  ],
+  "id": "circuit-breaker-window",
+  "style": "leetcode"
+}
