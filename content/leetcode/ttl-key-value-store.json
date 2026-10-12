@@ -1,0 +1,366 @@
+{
+  "kind": "design",
+  "className": "TTLStore",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "put",
+      "java": "put",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "int"
+        },
+        {
+          "name": "ttl",
+          "type": "int"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "get",
+      "java": "get",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "int[]"
+    },
+    {
+      "name": "remove",
+      "java": "remove",
+      "params": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "int"
+        }
+      ],
+      "returns": "boolean"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "get",
+          "get"
+        ],
+        "args": [
+          [
+            "x",
+            7,
+            5,
+            0
+          ],
+          [
+            "x",
+            4
+          ],
+          [
+            "x",
+            5
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        [
+          7
+        ],
+        []
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "put",
+          "get",
+          "get"
+        ],
+        "args": [
+          [
+            "a",
+            1,
+            2,
+            0
+          ],
+          [
+            "a",
+            9,
+            8,
+            1
+          ],
+          [
+            "a",
+            2
+          ],
+          [
+            "a",
+            9
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        [
+          9
+        ],
+        []
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "get"
+        ],
+        "args": [
+          [
+            "absent",
+            0
+          ]
+        ]
+      },
+      "expected": [
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "get"
+        ],
+        "args": [
+          [
+            "x",
+            -1,
+            1,
+            0
+          ],
+          [
+            "x",
+            0
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        [
+          -1
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "remove",
+          "get"
+        ],
+        "args": [
+          [
+            "x",
+            0,
+            10,
+            0
+          ],
+          [
+            "x",
+            1
+          ],
+          [
+            "x",
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        true,
+        []
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "remove"
+        ],
+        "args": [
+          [
+            "x",
+            0
+          ]
+        ]
+      },
+      "expected": [
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "remove"
+        ],
+        "args": [
+          [
+            "x",
+            4,
+            1,
+            0
+          ],
+          [
+            "x",
+            1
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        false
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "put",
+          "get",
+          "get"
+        ],
+        "args": [
+          [
+            "x",
+            2,
+            5,
+            0
+          ],
+          [
+            "y",
+            3,
+            9,
+            0
+          ],
+          [
+            "x",
+            6
+          ],
+          [
+            "y",
+            6
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        [],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "get"
+        ],
+        "args": [
+          [
+            "z",
+            42,
+            1000000000,
+            1000000000
+          ],
+          [
+            "z",
+            1000000000
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        [
+          42
+        ]
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "put",
+          "get",
+          "put",
+          "get"
+        ],
+        "args": [
+          [
+            "x",
+            1,
+            1,
+            0
+          ],
+          [
+            "x",
+            2
+          ],
+          [
+            "x",
+            2,
+            1,
+            2
+          ],
+          [
+            "x",
+            2
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        [],
+        null,
+        [
+          2
+        ]
+      ]
+    }
+  ],
+  "id": "ttl-key-value-store",
+  "style": "leetcode"
+}

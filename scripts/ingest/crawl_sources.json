@@ -1,5 +1,5 @@
 {
- "_comment": "Sources for company_crawler.py. 'companies' maps a list id to the name a source uses in its URLs; with 'listed_only' a source covers only those companies. Sources marked verified=false have URL patterns that could not be checked from the build sandbox: open the site, confirm the public listing URL, then update 'start' and 'follow' and set verified=true. Never add cookies, tokens or URLs behind a login or paywall.",
+ "_comment": "Sources for company_crawler.py. verified means safe for automatic extraction, not merely that a URL exists. Keep JavaScript-only, blocked or unscoped pages unverified. Explicit --sources opts into discovery; review output before merging. No cookies, credentials or paywall bypasses.",
  "user_agent": "interview-practice-crawler/1.0 (+https://github.com/navaneethbv/interview-practice)",
  "delay_seconds": 3,
  "sources": {
@@ -15,42 +15,86 @@
    "home": "https://www.hellointerview.com/community/questions",
    "kind": "pages",
    "verified": false,
-   "start": ["https://www.hellointerview.com/community/questions?company={company}&type=coding&page={page}"],
-   "pages": 3,
+   "start": [
+    "https://www.hellointerview.com/community/questions/company/{company}?type=CODING"
+   ],
+   "pages": 1,
    "follow": "https://www.hellointerview.com/community/questions/{slug}",
-   "max_follow": 40
+   "max_follow": 0,
+   "listed_only": true,
+   "companies": {
+    "meta": "Meta",
+    "google": "Google",
+    "amazon": "Amazon",
+    "apple": "Apple",
+    "microsoft": "Microsoft",
+    "uber": "Uber",
+    "nvidia": "NVIDIA",
+    "openai": "OpenAI",
+    "anthropic": "Anthropic"
+   },
+   "notes": "Listing URL verified 2026-10-12. Questions require client-side rendering; generic HTML extraction is not verified. Review rendered question cards, including their company labels. Detail URLs have both a slug and an ID, so automatic following is disabled."
   },
   "1point3acres": {
    "label": "1point3acres",
-   "home": "https://www.1point3acres.com/bbs/",
+   "home": "https://www.1point3acres.com/interview/problems",
    "kind": "pages",
    "verified": false,
    "listed_only": true,
-   "companies": {"meta": "Meta", "google": "Google", "amazon": "Amazon", "apple": "Apple", "microsoft": "Microsoft", "uber": "Uber", "nvidia": "NVIDIA", "openai": "OpenAI", "anthropic": "Anthropic"},
-   "start": ["https://www.1point3acres.com/bbs/tag/{company}-{page}.html"],
-   "pages": 2,
+   "companies": {
+    "meta": "meta",
+    "google": "google",
+    "amazon": "amazon",
+    "apple": "apple",
+    "microsoft": "microsoft",
+    "uber": "uber",
+    "nvidia": "nvidia",
+    "openai": "openai",
+    "anthropic": "anthropic"
+   },
+   "start": [
+    "https://www.1point3acres.com/interview/problems/company/{company}"
+   ],
+   "pages": 1,
    "follow": "https://www.1point3acres.com/bbs/thread-{number}-1-1.html",
-   "max_follow": 40
+   "max_follow": 0,
+   "notes": "Company listing URLs verified 2026-10-12. Crawl ultimately returned public HTML. Some exact titles in the public coding list can be reviewed, but broad page matching confuses variants. Full member-only prompts remain excluded."
   },
   "gothamloop": {
    "label": "Gotham Loop",
-   "home": "https://www.gothamloop.com/",
+   "home": "https://www.gothamloop.com/companies",
    "kind": "pages",
    "verified": false,
-   "start": ["https://www.gothamloop.com/companies/{company}"],
+   "start": [
+    "https://www.gothamloop.com/{company}"
+   ],
    "pages": 1,
    "follow": "https://www.gothamloop.com/questions/{slug}",
-   "max_follow": 40
+   "max_follow": 0,
+   "listed_only": true,
+   "companies": {
+    "meta": "meta",
+    "google": "google",
+    "amazon": "amazon",
+    "microsoft": "microsoft",
+    "uber": "uber",
+    "openai": "openai",
+    "anthropic": "anthropic"
+   },
+   "notes": "Public company guide URLs verified 2026-10-12. Guide text causes false-positive exact-title matches. Keep generic extraction unverified; review public question previews individually. No individual last-asked dates are exposed."
   },
   "interviewdb": {
    "label": "interviewDB",
    "home": "https://www.interviewdb.io/",
    "kind": "pages",
    "verified": false,
-   "start": ["https://www.interviewdb.io/company/{company}"],
+   "start": [
+    "https://www.interviewdb.io/question/{company}"
+   ],
    "pages": 1,
    "follow": "https://www.interviewdb.io/question/{slug}",
-   "max_follow": 40
+   "max_follow": 0,
+   "notes": "Public listing URLs verified 2026-10-12; crawl returned public titles and relative dates. Most titles do not map unambiguously to catalog exercises; inspect public detail content before mapping. Never infer a question from its title alone."
   }
  }
 }

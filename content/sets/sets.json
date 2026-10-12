@@ -4988,7 +4988,7 @@
   "id": "google",
   "title": "Google",
   "kind": "company",
-  "description": "Problems frequently asked at Google.",
+  "description": "Problems frequently asked at Google. The \"Recent reports\" category adds 3 problems reported on 1point3acres, Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "two-sum",
@@ -6203,6 +6203,18 @@
    {
     "slug": "to-be-or-not-to-be",
     "category": "Closure"
+   },
+   {
+    "slug": "http-route-matching",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "maximum-profit-in-job-scheduling",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "number-of-islands-ii",
+    "category": "Recent reports"
    }
   ]
  },
@@ -6210,7 +6222,7 @@
   "id": "amazon",
   "title": "Amazon",
   "kind": "company",
-  "description": "Problems frequently asked at Amazon in the last six months.",
+  "description": "Problems frequently asked at Amazon in the last six months. The \"Recent reports\" category adds 3 problems reported on 1point3acres, Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "two-sum",
@@ -8814,6 +8826,18 @@
    {
     "slug": "maximum-height-by-stacking-cuboids",
     "category": "DP"
+   },
+   {
+    "slug": "angle-between-hands-of-a-clock",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "maximum-coins-from-k-consecutive-bags",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "sliding-window-rate-limiter",
+    "category": "Recent reports"
    }
   ]
  },
@@ -8821,7 +8845,7 @@
   "id": "apple",
   "title": "Apple",
   "kind": "company",
-  "description": "Problems frequently asked at Apple in the last six months.",
+  "description": "Problems frequently asked at Apple in the last six months. The \"Recent reports\" category adds 2 problems reported on 1point3acres as of 2026-10-12.",
   "items": [
    {
     "slug": "two-sum",
@@ -10006,6 +10030,14 @@
    {
     "slug": "string-compression-iii",
     "category": "String"
+   },
+   {
+    "slug": "design-task-manager",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "sparse-matrix-multiplication",
+    "category": "Recent reports"
    }
   ]
  },
@@ -10013,7 +10045,7 @@
   "id": "microsoft",
   "title": "Microsoft",
   "kind": "company",
-  "description": "Problems frequently asked at Microsoft in the last six months.",
+  "description": "Problems frequently asked at Microsoft in the last six months. The \"Recent reports\" category adds 3 problems reported on 1point3acres, Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "two-sum",
@@ -10874,6 +10906,18 @@
    {
     "slug": "maximum-profit-in-job-scheduling",
     "category": "DP / Binary Search"
+   },
+   {
+    "slug": "alien-dictionary",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "count-binary-substrings",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "design-hit-counter",
+    "category": "Recent reports"
    }
   ]
  },
@@ -10881,7 +10925,7 @@
   "id": "uber",
   "title": "Uber",
   "kind": "company",
-  "description": "Problems frequently asked at Uber in the last six months.",
+  "description": "Problems frequently asked at Uber in the last six months. The \"Recent reports\" category adds 2 problems reported on 1point3acres, Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "two-sum",
@@ -11613,6 +11657,14 @@
    {
     "slug": "frequency-of-the-most-frequent-element",
     "category": "Sliding Window"
+   },
+   {
+    "slug": "circuit-breaker-window",
+    "category": "Recent reports"
+   },
+   {
+    "slug": "minimum-number-of-refueling-stops",
+    "category": "Recent reports"
    }
   ]
  },
@@ -11620,7 +11672,7 @@
   "id": "nvidia",
   "title": "NVIDIA",
   "kind": "company",
-  "description": "Problems tagged NVIDIA on LeetCode, most recent first (snapshot of 12th July 2026).",
+  "description": "Problems tagged NVIDIA on LeetCode, most recent first (snapshot of 12th July 2026). The \"Recent reports\" category adds 1 problems reported on Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "koko-eating-bananas",
@@ -12177,6 +12229,10 @@
    {
     "slug": "count-the-number-of-good-subsequences",
     "category": "Older than 6 months"
+   },
+   {
+    "slug": "ttl-key-value-store",
+    "category": "Recent reports"
    }
   ],
   "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
@@ -12186,7 +12242,7 @@
   "id": "openai",
   "title": "OpenAI",
   "kind": "company",
-  "description": "Problems tagged OpenAI on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category.",
+  "description": "Problems tagged OpenAI on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category. The \"Recent reports\" category adds 1 problems reported on Hello Interview as of 2026-10-12.",
   "items": [
    {
     "slug": "rotting-oranges",
@@ -12259,6 +12315,10 @@
    {
     "slug": "resumable-iterator",
     "category": "Reported in candidate write-ups"
+   },
+   {
+    "slug": "follow-graph-snapshots",
+    "category": "Recent reports"
    }
   ],
   "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
@@ -12268,7 +12328,7 @@
   "id": "anthropic",
   "title": "Anthropic",
   "kind": "company",
-  "description": "Problems tagged Anthropic on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category.",
+  "description": "Problems tagged Anthropic on LeetCode, most recent first (snapshot of 12th July 2026). Also includes problems described in candidate write-ups, marked by their category. The \"Recent reports\" category adds 1 problems reported on Gotham Loop as of 2026-10-12.",
   "items": [
    {
     "slug": "web-crawler-multithreaded",
@@ -12297,6 +12357,10 @@
    {
     "slug": "simple-bank-system",
     "category": "Reported in candidate write-ups"
+   },
+   {
+    "slug": "ttl-key-value-store",
+    "category": "Recent reports"
    }
   ],
   "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",

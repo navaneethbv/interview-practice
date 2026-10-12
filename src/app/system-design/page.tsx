@@ -95,7 +95,7 @@ function BookCard({ book }: Readonly<{ book: DesignBook }>) {
         {chapters.length} chapters{book.parts.length > 1 && ` · ${book.parts.length} parts`}
       </p>
       <h3 id={`book-${book.id}`} className="leading-snug font-semibold tracking-tight">
-        <Link href={`/system-design/${book.id}`} className="hover:text-blue">{book.title}</Link>
+        <Link href={`/system-design/${book.id}`} className="-my-1 inline-block py-1 hover:text-blue">{book.title}</Link>
       </h3>
       <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-fg-2">{book.description}</p>
       <div className="mt-auto flex items-center gap-1 pt-4">

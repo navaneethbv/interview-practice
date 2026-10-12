@@ -1,0 +1,275 @@
+{
+  "kind": "design",
+  "className": "Router",
+  "ctorParams": [],
+  "methods": [
+    {
+      "name": "register",
+      "java": "register",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "string"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "match",
+      "java": "match",
+      "params": [
+        {
+          "name": "path",
+          "type": "string"
+        }
+      ],
+      "returns": "string"
+    }
+  ],
+  "tests": [
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "register",
+          "match",
+          "match",
+          "match"
+        ],
+        "args": [
+          [
+            "/users/{id}"
+          ],
+          [
+            "/users/me"
+          ],
+          [
+            "/users/me"
+          ],
+          [
+            "/users/42"
+          ],
+          [
+            "/posts/42"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        "/users/me",
+        "/users/{id}",
+        ""
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/{x}/b"
+          ],
+          [
+            "/a/{y}"
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        "/{x}/b"
+      ],
+      "sample": true
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "match"
+        ],
+        "args": [
+          [
+            "/"
+          ]
+        ]
+      },
+      "expected": [
+        ""
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/"
+          ],
+          [
+            "/"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        "/"
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/{id}"
+          ],
+          [
+            "/"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        ""
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/a/{id}"
+          ],
+          [
+            "/a/x/y"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        ""
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/a/{x}"
+          ],
+          [
+            "/a/{x}"
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        "/a/{x}"
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/A"
+          ],
+          [
+            "/a"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        ""
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "register",
+          "match"
+        ],
+        "args": [
+          [
+            "/{x}/{y}"
+          ],
+          [
+            "/a/{z}"
+          ],
+          [
+            "/a/b"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        "/a/{z}"
+      ]
+    },
+    {
+      "input": {
+        "ctor": [],
+        "ops": [
+          "register",
+          "match",
+          "match"
+        ],
+        "args": [
+          [
+            "/{x}/{y}"
+          ],
+          [
+            "/a/b"
+          ],
+          [
+            "/a"
+          ]
+        ]
+      },
+      "expected": [
+        null,
+        "/{x}/{y}",
+        ""
+      ]
+    }
+  ],
+  "id": "http-route-matching",
+  "style": "leetcode"
+}

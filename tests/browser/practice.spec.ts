@@ -197,3 +197,33 @@ test("mobile menu opens, navigates and closes", async ({ page }) => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
 });
+
+test("phone workspace shows one panel at a time and jumps to results after a run", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto(problem);
+  const views = page.getByRole("navigation", { name: "Workspace view" });
+  await expect(page.getByRole("tab", { name: "Description", exact: true })).toBeVisible();
+  await expect(page.getByLabel("Code editor")).toBeHidden();
+  await views.getByRole("button", { name: "Code" }).click();
+  await expect(page.getByLabel("Code editor")).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Description", exact: true })).toBeHidden();
+  await page.getByRole("button", { name: "Run", exact: true }).click();
+  await expect(views.getByRole("button", { name: "Tests" })).toHaveAttribute("aria-pressed", "true");
+  const header = await page.getByRole("button", { name: /Switch to .* mode/ }).boundingBox();
+  expect(header!.width).toBeGreaterThanOrEqual(30);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+test("tablet header keeps every nav link clear of search, and wide guide tables scroll on phones", async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.goto("/system-design");
+  const search = (await page.getByRole("button", { name: "Search" }).boundingBox())!;
+  for (const name of ["Problems", "Patterns", "Practice", "Guides"]) {
+    const link = (await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name, exact: true }).boundingBox())!;
+    expect(link.x + link.width).toBeLessThanOrEqual(search.x);
+  }
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/system-design/fundamentals/complexity-cheat-sheet");
+  await expect(page.locator(".prose-reader table").first()).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

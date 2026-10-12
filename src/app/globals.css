@@ -310,6 +310,16 @@ body {
   border: 1px solid var(--border);
   border-radius: 8px;
 }
+/* Below the sidebar breakpoint, wide tables scroll inside their own box instead of widening the page. */
+@media (max-width: 1023.98px) {
+  .prose-reader table {
+    display: block;
+    width: fit-content;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
 .prose-reader th {
   background: var(--layer-2);
   text-align: left;

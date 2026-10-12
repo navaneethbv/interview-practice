@@ -199,6 +199,24 @@ class RunTests(unittest.TestCase):
         self.assertIsNone(cc.company_key(source, "other"))
 
 
+class DefaultSourceTests(unittest.TestCase):
+    def test_default_run_skips_unverified_sources(self):
+        import io
+        import contextlib
+
+        seen = []
+        original = cc.run
+        cc.run = lambda config, names, *a, **k: (seen.extend(names), {"companies": {}})[1]
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                cc.main(["--dry-run"])
+        finally:
+            cc.run = original
+        config = json.loads(cc.CONFIG.read_text(encoding="utf8"))
+        self.assertEqual(seen, [n for n, s in config["sources"].items() if s.get("verified")])
+        self.assertIn("leetcode", seen)
+
+
 class ConfigTests(unittest.TestCase):
     def test_follow_templates_match_only_the_declared_host_and_identifier(self):
         slug = cc.follow_matcher("https://f.test/questions/{slug}")

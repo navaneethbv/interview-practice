@@ -65,12 +65,14 @@ export interface CodeEditorProps {
   value: string;
   lang: CodeLang;
   fontSize: number;
+  /** Narrow screens: wrap long lines and drop the folding gutter so code fits without sideways scrolling. */
+  compact?: boolean;
   onChange: (value: string) => void;
   onRun: () => void;
   onSubmit: () => void;
 }
 
-export function CodeEditor({ value, lang, fontSize, onChange, onRun, onSubmit }: Readonly<CodeEditorProps>) {
+export function CodeEditor({ value, lang, fontSize, compact = false, onChange, onRun, onSubmit }: Readonly<CodeEditorProps>) {
   const { resolvedTheme } = useTheme();
   // Keep the latest callbacks for the keybindings registered once on mount.
   const actions = useRef({ onRun, onSubmit });
@@ -106,7 +108,9 @@ export function CodeEditor({ value, lang, fontSize, onChange, onRun, onSubmit }:
         smoothScrolling: true,
         cursorBlinking: "smooth",
         bracketPairColorization: { enabled: true },
-        lineNumbersMinChars: 3,
+        lineNumbersMinChars: compact ? 2 : 3,
+        wordWrap: compact ? "on" : "off",
+        folding: !compact,
         overviewRulerLanes: 0,
         scrollbar: { verticalScrollbarSize: 8, horizontalScrollbarSize: 8 },
         fixedOverflowWidgets: true,
