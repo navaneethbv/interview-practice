@@ -488,7 +488,9 @@ def main(argv: list[str]):
     known = json.loads(PROBLEMS.read_text(encoding="utf8"))
     all_companies = [s["id"] for s in sets if s["kind"] == "company"]
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--sources", default=",".join(config["sources"]), help="comma-separated source names")
+    verified = [name for name, source in config["sources"].items() if source.get("verified", False)]
+    parser.add_argument("--sources", default=",".join(verified),
+                        help="comma-separated source names (default: only sources marked verified in crawl_sources.json)")
     parser.add_argument("--companies", default=",".join(all_companies), help="comma-separated company list ids")
     parser.add_argument("--cache", type=Path, help="directory caching fetched pages between runs")
     parser.add_argument("--offline", action="store_true", help="use only cached pages")
