@@ -180,8 +180,9 @@ function Handle({
       aria-label={label}
       onPointerDown={onPointerDown}
       onKeyDown={onKeyDown}
-      className={`group flex shrink-0 touch-none items-center justify-center outline-none ${
-        axis === "x" ? "w-2 cursor-col-resize" : "h-2 cursor-row-resize"
+      // On touch screens a wider invisible hit area makes the 8px divider easy to grab.
+      className={`group relative z-10 flex shrink-0 touch-none items-center justify-center outline-none before:absolute before:inset-0 ${
+        axis === "x" ? "w-2 cursor-col-resize pointer-coarse:before:-inset-x-2" : "h-2 cursor-row-resize pointer-coarse:before:-inset-y-2"
       }`}
     >
       <span
@@ -532,7 +533,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
       </div>
       {resetError && <p role="alert" className="px-3 py-2 text-sm text-bad">{resetError}</p>}
       <div className="min-h-0 flex-1">
-        <CodeEditor value={code} lang={lang} fontSize={fontSize} onChange={onCodeChange} onRun={run} onSubmit={submit} />
+        <CodeEditor value={code} lang={lang} fontSize={fontSize} compact={!isDesktop} onChange={onCodeChange} onRun={run} onSubmit={submit} />
       </div>
     </section>
   );

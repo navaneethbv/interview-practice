@@ -50,11 +50,11 @@ export function CommandPalette() {
         onMouseEnter={loadIndex}
         onFocus={loadIndex}
         aria-label="Search"
-        className="flex h-8 items-center gap-2 rounded-lg border border-line bg-layer-2 px-2 text-sm text-fg-3 transition-colors hover:border-line-strong hover:text-fg-2 sm:w-56 sm:px-2.5"
+        className="flex h-8 items-center gap-2 rounded-lg border border-line bg-layer-2 px-2 text-sm text-fg-3 transition-colors hover:border-line-strong hover:text-fg-2 sm:w-56 sm:px-2.5 md:w-auto md:px-2 lg:w-56 lg:px-2.5"
       >
         <Search size={15} />
-        <span className="hidden sm:inline">Search…</span>
-        <kbd className="ml-auto hidden rounded border border-line bg-layer-1 px-1.5 font-sans text-[11px] text-fg-3 sm:inline">Ctrl K</kbd>
+        <span className="hidden sm:inline md:hidden lg:inline">Search…</span>
+        <kbd className="ml-auto hidden rounded border border-line bg-layer-1 px-1.5 font-sans text-[11px] text-fg-3 sm:inline md:hidden lg:inline">Ctrl K</kbd>
       </button>
       {open && <PaletteDialog onClose={() => setOpen(false)} />}
     </>
