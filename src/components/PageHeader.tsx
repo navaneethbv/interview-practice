@@ -23,7 +23,7 @@ export function PageHeader({
             <ol className="flex flex-wrap items-center gap-1 text-sm text-fg-3">
               {crumbs.map((c) => (
                 <li key={c.href} className="flex items-center gap-1">
-                  <Link href={c.href} className="hover:text-fg-1">{c.label}</Link>
+                  <Link href={c.href} className="-my-1.5 inline-block py-1.5 hover:text-fg-1">{c.label}</Link>
                   <ChevronRight size={14} aria-hidden />
                 </li>
               ))}

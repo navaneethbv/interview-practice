@@ -109,6 +109,13 @@ function useListNav(initial: WorkspaceNav, slug: string | undefined): WorkspaceN
   return nav;
 }
 
+type MobileView = "problem" | "code" | "tests";
+const MOBILE_VIEWS: { id: MobileView; label: string; icon: React.ReactNode }[] = [
+  { id: "problem", label: "Problem", icon: <BookOpenText size={16} /> },
+  { id: "code", label: "Code", icon: <Code2 size={16} /> },
+  { id: "tests", label: "Tests", icon: <FlaskConical size={16} /> },
+];
+
 const subscribeNoop = () => () => {};
 const DESKTOP = "(min-width: 1024px)";
 function useIsDesktop() {
@@ -251,6 +258,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const initialLang = languages.includes(prefs.lang) ? prefs.lang : languages[0];
   const [leftTab, setLeftTab] = useState<LeftTab>("description");
   const [consoleTab, setConsoleTab] = useState<ConsoleTab>("testcase");
+  // On phones only one panel fits at a time; running or submitting jumps to the results.
+  const [mobileView, setMobileView] = useState<MobileView>("problem");
   const [lang, setLang] = useState<CodeLang>(initialLang);
   const pendingWrites = usePendingWrites();
   const [recovery, setRecovery] = useState(() => loadRecovery(id, initialLang));
@@ -335,6 +344,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const run = useCallback(async () => {
     if (!spec || running) return;
     setConsoleTab("result");
+    setMobileView("tests");
     const tests: AnyTestCase[] = [];
     for (const c of cases) {
       const parsed = parseCase(spec, c);
@@ -369,6 +379,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   const submit = useCallback(async () => {
     if (!spec || running) return;
     setConsoleTab("result");
+    setMobileView("tests");
     setRunning(isServerLang(lang) ? "Judging: compiling and running all tests…" : "Judging all tests…");
     try {
       const tests = spec.tests as AnyTestCase[];
@@ -570,7 +581,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
   return (
     <div className="flex h-dvh flex-col bg-bg">
       <PracticeVisit kind="problem" title={title} context={listSlug ? "Coding workbook" : "Grokking Patterns"} />
-      <header className="flex h-12 shrink-0 items-center gap-1.5 px-3">
+      <header className="flex h-12 shrink-0 items-center gap-1 px-2 sm:gap-1.5 sm:px-3">
         <Link href="/" className="grid size-8 shrink-0 place-items-center rounded-md bg-brand text-white" aria-label="Home">
           <Code2 size={16} strokeWidth={2.5} />
         </Link>
@@ -594,7 +605,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           <button
             onClick={run}
             disabled={!spec || busy}
-            className="flex h-8 items-center gap-1.5 rounded-l-lg bg-layer-1 px-3 text-sm font-medium text-fg-1 shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
+            className="flex h-8 items-center gap-1.5 rounded-l-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-fg-1 shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
             title="Run (Ctrl/⌘ + ')"
           >
             <Play size={13} className="fill-current" /> Run
@@ -602,7 +613,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           <button
             onClick={submit}
             disabled={!spec || busy}
-            className="flex h-8 items-center gap-1.5 rounded-r-lg bg-layer-1 px-3 text-sm font-medium text-ok shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
+            className="flex h-8 items-center gap-1.5 rounded-r-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-ok shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
             title="Submit (Ctrl/⌘ + Enter)"
           >
             <CloudUpload size={15} /> Submit
@@ -629,11 +640,35 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           </div>
         </div>
       ) : (
-        <div className="flex-1 space-y-2 overflow-y-auto px-2 pb-2">
-          <div className="flex max-h-[70vh] flex-col">{left}</div>
-          <div className="flex h-[60vh] flex-col">{editorPanel}</div>
-          <div className="flex min-h-72 flex-col">{consolePanel}</div>
-        </div>
+        <>
+          <div className="min-h-0 flex-1 px-2 pb-2">
+            {[
+              ["problem", left],
+              ["code", editorPanel],
+              ["tests", consolePanel],
+            ].map(([view, panel]) => (
+              <div key={view as string} className={mobileView === view ? "flex h-full flex-col" : "hidden"}>
+                {panel}
+              </div>
+            ))}
+          </div>
+          <nav aria-label="Workspace view" className="grid shrink-0 grid-cols-3 border-t border-line bg-layer-1 pb-[env(safe-area-inset-bottom)]">
+            {MOBILE_VIEWS.map((v) => (
+              <button
+                key={v.id}
+                type="button"
+                aria-pressed={mobileView === v.id}
+                onClick={() => setMobileView(v.id)}
+                className={`flex h-12 flex-col items-center justify-center gap-0.5 text-xs transition-colors ${
+                  mobileView === v.id ? "font-semibold text-brand" : "text-fg-3 hover:text-fg-1"
+                }`}
+              >
+                {v.icon}
+                {v.label}
+              </button>
+            ))}
+          </nav>
+        </>
       )}
     </div>
   );

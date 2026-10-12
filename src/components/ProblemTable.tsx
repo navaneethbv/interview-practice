@@ -130,7 +130,7 @@ function ProblemTableContent({ problems, patterns }: Props) {
                   <StatusIcon status={statusOf(progress, p.id, COURSE_SCOPE)} />
                 </td>
                 <td className="py-3 pr-3">
-                  <Link href={`/problems/${p.id}`} className="font-medium text-fg-1 hover:text-blue">
+                  <Link href={`/problems/${p.id}`} className="-my-2 inline-block py-2 font-medium text-fg-1 hover:text-blue">
                     {p.number}. {p.title}
                   </Link>
                 </td>

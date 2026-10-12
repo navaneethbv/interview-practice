@@ -197,3 +197,19 @@ test("mobile menu opens, navigates and closes", async ({ page }) => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
 });
+
+test("phone workspace shows one panel at a time and jumps to results after a run", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  await page.goto(problem);
+  const views = page.getByRole("navigation", { name: "Workspace view" });
+  await expect(page.getByRole("tab", { name: "Description", exact: true })).toBeVisible();
+  await expect(page.getByLabel("Code editor")).toBeHidden();
+  await views.getByRole("button", { name: "Code" }).click();
+  await expect(page.getByLabel("Code editor")).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Description", exact: true })).toBeHidden();
+  await page.getByRole("button", { name: "Run", exact: true }).click();
+  await expect(views.getByRole("button", { name: "Tests" })).toHaveAttribute("aria-pressed", "true");
+  const header = await page.getByRole("button", { name: /Switch to .* mode/ }).boundingBox();
+  expect(header!.width).toBeGreaterThanOrEqual(30);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

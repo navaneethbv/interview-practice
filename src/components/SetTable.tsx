@@ -140,7 +140,7 @@ function SetTableContent({ setId, kind, rows }: Props) {
                 </td>
                 <td className="py-3 pr-3">
                   {r.available ? (
-                    <Link href={`/problems/lc/${r.slug}?set=${setId}`} className="font-medium text-fg-1 hover:text-blue">
+                    <Link href={`/problems/lc/${r.slug}?set=${setId}`} className="-my-2 inline-block py-2 font-medium text-fg-1 hover:text-blue">
                       {r.label ?? `${r.number}.`} {r.title}
                     </Link>
                   ) : (

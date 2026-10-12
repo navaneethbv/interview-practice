@@ -14,6 +14,7 @@ Live: https://interview-practice-sandy-eight.vercel.app
 - **Patterns**: the course lessons, with diagrams, math and highlighted code in both languages.
 - **Practice**: timed mock interviews drawn from any list (walkthroughs stay hidden until the round ends, followed by a self-rated debrief), a spaced-repetition review queue for solved problems, and a 16-week study plan.
 - **Interview Guides**: system design books plus focused practice for low-level design, AI architecture, testing and debugging, and behavioral interviews.
+- **Search and navigation**: `Ctrl/⌘ + K` (or `/`) opens a site-wide search across problems, lists, lessons and guides; `/problems` groups study plans, topic tracks and company lists with per-list progress.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
 
 ## How code runs
@@ -68,6 +69,32 @@ npm run tests:build -- --java    # also compile and run the Java references
 npm run tests:build -- --langs   # also run JavaScript, TypeScript, C++ and Go references (<id>.js/.ts/.cpp/.go)
 npm run tests:build -- some-id   # only some problems
 ```
+
+### Company lists
+
+Company lists (Meta, Google, Amazon, Apple, Microsoft, Uber, NVIDIA, OpenAI, Anthropic) hold the problems reported for each company, most recent first.
+`company_lists.py` builds them from a recency-bucketed LeetCode company-tag snapshot, and `scripts/ingest/company_crawler.py` can add problems that public pages report but a list lacks, as a "Recent reports" category.
+
+```bash
+python3 scripts/ingest/company_lists.py <snapshot-dir> nvidia=NVIDIA openai=OpenAI anthropic=Anthropic
+python3 scripts/ingest/company_crawler.py --dry-run          # verified sources only; add --sources to opt in to others
+python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
+```
+
+The crawler stores facts only (problem, company, how many sources mention it), honours robots.txt, rate-limits each host and skips login or paywalled pages.
+Only the LeetCode tag source is verified for automatic extraction. The four website listing URLs were checked on October 12, 2026, but JavaScript rendering, locked content and ambiguous title matches still require review before importing.
+
+The October 12 refresh adds six original, runnable exercises and 16 company-list entries from reviewed public Hello Interview, 1point3acres and Gotham Loop observations. interviewDB was checked but yielded no reliably mapped additions. See [the crawl review](docs/COMPANY_CRAWL_2026-10-12.md) for coverage and limitations.
+
+To reproduce this reviewed refresh without a network crawl:
+
+```bash
+python3 -B scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
+python3 -B scripts/ingest/company_crawler.py --reviewed
+python3 -B scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
+```
+
+`company_report_observations.json` preserves exact source links, retrieval dates and source-reported last-asked labels where available. `--reviewed` imports those reviewed observations offline; it does not imply that the HTTP crawler can render the website. Discovery runs should use `--dry-run` so unreviewed matches do not replace the checked report.
 
 ### System design books
 

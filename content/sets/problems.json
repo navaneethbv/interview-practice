@@ -12519,6 +12519,17 @@
   "space": "O(n)",
   "acceptance": 48.9
  },
+ "maximum-coins-from-k-consecutive-bags": {
+  "number": 3413,
+  "title": "Maximum Coins From K Consecutive Bags",
+  "difficulty": "hard",
+  "topics": [
+   "Array",
+   "Sorting",
+   "Prefix Sum",
+   "Binary Search"
+  ]
+ },
  "maximum-amount-of-money-robot-can-earn": {
   "number": 3418,
   "title": "Maximum Amount of Money Robot Can Earn",
@@ -14109,6 +14120,25 @@
   "time": "Amortized O(1) per operation",
   "space": "O(n)"
  },
+ "ttl-key-value-store": {
+  "number": 6101,
+  "title": "TTL Key-Value Store",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Hash Table"
+  ]
+ },
+ "sliding-window-rate-limiter": {
+  "number": 6102,
+  "title": "Sliding-Window Rate Limiter",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Queue",
+   "Sliding Window"
+  ]
+ },
  "bctci-largest-temperature-change": {
   "number": 6103,
   "title": "Largest Temperature Change",
@@ -14120,6 +14150,16 @@
   "hint": "Track minimum and maximum indices in monotonic deques.",
   "time": "O(n)",
   "space": "O(n)"
+ },
+ "circuit-breaker-window": {
+  "number": 6103,
+  "title": "Circuit Breaker with a Failure Window",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Queue",
+   "Sliding Window"
+  ]
  },
  "bctci-longest-stable-period": {
   "number": 6104,
@@ -14133,6 +14173,15 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "http-route-matching": {
+  "number": 6104,
+  "title": "HTTP Route Matching",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "String"
+  ]
+ },
  "bctci-next-greater-element": {
   "number": 6105,
   "title": "Next Greater Element",
@@ -14144,6 +14193,16 @@
   "hint": "Resolve pending indices when a strictly taller value arrives.",
   "time": "O(n)",
   "space": "O(n)"
+ },
+ "follow-graph-snapshots": {
+  "number": 6105,
+  "title": "Follow Graph with Snapshots",
+  "difficulty": "medium",
+  "topics": [
+   "Design",
+   "Graph",
+   "Hash Table"
+  ]
  },
  "bctci-largest-rectangle": {
   "number": 6106,

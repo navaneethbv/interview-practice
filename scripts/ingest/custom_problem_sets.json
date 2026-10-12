@@ -6553,6 +6553,65 @@
    "hint": "Global position with prefix sums: Represent the state as the number of values consumed; map it back to (file, offset) with prefix sums and binary search.",
    "time": "O(1) for next and hasNext, O(log files) for setState",
    "space": "O(files)"
+  },
+  "ttl-key-value-store": {
+   "number": 6101,
+   "title": "TTL Key-Value Store",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Hash Table"
+   ]
+  },
+  "sliding-window-rate-limiter": {
+   "number": 6102,
+   "title": "Sliding-Window Rate Limiter",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Queue",
+    "Sliding Window"
+   ]
+  },
+  "circuit-breaker-window": {
+   "number": 6103,
+   "title": "Circuit Breaker with a Failure Window",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Queue",
+    "Sliding Window"
+   ]
+  },
+  "http-route-matching": {
+   "number": 6104,
+   "title": "HTTP Route Matching",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "String"
+   ]
+  },
+  "follow-graph-snapshots": {
+   "number": 6105,
+   "title": "Follow Graph with Snapshots",
+   "difficulty": "medium",
+   "topics": [
+    "Design",
+    "Graph",
+    "Hash Table"
+   ]
+  },
+  "maximum-coins-from-k-consecutive-bags": {
+   "number": 3413,
+   "title": "Maximum Coins From K Consecutive Bags",
+   "difficulty": "hard",
+   "topics": [
+    "Array",
+    "Sorting",
+    "Prefix Sum",
+    "Binary Search"
+   ]
   }
  },
  "workbookListOverrides": [
