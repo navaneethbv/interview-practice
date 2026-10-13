@@ -186,8 +186,15 @@ class Fetcher:
             status, text, _ = self._request(url)
         return status, text
 
-    def _record_response(self, url: str, status: int, text: str):
+    def _cached(self, url: str) -> tuple[int, str]:
+        path = self._cache_path(url)
+        cached = self._read_cached(url, path)
+        if cached is not None:
+            return cached
         host = urllib.parse.urlsplit(url).netloc
+        if self.offline or self._failures.get(host, 0) >= self.max_failures:
+            return 0, ""
+        status, text = self._request_with_retry(url)
         if status in (200, 404, 410):
             self.fetched_at[url] = self.wall_clock()
             self._failures[host] = 0
@@ -202,16 +209,6 @@ class Fetcher:
             if self._failures[host] == self.max_failures:
                 log(f"  giving up on {host} after {self.max_failures} failures")
 
-    def _cached(self, url: str) -> tuple[int, str]:
-        path = self._cache_path(url)
-        cached = self._read_cached(url, path)
-        if cached is not None:
-            return cached
-        host = urllib.parse.urlsplit(url).netloc
-        if self.offline or self._failures.get(host, 0) >= self.max_failures:
-            return 0, ""
-        status, text = self._request_with_retry(url)
-        self._record_response(url, status, text)
         return status, text
 
     def get(self, url: str) -> str | None:
