@@ -31,6 +31,7 @@ import json
 import math
 import re
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -186,6 +187,19 @@ class Fetcher:
             status, text, _ = self._request(url)
         return status, text
 
+    def _write_cache(self, url: str, status: int, text: str):
+        path = self._cache_path(url)
+        if path is None:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        # Write in a private directory on the same filesystem, then atomically
+        # replace the entry. A concurrent symlink is replaced, never followed.
+        with tempfile.TemporaryDirectory(prefix=".pending-", dir=path.parent) as staging:
+            pending = Path(staging) / "response.json"
+            pending.write_text(json.dumps({"url": url, "status": status, "text": text,
+                                           "fetchedAt": self.fetched_at[url]}), encoding="utf8")
+            pending.replace(path)
+
     def _cached(self, url: str) -> tuple[int, str]:
         path = self._cache_path(url)
         cached = self._read_cached(url, path)
@@ -198,12 +212,7 @@ class Fetcher:
         if status in (200, 404, 410):
             self.fetched_at[url] = self.wall_clock()
             self._failures[host] = 0
-            path = self._cache_path(url)
-            if path:
-                # Cache root is operator-selected; _cache_path enforces containment.
-                path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083)
-                path.write_text(json.dumps({"url": url, "status": status, "text": text,
-                                            "fetchedAt": self.fetched_at[url]}), encoding="utf8")  # NOSONAR(S2083)
+            self._write_cache(url, status, text)
         else:
             self._failures[host] = self._failures.get(host, 0) + 1
             if self._failures[host] == self.max_failures:

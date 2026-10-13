@@ -66,6 +66,27 @@ class FreshFetchTests(unittest.TestCase):
                 fetcher._cached(url)
             self.assertEqual(target.read_text(), 'unchanged')
 
+    def test_symlink_inserted_after_validation_cannot_redirect_cache_write(self):
+        url = 'https://test.test/page'
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
+            target = Path(outside) / 'protected.json'
+            target.write_text('unchanged')
+            fetcher = cc.Fetcher('test', cache=Path(directory), delay=0,
+                                 opener=lambda u, h: (200, 'fresh', {}))
+            path = fetcher._cache_path(url)
+            mkdir = Path.mkdir
+
+            def insert_symlink_after_directory_check(parent, *args, **kwargs):
+                mkdir(parent, *args, **kwargs)
+                if parent == Path(directory):
+                    path.symlink_to(target)
+
+            with patch.object(Path, 'mkdir', insert_symlink_after_directory_check):
+                self.assertEqual(fetcher._cached(url), (200, 'fresh'))
+            self.assertEqual(target.read_text(), 'unchanged')
+            self.assertFalse(path.is_symlink())
+            self.assertEqual(json.loads(path.read_text())['text'], 'fresh')
+
 
 class SafeRefreshTests(unittest.TestCase):
     def test_live_discovery_never_overwrites_reviewed_report(self):
