@@ -1,0 +1,266 @@
+{
+ "reviewedAt": "2026-10-13",
+ "scope": "Nine existing company lists. First public listing page per configured company, seven previously reviewed Hello Interview detail pages, and the latest upstream LeetCode snapshot. No claim of exhaustive site coverage.",
+ "snapshot": {
+  "repository": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
+  "revision": "e095c259cfd036e3ddb6886e84d7075c2faac477",
+  "snapshotDate": "2026-07-12",
+  "selection": "Six-month buckets for the six workbook company lists; all buckets for NVIDIA, OpenAI and Anthropic. Existing workbook entries retained."
+ },
+ "limitations": {
+  "hellointerview": "Fresh static listings did not expose question cards. Existing seven reviewed card observations retain their October 12 date and aggregate last-asked labels; detail pages were rechecked on October 13.",
+  "1point3acres": "51 exact visible coding-link observations across eight companies. No exact match on the first OpenAI page. No individual interview dates exposed. Unknown or variant titles excluded.",
+  "gothamloop": "Seven public guides checked. Existing Anthropic expiry-cache preview rechecked; no individual interview dates. No Apple/NVIDIA guide configured.",
+  "interviewdb": "Nine public listing routes checked. Six exposed question links; Apple, Microsoft and NVIDIA did not. Custom titles were not mapped without a verified public problem contract.",
+  "workbook": "Local workbook reviewed through deterministic reimport. No source snapshot date recorded; retained-only entries are labeled date unavailable.",
+  "company_extras": "Four pre-existing candidate-write-up entries retained; their original source URLs and interview dates were not recorded, so fresh attribution could not be verified."
+ },
+ "checks": [
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/amazon",
+   "httpStatus": 200,
+   "contentSha256": "efdeac4a2146fea8fbc84de76ea2f43717a1d6a5e54149b33244b7a6ee7c46af"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/anthropic",
+   "httpStatus": 200,
+   "contentSha256": "3fb67206dda988f1fc2c9350a6c7520c51ba5903c30f5bbbe49f23e68587b8af"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/apple",
+   "httpStatus": 200,
+   "contentSha256": "502ee2264b1fb4fe3308d423d40404672171678ecb6eb8598c2c47f05aec89e1"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/google",
+   "httpStatus": 200,
+   "contentSha256": "0707fddc820dbe924cf64c205a1cf0a18d2f39430dd17419052ee11418118478"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/meta",
+   "httpStatus": 200,
+   "contentSha256": "4991de05ffc8ee1532c1ffea2a761ed0ff5460a12de9d8accc72e5abf71d346d"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/microsoft",
+   "httpStatus": 200,
+   "contentSha256": "9832efa0f243ee6df668a628f152b6e366b309e40a5bcad9aa24dd3287e1de4d"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/nvidia",
+   "httpStatus": 200,
+   "contentSha256": "df498ed31c8cc585218a8f85b319adf3a57751c18f396d6332ef679e47b9fa3a"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/openai",
+   "httpStatus": 200,
+   "contentSha256": "137222f5cc7f17c42cc28a3f1ac6cfab4d45fb383c65cf36bcfa4a615a7e1883"
+  },
+  {
+   "source": "1point3acres",
+   "url": "https://www.1point3acres.com/interview/problems/company/uber",
+   "httpStatus": 200,
+   "contentSha256": "b8deea7b78b16ce4e320ab1d4b464561a4407a8922dbff375f3293b36351d73a"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/amazon",
+   "httpStatus": 200,
+   "contentSha256": "3bd3a7c434b76d665acd74ede2a88310adcd7362a6eb81c880033981e11bbe96"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/anthropic",
+   "httpStatus": 200,
+   "contentSha256": "0932f3e96186a3033abb50e1df7ecb4f506f1c6a87f4755e9fe4b1406701632d"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/google",
+   "httpStatus": 200,
+   "contentSha256": "21a32054c3c2021c9a69e1ed60d50cb4349fa8498adce2c75e52ce6f422ca753"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/meta",
+   "httpStatus": 200,
+   "contentSha256": "d7e97ca35e1d0b219b9af98dbed72aa372286d40e7818d54a9d5968b249ef2bc"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/microsoft",
+   "httpStatus": 200,
+   "contentSha256": "ba654569cd3cedf039cce44dfdfdec2413a68c8777b18af854f178f2e0b0032c"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/openai",
+   "httpStatus": 200,
+   "contentSha256": "27319c329d1182aef44ee0381d8a9e7682caa40e1de92354906191307537c9ed"
+  },
+  {
+   "source": "gothamloop",
+   "url": "https://www.gothamloop.com/uber",
+   "httpStatus": 200,
+   "contentSha256": "4b052e67a15c21c16af1e944fb0c146080608c6f71d3ed65ef09b7e3aae75b9b"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/circuit-breaker-client/cmk5b2t4p00xh08advuhtl6x6",
+   "httpStatus": 200,
+   "contentSha256": "d9aa3ae1cbfc02397250c1ae692e039292dad90aaf9d28f08748a4f3c78b1e09"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Amazon?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "48eca9022f9dd1e03e66c4d49bcddfeaa44de285d75b484a2e579932863dda90"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Anthropic?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "9c071871b88888fa0c2851dadb04f68a406c5b04aa49a45da469bd5b78a60bc2"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Apple?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "73cbdd76135d4dfec886c0f977f0d858b0adcda95117b64202f586a5172887d0"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Google?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "885e184f0ca7aadfaca5b1617e3a55a446e004e71393dd82681e6e6c65485dff"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Meta?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "32a1f3e901e9fdd66db12f475bf347d0b23010cd033f894cfbf5efcbea2b45af"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Microsoft?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "c8f25285be5b606275e7fa49cf13a77520b04bf2b31fd9e2749602e8f1514454"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/NVIDIA?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "408c5786feb1dd8e75cc3b01700131601d26bea999adabf2ee4ed2c4cd200d5a"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/OpenAI?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "02bc5b71341bc3824df5980aaa4de8a600b2383c106f518055c9871601e38632"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/company/Uber?type=CODING",
+   "httpStatus": 200,
+   "contentSha256": "bb85862feb039a26e043abddad6f9d5c503314bc29688c4b98b421f498e5847b"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/follow-graph-recommendations/cmobtcld30s420fadjyp8zgv3",
+   "httpStatus": 200,
+   "contentSha256": "8031afbf19022694da8c771baffde756ed444d7b57107fdae991a68cbe3dcbce"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/hit-counter/cm5eh7nri04x2838ob5n06oin",
+   "httpStatus": 200,
+   "contentSha256": "bd30aa45632a0f454aea15d8d7a1e4d40d6441053e2b50472961fa3a2ee25696"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/http-route-matching/cmou3jp0m13rl0cadz84s19xd",
+   "httpStatus": 200,
+   "contentSha256": "4aa30759e6f157e25d9e8e10b247ef3928ef74a1e448023d83727be109752d2b"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/key-value-ttl/cmjxixyya02aj07adok8leqq5",
+   "httpStatus": 200,
+   "contentSha256": "a5e392b81f490dc452a2e22f90a57223822c835933877880fe1e3a8cf3493eb7"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/maximum-coins-from-k-consecutive-bags/112756e1-20fc-4f02-9959-6fe4b3b55dcf",
+   "httpStatus": 200,
+   "contentSha256": "5eafa3bf2fd082109a1f682305aa0fd6ba449bf426d26631ec9695f40e504a78"
+  },
+  {
+   "source": "hellointerview",
+   "url": "https://www.hellointerview.com/community/questions/sliding-window-rate-limiter/cmni1bvsy02uw0dadl09u4g1r",
+   "httpStatus": 200,
+   "contentSha256": "0d60d9551e6e29aba5945c9599e8e37c1420f27327012910edce510f3eaa1381"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/amazon",
+   "httpStatus": 200,
+   "contentSha256": "0aba61a5b072456d439e57f985f81e31090de18a2c31a01852c70038e388432d"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/anthropic",
+   "httpStatus": 200,
+   "contentSha256": "4f9caaa872aaf55cef07e9985fe2d788272e1b2b4bcd784d621de5fcc81c4ee2"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/apple",
+   "httpStatus": 200,
+   "contentSha256": "21002988d54417a634053b7a19424dbd40520f13b041137025e3ee614ed98930"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/google",
+   "httpStatus": 200,
+   "contentSha256": "819e1f1aa1e342ba939df17d0dc67fa52f1191d954e434cc90743106eaefb218"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/meta",
+   "httpStatus": 200,
+   "contentSha256": "ef7a435a37e7f11daee6bff8ae40032a7344e574abe630f699f518f56e426404"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/microsoft",
+   "httpStatus": 200,
+   "contentSha256": "e1fe84f8368c62c44a8ddc02f63de42f65fb375e7f5e6a745f46a5ba27496327"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/nvidia",
+   "httpStatus": 200,
+   "contentSha256": "250fcfac6361714a1545a1a07a99e27bf531e97c23c28d420ecdd40ecf96c90b"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/openai",
+   "httpStatus": 200,
+   "contentSha256": "d9de3d22c8b6542d510a63a6e7caac29a21bfaa9c6ebf301491549c228e06ac7"
+  },
+  {
+   "source": "interviewdb",
+   "url": "https://www.interviewdb.io/question/uber",
+   "httpStatus": 200,
+   "contentSha256": "421f897f4712fe7d9ae3c9a89e26cbc60a35d0cdf62d7cb06f1ca451cf9bdaa4"
+  }
+ ]
+}

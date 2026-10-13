@@ -1198,6 +1198,13 @@
   "space": "O(1)",
   "acceptance": 61.2
  },
+ "scramble-string": {
+  "number": 87,
+  "title": "Scramble String",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 45.0
+ },
  "merge-sorted-array": {
   "number": 88,
   "title": "Merge Sorted Array",
@@ -1637,6 +1644,13 @@
   "space": "O(n²)",
   "acceptance": 78.9
  },
+ "pascals-triangle-ii": {
+  "number": 119,
+  "title": "Pascal's Triangle II",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 67.7
+ },
  "triangle": {
   "number": 120,
   "title": "Triangle",
@@ -1811,6 +1825,13 @@
   "space": "O(n²)",
   "acceptance": 74.0
  },
+ "palindrome-partitioning-ii": {
+  "number": 132,
+  "title": "Palindrome Partitioning II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 37.4
+ },
  "clone-graph": {
   "number": 133,
   "title": "Clone Graph",
@@ -1967,6 +1988,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 65.2
+ },
+ "binary-tree-preorder-traversal": {
+  "number": 144,
+  "title": "Binary Tree Preorder Traversal",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.2
  },
  "lru-cache": {
   "number": 146,
@@ -2176,6 +2204,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 35.7
+ },
+ "maximum-gap": {
+  "number": 164,
+  "title": "Maximum Gap",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.5
  },
  "compare-version-numbers": {
   "number": 165,
@@ -2543,6 +2578,13 @@
   "space": "O(1)",
   "acceptance": 29.7
  },
+ "transpose-file": {
+  "number": 194,
+  "title": "Transpose File",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 32.4
+ },
  "delete-duplicate-emails": {
   "number": 196,
   "title": "Delete Duplicate Emails",
@@ -2752,6 +2794,13 @@
   "space": "O(total characters)",
   "acceptance": 48.5
  },
+ "design-add-and-search-words-data-structure": {
+  "number": 211,
+  "title": "Design Add and Search Words Data Structure",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 48.7
+ },
  "word-search-ii": {
   "number": 212,
   "title": "Word Search II",
@@ -2879,6 +2928,13 @@
   "time": "O(m·n)",
   "space": "O(n)",
   "acceptance": 50.3
+ },
+ "count-complete-tree-nodes": {
+  "number": 222,
+  "title": "Count Complete Tree Nodes",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 73.1
  },
  "rectangle-area": {
   "number": 223,
@@ -3024,6 +3080,13 @@
   "time": "O(1) amortized",
   "space": "O(n)",
   "acceptance": 69.8
+ },
+ "number-of-digit-one": {
+  "number": 233,
+  "title": "Number of Digit One",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 39.2
  },
  "palindrome-linked-list": {
   "number": 234,
@@ -3265,6 +3328,13 @@
   "space": "O(1)",
   "acceptance": 68.9
  },
+ "single-number-iii": {
+  "number": 260,
+  "title": "Single Number III",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 70.2
+ },
  "graph-valid-tree": {
   "number": 261,
   "title": "Graph Valid Tree",
@@ -3279,6 +3349,13 @@
   "space": "O(V+E)",
   "premium": true
  },
+ "trips-and-users": {
+  "number": 262,
+  "title": "Trips and Users",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 38.6
+ },
  "ugly-number": {
   "number": 263,
   "title": "Ugly Number",
@@ -3291,6 +3368,13 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 43.5
+ },
+ "ugly-number-ii": {
+  "number": 264,
+  "title": "Ugly Number II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 49.7
  },
  "palindrome-permutation": {
   "number": 266,
@@ -3836,6 +3920,13 @@
   "space": "O(V+E)",
   "acceptance": 44.9
  },
+ "maximum-product-of-word-lengths": {
+  "number": 318,
+  "title": "Maximum Product of Word Lengths",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 61.4
+ },
  "bulb-switcher": {
   "number": 319,
   "title": "Bulb Switcher",
@@ -3878,6 +3969,13 @@
   "time": "O(V + E)",
   "space": "O(V)",
   "premium": true
+ },
+ "wiggle-sort-ii": {
+  "number": 324,
+  "title": "Wiggle Sort II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.7
  },
  "maximum-size-subarray-sum-equals-k": {
   "number": 325,
@@ -4076,6 +4174,13 @@
   "space": "O(1)",
   "acceptance": 65.7
  },
+ "power-of-four": {
+  "number": 342,
+  "title": "Power of Four",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 52.3
+ },
  "integer-break": {
   "number": 343,
   "title": "Integer Break",
@@ -4231,6 +4336,13 @@
   "space": "O(k)",
   "acceptance": 44.7
  },
+ "rearrange-string-k-distance-apart": {
+  "number": 358,
+  "title": "Rearrange String k Distance Apart",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 40.0
+ },
  "logger-rate-limiter": {
   "number": 359,
   "title": "Logger Rate Limiter",
@@ -4244,6 +4356,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 76.8
+ },
+ "sort-transformed-array": {
+  "number": 360,
+  "title": "Sort Transformed Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 58.2
  },
  "design-hit-counter": {
   "number": 362,
@@ -4288,6 +4407,20 @@
   "space": "O(1)",
   "acceptance": 45.7
  },
+ "find-leaves-of-binary-tree": {
+  "number": 366,
+  "title": "Find Leaves of Binary Tree",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 81.3
+ },
+ "valid-perfect-square": {
+  "number": 367,
+  "title": "Valid Perfect Square",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 45.1
+ },
  "largest-divisible-subset": {
   "number": 368,
   "title": "Largest Divisible Subset",
@@ -4330,6 +4463,13 @@
   "time": "O(n log k)",
   "space": "O(k)",
   "acceptance": 41.9
+ },
+ "wiggle-subsequence": {
+  "number": 376,
+  "title": "Wiggle Subsequence",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 49.6
  },
  "combination-sum-iv": {
   "number": 377,
@@ -4374,6 +4514,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 55.4
+ },
+ "insert-delete-getrandom-o1-duplicates-allowed": {
+  "number": 381,
+  "title": "Insert Delete GetRandom O(1) - Duplicates allowed",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 36.7
  },
  "linked-list-random-node": {
   "number": 382,
@@ -4432,6 +4579,13 @@
   "space": "O(n)",
   "acceptance": 42.5
  },
+ "lexicographical-numbers": {
+  "number": 386,
+  "title": "Lexicographical Numbers",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 76.3
+ },
  "first-unique-character-in-a-string": {
   "number": 387,
   "title": "First Unique Character in a String",
@@ -4445,6 +4599,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 65.5
+ },
+ "longest-absolute-file-path": {
+  "number": 388,
+  "title": "Longest Absolute File Path",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 49.6
  },
  "find-the-difference": {
   "number": 389,
@@ -4573,6 +4734,20 @@
   "space": "O(V+E)",
   "acceptance": 64.2
  },
+ "nth-digit": {
+  "number": 400,
+  "title": "Nth Digit",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 38.5
+ },
+ "binary-watch": {
+  "number": 401,
+  "title": "Binary Watch",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 65.8
+ },
  "remove-k-digits": {
   "number": 402,
   "title": "Remove K Digits",
@@ -4601,6 +4776,20 @@
   "time": "O(n^2)",
   "space": "O(n^2)",
   "acceptance": 47.3
+ },
+ "sum-of-left-leaves": {
+  "number": 404,
+  "title": "Sum of Left Leaves",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 62.9
+ },
+ "convert-a-number-to-hexadecimal": {
+  "number": 405,
+  "title": "Convert a Number to Hexadecimal",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 54.5
  },
  "queue-reconstruction-by-height": {
   "number": 406,
@@ -4772,6 +4961,13 @@
   "space": "O(m·n)",
   "acceptance": 77.5
  },
+ "maximum-xor-of-two-numbers-in-an-array": {
+  "number": 421,
+  "title": "Maximum XOR of Two Numbers in an Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 53.6
+ },
  "longest-repeating-character-replacement": {
   "number": 424,
   "title": "Longest Repeating Character Replacement",
@@ -4801,6 +4997,13 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 65.6
+ },
+ "construct-quad-tree": {
+  "number": 427,
+  "title": "Construct Quad Tree",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 78.5
  },
  "serialize-and-deserialize-n-ary-tree": {
   "number": 428,
@@ -4842,6 +5045,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 44.3
+ },
+ "minimum-genetic-mutation": {
+  "number": 433,
+  "title": "Minimum Genetic Mutation",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 56.9
  },
  "non-overlapping-intervals": {
   "number": 435,
@@ -4889,6 +5099,13 @@
   "space": "O(1)",
   "acceptance": 53.7
  },
+ "k-th-smallest-in-lexicographical-order": {
+  "number": 440,
+  "title": "K-th Smallest in Lexicographical Order",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 46.4
+ },
  "arranging-coins": {
   "number": 441,
   "title": "Arranging Coins",
@@ -4929,6 +5146,13 @@
   "time": "O(n)",
   "space": "O(1) to O(k)",
   "acceptance": 59.9
+ },
+ "sequence-reconstruction": {
+  "number": 444,
+  "title": "Sequence Reconstruction",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 31.0
  },
  "add-two-numbers-ii": {
   "number": 445,
@@ -5003,6 +5227,13 @@
   "space": "O(n)",
   "acceptance": 75.3
  },
+ "minimum-number-of-arrows-to-burst-balloons": {
+  "number": 452,
+  "title": "Minimum Number of Arrows to Burst Balloons",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 61.7
+ },
  "assign-cookies": {
   "number": 455,
   "title": "Assign Cookies",
@@ -5031,6 +5262,20 @@
   "space": "O(n)",
   "acceptance": 34.7
  },
+ "circular-array-loop": {
+  "number": 457,
+  "title": "Circular Array Loop",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.8
+ },
+ "repeated-substring-pattern": {
+  "number": 459,
+  "title": "Repeated Substring Pattern",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 48.5
+ },
  "lfu-cache": {
   "number": 460,
   "title": "LFU Cache",
@@ -5045,6 +5290,13 @@
   "time": "O(1) per op",
   "space": "O(n)",
   "acceptance": 49.2
+ },
+ "hamming-distance": {
+  "number": 461,
+  "title": "Hamming Distance",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.9
  },
  "island-perimeter": {
   "number": 463,
@@ -5129,6 +5381,13 @@
   "time": "O(L*m*n)",
   "space": "O(m*n)",
   "acceptance": 53.3
+ },
+ "heaters": {
+  "number": 475,
+  "title": "Heaters",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 42.2
  },
  "total-hamming-distance": {
   "number": 477,
@@ -5328,6 +5587,13 @@
   "space": "O(log n)",
   "acceptance": 54.5
  },
+ "relative-ranks": {
+  "number": 506,
+  "title": "Relative Ranks",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 74.9
+ },
  "perfect-number": {
   "number": 507,
   "title": "Perfect Number",
@@ -5353,6 +5619,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 74.1
+ },
+ "game-play-analysis-i": {
+  "number": 511,
+  "title": "Game Play Analysis I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.5
  },
  "freedom-trail": {
   "number": 514,
@@ -5439,6 +5712,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 51.3
+ },
+ "beautiful-arrangement": {
+  "number": 526,
+  "title": "Beautiful Arrangement",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.9
  },
  "random-pick-with-weight": {
   "number": 528,
@@ -5585,6 +5865,13 @@
   "space": "O(h)",
   "acceptance": 48.1
  },
+ "remove-boxes": {
+  "number": 546,
+  "title": "Remove Boxes",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 49.6
+ },
  "number-of-provinces": {
   "number": 547,
   "title": "Number of Provinces",
@@ -5723,6 +6010,13 @@
   "space": "O(1)",
   "acceptance": 56.6
  },
+ "reshape-the-matrix": {
+  "number": 566,
+  "title": "Reshape the Matrix",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 65.2
+ },
  "permutation-in-string": {
   "number": 567,
   "title": "Permutation in String",
@@ -5790,6 +6084,20 @@
   "space": "O(n)",
   "acceptance": 77.4
  },
+ "shortest-unsorted-continuous-subarray": {
+  "number": 581,
+  "title": "Shortest Unsorted Continuous Subarray",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 38.4
+ },
+ "delete-operation-for-two-strings": {
+  "number": 583,
+  "title": "Delete Operation for Two Strings",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 65.9
+ },
  "find-customer-referee": {
   "number": 584,
   "title": "Find Customer Referee",
@@ -5813,6 +6121,13 @@
   "pattern": "Correlated counts",
   "hint": "Correlated counts: Keep a policy when its tiv_2015 repeats and its location does not."
  },
+ "customer-placing-the-largest-number-of-orders": {
+  "number": 586,
+  "title": "Customer Placing the Largest Number of Orders",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.5
+ },
  "design-in-memory-file-system": {
   "number": 588,
   "title": "Design In-Memory File System",
@@ -5826,6 +6141,13 @@
   "time": "O(L) per op",
   "space": "O(total characters)",
   "acceptance": 48.4
+ },
+ "longest-harmonious-subsequence": {
+  "number": 594,
+  "title": "Longest Harmonious Subsequence",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.8
  },
  "big-countries": {
   "number": 595,
@@ -5850,6 +6172,13 @@
   "pattern": "GROUP BY with HAVING",
   "hint": "GROUP BY with HAVING: Group by class and keep groups with COUNT(*) >= 5."
  },
+ "classes-with-at-least-5-students": {
+  "number": 596,
+  "title": "Classes With at Least 5 Students",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.3
+ },
  "minimum-index-sum-of-two-lists": {
   "number": 599,
   "title": "Minimum Index Sum of Two Lists",
@@ -5863,6 +6192,13 @@
   "time": "O(n+m)",
   "space": "O(n)",
   "acceptance": 59.9
+ },
+ "human-traffic-of-stadium": {
+  "number": 601,
+  "title": "Human Traffic of Stadium",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 51.6
  },
  "friend-requests-ii-who-has-the-most-friends": {
   "number": 602,
@@ -5887,6 +6223,13 @@
   "time": "O(n)",
   "space": "O(1) to O(n)",
   "acceptance": 29.1
+ },
+ "sales-person": {
+  "number": 607,
+  "title": "Sales Person",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 66.1
  },
  "find-duplicate-file-in-system": {
   "number": 609,
@@ -6062,6 +6405,13 @@
   "space": "O(n)",
   "acceptance": 66.2
  },
+ "design-circular-deque": {
+  "number": 641,
+  "title": "Design Circular Deque",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.8
+ },
  "design-search-autocomplete-system": {
   "number": 642,
   "title": "Design Search Autocomplete System",
@@ -6148,6 +6498,13 @@
   "space": "O(n)",
   "acceptance": 63.3
  },
+ "robot-return-to-origin": {
+  "number": 657,
+  "title": "Robot Return to Origin",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 78.2
+ },
  "find-k-closest-elements": {
   "number": 658,
   "title": "Find K Closest Elements",
@@ -6204,6 +6561,20 @@
   "space": "O(1) to O(n)",
   "acceptance": 52.0
  },
+ "number-of-longest-increasing-subsequence": {
+  "number": 673,
+  "title": "Number of Longest Increasing Subsequence",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.3
+ },
+ "longest-continuous-increasing-subsequence": {
+  "number": 674,
+  "title": "Longest Continuous Increasing Subsequence",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 52.2
+ },
  "valid-parenthesis-string": {
   "number": 678,
   "title": "Valid Parenthesis String",
@@ -6218,6 +6589,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 40.1
+ },
+ "24-game": {
+  "number": 679,
+  "title": "24 Game",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 59.6
  },
  "valid-palindrome-ii": {
   "number": 680,
@@ -6260,6 +6638,13 @@
   "time": "O(n * alpha)",
   "space": "O(n)",
   "acceptance": 67.6
+ },
+ "repeated-string-match": {
+  "number": 686,
+  "title": "Repeated String Match",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 39.4
  },
  "knight-probability-in-chessboard": {
   "number": 688,
@@ -6391,6 +6776,13 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "insert-into-a-binary-search-tree": {
+  "number": 701,
+  "title": "Insert into a Binary Search Tree",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 73.5
+ },
  "kth-largest-element-in-a-stream": {
   "number": 703,
   "title": "Kth Largest Element in a Stream",
@@ -6417,6 +6809,13 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 60.8
+ },
+ "design-hashset": {
+  "number": 705,
+  "title": "Design HashSet",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 68.2
  },
  "design-hashmap": {
   "number": 706,
@@ -6611,6 +7010,13 @@
   "space": "O(n)",
   "acceptance": 65.1
  },
+ "self-dividing-numbers": {
+  "number": 728,
+  "title": "Self Dividing Numbers",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 81.0
+ },
  "my-calendar-i": {
   "number": 729,
   "title": "My Calendar I",
@@ -6669,6 +7075,13 @@
   "space": "O(n)",
   "acceptance": 47.8
  },
+ "parse-lisp-expression": {
+  "number": 736,
+  "title": "Parse Lisp Expression",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 53.8
+ },
  "sentence-similarity-ii": {
   "number": 737,
   "title": "Sentence Similarity II",
@@ -6696,6 +7109,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 68.7
+ },
+ "delete-and-earn": {
+  "number": 740,
+  "title": "Delete and Earn",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 57.4
  },
  "cherry-pickup": {
   "number": 741,
@@ -6753,6 +7173,13 @@
   "space": "O(1)",
   "acceptance": 68.3
  },
+ "largest-number-at-least-twice-of-others": {
+  "number": 747,
+  "title": "Largest Number At Least Twice of Others",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 52.8
+ },
  "ip-to-cidr": {
   "number": 751,
   "title": "IP to CIDR",
@@ -6780,6 +7207,13 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 61.3
+ },
+ "reach-a-number": {
+  "number": 754,
+  "title": "Reach a Number",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 45.3
  },
  "pyramid-transition-matrix": {
   "number": 756,
@@ -6824,6 +7258,13 @@
   "space": "O(n)",
   "acceptance": 79.3
  },
+ "prime-number-of-set-bits-in-binary-representation": {
+  "number": 762,
+  "title": "Prime Number of Set Bits in Binary Representation",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 78.9
+ },
  "partition-labels": {
   "number": 763,
   "title": "Partition Labels",
@@ -6837,6 +7278,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 81.9
+ },
+ "couples-holding-hands": {
+  "number": 765,
+  "title": "Couples Holding Hands",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 59.5
  },
  "toeplitz-matrix": {
   "number": 766,
@@ -6895,6 +7343,13 @@
   "space": "O(1)",
   "acceptance": 89.6
  },
+ "basic-calculator-iii": {
+  "number": 772,
+  "title": "Basic Calculator III",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 53.4
+ },
  "sliding-puzzle": {
   "number": 773,
   "title": "Sliding Puzzle",
@@ -6940,6 +7395,20 @@
   "space": "O(n^2)",
   "acceptance": 67.8
  },
+ "k-th-symbol-in-grammar": {
+  "number": 779,
+  "title": "K-th Symbol in Grammar",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 48.5
+ },
+ "letter-case-permutation": {
+  "number": 784,
+  "title": "Letter Case Permutation",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 75.9
+ },
  "is-graph-bipartite": {
   "number": 785,
   "title": "Is Graph Bipartite?",
@@ -6981,6 +7450,13 @@
   "time": "O(n*d)",
   "space": "O(1)",
   "acceptance": 63.9
+ },
+ "escape-the-ghosts": {
+  "number": 789,
+  "title": "Escape The Ghosts",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.0
  },
  "domino-and-tromino-tiling": {
   "number": 790,
@@ -7053,6 +7529,13 @@
   "space": "O(n)",
   "acceptance": 83.6
  },
+ "smallest-rotation-with-highest-score": {
+  "number": 798,
+  "title": "Smallest Rotation with Highest Score",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 54.3
+ },
  "champagne-tower": {
   "number": 799,
   "title": "Champagne Tower",
@@ -7108,6 +7591,20 @@
   "time": "O(n)",
   "space": "O(1)"
  },
+ "max-increase-to-keep-city-skyline": {
+  "number": 807,
+  "title": "Max Increase to Keep City Skyline",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 86.5
+ },
+ "subdomain-visit-count": {
+  "number": 811,
+  "title": "Subdomain Visit Count",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 77.2
+ },
  "bus-routes": {
   "number": 815,
   "title": "Bus Routes",
@@ -7149,6 +7646,13 @@
   "time": "O(L) per op",
   "space": "O(total characters)",
   "acceptance": 60.9
+ },
+ "shortest-distance-to-a-character": {
+  "number": 821,
+  "title": "Shortest Distance to a Character",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 72.9
  },
  "goat-latin": {
   "number": 824,
@@ -7193,6 +7697,13 @@
   "space": "O(m·n)",
   "acceptance": 56.6
  },
+ "consecutive-numbers-sum": {
+  "number": 829,
+  "title": "Consecutive Numbers Sum",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 42.8
+ },
  "flipping-an-image": {
   "number": 832,
   "title": "Flipping an Image",
@@ -7207,6 +7718,20 @@
   "hint": "Flip and Invert: Reverse each row. Flip each bit (XOR with 1).",
   "time": "O(n)",
   "space": "O(n)"
+ },
+ "find-and-replace-in-string": {
+  "number": 833,
+  "title": "Find And Replace in String",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 50.8
+ },
+ "sum-of-distances-in-tree": {
+  "number": 834,
+  "title": "Sum of Distances in Tree",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 65.7
  },
  "similar-string-groups": {
   "number": 839,
@@ -7293,6 +7818,13 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "shortest-path-visiting-all-nodes": {
+  "number": 847,
+  "title": "Shortest Path Visiting All Nodes",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 66.1
+ },
  "maximize-distance-to-closest-person": {
   "number": 849,
   "title": "Maximize Distance to Closest Person",
@@ -7336,6 +7868,13 @@
   "space": "O(n)",
   "acceptance": 55.1
  },
+ "k-similar-strings": {
+  "number": 854,
+  "title": "K-Similar Strings",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.1
+ },
  "exam-room": {
   "number": 855,
   "title": "Exam Room",
@@ -7350,6 +7889,27 @@
   "space": "O(n)",
   "acceptance": 43.5
  },
+ "score-of-parentheses": {
+  "number": 856,
+  "title": "Score of Parentheses",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 63.5
+ },
+ "minimum-cost-to-hire-k-workers": {
+  "number": 857,
+  "title": "Minimum Cost to Hire K Workers",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 63.7
+ },
+ "buddy-strings": {
+  "number": 859,
+  "title": "Buddy Strings",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 34.1
+ },
  "lemonade-change": {
   "number": 860,
   "title": "Lemonade Change",
@@ -7363,6 +7923,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 59.1
+ },
+ "score-after-flipping-matrix": {
+  "number": 861,
+  "title": "Score After Flipping Matrix",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 80.3
+ },
+ "shortest-subarray-with-sum-at-least-k": {
+  "number": 862,
+  "title": "Shortest Subarray with Sum at Least K",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 32.9
  },
  "all-nodes-distance-k-in-binary-tree": {
   "number": 863,
@@ -7380,6 +7954,13 @@
   "space": "O(n)",
   "acceptance": 67.6
  },
+ "shortest-path-to-get-all-keys": {
+  "number": 864,
+  "title": "Shortest Path to Get All Keys",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 54.8
+ },
  "smallest-subtree-with-all-the-deepest-nodes": {
   "number": 865,
   "title": "Smallest Subtree with all the Deepest Nodes",
@@ -7393,6 +7974,13 @@
   "time": "O(n)",
   "space": "O(h)",
   "acceptance": 77.6
+ },
+ "prime-palindrome": {
+  "number": 866,
+  "title": "Prime Palindrome",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 28.3
  },
  "transpose-matrix": {
   "number": 867,
@@ -7491,6 +8079,13 @@
   "time": "O(log(n*max))",
   "space": "O(1)",
   "acceptance": 36.7
+ },
+ "profitable-schemes": {
+  "number": 879,
+  "title": "Profitable Schemes",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 48.5
  },
  "boats-to-save-people": {
   "number": 881,
@@ -7606,6 +8201,20 @@
   "space": "O(1)",
   "acceptance": 62.3
  },
+ "bitwise-ors-of-subarrays": {
+  "number": 898,
+  "title": "Bitwise ORs of Subarrays",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 56.9
+ },
+ "rle-iterator": {
+  "number": 900,
+  "title": "RLE Iterator",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 59.4
+ },
  "online-stock-span": {
   "number": 901,
   "title": "Online Stock Span",
@@ -7692,6 +8301,13 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 55.9
+ },
+ "x-of-a-kind-in-a-deck-of-cards": {
+  "number": 914,
+  "title": "X of a Kind in a Deck of Cards",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 30.4
  },
  "maximum-sum-circular-subarray": {
   "number": 918,
@@ -7796,6 +8412,13 @@
   "space": "O(h)",
   "acceptance": 87.6
  },
+ "minimum-area-rectangle": {
+  "number": 939,
+  "title": "Minimum Area Rectangle",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 55.4
+ },
  "valid-mountain-array": {
   "number": 941,
   "title": "Valid Mountain Array",
@@ -7877,6 +8500,13 @@
   "space": "O(m)",
   "acceptance": 49.7
  },
+ "tallest-billboard": {
+  "number": 956,
+  "title": "Tallest Billboard",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 51.9
+ },
  "delete-columns-to-make-sorted-iii": {
   "number": 960,
   "title": "Delete Columns to Make Sorted III",
@@ -7918,6 +8548,13 @@
   "space": "O(n)",
   "acceptance": 55.9
  },
+ "minimum-area-rectangle-ii": {
+  "number": 963,
+  "title": "Minimum Area Rectangle II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 56.0
+ },
  "binary-tree-cameras": {
   "number": 968,
   "title": "Binary Tree Cameras",
@@ -7931,6 +8568,13 @@
   "time": "O(n)",
   "space": "O(h)",
   "acceptance": 47.9
+ },
+ "pancake-sorting": {
+  "number": 969,
+  "title": "Pancake Sorting",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 71.9
  },
  "k-closest-points-to-origin": {
   "number": 973,
@@ -7961,6 +8605,20 @@
   "time": "O(n)",
   "space": "O(k)",
   "acceptance": 56.3
+ },
+ "odd-even-jump": {
+  "number": 975,
+  "title": "Odd Even Jump",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.3
+ },
+ "largest-perimeter-triangle": {
+  "number": 976,
+  "title": "Largest Perimeter Triangle",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 62.3
  },
  "squares-of-a-sorted-array": {
   "number": 977,
@@ -8133,6 +8791,20 @@
   "space": "O(depth)",
   "acceptance": 51.5
  },
+ "minimum-cost-to-merge-stones": {
+  "number": 1000,
+  "title": "Minimum Cost to Merge Stones",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 46.4
+ },
+ "find-common-characters": {
+  "number": 1002,
+  "title": "Find Common Characters",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 74.8
+ },
  "max-consecutive-ones-iii": {
   "number": 1004,
   "title": "Max Consecutive Ones III",
@@ -8161,6 +8833,13 @@
   "space": "O(n)",
   "acceptance": 84.2
  },
+ "complement-of-base-10-integer": {
+  "number": 1009,
+  "title": "Complement of Base 10 Integer",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 63.4
+ },
  "capacity-to-ship-packages-within-d-days": {
   "number": 1011,
   "title": "Capacity To Ship Packages Within D Days",
@@ -8187,6 +8866,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 42.7
+ },
+ "smallest-integer-divisible-by-k": {
+  "number": 1015,
+  "title": "Smallest Integer Divisible by K",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 54.2
  },
  "next-greater-node-in-linked-list": {
   "number": 1019,
@@ -8215,6 +8901,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 87.1
+ },
+ "sum-of-root-to-leaf-binary-numbers": {
+  "number": 1022,
+  "title": "Sum of Root To Leaf Binary Numbers",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.6
  },
  "divisor-game": {
   "number": 1025,
@@ -8315,6 +9008,13 @@
   "space": "O(n)",
   "acceptance": 77.4
  },
+ "longest-duplicate-substring": {
+  "number": 1044,
+  "title": "Longest Duplicate Substring",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 31.3
+ },
  "customers-who-bought-all-products": {
   "number": 1045,
   "title": "Customers Who Bought All Products",
@@ -8352,6 +9052,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 73.2
+ },
+ "longest-string-chain": {
+  "number": 1048,
+  "title": "Longest String Chain",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 63.3
+ },
+ "last-stone-weight-ii": {
+  "number": 1049,
+  "title": "Last Stone Weight II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.2
  },
  "actors-and-directors-who-cooperated-at-least-three-times": {
   "number": 1050,
@@ -8469,6 +9183,13 @@
   "space": "O(1)",
   "acceptance": 56.3
  },
+ "find-in-mountain-array": {
+  "number": 1095,
+  "title": "Find in Mountain Array",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.9
+ },
  "the-earliest-moment-when-everyone-become-friends": {
   "number": 1101,
   "title": "The Earliest Moment When Everyone Become Friends",
@@ -8481,6 +9202,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 66.0
+ },
+ "corporate-flight-bookings": {
+  "number": 1109,
+  "title": "Corporate Flight Bookings",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 67.9
  },
  "delete-nodes-and-return-forest": {
   "number": 1110,
@@ -8495,6 +9223,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 72.5
+ },
+ "maximum-nesting-depth-of-two-valid-parentheses-strings": {
+  "number": 1111,
+  "title": "Maximum Nesting Depth of Two Valid Parentheses Strings",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 72.0
  },
  "print-in-order": {
   "number": 1114,
@@ -8544,6 +9279,20 @@
   "time": "O(1) per atom",
   "space": "O(1)"
  },
+ "relative-sort-array": {
+  "number": 1122,
+  "title": "Relative Sort Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 75.3
+ },
+ "shortest-path-with-alternating-colors": {
+  "number": 1129,
+  "title": "Shortest Path with Alternating Colors",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 48.1
+ },
  "parallel-courses": {
   "number": 1136,
   "title": "Parallel Courses",
@@ -8557,6 +9306,13 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 62.2
+ },
+ "n-th-tribonacci-number": {
+  "number": 1137,
+  "title": "N-th Tribonacci Number",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 63.1
  },
  "user-activity-for-the-past-30-days-i": {
   "number": 1141,
@@ -8610,6 +9366,13 @@
   "space": "O(n)",
   "acceptance": 76.6
  },
+ "minimum-swaps-to-group-all-1s-together": {
+  "number": 1151,
+  "title": "Minimum Swaps to Group All 1's Together",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 61.3
+ },
  "analyze-user-website-visit-pattern": {
   "number": 1152,
   "title": "Analyze User Website Visit Pattern",
@@ -8624,6 +9387,20 @@
   "time": "O(u * c^3)",
   "space": "O(n)",
   "acceptance": 44.3
+ },
+ "day-of-the-year": {
+  "number": 1154,
+  "title": "Day of the Year",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 49.9
+ },
+ "find-words-that-can-be-formed-by-characters": {
+  "number": 1160,
+  "title": "Find Words That Can Be Formed by Characters",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 71.7
  },
  "maximum-level-sum-of-a-binary-tree": {
   "number": 1161,
@@ -8653,6 +9430,13 @@
   "time": "O(n^2)",
   "space": "O(n^2)",
   "acceptance": 52.3
+ },
+ "last-substring-in-lexicographical-order": {
+  "number": 1163,
+  "title": "Last Substring in Lexicographical Order",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 35.1
  },
  "product-price-at-a-given-date": {
   "number": 1164,
@@ -8692,6 +9476,13 @@
   "space": "O(V+E)",
   "acceptance": 65.6
  },
+ "invalid-transactions": {
+  "number": 1169,
+  "title": "Invalid Transactions",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 32.4
+ },
  "remove-zero-sum-consecutive-nodes-from-linked-list": {
   "number": 1171,
   "title": "Remove Zero Sum Consecutive Nodes from Linked List",
@@ -8718,6 +9509,27 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 56.0
+ },
+ "reformat-department-table": {
+  "number": 1179,
+  "title": "Reformat Department Table",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.3
+ },
+ "distance-between-bus-stops": {
+  "number": 1184,
+  "title": "Distance Between Bus Stops",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 55.5
+ },
+ "maximum-number-of-balloons": {
+  "number": 1189,
+  "title": "Maximum Number of Balloons",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.2
  },
  "critical-connections-in-a-network": {
   "number": 1192,
@@ -8784,6 +9596,13 @@
   "hint": "Sort and compare neighbours: After sorting, the minimum difference occurs between adjacent elements.",
   "time": "O(n log n)",
   "space": "O(n) for the output"
+ },
+ "smallest-string-with-swaps": {
+  "number": 1202,
+  "title": "Smallest String With Swaps",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.8
  },
  "last-person-to-fit-in-the-bus": {
   "number": 1204,
@@ -8932,6 +9751,13 @@
   "space": "O(1)",
   "acceptance": 55.2
  },
+ "remove-sub-folders-from-the-filesystem": {
+  "number": 1233,
+  "title": "Remove Sub-Folders from the Filesystem",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 78.6
+ },
  "maximum-profit-in-job-scheduling": {
   "number": 1235,
   "title": "Maximum Profit in Job Scheduling",
@@ -8976,6 +9802,13 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "tiling-a-rectangle-with-the-fewest-squares": {
+  "number": 1240,
+  "title": "Tiling a Rectangle with the Fewest Squares",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 55.1
+ },
  "web-crawler-multithreaded": {
   "number": 1242,
   "title": "Web Crawler Multithreaded",
@@ -9001,6 +9834,13 @@
   "hint": "Hash map plus ordered multiset: Map players to totals and keep totals in a sorted multiset so top(K) reads the K largest.",
   "time": "O(log n) per update, O(K) per top",
   "space": "O(n)"
+ },
+ "design-a-leaderboard": {
+  "number": 1244,
+  "title": "Design A Leaderboard",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 68.1
  },
  "count-number-of-nice-subarrays": {
   "number": 1248,
@@ -9042,6 +9882,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 37.3
+ },
+ "number-of-closed-islands": {
+  "number": 1254,
+  "title": "Number of Closed Islands",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 67.2
  },
  "greatest-sum-divisible-by-three": {
   "number": 1262,
@@ -9127,6 +9974,13 @@
   "space": "O(n)",
   "acceptance": 61.2
  },
+ "subtract-the-product-and-sum-of-digits-of-an-integer": {
+  "number": 1281,
+  "title": "Subtract the Product and Sum of Digits of an Integer",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 86.6
+ },
  "find-the-smallest-divisor-given-a-threshold": {
   "number": 1283,
   "title": "Find the Smallest Divisor Given a Threshold",
@@ -9140,6 +9994,20 @@
   "time": "O(n log(max))",
   "space": "O(1)",
   "acceptance": 65.9
+ },
+ "element-appearing-more-than-25-in-sorted-array": {
+  "number": 1287,
+  "title": "Element Appearing More Than 25% In Sorted Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 61.3
+ },
+ "remove-covered-intervals": {
+  "number": 1288,
+  "title": "Remove Covered Intervals",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.0
  },
  "maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold": {
   "number": 1292,
@@ -9184,6 +10052,13 @@
   "space": "O(1)",
   "acceptance": 79.7
  },
+ "divide-array-in-sets-of-k-consecutive-numbers": {
+  "number": 1296,
+  "title": "Divide Array in Sets of K Consecutive Numbers",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 59.5
+ },
  "replace-elements-with-greatest-element-on-right-side": {
   "number": 1299,
   "title": "Replace Elements with Greatest Element on Right Side",
@@ -9196,6 +10071,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 72.2
+ },
+ "number-of-paths-with-max-score": {
+  "number": 1301,
+  "title": "Number of Paths with Max Score",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 64.3
  },
  "jump-game-iii": {
   "number": 1306,
@@ -9212,6 +10094,20 @@
   "space": "O(n)",
   "acceptance": 70.0
  },
+ "matrix-block-sum": {
+  "number": 1314,
+  "title": "Matrix Block Sum",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 76.7
+ },
+ "sum-of-nodes-with-even-valued-grandparent": {
+  "number": 1315,
+  "title": "Sum of Nodes with Even-Valued Grandparent",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 86.0
+ },
  "number-of-operations-to-make-network-connected": {
   "number": 1319,
   "title": "Number of Operations to Make Network Connected",
@@ -9225,6 +10121,13 @@
   "time": "O(E * alpha)",
   "space": "O(n)",
   "acceptance": 66.5
+ },
+ "minimum-distance-to-type-a-word-using-two-fingers": {
+  "number": 1320,
+  "title": "Minimum Distance to Type a Word Using Two Fingers",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 72.3
  },
  "restaurant-growth": {
   "number": 1321,
@@ -9288,6 +10191,13 @@
   "space": "O(V+E)",
   "acceptance": 72.7
  },
+ "minimum-difficulty-of-a-job-schedule": {
+  "number": 1335,
+  "title": "Minimum Difficulty of a Job Schedule",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 59.8
+ },
  "maximum-product-of-splitted-binary-tree": {
   "number": 1339,
   "title": "Maximum Product Of Splitted Binary Tree",
@@ -9302,6 +10212,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 55.7
+ },
+ "jump-game-v": {
+  "number": 1340,
+  "title": "Jump Game V",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 75.8
  },
  "movie-rating": {
   "number": 1341,
@@ -9339,6 +10256,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 64.4
+ },
+ "jump-game-iv": {
+  "number": 1345,
+  "title": "Jump Game IV",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 51.0
  },
  "count-negative-numbers-in-a-sorted-matrix": {
   "number": 1351,
@@ -9397,6 +10321,13 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 82.3
+ },
+ "number-of-substrings-containing-all-three-characters": {
+  "number": 1358,
+  "title": "Number of Substrings Containing All Three Characters",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 74.4
  },
  "how-many-numbers-are-smaller-than-the-current-number": {
   "number": 1365,
@@ -9497,6 +10428,13 @@
   "space": "O(1)",
   "acceptance": 86.3
  },
+ "check-if-there-is-a-valid-path-in-a-grid": {
+  "number": 1391,
+  "title": "Check if There is a Valid Path in a Grid",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.5
+ },
  "longest-happy-prefix": {
   "number": 1392,
   "title": "Longest Happy Prefix",
@@ -9551,6 +10489,13 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "stone-game-iii": {
+  "number": 1406,
+  "title": "Stone Game III",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 63.4
+ },
  "number-of-ways-to-paint-n-x-3-grid": {
   "number": 1411,
   "title": "Number Of Ways To Paint N X 3 Grid",
@@ -9564,6 +10509,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 80.5
+ },
+ "minimum-value-to-get-positive-step-by-step-sum": {
+  "number": 1413,
+  "title": "Minimum Value to Get Positive Step by Step Sum",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.8
+ },
+ "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n": {
+  "number": 1415,
+  "title": "The k-th Lexicographical String of All Happy Strings of Length n",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 87.1
  },
  "maximum-points-you-can-obtain-from-cards": {
   "number": 1423,
@@ -9593,6 +10552,13 @@
   "space": "O(m·n)",
   "acceptance": 58.3
  },
+ "leftmost-column-with-at-least-a-one": {
+  "number": 1428,
+  "title": "Leftmost Column with at Least a One",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 55.3
+ },
  "first-unique-number": {
   "number": 1429,
   "title": "First Unique Number",
@@ -9607,6 +10573,20 @@
   "space": "O(n)",
   "acceptance": 57.6
  },
+ "kids-with-the-greatest-number-of-candies": {
+  "number": 1431,
+  "title": "Kids With the Greatest Number of Candies",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 88.0
+ },
+ "check-if-all-1s-are-at-least-length-k-places-away": {
+  "number": 1437,
+  "title": "Check If All 1's Are at Least Length K Places Away",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.3
+ },
  "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit": {
   "number": 1438,
   "title": "Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit",
@@ -9620,6 +10600,13 @@
   "time": "O(n)",
   "space": "O(k)",
   "acceptance": 57.7
+ },
+ "build-an-array-with-stack-operations": {
+  "number": 1441,
+  "title": "Build an Array With Stack Operations",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 80.8
  },
  "count-good-nodes-in-binary-tree": {
   "number": 1448,
@@ -9691,6 +10678,27 @@
   "space": "O(V+E)",
   "acceptance": 59.9
  },
+ "cherry-pickup-ii": {
+  "number": 1463,
+  "title": "Cherry Pickup II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 72.5
+ },
+ "maximum-product-of-two-elements-in-an-array": {
+  "number": 1464,
+  "title": "Maximum Product of Two Elements in an Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 83.6
+ },
+ "reorder-routes-to-make-all-paths-lead-to-the-city-zero": {
+  "number": 1466,
+  "title": "Reorder Routes to Make All Paths Lead to the City Zero",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 66.0
+ },
  "shuffle-the-array": {
   "number": 1470,
   "title": "Shuffle the Array",
@@ -9732,6 +10740,13 @@
   "space": "O(n)",
   "acceptance": 84.1
  },
+ "allocate-mailboxes": {
+  "number": 1478,
+  "title": "Allocate Mailboxes",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 56.8
+ },
  "running-sum-of-1d-array": {
   "number": 1480,
   "title": "Running Sum of 1d Array",
@@ -9770,6 +10785,34 @@
   "pattern": "Ordered string aggregation",
   "hint": "Ordered string aggregation: Deduplicate and sort first, then GROUP_CONCAT per date."
  },
+ "find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree": {
+  "number": 1489,
+  "title": "Find Critical and Pseudo-Critical Edges in Minimum Spanning Tree",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 66.6
+ },
+ "the-kth-factor-of-n": {
+  "number": 1492,
+  "title": "The kth Factor of n",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 70.5
+ },
+ "longest-subarray-of-1s-after-deleting-one-element": {
+  "number": 1493,
+  "title": "Longest Subarray of 1's After Deleting One Element",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 71.3
+ },
+ "parallel-courses-ii": {
+  "number": 1494,
+  "title": "Parallel Courses II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 31.1
+ },
  "can-make-arithmetic-progression-from-sequence": {
   "number": 1502,
   "title": "Can Make Arithmetic Progression From Sequence",
@@ -9798,6 +10841,13 @@
   "space": "O(n)",
   "acceptance": 89.8
  },
+ "path-with-maximum-probability": {
+  "number": 1514,
+  "title": "Path with Maximum Probability",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 65.6
+ },
  "find-users-with-valid-e-mails": {
   "number": 1517,
   "title": "Find Users With Valid E-Mails",
@@ -9807,6 +10857,13 @@
   ],
   "pattern": "Pattern matching",
   "hint": "Pattern matching: Check the first letter and domain with GLOB, then reject any invalid prefix character."
+ },
+ "water-bottles": {
+  "number": 1518,
+  "title": "Water Bottles",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 72.6
  },
  "number-of-nodes-in-the-sub-tree-with-the-same-label": {
   "number": 1519,
@@ -9822,6 +10879,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 55.4
+ },
+ "count-odd-numbers-in-an-interval-range": {
+  "number": 1523,
+  "title": "Count Odd Numbers in an Interval Range",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 54.6
  },
  "patients-with-a-condition": {
   "number": 1527,
@@ -9860,6 +10924,13 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 63.5
+ },
+ "make-the-string-great": {
+  "number": 1544,
+  "title": "Make The String Great",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 68.6
  },
  "find-kth-bit-in-nth-binary-string": {
   "number": 1545,
@@ -9902,6 +10973,13 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 72.1
+ },
+ "minimum-number-of-vertices-to-reach-all-nodes": {
+  "number": 1557,
+  "title": "Minimum Number of Vertices to Reach All Nodes",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 81.7
  },
  "detect-cycles-in-2d-grid": {
   "number": 1559,
@@ -10001,6 +11079,20 @@
   "space": "O(n)",
   "acceptance": 67.7
  },
+ "special-positions-in-a-binary-matrix": {
+  "number": 1582,
+  "title": "Special Positions in a Binary Matrix",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 72.7
+ },
+ "count-unhappy-friends": {
+  "number": 1583,
+  "title": "Count Unhappy Friends",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 62.7
+ },
  "min-cost-to-connect-all-points": {
   "number": 1584,
   "title": "Min Cost to Connect All Points",
@@ -10014,6 +11106,20 @@
   "time": "O(V+E)",
   "space": "O(V+E)",
   "acceptance": 70.9
+ },
+ "maximum-sum-obtained-of-any-permutation": {
+  "number": 1589,
+  "title": "Maximum Sum Obtained of Any Permutation",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 41.2
+ },
+ "make-sum-divisible-by-p": {
+  "number": 1590,
+  "title": "Make Sum Divisible by P",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 42.6
  },
  "maximum-non-negative-product-in-a-matrix": {
   "number": 1594,
@@ -10140,6 +11246,13 @@
   "space": "O(n)",
   "acceptance": 80.8
  },
+ "widest-vertical-area-between-two-points-containing-no-points": {
+  "number": 1637,
+  "title": "Widest Vertical Area Between Two Points Containing No Points",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 87.1
+ },
  "furthest-building-you-can-reach": {
   "number": 1642,
   "title": "Furthest Building You Can Reach",
@@ -10182,6 +11295,13 @@
   "time": "O(h)",
   "space": "O(1)",
   "acceptance": 83.0
+ },
+ "defuse-the-bomb": {
+  "number": 1652,
+  "title": "Defuse the Bomb",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 79.4
  },
  "minimum-deletions-to-make-string-balanced": {
   "number": 1653,
@@ -10401,6 +11521,20 @@
   "space": "O(n)",
   "acceptance": 86.7
  },
+ "maximum-erasure-value": {
+  "number": 1695,
+  "title": "Maximum Erasure Value",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.4
+ },
+ "jump-game-vi": {
+  "number": 1696,
+  "title": "Jump Game VI",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 46.5
+ },
  "number-of-students-unable-to-eat-lunch": {
   "number": 1700,
   "title": "Number of Students Unable to Eat Lunch",
@@ -10415,6 +11549,20 @@
   "space": "O(1)",
   "acceptance": 79.6
  },
+ "minimum-adjacent-swaps-for-k-consecutive-ones": {
+  "number": 1703,
+  "title": "Minimum Adjacent Swaps for K Consecutive Ones",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 42.4
+ },
+ "maximum-units-on-a-truck": {
+  "number": 1710,
+  "title": "Maximum Units on a Truck",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 75.0
+ },
  "swapping-nodes-in-a-linked-list": {
   "number": 1721,
   "title": "Swapping Nodes in a Linked List",
@@ -10427,6 +11575,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 69.4
+ },
+ "minimize-hamming-distance-after-swap-operations": {
+  "number": 1722,
+  "title": "Minimize Hamming Distance After Swap Operations",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 69.6
  },
  "largest-submatrix-with-rearrangements": {
   "number": 1727,
@@ -10480,6 +11635,20 @@
   "pattern": "Self join",
   "hint": "Self join: Join each employee to their manager and aggregate per manager."
  },
+ "find-the-highest-altitude": {
+  "number": 1732,
+  "title": "Find the Highest Altitude",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 84.7
+ },
+ "find-distance-in-a-binary-tree": {
+  "number": 1740,
+  "title": "Find Distance in a Binary Tree",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 74.4
+ },
  "maximum-absolute-sum-of-any-subarray": {
   "number": 1749,
   "title": "Maximum Absolute Sum of Any Subarray",
@@ -10506,6 +11675,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 56.0
+ },
+ "closest-subsequence-sum": {
+  "number": 1755,
+  "title": "Closest Subsequence Sum",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 44.0
  },
  "recyclable-and-low-fat-products": {
   "number": 1757,
@@ -10545,6 +11721,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 80.9
+ },
+ "longest-nice-substring": {
+  "number": 1763,
+  "title": "Longest Nice Substring",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 64.5
  },
  "merge-strings-alternately": {
   "number": 1768,
@@ -10625,6 +11808,20 @@
   "space": "O(1)",
   "acceptance": 86.6
  },
+ "rearrange-products-table": {
+  "number": 1795,
+  "title": "Rearrange Products Table",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.5
+ },
+ "second-largest-digit-in-a-string": {
+  "number": 1796,
+  "title": "Second Largest Digit in a String",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 54.9
+ },
  "design-authentication-manager": {
   "number": 1797,
   "title": "Design Authentication Manager",
@@ -10651,6 +11848,34 @@
   "space": "O(1)",
   "acceptance": 64.8
  },
+ "find-the-winner-of-the-circular-game": {
+  "number": 1823,
+  "title": "Find the Winner of the Circular Game",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 82.3
+ },
+ "check-if-the-sentence-is-pangram": {
+  "number": 1832,
+  "title": "Check if the Sentence Is Pangram",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 84.3
+ },
+ "maximum-ice-cream-bars": {
+  "number": 1833,
+  "title": "Maximum Ice Cream Bars",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 77.2
+ },
+ "single-threaded-cpu": {
+  "number": 1834,
+  "title": "Single-Threaded CPU",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 47.8
+ },
  "frequency-of-the-most-frequent-element": {
   "number": 1838,
   "title": "Frequency of the Most Frequent Element",
@@ -10665,6 +11890,13 @@
   "space": "O(1)",
   "acceptance": 44.8
  },
+ "maximum-building-height": {
+  "number": 1840,
+  "title": "Maximum Building Height",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 67.0
+ },
  "seat-reservation-manager": {
   "number": 1845,
   "title": "Seat Reservation Manager",
@@ -10676,6 +11908,13 @@
   "hint": "Min-heap of freed slots: Hand out seats in order with a counter; returned seats go into a min-heap that is used first.",
   "time": "O(log n) per call",
   "space": "O(freed seats)"
+ },
+ "maximum-element-after-decreasing-and-rearranging": {
+  "number": 1846,
+  "title": "Maximum Element After Decreasing and Rearranging",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 69.1
  },
  "minimum-distance-to-the-target-element": {
   "number": 1848,
@@ -10718,6 +11957,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 64.0
+ },
+ "maximum-distance-between-a-pair-of-values": {
+  "number": 1855,
+  "title": "Maximum Distance Between a Pair of Values",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 61.3
  },
  "maximum-subarray-min-product": {
   "number": 1856,
@@ -10788,6 +12034,27 @@
   "time": "O(log n)",
   "space": "O(1)",
   "acceptance": 47.9
+ },
+ "jump-game-vii": {
+  "number": 1871,
+  "title": "Jump Game VII",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 35.6
+ },
+ "minimize-maximum-pair-sum-in-array": {
+  "number": 1877,
+  "title": "Minimize Maximum Pair Sum in Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 83.3
+ },
+ "get-biggest-three-rhombus-sums-in-a-grid": {
+  "number": 1878,
+  "title": "Get Biggest Three Rhombus Sums in a Grid",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 71.3
  },
  "determine-whether-matrix-can-be-obtained-by-rotation": {
   "number": 1886,
@@ -10900,6 +12167,13 @@
   "space": "O(n)",
   "acceptance": 74.1
  },
+ "number-of-wonderful-substrings": {
+  "number": 1915,
+  "title": "Number of Wonderful Substrings",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 66.6
+ },
  "build-array-from-permutation": {
   "number": 1920,
   "title": "Build Array from Permutation",
@@ -10926,6 +12200,20 @@
   "space": "O(n)",
   "acceptance": 57.7
  },
+ "nearest-exit-from-entrance-in-maze": {
+  "number": 1926,
+  "title": "Nearest Exit from Entrance in Maze",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 48.8
+ },
+ "minimum-cost-to-reach-destination-in-time": {
+  "number": 1928,
+  "title": "Minimum Cost to Reach Destination in Time",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.9
+ },
  "concatenation-of-array": {
   "number": 1929,
   "title": "Concatenation of Array",
@@ -10938,6 +12226,20 @@
   "time": "O(n)",
   "space": "O(1) to O(n)",
   "acceptance": 90.3
+ },
+ "painting-a-grid-with-three-different-colors": {
+  "number": 1931,
+  "title": "Painting a Grid With Three Different Colors",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 77.0
+ },
+ "merge-bsts-to-create-single-bst": {
+  "number": 1932,
+  "title": "Merge BSTs to Create Single BST",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 39.6
  },
  "confirmation-rate": {
   "number": 1934,
@@ -11007,6 +12309,27 @@
   "time": "O(n + k log n)",
   "space": "O(n)"
  },
+ "binary-searchable-numbers-in-an-unsorted-array": {
+  "number": 1966,
+  "title": "Binary Searchable Numbers in an Unsorted Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 63.8
+ },
+ "number-of-strings-that-appear-as-substrings-in-word": {
+  "number": 1967,
+  "title": "Number of Strings That Appear as Substrings in Word",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 86.1
+ },
+ "last-day-where-you-can-still-cross": {
+  "number": 1970,
+  "title": "Last Day Where You Can Still Cross",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 68.7
+ },
  "find-if-path-exists-in-graph": {
   "number": 1971,
   "title": "Find If Path Exists In Graph",
@@ -11035,6 +12358,13 @@
   "space": "O(n)",
   "acceptance": 67.5
  },
+ "number-of-ways-to-arrive-at-destination": {
+  "number": 1976,
+  "title": "Number of Ways to Arrive at Destination",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.6
+ },
  "employees-whose-manager-left-the-company": {
   "number": 1978,
   "title": "Employees Whose Manager Left the Company",
@@ -11044,6 +12374,13 @@
   ],
   "pattern": "NOT IN subquery",
   "hint": "NOT IN subquery: Filter salary and keep manager ids missing from the table."
+ },
+ "find-greatest-common-divisor-of-array": {
+  "number": 1979,
+  "title": "Find Greatest Common Divisor of Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 80.1
  },
  "find-unique-binary-string": {
   "number": 1980,
@@ -11059,6 +12396,41 @@
   "space": "O(n)",
   "acceptance": 81.2
  },
+ "minimum-difference-between-highest-and-lowest-of-k-scores": {
+  "number": 1984,
+  "title": "Minimum Difference Between Highest and Lowest of K Scores",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 66.4
+ },
+ "number-of-pairs-of-interchangeable-rectangles": {
+  "number": 2001,
+  "title": "Number of Pairs of Interchangeable Rectangles",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.6
+ },
+ "count-number-of-pairs-with-absolute-difference-k": {
+  "number": 2006,
+  "title": "Count Number of Pairs With Absolute Difference K",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.4
+ },
+ "find-original-array-from-doubled-array": {
+  "number": 2007,
+  "title": "Find Original Array From Doubled Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 40.9
+ },
+ "final-value-of-variable-after-performing-operations": {
+  "number": 2011,
+  "title": "Final Value of Variable After Performing Operations",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 90.6
+ },
  "detect-squares": {
   "number": 2013,
   "title": "Detect Squares",
@@ -11072,6 +12444,13 @@
   "hint": "Hashing Squares: For each pair sharing x or y, check if completing square exists in point set. Divide by 4 for overcounting.",
   "time": "O(n)",
   "space": "O(n)"
+ },
+ "convert-1d-array-into-2d-array": {
+  "number": 2022,
+  "title": "Convert 1D Array Into 2D Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 72.3
  },
  "number-of-pairs-of-strings-with-concatenation-equal-to-target": {
   "number": 2023,
@@ -11112,6 +12491,13 @@
   "hint": "Map plus ordered multiset: Keep the price per timestamp and a sorted multiset of current prices; corrections remove the old price.",
   "time": "O(log n) per call",
   "space": "O(n)"
+ },
+ "partition-array-into-two-arrays-to-minimize-sum-difference": {
+  "number": 2035,
+  "title": "Partition Array Into Two Arrays to Minimize Sum Difference",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 23.9
  },
  "simple-bank-system": {
   "number": 2043,
@@ -11154,6 +12540,20 @@
   "space": "O(k)",
   "acceptance": 64.0
  },
+ "plates-between-candles": {
+  "number": 2055,
+  "title": "Plates Between Candles",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 47.6
+ },
+ "find-the-minimum-and-maximum-number-of-nodes-between-critical-points": {
+  "number": 2058,
+  "title": "Find the Minimum and Maximum Number of Nodes Between Critical Points",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 69.5
+ },
  "minimized-maximum-of-products-distributed-to-any-store": {
   "number": 2064,
   "title": "Minimized Maximum of Products Distributed to Any Store",
@@ -11182,6 +12582,13 @@
   "space": "O(V+E)",
   "acceptance": 62.2
  },
+ "most-beautiful-item-for-each-query": {
+  "number": 2070,
+  "title": "Most Beautiful Item for Each Query",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 62.0
+ },
  "maximum-number-of-tasks-you-can-assign": {
   "number": 2071,
   "title": "Maximum Number of Tasks You Can Assign",
@@ -11196,6 +12603,13 @@
   "space": "O(n)",
   "acceptance": 50.0
  },
+ "reverse-nodes-in-even-length-groups": {
+  "number": 2074,
+  "title": "Reverse Nodes in Even Length Groups",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.7
+ },
  "two-furthest-houses-with-different-colors": {
   "number": 2078,
   "title": "Two Furthest Houses With Different Colors",
@@ -11209,6 +12623,41 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 71.8
+ },
+ "range-frequency-queries": {
+  "number": 2080,
+  "title": "Range Frequency Queries",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 43.6
+ },
+ "find-target-indices-after-sorting-array": {
+  "number": 2089,
+  "title": "Find Target Indices After Sorting Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 78.2
+ },
+ "find-all-people-with-secret": {
+  "number": 2092,
+  "title": "Find All People With Secret",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 48.4
+ },
+ "finding-3-digit-even-numbers": {
+  "number": 2094,
+  "title": "Finding 3-Digit Even Numbers",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 78.6
+ },
+ "delete-the-middle-node-of-a-linked-list": {
+  "number": 2095,
+  "title": "Delete the Middle Node of a Linked List",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.9
  },
  "detonate-the-maximum-bombs": {
   "number": 2101,
@@ -11252,6 +12701,34 @@
   "space": "O(1)",
   "acceptance": 86.7
  },
+ "find-all-possible-recipes-from-given-supplies": {
+  "number": 2115,
+  "title": "Find All Possible Recipes from Given Supplies",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 57.0
+ },
+ "destroying-asteroids": {
+  "number": 2126,
+  "title": "Destroying Asteroids",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 59.8
+ },
+ "maximum-twin-sum-of-a-linked-list": {
+  "number": 2130,
+  "title": "Maximum Twin Sum of a Linked List",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 83.3
+ },
+ "solving-questions-with-brainpower": {
+  "number": 2140,
+  "title": "Solving Questions With Brainpower",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.2
+ },
  "maximum-running-time-of-n-computers": {
   "number": 2141,
   "title": "Maximum Running Time Of N Computers",
@@ -11265,6 +12742,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 56.5
+ },
+ "minimum-cost-of-buying-candies-with-discount": {
+  "number": 2144,
+  "title": "Minimum Cost of Buying Candies With Discount",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 71.6
  },
  "rearrange-array-elements-by-sign": {
   "number": 2149,
@@ -11309,6 +12793,48 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "partition-array-according-to-given-pivot": {
+  "number": 2161,
+  "title": "Partition Array According to Given Pivot",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 90.8
+ },
+ "minimum-time-to-finish-the-race": {
+  "number": 2188,
+  "title": "Minimum Time to Finish the Race",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 43.4
+ },
+ "create-binary-tree-from-descriptions": {
+  "number": 2196,
+  "title": "Create Binary Tree From Descriptions",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 83.9
+ },
+ "find-the-difference-of-two-arrays": {
+  "number": 2215,
+  "title": "Find the Difference of Two Arrays",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 81.5
+ },
+ "minimum-bit-flips-to-convert-number": {
+  "number": 2220,
+  "title": "Minimum Bit Flips to Convert Number",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 88.0
+ },
+ "find-players-with-zero-or-one-losses": {
+  "number": 2225,
+  "title": "Find Players With Zero or One Losses",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 72.4
+ },
  "maximum-candies-allocated-to-k-children": {
   "number": 2226,
   "title": "Maximum Candies Allocated to K Children",
@@ -11336,6 +12862,27 @@
   "space": "O(n)",
   "acceptance": 88.0
  },
+ "root-equals-sum-of-children": {
+  "number": 2236,
+  "title": "Root Equals Sum of Children",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.1
+ },
+ "total-appeal-of-a-string": {
+  "number": 2262,
+  "title": "Total Appeal of A String",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 56.6
+ },
+ "count-nodes-equal-to-average-of-subtree": {
+  "number": 2265,
+  "title": "Count Nodes Equal to Average of Subtree",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 86.8
+ },
  "number-of-ways-to-split-array": {
   "number": 2270,
   "title": "Number of Ways to Split Array",
@@ -11348,6 +12895,20 @@
   "hint": "Prefix sum versus total: A split after index i is valid when the prefix sum is at least the remaining sum; use 64-bit sums.",
   "time": "O(n)",
   "space": "O(1)"
+ },
+ "maximum-white-tiles-covered-by-a-carpet": {
+  "number": 2271,
+  "title": "Maximum White Tiles Covered by a Carpet",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 36.1
+ },
+ "substring-with-largest-variance": {
+  "number": 2272,
+  "title": "Substring With Largest Variance",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 46.0
  },
  "find-resultant-array-after-removing-anagrams": {
   "number": 2273,
@@ -11362,6 +12923,13 @@
   "time": "O(n * L log L)",
   "space": "O(L)",
   "acceptance": 69.9
+ },
+ "sum-of-total-strength-of-wizards": {
+  "number": 2281,
+  "title": "Sum of Total Strength of Wizards",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 29.6
  },
  "apply-discount-to-prices": {
   "number": 2288,
@@ -11389,6 +12957,13 @@
   "time": "O(k) per call",
   "space": "O(text length)"
  },
+ "the-latest-time-to-catch-a-bus": {
+  "number": 2332,
+  "title": "The Latest Time to Catch a Bus",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 30.1
+ },
  "minimum-sum-of-squared-difference": {
   "number": 2333,
   "title": "Minimum Sum of Squared Difference",
@@ -11402,6 +12977,13 @@
   "time": "O(n log n)",
   "space": "O(1)",
   "acceptance": 26.9
+ },
+ "move-pieces-to-obtain-a-string": {
+  "number": 2337,
+  "title": "Move Pieces to Obtain a String",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 56.6
  },
  "max-sum-of-a-pair-with-equal-sum-of-digits": {
   "number": 2342,
@@ -11589,6 +13171,13 @@
   "space": "O(n)",
   "acceptance": 65.4
  },
+ "longest-subsequence-with-limited-sum": {
+  "number": 2389,
+  "title": "Longest Subsequence With Limited Sum",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 73.7
+ },
  "strictly-palindromic-number": {
   "number": 2396,
   "title": "Strictly Palindromic Number",
@@ -11615,6 +13204,13 @@
   "time": "O(2^n * m)",
   "space": "O(m)",
   "acceptance": 58.0
+ },
+ "number-of-ways-to-reach-a-position-after-exactly-k-steps": {
+  "number": 2400,
+  "title": "Number of Ways to Reach a Position After Exactly k Steps",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.1
  },
  "longest-nice-subarray": {
   "number": 2401,
@@ -11645,6 +13241,20 @@
   "space": "O(k)",
   "acceptance": 51.5
  },
+ "optimal-partition-of-string": {
+  "number": 2405,
+  "title": "Optimal Partition of String",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 78.5
+ },
+ "longest-increasing-subsequence-ii": {
+  "number": 2407,
+  "title": "Longest Increasing Subsequence II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 26.4
+ },
  "design-sql": {
   "number": 2408,
   "title": "Design SQL",
@@ -11670,6 +13280,20 @@
   "time": "O(1)",
   "space": "O(1)",
   "acceptance": 88.3
+ },
+ "sort-the-people": {
+  "number": 2418,
+  "title": "Sort the People",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 84.8
+ },
+ "number-of-good-paths": {
+  "number": 2421,
+  "title": "Number of Good Paths",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 56.5
  },
  "number-of-pairs-satisfying-inequality": {
   "number": 2426,
@@ -11698,6 +13322,13 @@
   "time": "O(n)",
   "space": "O(n) for the output"
  },
+ "minimize-maximum-of-array": {
+  "number": 2439,
+  "title": "Minimize Maximum of Array",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 46.6
+ },
  "minimum-cost-to-make-array-equal": {
   "number": 2448,
   "title": "Minimum Cost to Make Array Equal",
@@ -11712,6 +13343,27 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 46.8
+ },
+ "words-within-two-edits-of-dictionary": {
+  "number": 2452,
+  "title": "Words Within Two Edits of Dictionary",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 73.4
+ },
+ "next-greater-element-iv": {
+  "number": 2454,
+  "title": "Next Greater Element IV",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 42.3
+ },
+ "apply-operations-to-an-array": {
+  "number": 2460,
+  "title": "Apply Operations to an Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 74.7
  },
  "maximum-sum-of-distinct-subarrays-with-length-k": {
   "number": 2461,
@@ -11741,6 +13393,20 @@
   "time": "O(n)",
   "space": "O(n)"
  },
+ "maximum-number-of-non-overlapping-palindrome-substrings": {
+  "number": 2472,
+  "title": "Maximum Number of Non-overlapping Palindrome Substrings",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 44.9
+ },
+ "minimum-fuel-cost-to-report-to-the-capital": {
+  "number": 2477,
+  "title": "Minimum Fuel Cost to Report to the Capital",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 65.4
+ },
  "minimum-penalty-for-a-shop": {
   "number": 2483,
   "title": "Minimum Penalty for a Shop",
@@ -11754,6 +13420,20 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 71.2
+ },
+ "count-palindromic-subsequences": {
+  "number": 2484,
+  "title": "Count Palindromic Subsequences",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.5
+ },
+ "remove-nodes-from-linked-list": {
+  "number": 2487,
+  "title": "Remove Nodes From Linked List",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 75.0
  },
  "count-subarrays-with-median-k": {
   "number": 2488,
@@ -11769,6 +13449,13 @@
   "space": "O(n)",
   "acceptance": 48.8
  },
+ "minimum-score-of-a-path-between-two-cities": {
+  "number": 2492,
+  "title": "Minimum Score of a Path Between Two Cities",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 66.2
+ },
  "design-memory-allocator": {
   "number": 2502,
   "title": "Design Memory Allocator",
@@ -11782,6 +13469,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 50.1
+ },
+ "maximum-number-of-points-from-grid-queries": {
+  "number": 2503,
+  "title": "Maximum Number of Points From Grid Queries",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 59.2
+ },
+ "shortest-distance-to-target-string-in-a-circular-array": {
+  "number": 2515,
+  "title": "Shortest Distance to Target String in a Circular Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 65.2
  },
  "take-k-of-each-character-from-left-and-right": {
   "number": 2516,
@@ -11797,6 +13498,13 @@
   "space": "O(1)",
   "acceptance": 51.5
  },
+ "count-the-digits-that-divide-a-number": {
+  "number": 2520,
+  "title": "Count the Digits That Divide a Number",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.9
+ },
  "count-the-number-of-good-subsequences": {
   "number": 2539,
   "title": "Count the Number of Good Subsequences",
@@ -11810,6 +13518,20 @@
   "hint": "Count by common frequency: Fix the shared frequency f; each letter independently contributes C(count, f) ways or is left out.",
   "time": "O(26 * n) with precomputed binomials",
   "space": "O(n)"
+ },
+ "minimum-common-value": {
+  "number": 2540,
+  "title": "Minimum Common Value",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 60.8
+ },
+ "separate-the-digits-in-an-array": {
+  "number": 2553,
+  "title": "Separate the Digits in an Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.8
  },
  "rearranging-fruits": {
   "number": 2561,
@@ -11837,6 +13559,13 @@
   "hint": "Greedy on low bits: Look at the two lowest bits: a single 1 is removed by subtracting, a run of 1s is cheaper to clear by adding 1.",
   "time": "O(log n)",
   "space": "O(1)"
+ },
+ "left-and-right-sum-differences": {
+  "number": 2574,
+  "title": "Left and Right Sum Differences",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 89.6
  },
  "kth-largest-sum-in-a-binary-tree": {
   "number": 2583,
@@ -11935,6 +13664,34 @@
   "space": "O(1)",
   "acceptance": 82.4
  },
+ "sleep": {
+  "number": 2621,
+  "title": "Sleep",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 87.4
+ },
+ "cache-with-time-limit": {
+  "number": 2622,
+  "title": "Cache With Time Limit",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 76.2
+ },
+ "convert-object-to-json-string": {
+  "number": 2633,
+  "title": "Convert Object to JSON String",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 78.1
+ },
+ "row-with-maximum-ones": {
+  "number": 2643,
+  "title": "Row With Maximum Ones",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 74.2
+ },
  "sliding-subarray-beauty": {
   "number": 2653,
   "title": "Sliding Subarray Beauty",
@@ -11948,6 +13705,13 @@
   "time": "O(n * 50)",
   "space": "O(1)",
   "acceptance": 37.0
+ },
+ "find-the-prefix-common-array-of-two-arrays": {
+  "number": 2657,
+  "title": "Find the Prefix Common Array of Two Arrays",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 88.3
  },
  "first-completely-painted-row-or-column": {
   "number": 2661,
@@ -12015,6 +13779,27 @@
   "space": "O(1)",
   "acceptance": 63.3
  },
+ "extra-characters-in-a-string": {
+  "number": 2707,
+  "title": "Extra Characters in a String",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 57.4
+ },
+ "timeout-cancellation": {
+  "number": 2715,
+  "title": "Timeout Cancellation",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 89.6
+ },
+ "sort-by": {
+  "number": 2724,
+  "title": "Sort By",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 83.0
+ },
  "robot-collisions": {
   "number": 2751,
   "title": "Robot Collisions",
@@ -12028,6 +13813,20 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 61.6
+ },
+ "longest-even-odd-subarray-with-threshold": {
+  "number": 2760,
+  "title": "Longest Even Odd Subarray With Threshold",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 32.3
+ },
+ "continuous-subarrays": {
+  "number": 2762,
+  "title": "Continuous Subarrays",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 58.0
  },
  "maximum-number-of-jumps-to-reach-the-last-index": {
   "number": 2770,
@@ -12043,6 +13842,13 @@
   "space": "O(n)",
   "acceptance": 50.8
  },
+ "check-if-array-is-good": {
+  "number": 2784,
+  "title": "Check if Array is Good",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 57.3
+ },
  "split-strings-by-separator": {
   "number": 2788,
   "title": "Split Strings by Separator",
@@ -12056,6 +13862,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 76.2
+ },
+ "count-paths-that-can-form-a-palindrome-in-a-tree": {
+  "number": 2791,
+  "title": "Count Paths That Can Form a Palindrome in a Tree",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 52.7
  },
  "count-stepping-numbers-in-range": {
   "number": 2801,
@@ -12071,6 +13884,34 @@
   "space": "O(d)",
   "acceptance": 28.3
  },
+ "find-the-safest-path-in-a-grid": {
+  "number": 2812,
+  "title": "Find the Safest Path in a Grid",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 57.2
+ },
+ "max-pair-sum-in-an-array": {
+  "number": 2815,
+  "title": "Max Pair Sum in an Array",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 61.0
+ },
+ "furthest-point-from-origin": {
+  "number": 2833,
+  "title": "Furthest Point From Origin",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 77.1
+ },
+ "check-if-strings-can-be-made-equal-with-operations-i": {
+  "number": 2839,
+  "title": "Check if Strings Can be Made Equal With Operations I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 61.9
+ },
  "check-if-strings-can-be-made-equal-with-operations-ii": {
   "number": 2840,
   "title": "Check if Strings Can be Made Equal With Operations II",
@@ -12083,6 +13924,13 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 74.0
+ },
+ "count-symmetric-integers": {
+  "number": 2843,
+  "title": "Count Symmetric Integers",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 83.0
  },
  "minimum-edge-reversals-so-every-node-is-reachable": {
   "number": 2858,
@@ -12112,6 +13960,20 @@
   "space": "O(1)",
   "acceptance": 51.0
  },
+ "maximum-number-of-alloys": {
+  "number": 2861,
+  "title": "Maximum Number of Alloys",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 41.3
+ },
+ "create-a-dataframe-from-list": {
+  "number": 2877,
+  "title": "Create a DataFrame from List",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 80.9
+ },
  "display-the-first-three-rows": {
   "number": 2879,
   "title": "Display the First Three Rows",
@@ -12124,6 +13986,20 @@
   "time": "O(1)",
   "space": "O(1)",
   "acceptance": 93.0
+ },
+ "select-data": {
+  "number": 2880,
+  "title": "Select Data",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 78.4
+ },
+ "minimum-processing-time": {
+  "number": 2895,
+  "title": "Minimum Processing Time",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 70.6
  },
  "construct-product-matrix": {
   "number": 2906,
@@ -12153,6 +14029,27 @@
   "space": "O(n)",
   "acceptance": 25.3
  },
+ "subarrays-distinct-element-sum-of-squares-i": {
+  "number": 2913,
+  "title": "Subarrays Distinct Element Sum of Squares I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 80.3
+ },
+ "separate-black-and-white-balls": {
+  "number": 2938,
+  "title": "Separate Black and White Balls",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 63.9
+ },
+ "find-words-containing-character": {
+  "number": 2942,
+  "title": "Find Words Containing Character",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 90.4
+ },
  "maximize-area-of-square-hole-in-grid": {
   "number": 2943,
   "title": "Maximize Area of Square Hole in Grid",
@@ -12180,6 +14077,27 @@
   "time": "O(m*n)",
   "space": "O(1)",
   "acceptance": 74.3
+ },
+ "make-lexicographically-smallest-array-by-swapping-elements": {
+  "number": 2948,
+  "title": "Make Lexicographically Smallest Array by Swapping Elements",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.3
+ },
+ "count-the-number-of-infection-sequences": {
+  "number": 2954,
+  "title": "Count the Number of Infection Sequences",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 38.0
+ },
+ "find-common-elements-between-two-arrays": {
+  "number": 2956,
+  "title": "Find Common Elements Between Two Arrays",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 84.6
  },
  "find-missing-and-repeated-values": {
   "number": 2965,
@@ -12222,6 +14140,20 @@
   "space": "O(1)",
   "acceptance": 40.2
  },
+ "minimum-number-game": {
+  "number": 2974,
+  "title": "Minimum Number Game",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 85.6
+ },
+ "maximum-square-area-by-removing-fences-from-a-field": {
+  "number": 2975,
+  "title": "Maximum Square Area by Removing Fences From a Field",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 49.5
+ },
  "minimum-cost-to-convert-string-i": {
   "number": 2976,
   "title": "Minimum Cost to Convert String I",
@@ -12235,6 +14167,20 @@
   "time": "O(26^3 + n)",
   "space": "O(26^2)",
   "acceptance": 63.2
+ },
+ "minimum-cost-to-convert-string-ii": {
+  "number": 2977,
+  "title": "Minimum Cost to Convert String II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 59.6
+ },
+ "count-elements-with-maximum-frequency": {
+  "number": 3005,
+  "title": "Count Elements With Maximum Frequency",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 79.8
  },
  "divide-an-array-into-subarrays-with-minimum-cost-i": {
   "number": 3010,
@@ -12263,6 +14209,20 @@
   "time": "O(n log n)",
   "space": "O(n)",
   "acceptance": 54.7
+ },
+ "minimum-number-of-pushes-to-type-word-i": {
+  "number": 3014,
+  "title": "Minimum Number of Pushes to Type Word I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 67.3
+ },
+ "find-the-maximum-number-of-elements-in-subset": {
+  "number": 3020,
+  "title": "Find the Maximum Number of Elements in Subset",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 42.3
  },
  "maximum-good-subarray-sum": {
   "number": 3026,
@@ -12306,6 +14266,27 @@
   "space": "O(n)",
   "acceptance": 34.2
  },
+ "find-the-length-of-the-longest-common-prefix": {
+  "number": 3043,
+  "title": "Find the Length of the Longest Common Prefix",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 62.3
+ },
+ "find-the-largest-area-of-square-inside-two-rectangles": {
+  "number": 3047,
+  "title": "Find the Largest Area of Square Inside Two Rectangles",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 67.0
+ },
+ "count-submatrices-with-top-left-element-and-sum-less-than-k": {
+  "number": 3070,
+  "title": "Count Submatrices with Top-Left Element and Sum Less Than k",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 74.9
+ },
  "apple-redistribution-into-boxes": {
   "number": 3074,
   "title": "Apple Redistribution into Boxes",
@@ -12335,6 +14316,34 @@
   "space": "O(1)",
   "acceptance": 58.7
  },
+ "longest-common-suffix-queries": {
+  "number": 3093,
+  "title": "Longest Common Suffix Queries",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 52.6
+ },
+ "score-of-a-string": {
+  "number": 3110,
+  "title": "Score of a String",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 91.4
+ },
+ "count-the-number-of-special-characters-i": {
+  "number": 3120,
+  "title": "Count the Number of Special Characters I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 77.3
+ },
+ "count-the-number-of-special-characters-ii": {
+  "number": 3121,
+  "title": "Count the Number of Special Characters II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.4
+ },
  "find-all-possible-stable-binary-arrays-i": {
   "number": 3129,
   "title": "Find All Possible Stable Binary Arrays I",
@@ -12362,6 +14371,13 @@
   "time": "O(zeros*ones)",
   "space": "O(zeros*ones)",
   "acceptance": 58.9
+ },
+ "block-placement-queries": {
+  "number": 3161,
+  "title": "Block Placement Queries",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.4
  },
  "string-compression-iii": {
   "number": 3163,
@@ -12420,6 +14436,20 @@
   "space": "O(n)",
   "acceptance": 64.6
  },
+ "find-indices-of-stable-mountains": {
+  "number": 3285,
+  "title": "Find Indices of Stable Mountains",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 87.1
+ },
+ "find-a-safe-walk-through-a-grid": {
+  "number": 3286,
+  "title": "Find a Safe Walk Through a Grid",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 55.3
+ },
  "minimum-number-of-seconds-to-make-mountain-height-zero": {
   "number": 3296,
   "title": "Minimum Number of Seconds to Make Mountain Height Zero",
@@ -12433,6 +14463,20 @@
   "time": "O(n log)",
   "space": "O(1)",
   "acceptance": 58.3
+ },
+ "minimum-element-after-replacement-with-digit-sum": {
+  "number": 3300,
+  "title": "Minimum Element After Replacement With Digit Sum",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 89.6
+ },
+ "find-the-k-th-character-in-string-game-i": {
+  "number": 3304,
+  "title": "Find the K-th Character in String Game I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 81.5
  },
  "construct-the-minimum-bitwise-array-i": {
   "number": 3314,
@@ -12462,6 +14506,13 @@
   "space": "O(1)",
   "acceptance": 66.6
  },
+ "zero-array-transformation-ii": {
+  "number": 3356,
+  "title": "Zero Array Transformation II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 43.6
+ },
  "identify-the-largest-outlier-in-an-array": {
   "number": 3371,
   "title": "Identify the Largest Outlier in an Array",
@@ -12489,6 +14540,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 70.5
+ },
+ "maximum-area-rectangle-with-point-constraints-i": {
+  "number": 3380,
+  "title": "Maximum Area Rectangle With Point Constraints I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.2
  },
  "maximum-subarray-sum-with-length-divisible-by-k": {
   "number": 3381,
@@ -12543,6 +14601,13 @@
   "time": "O(m*n)",
   "space": "O(n)",
   "acceptance": 47.8
+ },
+ "minimize-the-maximum-edge-weight-of-graph": {
+  "number": 3419,
+  "title": "Minimize the Maximum Edge Weight of Graph",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 45.1
  },
  "count-partitions-with-even-sum-difference": {
   "number": 3432,
@@ -12601,6 +14666,13 @@
   "space": "O(n)",
   "acceptance": 59.6
  },
+ "length-of-longest-v-shaped-diagonal-segment": {
+  "number": 3459,
+  "title": "Length of Longest V-Shaped Diagonal Segment",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 56.2
+ },
  "maximum-sum-with-at-most-k-elements": {
   "number": 3462,
   "title": "Maximum Sum With at Most K Elements",
@@ -12615,6 +14687,27 @@
   "time": "O(m * n log)",
   "space": "O(m*n)",
   "acceptance": 60.8
+ },
+ "maximize-the-distance-between-points-on-a-square": {
+  "number": 3464,
+  "title": "Maximize the Distance Between Points on a Square",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 51.1
+ },
+ "lexicographically-smallest-generated-string": {
+  "number": 3474,
+  "title": "Lexicographically Smallest Generated String",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 53.5
+ },
+ "apply-substitutions": {
+  "number": 3481,
+  "title": "Apply Substitutions",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 77.9
  },
  "unique-3-digit-even-numbers": {
   "number": 3483,
@@ -12686,6 +14779,62 @@
   "space": "O(n)",
   "acceptance": 39.0
  },
+ "minimum-operations-to-make-array-sum-divisible-by-k": {
+  "number": 3512,
+  "title": "Minimum Operations to Make Array Sum Divisible by K",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 92.3
+ },
+ "path-existence-queries-in-a-graph-i": {
+  "number": 3532,
+  "title": "Path Existence Queries in a Graph I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 70.7
+ },
+ "path-existence-queries-in-a-graph-ii": {
+  "number": 3534,
+  "title": "Path Existence Queries in a Graph II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 64.6
+ },
+ "equal-sum-grid-partition-i": {
+  "number": 3546,
+  "title": "Equal Sum Grid Partition I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.9
+ },
+ "equal-sum-grid-partition-ii": {
+  "number": 3548,
+  "title": "Equal Sum Grid Partition II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 39.4
+ },
+ "grid-teleportation-traversal": {
+  "number": 3552,
+  "title": "Grid Teleportation Traversal",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 23.9
+ },
+ "number-of-ways-to-assign-edge-weights-i": {
+  "number": 3558,
+  "title": "Number of Ways to Assign Edge Weights I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.0
+ },
+ "number-of-ways-to-assign-edge-weights-ii": {
+  "number": 3559,
+  "title": "Number of Ways to Assign Edge Weights II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 72.5
+ },
  "minimum-absolute-difference-in-sliding-submatrix": {
   "number": 3567,
   "title": "Minimum Absolute Difference in Sliding Submatrix",
@@ -12699,6 +14848,27 @@
   "time": "O(m * n * k^2)",
   "space": "O(k^2)",
   "acceptance": 78.8
+ },
+ "best-time-to-buy-and-sell-stock-v": {
+  "number": 3573,
+  "title": "Best Time to Buy and Sell Stock V",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 60.6
+ },
+ "count-special-triplets": {
+  "number": 3583,
+  "title": "Count Special Triplets",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 47.1
+ },
+ "inverse-coin-change": {
+  "number": 3592,
+  "title": "Inverse Coin Change",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 52.5
  },
  "maximize-spanning-tree-stability-with-upgrades": {
   "number": 3600,
@@ -12714,6 +14884,27 @@
   "space": "O(V)",
   "acceptance": 66.3
  },
+ "process-string-with-special-operations-i": {
+  "number": 3612,
+  "title": "Process String with Special Operations I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 71.4
+ },
+ "process-string-with-special-operations-ii": {
+  "number": 3614,
+  "title": "Process String with Special Operations II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 39.8
+ },
+ "network-recovery-pathways": {
+  "number": 3620,
+  "title": "Network Recovery Pathways",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 50.9
+ },
  "minimum-jumps-to-reach-end-via-prime-teleportation": {
   "number": 3629,
   "title": "Minimum Jumps to Reach End via Prime Teleportation",
@@ -12727,6 +14918,13 @@
   "time": "O(n log log n)",
   "space": "O(n)",
   "acceptance": 44.9
+ },
+ "earliest-finish-time-for-land-and-water-rides-i": {
+  "number": 3633,
+  "title": "Earliest Finish Time for Land and Water Rides I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 73.0
  },
  "minimum-removals-to-balance-array": {
   "number": 3634,
@@ -12742,6 +14940,13 @@
   "space": "O(n)",
   "acceptance": 47.9
  },
+ "earliest-finish-time-for-land-and-water-rides-ii": {
+  "number": 3635,
+  "title": "Earliest Finish Time for Land and Water Rides II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 64.3
+ },
  "trionic-array-i": {
   "number": 3637,
   "title": "Trionic Array I",
@@ -12755,6 +14960,27 @@
   "time": "O(n)",
   "space": "O(1)",
   "acceptance": 49.5
+ },
+ "trionic-array-ii": {
+  "number": 3640,
+  "title": "Trionic Array II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 47.3
+ },
+ "flip-square-submatrix-vertically": {
+  "number": 3643,
+  "title": "Flip Square Submatrix Vertically",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 79.4
+ },
+ "maximum-k-to-sort-a-permutation": {
+  "number": 3644,
+  "title": "Maximum K to Sort a Permutation",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.5
  },
  "minimum-cost-path-with-edge-reversals": {
   "number": 3650,
@@ -12854,6 +15080,48 @@
   "space": "O(1)",
   "acceptance": 45.1
  },
+ "restore-finishing-order": {
+  "number": 3668,
+  "title": "Restore Finishing Order",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 91.4
+ },
+ "maximum-total-subarray-value-i": {
+  "number": 3689,
+  "title": "Maximum Total Subarray Value I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 71.9
+ },
+ "maximum-total-subarray-value-ii": {
+  "number": 3691,
+  "title": "Maximum Total Subarray Value II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 41.7
+ },
+ "number-of-zigzag-arrays-i": {
+  "number": 3699,
+  "title": "Number of ZigZag Arrays I",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 50.5
+ },
+ "number-of-zigzag-arrays-ii": {
+  "number": 3700,
+  "title": "Number of ZigZag Arrays II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 67.6
+ },
+ "maximum-partition-factor": {
+  "number": 3710,
+  "title": "Maximum Partition Factor",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 32.1
+ },
  "longest-balanced-substring-i": {
   "number": 3713,
   "title": "Longest Balanced Substring I",
@@ -12924,6 +15192,13 @@
   "space": "O(n)",
   "acceptance": 33.7
  },
+ "find-missing-elements": {
+  "number": 3731,
+  "title": "Find Missing Elements",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 83.3
+ },
  "minimum-time-to-complete-all-deliveries": {
   "number": 3733,
   "title": "Minimum Time to Complete All Deliveries",
@@ -12937,6 +15212,20 @@
   "time": "O(n log n)",
   "space": "O(1)",
   "acceptance": 35.3
+ },
+ "count-subarrays-with-majority-element-i": {
+  "number": 3737,
+  "title": "Count Subarrays With Majority Element I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 75.7
+ },
+ "longest-non-decreasing-subarray-after-replacing-at-most-one-element": {
+  "number": 3738,
+  "title": "Longest Non-Decreasing Subarray After Replacing at Most One Element",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 22.6
  },
  "minimum-distance-between-three-equal-elements-i": {
   "number": 3740,
@@ -12952,6 +15241,34 @@
   "space": "O(n)",
   "acceptance": 73.5
  },
+ "minimum-distance-between-three-equal-elements-ii": {
+  "number": 3741,
+  "title": "Minimum Distance Between Three Equal Elements II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 74.7
+ },
+ "maximum-path-score-in-a-grid": {
+  "number": 3742,
+  "title": "Maximum Path Score in a Grid",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 53.7
+ },
+ "maximize-cyclic-partition-score": {
+  "number": 3743,
+  "title": "Maximize Cyclic Partition Score",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 14.1
+ },
+ "total-waviness-of-numbers-in-range-i": {
+  "number": 3751,
+  "title": "Total Waviness of Numbers in Range I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 87.5
+ },
  "lexicographically-smallest-negated-permutation-that-sums-to-target": {
   "number": 3752,
   "title": "Lexicographically Smallest Negated Permutation that Sums to Target",
@@ -12966,6 +15283,27 @@
   "space": "O(n)",
   "acceptance": 31.2
  },
+ "total-waviness-of-numbers-in-range-ii": {
+  "number": 3753,
+  "title": "Total Waviness of Numbers in Range II",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 56.7
+ },
+ "concatenate-non-zero-digits-and-multiply-by-sum-i": {
+  "number": 3754,
+  "title": "Concatenate Non-Zero Digits and Multiply by Sum I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 66.3
+ },
+ "concatenate-non-zero-digits-and-multiply-by-sum-ii": {
+  "number": 3756,
+  "title": "Concatenate Non-Zero Digits and Multiply by Sum II",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 42.9
+ },
  "minimum-absolute-distance-between-mirror-pairs": {
   "number": 3761,
   "title": "Minimum Absolute Distance Between Mirror Pairs",
@@ -12979,6 +15317,13 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 59.2
+ },
+ "mirror-distance-of-an-integer": {
+  "number": 3783,
+  "title": "Mirror Distance of an Integer",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 91.5
  },
  "minimum-swaps-to-avoid-forbidden-values": {
   "number": 3785,
@@ -13036,6 +15381,27 @@
   "space": "O(1)",
   "acceptance": 31.8
  },
+ "maximum-capacity-within-budget": {
+  "number": 3814,
+  "title": "Maximum Capacity Within Budget",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 20.6
+ },
+ "design-auction-system": {
+  "number": 3815,
+  "title": "Design Auction System",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 41.9
+ },
+ "find-nth-smallest-integer-with-k-one-bits": {
+  "number": 3821,
+  "title": "Find Nth Smallest Integer With K One Bits",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 35.3
+ },
  "final-element-after-subarray-deletions": {
   "number": 3828,
   "title": "Final Element After Subarray Deletions",
@@ -13050,6 +15416,20 @@
   "time": "O(n)",
   "space": "O(n)",
   "acceptance": 40.6
+ },
+ "weighted-word-mapping": {
+  "number": 3838,
+  "title": "Weighted Word Mapping",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 90.6
+ },
+ "count-sequences-to-k": {
+  "number": 3850,
+  "title": "Count Sequences to K",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 36.1
  },
  "minimum-cost-to-split-into-ones": {
   "number": 3857,
@@ -13093,6 +15473,34 @@
   "space": "O(n^2)",
   "acceptance": 21.1
  },
+ "construct-uniform-parity-array-i": {
+  "number": 3875,
+  "title": "Construct Uniform Parity Array I",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 76.6
+ },
+ "traffic-signal-color": {
+  "number": 3894,
+  "title": "Traffic Signal Color",
+  "difficulty": "easy",
+  "topics": [],
+  "acceptance": 83.7
+ },
+ "minimum-operations-to-transform-array-into-alternating-prime": {
+  "number": 3896,
+  "title": "Minimum Operations to Transform Array into Alternating Prime",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 53.2
+ },
+ "good-subsequence-queries": {
+  "number": 3901,
+  "title": "Good Subsequence Queries",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 20.2
+ },
  "minimum-operations-to-make-array-non-decreasing": {
   "number": 3914,
   "title": "Minimum Operations to Make Array Non Decreasing",
@@ -13134,6 +15542,55 @@
   "time": "O(E log V)",
   "space": "O(V+E)",
   "acceptance": 31.6
+ },
+ "count-k-th-roots-in-a-range": {
+  "number": 3932,
+  "title": "Count K-th Roots in a Range",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 24.5
+ },
+ "minimum-operations-to-sort-a-permutation": {
+  "number": 3942,
+  "title": "Minimum Operations to Sort a Permutation",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 27.6
+ },
+ "maximum-number-of-items-from-sale-i": {
+  "number": 3946,
+  "title": "Maximum Number of Items From Sale I",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 37.3
+ },
+ "lexicographically-maximum-mex-array": {
+  "number": 3948,
+  "title": "Lexicographically Maximum MEX Array",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 57.2
+ },
+ "frequency-balance-subarray": {
+  "number": 3960,
+  "title": "Frequency Balance Subarray",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 29.1
+ },
+ "maximum-subarray-sum-after-at-most-k-swaps": {
+  "number": 3962,
+  "title": "Maximum Subarray Sum After at Most K Swaps",
+  "difficulty": "hard",
+  "topics": [],
+  "acceptance": 13.8
+ },
+ "maximum-subarray-sum-after-multiplier": {
+  "number": 3976,
+  "title": "Maximum Subarray Sum After Multiplier",
+  "difficulty": "medium",
+  "topics": [],
+  "acceptance": 25.7
  },
  "ctci-is-unique": {
   "number": 4001,

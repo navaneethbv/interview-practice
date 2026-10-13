@@ -23,10 +23,10 @@ class ReviewedReportTests(unittest.TestCase):
         self.assertEqual(row['sources'], {'hello': 1})
         self.assertEqual(row['evidence'], [observation])
 
-    def test_excludes_existing_list_entries(self):
+    def test_keeps_evidence_for_existing_list_entries(self):
         sets = [{'id': 'acme', 'kind': 'company', 'items': [{'slug': 'lru-cache'}]}]
         report = cc.reviewed_report([self.observation()], self.config, sets, self.known, 25)
-        self.assertEqual(report['companies'], {})
+        self.assertEqual(report['companies']['acme'][0]['evidence'], [self.observation()])
 
     def test_rejects_unknown_problem_company_and_source(self):
         for changes in [{'slug': 'invented'}, {'companies': ['invented']}, {'source': 'invented'}]:

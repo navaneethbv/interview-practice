@@ -42,6 +42,12 @@ export default async function SetPage({ params }: Readonly<{ params: Promise<{ s
         )}
       </PageHeader>
       <main className="mx-auto max-w-6xl px-4 py-6">
+        {set.snapshotDate && (
+          <p className="mb-4 text-sm text-fg-3">
+            “Last 30 days”, “Last 3 months” and “Last 6 months” refer to the snapshot ending on{" "}
+            <time dateTime={set.snapshotDate}>{set.snapshotDate}</time>. Website report dates appear under each problem’s sources.
+          </p>
+        )}
         <div className="mb-6">
           <ProgressPanel
             ids={rows.map((r) => lcProgressId(r.slug))}

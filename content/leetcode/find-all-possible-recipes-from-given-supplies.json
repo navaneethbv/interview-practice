@@ -1,0 +1,26 @@
+{
+  "id": "find-all-possible-recipes-from-given-supplies",
+  "style": "leetcode",
+  "function": {"python": "findAllRecipes", "java": "findAllRecipes"},
+  "params": [
+    {"name": "recipes", "type": "string[]"},
+    {"name": "ingredients", "type": "List<List<string>>"},
+    {"name": "supplies", "type": "string[]"}
+  ],
+  "returns": "List<string>",
+  "compare": "unordered",
+  "tests": [
+    {"input": [["dough", "pizza"], [["flour", "water"], ["dough", "tomato"]], ["flour", "water", "tomato"]], "expected": ["dough", "pizza"], "sample": true},
+    {"input": [["sauce", "stew"], [["stew"], ["sauce", "salt"]], ["salt"]], "expected": [], "sample": true},
+    {"input": [["tea"], [["water"]], ["water"]], "expected": ["tea"]},
+    {"input": [["tea"], [["water", "leaves"]], ["water"]], "expected": []},
+    {"input": [["tea"], [["water"]], ["salt"]], "expected": []},
+    {"input": [["a", "b", "c"], [["b"], ["c"], ["raw"]], ["raw"]], "expected": ["a", "b", "c"]},
+    {"input": [["a", "b", "c"], [["raw"], ["raw"], ["a", "b"]], ["raw"]], "expected": ["a", "b", "c"]},
+    {"input": [["a", "b", "c"], [["raw"], ["missing"], ["a", "b"]], ["raw"]], "expected": ["a"]},
+    {"input": [["a", "b", "c"], [["b"], ["a"], ["raw"]], ["raw"]], "expected": ["c"]},
+    {"input": [["a", "b", "c"], [["a"], ["a"], ["raw"]], ["raw"]], "expected": ["c"]},
+    {"input": [["a", "b", "c", "d"], [["raw"], ["a", "salt"], ["a", "b"], ["c", "raw"]], ["raw", "salt"]], "expected": ["a", "b", "c", "d"]},
+    {"input": [["a", "b", "c"], [["raw"], ["other"], ["a"]], ["raw", "other", "unused"]], "expected": ["a", "b", "c"]}
+  ]
+}

@@ -140,6 +140,7 @@ export function setRows(set: ProblemSet): SetRow[] {
     slug: it.slug,
     category: it.category,
     label: it.label,
+    reports: it.reports,
     available: authored.has(it.slug),
   }));
 }

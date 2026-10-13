@@ -11,8 +11,9 @@ Statements and write-ups are never stored. The crawler sends no cookies or crede
 robots.txt, waits between requests to the same host, backs off on 429/503 and stops a host after
 repeated failures. Pages behind a login or paywall are skipped, not worked around.
 
-Writes scripts/ingest/company_reports.json, which problem_sets.py merges into every company list
-as "Recent reports" items the list does not already have.
+Live runs print discovery JSON to stdout. Only an unfiltered --reviewed import writes
+scripts/ingest/company_reports.json. problem_sets.py retains its source evidence on existing rows
+and appends missing problems as "Website reports".
 
 Usage:
   python3 scripts/ingest/company_crawler.py [--sources leetcode,hellointerview] [--companies meta,google]
@@ -27,6 +28,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 import re
 import sys
 import time
@@ -36,7 +38,7 @@ import urllib.request
 import urllib.robotparser
 from collections import deque
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Callable
@@ -49,7 +51,7 @@ SETS = ROOT / "content" / "sets" / "sets.json"
 PROBLEMS = ROOT / "content" / "sets" / "problems.json"
 OBSERVATIONS = HERE / "company_report_observations.json"
 
-REPORT_CATEGORY = "Recent reports"
+REPORT_CATEGORY = "Website reports"
 COMPANY_ID = re.compile(r"[a-z0-9][a-z0-9-]*")
 LC_LINK = re.compile(r"leetcode\.(?:com|cn)/problems/([a-z0-9]+(?:-[a-z0-9]+)*)")
 # "LC 200", "LeetCode #200", "力扣 200": a problem cited by number, common in forum posts.
@@ -116,10 +118,13 @@ class Fetcher:
     opener: Opener = urllib_opener
     sleep: Callable[[float], None] = time.sleep
     clock: Callable[[], float] = time.monotonic
+    wall_clock: Callable[[], float] = time.time
+    cache_max_age: float = 86400
     max_failures: int = 3
     _robots: dict = field(default_factory=dict)
     _last: dict = field(default_factory=dict)
     _failures: dict = field(default_factory=dict)
+    fetched_at: dict[str, float | None] = field(default_factory=dict)
 
     def _cache_path(self, url: str) -> Path | None:
         if self.cache is None:
@@ -148,7 +153,7 @@ class Fetcher:
             parser = urllib.robotparser.RobotFileParser()
             if status == 200:
                 parser.parse(text.splitlines())
-            elif 400 <= status < 500:
+            elif status in (404, 410):
                 parser.allow_all = True  # No robots.txt: everything is allowed.
             else:
                 parser.disallow_all = True  # Unreachable or erroring: crawl nothing.
@@ -159,8 +164,19 @@ class Fetcher:
         path = self._cache_path(url)
         if path and path.is_file():
             # _cache_path validates the digest filename and resolved path containment.
-            entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083)
-            return entry["status"], entry["text"]
+            try:
+                entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083)
+                valid = (entry.get("url") == url and isinstance(entry.get("status"), int)
+                         and isinstance(entry.get("text"), str))
+                fetched = entry.get("fetchedAt")
+                has_timestamp = isinstance(fetched, (float, int)) and math.isfinite(fetched) and fetched >= 0
+                fresh = (has_timestamp
+                         and 0 <= self.wall_clock() - fetched < self.cache_max_age)
+                if valid and (self.offline or fresh):
+                    self.fetched_at[url] = fetched if has_timestamp else None
+                    return entry["status"], entry["text"]
+            except (ValueError, AttributeError, OSError):
+                pass  # Corrupt or old caches are misses, never evidence of an empty source.
         if self.offline:
             return 0, ""
         host = urllib.parse.urlsplit(url).netloc
@@ -171,12 +187,14 @@ class Fetcher:
             retry = headers.get("Retry-After", "")
             self.sleep(min(int(retry), 120) if retry.isdigit() else 30)
             status, text, headers = self._request(url)
-        if status == 200 or 400 <= status < 500:
+        if status == 200 or status in (404, 410):
+            self.fetched_at[url] = self.wall_clock()
             self._failures[host] = 0
             if path:
                 # Cache root is operator-selected; _cache_path enforces containment.
                 path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083)
-                path.write_text(json.dumps({"url": url, "status": status, "text": text}), encoding="utf8")  # NOSONAR(S2083)
+                path.write_text(json.dumps({"url": url, "status": status, "text": text,
+                                            "fetchedAt": self.fetched_at[url]}), encoding="utf8")  # NOSONAR(S2083)
         else:
             self._failures[host] = self._failures.get(host, 0) + 1
             if self._failures[host] == self.max_failures:
@@ -209,7 +227,7 @@ class _PageText(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in self.SKIP:
             self._skip += 1
-        if tag == "a":
+        if tag == "a" and not self._skip:
             href = dict(attrs).get("href")
             if href:
                 self.links.append(href)
@@ -245,9 +263,11 @@ class TitleIndex:
 
     def __init__(self, titles: dict[str, str], numbers: dict[int, str] | None = None):
         self.by_number = numbers or {}
+        self.exact_titles: dict[str, list[str]] = {}
         self.by_title: dict[str, str] = {}
         for slug, title in titles.items():
             key = normalize(title)
+            self.exact_titles.setdefault(key, []).append(slug)
             if len(key) >= 8 and " " in key:
                 self.by_title.setdefault(key, slug)
         names = sorted(self.by_title, key=len, reverse=True)
@@ -263,6 +283,57 @@ class TitleIndex:
         return found
 
 
+class _QuestionLinks(_PageText):
+    """Only visible anchor text; templates and embedded application state are excluded."""
+
+    def __init__(self):
+        super().__init__()
+        self.anchors: list[tuple[str, str]] = []
+        self._href: str | None = None
+        self._label: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        super().handle_starttag(tag, attrs)
+        if tag == "a" and not self._skip:
+            self._href = dict(attrs).get("href")
+            self._label = []
+
+    def handle_data(self, data):
+        if self._href and not self._skip:
+            self._label.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "a":
+            if self._href:
+                self.anchors.append((self._href, "".join(self._label).strip()))
+            self._href = None
+        super().handle_endtag(tag)
+
+
+def coding_list_observations(document: str, url: str, company: str, source: str, index: TitleIndex) -> list[dict]:
+    """1point3acres public coding-list links with unambiguous whole catalog titles."""
+    parser = _QuestionLinks()
+    parser.feed(document)
+    origin = urllib.parse.urlsplit(url).netloc
+    entries = {}
+    for href, title in parser.anchors:
+        target = urllib.parse.urljoin(url, href)
+        parts = urllib.parse.urlsplit(target)
+        if (parts.scheme != "https" or parts.netloc != origin or parts.username or parts.password
+                or not re.fullmatch(r"/interview/problems/[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}", parts.path)):
+            continue
+        candidates = index.exact_titles.get(normalize(title), [])
+        if len(candidates) != 1:
+            continue
+        slug = candidates[0]
+        entries[(slug, target)] = {
+            "slug": slug, "companies": [company], "source": source, "url": url, "questionUrl": target,
+            "sourceTitle": title, "observedAt": date.today().isoformat(),
+            "mapping": "Exact public coding-list title; no question-specific interview date exposed.",
+        }
+    return list(entries.values())
+
+
 # --------------------------------------------------------------------------- sources
 
 
@@ -272,6 +343,7 @@ class Tally:
 
     counts: dict[str, dict[str, dict[str, int]]] = field(default_factory=dict)
     meta: dict[str, dict] = field(default_factory=dict)
+    evidence: dict[tuple[str, str], list[dict]] = field(default_factory=dict)
 
     def add(self, company: str, slug: str, source: str, weight: int = 1):
         per = self.counts.setdefault(company, {}).setdefault(slug, {})
@@ -385,11 +457,22 @@ def start_urls(source: dict, key: str) -> list[str]:
     return urls
 
 
-def page_mentions(url: str, name: str, company: str, fetcher: Fetcher, tally: Tally, index: TitleIndex) -> list[str]:
+def page_mentions(url: str, name: str, company: str, fetcher: Fetcher, tally: Tally, index: TitleIndex,
+                  extractor: str | None = None) -> list[str]:
     document = fetcher.get(url)
     if document is None:
         return []
     text, links = page_text(document)
+    if extractor == "coding-list-links":
+        for entry in coding_list_observations(document, url, company, name, index):
+            fetched = fetcher.fetched_at.get(url)
+            if fetched is None:
+                entry.pop("observedAt")  # Legacy offline caches have no trustworthy retrieval date.
+            else:
+                entry["observedAt"] = datetime.fromtimestamp(fetched, timezone.utc).date().isoformat()
+            tally.add(company, entry["slug"], name)
+            tally.evidence.setdefault((company, entry["slug"]), []).append(entry)
+        return links
     for slug in index.find(text, links):
         tally.add(company, slug, name)
     return links
@@ -421,7 +504,7 @@ def crawl_pages(name: str, source: dict, company: str, fetcher: Fetcher, tally: 
         if url in visited:
             continue
         visited.add(url)
-        links = page_mentions(url, name, company, fetcher, tally, index)
+        links = page_mentions(url, name, company, fetcher, tally, index, source.get("extractor"))
         targets = follow_targets(url, links, matches, visited, remaining)
         queue.extend(targets)
         remaining -= len(targets)
@@ -433,7 +516,7 @@ def crawl_pages(name: str, source: dict, company: str, fetcher: Fetcher, tally: 
 def base_lists(sets: list[dict]) -> dict[str, set[str]]:
     """Problems each company list has before reports are merged in."""
     return {
-        s["id"]: {i["slug"] for i in s["items"] if i.get("category") != REPORT_CATEGORY}
+        s["id"]: {i["slug"] for i in s["items"] if i.get("category") not in (REPORT_CATEGORY, "Recent reports")}
         for s in sets if s["kind"] == "company"
     }
 
@@ -451,6 +534,10 @@ def build_report(tally: Tally, sources: dict, lists: dict[str, set[str]], known:
         if not ranked:
             continue
         companies[company] = [{"slug": slug, "sources": dict(sorted(per.items()))} for slug, per in ranked]
+        for row in companies[company]:
+            evidence = tally.evidence.get((company, row["slug"]))
+            if evidence:
+                row["evidence"] = evidence
         for slug, _ in ranked:
             if slug not in known:
                 needed[slug] = tally.meta[slug]
@@ -497,23 +584,25 @@ def reviewed_report(entries: list[dict], config: dict, sets: list[dict], known: 
         source, slug = entry["source"], entry["slug"]
         if source not in config["sources"] or slug not in known:
             raise ValueError("Reviewed observation has an unknown source or problem")
-        url = urllib.parse.urlsplit(entry["url"])
         home = urllib.parse.urlsplit(config["sources"][source]["home"])
-        if url.scheme != "https" or url.netloc != home.netloc or url.username or url.password:
-            raise ValueError("Reviewed observation URL must be on its public source host")
+        for value in (entry["url"], entry.get("questionUrl", entry["url"])):
+            url = urllib.parse.urlsplit(value)
+            if url.scheme != "https" or url.netloc != home.netloc or url.username or url.password:
+                raise ValueError("Reviewed observation URL must be on its public source host")
         observed = date.fromisoformat(entry["observedAt"])
         if observed > date.today():
             raise ValueError("Reviewed observation cannot have a future retrieval date")
         if not entry["companies"] or any(company not in lists for company in entry["companies"]):
             raise ValueError("Reviewed observation has an unknown or empty company list")
         for company in entry["companies"]:
-            key = (company, slug, source, entry["url"])
+            key = (company, slug, source, entry.get("questionUrl", entry["url"]))
             if key in seen:
                 continue
             seen.add(key)
             tally.add(company, slug, source)
             evidence.setdefault((company, slug), []).append(entry)
-    report = build_report(tally, config["sources"], lists, known, max_new)
+    # Keep evidence even when a snapshot already contains the same problem.
+    report = build_report(tally, config["sources"], {}, known, max_new)
     report["generatedAt"] = max((entry["observedAt"] for entry in entries), default=date.today().isoformat())
     report["_comment"] = "Generated by company_crawler.py --reviewed from reviewed public observations. Dates are source-reported, not independently verified interview dates."
     for company, rows in report["companies"].items():
@@ -527,12 +616,14 @@ def main(argv: list[str]):
     sets = json.loads(SETS.read_text(encoding="utf8"))
     known = json.loads(PROBLEMS.read_text(encoding="utf8"))
     all_companies = [s["id"] for s in sets if s["kind"] == "company"]
-    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0], allow_abbrev=False)
     verified = [name for name, source in config["sources"].items() if source.get("verified", False)]
     parser.add_argument("--sources", default=",".join(verified),
                         help="comma-separated source names (default: only sources marked verified in crawl_sources.json)")
     parser.add_argument("--companies", default=",".join(all_companies), help="comma-separated company list ids")
     parser.add_argument("--cache", type=Path, help="directory caching fetched pages between runs")
+    parser.add_argument("--cache-max-age", type=float, default=86400,
+                        help="cache lifetime in seconds (default: 86400; 0 always refreshes; offline ignores age)")
     parser.add_argument("--offline", action="store_true", help="use only cached pages")
     parser.add_argument("--reviewed", action="store_true",
                         help="rebuild offline from company_report_observations.json; no live crawling")
@@ -541,32 +632,42 @@ def main(argv: list[str]):
     parser.add_argument("--max-new", type=int, default=25, help="reported problems added per company")
     parser.add_argument("--dry-run", action="store_true", help="print the report instead of writing it")
     args = parser.parse_args(argv)
+    for label, value in [("delay", args.delay), ("cache-max-age", args.cache_max_age)]:
+        if not math.isfinite(value) or value < 0:
+            parser.error(f"--{label} must be a finite non-negative number")
+    if args.max_new < 1:
+        parser.error("--max-new must be positive")
+    filters = ("--sources", "--companies", "--max-new")
+    if args.reviewed and not args.dry_run and any(arg.split("=", 1)[0] in filters for arg in argv):
+        parser.error("filtered --reviewed runs require --dry-run; rebuild the complete manifest to update the report")
 
     names = [n for n in args.sources.split(",") if n]
     unknown = [n for n in names if n not in config["sources"]]
     if unknown:
         parser.error(f"unknown sources: {', '.join(unknown)}")
     companies = [c for c in args.companies.split(",") if c]
-    bad = [c for c in companies if not COMPANY_ID.fullmatch(c)]
+    bad = [c for c in companies if not COMPANY_ID.fullmatch(c) or c not in all_companies]
     if bad:
         parser.error(f"invalid company ids: {', '.join(bad)}")
-    fetcher = Fetcher(config["user_agent"], delay=args.delay, cache=args.cache, offline=args.offline)
+    fetcher = Fetcher(config["user_agent"], delay=args.delay, cache=args.cache, offline=args.offline,
+                      cache_max_age=args.cache_max_age)
     if args.reviewed:
         entries = json.loads(OBSERVATIONS.read_text(encoding="utf8"))["observations"]
         explicit_sources = any(arg == "--sources" or arg.startswith("--sources=") for arg in argv)
         entries = [entry for entry in entries if entry["source"] in names] if explicit_sources else entries
         entries = [{**entry, "companies": [c for c in entry["companies"] if c in companies]} for entry in entries]
-        report = reviewed_report([entry for entry in entries if entry["companies"]], config, sets, known, args.max_new)
+        limit = args.max_new if args.dry_run else max(len(entries), args.max_new)
+        report = reviewed_report([entry for entry in entries if entry["companies"]], config, sets, known, limit)
     else:
         report = run(config, names, companies, fetcher, sets, known, args.snapshot_out, args.max_new)
     text = json.dumps(report, indent=1, ensure_ascii=False) + "\n"
-    if args.dry_run:
+    if args.dry_run or not args.reviewed:
         print(text)
         return
     # OUT is the fixed module-owned report path, never a CLI argument.
     OUT.write_text(text, encoding="utf8")  # NOSONAR(S2083)
     for company, items in report["companies"].items():
-        print(f"{company}: {len(items)} reported problems not yet listed")
+        print(f"{company}: {len(items)} problems with reviewed source evidence")
 
 
 if __name__ == "__main__":

@@ -175,23 +175,37 @@ def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
     data = json.loads(source.read_text(encoding="utf8"))
     extras_file = source.with_name("company_extras.json")
     extras = json.loads(extras_file.read_text(encoding="utf8")) if extras_file.is_file() else {}
-    existing = {item["id"] for item in sets}
+    existing = {item["id"]: item for item in sets}
     for item in data["sets"]:
-        if item["id"] in existing:
-            raise ValueError(f"Duplicate company list: {item['id']}")
+        previous = existing.get(item["id"])
+        if previous and previous["kind"] != "company":
+            raise ValueError(f"Snapshot cannot replace curated list: {item['id']}")
         for entry in item["items"]:
             problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
         items = list(item["items"])
         listed = {entry["slug"] for entry in items}
+        if previous:
+            items.extend({**entry, "category": "Workbook · date unavailable"}
+                         for entry in previous["items"] if entry["slug"] not in listed)
+            listed.update(entry["slug"] for entry in items)
+        before_extras = len(items)
         items.extend(company_extras(extras, item["id"], problems, listed))
         description = item["description"]
-        if len(items) > len(item["items"]):
+        if previous and before_extras > len(item["items"]):
+            description += " Older workbook entries are retained with no interview date asserted."
+        if len(items) > before_extras:
             description += " Also includes problems described in candidate write-ups, marked by their category."
-        sets.append({**item, "description": description, "items": items, "sourceUrl": SNAPSHOT_URL, "sourceLabel": "Community LeetCode company-tag snapshot"})
+        merged = {**(previous or {}), **item, "description": description, "items": items,
+                  "sourceUrl": item.get("sourceUrl", SNAPSHOT_URL),
+                  "sourceLabel": item.get("sourceLabel", "Community LeetCode company-tag snapshot")}
+        if previous:
+            previous.update(merged)
+        else:
+            sets.append(merged)
 
 
 SNAPSHOT_URL = "https://github.com/snehasishroy/leetcode-companywise-interview-questions"
-REPORT_CATEGORY = "Recent reports"
+REPORT_CATEGORY = "Website reports"
 
 
 def merge_company_reports(sets: list[dict], problems: dict[str, dict]):
@@ -204,21 +218,23 @@ def merge_company_reports(sets: list[dict], problems: dict[str, dict]):
         reports = data["companies"].get(item["id"]) if item["kind"] == "company" else None
         if not reports:
             continue
-        listed = {entry["slug"] for entry in item["items"]}
-        added = 0
+        listed = {entry["slug"]: entry for entry in item["items"]}
         for report in reports:
             slug = report["slug"]
-            meta = problems.get(slug) or data["problems"].get(slug)
-            if slug in listed or meta is None:
+            meta = problems.get(slug, data["problems"].get(slug))
+            if meta is None:
                 continue
             problems.setdefault(slug, meta)
-            item["items"].append({"slug": slug, "category": REPORT_CATEGORY})
-            listed.add(slug)
-            added += 1
-        if added:
-            labels = sorted({data["sources"][name]["label"] for report in reports for name in report["sources"]})
-            item["description"] += (f" The \"{REPORT_CATEGORY}\" category adds {added} problems reported on {', '.join(labels)}"
-                                    f" as of {data['generatedAt']}.")
+            if slug not in listed:
+                listed[slug] = {"slug": slug, "category": REPORT_CATEGORY}
+                item["items"].append(listed[slug])
+            listed[slug]["reports"] = [
+                {"label": data["sources"][e["source"]]["label"], "url": e.get("questionUrl", e["url"]),
+                 **{key: e[key] for key in ("observedAt", "lastAsked", "dateScope", "mapping") if key in e}}
+                for e in report.get("evidence", [])
+            ]
+        item["description"] += (f" Website reports checked through {data['generatedAt']}; "
+                                "source-reported dates and company attributions are not independently verified.")
 
 
 def main(workbook: str):

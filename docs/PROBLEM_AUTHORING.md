@@ -9,8 +9,8 @@ The importer reconciles that sheet with the 150-entry official snapshot in `scri
 The reconciliation reuses existing slugs, including the historical Add and Search Word slug, so saved progress is preserved.
 LC 659 is merged into LC 271 as the workbook's duplicate entry.
 
-Company lists beyond the workbook (NVIDIA, OpenAI, Anthropic) come from `scripts/ingest/company_lists.json`, built by `company_lists.py` from a recency-bucketed LeetCode company-tag snapshot, plus `company_extras.json` for problems described in candidate write-ups.
-Rebuild with `python3 scripts/ingest/company_lists.py <snapshot-dir> <id>=<Title> ...`, then rerun the workbook importer.
+All nine company lists receive dated snapshots from `scripts/ingest/company_lists.json`, built by `company_lists.py`, plus `company_extras.json` and reviewed website observations. Snapshot rows take precedence over workbook membership while authored metadata and workbook-only problems are preserved.
+Use `--snapshot-date YYYY-MM-DD --revision <full-upstream-sha>` for dated, pinned source links. `--recent-only` selects the snapshot's first three recency buckets. See [the October 13 review](COMPANY_CRAWL_2026-10-13.md) for exact reproduction commands and coverage.
 
 For each slug, author an original `content/leetcode/<slug>.md` statement, a `<slug>.json` spec, and a Python `<slug>.py` reference.
 Set `id` to the filename slug and `style` to `leetcode`.
