@@ -49,6 +49,23 @@ class FreshFetchTests(unittest.TestCase):
         _, links = cc.page_text('<template><a href="https://leetcode.com/problems/two-sum">Two Sum</a></template>')
         self.assertEqual(links, [])
 
+    def test_cache_destination_is_revalidated_after_the_network_request(self):
+        url = 'https://test.test/page'
+        with tempfile.TemporaryDirectory() as directory, tempfile.TemporaryDirectory() as outside:
+            target = Path(outside) / 'protected.json'
+            target.write_text('unchanged')
+            fetcher = cc.Fetcher('test', cache=Path(directory), delay=0)
+            path = fetcher._cache_path(url)
+
+            def replace_destination(_request_url, _headers):
+                path.symlink_to(target)
+                return 200, 'page', {}
+
+            fetcher.opener = replace_destination
+            with self.assertRaises(ValueError):
+                fetcher._cached(url)
+            self.assertEqual(target.read_text(), 'unchanged')
+
 
 class SafeRefreshTests(unittest.TestCase):
     def test_live_discovery_never_overwrites_reviewed_report(self):

@@ -186,11 +186,12 @@ class Fetcher:
             status, text, _ = self._request(url)
         return status, text
 
-    def _record_response(self, url: str, path: Path | None, status: int, text: str):
+    def _record_response(self, url: str, status: int, text: str):
         host = urllib.parse.urlsplit(url).netloc
         if status in (200, 404, 410):
             self.fetched_at[url] = self.wall_clock()
             self._failures[host] = 0
+            path = self._cache_path(url)
             if path:
                 # Cache root is operator-selected; _cache_path enforces containment.
                 path.parent.mkdir(parents=True, exist_ok=True)  # NOSONAR(S2083)
@@ -210,7 +211,7 @@ class Fetcher:
         if self.offline or self._failures.get(host, 0) >= self.max_failures:
             return 0, ""
         status, text = self._request_with_retry(url)
-        self._record_response(url, path, status, text)
+        self._record_response(url, status, text)
         return status, text
 
     def get(self, url: str) -> str | None:
