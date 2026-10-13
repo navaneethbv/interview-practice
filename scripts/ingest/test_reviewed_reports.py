@@ -30,18 +30,21 @@ class ReviewedReportTests(unittest.TestCase):
 
     def test_rejects_unknown_problem_company_and_source(self):
         for changes in [{'slug': 'invented'}, {'companies': ['invented']}, {'source': 'invented'}]:
+            observation = self.observation(**changes)
             with self.subTest(changes=changes), self.assertRaises(ValueError):
-                self.report([self.observation(**changes)])
+                self.report([observation])
 
     def test_rejects_non_source_and_credential_urls(self):
         for url in ['http://hello.test/x', 'https://evil.test/x', 'https://user:secret@hello.test/x']:
+            observation = self.observation(url=url)
             with self.subTest(url=url), self.assertRaises(ValueError):
-                self.report([self.observation(url=url)])
+                self.report([observation])
 
     def test_rejects_invalid_and_future_observation_dates(self):
         for value in ['yesterday', '9999-01-01']:
+            observation = self.observation(observedAt=value)
             with self.subTest(value=value), self.assertRaises(ValueError):
-                self.report([self.observation(observedAt=value)])
+                self.report([observation])
 
     def test_does_not_invent_last_asked_date(self):
         observation = self.observation()

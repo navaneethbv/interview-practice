@@ -160,34 +160,35 @@ class Fetcher:
             self._robots[origin] = parser
         return self._robots[origin].can_fetch(self.user_agent, url)
 
-    def _cached(self, url: str) -> tuple[int, str]:
-        path = self._cache_path(url)
-        if path and path.is_file():
-            # _cache_path validates the digest filename and resolved path containment.
-            try:
-                entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083)
-                valid = (entry.get("url") == url and isinstance(entry.get("status"), int)
-                         and isinstance(entry.get("text"), str))
-                fetched = entry.get("fetchedAt")
-                has_timestamp = isinstance(fetched, (float, int)) and math.isfinite(fetched) and fetched >= 0
-                fresh = (has_timestamp
-                         and 0 <= self.wall_clock() - fetched < self.cache_max_age)
-                if valid and (self.offline or fresh):
-                    self.fetched_at[url] = fetched if has_timestamp else None
-                    return entry["status"], entry["text"]
-            except (ValueError, AttributeError, OSError):
-                pass  # Corrupt or old caches are misses, never evidence of an empty source.
-        if self.offline:
-            return 0, ""
-        host = urllib.parse.urlsplit(url).netloc
-        if self._failures.get(host, 0) >= self.max_failures:
-            return 0, ""
+    def _read_cached(self, url: str, path: Path | None) -> tuple[int, str] | None:
+        if path is None or not path.is_file():
+            return None
+        # _cache_path validates the digest filename and resolved path containment.
+        try:
+            entry = json.loads(path.read_text(encoding="utf8"))  # NOSONAR(S2083)
+            valid = (entry.get("url") == url and isinstance(entry.get("status"), int)
+                     and isinstance(entry.get("text"), str))
+            fetched = entry.get("fetchedAt")
+            has_timestamp = isinstance(fetched, (float, int)) and math.isfinite(fetched) and fetched >= 0
+            fresh = has_timestamp and 0 <= self.wall_clock() - fetched < self.cache_max_age
+            if valid and (self.offline or fresh):
+                self.fetched_at[url] = fetched if has_timestamp else None
+                return entry["status"], entry["text"]
+        except (ValueError, AttributeError, OSError):
+            pass  # Corrupt or old caches are misses, never evidence of an empty source.
+        return None
+
+    def _request_with_retry(self, url: str) -> tuple[int, str]:
         status, text, headers = self._request(url)
         if status in (429, 503):
             retry = headers.get("Retry-After", "")
             self.sleep(min(int(retry), 120) if retry.isdigit() else 30)
-            status, text, headers = self._request(url)
-        if status == 200 or status in (404, 410):
+            status, text, _ = self._request(url)
+        return status, text
+
+    def _record_response(self, url: str, path: Path | None, status: int, text: str):
+        host = urllib.parse.urlsplit(url).netloc
+        if status in (200, 404, 410):
             self.fetched_at[url] = self.wall_clock()
             self._failures[host] = 0
             if path:
@@ -199,6 +200,17 @@ class Fetcher:
             self._failures[host] = self._failures.get(host, 0) + 1
             if self._failures[host] == self.max_failures:
                 log(f"  giving up on {host} after {self.max_failures} failures")
+
+    def _cached(self, url: str) -> tuple[int, str]:
+        path = self._cache_path(url)
+        cached = self._read_cached(url, path)
+        if cached is not None:
+            return cached
+        host = urllib.parse.urlsplit(url).netloc
+        if self.offline or self._failures.get(host, 0) >= self.max_failures:
+            return 0, ""
+        status, text = self._request_with_retry(url)
+        self._record_response(url, path, status, text)
         return status, text
 
     def get(self, url: str) -> str | None:
@@ -570,6 +582,22 @@ def run(config: dict, source_names: list[str], companies: list[str], fetcher: Fe
     return build_report(tally, sources, base_lists(sets), known, max_new)
 
 
+def validate_observation(entry: dict, sources: dict, known: dict, companies: dict):
+    """Validate source attribution before an observation contributes to the report."""
+    if entry["source"] not in sources or entry["slug"] not in known:
+        raise ValueError("Reviewed observation has an unknown source or problem")
+    home = urllib.parse.urlsplit(sources[entry["source"]]["home"])
+    for value in (entry["url"], entry.get("questionUrl", entry["url"])):
+        url = urllib.parse.urlsplit(value)
+        if url.scheme != "https" or url.netloc != home.netloc or url.username or url.password:
+            raise ValueError("Reviewed observation URL must be on its public source host")
+    observed = date.fromisoformat(entry["observedAt"])
+    if observed > date.today():
+        raise ValueError("Reviewed observation cannot have a future retrieval date")
+    if not entry["companies"] or any(company not in companies for company in entry["companies"]):
+        raise ValueError("Reviewed observation has an unknown or empty company list")
+
+
 def reviewed_report(entries: list[dict], config: dict, sets: list[dict], known: dict, max_new: int) -> dict:
     """Rebuild from human-reviewed public cards, without treating page-wide matches as evidence.
 
@@ -581,19 +609,8 @@ def reviewed_report(entries: list[dict], config: dict, sets: list[dict], known: 
     evidence: dict[tuple[str, str], list[dict]] = {}
     seen = set()
     for entry in entries:
+        validate_observation(entry, config["sources"], known, lists)
         source, slug = entry["source"], entry["slug"]
-        if source not in config["sources"] or slug not in known:
-            raise ValueError("Reviewed observation has an unknown source or problem")
-        home = urllib.parse.urlsplit(config["sources"][source]["home"])
-        for value in (entry["url"], entry.get("questionUrl", entry["url"])):
-            url = urllib.parse.urlsplit(value)
-            if url.scheme != "https" or url.netloc != home.netloc or url.username or url.password:
-                raise ValueError("Reviewed observation URL must be on its public source host")
-        observed = date.fromisoformat(entry["observedAt"])
-        if observed > date.today():
-            raise ValueError("Reviewed observation cannot have a future retrieval date")
-        if not entry["companies"] or any(company not in lists for company in entry["companies"]):
-            raise ValueError("Reviewed observation has an unknown or empty company list")
         for company in entry["companies"]:
             key = (company, slug, source, entry.get("questionUrl", entry["url"]))
             if key in seen:
@@ -611,11 +628,7 @@ def reviewed_report(entries: list[dict], config: dict, sets: list[dict], known: 
     return report
 
 
-def main(argv: list[str]):
-    config = json.loads(CONFIG.read_text(encoding="utf8"))
-    sets = json.loads(SETS.read_text(encoding="utf8"))
-    known = json.loads(PROBLEMS.read_text(encoding="utf8"))
-    all_companies = [s["id"] for s in sets if s["kind"] == "company"]
+def argument_parser(config: dict, all_companies: list[str]) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0], allow_abbrev=False)
     verified = [name for name, source in config["sources"].items() if source.get("verified", False)]
     parser.add_argument("--sources", default=",".join(verified),
@@ -631,7 +644,10 @@ def main(argv: list[str]):
     parser.add_argument("--snapshot-out", type=Path, help="also save snapshot CSVs here for company_lists.py")
     parser.add_argument("--max-new", type=int, default=25, help="reported problems added per company")
     parser.add_argument("--dry-run", action="store_true", help="print the report instead of writing it")
-    args = parser.parse_args(argv)
+    return parser
+
+
+def validate_limits(args: argparse.Namespace, argv: list[str], parser: argparse.ArgumentParser):
     for label, value in [("delay", args.delay), ("cache-max-age", args.cache_max_age)]:
         if not math.isfinite(value) or value < 0:
             parser.error(f"--{label} must be a finite non-negative number")
@@ -641,6 +657,11 @@ def main(argv: list[str]):
     if args.reviewed and not args.dry_run and any(arg.split("=", 1)[0] in filters for arg in argv):
         parser.error("filtered --reviewed runs require --dry-run; rebuild the complete manifest to update the report")
 
+
+def parse_args(argv: list[str], config: dict, all_companies: list[str]):
+    parser = argument_parser(config, all_companies)
+    args = parser.parse_args(argv)
+    validate_limits(args, argv, parser)
     names = [n for n in args.sources.split(",") if n]
     unknown = [n for n in names if n not in config["sources"]]
     if unknown:
@@ -649,6 +670,15 @@ def main(argv: list[str]):
     bad = [c for c in companies if not COMPANY_ID.fullmatch(c) or c not in all_companies]
     if bad:
         parser.error(f"invalid company ids: {', '.join(bad)}")
+    return args, names, companies
+
+
+def main(argv: list[str]):
+    config = json.loads(CONFIG.read_text(encoding="utf8"))
+    sets = json.loads(SETS.read_text(encoding="utf8"))
+    known = json.loads(PROBLEMS.read_text(encoding="utf8"))
+    all_companies = [s["id"] for s in sets if s["kind"] == "company"]
+    args, names, companies = parse_args(argv, config, all_companies)
     fetcher = Fetcher(config["user_agent"], delay=args.delay, cache=args.cache, offline=args.offline,
                       cache_max_age=args.cache_max_age)
     if args.reviewed:

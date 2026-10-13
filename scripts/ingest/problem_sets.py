@@ -167,6 +167,26 @@ def company_extras(extras, company_id, problems, listed):
             yield extra
 
 
+def merge_company_snapshot(item: dict, previous: dict | None, extras: dict, problems: dict) -> dict:
+    """Combine one snapshot with preserved workbook entries and candidate extras."""
+    items = list(item["items"])
+    listed = {entry["slug"] for entry in items}
+    if previous:
+        items.extend({**entry, "category": "Workbook · date unavailable"}
+                     for entry in previous["items"] if entry["slug"] not in listed)
+        listed.update(entry["slug"] for entry in items)
+    before_extras = len(items)
+    items.extend(company_extras(extras, item["id"], problems, listed))
+    description = item["description"]
+    if previous and before_extras > len(item["items"]):
+        description += " Older workbook entries are retained with no interview date asserted."
+    if len(items) > before_extras:
+        description += " Also includes problems described in candidate write-ups, marked by their category."
+    return {**(previous or {}), **item, "description": description, "items": items,
+            "sourceUrl": item.get("sourceUrl", SNAPSHOT_URL),
+            "sourceLabel": item.get("sourceLabel", "Community LeetCode company-tag snapshot")}
+
+
 def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
     """Append company lists built by company_lists.py; workbook and authored metadata take precedence."""
     source = Path(__file__).with_name("company_lists.json")
@@ -182,22 +202,7 @@ def merge_company_lists(sets: list[dict], problems: dict[str, dict]):
             raise ValueError(f"Snapshot cannot replace curated list: {item['id']}")
         for entry in item["items"]:
             problems.setdefault(entry["slug"], data["problems"][entry["slug"]])
-        items = list(item["items"])
-        listed = {entry["slug"] for entry in items}
-        if previous:
-            items.extend({**entry, "category": "Workbook · date unavailable"}
-                         for entry in previous["items"] if entry["slug"] not in listed)
-            listed.update(entry["slug"] for entry in items)
-        before_extras = len(items)
-        items.extend(company_extras(extras, item["id"], problems, listed))
-        description = item["description"]
-        if previous and before_extras > len(item["items"]):
-            description += " Older workbook entries are retained with no interview date asserted."
-        if len(items) > before_extras:
-            description += " Also includes problems described in candidate write-ups, marked by their category."
-        merged = {**(previous or {}), **item, "description": description, "items": items,
-                  "sourceUrl": item.get("sourceUrl", SNAPSHOT_URL),
-                  "sourceLabel": item.get("sourceLabel", "Community LeetCode company-tag snapshot")}
+        merged = merge_company_snapshot(item, previous, extras, problems)
         if previous:
             previous.update(merged)
         else:

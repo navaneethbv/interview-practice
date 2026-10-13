@@ -71,6 +71,37 @@ def read_company(folder: Path, recent_only: bool = False):
     return items, {s: seen[s]["meta"] for s in slugs}
 
 
+def company_folder(snapshot: Path, company_id: str) -> Path:
+    """Resolve a company folder without allowing traversal outside the snapshot."""
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", company_id):
+        raise ValueError("Company ID must be a lowercase slug")
+    folder = (snapshot / company_id).resolve()
+    if not folder.is_relative_to(snapshot):
+        raise ValueError("Company folder must stay inside the snapshot")
+    if not folder.is_dir():
+        raise SystemExit(f"No folder for {company_id} in {snapshot}")
+    return folder
+
+
+def snapshot_entry(company_id: str, title: str, items: list[dict], snapshot_label: str,
+                   snapshot_date: str | None, revision: str | None) -> dict:
+    entry = {
+        "id": company_id,
+        "title": title,
+        "kind": "company",
+        "description": (f"Community LeetCode tags for {title} ({snapshot_label}). "
+                        "Recency buckets are relative to the snapshot date, not today."),
+        "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions" + (f"/tree/{revision}/{company_id}" if revision else ""),
+        "sourceLabel": f"LeetCode tag snapshot · {snapshot_date or snapshot_label}",
+        "items": items,
+    }
+    if snapshot_date:
+        entry["snapshotDate"] = snapshot_date
+    if revision:
+        entry["sourceRevision"] = revision
+    return entry
+
+
 def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str, *,
           recent_only: bool = False, snapshot_date: str | None = None, revision: str | None = None) -> dict:
     snapshot = snapshot.resolve(strict=True)
@@ -80,30 +111,11 @@ def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str,
         raise ValueError("Snapshot revision must be a full commit SHA")
     data = json.loads(OUT.read_text(encoding="utf8")) if OUT.is_file() else {"sets": [], "problems": {}}
     for company_id, title in companies:
-        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", company_id):
-            raise ValueError("Company ID must be a lowercase slug")
-        folder = (snapshot / company_id).resolve()
-        if not folder.is_relative_to(snapshot):
-            raise ValueError("Company folder must stay inside the snapshot")
-        if not folder.is_dir():
-            raise SystemExit(f"No folder for {company_id} in {snapshot}")
+        folder = company_folder(snapshot, company_id)
         items, problems = read_company(folder, recent_only)
         if not items:
             raise SystemExit(f"No problems found for {company_id}")
-        entry = {
-            "id": company_id,
-            "title": title,
-            "kind": "company",
-            "description": (f"Community LeetCode tags for {title} ({snapshot_label}). "
-                            "Recency buckets are relative to the snapshot date, not today."),
-            "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions" + (f"/tree/{revision}/{company_id}" if revision else ""),
-            "sourceLabel": f"LeetCode tag snapshot · {snapshot_date or snapshot_label}",
-            "items": items,
-        }
-        if snapshot_date:
-            entry["snapshotDate"] = snapshot_date
-        if revision:
-            entry["sourceRevision"] = revision
+        entry = snapshot_entry(company_id, title, items, snapshot_label, snapshot_date, revision)
         data["sets"] = [s for s in data["sets"] if s["id"] != company_id] + [entry]
         for slug, meta in problems.items():
             data["problems"].setdefault(slug, meta)
