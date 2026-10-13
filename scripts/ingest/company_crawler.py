@@ -192,13 +192,17 @@ class Fetcher:
         if path is None:
             return
         path.parent.mkdir(parents=True, exist_ok=True)
-        # Write in a private directory on the same filesystem, then atomically
+        # Keep the securely created file handle for the write, then atomically
         # replace the entry. A concurrent symlink is replaced, never followed.
-        with tempfile.TemporaryDirectory(prefix=".pending-", dir=path.parent) as staging:
-            pending = Path(staging) / "response.json"
-            pending.write_text(json.dumps({"url": url, "status": status, "text": text,
-                                           "fetchedAt": self.fetched_at[url]}), encoding="utf8")
-            pending.replace(path)
+        pending = tempfile.NamedTemporaryFile(mode="w", encoding="utf8", prefix=".pending-",
+                                              dir=path.parent, delete=False)
+        try:
+            with pending:
+                json.dump({"url": url, "status": status, "text": text,
+                           "fetchedAt": self.fetched_at[url]}, pending)
+            Path(pending.name).replace(path)
+        finally:
+            Path(pending.name).unlink(missing_ok=True)
 
     def _cached(self, url: str) -> tuple[int, str]:
         path = self._cache_path(url)
