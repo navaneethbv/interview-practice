@@ -159,6 +159,26 @@ function SetTableContent({ setId, kind, rows }: Props) {
                       </a>
                     </span>
                   )}
+                  {!!r.reports?.length && (
+                    <details className="mt-1 max-w-xl text-xs text-fg-3">
+                      <summary className="w-fit cursor-pointer py-2 text-blue hover:underline">
+                        Sources and dates ({r.reports.length})
+                      </summary>
+                      <ul className="space-y-3 pb-2">
+                        {r.reports.map((report) => (
+                          <li key={`${report.url}:${report.observedAt}`} className="space-y-1">
+                            <a href={report.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 py-1 text-blue hover:underline">
+                              {report.label} <ExternalLink size={12} aria-hidden />
+                            </a>
+                            <p>Observed <time dateTime={report.observedAt}>{report.observedAt}</time></p>
+                            <p>{report.lastAsked ? `Source last asked: ${report.lastAsked}` : "Interview date unavailable"}</p>
+                            {report.lastAsked && report.dateScope && <p>Date scope: {report.dateScope}</p>}
+                            {report.mapping && <p>{report.mapping}</p>}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
                 </td>
                 <td className="hidden py-3 pr-3 text-fg-2 md:table-cell">
                   {byCategory ? r.category : r.topics.slice(0, 3).join(", ")}

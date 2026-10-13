@@ -29,7 +29,7 @@ class CompanyListTests(unittest.TestCase):
         items = data["sets"][0]["items"]
         self.assertEqual([i["slug"] for i in items], ["two-sum", "number-of-islands", "lru-cache", "trapping-rain-water"])
         self.assertEqual(items[0]["category"], "Last 3 months")
-        self.assertEqual(items[-1]["category"], "Older than 6 months")
+        self.assertEqual(items[-1]["category"], "Recency unavailable")
         self.assertEqual(data["problems"]["lru-cache"], {"number": 146, "title": "LRU Cache", "difficulty": "medium", "topics": [], "acceptance": 40.0})
         self.assertNotIn("frequency", json.dumps(data["problems"]))
 

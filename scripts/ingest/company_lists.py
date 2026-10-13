@@ -11,10 +11,12 @@ Writes scripts/ingest/company_lists.json, which problem_sets.py merges into cont
 Usage: python3 scripts/ingest/company_lists.py <snapshot-dir> <company-id>[=<Title>] ...
 """
 
+import argparse
 import csv
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 OUT = Path(__file__).with_name("company_lists.json")
@@ -25,7 +27,7 @@ BUCKETS = [
     ("three-months.csv", "Last 3 months"),
     ("six-months.csv", "Last 6 months"),
     ("more-than-six-months.csv", "Older than 6 months"),
-    ("all.csv", "Older than 6 months"),
+    ("all.csv", "Recency unavailable"),
 ]
 DIFFICULTY = {"Easy": "easy", "Medium": "medium", "Hard": "hard"}
 SLUG = re.compile(r"/problems/([a-z0-9-]+)")
@@ -38,10 +40,12 @@ def percent(value: str) -> float:
         return 0.0
 
 
-def read_company(folder: Path):
+def read_company(folder: Path, recent_only: bool = False):
     """Returns ordered items and per-problem metadata for one company folder."""
     seen: dict[str, dict] = {}
     for filename, label in BUCKETS:
+        if recent_only and filename in ("more-than-six-months.csv", "all.csv"):
+            continue
         path = folder / filename
         if not path.is_file():
             continue
@@ -67,27 +71,51 @@ def read_company(folder: Path):
     return items, {s: seen[s]["meta"] for s in slugs}
 
 
-def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str) -> dict:
+def company_folder(snapshot: Path, company_id: str) -> Path:
+    """Resolve a company folder without allowing traversal outside the snapshot."""
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", company_id):
+        raise ValueError("Company ID must be a lowercase slug")
+    folder = (snapshot / company_id).resolve()
+    if not folder.is_relative_to(snapshot):
+        raise ValueError("Company folder must stay inside the snapshot")
+    if not folder.is_dir():
+        raise SystemExit(f"No folder for {company_id} in {snapshot}")
+    return folder
+
+
+def snapshot_entry(company_id: str, title: str, items: list[dict], snapshot_label: str,
+                   snapshot_date: str | None, revision: str | None) -> dict:
+    entry = {
+        "id": company_id,
+        "title": title,
+        "kind": "company",
+        "description": (f"Community LeetCode tags for {title} ({snapshot_label}). "
+                        "Recency buckets are relative to the snapshot date, not today."),
+        "sourceUrl": "https://github.com/snehasishroy/leetcode-companywise-interview-questions" + (f"/tree/{revision}/{company_id}" if revision else ""),
+        "sourceLabel": f"LeetCode tag snapshot · {snapshot_date or snapshot_label}",
+        "items": items,
+    }
+    if snapshot_date:
+        entry["snapshotDate"] = snapshot_date
+    if revision:
+        entry["sourceRevision"] = revision
+    return entry
+
+
+def build(snapshot: Path, companies: list[tuple[str, str]], snapshot_label: str, *,
+          recent_only: bool = False, snapshot_date: str | None = None, revision: str | None = None) -> dict:
     snapshot = snapshot.resolve(strict=True)
+    if snapshot_date:
+        date.fromisoformat(snapshot_date)
+    if revision and not re.fullmatch(r"[a-f0-9]{40}", revision):
+        raise ValueError("Snapshot revision must be a full commit SHA")
     data = json.loads(OUT.read_text(encoding="utf8")) if OUT.is_file() else {"sets": [], "problems": {}}
     for company_id, title in companies:
-        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", company_id):
-            raise ValueError("Company ID must be a lowercase slug")
-        folder = (snapshot / company_id).resolve()
-        if not folder.is_relative_to(snapshot):
-            raise ValueError("Company folder must stay inside the snapshot")
-        if not folder.is_dir():
-            raise SystemExit(f"No folder for {company_id} in {snapshot}")
-        items, problems = read_company(folder)
+        folder = company_folder(snapshot, company_id)
+        items, problems = read_company(folder, recent_only)
         if not items:
             raise SystemExit(f"No problems found for {company_id}")
-        entry = {
-            "id": company_id,
-            "title": title,
-            "kind": "company",
-            "description": f"Problems tagged {title} on LeetCode, most recent first ({snapshot_label}).",
-            "items": items,
-        }
+        entry = snapshot_entry(company_id, title, items, snapshot_label, snapshot_date, revision)
         data["sets"] = [s for s in data["sets"] if s["id"] != company_id] + [entry]
         for slug, meta in problems.items():
             data["problems"].setdefault(slug, meta)
@@ -102,20 +130,25 @@ def write_company_lists(data: dict):
 
 
 def main(argv: list[str]):
-    if len(argv) < 2:
-        print(__doc__)
-        sys.exit(1)
-    snapshot = Path(argv[0]).resolve(strict=True)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("snapshot", type=Path)
+    parser.add_argument("companies", nargs="+")
+    parser.add_argument("--recent-only", action="store_true", help="import only the snapshot's 30-day, 3-month and 6-month buckets")
+    parser.add_argument("--snapshot-date", help="source snapshot date in ISO format; not the retrieval date")
+    parser.add_argument("--revision", help="full upstream commit SHA for reproducible source links")
+    args = parser.parse_args(argv)
+    snapshot = args.snapshot.resolve(strict=True)
     companies = []
-    for arg in argv[1:]:
+    for arg in args.companies:
         company_id, _, title = arg.partition("=")
         companies.append((company_id, title or company_id.replace("-", " ").title()))
     readme = (snapshot / "README.md").resolve()
     if not readme.is_relative_to(snapshot):
         raise ValueError("Snapshot README must stay inside the snapshot")
     when = re.search(r"snapshot as of \*\*([^*]+)\*\*", readme.read_text(encoding="utf8")) if readme.is_file() else None
-    label = f"snapshot of {when.group(1)}" if when else "community snapshot"
-    data = build(snapshot, companies, label)
+    label = args.snapshot_date or (when.group(1) if when else "date unavailable")
+    data = build(snapshot, companies, label, recent_only=args.recent_only,
+                 snapshot_date=args.snapshot_date, revision=args.revision)
     write_company_lists(data)
     for s in data["sets"]:
         print(f"{s['title']}: {len(s['items'])} problems")

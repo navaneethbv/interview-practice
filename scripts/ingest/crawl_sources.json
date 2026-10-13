@@ -8,7 +8,9 @@
    "home": "https://github.com/snehasishroy/leetcode-companywise-interview-questions",
    "kind": "snapshot",
    "verified": true,
-   "base": "https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master"
+   "base": "https://raw.githubusercontent.com/snehasishroy/leetcode-companywise-interview-questions/master",
+   "reviewedAt": "2026-10-13",
+   "notes": "Upstream HEAD e095c259cfd036e3ddb6886e84d7075c2faac477 checked 2026-10-13. README dates the latest snapshot to 2026-07-12; recency buckets are relative to that date, never the crawl date."
   },
   "hellointerview": {
    "label": "Hello Interview",
@@ -33,13 +35,14 @@
     "openai": "OpenAI",
     "anthropic": "Anthropic"
    },
-   "notes": "Listing URL verified 2026-10-12. Questions require client-side rendering; generic HTML extraction is not verified. Review rendered question cards, including their company labels. Detail URLs have both a slug and an ID, so automatic following is disabled."
+   "notes": "Listing URL verified 2026-10-12. Questions require client-side rendering; generic HTML extraction is not verified. Review rendered question cards, including their company labels. Detail URLs have both a slug and an ID, so automatic following is disabled.",
+   "reviewedAt": "2026-10-13"
   },
   "1point3acres": {
    "label": "1point3acres",
    "home": "https://www.1point3acres.com/interview/problems",
    "kind": "pages",
-   "verified": false,
+   "verified": true,
    "listed_only": true,
    "companies": {
     "meta": "meta",
@@ -58,7 +61,9 @@
    "pages": 1,
    "follow": "https://www.1point3acres.com/bbs/thread-{number}-1-1.html",
    "max_follow": 0,
-   "notes": "Company listing URLs verified 2026-10-12. Crawl ultimately returned public HTML. Some exact titles in the public coding list can be reviewed, but broad page matching confuses variants. Full member-only prompts remain excluded."
+   "notes": "Reviewed 2026-10-13 across all nine company listings. Extract only visible question-link titles matching one complete catalog title; preserve the exact link. Unknown titles, longer variants, guide text and hidden content do not count. Listing dates do not establish interview dates.",
+   "extractor": "coding-list-links",
+   "reviewedAt": "2026-10-13"
   },
   "gothamloop": {
    "label": "Gotham Loop",
@@ -81,7 +86,8 @@
     "openai": "openai",
     "anthropic": "anthropic"
    },
-   "notes": "Public company guide URLs verified 2026-10-12. Guide text causes false-positive exact-title matches. Keep generic extraction unverified; review public question previews individually. No individual last-asked dates are exposed."
+   "notes": "Public company guide URLs verified 2026-10-12. Guide text causes false-positive exact-title matches. Keep generic extraction unverified; review public question previews individually. No individual last-asked dates are exposed.",
+   "reviewedAt": "2026-10-13"
   },
   "interviewdb": {
    "label": "interviewDB",
@@ -94,7 +100,8 @@
    "pages": 1,
    "follow": "https://www.interviewdb.io/question/{slug}",
    "max_follow": 0,
-   "notes": "Public listing URLs verified 2026-10-12; crawl returned public titles and relative dates. Most titles do not map unambiguously to catalog exercises; inspect public detail content before mapping. Never infer a question from its title alone."
+   "notes": "Public listing URLs verified 2026-10-12; crawl returned public titles and relative dates. Most titles do not map unambiguously to catalog exercises; inspect public detail content before mapping. Never infer a question from its title alone.",
+   "reviewedAt": "2026-10-13"
   }
  }
 }

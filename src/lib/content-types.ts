@@ -46,11 +46,21 @@ export interface Lesson {
 
 export type SetKind = "curated" | "company";
 
+export interface CompanyReport {
+  label: string;
+  url: string;
+  observedAt: string;
+  lastAsked?: string;
+  dateScope?: string;
+  mapping?: string;
+}
+
 export interface ProblemSetItem {
   slug: string;
   category?: string;
   /** Optional source numbering such as a chapter and question label. */
   label?: string;
+  reports?: CompanyReport[];
 }
 
 /** A problem list such as Blind 75 or a company's frequently asked questions. */
@@ -61,6 +71,7 @@ export interface ProblemSet {
   description: string;
   sourceUrl?: string;
   sourceLabel?: string;
+  snapshotDate?: string;
   items: ProblemSetItem[];
 }
 
@@ -84,6 +95,7 @@ export interface SetRow extends LcMeta {
   slug: string;
   category?: string;
   label?: string;
+  reports?: CompanyReport[];
   available: boolean;
 }
 

@@ -23,25 +23,28 @@ class ReviewedReportTests(unittest.TestCase):
         self.assertEqual(row['sources'], {'hello': 1})
         self.assertEqual(row['evidence'], [observation])
 
-    def test_excludes_existing_list_entries(self):
+    def test_keeps_evidence_for_existing_list_entries(self):
         sets = [{'id': 'acme', 'kind': 'company', 'items': [{'slug': 'lru-cache'}]}]
         report = cc.reviewed_report([self.observation()], self.config, sets, self.known, 25)
-        self.assertEqual(report['companies'], {})
+        self.assertEqual(report['companies']['acme'][0]['evidence'], [self.observation()])
 
     def test_rejects_unknown_problem_company_and_source(self):
         for changes in [{'slug': 'invented'}, {'companies': ['invented']}, {'source': 'invented'}]:
+            observation = self.observation(**changes)
             with self.subTest(changes=changes), self.assertRaises(ValueError):
-                self.report([self.observation(**changes)])
+                self.report([observation])
 
     def test_rejects_non_source_and_credential_urls(self):
         for url in ['http://hello.test/x', 'https://evil.test/x', 'https://user:secret@hello.test/x']:
+            observation = self.observation(url=url)
             with self.subTest(url=url), self.assertRaises(ValueError):
-                self.report([self.observation(url=url)])
+                self.report([observation])
 
     def test_rejects_invalid_and_future_observation_dates(self):
         for value in ['yesterday', '9999-01-01']:
+            observation = self.observation(observedAt=value)
             with self.subTest(value=value), self.assertRaises(ValueError):
-                self.report([self.observation(observedAt=value)])
+                self.report([observation])
 
     def test_does_not_invent_last_asked_date(self):
         observation = self.observation()

@@ -72,19 +72,21 @@ npm run tests:build -- some-id   # only some problems
 
 ### Company lists
 
-Company lists (Meta, Google, Amazon, Apple, Microsoft, Uber, NVIDIA, OpenAI, Anthropic) hold the problems reported for each company, most recent first.
-`company_lists.py` builds them from a recency-bucketed LeetCode company-tag snapshot, and `scripts/ingest/company_crawler.py` can add problems that public pages report but a list lacks, as a "Recent reports" category.
+Company lists (Meta, Google, Amazon, Apple, Microsoft, Uber, NVIDIA, OpenAI, Anthropic) combine dated LeetCode tag snapshots, retained workbook entries and reviewed website reports.
+Recency buckets refer to the displayed snapshot date, **not today**. The latest upstream snapshot checked on October 13, 2026 is dated July 12, 2026. Original workbook entries remain available; rows absent from the selected snapshot buckets are labeled with their unknown date.
 
 ```bash
 python3 scripts/ingest/company_lists.py <snapshot-dir> nvidia=NVIDIA openai=OpenAI anthropic=Anthropic
-python3 scripts/ingest/company_crawler.py --dry-run          # verified sources only; add --sources to opt in to others
+python3 scripts/ingest/company_crawler.py --cache /tmp/company-crawl > /tmp/discovery.json
 python3 scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
 ```
 
 The crawler stores facts only (problem, company, how many sources mention it), honours robots.txt, rate-limits each host and skips login or paywalled pages.
-Only the LeetCode tag source is verified for automatic extraction. The four website listing URLs were checked on October 12, 2026, but JavaScript rendering, locked content and ambiguous title matches still require review before importing.
+LeetCode tags and exact, visible 1point3acres coding-list links are verified for extraction. The other three websites require manual review; explicit `--sources` opts into discovery. A whole catalog title must match a 1point3acres question link unambiguously: guide prose and longer variants never count.
 
-The October 12 refresh adds six original, runnable exercises and 16 company-list entries from reviewed public Hello Interview, 1point3acres and Gotham Loop observations. interviewDB was checked but yielded no reliably mapped additions. See [the crawl review](docs/COMPANY_CRAWL_2026-10-12.md) for coverage and limitations.
+Live runs always print discovery JSON to stdout and **cannot overwrite the reviewed report**. Caches expire after 24 hours; `--cache-max-age 0` forces fresh requests, while `--offline` replays cached pages without changing their retrieval dates. Denied or rate-limited robots responses block the host. No cookies or credentials are sent.
+
+The [October 13 source review](docs/COMPANY_CRAWL_2026-10-13.md) adds 1,076 company-list entries, records 59 website observations on 57 company/problem pairs, and adds a runnable recipe-dependency exercise. It builds on the [October 12 refresh](docs/COMPANY_CRAWL_2026-10-12.md). interviewDB remains checked but unmapped where public titles do not identify a precise problem contract.
 
 To reproduce this reviewed refresh without a network crawl:
 
@@ -94,7 +96,7 @@ python3 -B scripts/ingest/company_crawler.py --reviewed
 python3 -B scripts/ingest/problem_sets.py Interview_Prep_Plan_ENRICHED.xlsx
 ```
 
-`company_report_observations.json` preserves exact source links, retrieval dates and source-reported last-asked labels where available. `--reviewed` imports those reviewed observations offline; it does not imply that the HTTP crawler can render the website. Discovery runs should use `--dry-run` so unreviewed matches do not replace the checked report.
+`company_report_observations.json` preserves exact source links, retrieval dates and source-reported last-asked labels where available. `--reviewed` imports the complete manifest offline and retains evidence even for problems already in a snapshot. A filtered `--reviewed` run requires `--dry-run`; it cannot erase other companies or silently truncate the saved manifest. Expand **Sources and dates** on a table row to inspect its evidence. “Website reports” does not assert that undated interviews happened recently.
 
 ### System design books
 

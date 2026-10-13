@@ -260,8 +260,8 @@ class MergeTests(unittest.TestCase):
             finally:
                 problem_sets.__file__ = original
         self.assertEqual([i["slug"] for i in sets[0]["items"]], ["two-sum", "lru-cache"])
-        self.assertEqual(sets[0]["items"][1]["category"], "Recent reports")
-        self.assertIn("Forum", sets[0]["description"])
+        self.assertEqual(sets[0]["items"][1]["category"], "Website reports")
+        self.assertIn("2026-10-11", sets[0]["description"])
         self.assertEqual(sets[1]["items"], [])
 
 
