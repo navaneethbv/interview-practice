@@ -32,6 +32,15 @@ A problem's spec (`content/problems/<id>.json`) declares the signature and test 
 The site generates a harness for each language that converts JSON inputs into typed arguments (including `ListNode`, `TreeNode` and `Interval`), calls your `Solution`, and prints JSON results.
 Outputs are compared in TypeScript, with order-insensitive checks and validators for problems that have several correct answers.
 
+## Back up practice data
+
+Code drafts, progress, submissions, review queues, mock interviews, preferences, and last-opened pages are stored in this browser.
+They are not synchronized between browsers or devices, and clearing site data removes them.
+Open **Back up or restore practice data** in the footer of a browsing or reading page and choose **Export backup** to download a JSON copy.
+To restore it, choose the backup file, inspect the confirmation, and select **Restore backup**.
+Matching records are replaced while unrelated records remain, so export the current data first when keeping both versions matters.
+Backups are limited to 20 MiB and remain on your device.
+
 ## Getting started
 
 Requirements: Node.js 22+, Python 3.12+ (for generating test data), and for Java locally a JDK 17+ on your `PATH`.
