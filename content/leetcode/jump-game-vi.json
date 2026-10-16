@@ -1,0 +1,185 @@
+{
+  "id": "jump-game-vi",
+  "style": "leetcode",
+  "function": {
+    "python": "maxResult",
+    "java": "maxResult"
+  },
+  "params": [
+    {
+      "name": "nums",
+      "type": "int[]"
+    },
+    {
+      "name": "k",
+      "type": "int"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        [
+          1,
+          -1,
+          -2,
+          4,
+          -7,
+          3
+        ],
+        2
+      ],
+      "expected": 7,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          10,
+          -5,
+          -2,
+          4,
+          0,
+          3
+        ],
+        3
+      ],
+      "expected": 17,
+      "sample": true
+    },
+    {
+      "input": [
+        [
+          7
+        ],
+        1
+      ],
+      "expected": 7
+    },
+    {
+      "input": [
+        [
+          -7
+        ],
+        1
+      ],
+      "expected": -7
+    },
+    {
+      "input": [
+        [
+          1,
+          -2,
+          3,
+          -4,
+          5
+        ],
+        1
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          -1,
+          -2,
+          -3,
+          -4
+        ],
+        2
+      ],
+      "expected": -7
+    },
+    {
+      "input": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        3
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          1,
+          -100,
+          2
+        ],
+        2
+      ],
+      "expected": 3
+    },
+    {
+      "input": [
+        [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        2
+      ],
+      "expected": 15
+    },
+    {
+      "input": [
+        [
+          1,
+          -5,
+          -20,
+          4,
+          -1,
+          3,
+          -6,
+          -3
+        ],
+        2
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        [
+          2,
+          -1,
+          -1,
+          -1,
+          9
+        ],
+        4
+      ],
+      "expected": 11
+    },
+    {
+      "input": [
+        [
+          10000,
+          -10000,
+          10000
+        ],
+        1
+      ],
+      "expected": 10000
+    },
+    {
+      "input": [
+        [
+          8,
+          -9,
+          -2,
+          -3,
+          7,
+          -10,
+          4
+        ],
+        3
+      ],
+      "expected": 17
+    }
+  ]
+}

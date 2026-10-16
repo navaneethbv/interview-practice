@@ -83,12 +83,12 @@ export async function POST(req: Request, ctx: { params: Promise<{ lang: string }
     if (snapshotId) return Response.json(await runInSandbox(plan, snapshotId));
     if (process.env.NODE_ENV === "development") return Response.json(await runLocally(lang, plan));
     return Response.json(
-      { error: "The code runner is not configured. Set CODE_SANDBOX_SNAPSHOT_ID (see README)." },
+      { error: "This language runner is currently unavailable. Try again later or choose another supported language." },
       { status: 503 },
     );
   } catch (e) {
     console.error(`${lang} run failed`, e);
-    return Response.json({ error: `Code runner failed: ${(e as Error).message}` }, { status: 502 });
+    return Response.json({ error: "The code runner could not complete your request. Please try again." }, { status: 502 });
   }
 }
 

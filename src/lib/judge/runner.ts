@@ -8,6 +8,7 @@ import { buildJavaProgram, mapJavaCompileErrors } from "./java";
 import { buildJsProgram, splitCompileError } from "./javascript";
 import { buildPythonProgram } from "./python";
 import type { AnyTestCase, ProblemSpec, RunOutcome } from "./types";
+import { isRecord } from "../progress-data";
 
 const PYTHON_TIME_LIMIT_MS = 10_000;
 /** Upper bound for downloading and starting Pyodide on a slow connection. */
@@ -165,12 +166,28 @@ interface ServerResponse {
 
 const SERVER_NAME = { java: "Java", cpp: "C++", go: "Go" } as const;
 
+function isServerResponse(value: unknown): value is ServerResponse {
+  if (!isRecord(value)) return false;
+  const textFields = ["stdout", "stderr", "compileError", "error"];
+  return textFields.every((key) => value[key] === undefined || typeof value[key] === "string")
+    && (value.timedOut === undefined || typeof value.timedOut === "boolean")
+    && (typeof value.stdout === "string" || !!value.error || !!value.compileError || value.timedOut === true);
+}
+
+function serverFailure(lang: keyof typeof SERVER_NAME, status: number): string {
+  const name = SERVER_NAME[lang];
+  if (status === 429) return `${name} runner is busy. Wait a moment and try again.`;
+  if (status === 503) return `${name} runner is currently unavailable. Please try again later or choose another supported language. Your code has been kept.`;
+  return `${name} runner could not complete the request (HTTP ${status}). Please try again. Your code has been kept.`;
+}
+
 async function runOnServer(lang: keyof typeof SERVER_NAME, body: object): Promise<ServerResponse> {
   try {
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(65_000),
     };
     let res: Response;
     switch (lang) {
@@ -178,11 +195,15 @@ async function runOnServer(lang: keyof typeof SERVER_NAME, body: object): Promis
       case "cpp": res = await fetch("/api/run/cpp", options); break;
       case "go": res = await fetch("/api/run/go", options); break;
     }
-    const data = (await res.json().catch(() => ({}))) as ServerResponse;
-    if (!res.ok) return { error: data.error ?? `${SERVER_NAME[lang]} runner returned HTTP ${res.status}` };
+    if (!res.ok) return { error: serverFailure(lang, res.status) };
+    const data: unknown = await res.json().catch(() => null);
+    if (!isServerResponse(data)) return { error: `${SERVER_NAME[lang]} runner returned an invalid response. Please try again. Your code has been kept.` };
     return data;
   } catch (e) {
-    return { error: `Could not reach the ${SERVER_NAME[lang]} runner: ${(e as Error).message}` };
+    if (e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError")) {
+      return { error: `${SERVER_NAME[lang]} runner took too long to respond. Please try again. Your code has been kept.` };
+    }
+    return { error: `Could not reach the ${SERVER_NAME[lang]} runner. Check your connection and try again. Your code has been kept.` };
   }
 }
 

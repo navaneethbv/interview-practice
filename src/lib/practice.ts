@@ -5,6 +5,7 @@ import {
   afterAccepted,
   EMPTY_MOCK,
   endSession,
+  expireSession,
   markHard,
   MOCK_KEY,
   parseMock,
@@ -24,11 +25,20 @@ import { safeGet, safeSet } from "./storage";
  */
 function createStore<T>(key: string, parse: (raw: string | null) => T, empty: T) {
   let cache: T | null = null;
+  let cachedRaw: string | null | undefined;
   const listeners = new Set<() => void>();
-  const read = () => (cache ??= parse(safeGet(key)));
+  const read = () => {
+    const raw = safeGet(key);
+    if (cache === null || raw !== cachedRaw) {
+      cache = parse(raw);
+      cachedRaw = raw;
+    }
+    return cache;
+  };
   const write = (next: T) => {
     cache = next;
-    safeSet(key, JSON.stringify(next));
+    cachedRaw = JSON.stringify(next);
+    safeSet(key, cachedRaw);
     listeners.forEach((l) => l());
   };
   const subscribe = (cb: () => void) => {
@@ -73,6 +83,12 @@ export function startMock(session: Omit<MockSession, "startedAt">) {
 
 export function finishMock(log: Record<string, [number, 0 | 1][]>) {
   mock.write(endSession(mock.read(), log, Date.now()));
+}
+
+export function expireMock(log: Record<string, [number, 0 | 1][]>) {
+  const state = mock.read();
+  const next = expireSession(state, log, Date.now());
+  if (next !== state) mock.write(next);
 }
 
 /** Saves self-ratings and notes on the most recent finished session. */

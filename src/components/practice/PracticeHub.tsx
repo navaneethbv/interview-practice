@@ -11,6 +11,7 @@ import {
   DAY_MS,
   dueReviews,
   pickProblems,
+  pickInterviewMix,
   REVIEW_INTERVALS_DAYS,
   RUBRIC,
   sessionDeadline,
@@ -76,9 +77,7 @@ function MockInterview({ entries, sources }: Readonly<Props>) {
     const solved = (id: string) => statusOf(progress, id) === "solved";
     let problems: string[];
     if (difficulty === "mixed") {
-      const medium = pickProblems(ids.filter((id) => entries[id]?.difficulty === "medium").map((id) => ({ id, difficulty: "medium" as const })), solved, Math.max(1, count - 1), Math.random);
-      const rest = pickProblems(ids.filter((id) => entries[id]?.difficulty !== "medium").map((id) => ({ id, difficulty: entries[id].difficulty })), solved, count - medium.length, Math.random);
-      problems = [...medium, ...rest];
+      problems = pickInterviewMix(ids.map((id) => ({ id, difficulty: entries[id].difficulty })), solved, count, Math.random);
     } else {
       const pool = ids.filter((id) => difficulty === "any" || entries[id]?.difficulty === difficulty);
       problems = pickProblems(pool.map((id) => ({ id, difficulty: entries[id].difficulty })), solved, count, Math.random);
@@ -280,6 +279,7 @@ function MockHistory({ history, sources }: Readonly<{ history: MockSession[]; so
       <summary className="flex cursor-pointer items-center gap-2 text-sm font-medium">
         <History size={15} aria-hidden /> Past interviews ({history.length})
       </summary>
+      <div className="overflow-x-auto">
       <table className="mt-2 w-full text-sm">
         <thead className="text-left text-xs text-fg-3">
           <tr>
@@ -306,6 +306,7 @@ function MockHistory({ history, sources }: Readonly<{ history: MockSession[]; so
           })}
         </tbody>
       </table>
+      </div>
     </details>
   );
 }
