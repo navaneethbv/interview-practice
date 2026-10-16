@@ -11,7 +11,7 @@
     "tests:build": "node --import tsx scripts/judge/build-tests.ts",
     "sandbox:snapshot": "tsx --env-file-if-exists=.env.local scripts/sandbox/create-code-snapshot.ts",
     "ingest:system-design": "python3 scripts/ingest/system_design.py",
-    "test": "node --import tsx --test src/lib/*.test.ts src/lib/judge/*.test.ts && python3 -B -m unittest discover -s scripts/ingest -p 'test_*.py'",
+    "test": "node --import tsx --test src/lib/*.test.ts src/lib/judge/*.test.ts && python3 -B -m unittest discover -s scripts/ingest -p 'test_*.py' && python3 -B scripts/judge/test_practice_additions.py",
     "typecheck": "tsc --noEmit",
     "test:browser": "playwright test",
     "test:browser:install": "playwright install --with-deps chromium",

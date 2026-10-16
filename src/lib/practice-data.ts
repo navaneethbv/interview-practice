@@ -104,13 +104,21 @@ const MOCK_FIELDS = new Set(["startedAt", "minutes", "source", "problems", "ende
 
 export function isMockSession(value: unknown): value is MockSession {
   if (!isRecord(value) || !Object.keys(value).every((k) => MOCK_FIELDS.has(k))) return false;
-  const ids = (v: unknown) => Array.isArray(v) && v.length <= 10 && v.every((x) => typeof x === "string");
+  const ids = (v: unknown): v is string[] => Array.isArray(v) && v.length <= 10
+    && v.every((x) => typeof x === "string" && x.length > 0) && new Set(v).size === v.length;
   return finite(value.startedAt) && Number.isInteger(value.minutes) && (value.minutes as number) > 0 && (value.minutes as number) <= 240
-    && typeof value.source === "string" && ids(value.problems)
-    && (value.endedAt === undefined || finite(value.endedAt))
-    && (value.solved === undefined || ids(value.solved))
-    && (value.ratings === undefined || (isRecord(value.ratings) && Object.values(value.ratings).every((r) => Number.isInteger(r) && (r as number) >= 1 && (r as number) <= 4)))
+    && typeof value.source === "string" && ids(value.problems) && value.problems.length > 0
+    && (value.endedAt === undefined || (finite(value.endedAt) && value.endedAt >= value.startedAt
+      && value.endedAt <= value.startedAt + (value.minutes as number) * 60_000))
+    && (value.solved === undefined || (ids(value.solved) && value.solved.every((id) => (value.problems as string[]).includes(id))))
+    && (value.ratings === undefined || validRatings(value.ratings))
     && (value.notes === undefined || (typeof value.notes === "string" && value.notes.length <= 5000));
+}
+
+function validRatings(value: unknown): boolean {
+  const signals: readonly string[] = RUBRIC;
+  return isRecord(value) && Object.entries(value).every(([key, rating]) =>
+    signals.includes(key) && Number.isInteger(rating) && (rating as number) >= 1 && (rating as number) <= 4);
 }
 
 export function isMockState(value: unknown): value is MockState {
@@ -146,9 +154,23 @@ export function pickProblems(candidates: Candidate[], solved: (id: string) => bo
     }
     return out;
   };
-  const fresh = shuffle(candidates.filter((c) => !solved(c.id)));
-  const seen = shuffle(candidates.filter((c) => solved(c.id)));
+  const unique = [...new Map(candidates.map((candidate) => [candidate.id, candidate])).values()];
+  const fresh = shuffle(unique.filter((c) => !solved(c.id)));
+  const seen = shuffle(unique.filter((c) => solved(c.id)));
   return [...fresh, ...seen].slice(0, count).map((c) => c.id);
+}
+
+/** Prefer medium questions, then fill from the remaining pool even for single-difficulty lists. */
+export function pickInterviewMix(candidates: Candidate[], solved: (id: string) => boolean, count: number, random: () => number): string[] {
+  const medium = pickProblems(candidates.filter((c) => c.difficulty === "medium"), solved, Math.max(1, count - 1), random);
+  const other = pickProblems(candidates.filter((c) => c.difficulty !== "medium"), solved, count - medium.length, random);
+  const selected = new Set([...medium, ...other]);
+  return [...selected, ...pickProblems(candidates.filter((c) => !selected.has(c.id)), solved, count - selected.size, random)];
+}
+
+/** Finish overdue sessions at their deadline, including after a suspended tab resumes. */
+export function expireSession(state: MockState, log: Record<string, [number, 0 | 1][]>, now: number): MockState {
+  return state.active && now >= sessionDeadline(state.active) ? endSession(state, log, now) : state;
 }
 
 export function sessionDeadline(session: MockSession) {

@@ -6,6 +6,7 @@ import {
   dueReviews,
   EMPTY_MOCK,
   endSession,
+  expireSession,
   isMockState,
   isReviewState,
   markHard,
@@ -13,6 +14,7 @@ import {
   parseMock,
   parseReview,
   pickProblems,
+  pickInterviewMix,
   REVIEW_INTERVALS_DAYS,
   solvedDuring,
   type MockState,
@@ -51,6 +53,44 @@ describe("review queue", () => {
 });
 
 describe("mock interviews", () => {
+  it("fills mixed rounds from all-medium or all-easy lists", () => {
+    for (const difficulty of ["medium", "easy"] as const) {
+      const pool = ["a", "b", "c"].map((id) => ({ id, difficulty }));
+      const picked = pickInterviewMix(pool, () => false, 3, () => 0);
+      assert.equal(picked.length, 3);
+      assert.equal(new Set(picked).size, 3);
+    }
+  });
+
+  it("expires once at the deadline and excludes late accepted submissions", () => {
+    const state: MockState = { active: { startedAt: 1000, minutes: 1, source: "s", problems: ["a", "b"] }, history: [] };
+    const log: Record<string, [number, 0 | 1][]> = { a: [[61000, 1]], b: [[61001, 1]] };
+    assert.equal(expireSession(state, log, 60999), state);
+    const expired = expireSession(state, log, 90000);
+    assert.equal(expired.active, null);
+    assert.equal(expired.history[0].endedAt, 61000);
+    assert.deepEqual(expired.history[0].solved, ["a"]);
+    assert.equal(expireSession(expired, log, 100000), expired);
+  });
+  it("picks distinct problems even when a catalog repeats a candidate", () => {
+    const candidates = ["a", "a", "b"].map((id) => ({ id, difficulty: "medium" as const }));
+    assert.deepEqual(new Set(pickProblems(candidates, () => false, 3, () => 0)), new Set(["a", "b"]));
+    assert.equal(pickProblems(candidates, () => false, 3, () => 0).length, 2);
+  });
+
+  it("rejects inconsistent mock backups before restoration", () => {
+    const session = { startedAt: 1000, minutes: 1, source: "s", problems: ["a"] };
+    for (const invalid of [
+      { ...session, problems: [] },
+      { ...session, problems: ["a", "a"] },
+      { ...session, endedAt: 999 },
+      { ...session, endedAt: 62000 },
+      { ...session, solved: ["other"] },
+      { ...session, ratings: { Unknown: 3 } },
+    ]) {
+      assert.equal(isMockState({ active: invalid, history: [] }), false);
+    }
+  });
   it("prefers unsolved problems and falls back to solved ones", () => {
     const candidates = ["a", "b", "c"].map((id) => ({ id, difficulty: "medium" as const }));
     const solved = (id: string) => id !== "b";

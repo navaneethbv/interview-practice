@@ -1,0 +1,91 @@
+{
+  "id": "number-of-substrings-containing-all-three-characters",
+  "style": "leetcode",
+  "function": {
+    "python": "numberOfSubstrings",
+    "java": "numberOfSubstrings"
+  },
+  "params": [
+    {
+      "name": "s",
+      "type": "string"
+    }
+  ],
+  "returns": "int",
+  "tests": [
+    {
+      "input": [
+        "abcabc"
+      ],
+      "expected": 10,
+      "sample": true
+    },
+    {
+      "input": [
+        "aaacb"
+      ],
+      "expected": 3,
+      "sample": true
+    },
+    {
+      "input": [
+        "abc"
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "aaa"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "ab"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "cba"
+      ],
+      "expected": 1
+    },
+    {
+      "input": [
+        "aabbcc"
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "abababab"
+      ],
+      "expected": 0
+    },
+    {
+      "input": [
+        "ccccab"
+      ],
+      "expected": 4
+    },
+    {
+      "input": [
+        "acbacb"
+      ],
+      "expected": 10
+    },
+    {
+      "input": [
+        "bbbcccaaa"
+      ],
+      "expected": 9
+    },
+    {
+      "input": [
+        "bacacbbaca"
+      ],
+      "expected": 30
+    }
+  ]
+}

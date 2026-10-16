@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { PersistenceNotice } from "@/components/PersistenceNotice";
+import { MockLifecycle } from "@/components/practice/MockLifecycle";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} h-full`}>
       <body className="min-h-full bg-bg font-sans text-fg-1">
-        <ThemeProvider>{children}<PersistenceNotice /></ThemeProvider>
+        <ThemeProvider>{children}<MockLifecycle /><PersistenceNotice /></ThemeProvider>
       </body>
     </html>
   );

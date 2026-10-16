@@ -13,6 +13,7 @@ Live: https://interview-practice-sandy-eight.vercel.app
 - **Submit** checks it against every case, including hidden edge cases, and reports Accepted, Wrong Answer, Runtime Error, Compile Error or Time Limit Exceeded.
 - **Patterns**: the course lessons, with diagrams, math and highlighted code in both languages.
 - **Practice**: timed mock interviews drawn from any list (walkthroughs stay hidden until the round ends, followed by a self-rated debrief), a spaced-repetition review queue for solved problems, and a 16-week study plan.
+  Mock rounds finish automatically at their deadline, including after a reload or device sleep; late submissions do not count toward the round. Interview mix fills from the remaining questions when a list has only one difficulty.
 - **Interview Guides**: system design books plus focused practice for low-level design, AI architecture, testing and debugging, and behavioral interviews.
 - **Search and navigation**: `Ctrl/⌘ + K` (or `/`) opens a site-wide search across problems, lists, lessons and guides; `/problems` groups study plans, topic tracks and company lists with per-list progress.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
@@ -138,6 +139,7 @@ vercel env add CODE_SANDBOX_SNAPSHOT_ID production
 ```
 
 An existing `JAVA_SANDBOX_SNAPSHOT_ID` keeps Java working; C++ and Go need the new snapshot.
+If a compiled-language runner is unavailable, users receive retry guidance and keep their draft; infrastructure errors do not count as failed submissions. Requests time out after 65 seconds. For operators, a 503 indicates missing snapshot configuration; a 502 requires checking the server logs and snapshot/toolchain availability.
 Sandbox usage is billed to the Vercel account.
 The run endpoint accepts only same-origin browser requests, but it is not authenticated; enable Vercel Deployment Protection if the site should be private.
 

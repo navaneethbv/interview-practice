@@ -92,9 +92,12 @@ Map lookups return an empty list for a missing key or a singleton list for a sto
 Collection enumeration is ordered, union-find representatives are component minima, and MST reconstruction uses input order to break equal-weight ties.
 The string-labeled binary-tree problem uses child-index arrays so labels retain their original type without changing the shared numeric TreeNode helper.
 
-All 1,214 currently supported catalog entries have statements, references, and expected outputs for the Python, Java, or SQLite runners.
-The remaining seven require JavaScript, shell, or pandas runners.
+The October 16 coverage report contains 1,224 runnable catalog entries out of 1,578, with statements, references, and expected outputs for the Python, Java, or SQLite runners.
+The remaining 354 entries include seven that require additional JavaScript, shell, or pandas runner support; the others still need authored content.
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
+
+The October 16 additions cover Number of Substrings Containing All Three Characters, Heaters, and Jump Game VI, with original statements, Python/Java references, walkthroughs, and 39 fixed cases in total.
+Run `python3 -B scripts/judge/test_practice_additions.py` for independent exhaustive small-input substring, nearest-heater and dynamic-programming oracles, and maximum-size boundary cases.
 
 ## Solution walkthroughs
 
