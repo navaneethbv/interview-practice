@@ -116,8 +116,9 @@ export function isMockSession(value: unknown): value is MockSession {
 }
 
 function validRatings(value: unknown): boolean {
+  const signals: readonly string[] = RUBRIC;
   return isRecord(value) && Object.entries(value).every(([key, rating]) =>
-    RUBRIC.some((signal) => signal === key) && Number.isInteger(rating) && (rating as number) >= 1 && (rating as number) <= 4);
+    signals.includes(key) && Number.isInteger(rating) && (rating as number) >= 1 && (rating as number) <= 4);
 }
 
 export function isMockState(value: unknown): value is MockState {
