@@ -1,8 +1,7 @@
-"""Independent exhaustive/seeded oracles for the October practice additions."""
+"""Independent exhaustive oracles for the October practice additions."""
 import importlib.util
 import itertools
 from pathlib import Path
-import random
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2] / 'content' / 'leetcode'
@@ -25,25 +24,23 @@ class PracticeAdditions(unittest.TestCase):
                                for left in range(size) for right in range(left + 1, size + 1))
                 self.assertEqual(solver.numberOfSubstrings(text), expected, text)
 
-    def test_heaters_seeded(self):
+    def test_heaters_exhaustive(self):
         solver = solution('heaters')
-        rng = random.Random(475)
-        for _ in range(300):
-            houses = [rng.randint(1, 100) for _ in range(rng.randint(1, 20))]
-            heaters = [rng.randint(1, 100) for _ in range(rng.randint(1, 20))]
+        arrays = [list(values) for size in range(1, 4)
+                  for values in itertools.product(range(1, 5), repeat=size)]
+        for houses, heaters in itertools.product(arrays, repeat=2):
             expected = max(min(abs(house - heater) for heater in heaters) for house in houses)
             self.assertEqual(solver.findRadius(houses[:], heaters[:]), expected)
 
-    def test_jump_seeded(self):
+    def test_jump_exhaustive(self):
         solver = solution('jump-game-vi')
-        rng = random.Random(1696)
-        for _ in range(300):
-            nums = [rng.randint(-20, 20) for _ in range(rng.randint(1, 30))]
-            k = rng.randint(1, len(nums))
-            scores = [nums[0]]
-            for index in range(1, len(nums)):
-                scores.append(nums[index] + max(scores[max(0, index-k):index]))
-            self.assertEqual(solver.maxResult(nums, k), scores[-1], (nums, k))
+        arrays = (values for size in range(1, 8) for values in itertools.product((-2, 0, 3), repeat=size))
+        for nums in arrays:
+            for k in range(1, len(nums) + 1):
+                scores = [nums[0]]
+                for index in range(1, len(nums)):
+                    scores.append(nums[index] + max(scores[max(0, index-k):index]))
+                self.assertEqual(solver.maxResult(nums, k), scores[-1], (nums, k))
 
     def test_large_boundaries(self):
         substrings = solution('number-of-substrings-containing-all-three-characters')

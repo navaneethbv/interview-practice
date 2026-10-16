@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Browser traces can embed entire third-party bundles; they are generated test output.
+    "test-results/**",
+    "playwright-report/**",
     // Reference solutions are standalone files spliced into judge harnesses.
     "content/**",
     // Generated QuickJS vendor bundle; lint the authored worker in scripts/judge instead.

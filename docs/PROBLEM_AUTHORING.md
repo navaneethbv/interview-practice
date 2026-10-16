@@ -97,7 +97,7 @@ The remaining 354 entries include seven that require additional JavaScript, shel
 `problem-content-checkpoint.json` is a saved snapshot of `content-status.py` output; rerun the script for current coverage.
 
 The October 16 additions cover Number of Substrings Containing All Three Characters, Heaters, and Jump Game VI, with original statements, Python/Java references, walkthroughs, and 39 fixed cases in total.
-Run `python3 -B scripts/judge/test_practice_additions.py` for independent exhaustive substring checks, seeded nearest-heater and dynamic-programming oracles, and maximum-size boundary cases.
+Run `python3 -B scripts/judge/test_practice_additions.py` for independent exhaustive small-input substring, nearest-heater and dynamic-programming oracles, and maximum-size boundary cases.
 
 ## Solution walkthroughs
 
