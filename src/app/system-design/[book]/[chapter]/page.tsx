@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { PracticeVisit } from "@/components/PracticeVisit";
+import { ReaderTools } from "@/components/ReaderTools";
 import { LessonContent } from "@/components/LessonContent";
 import { OnThisPage } from "@/components/design/OnThisPage";
 import { designChapters, getDesignChapter, listDesignBooks } from "@/lib/content";
@@ -37,7 +38,9 @@ export default async function ChapterPage({ params }: PageProps) {
   return (
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] xl:gap-10">
       <PracticeVisit kind="chapter" title={chapter.title} context={book.short} href={`/system-design/${book.id}/${chapter.id}`} />
-      <article className="mx-auto w-full max-w-[46rem] min-w-0">
+      <article className="reader-page mx-auto w-full max-w-[46rem] min-w-0">
+        <ReaderTools targetId="reader-content" />
+        <div id="reader-content" data-reader-content>
         <header className="mb-8 border-b border-line pb-6">
           <p className="mb-2 text-sm font-medium text-brand">{chapter.part}</p>
           <h1 className="text-3xl leading-tight font-semibold tracking-tight text-balance sm:text-[2.1rem]">
@@ -59,8 +62,9 @@ export default async function ChapterPage({ params }: PageProps) {
         </header>
 
         <LessonContent blocks={[{ t: "html", html }]} className="prose-reader" />
+        </div>
 
-        <nav aria-label="Chapter navigation" className="mt-14 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
+        <nav aria-label="Chapter navigation" className="reader-hide mt-14 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
           {prev ? (
             <Link
               href={`/system-design/${book.id}/${prev.id}`}
