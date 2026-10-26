@@ -48,8 +48,8 @@ export function BaStudyPlan() {
       <Link href="/business-analyst" className="text-sm font-medium text-brand hover:underline">← Back to Business Analyst Prep</Link>
       <header className="mt-5 rounded-3xl border border-line bg-layer-1 p-6 shadow-card sm:p-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-brand uppercase">Beginner study plan</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">38 study sessions from zero to interview-ready</h1>
-        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for about 60 minutes per study day. These are 38 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas. At five sessions a week, the plan takes about eight weeks.</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">39 study sessions from zero to interview-ready</h1>
+        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for about 60 minutes per study day. These are 39 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas. At five sessions a week, the plan takes about eight weeks.</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">20 min</b><span className="text-sm text-fg-2">Read the assigned lessons</span></div>
           <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">30 min</b><span className="text-sm text-fg-2">Complete the practice task</span></div>
