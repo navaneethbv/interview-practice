@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Code2 } from "lucide-react";
 import { CommandPalette } from "./CommandPalette";
 import { PracticeDataControls } from "./PracticeDataControls";
-import { ThemeToggle } from "./ThemeProvider";
+import { ColorThemePicker, ThemeToggle } from "./ThemeProvider";
 import { MobileMenu, NavLinks } from "./NavLinks";
 
 export function NavBar() {
@@ -13,12 +13,13 @@ export function NavBar() {
           <span className="grid size-7 place-items-center rounded-lg bg-brand text-neutral-950 shadow-card">
             <Code2 size={16} strokeWidth={2.5} />
           </span>
-          <span>Interview Practice</span>
+          <span className="navbar-brand-text">Interview Practice</span>
         </Link>
         <NavLinks />
         <div className="ml-auto flex items-center gap-1.5">
           <CommandPalette />
           <ThemeToggle />
+          <ColorThemePicker />
           <MobileMenu />
         </div>
       </div>

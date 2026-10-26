@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavBar, SiteFooter } from "@/components/NavBar";
 import { LessonContent } from "@/components/LessonContent";
 import { MarkRead } from "@/components/MarkRead";
+import { ReaderTools } from "@/components/ReaderTools";
 import { getCourse, getLesson, hrefFor, neighbors, renderBlocks } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -40,10 +41,13 @@ export default async function LessonPage({ params }: PageProps) {
           <span className="mx-1.5">/</span>
           <span>{chapter?.title}</span>
         </nav>
-        <article className="rounded-2xl border border-line bg-layer-1 px-5 py-7 sm:px-10 sm:py-10">
-          <h1 className="mb-6 text-3xl font-semibold tracking-tight">{lesson.title}</h1>
-          <LessonContent blocks={blocks} />
-          <div className="mt-10 border-t border-line pt-6">
+        <article className="reader-page rounded-2xl border border-line bg-layer-1 px-5 py-7 sm:px-10 sm:py-10">
+          <ReaderTools targetId="reader-content" />
+          <div id="reader-content" data-reader-content>
+            <h1 className="mb-6 text-3xl font-semibold tracking-tight">{lesson.title}</h1>
+            <LessonContent blocks={blocks} />
+          </div>
+          <div className="reader-hide mt-10 border-t border-line pt-6">
             <MarkRead id={lesson.id} />
           </div>
         </article>

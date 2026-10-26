@@ -7,6 +7,7 @@ import { chapterStatuses, drawChapterQuiz, hasPassed, lessonKey, lessonsRead, ty
 import { savePosition, setLessonRead, useBa, useHydrated } from "@/lib/ba-store";
 import type { BaLesson } from "@/lib/ba-content";
 import { LessonContent } from "@/components/LessonContent";
+import { ReaderTools } from "@/components/ReaderTools";
 import { Quiz } from "./Quiz";
 import { NotesBox } from "./NotesBox";
 import { TipCard } from "./TipCard";
@@ -74,15 +75,18 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
       <LessonNav lessons={lessons} chapterId={id} step={step} quizStep={quizStep} allRead={allRead} passed={passed} read={ba.read} onGo={go} />
 
       {lesson && (
-        <article className="rounded-2xl border border-line bg-layer-1 p-5 shadow-card sm:p-8">
+        <article className="reader-page rounded-2xl border border-line bg-layer-1 p-5 shadow-card sm:p-8">
+          <ReaderTools targetId="reader-content" />
+          <div id="reader-content" data-reader-content>
           {step === 1 && (
             <LessonContent blocks={[{ t: "html", html: chapter.introHtml }]} className="prose-ba mb-6 border-b border-line pb-5" />
           )}
           <p className="text-xs font-medium tracking-wide text-fg-3 uppercase">Lesson {lesson.n} of {lessons.length} · {lesson.minutes} min</p>
           <h2 className="mt-1 mb-4 text-2xl font-semibold tracking-tight text-balance">{lesson.title}</h2>
           <LessonContent blocks={[{ t: "html", html: lesson.html }]} className="prose-reader prose-ba" />
+          </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
+          <div className="reader-hide mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
             <button
               onClick={() => go(step - 1)}
               disabled={step === 1}
