@@ -3,6 +3,8 @@ import path from "node:path";
 import { cache } from "react";
 import { Marked } from "marked";
 import type { BaQuestion } from "./ba-data";
+import indexJson from "../../content/business-analyst/index.json";
+import tipsJson from "../../content/business-analyst/tips.json";
 
 /**
  * Loads the Business Analyst course from content/business-analyst/. Each chapter is one
@@ -71,7 +73,7 @@ const render = (md: string) => parser.parse(md, { async: false });
 const minutesFor = (md: string) => Math.max(1, Math.round(md.split(/\s+/).filter((w) => /[a-z0-9]/i.test(w)).length / 200));
 
 export const getBaIndex = cache((): BaIndex => {
-  const index = JSON.parse(fs.readFileSync(path.join(DIR, "index.json"), "utf8")) as BaIndex;
+  const index = indexJson as BaIndex;
   if (!index.chapters.every((c) => SLUG.test(c.id))) throw new Error("Invalid chapter id in content/business-analyst/index.json");
   return index;
 });
@@ -108,7 +110,7 @@ export const getBaBank = cache((id: string): BaQuestion[] => {
 
 export const listBaChapters = cache(() => getBaIndex().chapters.map((c) => getBaChapter(c.id)).filter((c): c is BaChapter => c !== null));
 
-export const getBaTips = cache((): string[] => JSON.parse(fs.readFileSync(path.join(DIR, "tips.json"), "utf8")) as string[]);
+export const getBaTips = cache((): string[] => tipsJson);
 
 /** Lightweight chapter summaries for client components (no lesson HTML). */
 export function baOutline() {

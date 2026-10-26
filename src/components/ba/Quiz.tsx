@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, CheckCircle2, PartyPopper, RotateCcw, Target, XCircle } from "lucide-react";
 import { bestScore, hasPassed, passMark, scoreAnswers, type PresentedQuestion } from "@/lib/ba-data";
 import { recordAttempt, useBa } from "@/lib/ba-store";
@@ -149,6 +149,11 @@ function QuestionCard({ q, index, total, correctSoFar, choice, checked, onChoose
   onNext: () => void;
 }>) {
   const right = checked && choice === q.correct;
+  const nextButton = useRef<HTMLButtonElement>(null);
+  // Move focus to the Next button once the answer is checked, so keyboard users can carry on.
+  useEffect(() => {
+    if (checked) nextButton.current?.focus();
+  }, [checked]);
   return (
     <section className="rounded-2xl border border-line bg-layer-1 p-5 shadow-card sm:p-7" aria-live="polite">
       <div className="mb-4 flex items-center justify-between gap-3 text-xs text-fg-3">
@@ -186,7 +191,7 @@ function QuestionCard({ q, index, total, correctSoFar, choice, checked, onChoose
       )}
       <div className="mt-5 flex justify-end">
         {checked ? (
-          <button onClick={onNext} autoFocus className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
+          <button ref={nextButton} onClick={onNext} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
             {index + 1 < total ? "Next question" : "See my results"} <ArrowRight size={16} />
           </button>
         ) : (
@@ -205,7 +210,7 @@ function Results({ questions, answers, needed, onRetry, reviewFor, next, isFinal
   needed: number;
   onRetry: () => void;
   reviewFor: QuizProps["reviewFor"];
-  next?: QuizProps["next"];
+  next: QuizProps["next"];
   isFinal: boolean;
 }>) {
   const { correct, total, percent } = scoreAnswers(questions, answers);
@@ -218,6 +223,9 @@ function Results({ questions, answers, needed, onRetry, reviewFor, next, isFinal
     review.set(target.label, target);
   }
 
+  let verdict = `Not yet — you need ${needed} of ${total} to pass. Review the lessons below, then try again with a new set of questions.`;
+  if (passed) verdict = isFinal ? "You passed the final exam. Congratulations — you've completed the course!" : "You passed! The next chapter is unlocked.";
+
   return (
     <section className="space-y-4">
       <div className={`rounded-2xl border p-5 shadow-card sm:p-7 ${passed ? "border-ok/40 bg-ok-soft" : "border-line bg-layer-1"}`}>
@@ -227,9 +235,7 @@ function Results({ questions, answers, needed, onRetry, reviewFor, next, isFinal
         <p className="text-sm text-fg-2">Your score</p>
         <p className="text-4xl font-semibold tabular-nums">{correct}/{total} <span className="text-xl text-fg-3">({percent}%)</span></p>
         <p className="mt-2 text-base font-medium">
-          {passed
-            ? isFinal ? "You passed the final exam. Congratulations — you've completed the course!" : "You passed! The next chapter is unlocked."
-            : `Not yet — you need ${needed} of ${total} to pass. Review the lessons below, then try again with a new set of questions.`}
+          {verdict}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {passed && next && (

@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Check, CheckCircle2, Clock, Lock, Target } from 
 import { chapterStatuses, drawChapterQuiz, hasPassed, lessonKey, lessonsRead, type BaQuestion } from "@/lib/ba-data";
 import { savePosition, setLessonRead, useBa, useHydrated } from "@/lib/ba-store";
 import type { BaLesson } from "@/lib/ba-content";
+import { LessonContent } from "@/components/LessonContent";
 import { Quiz } from "./Quiz";
 import { NotesBox } from "./NotesBox";
 import { TipCard } from "./TipCard";
@@ -45,24 +46,7 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
 
   if (!hydrated) return <div className="min-h-[60vh]" aria-busy="true" />;
 
-  if (status === "locked") {
-    return (
-      <div className="mx-auto max-w-xl rounded-2xl border border-line bg-layer-1 p-7 text-center shadow-card">
-        <span className="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-layer-2 text-fg-3"><Lock size={22} /></span>
-        <p className="text-sm text-fg-3">Chapter {chapter.number}</p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight">{chapter.title}</h1>
-        <p className="mt-3 text-fg-2">This chapter unlocks when you pass the quiz for the previous chapter{prev ? <>, <b className="text-fg-1">{prev.title}</b></> : ""}.</p>
-        <div className="mt-6 flex justify-center gap-2">
-          {prev && (
-            <Link href={`/business-analyst/${prev.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
-              Go to {prev.title} <ArrowRight size={16} />
-            </Link>
-          )}
-          <Link href="/business-analyst" className="inline-flex h-10 items-center rounded-xl border border-line-strong px-4 text-sm font-medium hover:bg-layer-2">All chapters</Link>
-        </div>
-      </div>
-    );
-  }
+  if (status === "locked") return <LockedChapter number={chapter.number} title={chapter.title} prev={prev} />;
 
   const lesson = lessons[step - 1];
   const isRead = lesson ? !!ba.read[lessonKey(id, lesson.n)] : false;
@@ -86,44 +70,16 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
         </div>
       </header>
 
-      <nav aria-label="Lessons in this chapter" className="mb-6 flex flex-wrap gap-1.5">
-        {lessons.map((l) => {
-          const done = !!ba.read[lessonKey(id, l.n)];
-          const active = step === l.n;
-          return (
-            <button
-              key={l.n}
-              onClick={() => go(l.n)}
-              title={l.title}
-              aria-current={active ? "step" : undefined}
-              aria-label={`Lesson ${l.n}: ${l.title}${done ? " (read)" : ""}`}
-              className={`grid size-9 place-items-center rounded-lg border text-sm font-medium transition-colors ${
-                active ? "border-fg-1 bg-fg-1 text-layer-1" : done ? "border-ok/40 bg-ok-soft text-ok" : "border-line bg-layer-1 text-fg-2 hover:border-line-strong"
-              }`}
-            >
-              {done && !active ? <Check size={15} /> : l.n}
-            </button>
-          );
-        })}
-        <button
-          onClick={() => go(quizStep)}
-          aria-current={step === quizStep ? "step" : undefined}
-          className={`inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium transition-colors ${
-            step === quizStep ? "border-violet bg-violet text-white" : passed ? "border-ok/40 bg-ok-soft text-ok" : "border-line bg-layer-1 text-fg-2 hover:border-line-strong"
-          }`}
-        >
-          {allRead ? <Target size={15} /> : <Lock size={14} />} Quiz
-        </button>
-      </nav>
+      <LessonNav lessons={lessons} chapterId={id} step={step} quizStep={quizStep} allRead={allRead} passed={passed} read={ba.read} onGo={go} />
 
       {lesson && (
         <article className="rounded-2xl border border-line bg-layer-1 p-5 shadow-card sm:p-8">
           {step === 1 && (
-            <div className="prose-lesson prose-ba mb-6 border-b border-line pb-5 text-fg-2" dangerouslySetInnerHTML={{ __html: chapter.introHtml }} />
+            <LessonContent blocks={[{ t: "html", html: chapter.introHtml }]} className="prose-ba mb-6 border-b border-line pb-5" />
           )}
           <p className="text-xs font-medium tracking-wide text-fg-3 uppercase">Lesson {lesson.n} of {lessons.length} · {lesson.minutes} min</p>
           <h2 className="mt-1 mb-4 text-2xl font-semibold tracking-tight text-balance">{lesson.title}</h2>
-          <div className="prose-lesson prose-reader prose-ba" dangerouslySetInnerHTML={{ __html: lesson.html }} />
+          <LessonContent blocks={[{ t: "html", html: lesson.html }]} className="prose-reader prose-ba" />
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
             <button
@@ -182,5 +138,73 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
         <NotesBox chapter={id} placeholder={notesPlaceholder} />
       </div>
     </div>
+  );
+}
+
+function LockedChapter({ number, title, prev }: Readonly<{ number: number; title: string; prev: Props["prev"] }>) {
+  return (
+    <div className="mx-auto max-w-xl rounded-2xl border border-line bg-layer-1 p-7 text-center shadow-card">
+      <span className="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-layer-2 text-fg-3"><Lock size={22} /></span>
+      <p className="text-sm text-fg-3">Chapter {number}</p>
+      <h1 className="mt-1 text-2xl font-semibold tracking-tight">{title}</h1>
+      <p className="mt-3 text-fg-2">This chapter unlocks when you pass the quiz for the previous chapter{prev ? <>, <b className="text-fg-1">{prev.title}</b></> : ""}.</p>
+      <div className="mt-6 flex justify-center gap-2">
+        {prev && (
+          <Link href={`/business-analyst/${prev.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
+            Go to {prev.title} <ArrowRight size={16} />
+          </Link>
+        )}
+        <Link href="/business-analyst" className="inline-flex h-10 items-center rounded-xl border border-line-strong px-4 text-sm font-medium hover:bg-layer-2">All chapters</Link>
+      </div>
+    </div>
+  );
+}
+
+function chipTone(active: boolean, done: boolean) {
+  if (active) return "border-fg-1 bg-fg-1 text-layer-1";
+  return done ? "border-ok/40 bg-ok-soft text-ok" : "border-line bg-layer-1 text-fg-2 hover:border-line-strong";
+}
+
+function quizTone(active: boolean, passed: boolean) {
+  if (active) return "border-violet bg-violet text-white";
+  return passed ? "border-ok/40 bg-ok-soft text-ok" : "border-line bg-layer-1 text-fg-2 hover:border-line-strong";
+}
+
+function LessonNav({ lessons, chapterId, step, quizStep, allRead, passed, read, onGo }: Readonly<{
+  lessons: BaLesson[];
+  chapterId: string;
+  step: number;
+  quizStep: number;
+  allRead: boolean;
+  passed: boolean;
+  read: Record<string, number>;
+  onGo: (n: number) => void;
+}>) {
+  return (
+    <nav aria-label="Lessons in this chapter" className="mb-6 flex flex-wrap gap-1.5">
+      {lessons.map((l) => {
+        const done = !!read[lessonKey(chapterId, l.n)];
+        const active = step === l.n;
+        return (
+          <button
+            key={l.n}
+            onClick={() => onGo(l.n)}
+            title={l.title}
+            aria-current={active ? "step" : undefined}
+            aria-label={`Lesson ${l.n}: ${l.title}${done ? " (read)" : ""}`}
+            className={`grid size-9 place-items-center rounded-lg border text-sm font-medium transition-colors ${chipTone(active, done)}`}
+          >
+            {done && !active ? <Check size={15} /> : l.n}
+          </button>
+        );
+      })}
+      <button
+        onClick={() => onGo(quizStep)}
+        aria-current={step === quizStep ? "step" : undefined}
+        className={`inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium transition-colors ${quizTone(step === quizStep, passed)}`}
+      >
+        {allRead ? <Target size={15} /> : <Lock size={14} />} Quiz
+      </button>
+    </nav>
   );
 }

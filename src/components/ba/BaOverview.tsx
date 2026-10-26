@@ -29,6 +29,44 @@ function getVisit(): Visit {
 }
 const noop = () => () => {};
 
+type ChapterStatus = ReturnType<typeof chapterStatuses>[number];
+
+function continueFor(opts: { finalPassed: boolean; finalOpen: boolean; current?: BaOutline[number]; started: boolean }) {
+  const { finalPassed, finalOpen, current, started } = opts;
+  if (finalPassed) return null;
+  if (current) return { href: `/business-analyst/${current.id}`, label: started ? `Continue chapter ${current.number}` : "Start chapter 1" };
+  return finalOpen ? { href: "/business-analyst/final", label: "Take the final exam" } : null;
+}
+
+function welcomeMessage(finalPassed: boolean, percent: number, current?: BaOutline[number]) {
+  if (finalPassed) return "You've completed the course — revisit any chapter to refresh before an interview.";
+  const next = current ? ` Next up: chapter ${current.number}, ${current.title}.` : "";
+  return `You're ${percent}% of the way through.${next}`;
+}
+
+function chapterBadgeTone(status: ChapterStatus) {
+  if (status === "passed") return "bg-ok-soft text-ok";
+  return status === "locked" ? "bg-layer-2 text-fg-3" : "bg-brand-soft text-brand";
+}
+
+function chapterBadgeIcon(status: ChapterStatus, number: number) {
+  if (status === "passed") return <CheckCircle2 size={19} />;
+  return status === "locked" ? <Lock size={16} /> : number;
+}
+
+function finalTone(open: boolean, passed: boolean) {
+  if (passed) return "bg-ok-soft text-ok";
+  return open ? "bg-violet-soft text-violet" : "bg-layer-2 text-fg-3";
+}
+
+function finalMessage(open: boolean, passed: boolean, best: ReturnType<typeof bestScore>) {
+  if (passed) {
+    const score = best ? ` — best ${best.score}/${best.total}` : "";
+    return `Passed${score}.`;
+  }
+  return open ? "Unlocked — you're ready!" : "Unlocks after you pass all 14 chapter quizzes.";
+}
+
 interface Props {
   outline: BaOutline;
   tips: string[];
@@ -62,11 +100,7 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
     if (!ba.tourDone) finishTour();
   };
 
-  const continueTarget = finalPassed
-    ? null
-    : current
-      ? { href: `/business-analyst/${current.id}`, label: started ? `Continue chapter ${current.number}` : "Start chapter 1" }
-      : finalOpen ? { href: "/business-analyst/final", label: "Take the final exam" } : null;
+  const continueTarget = continueFor({ finalPassed, finalOpen, current, started });
 
   return (
     <>
@@ -103,7 +137,7 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
           <div className="mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-blue-soft/60 p-4">
             <p className="min-w-0 flex-1 text-[15px]">
               <b>Welcome back!</b>{" "}
-              {finalPassed ? "You've completed the course — revisit any chapter to refresh before an interview." : `You're ${percent}% of the way through.${current ? ` Next up: chapter ${current.number}, ${current.title}.` : ""}`}
+              {welcomeMessage(finalPassed, percent, current)}
             </p>
             <button onClick={() => setWelcomeDismissed(true)} className="text-sm text-fg-3 hover:text-fg-1">Dismiss</button>
           </div>
@@ -145,6 +179,8 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
 function ProgressCard({ hydrated, percent, passed, chapters, read, lessons, finalPassed }: Readonly<{
   hydrated: boolean; percent: number; passed: number; chapters: number; read: number; lessons: number; finalPassed: boolean;
 }>) {
+  let finalValue = "–";
+  if (hydrated && finalPassed) finalValue = "Passed";
   return (
     <div className="rounded-2xl border border-line bg-layer-1/85 p-5 shadow-card backdrop-blur">
       <div className="flex items-baseline justify-between">
@@ -157,7 +193,7 @@ function ProgressCard({ hydrated, percent, passed, chapters, read, lessons, fina
       <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
         <Stat label="Chapters passed" value={hydrated ? `${passed}/${chapters}` : "–"} />
         <Stat label="Lessons read" value={hydrated ? `${read}/${lessons}` : "–"} />
-        <Stat label="Final exam" value={hydrated ? (finalPassed ? "Passed" : "–") : "–"} />
+        <Stat label="Final exam" value={finalValue} />
       </dl>
     </div>
   );
@@ -172,17 +208,15 @@ function Stat({ label, value }: Readonly<{ label: string; value: string }>) {
   );
 }
 
-function ChapterCard({ chapter: c, status, ba, hydrated }: Readonly<{ chapter: BaOutline[number]; status: ReturnType<typeof chapterStatuses>[number]; ba: BaState; hydrated: boolean }>) {
+function ChapterCard({ chapter: c, status, ba, hydrated }: Readonly<{ chapter: BaOutline[number]; status: ChapterStatus; ba: BaState; hydrated: boolean }>) {
   const read = lessonsRead(ba, c.id, c.lessons.length);
   const best = bestScore(ba, c.id);
   const locked = status === "locked";
   const body = (
     <>
       <div className="flex items-start gap-3">
-        <span className={`grid size-10 shrink-0 place-items-center rounded-xl text-sm font-semibold ${
-          status === "passed" ? "bg-ok-soft text-ok" : locked ? "bg-layer-2 text-fg-3" : "bg-brand-soft text-brand"
-        }`}>
-          {status === "passed" ? <CheckCircle2 size={19} /> : locked ? <Lock size={16} /> : c.number}
+        <span className={`grid size-10 shrink-0 place-items-center rounded-xl text-sm font-semibold ${chapterBadgeTone(status)}`}>
+          {chapterBadgeIcon(status, c.number)}
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-xs text-fg-3">Chapter {c.number}</p>
@@ -217,13 +251,13 @@ function ChapterCard({ chapter: c, status, ba, hydrated }: Readonly<{ chapter: B
 function FinalCard({ open, passed, best, size }: Readonly<{ open: boolean; passed: boolean; best: ReturnType<typeof bestScore>; size: number }>) {
   const body = (
     <div className="flex items-center gap-4">
-      <span className={`grid size-12 shrink-0 place-items-center rounded-2xl ${passed ? "bg-ok-soft text-ok" : open ? "bg-violet-soft text-violet" : "bg-layer-2 text-fg-3"}`}>
+      <span className={`grid size-12 shrink-0 place-items-center rounded-2xl ${finalTone(open, passed)}`}>
         {open || passed ? <GraduationCap size={24} /> : <Lock size={20} />}
       </span>
       <div className="min-w-0 flex-1">
         <h3 className="font-semibold">Final exam</h3>
         <p className="text-sm text-fg-2">
-          {size} questions drawn from every chapter. {passed ? `Passed${best ? ` — best ${best.score}/${best.total}` : ""}.` : open ? "Unlocked — you're ready!" : "Unlocks after you pass all 14 chapter quizzes."}
+          {size} questions drawn from every chapter. {finalMessage(open, passed, best)}
         </p>
       </div>
       {open && <ArrowRight size={18} className="shrink-0 text-fg-3" />}
