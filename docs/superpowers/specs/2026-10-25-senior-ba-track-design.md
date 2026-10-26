@@ -36,7 +36,7 @@ Eight senior-level chapters, each with short lessons and a question bank:
 7. **Leading change and raising team capability** — organizational readiness, communication/adoption, mentoring analysts, facilitation standards, reusable practices and communities of practice.
 8. **Senior BA interviews and integrated case** — executive-level storytelling, leadership scenarios and a capstone that takes a complex initiative from strategy through measured value.
 
-Use a continuing case: modernizing reconciliation across multiple regions and systems, with competing operations, finance, control and technology priorities. Each chapter adds an artifact or decision to the capstone.
+Use a continuing case: modernizing reconciliation across multiple regions and systems, with competing operations, finance, control and technology priorities. Each chapter adds an artifact or decision to the capstone. The capstone is a self-reviewed portfolio exercise, not a graded submission: learners assemble a short decision pack (problem and strategic fit, stakeholder/decision map, current and target state, options and risks, delivery/governance outline, and benefits measures) and use a checklist to assess traceability, evidence, ownership and measurable value. The separate senior final exam scores course knowledge; the capstone does not gate course completion.
 
 ## Study plan
 
