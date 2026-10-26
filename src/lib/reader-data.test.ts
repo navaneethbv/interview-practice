@@ -392,3 +392,18 @@ test("navigation rebuilds public requests without forwarding caller credentials 
   assert.equal((await vm.runInContext("navigate(receivedRequest)", context) as Response).status, 503);
   assert.equal(fetched.length, 1);
 });
+
+
+test("shared public fetch policy rejects foreign authorities and fixes GET, credentials and redirect behavior", async () => {
+  const { context } = workerHarness();
+  const fetched: Request[] = [];
+  context.fetch = async (request: Request) => { fetched.push(request); return new Response("public resource"); };
+  await assert.rejects(vm.runInContext('fetchPublic(new URL("https://other.test/learn/arrays"))', context), /Only same-origin/);
+  assert.equal(fetched.length, 0);
+  await vm.runInContext('fetchPublic(downloadURL("/learn/arrays", "lesson"), { method: "POST", credentials: "include", redirect: "follow" })', context);
+  assert.equal(fetched.length, 1);
+  assert.equal(fetched[0].url, "https://example.test/learn/arrays");
+  assert.equal(fetched[0].method, "GET");
+  assert.equal(fetched[0].credentials, "omit");
+  assert.equal(fetched[0].redirect, "error");
+});

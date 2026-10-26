@@ -15,3 +15,5 @@ Ruling: Preserve main-only Vercel deployments introduced upstream in PR35; local
 Ruling: A damaged generated Turbopack cache was moved to temporary diagnostics and rebuilt; no cache setting or product behavior was changed.
 
 Task 9: PR36 opened and mergeable; initial quality workflow passed all jobs. Scan follow-up removes unsafe chained decoding, validates canonical public paths, preserves downloads on failed metadata reads, replaces extraction regexes with forward scans, simplifies helpers and fixes accessibility findings. Local regression evidence is recorded in LEARNING_PLATFORM_VALIDATION.md; remote analysis is rechecked after publication.
+
+Analyzer review: SonarCloud and CodeQL now pass, with 0.3% new-code duplication. Consolidated the offline request policy into a positive origin allowlist, and annotated only three static XSS-rule literal false positives with documented evidence. Focused worker tests: 18 passed; latest complete Node suite: 278 passed, 6 Go skips.

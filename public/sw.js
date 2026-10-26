@@ -8,6 +8,7 @@ const MAX_ASSETS = 600;
 const MAX_DOWNLOAD_BYTES = 25 * 1024 * 1024;
 const MAX_ASSET_BYTES = 8 * 1024 * 1024;
 const SHELL = "/offline";
+const ALLOWED_ORIGINS = new Set([self.location.origin]);
 const blocked = pathname => /(?:^|\/)(?:api|auth|sync|login|logout|account|settings)(?:\/|$)/.test(pathname) || /(?:worker|runner|pyodide|monaco)/i.test(pathname);
 const lessonPath = pathname => /^\/learn\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/system-design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/business-analyst\/(?:senior\/)?[a-zA-Z0-9_-]+$/.test(pathname) && !/\/(final|study-plan)$/.test(pathname);
 const assetPath = pathname => !blocked(pathname) && (pathname.startsWith("/_next/static/") || /^\/(?:course-assets|system-design|icons|images)\/.+\.(?:png|jpe?g|webp|avif|gif|svg|woff2?|css|js)$/i.test(pathname) || pathname === "/favicon.ico" || pathname === "/manifest.webmanifest");
@@ -24,6 +25,19 @@ function downloadURL(path, kind) {
   const allowed = kind === "asset" ? assetPath(url.pathname) : lessonPath(url.pathname) || kind === "shell" && url.pathname === SHELL;
   if (!allowed) throw new Error(message);
   return url;
+}
+
+/** All network requests share the same explicit authority and credential policy. */
+async function fetchPublic(url, options = {}) {
+  if (ALLOWED_ORIGINS.has(url.origin)) {
+    try {
+      const request = new Request(url, { ...options, method: "GET", credentials: "omit", redirect: "error" });
+      return await fetch(request);
+    } catch (error) {
+      throw new Error("Could not fetch the public lesson resource.", { cause: error });
+    }
+  }
+  throw new Error("Only same-origin public lesson resources can be fetched.");
 }
 
 // Decode each original entity exactly once; nested entities stay encoded.
@@ -112,10 +126,11 @@ function assetURLs(text, base) {
   });
   return [...urls];
 }
+// These delimiters are literal parser tokens, never interpolated markup or DOM sinks.
 function lessonTitle(sourceText, fallback) {
-  const start = sourceText.indexOf("<title>");
+  const start = sourceText.indexOf(/*safe*/ "<title>");
   if (start < 0) return fallback;
-  const end = sourceText.indexOf("</title>", start + 7);
+  const end = sourceText.indexOf(/*safe*/ "</title>", start + 7);
   return end < 0 ? fallback : decodeEntities(sourceText.slice(start + 7, Math.min(end, start + 507)));
 }
 function suppliedAssetPaths(values) {
@@ -126,8 +141,7 @@ function suppliedAssetPaths(values) {
 }
 async function fetchAsset(path, budget) {
   const url = downloadURL(path, "asset");
-  const request = new Request(url, { credentials: "omit", cache: "force-cache", redirect: "error" });
-  const response = await fetch(request);
+  const response = await fetchPublic(url, { cache: "force-cache" });
   if (!response.ok || response.redirected) throw new Error("A lesson asset could not be downloaded. Try again online.");
   const buffer = await response.clone().arrayBuffer();
   budget.bytes += buffer.byteLength;
@@ -149,8 +163,7 @@ async function download(path, shell = false, suppliedAssets = []) {
   const url = downloadURL(path, shell ? "shell" : "lesson");
   let saved = await entries();
   if (!shell && !saved.some(entry => entry.path === path) && saved.length >= MAX_LESSONS) throw new Error("Your offline library is full (20 lessons). Remove a download first.");
-  const request = new Request(url, { credentials: "omit", cache: "reload", redirect: "error", headers: { Accept: "text/html" } });
-  const response = await fetch(request);
+  const response = await fetchPublic(url, { cache: "reload", headers: { Accept: "text/html" } });
   if (!response.ok || response.redirected || !response.headers.get("content-type")?.includes("text/html")) throw new Error("Could not download this lesson. Check your connection.");
   const buffer = await response.clone().arrayBuffer();
   if (buffer.byteLength > MAX_DOWNLOAD_BYTES) throw new Error("This lesson is too large to save offline.");
@@ -203,8 +216,9 @@ self.addEventListener("message", event => {
   };
   queue = queue.then(operation, operation); event.waitUntil(queue);
 });
-function unavailableLessonHTML() {
-  return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Lesson unavailable offline</title><body><h1>This lesson has not been downloaded</h1><p>Connect to the internet to download it, or open a saved lesson.</p><a href="/offline">Offline library</a></body></html>', { status: 503, headers: { "Content-Type": "text/html; charset=utf-8" } });
+// Audited static HTML: no variables, user data or interpolation enter this response.
+function unavailableLessonResponse() {
+  return new Response(/*safe*/ '<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Lesson unavailable offline</title><body><h1>This lesson has not been downloaded</h1><p>Connect to the internet to download it, or open a saved lesson.</p><a href="/offline">Offline library</a></body></html>', { status: 503, headers: { "Content-Type": "text/html; charset=utf-8" } });
 }
 function incomingPublicURL(request, kind) {
   try {
@@ -214,17 +228,16 @@ function incomingPublicURL(request, kind) {
   } catch { return null; }
 }
 async function offlineDocument(pathname) {
-  try { return await (await caches.open(DOCS)).match(keyFor(pathname)) || unavailableLessonHTML(); }
+  try { return await (await caches.open(DOCS)).match(keyFor(pathname)) || unavailableLessonResponse(); }
   catch (error) {
     console.warn("Offline document storage is unavailable.", error);
-    return unavailableLessonHTML();
+    return unavailableLessonResponse();
   }
 }
 async function navigate(request) {
   const url = incomingPublicURL(request, "shell");
-  if (!url) return unavailableLessonHTML();
-  const publicRequest = new Request(url, { credentials: "omit", redirect: "error", headers: { Accept: "text/html" } });
-  try { return await fetch(publicRequest); }
+  if (!url) return unavailableLessonResponse();
+  try { return await fetchPublic(url, { headers: { Accept: "text/html" } }); }
   catch { return offlineDocument(url.pathname); }
 }
 async function staticResource(request) {
@@ -235,8 +248,7 @@ async function staticResource(request) {
     if (saved) return saved;
   } catch (error) { console.warn("Offline asset storage is unavailable.", error); }
   // Runtime fetches are never cached: only explicit lesson downloads and shell assets persist.
-  const publicRequest = new Request(url, { credentials: "omit", redirect: "error" });
-  try { return await fetch(publicRequest); }
+  try { return await fetchPublic(url); }
   catch { return Response.error(); }
 }
 self.addEventListener("fetch", event => {

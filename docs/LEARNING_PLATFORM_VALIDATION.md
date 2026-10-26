@@ -24,7 +24,7 @@ This branch implements the twelve approved improvements. The feature map is in t
 
 - `npm run lint`: zero errors; one existing exhaustive-deps warning in the unchanged BA tour.
 - `npm run typecheck`: passed.
-- `npm test`: 281 Node tests, 275 passed and 6 skipped because Go is not installed locally; all 60 Python importer and 4 practice-addition tests passed. Java compilation used the installed real JDK 17 compiler module; CI provisions JDK 21.
+- `npm test`: 284 Node tests, 278 passed and 6 skipped because Go is not installed locally; all 60 Python importer and 4 practice-addition tests passed. Java compilation used the installed real JDK 17 compiler module; CI provisions JDK 21.
 - Independent BCTCI oracle suite: all 14 tests passed.
 - `npm run tests:build -- --java`: 1,227 specs processed, zero problems; 1,158 Python, 1,164 Java and 63 SQLite executions. No expected-output changes.
 - `npm run build`: passed after replacing a damaged local Turbopack persistence cache. No source configuration change was needed.
@@ -45,3 +45,9 @@ There is no connected Supabase project named for this application. No unrelated 
 Device voice availability, audible pronunciation, iOS home-screen installation and platform-specific install prompts need real-device checks. Browser API lifecycle and offline behavior are covered by automated tests.
 
 The latest main-branch Vercel policy (`vercel.json`) deploys only main. This branch preserves that policy and does not enable preview deployments.
+
+## Final analyzer boundary review
+
+SonarCloud and CodeQL passed after the offline sender/request boundary fixes. New-code duplication is 0.3%. The worker uses one fixed-origin GET fetch policy with an explicit positive origin allowlist, omitted credentials and blocked redirects. Focused regressions reject foreign origins, unauthorized messages and unsafe request options.
+
+Three static literals have the XSS rule's `/*safe*/` annotation: the two title parser delimiters and the fully static unavailable-page document. They contain no interpolation; delimiter searches produce numeric offsets, and the fallback contains no user data. No file-wide scanner exclusion or quality threshold was added. The remote scan remains the source of current check status.
