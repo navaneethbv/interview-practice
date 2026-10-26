@@ -12,7 +12,7 @@ import {
   type BaAttempt,
   type BaState,
 } from "./ba-data";
-import { safeGet, safeRemove, safeSet } from "./storage";
+import { safeGet, safeSet } from "./storage";
 
 /**
  * Browser store for the Business Analyst course, using the same guarded localStorage
@@ -71,9 +71,15 @@ export const savePosition = (chapter: string, lesson: number) => {
 };
 export const finishTour = () => write({ ...read(), tourDone: Date.now() });
 
-export function resetCourse() {
-  cache = EMPTY_BA;
-  cachedRaw = null;
-  safeRemove(BA_KEY);
-  listeners.forEach((l) => l());
+export function resetCourse(chapterIds: string[], finalId = "final") {
+  const state = read();
+  const ids = new Set([...chapterIds, finalId]);
+  const readPrefix = (key: string) => chapterIds.some((id) => key.startsWith(`${id}:`));
+  write({
+    ...state,
+    read: Object.fromEntries(Object.entries(state.read).filter(([key]) => !readPrefix(key))),
+    quizzes: Object.fromEntries(Object.entries(state.quizzes).filter(([id]) => !ids.has(id))),
+    notes: Object.fromEntries(Object.entries(state.notes).filter(([id]) => !ids.has(id))),
+    position: Object.fromEntries(Object.entries(state.position).filter(([id]) => !ids.has(id))),
+  });
 }

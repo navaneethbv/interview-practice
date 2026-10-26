@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What does a capability map describe?",
+    "options": [
+      "Stable abilities an organization needs, independent of current teams and systems",
+      "A project task list",
+      "A vendor feature set",
+      "The current reporting hierarchy"
+    ],
+    "why": "Capabilities describe what the business must be able to do."
+  },
+  {
+    "lesson": 1,
+    "q": "What does a value stream represent?",
+    "options": [
+      "End-to-end stages through which a stakeholder receives value",
+      "An org chart",
+      "A data dictionary",
+      "A funding request"
+    ],
+    "why": "Value streams show how work flows across handoffs to an outcome."
+  },
+  {
+    "lesson": 1,
+    "q": "What is a good use of a capability map?",
+    "options": [
+      "Compare gaps and investment needs at a useful level",
+      "List every individual keystroke",
+      "Replace all current-state evidence",
+      "Prove the target will work"
+    ],
+    "why": "Maps should support decisions, not serve as decoration."
+  },
+  {
+    "lesson": 2,
+    "q": "What should current-state analysis combine?",
+    "options": [
+      "Formal procedures, actual practice, data and control evidence",
+      "Only the policy document",
+      "Only executive opinions",
+      "Only the system vendor's description"
+    ],
+    "why": "Real operations may differ from written process and should be validated."
+  },
+  {
+    "lesson": 2,
+    "q": "Why define “aged break” consistently across regions?",
+    "options": [
+      "Comparisons require the same population and calculation",
+      "It makes all issues disappear",
+      "It reduces the need for a target",
+      "It is only a technical concern"
+    ],
+    "why": "Metric definitions must be aligned before comparing performance."
+  },
+  {
+    "lesson": 2,
+    "q": "How should a fixed constraint be distinguished from an assumption?",
+    "options": [
+      "Verify its source and whether it can be changed",
+      "Use whichever label is shorter",
+      "Treat every stakeholder statement as fixed",
+      "Assume regulation is never relevant"
+    ],
+    "why": "Some constraints are negotiable; others require evidence and authority."
+  },
+  {
+    "lesson": 3,
+    "q": "What belongs in a target operating model?",
+    "options": [
+      "Roles, processes, data, systems, controls and performance ownership",
+      "Only the new application",
+      "Only training dates",
+      "Only the org chart"
+    ],
+    "why": "A target operating model describes how the organization will operate after change."
+  },
+  {
+    "lesson": 3,
+    "q": "Why validate a target model with frontline users?",
+    "options": [
+      "They can reveal whether responsibilities and processes work in practice",
+      "They approve funding",
+      "They replace risk management",
+      "They determine vendor contracts"
+    ],
+    "why": "Operational validation catches gaps not visible to project leaders."
+  },
+  {
+    "lesson": 3,
+    "q": "How should necessary regional variation be handled?",
+    "options": [
+      "Define the global minimum and document justified local differences",
+      "Remove all differences without analysis",
+      "Let each team invent its own terms",
+      "Exclude the variation from tests"
+    ],
+    "why": "A deliberate model can standardize controls while preserving valid local needs."
+  },
+  {
+    "lesson": 4,
+    "q": "What is a transition state?",
+    "options": [
+      "An intermediate operating condition between current and target states",
+      "A project name",
+      "A final user story",
+      "A yearly strategy"
+    ],
+    "why": "Transitions describe how the organization moves safely toward the target."
+  },
+  {
+    "lesson": 4,
+    "q": "Why define exit criteria for a transition?",
+    "options": [
+      "To know when it is safe to proceed to the next state",
+      "To guarantee the vendor is paid",
+      "To avoid tracking benefits",
+      "To make the roadmap look complete"
+    ],
+    "why": "Exit criteria provide evidence for progression decisions."
+  },
+  {
+    "lesson": 4,
+    "q": "What can coexistence of old and new systems create?",
+    "options": [
+      "Duplicate processing and reconciliation risk",
+      "Automatic data quality",
+      "No operational impact",
+      "A benefit with no cost"
+    ],
+    "why": "Transition planning must consider parallel systems and duplicate work."
+  },
+  {
+    "lesson": 5,
+    "q": "What should a business architecture roadmap show?",
+    "options": [
+      "Outcomes, capabilities, dependencies, timing and decision gates",
+      "Every coding task as a fixed promise",
+      "Only funding totals",
+      "A single end date"
+    ],
+    "why": "Roadmaps communicate sequencing and outcomes at the right level."
+  },
+  {
+    "lesson": 5,
+    "q": "How should scenario planning be used?",
+    "options": [
+      "Show how the roadmap changes under materially different assumptions",
+      "Predict the future with certainty",
+      "Avoid discussing uncertainty",
+      "Replace a business case"
+    ],
+    "why": "Scenario planning makes uncertainty and decision consequences visible."
+  },
+  {
+    "lesson": 5,
+    "q": "What is a useful enabling work item?",
+    "options": [
+      "Data cleanup required before safe matching automation",
+      "A decorative dashboard animation",
+      "A renamed project team",
+      "A quarterly team social"
+    ],
+    "why": "Enabling work can unlock later outcome delivery."
+  },
+  {
+    "lesson": 6,
+    "q": "Why map ecosystem impacts?",
+    "options": [
+      "Change can affect vendors, regulators, customers and adjacent teams",
+      "Only internal staff matter",
+      "It eliminates external approval",
+      "It removes contract obligations"
+    ],
+    "why": "Enterprise changes often cross organizational boundaries."
+  },
+  {
+    "lesson": 6,
+    "q": "What should be reviewed for a vendor-dependent process?",
+    "options": [
+      "Service obligations, data handling, access, continuity and exit needs with proper owners",
+      "Vendor logo colors",
+      "Only the price list",
+      "Nothing after signature"
+    ],
+    "why": "Vendor arrangements affect operations, privacy, resilience and accountability."
+  },
+  {
+    "lesson": 6,
+    "q": "What should the BA do when a change affects another team's authority?",
+    "options": [
+      "Identify the decision owner and bring the impact to that forum",
+      "Make the decision unilaterally",
+      "Hide the dependency",
+      "Wait until production"
+    ],
+    "why": "Cross-boundary decisions need the right owner and timing."
+  },
+  {
+    "lesson": 2,
+    "q": "How should current-state evidence be presented when sources disagree?",
+    "options": [
+      "Show the disagreement, confidence and how it will be resolved",
+      "Pick the largest dataset without question",
+      "Remove conflicting evidence",
+      "Call it consensus"
+    ],
+    "why": "Transparency about evidence quality supports sound decisions."
+  },
+  {
+    "lesson": 5,
+    "q": "What makes a roadmap useful?",
+    "options": [
+      "It shows what outcomes come when and what decisions or dependencies matter",
+      "It lists every meeting",
+      "It has many colors",
+      "It avoids owners"
+    ],
+    "why": "A roadmap supports prioritization and coordination."
+  }
+]

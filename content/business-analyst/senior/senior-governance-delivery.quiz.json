@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What is proportionate governance?",
+    "options": [
+      "Clear decision owners, evidence and forums matched to risk and decision type",
+      "Routing every detail to executives",
+      "Creating a committee for each story",
+      "Removing all records"
+    ],
+    "why": "Governance should clarify accountability without adding unnecessary process."
+  },
+  {
+    "lesson": 1,
+    "q": "Who should decide reversible team implementation details within guardrails?",
+    "options": [
+      "The delivery team",
+      "The board for every change",
+      "The BA regardless of role",
+      "The vendor's sales team"
+    ],
+    "why": "Delegated decision rights let teams act within agreed boundaries."
+  },
+  {
+    "lesson": 1,
+    "q": "When should a prior decision be reopened?",
+    "options": [
+      "When material assumptions change",
+      "Whenever someone dislikes it",
+      "At every daily stand-up",
+      "Never under any condition"
+    ],
+    "why": "Reopening should be evidence-based and deliberate."
+  },
+  {
+    "lesson": 2,
+    "q": "What makes a dependency actionable?",
+    "options": [
+      "Provider and consumer owners, deliverable, date and acceptance condition",
+      "A row with no names",
+      "A list of acronyms",
+      "A risk color only"
+    ],
+    "why": "Dependencies need shared ownership and a clear definition of what is needed."
+  },
+  {
+    "lesson": 2,
+    "q": "Why are cross-team dependencies tracked early?",
+    "options": [
+      "Late outputs can delay integration, controls and rollout",
+      "They prevent all change",
+      "They replace architecture",
+      "They set salary bands"
+    ],
+    "why": "Early tracking allows sequencing or escalation before commitments fail."
+  },
+  {
+    "lesson": 2,
+    "q": "How should a late dependency be escalated?",
+    "options": [
+      "With impact, options and a requested decision",
+      "By blaming the provider team",
+      "After the project ends",
+      "Without telling the owner"
+    ],
+    "why": "Good escalation enables a timely trade-off."
+  },
+  {
+    "lesson": 3,
+    "q": "What should a risk statement include?",
+    "options": [
+      "Uncertain event, cause, consequence, trigger, response and owner",
+      "Only the word risk",
+      "A guaranteed outcome",
+      "A meeting title"
+    ],
+    "why": "A risk is actionable when exposure and response ownership are clear."
+  },
+  {
+    "lesson": 3,
+    "q": "How should senior BAs connect risks across workstreams?",
+    "options": [
+      "Show how one risk can affect dependent outcomes and decisions",
+      "Keep each risk isolated",
+      "Remove all low-probability risks",
+      "Assign every risk to the BA"
+    ],
+    "why": "Cross-workstream effects can change sequencing and business exposure."
+  },
+  {
+    "lesson": 3,
+    "q": "What is escalation for?",
+    "options": [
+      "Obtaining authority, resources or a trade-off beyond the team's boundary",
+      "Assigning blame",
+      "Avoiding analysis",
+      "Changing a metric definition"
+    ],
+    "why": "Escalation should request help with a decision outside current authority."
+  },
+  {
+    "lesson": 4,
+    "q": "How can teams using different delivery methods stay aligned?",
+    "options": [
+      "Share outcomes, interfaces, decision dates and quality evidence",
+      "Use identical ceremonies regardless of context",
+      "Stop communicating across teams",
+      "Use only calendar milestones"
+    ],
+    "why": "Shared contracts and evidence matter more than identical rituals."
+  },
+  {
+    "lesson": 4,
+    "q": "What is still required in an agile program when scope changes?",
+    "options": [
+      "Impact analysis, prioritization and stakeholder alignment",
+      "No records",
+      "No owner",
+      "No testing"
+    ],
+    "why": "Agile delivery does not remove the need to assess change."
+  },
+  {
+    "lesson": 4,
+    "q": "How should progress be reported?",
+    "options": [
+      "Using verified outcomes, dependencies and risks",
+      "By story count alone",
+      "By number of meetings",
+      "By color without explanation"
+    ],
+    "why": "Senior reporting should communicate real outcome and delivery evidence."
+  },
+  {
+    "lesson": 5,
+    "q": "What should be assessed for a scope change?",
+    "options": [
+      "Value, risk, migration, control, testing, training, support and displaced work",
+      "Only coding effort",
+      "Only the requester's seniority",
+      "Nothing if urgent"
+    ],
+    "why": "A scope change can affect the full operating and delivery system."
+  },
+  {
+    "lesson": 5,
+    "q": "What does a baseline help with?",
+    "options": [
+      "Managing agreed scope and controlled change where needed",
+      "Preventing all learning",
+      "Replacing the backlog",
+      "Avoiding the sponsor"
+    ],
+    "why": "Baselines are useful where agreement or control requires a reference point."
+  },
+  {
+    "lesson": 5,
+    "q": "How should an urgent request be handled?",
+    "options": [
+      "Clarify need, urgency, impact and decision authority before reprioritizing",
+      "Add it silently",
+      "Ignore it by default",
+      "Ask the vendor to decide"
+    ],
+    "why": "Urgency should be assessed against evidence and trade-offs."
+  },
+  {
+    "lesson": 6,
+    "q": "Who retains accountability when delivery is outsourced?",
+    "options": [
+      "The organization and its accountable owners",
+      "The vendor alone",
+      "The BA alone",
+      "The end users"
+    ],
+    "why": "Outsourcing work does not automatically transfer organizational accountability."
+  },
+  {
+    "lesson": 6,
+    "q": "Which is an important vendor obligation to analyze?",
+    "options": [
+      "Data handling, audit rights, continuity and exit",
+      "Logo usage only",
+      "Team lunch schedule",
+      "Screen brightness"
+    ],
+    "why": "Vendor relationships can introduce operational, data and continuity obligations."
+  },
+  {
+    "lesson": 6,
+    "q": "What should be traced for auditability?",
+    "options": [
+      "Obligation to requirement, test, approval and operational evidence",
+      "Only contract to invoice",
+      "Only team to meeting",
+      "Nothing after launch"
+    ],
+    "why": "Traceability supports evidence that obligations were implemented and checked."
+  },
+  {
+    "lesson": 6,
+    "q": "What is a useful control for an accepted exception?",
+    "options": [
+      "Record the owner, rationale, scope and review condition",
+      "Hide it in a chat",
+      "Call it standard behavior",
+      "Remove its date"
+    ],
+    "why": "Exceptions need an accountable record and a way to revisit them."
+  },
+  {
+    "lesson": 1,
+    "q": "What should a governance decision record contain?",
+    "options": [
+      "Date, owner, options, rationale, conditions and follow-up",
+      "Only attendee count",
+      "Only project name",
+      "The BA's preferred solution"
+    ],
+    "why": "A record makes the decision understandable and actionable later."
+  }
+]

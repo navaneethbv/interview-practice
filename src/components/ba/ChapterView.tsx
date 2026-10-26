@@ -21,9 +21,10 @@ interface Props {
   passPercent: number;
   tips: string[];
   notesPlaceholder?: string;
+  routeBase?: string;
 }
 
-export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, passPercent, tips, notesPlaceholder }: Readonly<Props>) {
+export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, passPercent, tips, notesPlaceholder, routeBase = "/business-analyst" }: Readonly<Props>) {
   const ba = useBa();
   const hydrated = useHydrated();
   const { id, lessons } = chapter;
@@ -46,7 +47,7 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
 
   if (!hydrated) return <div className="min-h-[60vh]" aria-busy="true" />;
 
-  if (status === "locked") return <LockedChapter number={chapter.number} title={chapter.title} prev={prev} />;
+  if (status === "locked") return <LockedChapter number={chapter.number} title={chapter.title} prev={prev} routeBase={routeBase} />;
 
   const lesson = lessons[step - 1];
   const isRead = lesson ? !!ba.read[lessonKey(id, lesson.n)] : false;
@@ -55,7 +56,7 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
   return (
     <div ref={top} className="mx-auto max-w-[46rem] scroll-mt-20">
       <header className="mb-6">
-        <Link href="/business-analyst" className="inline-flex items-center gap-1 text-sm text-fg-3 hover:text-fg-1">
+        <Link href={routeBase} className="inline-flex items-center gap-1 text-sm text-fg-3 hover:text-fg-1">
           <ArrowLeft size={14} /> All chapters
         </Link>
         <p className="mt-4 text-sm font-medium text-brand">Chapter {chapter.number} of {chapterIds.length}</p>
@@ -117,7 +118,7 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
             passPercent={passPercent}
             draw={(recent) => drawChapterQuiz(bank, quizSize, recent)}
             reviewFor={(q) => ({ label: `Lesson ${q.lesson}: ${lessons[q.lesson - 1]?.title ?? ""}`, onClick: () => go(q.lesson) })}
-            next={next ? { href: `/business-analyst/${next.id}`, label: `Start chapter ${chapter.number + 1}: ${next.title}` } : { href: "/business-analyst/final", label: "Go to the final exam" }}
+            next={next ? { href: `${routeBase}/${next.id}`, label: `Start chapter ${chapter.number + 1}: ${next.title}` } : { href: `${routeBase}/final`, label: "Go to the final exam" }}
           />
         ) : (
           <section className="rounded-2xl border border-line bg-layer-1 p-6 shadow-card">
@@ -141,7 +142,7 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
   );
 }
 
-function LockedChapter({ number, title, prev }: Readonly<{ number: number; title: string; prev: Props["prev"] }>) {
+function LockedChapter({ number, title, prev, routeBase }: Readonly<{ number: number; title: string; prev: Props["prev"]; routeBase: string }>) {
   return (
     <div className="mx-auto max-w-xl rounded-2xl border border-line bg-layer-1 p-7 text-center shadow-card">
       <span className="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-layer-2 text-fg-3"><Lock size={22} /></span>
@@ -150,11 +151,11 @@ function LockedChapter({ number, title, prev }: Readonly<{ number: number; title
       <p className="mt-3 text-fg-2">This chapter unlocks when you pass the quiz for the previous chapter{prev ? <>, <b className="text-fg-1">{prev.title}</b></> : ""}.</p>
       <div className="mt-6 flex justify-center gap-2">
         {prev && (
-          <Link href={`/business-analyst/${prev.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
+          <Link href={`${routeBase}/${prev.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
             Go to {prev.title} <ArrowRight size={16} />
           </Link>
         )}
-        <Link href="/business-analyst" className="inline-flex h-10 items-center rounded-xl border border-line-strong px-4 text-sm font-medium hover:bg-layer-2">All chapters</Link>
+        <Link href={routeBase} className="inline-flex h-10 items-center rounded-xl border border-line-strong px-4 text-sm font-medium hover:bg-layer-2">All chapters</Link>
       </div>
     </div>
   );

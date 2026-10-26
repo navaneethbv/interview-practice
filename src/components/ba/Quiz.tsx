@@ -7,8 +7,9 @@ import { bestScore, hasPassed, passMark, scoreAnswers, type PresentedQuestion } 
 import { recordAttempt, useBa } from "@/lib/ba-store";
 
 export interface QuizProps {
-  /** Chapter id, or "final". */
+  /** Chapter or final exam attempt id. */
   id: string;
+  isFinal?: boolean;
   title: string;
   size: number;
   bankSize: number;
@@ -26,7 +27,7 @@ const LETTERS = ["A", "B", "C", "D", "E", "F"];
  * One question at a time with instant feedback. Each attempt draws a fresh set of questions
  * (preferring ones not shown last time) and shuffles the answer order.
  */
-export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, next }: Readonly<QuizProps>) {
+export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, next, isFinal = false }: Readonly<QuizProps>) {
   const ba = useBa();
   const attempts = ba.quizzes[id] ?? [];
   const passed = hasPassed(ba, id);
@@ -85,7 +86,7 @@ export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, 
             <li>• <b className="text-fg-1">{total} questions</b>, picked at random from a bank of {bankSize}.</li>
             <li>• Answer choices are shuffled every time, so you can&apos;t rely on remembering positions.</li>
             <li>• You&apos;ll see whether you were right, with an explanation, after each question.</li>
-            <li>• You need <b className="text-fg-1">{needed} of {total}</b> ({passPercent}%) to pass{id === "final" ? " and finish the course" : " and unlock the next chapter"}.</li>
+            <li>• You need <b className="text-fg-1">{needed} of {total}</b> ({passPercent}%) to pass{isFinal ? " and finish the course" : " and unlock the next chapter"}.</li>
             <li>• Retakes are unlimited. Each retake prefers questions you didn&apos;t see last time.</li>
           </ul>
           {attempts.length > 0 && (
@@ -130,7 +131,7 @@ export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, 
           onRetry={start}
           reviewFor={reviewFor}
           next={next}
-          isFinal={id === "final"}
+          isFinal={isFinal}
         />
       )}
     </div>

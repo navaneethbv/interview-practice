@@ -1,0 +1,91 @@
+{
+  "title": "Senior Business Analyst Track",
+  "passPercent": 80,
+  "quizSize": 10,
+  "final": {
+    "size": 30,
+    "passPercent": 80
+  },
+  "chapters": [
+    {
+      "id": "senior-strategic-partnership",
+      "title": "From Project Support to Strategic Partnership",
+      "summary": "Connect enterprise goals, operating models, capabilities and measurable outcomes; move from taking requests to shaping valuable change.",
+      "skills": [
+        "Strategy alignment",
+        "Value streams",
+        "Outcome thinking"
+      ]
+    },
+    {
+      "id": "senior-complex-discovery",
+      "title": "Complex Discovery and Decision Leadership",
+      "summary": "Lead discovery across executive, operational and technical groups; work through ambiguity, conflict, decision rights and distributed stakeholders.",
+      "skills": [
+        "Executive facilitation",
+        "Decision rights",
+        "Ambiguity"
+      ]
+    },
+    {
+      "id": "senior-solution-shaping",
+      "title": "Enterprise Requirements and Solution Shaping",
+      "summary": "Shape options with architecture partners, define quality attributes and controls, and govern complex requirements across systems and teams.",
+      "skills": [
+        "Solution options",
+        "Architecture partnership",
+        "NFRs and controls"
+      ]
+    },
+    {
+      "id": "senior-business-architecture",
+      "title": "Business Architecture and Target Operating Models",
+      "summary": "Model capabilities, value streams and operating-model change; sequence target states into an actionable roadmap.",
+      "skills": [
+        "Capability maps",
+        "Target operating model",
+        "Roadmaps"
+      ]
+    },
+    {
+      "id": "senior-governance-delivery",
+      "title": "Portfolio Delivery, Governance and Risk",
+      "summary": "Coordinate cross-team delivery, decision forums, scope, dependencies, auditability, risk and escalation across a portfolio.",
+      "skills": [
+        "Governance",
+        "Dependencies",
+        "Risk leadership"
+      ]
+    },
+    {
+      "id": "senior-value-realization",
+      "title": "Business Cases and Value Realization",
+      "summary": "Build evidence-based options and business cases, define benefit ownership and baselines, and verify whether value was realized.",
+      "skills": [
+        "Business cases",
+        "Benefits maps",
+        "Value measurement"
+      ]
+    },
+    {
+      "id": "senior-change-coaching",
+      "title": "Leading Change and Raising Team Capability",
+      "summary": "Lead adoption and readiness, mentor analysts, establish reusable practices and build stakeholder capability without relying on authority.",
+      "skills": [
+        "Change leadership",
+        "Coaching",
+        "Practice standards"
+      ]
+    },
+    {
+      "id": "senior-interview-capstone",
+      "title": "Senior BA Interviews and Integrated Case",
+      "summary": "Present strategic work at executive level, answer leadership scenarios and complete a multi-region reconciliation modernization case.",
+      "skills": [
+        "Senior interviews",
+        "Executive narrative",
+        "Capstone"
+      ]
+    }
+  ]
+}

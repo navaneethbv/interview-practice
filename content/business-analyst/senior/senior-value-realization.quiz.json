@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What should a business case compare?",
+    "options": [
+      "Credible options, including do-nothing or minimal change",
+      "Only the preferred solution",
+      "Only software license fees",
+      "Only delivery dates"
+    ],
+    "why": "Options comparison shows whether and how to invest."
+  },
+  {
+    "lesson": 1,
+    "q": "Who owns the investment decision?",
+    "options": [
+      "The sponsor or designated investment authority",
+      "The BA by default",
+      "A test lead",
+      "The vendor"
+    ],
+    "why": "The BA informs the decision while the accountable authority decides."
+  },
+  {
+    "lesson": 1,
+    "q": "How should weak financial estimates be presented?",
+    "options": [
+      "With ranges, assumptions and sensitivity",
+      "As exact facts",
+      "Without a time horizon",
+      "Only as a percentage"
+    ],
+    "why": "Transparent uncertainty is more useful than false precision."
+  },
+  {
+    "lesson": 2,
+    "q": "What is an example of an output rather than a benefit?",
+    "options": [
+      "A new matching engine",
+      "Reduced aged breaks",
+      "Lower investigation effort",
+      "Faster close"
+    ],
+    "why": "The engine is delivered; business outcomes depend on changed capability and use."
+  },
+  {
+    "lesson": 2,
+    "q": "What should a benefits map connect?",
+    "options": [
+      "Outputs, behavior/capability changes, outcomes and strategic objectives",
+      "People to meeting times",
+      "Features to vendor logos",
+      "Budget to sprint points"
+    ],
+    "why": "Benefits mapping creates a logic chain from investment to value."
+  },
+  {
+    "lesson": 2,
+    "q": "Why include disbenefits?",
+    "options": [
+      "A change may create negative effects such as role disruption or new support load",
+      "They improve the score",
+      "They are always zero",
+      "They replace outcomes"
+    ],
+    "why": "A balanced case includes adverse impacts as well as benefits."
+  },
+  {
+    "lesson": 3,
+    "q": "What is required for a useful baseline?",
+    "options": [
+      "Agreed population, calculation, period and data source",
+      "A target only",
+      "A dashboard image",
+      "A sponsor's guess"
+    ],
+    "why": "A baseline must be defined consistently to compare later results."
+  },
+  {
+    "lesson": 3,
+    "q": "Why define “aged break” before comparing regions?",
+    "options": [
+      "Different definitions make performance comparisons misleading",
+      "It determines the software vendor",
+      "It guarantees the target",
+      "It removes local regulations"
+    ],
+    "why": "Shared definitions are necessary for valid comparisons."
+  },
+  {
+    "lesson": 3,
+    "q": "Which is a leading indicator?",
+    "options": [
+      "Data completeness before automated matching rollout",
+      "Annual cost savings after two years",
+      "Close time at year end",
+      "Number of historical write-offs"
+    ],
+    "why": "Leading indicators can show early adoption or readiness."
+  },
+  {
+    "lesson": 4,
+    "q": "Who should own a business benefit after project delivery?",
+    "options": [
+      "A business owner with authority to change the process",
+      "The project manager forever",
+      "The BA alone",
+      "The development vendor"
+    ],
+    "why": "Benefits usually depend on ongoing business decisions and process ownership."
+  },
+  {
+    "lesson": 4,
+    "q": "What should happen if no owner accepts a predicted benefit?",
+    "options": [
+      "Resolve ownership before relying on that benefit in the investment case",
+      "Assume the project team owns it forever",
+      "Remove all measures",
+      "Promise it anyway"
+    ],
+    "why": "Unowned benefits have no clear path to realization."
+  },
+  {
+    "lesson": 4,
+    "q": "What should benefit handoff include?",
+    "options": [
+      "Measure, baseline, target, review period, data access and action owner",
+      "Only a farewell meeting",
+      "Only a status color",
+      "A new project name"
+    ],
+    "why": "Operational ownership and data access allow continued measurement."
+  },
+  {
+    "lesson": 5,
+    "q": "Why run sensitivity analysis?",
+    "options": [
+      "To see whether key assumptions change the recommendation",
+      "To make numbers look exact",
+      "To avoid comparing options",
+      "To eliminate risk"
+    ],
+    "why": "Sensitivity reveals which assumptions materially affect the case."
+  },
+  {
+    "lesson": 5,
+    "q": "When can a staged investment be useful?",
+    "options": [
+      "When it buys evidence about an uncertain high-impact assumption",
+      "When uncertainty is irrelevant",
+      "When no stopping criteria exist",
+      "To avoid all stakeholder decisions"
+    ],
+    "why": "A staged decision can reduce exposure while learning."
+  },
+  {
+    "lesson": 5,
+    "q": "What should a scenario analysis show?",
+    "options": [
+      "How choices and outcomes change under plausible futures",
+      "One guaranteed prediction",
+      "Only a best-case forecast",
+      "Only the vendor's view"
+    ],
+    "why": "Scenarios clarify consequences under material uncertainty."
+  },
+  {
+    "lesson": 6,
+    "q": "What does a post-implementation review compare?",
+    "options": [
+      "Actual adoption and outcomes against the agreed baseline and target",
+      "The project name against the budget",
+      "Team attendance against estimate",
+      "Only release date"
+    ],
+    "why": "Review measures whether expected value occurred and why variance exists."
+  },
+  {
+    "lesson": 6,
+    "q": "Can a project deliver successfully but miss benefits?",
+    "options": [
+      "Yes; scope and schedule can be met while business outcomes fail",
+      "No; release means benefits are achieved",
+      "Only if the system is down",
+      "Only in waterfall"
+    ],
+    "why": "Delivery outputs do not guarantee adoption or value."
+  },
+  {
+    "lesson": 6,
+    "q": "What should happen when benefits miss target?",
+    "options": [
+      "Explain variance with evidence and agree corrective action or closure",
+      "Hide the result",
+      "Change the baseline silently",
+      "Blame end users"
+    ],
+    "why": "A review should inform action and preserve measure integrity."
+  },
+  {
+    "lesson": 6,
+    "q": "Why use the same definitions after launch as before?",
+    "options": [
+      "To make before-and-after comparison valid",
+      "To prevent feedback",
+      "To avoid target owners",
+      "To make all numbers improve"
+    ],
+    "why": "Consistent measures support trustworthy benefits analysis."
+  },
+  {
+    "lesson": 4,
+    "q": "What is a benefit owner expected to do?",
+    "options": [
+      "Track the measure and act when performance misses the target",
+      "Write all technical stories",
+      "Approve every invoice",
+      "Replace the sponsor"
+    ],
+    "why": "Ownership includes monitoring and action, not only a name on a register."
+  }
+]
