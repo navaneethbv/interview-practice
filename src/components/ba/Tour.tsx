@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Compass, Lightbulb, Lock, Target, X } from "lucide-react";
 
 function buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize }: Readonly<{ courseTitle: string; chapterCount: number; quizSize: number; passPercent: number; finalSize: number; bankSize: number }>) {
@@ -47,7 +47,7 @@ function buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSiz
 /** A short, step-by-step introduction shown in a dialog. */
 interface Props { onClose: () => void; courseTitle: string; chapterCount: number; quizSize: number; passPercent: number; finalSize: number; bankSize: number }
 export function Tour({ onClose, courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize }: Readonly<Props>) {
-  const steps = buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize });
+  const steps = useMemo(() => buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize }), [courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize]);
   const [step, setStep] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const s = steps[step];
