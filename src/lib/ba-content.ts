@@ -4,6 +4,7 @@ import { cache } from "react";
 import { Marked } from "marked";
 import type { BaQuestion } from "./ba-data";
 import indexJson from "../../content/business-analyst/index.json";
+import seniorIndexJson from "../../content/business-analyst/senior/index.json";
 import tipsJson from "../../content/business-analyst/tips.json";
 
 /**
@@ -13,7 +14,10 @@ import tipsJson from "../../content/business-analyst/tips.json";
  */
 
 const DIR = path.join(process.cwd(), "content", "business-analyst");
+const TRACK_DIR = { beginner: DIR, senior: path.join(DIR, "senior") } as const;
 const SLUG = /^[a-z0-9-]+$/;
+
+export type BaTrack = "beginner" | "senior";
 
 export interface BaChapterMeta {
   id: string;
@@ -72,19 +76,19 @@ const parser = new Marked({
 const render = (md: string) => parser.parse(md, { async: false });
 const minutesFor = (md: string) => Math.max(1, Math.round(md.split(/\s+/).filter((w) => /[a-z0-9]/i.test(w)).length / 200));
 
-export const getBaIndex = cache((): BaIndex => {
-  const index = indexJson as BaIndex;
+export const getBaIndex = cache((track: BaTrack = "beginner"): BaIndex => {
+  const index = (track === "senior" ? seniorIndexJson : indexJson) as BaIndex;
   if (!index.chapters.every((c) => SLUG.test(c.id))) throw new Error("Invalid chapter id in content/business-analyst/index.json");
   return index;
 });
 
-export const getBaChapter = cache((id: string): BaChapter | null => {
-  const index = getBaIndex();
+export const getBaChapter = cache((id: string, track: BaTrack = "beginner"): BaChapter | null => {
+  const index = getBaIndex(track);
   const i = index.chapters.findIndex((c) => c.id === id);
   if (i === -1) return null;
   const meta = index.chapters[i];
   // The id was matched against index.json, so the path stays inside the course folder.
-  const md = fs.readFileSync(path.join(DIR, `${meta.id}.md`), "utf8"); // nosemgrep -- id validated against index.json
+  const md = fs.readFileSync(path.join(TRACK_DIR[track], `${meta.id}.md`), "utf8"); // nosemgrep -- id validated against index.json
   const [intro, ...sections] = md.split(/^## /m);
   const lessons = sections.map((section, n) => {
     const newline = section.indexOf("\n");
@@ -101,20 +105,20 @@ export const getBaChapter = cache((id: string): BaChapter | null => {
   };
 });
 
-export const getBaBank = cache((id: string): BaQuestion[] => {
-  const meta = getBaIndex().chapters.find((c) => c.id === id);
+export const getBaBank = cache((id: string, track: BaTrack = "beginner"): BaQuestion[] => {
+  const meta = getBaIndex(track).chapters.find((c) => c.id === id);
   if (!meta) return [];
-  const raw = JSON.parse(fs.readFileSync(path.join(DIR, `${meta.id}.quiz.json`), "utf8")) as AuthoredQuestion[]; // nosemgrep -- id validated against index.json
+  const raw = JSON.parse(fs.readFileSync(path.join(TRACK_DIR[track], `${meta.id}.quiz.json`), "utf8")) as AuthoredQuestion[]; // nosemgrep -- id validated against index.json
   return raw.map((q, i) => ({ ...q, id: `${meta.id}-${i + 1}` }));
 });
 
-export const listBaChapters = cache(() => getBaIndex().chapters.map((c) => getBaChapter(c.id)).filter((c): c is BaChapter => c !== null));
+export const listBaChapters = cache((track: BaTrack = "beginner") => getBaIndex(track).chapters.map((c) => getBaChapter(c.id, track)).filter((c): c is BaChapter => c !== null));
 
 export const getBaTips = cache((): string[] => tipsJson);
 
 /** Lightweight chapter summaries for client components (no lesson HTML). */
-export function baOutline() {
-  return listBaChapters().map((c) => ({
+export function baOutline(track: BaTrack = "beginner") {
+  return listBaChapters(track).map((c) => ({
     id: c.id,
     number: c.number,
     title: c.title,
@@ -122,7 +126,7 @@ export function baOutline() {
     skills: c.skills,
     minutes: c.minutes,
     lessons: c.lessons.map((l) => ({ n: l.n, title: l.title })),
-    questions: getBaBank(c.id).length,
+    questions: getBaBank(c.id, track).length,
   }));
 }
 
