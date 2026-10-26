@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { StudyActions } from "@/components/StudyActions";
+import { recordLearningAcceptance, recordLearningAssistance, startIndependentAttempt } from "@/lib/learning-store";
 import {
   BookOpenText,
   ChevronLeft,
@@ -400,7 +402,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         addSubmission(id, sub);
         setSubmissions((s) => [sub, ...s].slice(0, 30));
         recordSubmission(id, outcome.verdict === "Accepted");
-        if (outcome.verdict === "Accepted") reviewAccepted(id);
+        if (outcome.verdict === "Accepted") { reviewAccepted(id); recordLearningAcceptance(id); }
       }
     } catch (e) {
       setResult({ mode: "submit", tests: [], inputs: [], outcome: errorOutcome((e as Error).message) });
@@ -425,7 +427,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           id="workspace-solution-tab"
           panelId="workspace-solution-panel"
           active={leftTab === "solution"}
-          onClick={() => setLeftTab("solution")}
+          onClick={() => { if (!inMock) recordLearningAssistance(id, "solution"); setLeftTab("solution"); }}
           icon={<FlaskConical size={15} className="text-medium" />}
         >
           Solution
@@ -441,7 +443,11 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </PanelTab>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
-        <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>{description}</div>
+        <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>
+          <StudyActions href={id.startsWith("lc:") ? `/problems/lc/${id.slice(3)}` : `/problems/${id}`} title={title} section="Coding practice" />
+          <button type="button" onClick={() => { startIndependentAttempt(id); setLeftTab("description"); }} className="mb-4 rounded-lg border border-line px-3 py-2 text-xs text-fg-2 hover:bg-layer-2" title="Self declaration: attempt from scratch without referring to hints or solutions. Prior evidence is preserved.">Start an independent attempt</button>
+          {description}
+        </div>
         <div id="workspace-solution-panel" role="tabpanel" aria-labelledby="workspace-solution-tab" tabIndex={0} hidden={leftTab !== "solution"}>
           {inMock ? (
             <p className="rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">

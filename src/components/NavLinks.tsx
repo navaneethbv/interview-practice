@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const LINKS: { href: string; label: string; blurb: string }[] = [
+  { href: "/practice/today", label: "Today", blurb: "Your daily schedule, saved work and readiness" },
   { href: "/problems", label: "Problems", blurb: "Study plans, topic tracks and company lists" },
   { href: "/learn", label: "Patterns", blurb: "Lessons on the patterns behind the problems" },
   { href: "/practice", label: "Practice", blurb: "Mock interviews, reviews and the study plan" },
@@ -14,6 +15,7 @@ const LINKS: { href: string; label: string; blurb: string }[] = [
 ];
 
 function isActive(path: string, href: string) {
+  if (href === "/practice" && path.startsWith("/practice/today")) return false;
   return path === href || path.startsWith(`${href}/`);
 }
 

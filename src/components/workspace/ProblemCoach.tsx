@@ -3,6 +3,7 @@
 import { Lightbulb, Gauge } from "lucide-react";
 import { useState } from "react";
 import { normalizeComplexity } from "@/lib/practice-data";
+import { recordLearningAssistance } from "@/lib/learning-store";
 
 export interface CoachInfo {
   topics?: string[];
@@ -18,7 +19,7 @@ const COMMON = ["O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n^2)", "O(n^3)", "O
  * Hints that reveal one step at a time (topic, pattern, approach) and a complexity check that
  * asks for your own answer before showing the reference.
  */
-export function ProblemCoach({ info }: Readonly<{ info: CoachInfo }>) {
+export function ProblemCoach({ info, progressId }: Readonly<{ info: CoachInfo; progressId?: string }>) {
   const hints = [
     info.topics?.length ? `Topics: ${info.topics.join(", ")}.` : undefined,
     info.pattern ? `Pattern to consider: ${info.pattern}.` : undefined,
@@ -41,7 +42,7 @@ export function ProblemCoach({ info }: Readonly<{ info: CoachInfo }>) {
             {shown < hints.length && (
               <button
                 type="button"
-                onClick={() => setShown(shown + 1)}
+                onClick={() => { if (progressId) recordLearningAssistance(progressId, "hint"); setShown(shown + 1); }}
                 className="ml-auto rounded-md bg-layer-2 px-2.5 py-1 text-xs font-medium text-fg-1 hover:bg-layer-3"
               >
                 {shown === 0 ? "Show a hint" : "Next hint"}

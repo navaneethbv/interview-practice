@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, Clock, Lock, Target } from "lucide-react";
 import { chapterStatuses, drawChapterQuiz, hasPassed, lessonKey, lessonsRead, type BaQuestion } from "@/lib/ba-data";
 import { savePosition, setLessonRead, useBa, useHydrated } from "@/lib/ba-store";
 import type { BaLesson } from "@/lib/ba-content";
 import { LessonContent } from "@/components/LessonContent";
 import { ReaderTools } from "@/components/ReaderTools";
+import { StudyActions } from "@/components/StudyActions";
 import { Quiz } from "./Quiz";
 import { NotesBox } from "./NotesBox";
 import { TipCard } from "./TipCard";
@@ -25,23 +26,32 @@ interface Props {
   routeBase?: string;
 }
 
+function subscribeLessonHash(listener: () => void) {
+  window.addEventListener("hashchange", listener);
+  return () => window.removeEventListener("hashchange", listener);
+}
+function getLessonHash() { return window.location.hash; }
+
 export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, passPercent, tips, notesPlaceholder, routeBase = "/business-analyst" }: Readonly<Props>) {
   const ba = useBa();
   const hydrated = useHydrated();
   const { id, lessons } = chapter;
   const quizStep = lessons.length + 1;
-  const [chosen, setChosen] = useState<number | null>(null);
+  const hash = useSyncExternalStore(subscribeLessonHash, getLessonHash, () => "");
   const top = useRef<HTMLDivElement>(null);
 
   const status = chapterStatuses(ba, chapterIds)[chapter.number - 1];
   const readCount = lessonsRead(ba, id, lessons.length);
   const allRead = readCount === lessons.length;
   const saved = ba.position[id];
-  const step = chosen ?? (saved && saved <= quizStep ? saved : 1);
+  const requestedLesson = /^#lesson-([1-9][0-9]*)$/.exec(hash)?.[1];
+  const linkedStep = hash === "#quiz" ? quizStep : requestedLesson ? Number(requestedLesson) : 0;
+  const step = linkedStep > 0 && linkedStep <= quizStep ? linkedStep : saved && saved <= quizStep ? saved : 1;
   const passed = hasPassed(ba, id);
 
   const go = (n: number) => {
-    setChosen(n);
+    window.history.replaceState(window.history.state, "", `${window.location.pathname}${n <= lessons.length ? `#lesson-${n}` : "#quiz"}`);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
     savePosition(id, n);
     top.current?.scrollIntoView({ block: "start", behavior: "smooth" });
   };
@@ -76,13 +86,14 @@ export function ChapterView({ chapter, bank, chapterIds, prev, next, quizSize, p
 
       {lesson && (
         <article className="reader-page rounded-2xl border border-line bg-layer-1 p-5 shadow-card sm:p-8">
-          <ReaderTools targetId="reader-content" />
-          <div id="reader-content" data-reader-content>
+          <StudyActions href={`${routeBase}/${id}#lesson-${lesson.n}`} title={`${chapter.title}: ${lesson.title}`} section={routeBase.includes("senior") ? "Senior BA" : "Business Analyst"} />
+          <ReaderTools key={`ba-reader-${id}-${lesson.n}`} targetId={`ba-reader-${id}-${lesson.n}`} />
+          <div id={`ba-reader-${id}-${lesson.n}`} data-reader-content>
           {step === 1 && (
             <LessonContent blocks={[{ t: "html", html: chapter.introHtml }]} className="prose-ba mb-6 border-b border-line pb-5" />
           )}
           <p className="text-xs font-medium tracking-wide text-fg-3 uppercase">Lesson {lesson.n} of {lessons.length} · {lesson.minutes} min</p>
-          <h2 className="mt-1 mb-4 text-2xl font-semibold tracking-tight text-balance">{lesson.title}</h2>
+          <h2 id={`lesson-${lesson.n}`} className="mt-1 mb-4 scroll-mt-20 text-2xl font-semibold tracking-tight text-balance">{lesson.title}</h2>
           <LessonContent blocks={[{ t: "html", html: lesson.html }]} className="prose-reader prose-ba" />
           </div>
 

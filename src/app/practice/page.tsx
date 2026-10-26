@@ -5,6 +5,7 @@ import { NavBar, SiteFooter } from "@/components/NavBar";
 import { PageHeader } from "@/components/PageHeader";
 import { PracticeHub } from "@/components/practice/PracticeHub";
 import { practiceCatalog } from "@/lib/practice-catalog";
+import { LearningTools } from "@/components/practice/LearningTools";
 
 export const metadata: Metadata = { title: "Practice" };
 
@@ -24,6 +25,10 @@ export default function PracticePage() {
         saved in this browser.
       </PageHeader>
       <main className="mx-auto max-w-6xl px-4 py-8">
+        <section className="mb-10" aria-labelledby="learning-tools-title">
+          <h2 id="learning-tools-title" className="mb-4 text-xl font-semibold">Your learning workspace</h2>
+          <LearningTools />
+        </section>
         <div className="mb-10 grid gap-3 sm:grid-cols-3">
           {GUIDES.map((g) => (
             <Link key={g.href} href={g.href} className="rounded-2xl border border-line bg-layer-1 p-4 shadow-card transition hover:-translate-y-px hover:border-line-strong hover:shadow-raised">

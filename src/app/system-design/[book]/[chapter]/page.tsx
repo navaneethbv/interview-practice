@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { PracticeVisit } from "@/components/PracticeVisit";
 import { ReaderTools } from "@/components/ReaderTools";
+import { StudyActions } from "@/components/StudyActions";
+import { SectionBookmarks } from "@/components/SectionBookmarks";
+import { ContentFreshness } from "@/components/ContentFreshness";
 import { LessonContent } from "@/components/LessonContent";
 import { OnThisPage } from "@/components/design/OnThisPage";
 import { designChapters, getDesignChapter, listDesignBooks } from "@/lib/content";
@@ -39,6 +42,7 @@ export default async function ChapterPage({ params }: PageProps) {
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] xl:gap-10">
       <PracticeVisit kind="chapter" title={chapter.title} context={book.short} href={`/system-design/${book.id}/${chapter.id}`} />
       <article className="reader-page mx-auto w-full max-w-[46rem] min-w-0">
+        <StudyActions href={`/system-design/${book.id}/${chapter.id}`} title={chapter.title} section={book.short} />
         <ReaderTools targetId="reader-content" />
         <div id="reader-content" data-reader-content>
         <header className="mb-8 border-b border-line pb-6">
@@ -63,6 +67,8 @@ export default async function ChapterPage({ params }: PageProps) {
 
         <LessonContent blocks={[{ t: "html", html }]} className="prose-reader" />
         </div>
+        <SectionBookmarks href={`/system-design/${book.id}/${chapter.id}`} section={book.short} headings={headings} />
+        <div className="reader-hide"><ContentFreshness contentId={`book:${book.id}`} /></div>
 
         <nav aria-label="Chapter navigation" className="reader-hide mt-14 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
           {prev ? (

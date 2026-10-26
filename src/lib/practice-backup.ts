@@ -3,6 +3,11 @@ import { isPracticeVisit } from "./practice-resume";
 import { isMockState, isReviewState, MOCK_KEY, REVIEW_KEY } from "./practice-data";
 import { restoreEntries, storedEntries } from "./storage";
 import { BA_KEY, isBaState } from "./ba-data";
+import { APPEARANCE_KEY, isAppearance } from "./appearance-data";
+import { PLAN_KEY, BOOKMARKS_KEY, MISTAKES_KEY, EVIDENCE_KEY, isPlanState, isBookmarks, isMistakes, isLearningEvidence } from "./learning-data";
+import { INTERVIEWS_KEY, isInterviewState } from "./interview-data";
+import { LABS_KEY, isLabState } from "./lab-state";
+import { READER_KEY, READER_POSITIONS_KEY, isReaderPreferences, isReaderPositions } from "./reader-data";
 
 export const BACKUP_LIMIT = 20 * 1024 * 1024;
 export interface PracticeBackup {
@@ -13,8 +18,20 @@ export interface PracticeBackup {
 }
 const CODE_KEY = /^ip:(?:code|recovery):(?:lc:)?[a-zA-Z0-9_-]+:(?:python|java|javascript|typescript|cpp|go|sql)$/;
 const HISTORY_KEY = /^ip:subs:(?:lc:)?[a-zA-Z0-9_-]+$/;
+const EXTRA_VALIDATORS: Record<string, (value: unknown) => boolean> = {
+  [APPEARANCE_KEY]: isAppearance,
+  [PLAN_KEY]: isPlanState,
+  [BOOKMARKS_KEY]: isBookmarks,
+  [MISTAKES_KEY]: isMistakes,
+  [EVIDENCE_KEY]: isLearningEvidence,
+  [INTERVIEWS_KEY]: isInterviewState,
+  [LABS_KEY]: isLabState,
+  [READER_KEY]: isReaderPreferences,
+  [READER_POSITIONS_KEY]: isReaderPositions,
+};
 
 function validStructuredEntry(key: string, value: unknown): boolean {
+  if (Object.hasOwn(EXTRA_VALIDATORS, key)) return EXTRA_VALIDATORS[key](value);
   if (HISTORY_KEY.test(key)) return Array.isArray(value) && value.length <= 30 && value.every(isSubmission);
   if (!isRecord(value)) return false;
   if (key === "ip:progress:v1") {
@@ -66,7 +83,7 @@ export function exportPractice(): string {
       try {
         const value: unknown = JSON.parse(raw);
         if (validStructuredEntry(key, value)) entries[key] = raw;
-        else if (["ip:progress:v1", "ip:prefs:v1", "ip:resume:v1", REVIEW_KEY, MOCK_KEY, BA_KEY].includes(key) || HISTORY_KEY.test(key)) {
+        else if (Object.hasOwn(EXTRA_VALIDATORS, key) || ["ip:progress:v1", "ip:prefs:v1", "ip:resume:v1", REVIEW_KEY, MOCK_KEY, BA_KEY].includes(key) || HISTORY_KEY.test(key)) {
           throw new Error("Stored practice data is damaged. Export individual drafts before repairing it.");
         }
       } catch {

@@ -108,6 +108,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media (max-width: 1279.98px) {
+  .navbar-brand-text { display: none; }
+}
+
 /* Soft brand glow behind page headers. */
 .hero-glow {
   background-image:

@@ -35,6 +35,11 @@ export function SiteFooter() {
         <div>
           <p className="font-medium text-fg-2">Interview Practice</p>
           <p className="mt-1 max-w-md">Progress, code and notes stay in this browser. Back them up to move them to another device.</p>
+          <nav aria-label="Site settings" className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-fg-2">
+            <Link href="/settings/sync" className="hover:text-fg-1">Account & sync</Link>
+            <Link href="/offline" className="hover:text-fg-1">Offline library</Link>
+            <Link href="/content-status" className="hover:text-fg-1">Sources & review dates</Link>
+          </nav>
         </div>
         <PracticeDataControls />
       </div>

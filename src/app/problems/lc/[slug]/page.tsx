@@ -64,7 +64,7 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
           </div>
           <LessonContent blocks={[{ t: "html", html: problem.statementHtml }]} />
           {spec.kind !== "sql" && (
-            <ProblemCoach info={{ topics: meta.topics, pattern: meta.pattern, hint: meta.hint, time: meta.time, space: meta.space }} />
+            <ProblemCoach progressId={`lc:${slug}`} info={{ topics: meta.topics, pattern: meta.pattern, hint: meta.hint, time: meta.time, space: meta.space }} />
           )}
         </>
       }

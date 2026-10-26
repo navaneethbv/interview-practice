@@ -4,6 +4,7 @@ import { listBaChapters } from "@/lib/ba-content";
 import { FeaturedLists, HomeStats, TodayActions } from "@/components/home/Dashboard";
 import { NavBar, SiteFooter } from "@/components/NavBar";
 import { ResumePractice } from "@/components/ResumePractice";
+import { LearningTools } from "@/components/practice/LearningTools";
 import { listSummaries } from "@/lib/catalog";
 import { designChapters, getCourse, listDesignBooks } from "@/lib/content";
 
@@ -58,6 +59,10 @@ export default function Home() {
         <Section title="Pick up where you left off">
           <ResumePractice />
           <TodayActions />
+        </Section>
+
+        <Section title="Make today's practice count">
+          <LearningTools />
         </Section>
 
         <Section title="Popular lists" link={{ href: "/problems", label: "All lists" }}>

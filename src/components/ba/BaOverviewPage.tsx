@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NavBar, SiteFooter } from "@/components/NavBar";
 import { BaOverview } from "@/components/ba/BaOverview";
+import Link from "next/link";
 import { baOutline, getBaIndex, getBaTips, type BaTrack } from "@/lib/ba-content";
 
 export const BA_OVERVIEW_METADATA: Record<BaTrack, Metadata> = {
@@ -40,6 +41,13 @@ export function BaOverviewPage({ track }: Readonly<{ track: BaTrack }>) {
           otherTrack: { href: "/business-analyst/senior", title: "Already know the BA fundamentals?", description: "Explore the senior track for strategy alignment, enterprise change, governance, value realization, coaching and senior interview practice." },
         })}
       />
+      <section className="mx-auto max-w-5xl px-4 pb-8" aria-label="Apply your BA skills">
+        <div className="rounded-2xl border border-line bg-layer-1 p-6">
+          <h2 className="text-xl font-semibold">Put the lessons into practice</h2>
+          <p className="mt-2 text-sm text-fg-2">Build requirements and UAT artifacts, query business datasets, practice Excel, and rehearse stakeholder decisions.</p>
+          <div className="mt-4 flex flex-wrap gap-3 text-sm text-brand"><Link href="/practice/labs">Open practical labs</Link><Link href="/practice/interviews">Rehearse an interview</Link><Link href="/practice/today">Plan today&apos;s study</Link></div>
+        </div>
+      </section>
       <SiteFooter />
     </>
   );
