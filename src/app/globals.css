@@ -415,3 +415,13 @@ body {
     padding-inline: 0.75rem;
   }
 }
+
+@media (max-width: 359.98px) {
+  .workspace-action {
+    padding-inline: 0.5rem;
+  }
+
+  .workspace-action-label {
+    display: none;
+  }
+}
