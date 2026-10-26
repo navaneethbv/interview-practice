@@ -274,7 +274,7 @@ function StudyPlan({ chapters }: Readonly<{ chapters: number }>) {
         <div>
           <h2 className="text-lg font-semibold tracking-tight">New to business analysis?</h2>
           <p className="mt-1 max-w-2xl text-sm leading-relaxed text-fg-2">
-            Follow a beginner-friendly 30-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep.
+            Follow a beginner-friendly 39-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep.
             Take rest days as needed; the plan tells you what to study and practice each session.
           </p>
         </div>
