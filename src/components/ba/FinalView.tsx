@@ -33,6 +33,7 @@ export function FinalView({ banks, size, passPercent, routeBase = "/business-ana
       {finalUnlocked(ba, ids) ? (
         <Quiz
           id={finalId}
+          isFinal
           title={`${examTitle} final exam`}
           size={size}
           bankSize={total}
