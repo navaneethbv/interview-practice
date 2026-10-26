@@ -219,8 +219,10 @@ export class SyncClient {
       );
     }
     let response: Response;
+    // Called detached: browsers throw "Illegal invocation" when fetch runs with this client as `this`.
+    const fetcher = this.fetcher;
     try {
-      response = await this.fetcher(`${this.config.url}${path}`, {
+      response = await fetcher(`${this.config.url}${path}`, {
         ...init,
         cache: "no-store",
         credentials: "omit",
