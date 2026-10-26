@@ -1,0 +1,56 @@
+.reader-button {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--layer-1);
+  font-size: 0.85rem;
+}
+.reader-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.reader-preferences {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+.reader-preferences label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  min-width: 7rem;
+  flex: 1;
+}
+.reader-preferences select {
+  max-width: 100%;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  background: var(--bg);
+}
+[data-reader-content] {
+  max-width: var(--reader-width, 48rem) !important;
+  margin-inline: auto;
+  font-size: var(--reader-font-size, 18px);
+  line-height: var(--reader-line-spacing, 1.8);
+  overflow-wrap: anywhere;
+}
+[data-reader-content]
+  :is(.prose-reader, .prose-lesson, .prose-ba, p, li, blockquote) {
+  font-size: inherit;
+  line-height: inherit;
+}
+[data-reading-active] {
+  background: var(--blue-soft, #dceafa);
+  outline: 2px solid var(--blue, #3675c5);
+  outline-offset: 4px;
+  border-radius: 0.2rem;
+}
+html.reader-mode-active .reader-page > [data-reader-content] {
+  max-width: var(--reader-width, 48rem);
+}
