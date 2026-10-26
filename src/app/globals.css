@@ -378,3 +378,249 @@ body {
 .dark .shiki span {
   color: var(--shiki-dark) !important;
 }
+
+
+/* ------------------------------------------------------------ calm color palettes */
+
+/* Six coordinated palettes are available in both light and dark modes. */
+:root[data-color-theme="ocean"] {
+  --bg: #f2f6fa;
+  --layer-1: #fbfdff;
+  --layer-2: #eaf0f6;
+  --layer-3: #dce6f0;
+  --border: #d8e1eb;
+  --border-strong: #b9c8d8;
+  --text-1: #263444;
+  --text-2: #536477;
+  --text-3: #7b8999;
+  --brand: #3478b8;
+  --brand-soft: #e2eef8;
+  --blue: #2868a8;
+  --blue-soft: #e2edf8;
+  --violet: #6755ad;
+  --violet-soft: #eeeaf8;
+  --code-bg: #f0f4f8;
+}
+
+:root[data-color-theme="sage"] {
+  --bg: #f3f6f2;
+  --layer-1: #fcfdfb;
+  --layer-2: #eaf0e8;
+  --layer-3: #dce6da;
+  --border: #d9e2d7;
+  --border-strong: #b9c9b6;
+  --text-1: #2c382c;
+  --text-2: #596858;
+  --text-3: #818d80;
+  --brand: #52775c;
+  --brand-soft: #e6efe5;
+  --blue: #4e7184;
+  --blue-soft: #e5eff3;
+  --violet: #71618c;
+  --violet-soft: #eeeaf4;
+  --code-bg: #f0f4ef;
+}
+
+:root[data-color-theme="sand"] {
+  --bg: #f7f4ef;
+  --layer-1: #fffdfa;
+  --layer-2: #f0ebe3;
+  --layer-3: #e7dfd3;
+  --border: #e1d8ca;
+  --border-strong: #cbbba6;
+  --text-1: #3c342c;
+  --text-2: #665b4f;
+  --text-3: #918577;
+  --brand: #9b6946;
+  --brand-soft: #f4e9dd;
+  --blue: #55758e;
+  --blue-soft: #e8eff3;
+  --violet: #786387;
+  --violet-soft: #f0eaf3;
+  --code-bg: #f3eee6;
+}
+
+:root[data-color-theme="rose"] {
+  --bg: #f7f3f4;
+  --layer-1: #fffdfd;
+  --layer-2: #f1e9ec;
+  --layer-3: #e7dce1;
+  --border: #e2d6dc;
+  --border-strong: #cbb7c0;
+  --text-1: #3c3036;
+  --text-2: #685761;
+  --text-3: #91818a;
+  --brand: #9b6078;
+  --brand-soft: #f3e6eb;
+  --blue: #55748c;
+  --blue-soft: #e8eff4;
+  --violet: #76618f;
+  --violet-soft: #efebf5;
+  --code-bg: #f4edef;
+}
+
+:root[data-color-theme="lavender"] {
+  --bg: #f5f3f9;
+  --layer-1: #fdfcff;
+  --layer-2: #eeeaf5;
+  --layer-3: #e2dced;
+  --border: #ddd6e9;
+  --border-strong: #c2b7d5;
+  --text-1: #352e42;
+  --text-2: #62596f;
+  --text-3: #8c8398;
+  --brand: #715da7;
+  --brand-soft: #ede8f7;
+  --blue: #4f719d;
+  --blue-soft: #e7eef7;
+  --violet: #715da7;
+  --violet-soft: #ede8f7;
+  --code-bg: #f1eef7;
+}
+
+.dark[data-color-theme="ocean"] {
+  --bg: #151c25;
+  --layer-1: #1d2733;
+  --layer-2: #263442;
+  --layer-3: #314253;
+  --border: #344455;
+  --border-strong: #4b6074;
+  --text-1: #e4ebf2;
+  --text-2: #b5c3d0;
+  --text-3: #8999a9;
+  --brand: #79a9d3;
+  --brand-soft: #23384b;
+  --blue: #83b4e4;
+  --blue-soft: #22384c;
+  --violet: #b2a0e5;
+  --violet-soft: #342c4a;
+  --code-bg: #19232e;
+}
+
+.dark[data-color-theme="sage"] {
+  --bg: #171d19;
+  --layer-1: #202923;
+  --layer-2: #29352d;
+  --layer-3: #354439;
+  --border: #36443a;
+  --border-strong: #4f6253;
+  --text-1: #e4ebe5;
+  --text-2: #b5c2b6;
+  --text-3: #89988b;
+  --brand: #91b99a;
+  --brand-soft: #26382b;
+  --blue: #8fb6c5;
+  --blue-soft: #24343a;
+  --violet: #b2a1d0;
+  --violet-soft: #332d3c;
+  --code-bg: #1b251e;
+}
+
+.dark[data-color-theme="sand"] {
+  --bg: #201d19;
+  --layer-1: #2a2621;
+  --layer-2: #363028;
+  --layer-3: #453d33;
+  --border: #494035;
+  --border-strong: #625647;
+  --text-1: #eee7dd;
+  --text-2: #c7b9a8;
+  --text-3: #9b8c7b;
+  --brand: #d0a77f;
+  --brand-soft: #3d3025;
+  --blue: #91acbd;
+  --blue-soft: #293840;
+  --violet: #c1a6ca;
+  --violet-soft: #3b2d3e;
+  --code-bg: #25211c;
+}
+
+.dark[data-color-theme="rose"] {
+  --bg: #201a1e;
+  --layer-1: #2b2328;
+  --layer-2: #382c33;
+  --layer-3: #493842;
+  --border: #4a3b43;
+  --border-strong: #66515d;
+  --text-1: #f0e7ec;
+  --text-2: #c8b6c0;
+  --text-3: #9b8791;
+  --brand: #d3a0b3;
+  --brand-soft: #3d2b34;
+  --blue: #91afc4;
+  --blue-soft: #293943;
+  --violet: #bca8d5;
+  --violet-soft: #382e43;
+  --code-bg: #261f23;
+}
+
+.dark[data-color-theme="lavender"] {
+  --bg: #1b1921;
+  --layer-1: #25222d;
+  --layer-2: #302c3a;
+  --layer-3: #3d3749;
+  --border: #413b4d;
+  --border-strong: #5b526d;
+  --text-1: #ebe7f2;
+  --text-2: #c1b9d0;
+  --text-3: #938ba2;
+  --brand: #b3a2df;
+  --brand-soft: #332b47;
+  --blue: #91aecd;
+  --blue-soft: #283744;
+  --violet: #b3a2df;
+  --violet-soft: #332b47;
+  --code-bg: #211e29;
+}
+
+/* ------------------------------------------------------------ focused reader mode */
+
+html.reader-mode-active,
+html.reader-mode-active body {
+  overflow: hidden;
+}
+
+html.reader-mode-active body * {
+  visibility: hidden !important;
+}
+
+html.reader-mode-active .reader-page,
+html.reader-mode-active .reader-page * {
+  visibility: visible !important;
+}
+
+html.reader-mode-active .reader-page {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100 !important;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100dvh !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  padding: clamp(1.25rem, 4vw, 3.5rem) max(1rem, env(safe-area-inset-right)) clamp(2rem, 5vw, 4rem) max(1rem, env(safe-area-inset-left)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--bg) !important;
+  box-shadow: none !important;
+}
+
+html.reader-mode-active .reader-page > * {
+  width: 100%;
+  max-width: 48rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+html.reader-mode-active .reader-hide {
+  display: none !important;
+}
+
+html.reader-mode-active [data-reader-controls] {
+  position: sticky;
+  top: -1px;
+  z-index: 2;
+  background: var(--bg);
+  box-shadow: 0 1px 0 var(--border);
+}
