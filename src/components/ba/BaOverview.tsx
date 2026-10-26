@@ -83,7 +83,7 @@ interface Props {
   otherTrack?: { href: string; title: string; description: string };
 }
 
-export function BaOverview({ outline, tips, quizSize, passPercent, finalSize, coursePath = "/business-analyst", studyPlanPath = "/business-analyst/study-plan", trackLabel = "Business Analyst Prep", headline = "{headline}", finalId = FINAL_ID, planTitle = "New to business analysis?", planDescription = "Follow a beginner-friendly 39-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep. Take rest days as needed; the plan tells you what to study and practice each session.", otherTrack }: Readonly<Props>) {
+export function BaOverview({ outline, tips, quizSize, passPercent, finalSize, coursePath = "/business-analyst", studyPlanPath = "/business-analyst/study-plan", trackLabel = "Business Analyst Prep", headline = "From the basics to interview-ready, one short lesson at a time.", finalId = FINAL_ID, planTitle = "New to business analysis?", planDescription = "Follow a beginner-friendly 39-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep. Take rest days as needed; the plan tells you what to study and practice each session.", otherTrack }: Readonly<Props>) {
   const ba = useBa();
   const hydrated = useHydrated();
   const [tourRequested, setTourRequested] = useState(false);
