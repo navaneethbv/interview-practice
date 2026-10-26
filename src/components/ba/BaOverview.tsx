@@ -31,11 +31,11 @@ const noop = () => () => {};
 
 type ChapterStatus = ReturnType<typeof chapterStatuses>[number];
 
-function continueFor(opts: { finalPassed: boolean; finalOpen: boolean; current?: BaOutline[number]; started: boolean }) {
-  const { finalPassed, finalOpen, current, started } = opts;
+function continueFor(opts: { finalPassed: boolean; finalOpen: boolean; current?: BaOutline[number]; started: boolean; coursePath: string }) {
+  const { finalPassed, finalOpen, current, started, coursePath } = opts;
   if (finalPassed) return null;
-  if (current) return { href: `/business-analyst/${current.id}`, label: started ? `Continue chapter ${current.number}` : "Start chapter 1" };
-  return finalOpen ? { href: "/business-analyst/final", label: "Take the final exam" } : null;
+  if (current) return { href: `${coursePath}/${current.id}`, label: started ? `Continue chapter ${current.number}` : "Start chapter 1" };
+  return finalOpen ? { href: `${coursePath}/final`, label: "Take the final exam" } : null;
 }
 
 function welcomeMessage(finalPassed: boolean, percent: number, current?: BaOutline[number]) {
@@ -59,12 +59,12 @@ function finalTone(open: boolean, passed: boolean) {
   return open ? "bg-violet-soft text-violet" : "bg-layer-2 text-fg-3";
 }
 
-function finalMessage(open: boolean, passed: boolean, best: ReturnType<typeof bestScore>) {
+function finalMessage(open: boolean, passed: boolean, best: ReturnType<typeof bestScore>, chapters: number) {
   if (passed) {
     const score = best ? ` — best ${best.score}/${best.total}` : "";
     return `Passed${score}.`;
   }
-  return open ? "Unlocked — you're ready!" : "Unlocks after you pass all 14 chapter quizzes.";
+  return open ? "Unlocked — you're ready!" : `Unlocks after you pass all ${chapters} chapter quizzes.`;
 }
 
 interface Props {
@@ -73,9 +73,17 @@ interface Props {
   quizSize: number;
   passPercent: number;
   finalSize: number;
+  coursePath?: string;
+  studyPlanPath?: string;
+  trackLabel?: string;
+  headline?: string;
+  finalId?: string;
+  planTitle?: string;
+  planDescription?: string;
+  otherTrack?: { href: string; title: string; description: string };
 }
 
-export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: Readonly<Props>) {
+export function BaOverview({ outline, tips, quizSize, passPercent, finalSize, coursePath = "/business-analyst", studyPlanPath = "/business-analyst/study-plan", trackLabel = "Business Analyst Prep", headline = "{headline}", finalId = FINAL_ID, planTitle = "New to business analysis?", planDescription = "Follow a beginner-friendly 39-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep. Take rest days as needed; the plan tells you what to study and practice each session.", otherTrack }: Readonly<Props>) {
   const ba = useBa();
   const hydrated = useHydrated();
   const [tourRequested, setTourRequested] = useState(false);
@@ -90,17 +98,17 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
   const totalLessons = outline.reduce((sum, c) => sum + c.lessons.length, 0);
   const readTotal = outline.reduce((sum, c) => sum + lessonsRead(ba, c.id, c.lessons.length), 0);
   const finalOpen = finalUnlocked(ba, ids);
-  const finalPassed = hasPassed(ba, FINAL_ID);
+  const finalPassed = hasPassed(ba, finalId);
   const percent = Math.round(((readTotal + passedCount + (finalPassed ? 1 : 0)) / (totalLessons + ids.length + 1)) * 100);
   const current = outline.find((_, i) => statuses[i] === "open");
-  const started = readTotal > 0 || Object.keys(ba.quizzes).length > 0;
+  const started = readTotal > 0 || ids.some((id) => (ba.quizzes[id]?.length ?? 0) > 0) || (ba.quizzes[finalId]?.length ?? 0) > 0;
 
   const closeTour = () => {
     setTourRequested(false);
     if (!ba.tourDone) finishTour();
   };
 
-  const continueTarget = continueFor({ finalPassed, finalOpen, current, started });
+  const continueTarget = continueFor({ finalPassed, finalOpen, current, started, coursePath });
 
   return (
     <>
@@ -109,7 +117,7 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
       <div className="hero-glow border-b border-line">
         <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:py-12 lg:grid-cols-[1fr_minmax(0,24rem)] lg:items-end">
           <div className="max-w-2xl">
-            <p className="mb-3 text-xs font-semibold tracking-[0.16em] text-brand uppercase">Business Analyst Prep</p>
+            <p className="mb-3 text-xs font-semibold tracking-[0.16em] text-brand uppercase">{trackLabel}</p>
             <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-[2.4rem] sm:leading-[1.1]">
               From the basics to interview-ready, one short lesson at a time.
             </h1>
@@ -152,7 +160,7 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
             <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-layer-1 text-ok"><Trophy size={24} /></span>
             <div>
               <p className="font-semibold">Course complete!</p>
-              <p className="text-sm text-fg-2">You passed every chapter and the final exam. Keep practising your interview stories in chapter 14, and retake any quiz to stay sharp.</p>
+              <p className="text-sm text-fg-2">You passed every chapter and the final exam. Review chapter {outline.length} and retake any quiz to stay sharp.</p>
             </div>
           </div>
         )}
@@ -161,16 +169,23 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize }: 
         <ol className="grid gap-3 md:grid-cols-2">
           {outline.map((c, i) => (
             <li key={c.id}>
-              <ChapterCard chapter={c} status={hydrated ? statuses[i] : "locked"} ba={ba} hydrated={hydrated} />
+              <ChapterCard chapter={c} status={hydrated ? statuses[i] : "locked"} ba={ba} hydrated={hydrated} coursePath={coursePath} />
             </li>
           ))}
           <li className="md:col-span-2">
-            <FinalCard open={hydrated && finalOpen} passed={finalPassed} best={bestScore(ba, FINAL_ID)} size={finalSize} />
+            <FinalCard open={hydrated && finalOpen} passed={finalPassed} best={bestScore(ba, finalId)} size={finalSize} chapters={ids.length} href={`${coursePath}/final`} />
           </li>
         </ol>
 
-        <StudyPlan chapters={outline.length} />
-        {hydrated && started && <ResetCourse />}
+        <StudyPlan title={planTitle} description={planDescription} href={studyPlanPath} />
+        {otherTrack && (
+          <div className="mt-6 rounded-2xl border border-line bg-layer-1 p-5 shadow-card">
+            <h2 className="font-semibold">{otherTrack.title}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-fg-2">{otherTrack.description}</p>
+            <Link href={otherTrack.href} className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-brand hover:underline">Explore this track <ArrowRight size={15} /></Link>
+          </div>
+        )}
+        {hydrated && started && <ResetCourse chapterIds={ids} finalId={finalId} />}
       </main>
     </>
   );
@@ -208,7 +223,7 @@ function Stat({ label, value }: Readonly<{ label: string; value: string }>) {
   );
 }
 
-function ChapterCard({ chapter: c, status, ba, hydrated }: Readonly<{ chapter: BaOutline[number]; status: ChapterStatus; ba: BaState; hydrated: boolean }>) {
+function ChapterCard({ chapter: c, status, ba, hydrated, coursePath }: Readonly<{ chapter: BaOutline[number]; status: ChapterStatus; ba: BaState; hydrated: boolean; coursePath: string }>) {
   const read = lessonsRead(ba, c.id, c.lessons.length);
   const best = bestScore(ba, c.id);
   const locked = status === "locked";
@@ -245,10 +260,10 @@ function ChapterCard({ chapter: c, status, ba, hydrated }: Readonly<{ chapter: B
   if (locked) {
     return <div aria-disabled="true" className={`${base} border-line bg-layer-1/60 opacity-70`}>{body}<p className="mt-3 text-xs text-fg-3">Pass the previous chapter&apos;s quiz to unlock.</p></div>;
   }
-  return <Link href={`/business-analyst/${c.id}`} className={`${base} border-line bg-layer-1 hover:-translate-y-px hover:border-line-strong hover:shadow-raised`}>{body}</Link>;
+  return <Link href={`${coursePath}/${c.id}`} className={`${base} border-line bg-layer-1 hover:-translate-y-px hover:border-line-strong hover:shadow-raised`}>{body}</Link>;
 }
 
-function FinalCard({ open, passed, best, size }: Readonly<{ open: boolean; passed: boolean; best: ReturnType<typeof bestScore>; size: number }>) {
+function FinalCard({ open, passed, best, size, chapters, href }: Readonly<{ open: boolean; passed: boolean; best: ReturnType<typeof bestScore>; size: number; chapters: number; href: string }>) {
   const body = (
     <div className="flex items-center gap-4">
       <span className={`grid size-12 shrink-0 place-items-center rounded-2xl ${finalTone(open, passed)}`}>
@@ -257,44 +272,40 @@ function FinalCard({ open, passed, best, size }: Readonly<{ open: boolean; passe
       <div className="min-w-0 flex-1">
         <h3 className="font-semibold">Final exam</h3>
         <p className="text-sm text-fg-2">
-          {size} questions drawn from every chapter. {finalMessage(open, passed, best)}
+          {size} questions drawn from every chapter. {finalMessage(open, passed, best, chapters)}
         </p>
       </div>
       {open && <ArrowRight size={18} className="shrink-0 text-fg-3" />}
     </div>
   );
   if (!open && !passed) return <div aria-disabled="true" className="rounded-2xl border border-dashed border-line-strong bg-layer-1/60 p-5">{body}</div>;
-  return <Link href="/business-analyst/final" className="block rounded-2xl border border-line bg-layer-1 p-5 shadow-card transition hover:border-line-strong hover:shadow-raised">{body}</Link>;
+  return <Link href={href} className="block rounded-2xl border border-line bg-layer-1 p-5 shadow-card transition hover:border-line-strong hover:shadow-raised">{body}</Link>;
 }
 
-function StudyPlan({ chapters }: Readonly<{ chapters: number }>) {
+function StudyPlan({ title, description, href }: Readonly<{ title: string; description: string; href: string }>) {
   return (
     <section className="mt-12 rounded-2xl border border-brand/30 bg-brand-soft p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight">New to business analysis?</h2>
-          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-fg-2">
-            Follow a beginner-friendly 39-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep.
-            Take rest days as needed; the plan tells you what to study and practice each session.
-          </p>
+          <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-fg-2">{description}</p>
         </div>
-        <Link href="/business-analyst/study-plan" className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
+        <Link href={href} className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
           Open daily plan <ArrowRight size={16} />
         </Link>
       </div>
-      <p className="mt-3 text-xs text-fg-3">Complete the chapter quizzes along the way; all {chapters} quizzes unlock the final exam.</p>
     </section>
   );
 }
 
-function ResetCourse() {
+function ResetCourse({ chapterIds, finalId }: Readonly<{ chapterIds: string[]; finalId: string }>) {
   const [confirming, setConfirming] = useState(false);
   return (
     <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-line pt-6 text-sm">
       {confirming ? (
         <>
           <span className="text-fg-2">Erase all course progress, quiz scores and notes in this browser?</span>
-          <button onClick={() => { resetCourse(); setConfirming(false); }} className="rounded-lg bg-bad px-3 py-1.5 font-medium text-white hover:opacity-90">Yes, reset</button>
+          <button onClick={() => { resetCourse(chapterIds, finalId); setConfirming(false); }} className="rounded-lg bg-bad px-3 py-1.5 font-medium text-white hover:opacity-90">Yes, reset</button>
           <button onClick={() => setConfirming(false)} className="rounded-lg px-3 py-1.5 text-fg-2 hover:bg-layer-2">Cancel</button>
         </>
       ) : (
