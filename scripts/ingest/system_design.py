@@ -126,7 +126,7 @@ BOOKS = {
     "case-studies": {
         "title": "System Design Case Studies",
         "short": "Design Case Studies",
-        "description": "Original worked designs for frequently asked prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.",
+        "description": "Original worked designs for interview prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache, email, global rate limiting and real-time pedestrian intent.",
     },
     "fundamentals": {
         "title": "CS Fundamentals Quick Reference",
