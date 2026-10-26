@@ -209,7 +209,7 @@
     "why": "Exceptions need an accountable record and a way to revisit them."
   },
   {
-    "lesson": 6,
+    "lesson": 1,
     "q": "What should a governance decision record contain?",
     "options": [
       "Date, owner, options, rationale, conditions and follow-up",
