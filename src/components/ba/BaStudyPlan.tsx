@@ -42,6 +42,24 @@ const days: [string, string, string][] = [
   ["Final review", "Take the final exam in one sitting. Review missed answers, revisit the weakest chapter and explain your case study in 5 minutes.", "60–90 min"],
 ];
 
+const chapterIds = [
+  "foundations", "foundations",
+  "stakeholders-elicitation", "stakeholders-elicitation", "stakeholders-elicitation", "stakeholders-elicitation",
+  "requirements", "requirements", "requirements", "requirements",
+  "process-modeling", "process-modeling", "process-modeling", "process-modeling",
+  "analysis-techniques", "analysis-techniques", "analysis-techniques", "analysis-techniques",
+  "agile-delivery", "agile-delivery",
+  "project-coordination", "project-coordination",
+  "testing-uat", "testing-uat",
+  "data-sql-excel", "data-sql-excel", "data-sql-excel", "data-sql-excel", "data-sql-excel",
+  "kpis-reporting", "kpis-reporting",
+  "process-improvement",
+  "banking-finance", "banking-finance",
+  "communication", "communication",
+  "interview-prep", "interview-prep",
+  "final",
+];
+
 export function BaStudyPlan() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
@@ -63,7 +81,7 @@ export function BaStudyPlan() {
           {days.map(([title, task, time], index) => (
             <li key={title} className="grid gap-2 px-5 py-4 sm:grid-cols-[5rem_1fr_auto] sm:items-start">
               <span className="text-sm font-semibold text-brand">Day {index + 1}</span>
-              <div><h3 className="font-medium">{title}</h3><p className="mt-1 text-sm leading-relaxed text-fg-2">{task}</p></div>
+              <div><h3 className="font-medium"><Link href={chapterIds[index] === "final" ? "/business-analyst/final" : `/business-analyst/${chapterIds[index]}`} className="hover:text-brand hover:underline">{title}</Link></h3><p className="mt-1 text-sm leading-relaxed text-fg-2">{task}</p></div>
               <span className="text-xs text-fg-3 sm:pt-1">{time}</span>
             </li>
           ))}
