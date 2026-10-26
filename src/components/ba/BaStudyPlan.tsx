@@ -104,6 +104,15 @@ export function BaStudyPlan() {
               <tr><td className="p-2">E-108</td><td className="p-2">Sales</td><td className="p-2">$215.00</td><td className="p-2">Pending</td><td className="p-2">2026-09-12</td></tr>
             </tbody>
           </table>
+          <p className="mt-4 text-sm font-medium">Department lookup table for a JOIN exercise</p>
+          <table className="mt-2 w-full max-w-md text-left text-sm">
+            <thead className="border-b border-line text-fg-2"><tr><th className="p-2">Department</th><th className="p-2">Approver</th></tr></thead>
+            <tbody className="divide-y divide-line">
+              <tr><td className="p-2">Finance</td><td className="p-2">Priya</td></tr>
+              <tr><td className="p-2">Sales</td><td className="p-2">Marco</td></tr>
+              <tr><td className="p-2">Operations</td><td className="p-2">Jordan</td></tr>
+            </tbody>
+          </table>
         </div>
       </details>
       <aside className="mt-8 rounded-2xl border border-brand/30 bg-brand-soft p-5">
