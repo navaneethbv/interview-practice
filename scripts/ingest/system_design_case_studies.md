@@ -3,7 +3,7 @@
 Each chapter is an original worked design for a prompt that comes up often in system design interviews.
 They follow the same order you would use in a 45-minute round: requirements, estimates, API, data model, architecture, deep dives, failure modes, and the follow-up questions an interviewer is likely to ask.
 Numbers are illustrative assumptions; state your own and adjust the design when they change.
-Reviewed October 11, 2026.
+Reviewed October 25, 2026.
 
 ## Before reading a chapter
 
@@ -495,3 +495,184 @@ Outbound messages sit in a durable queue and are retried for days according to S
 
 - How do you implement threading? (Group by the `References` and `In-Reply-To` headers, falling back to normalized subjects.)
 - How do you search a 50 GB mailbox quickly? (A per-user index sharded with the mailbox, built incrementally.)
+
+
+# Design a global multi-region rate limiter
+
+**Recent interview prompt signal:** Gotham Loop's public feed listed a Google L5 onsite question on October 20, 2026 about a distributed rate limiter handling one million requests per second across data centers with eventual consistency. Candidate-report feeds can be incomplete or inaccurate; use this as a practice prompt, not as a claim about Google's standard loop. [Source: Gotham Loop recently asked questions](https://www.gothamloop.com/)
+
+## Prompt
+
+Design a rate-limiting service for a global API. It must enforce limits by tenant and API key, allow short bursts, publish rule changes quickly, and keep request checks fast while regions can temporarily lose connectivity to one another.
+
+Assume the system sees one million requests per second globally. State any other assumptions you need, including the request-check latency target and how much temporary over-limit traffic the business can tolerate.
+
+## Requirements
+
+- Decide whether a request is allowed before the protected API performs expensive work.
+- Support limits at more than one scope, such as tenant, credential, user, IP address, and endpoint.
+- Support sustained rates and short bursts, plus explicit exceptions for trusted clients.
+- Let operators change limits, activate emergency blocks, and audit who changed a rule.
+- Continue making a bounded decision when a region cannot reach the global control plane.
+
+Do not assume every limit has the same fairness, latency, or abuse requirements.
+
+## First design questions
+
+Clarify which scopes must be enforced together and how a caller is identified. Ask whether the limit is a hard contractual quota, an abuse-control guardrail, or a fairness target; each implies a different tolerance for overshoot.
+
+Ask whether rejected requests consume quota, whether retries count, how policy changes take effect, and what clients should receive when a limit is exceeded. Define the permitted error budget and regional failure behavior before selecting an algorithm.
+
+## Estimation
+
+Start with the given one-million-request-per-second global load. Estimate the peak share per region, the number of active keys, the number of rule checks per request, and the metadata or counter state per active key. Separate steady traffic from bursts.
+
+Use the estimates to identify the hot path. A design that performs a synchronous cross-region write for every request is unlikely to meet a tight request latency target during a partition. A design with independent local counters may be fast, but can exceed a truly global limit.
+
+## API and rule model
+
+~~~text
+POST /v1/decisions
+  { tenant_id, credential_id, user_id, ip, route, cost }
+  -> { allowed, retry_after_ms, policy_id, decision_id }
+
+PUT /v1/policies/{policy_id}
+  { scope, key, sustained_rate, burst_capacity, action, effective_at, version }
+
+GET /v1/policies/{policy_id}
+GET /v1/decisions/{decision_id}
+~~~
+
+Treat rule updates as versioned and auditable. Do not put raw credentials or unnecessary personal data in counter keys or logs. The policy service should validate ownership and scope before publishing a change.
+
+## Architecture
+
+~~~text
+API gateway in each region
+  -> local decision engine
+       -> in-memory token buckets for hot keys
+       -> regional state store for shared local counters
+       -> cached, versioned policy bundle
+Global policy service
+  -> durable policy database and audit log
+  -> change stream / regional distribution
+Quota coordinator
+  -> leases a bounded share of global quota to each region
+~~~
+
+Keep the per-request decision path in-region. Use a globally coordinated control plane for policy and quota allocation, with explicit bounds on stale configuration and unreported usage.
+
+For global quotas, grant each region a lease or budget. A region decrements its local budget quickly and reports consumption asynchronously. Smaller leases reduce global overshoot but cause more coordination and can waste unused capacity; larger leases improve availability and utilization but permit more temporary excess. State the maximum acceptable overshoot and size the lease to that bound.
+
+## Algorithm choices
+
+- **Token bucket:** supports an average rate and a configurable burst. Store the last refill time and remaining tokens; refill on demand and cap at burst capacity.
+- **Sliding window:** offers a closer rolling-window interpretation but costs more state or computation.
+- **Fixed window:** is easy to implement, but a caller can send nearly twice the configured rate across a window boundary.
+- **Concurrency limit:** complements rate limits when request duration or downstream pressure matters more than arrival rate.
+
+Use a monotonic clock for elapsed time. Define how clock skew, duplicate retries, weighted requests, and multi-rule decisions affect token consumption.
+
+## Consistency and regional partitions
+
+A precise global counter requires coordination. During a network partition, the product must choose between rejecting traffic, allowing a bounded amount of extra traffic, or reducing each region to its preallocated share. Explain the choice in terms of customer impact and the business meaning of the quota.
+
+A regional lease gives a measurable upper bound on overshoot. Leases should expire or be fenced so a recovered region cannot spend an old allocation after reassignment. If a region exhausts its lease while disconnected, choose a documented fallback: reject, use a smaller emergency reserve, or temporarily enforce only local abuse limits.
+
+## Failure modes and abuse controls
+
+- **Policy service unavailable:** continue with the last valid policy only for a bounded age; alert when the age limit is reached.
+- **Counter store unavailable:** use a conservative local fallback with a short lifetime and record degraded decisions.
+- **Hot tenant or key:** shard or replicate reads carefully; do not allow one key to saturate the shared state store.
+- **Rule update races:** apply monotonically increasing versions and reject older updates.
+- **Retry storm:** return a useful retry delay, add jitter in clients, and avoid retrying automatically without a budget.
+- **Identity spoofing:** derive trusted identity at the gateway; do not rely on an untrusted client-supplied tenant id.
+- **Emergency block:** define authenticated approval, propagation target, audit record, and a tested rollback path.
+
+## Observability and rollout
+
+Measure decision latency by region and policy scope, allow/deny rates, false-positive complaints, estimated global overshoot, stale-policy age, lease exhaustion, counter-store errors, and rule-propagation delay.
+
+Shadow new rules before enforcing them. Compare decisions with the current policy, inspect affected tenants, and roll out by region or traffic percentage. Keep an explicit rollback and emergency override.
+
+## Follow-up questions
+
+- How would you enforce a strict contractual quota across regions during a partition?
+- What changes if one request consumes a different amount of capacity than another?
+- How do you avoid a hot key while preserving fair accounting?
+- How should the system handle a sudden abusive client without blocking its entire tenant?
+- What should happen when a tenant's policy is lowered below its current burst?
+- How would you measure and limit false-positive throttling?
+
+
+# Design a real-time pedestrian-intent system
+
+**Recent interview prompt signal:** Gotham Loop's public feed listed a Waymo L4 screen question on October 23, 2026 about processing LiDAR point clouds to detect and track pedestrian intent under a sub-100-millisecond latency target. Candidate-report feeds can be incomplete or inaccurate; use this as a practice prompt, not as a claim about Waymo's standard loop. [Source: Gotham Loop recently asked questions](https://www.gothamloop.com/)
+
+## Prompt
+
+Design an onboard perception system that consumes timestamped LiDAR point clouds, detects pedestrians, maintains tracks across frames, and estimates near-term motion or crossing intent quickly enough to inform a downstream planning system.
+
+Assume the perception-to-planning path has a target below 100 milliseconds. Clarify which components are included in that budget and what the system should do when confidence is low, an input is stale, or a sensor is degraded.
+
+## Requirements
+
+- Associate detections over time so the planner can reason about a moving pedestrian, not isolated points.
+- Produce a calibrated estimate of position, velocity, and short-horizon trajectory with uncertainty.
+- Keep the real-time decision path onboard and bounded; connectivity to a cloud service is not guaranteed.
+- Handle occlusion, sparse or noisy point clouds, overlapping pedestrians, and sensor timing differences.
+- Preserve enough privacy-aware telemetry for offline evaluation and improvement without placing cloud availability on the safety-critical path.
+
+Treat “intent” as an uncertain prediction, not a directly observed fact. The system should communicate confidence and uncertainty to downstream consumers.
+
+## Data flow
+
+~~~text
+LiDAR frames + timestamps
+  -> time alignment and sensor-health checks
+  -> point-cloud filtering and feature extraction
+  -> pedestrian detection
+  -> multi-object tracking
+  -> short-horizon motion / intent prediction
+  -> confidence and freshness checks
+  -> downstream planner
+~~~
+
+Keep the stages modular so latency, quality, and failure can be measured separately. Each message should include a timestamp, coordinate frame, track identifier, estimate, confidence, and validity period.
+
+## Latency and capacity
+
+Ask about sensor frame rate, point-cloud size, number of concurrent objects, compute budget, and whether the 100-millisecond target is end-to-end or only for a model stage. Build a latency budget with time for preprocessing, detection, association, inference, and message handoff.
+
+Prefer bounded queues and drop stale frames rather than allowing backpressure to turn old predictions into apparently current ones. Measure p50, p95, p99 and deadline misses by stage and by operating condition.
+
+## Tracking and prediction
+
+Use a stable track identity while making identity changes explicit. Data association should account for motion, uncertainty, missed detections, and objects entering or leaving the field of view. A track should expire based on time and evidence, not simply on one missing frame.
+
+Predict a distribution or a small set of plausible near-term paths instead of a single overconfident label. Separate the detected state (“pedestrian at position X, moving at velocity V”) from an inference (“may enter the roadway”). Send uncertainty and age so the planner can apply its own policy.
+
+## Failure handling
+
+- **Stale frame:** mark output invalid or expired; never present an old estimate as current.
+- **Low confidence:** expose the uncertainty and let the downstream safety policy choose a conservative response.
+- **Occlusion:** retain a short-lived predicted track with growing uncertainty, then retire it.
+- **Clock or frame mismatch:** reject or quarantine data with invalid timestamps or coordinate metadata.
+- **Compute overload:** shed stale work, prioritize current perception, and report missed deadlines.
+- **Sensor degradation:** publish health state and reduce confidence; do not silently substitute a normal-quality estimate.
+- **Model update:** validate version, resource use, latency, and scenario performance before rollout; retain a rapid rollback path.
+
+## Evaluation
+
+Build an offline evaluation set stratified by lighting, weather, crowd density, occlusion, pedestrian behavior, and sensor quality. Measure detection and tracking quality, intent calibration, latency, deadline misses, and performance on rare but important scenarios.
+
+Review false negatives and false positives separately. Averages can hide poor behavior in a small but consequential scenario group. Use replay and simulation to reproduce failures, and ensure training and evaluation splits do not leak near-duplicate sequences.
+
+## Follow-up questions
+
+- How do you distinguish a pedestrian who is walking alongside a road from one preparing to cross?
+- How does uncertainty grow when a track is occluded?
+- What should happen if two sensors disagree on a track?
+- Which metrics would you use to compare a new model with the current one?
+- How would you test a model update against rare scenarios before deployment?
+- Which work belongs onboard, and which can safely happen offline?
