@@ -115,7 +115,7 @@ The Interview Guides section is a read-only reader: pick a collection, then a ch
 The original practice collections are maintained as Markdown sources under `scripts/ingest/` and imported into `content/system-design/`.
 They include worked exercises for parking lots, elevators, vending machines, task schedulers, retrieval-augmented generation, bounded assistants, incident diagnosis, SLO alerting, and behavioral stories, plus:
 
-- System Design Case Studies: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.
+- System Design Case Studies: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache, email, global rate limiting and real-time pedestrian intent.
 - AI-Assisted Coding Interviews, CS Fundamentals, Frontend Interviews, and Resume, Job Search and Offers.
 Each book is imported once into `content/system-design/<book>/` (an `index.json` plus one Markdown file per chapter).
 
