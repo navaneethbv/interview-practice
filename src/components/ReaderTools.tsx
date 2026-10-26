@@ -8,7 +8,7 @@ type Speed = "slow" | "fast";
 const SPEED_RATE: Record<Speed, number> = { slow: 0.85, fast: 1.2 };
 
 function isWhitespace(character: string) {
-  return character === " " || character === "\\n" || character === "\\r" || character === "\\t";
+  return character === " " || character === "\n" || character === "\r" || character === "\t";
 }
 
 function speechChunks(text: string) {
