@@ -10,6 +10,7 @@ const LINKS: { href: string; label: string; blurb: string }[] = [
   { href: "/learn", label: "Patterns", blurb: "Lessons on the patterns behind the problems" },
   { href: "/practice", label: "Practice", blurb: "Mock interviews, reviews and the study plan" },
   { href: "/system-design", label: "Guides", blurb: "System design, behavioral and more" },
+  { href: "/business-analyst", label: "Business Analyst", blurb: "Step-by-step BA course with chapter quizzes" },
 ];
 
 function isActive(path: string, href: string) {

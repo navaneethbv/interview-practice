@@ -15,6 +15,7 @@ Live: https://interview-practice-sandy-eight.vercel.app
 - **Practice**: timed mock interviews drawn from any list (walkthroughs stay hidden until the round ends, followed by a self-rated debrief), a spaced-repetition review queue for solved problems, and a 16-week study plan.
   Mock rounds finish automatically at their deadline, including after a reload or device sleep; late submissions do not count toward the round. Interview mix fills from the remaining questions when a list has only one difficulty.
 - **Interview Guides**: system design books plus focused practice for low-level design, AI architecture, testing and debugging, and behavioral interviews.
+- **Business Analyst prep** (`/business-analyst`): a 14-chapter course for BA roles (requirements, elicitation, process modeling, Agile, testing, SQL and Excel, KPIs, Lean Six Sigma, banking and finance, interviews). Lessons are shown one at a time; each chapter ends with a 10-question quiz drawn at random from a bank of about 30, with shuffled answers and instant explanations. A score of 80% unlocks the next chapter, and passing all 14 unlocks a 30-question final exam. Includes a first-visit tour, a tip of the day and private per-chapter notes.
 - **Search and navigation**: `Ctrl/⌘ + K` (or `/`) opens a site-wide search across problems, lists, lessons and guides; `/problems` groups study plans, topic tracks and company lists with per-list progress.
 - Light and dark themes with low-glare colors, keyboard shortcuts (`Ctrl/⌘ + '` to run, `Ctrl/⌘ + Enter` to submit) and progress saved in the browser.
 
@@ -133,6 +134,17 @@ Diagrams, including the advanced guide's vector drawings, are rendered from thei
 The original document is published under `public/course-assets/system-design/sources/` for download.
 It uses `/usr/share/dict/words` (present on macOS) to repair ligatures and hyphenation.
 The LibreOffice export of the classic course is the same text as the `pdf-free` edition, which is used because its diagrams and tables survive intact.
+
+### Business Analyst course
+
+The course lives in `content/business-analyst/` and is hand-authored:
+
+- `index.json`: chapter order, titles, summaries, skill tags, quiz size, pass mark and final exam size.
+- `<chapter>.md`: text before the first `##` is the chapter introduction; every `##` section is one lesson (keep each to about 1–3 minutes of reading, starting with a `> **In short:**` line).
+- `<chapter>.quiz.json`: the question bank. Each question has `lesson` (the 1-based `##` section it tests), `q`, four `options` with **the correct answer first** (choices are shuffled when shown), and `why`. Avoid positional options such as "all of the above".
+- `tips.json`: tips shown in the tip-of-the-day card.
+
+`src/lib/ba-content.test.ts` checks that every lesson is short and tested and every question is well formed. Progress, quiz attempts and notes are stored under the `ip:ba:v1` key and are included in practice backups.
 
 ## Deployment
 

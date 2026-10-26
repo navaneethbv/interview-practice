@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Boxes, Code2, Network } from "lucide-react";
+import { ArrowRight, Boxes, Briefcase, Code2, Network } from "lucide-react";
+import { listBaChapters } from "@/lib/ba-content";
 import { FeaturedLists, HomeStats, TodayActions } from "@/components/home/Dashboard";
 import { NavBar, SiteFooter } from "@/components/NavBar";
 import { ResumePractice } from "@/components/ResumePractice";
@@ -16,6 +17,9 @@ export default function Home() {
   const designBooks = listDesignBooks();
   const designChapterCount = designBooks.reduce((sum, book) => sum + designChapters(book).length, 0);
   const patterns = getCourse().chapters.filter((c) => c.title.startsWith("Pattern"));
+  const ba = listBaChapters();
+  const baChapters = ba.length;
+  const baLessons = ba.reduce((sum, c) => sum + c.lessons.length, 0);
 
   return (
     <>
@@ -69,7 +73,7 @@ export default function Home() {
         </Section>
 
         <Section title="Explore">
-          <div className="grid gap-3 md:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
             <Track
               href="/problems"
               icon={<Code2 size={20} />}
@@ -93,6 +97,14 @@ export default function Home() {
               title="Interview guides"
               meta={`${designBooks.length} guides · ${designChapterCount} chapters`}
               body="System design, AI architecture, object-oriented design, behavioral and the job search."
+            />
+            <Track
+              href="/business-analyst"
+              icon={<Briefcase size={20} />}
+              tone="bg-violet-soft text-violet"
+              title="Business Analyst prep"
+              meta={`${baChapters} chapters · ${baLessons} lessons`}
+              body="Bite-size lessons from BA basics to banking domain and interviews, with a quiz to unlock each chapter."
             />
           </div>
         </Section>

@@ -343,6 +343,32 @@ body {
   filter: brightness(0.9);
 }
 
+/* ------------------------------------------------------------ business analyst course */
+
+/* Callouts: every lesson opens with an "In short" summary; tips and examples follow the same card style. */
+.prose-ba blockquote {
+  border-left: 0;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  color: var(--text-1);
+  padding: 0.75em 1em;
+}
+.prose-ba > blockquote:first-child {
+  background: var(--brand-soft);
+  font-size: 1.02em;
+}
+.prose-ba blockquote p {
+  margin: 0.3em 0;
+  color: var(--text-1);
+}
+.prose-ba table {
+  font-size: 0.93em;
+}
+.prose-ba th {
+  background: var(--layer-2);
+  text-align: left;
+}
+
 /* ------------------------------------------------------------ shiki dual themes */
 
 .shiki {

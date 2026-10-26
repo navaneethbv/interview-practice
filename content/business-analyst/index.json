@@ -1,0 +1,151 @@
+{
+  "title": "Business Analyst Prep",
+  "passPercent": 80,
+  "quizSize": 10,
+  "final": {
+    "size": 30,
+    "passPercent": 80
+  },
+  "chapters": [
+    {
+      "id": "foundations",
+      "title": "What a Business Analyst Does",
+      "summary": "The role, the BABOK Guide and its six core concepts, the six knowledge areas, how BAs differ from PMs and product owners, and the certification path.",
+      "skills": [
+        "BA role",
+        "BABOK",
+        "Certifications"
+      ]
+    },
+    {
+      "id": "stakeholders-elicitation",
+      "title": "Stakeholders and Elicitation",
+      "summary": "Finding and analyzing stakeholders, then gathering facts through structured interviews, workshops, observation and document analysis.",
+      "skills": [
+        "Interviews",
+        "Workshops",
+        "Stakeholder analysis"
+      ]
+    },
+    {
+      "id": "requirements",
+      "title": "Writing Requirements",
+      "summary": "Requirement types, BRDs and FRDs, user stories, acceptance criteria, traceability, prioritization and change control.",
+      "skills": [
+        "User stories",
+        "Acceptance criteria",
+        "Traceability"
+      ]
+    },
+    {
+      "id": "process-modeling",
+      "title": "Process Modeling: As-Is and To-Be",
+      "summary": "Flowcharts, swimlanes, BPMN, SIPOC, use cases and basic data models, and how to run an as-is / to-be mapping exercise.",
+      "skills": [
+        "As-is / to-be",
+        "BPMN",
+        "Swimlanes"
+      ]
+    },
+    {
+      "id": "analysis-techniques",
+      "title": "Root Cause and Strategy Analysis",
+      "summary": "5 Whys, fishbone, Pareto, gap analysis, SWOT, PESTLE, business cases, cost-benefit and feasibility.",
+      "skills": [
+        "Root cause",
+        "Gap analysis",
+        "Business case"
+      ]
+    },
+    {
+      "id": "agile-delivery",
+      "title": "Agile, Scrum and Delivery Methods",
+      "summary": "Waterfall versus Agile, Scrum roles, events and artifacts, Kanban, backlog refinement, estimation, and the BA's place on an agile team.",
+      "skills": [
+        "Scrum",
+        "Kanban",
+        "Backlog"
+      ]
+    },
+    {
+      "id": "project-coordination",
+      "title": "Coordinating Initiatives, Risk and Change",
+      "summary": "Running several projects at once, status and RAG reporting, RAID logs, risk responses, dependencies, escalation and organizational change management.",
+      "skills": [
+        "RAID log",
+        "Status reporting",
+        "Change management"
+      ]
+    },
+    {
+      "id": "testing-uat",
+      "title": "Testing, UAT and Release",
+      "summary": "Test levels, writing test cases, UAT, the defect life cycle, severity versus priority, triage, go-live, hypercare and SLAs.",
+      "skills": [
+        "UAT",
+        "Defect triage",
+        "Go-live"
+      ]
+    },
+    {
+      "id": "data-sql-excel",
+      "title": "Data Skills: Excel and SQL",
+      "summary": "Tables and keys, Excel lookups and pivot tables, SQL from SELECT to JOINs and GROUP BY, data quality checks and data mapping.",
+      "skills": [
+        "SQL",
+        "Excel",
+        "Data quality"
+      ]
+    },
+    {
+      "id": "kpis-reporting",
+      "title": "KPIs, Dashboards and Reporting",
+      "summary": "Designing KPIs, leading versus lagging indicators, dashboard design, Power BI and Tableau basics, choosing charts and telling a story with data.",
+      "skills": [
+        "KPIs",
+        "Dashboards",
+        "Power BI / Tableau"
+      ]
+    },
+    {
+      "id": "process-improvement",
+      "title": "Process Improvement: Lean and Six Sigma",
+      "summary": "Lean wastes, DMAIC, PDCA, Kaizen, flow metrics, SOPs, automation and how to prove an improvement.",
+      "skills": [
+        "Lean",
+        "Six Sigma",
+        "SOPs"
+      ]
+    },
+    {
+      "id": "banking-finance",
+      "title": "Banking and Finance Domain",
+      "summary": "Accounting basics, general ledger, reconciliation and breaks, nostro and vostro, payments, regulation and controls, and financial statements.",
+      "skills": [
+        "Reconciliation",
+        "General ledger",
+        "Payments"
+      ]
+    },
+    {
+      "id": "communication",
+      "title": "Communication, Facilitation and Influence",
+      "summary": "Writing for stakeholders, presenting, handling conflict, negotiation, influencing without authority, cross-cultural work, training users and professional ethics.",
+      "skills": [
+        "Facilitation",
+        "Influence",
+        "Training users"
+      ]
+    },
+    {
+      "id": "interview-prep",
+      "title": "Acing the BA Interview",
+      "summary": "How BA interviews run, your introduction, building STAR stories from your own experience, common questions, case studies and questions to ask.",
+      "skills": [
+        "STAR stories",
+        "Case studies",
+        "Questions to ask"
+      ]
+    }
+  ]
+}
