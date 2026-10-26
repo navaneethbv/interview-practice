@@ -7,11 +7,14 @@ type Speed = "slow" | "fast";
 
 const SPEED_RATE: Record<Speed, number> = { slow: 0.85, fast: 1.2 };
 
+function isWhitespace(character: string) {
+  return character === " " || character === "\\n" || character === "\\r" || character === "\\t";
+}
+
 function speechChunks(text: string) {
-  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) ?? [text];
   const chunks: string[] = [];
 
-  for (const sentence of sentences) {
+  const appendSentence = (sentence: string) => {
     let remainder = sentence.trim();
     while (remainder.length > 180) {
       let splitAt = remainder.lastIndexOf(" ", 180);
@@ -20,8 +23,19 @@ function speechChunks(text: string) {
       remainder = remainder.slice(splitAt).trim();
     }
     if (remainder) chunks.push(remainder);
+  };
+
+  let start = 0;
+  for (let index = 0; index < text.length; index++) {
+    const sentenceEnd = ".!?".includes(text[index]) && (index + 1 === text.length || isWhitespace(text[index + 1]));
+    if (!sentenceEnd) continue;
+    appendSentence(text.slice(start, index + 1));
+    start = index + 1;
+    while (start < text.length && isWhitespace(text[start])) start++;
+    index = start - 1;
   }
 
+  if (start < text.length) appendSentence(text.slice(start));
   return chunks;
 }
 
