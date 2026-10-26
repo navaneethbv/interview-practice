@@ -41,6 +41,7 @@ export function SiteFooter() {
             <Link href="/settings/sync" className="hover:text-fg-1">Account & sync</Link>
             <Link href="/offline" className="hover:text-fg-1">Offline library</Link>
             <Link href="/content-status" className="hover:text-fg-1">Sources & review dates</Link>
+            <Link href="/privacy" className="hover:text-fg-1">Privacy</Link>
           </nav>
         </div>
         <PracticeDataControls />
