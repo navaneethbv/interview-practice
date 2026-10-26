@@ -1,0 +1,233 @@
+[
+  {
+    "lesson": 1,
+    "q": "What is a senior BA accountable for beyond writing requirements?",
+    "options": [
+      "Connecting the need, decisions and delivery to measurable business value",
+      "Approving all project funding",
+      "Owning the technical architecture",
+      "Managing every stakeholder's staff"
+    ],
+    "why": "Senior BAs lead analysis quality and connect it to outcomes without taking every decision."
+  },
+  {
+    "lesson": 1,
+    "q": "A sponsor asks to replace a tool. What should the BA clarify first?",
+    "options": [
+      "The underlying need and desired outcome",
+      "The color scheme of the replacement",
+      "Which vendor has the shortest name",
+      "The sprint length"
+    ],
+    "why": "Understanding the need prevents prematurely treating a proposed solution as the requirement."
+  },
+  {
+    "lesson": 1,
+    "q": "Who normally owns the investment decision?",
+    "options": [
+      "The accountable sponsor",
+      "The business analyst",
+      "The database administrator",
+      "The training lead"
+    ],
+    "why": "The BA informs the decision; the sponsor authorizes investment."
+  },
+  {
+    "lesson": 1,
+    "q": "What best describes a senior BA individual contributor?",
+    "options": [
+      "Leads through analysis, facilitation and judgment without necessarily managing staff",
+      "Must have direct reports",
+      "Owns all organizational strategy",
+      "Approves technical designs"
+    ],
+    "why": "Senior scope can be an expert IC role and does not require line management."
+  },
+  {
+    "lesson": 2,
+    "q": "Which chain best connects strategy to delivery?",
+    "options": [
+      "Strategic objective → outcome → measure → change hypothesis → work",
+      "Project task → tool → team → strategy label",
+      "Vendor → contract → feature → benefit",
+      "Requirement → meeting → budget → objective"
+    ],
+    "why": "The chain preserves traceability from enterprise intent to concrete work."
+  },
+  {
+    "lesson": 2,
+    "q": "Which outcome statement is most measurable?",
+    "options": [
+      "Reduce high-risk breaks older than two days by 40% in six months",
+      "Improve reconciliation significantly",
+      "Modernize operations soon",
+      "Build a single platform"
+    ],
+    "why": "A strong outcome names a population, magnitude and time horizon."
+  },
+  {
+    "lesson": 2,
+    "q": "Why should a BA clarify competing objectives?",
+    "options": [
+      "Trade-offs must be made explicit when outcomes conflict",
+      "Stakeholders should all have identical priorities",
+      "It removes the need for a sponsor",
+      "It guarantees the project meets its date"
+    ],
+    "why": "Explicit priorities support informed decisions when goals such as speed and control compete."
+  },
+  {
+    "lesson": 3,
+    "q": "Why use an operating model in analysis?",
+    "options": [
+      "A system change may also affect roles, processes, information, controls and support",
+      "It replaces stakeholder interviews",
+      "It determines a vendor automatically",
+      "It is only a software deployment diagram"
+    ],
+    "why": "Operating models show the full set of elements required to deliver value."
+  },
+  {
+    "lesson": 3,
+    "q": "What should the BA do with an apparent regional process exception?",
+    "options": [
+      "Verify whether it comes from regulation, policy, system limits or habit",
+      "Assume it is required by law",
+      "Delete it from the target model",
+      "Treat it as a defect without discussion"
+    ],
+    "why": "Evidence helps distinguish necessary variation from inherited practice."
+  },
+  {
+    "lesson": 3,
+    "q": "Which is an example of an operating-model dimension?",
+    "options": [
+      "Decision ownership",
+      "Sprint velocity only",
+      "Logo color",
+      "Programming language preference"
+    ],
+    "why": "Operating models include roles and decision mechanisms along with process, data and technology."
+  },
+  {
+    "lesson": 4,
+    "q": "What is a business capability?",
+    "options": [
+      "A stable ability the organization needs, such as resolving exceptions",
+      "A temporary project team",
+      "A single software screen",
+      "A list of individual employee tasks"
+    ],
+    "why": "Capabilities describe what the business must be able to do independent of current org charts."
+  },
+  {
+    "lesson": 4,
+    "q": "What does a value stream show?",
+    "options": [
+      "End-to-end stages through which a stakeholder receives value",
+      "A team hierarchy",
+      "A database schema",
+      "The annual budget by department"
+    ],
+    "why": "Value streams connect work across handoffs from an initiating need to an outcome."
+  },
+  {
+    "lesson": 4,
+    "q": "How should a capability map be used?",
+    "options": [
+      "At the level needed to compare gaps and investment choices",
+      "As a decorative diagram with every task",
+      "As a replacement for all process maps",
+      "As proof that a solution will work"
+    ],
+    "why": "A map is useful when it informs decisions about capability gaps and change."
+  },
+  {
+    "lesson": 5,
+    "q": "What should determine the depth of analysis?",
+    "options": [
+      "Decision importance, uncertainty, risk and cost of being wrong",
+      "The number of templates available",
+      "The BA's preferred notation",
+      "The number of meetings on the calendar"
+    ],
+    "why": "Analysis should be proportionate to the decision and its consequences."
+  },
+  {
+    "lesson": 5,
+    "q": "What is a useful hypothesis in early discovery?",
+    "options": [
+      "A testable explanation for the observed problem",
+      "A confirmed fact that cannot change",
+      "A feature request",
+      "A project status color"
+    ],
+    "why": "A hypothesis focuses discovery and should be tested against evidence."
+  },
+  {
+    "lesson": 5,
+    "q": "What should accompany an unresolved assumption?",
+    "options": [
+      "Its impact, confidence, owner and a way to test it",
+      "A new acronym",
+      "A final approval date regardless of evidence",
+      "A vendor quote"
+    ],
+    "why": "Assumptions need ownership and validation based on their consequence if false."
+  },
+  {
+    "lesson": 6,
+    "q": "What is the purpose of a roadmap?",
+    "options": [
+      "Sequence outcomes, dependencies and decision points over time",
+      "Promise every delivery task as fixed",
+      "Replace the project backlog",
+      "Show only calendar dates"
+    ],
+    "why": "A roadmap gives leaders a view of outcome sequencing and important dependencies."
+  },
+  {
+    "lesson": 6,
+    "q": "Why might a data-quality foundation appear before a visible product feature?",
+    "options": [
+      "It enables later automation and reduces risk",
+      "It is always the cheapest work",
+      "It avoids stakeholder involvement",
+      "It makes benefits measurement unnecessary"
+    ],
+    "why": "Enabling work may be required before downstream value can be safely achieved."
+  },
+  {
+    "lesson": 6,
+    "q": "How should roadmap items be reviewed?",
+    "options": [
+      "When evidence, dependencies or business priorities change",
+      "Only at project closure",
+      "Whenever someone changes a title",
+      "Never after approval"
+    ],
+    "why": "Roadmaps should adapt to material changes while keeping decisions deliberate."
+  },
+  {
+    "lesson": 6,
+    "q": "What distinguishes a senior BA recommendation from a preference?",
+    "options": [
+      "It states supporting evidence, trade-offs, conditions and what could change the view",
+      "It uses more slides",
+      "It has a larger document",
+      "It avoids uncertainty"
+    ],
+    "why": "A defensible recommendation explains rationale and uncertainty."
+  },
+  {
+    "lesson": 6,
+    "q": "When is a pilot especially useful?",
+    "options": [
+      "When it can reduce important uncertainty before a costly scale-up",
+      "When all evidence is already conclusive",
+      "When no owner can be assigned",
+      "When the team wants to avoid measuring outcomes"
+    ],
+    "why": "Pilots are valuable when they produce evidence that changes a larger decision."
+  }
+]
