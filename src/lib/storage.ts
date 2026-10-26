@@ -6,7 +6,14 @@ import { useSyncExternalStore } from "react";
 // other tabs' changes remain visible. Null is a pending removal, not a missing entry.
 const pending = new Map<string, string | null>();
 const listeners = new Set<() => void>();
+const writeListeners = new Set<(key: string) => void>();
 function notify() { listeners.forEach((listener) => listener()); }
+
+/** Observe this tab's practice writes, for example to schedule a cloud sync. */
+export function subscribeWrites(listener: (key: string) => void) {
+  writeListeners.add(listener);
+  return () => { writeListeners.delete(listener); };
+}
 
 export function safeGet(key: string): string | null {
   if (pending.has(key)) return pending.get(key) ?? null;
@@ -20,6 +27,7 @@ function write(key: string, value: string | null): boolean {
     else window.localStorage.setItem(key, value);
     pending.delete(key);
     notify();
+    writeListeners.forEach((listener) => listener(key));
     return true;
   } catch {
     pending.set(key, value);

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { PersistenceNotice } from "@/components/PersistenceNotice";
 import { MockLifecycle } from "@/components/practice/MockLifecycle";
 import { OfflineRegistration } from "@/components/OfflineRegistration";
+import { AutoSyncProvider } from "@/components/sync/AutoSyncProvider";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} h-full`}>
       <body className="min-h-full bg-bg font-sans text-fg-1">
-        <ThemeProvider>{children}<MockLifecycle /><PersistenceNotice /><OfflineRegistration /></ThemeProvider>
+        <ThemeProvider>{children}<MockLifecycle /><PersistenceNotice /><OfflineRegistration /><AutoSyncProvider /></ThemeProvider>
       </body>
     </html>
   );

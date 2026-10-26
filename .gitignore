@@ -51,3 +51,6 @@ next-env.d.ts
 
 # Generated browser interpreter bundle (npm run worker:build).
 /public/js-worker.js
+
+# Supabase CLI link state
+supabase/.temp/
