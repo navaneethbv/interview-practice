@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What is a strong option set for solution analysis?",
+    "options": [
+      "Several materially different options, including do-nothing or minimal change",
+      "One requested solution with no baseline",
+      "A list of vendor names only",
+      "A technical design chosen before discovery"
+    ],
+    "why": "Credible alternatives enable meaningful comparison and reveal whether change is needed."
+  },
+  {
+    "lesson": 1,
+    "q": "When should comparison criteria be agreed?",
+    "options": [
+      "Before scoring options",
+      "After seeing which option scores highest",
+      "Only after vendor selection",
+      "After release"
+    ],
+    "why": "Pre-agreed criteria reduce biased evaluation."
+  },
+  {
+    "lesson": 1,
+    "q": "What should accompany a weighted score?",
+    "options": [
+      "Evidence, assumptions and uncertainty for each rating",
+      "A claim that the total is objective",
+      "The BA's personal preference",
+      "Only the final rank"
+    ],
+    "why": "Scoring can organize discussion but does not make subjective inputs factual."
+  },
+  {
+    "lesson": 2,
+    "q": "What should a BA provide to an architect?",
+    "options": [
+      "Business outcomes, process context, volumes, constraints and risk tolerance",
+      "A mandated database design without rationale",
+      "Only the project deadline",
+      "A list of screen colors"
+    ],
+    "why": "Architecture partners need the business context and measurable constraints to shape options."
+  },
+  {
+    "lesson": 2,
+    "q": "Which is an appropriate business requirement?",
+    "options": [
+      "95% of matching runs finish within the agreed time for target volume",
+      "Use a specific cloud database",
+      "Call the table reconciliation_v2",
+      "Write code in a preferred language"
+    ],
+    "why": "Business-facing quality needs should be measurable without prescribing design unnecessarily."
+  },
+  {
+    "lesson": 2,
+    "q": "Who owns technical architecture decisions?",
+    "options": [
+      "The designated architecture and engineering owners",
+      "The BA in every organization",
+      "The end user group",
+      "The training lead"
+    ],
+    "why": "The BA informs technical design but does not automatically own it."
+  },
+  {
+    "lesson": 3,
+    "q": "How should a vague quality need like “fast” be improved?",
+    "options": [
+      "Define scenario, threshold, measurement method and owner",
+      "Repeat the word faster",
+      "Replace it with a feature name",
+      "Defer it until production"
+    ],
+    "why": "A measurable quality attribute can be verified."
+  },
+  {
+    "lesson": 3,
+    "q": "Why should control needs be treated as solution behavior?",
+    "options": [
+      "Controls affect requirements, workflow, evidence and exception handling",
+      "They are only audit documents",
+      "They apply only after deployment",
+      "They are outside business analysis"
+    ],
+    "why": "Controls need to be designed and verified as part of the solution."
+  },
+  {
+    "lesson": 3,
+    "q": "Who should validate a control threshold?",
+    "options": [
+      "The accountable control owner",
+      "The BA alone",
+      "The vendor alone",
+      "Any developer available"
+    ],
+    "why": "Control owners confirm acceptable risk and evidence requirements."
+  },
+  {
+    "lesson": 4,
+    "q": "What should a data-flow analysis include?",
+    "options": [
+      "Source, owner, meaning, timing, quality rules and consumers",
+      "Only a happy-path diagram",
+      "Only table names",
+      "A chart of project milestones"
+    ],
+    "why": "Data lineage and ownership matter across systems and decisions."
+  },
+  {
+    "lesson": 4,
+    "q": "Which is an important integration failure condition?",
+    "options": [
+      "A feed arrives late or contains duplicate records",
+      "The screen uses blue",
+      "The user prefers workshops",
+      "A sprint is two weeks"
+    ],
+    "why": "Late or duplicate inputs can affect matching and controls."
+  },
+  {
+    "lesson": 4,
+    "q": "Why distinguish local configuration from shared definitions?",
+    "options": [
+      "It allows needed variation without creating inconsistent meaning",
+      "It removes all regional needs",
+      "It means data quality is irrelevant",
+      "It replaces decision ownership"
+    ],
+    "why": "Shared semantics can coexist with approved local settings."
+  },
+  {
+    "lesson": 5,
+    "q": "What is a useful business-rule table field?",
+    "options": [
+      "Condition and outcome with owner, effective date and exception path",
+      "Meeting room number",
+      "Project slogan",
+      "Developer seniority"
+    ],
+    "why": "Rule tables should make behavior and governance testable."
+  },
+  {
+    "lesson": 5,
+    "q": "Why separate policy from implementation logic?",
+    "options": [
+      "Business owners approve policy while technical teams implement behavior",
+      "It prevents testing",
+      "It gives the BA all authority",
+      "It removes stakeholder review"
+    ],
+    "why": "Clear ownership prevents confusing policy choices with technical realization."
+  },
+  {
+    "lesson": 5,
+    "q": "What is a safe rule for automated matching?",
+    "options": [
+      "Do not let a match rule authorize write-off without approved control design",
+      "Every match should write off automatically",
+      "Ignore overrides",
+      "Use any available amount field"
+    ],
+    "why": "Automated matching and financial write-off are different actions with different risks."
+  },
+  {
+    "lesson": 6,
+    "q": "What should cross-team traceability connect?",
+    "options": [
+      "Outcome, requirement, delivery item, test evidence and owner",
+      "Only epic to sprint",
+      "Only person to meeting",
+      "Vendor to invoice"
+    ],
+    "why": "Traceability supports impact analysis across teams and controls."
+  },
+  {
+    "lesson": 6,
+    "q": "A requested change affects migration and training. What should be assessed?",
+    "options": [
+      "End-to-end impacts, trade-offs and what work is displaced",
+      "Only screen implementation effort",
+      "Only the requesting team's opinion",
+      "Nothing if the change is agile"
+    ],
+    "why": "Scope changes can affect several workstreams beyond the visible feature."
+  },
+  {
+    "lesson": 6,
+    "q": "What should be done with deferred scope?",
+    "options": [
+      "Record what is deferred, why and which outcome or risk it affects",
+      "Delete the request",
+      "Promise delivery without a date",
+      "Hide it from stakeholders"
+    ],
+    "why": "Clear deferral records support future prioritization."
+  },
+  {
+    "lesson": 6,
+    "q": "Why involve technical partners early?",
+    "options": [
+      "They can expose feasibility, integration and migration constraints before commitments",
+      "They approve business value",
+      "They replace user discovery",
+      "They guarantee lower cost"
+    ],
+    "why": "Early collaboration helps shape feasible options and dependencies."
+  },
+  {
+    "lesson": 6,
+    "q": "What is a good acceptance target for a high-value write-off control?",
+    "options": [
+      "Every override records authorized user, reason, approval and timestamp",
+      "The feature has a green status",
+      "The team likes the workflow",
+      "The release is on time"
+    ],
+    "why": "A control need should define observable evidence and authorization."
+  }
+]
