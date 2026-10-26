@@ -269,20 +269,20 @@ function FinalCard({ open, passed, best, size }: Readonly<{ open: boolean; passe
 
 function StudyPlan({ chapters }: Readonly<{ chapters: number }>) {
   return (
-    <section className="mt-12">
-      <h2 className="mb-3 text-lg font-semibold tracking-tight">A suggested pace</h2>
-      <div className="grid gap-3 md:grid-cols-3">
-        {[
-          { title: "Steady — about 5 weeks", body: `Three chapters a week, 20–30 minutes a day. Good alongside a job search.` },
-          { title: "Focused — about 2 weeks", body: `One chapter a day, about 45 minutes including the quiz. Good before a scheduled interview.` },
-          { title: "Every day", body: `Read 2–3 lessons, then explain them out loud. Spend the last week of any plan on chapter ${chapters} and mock answers.` },
-        ].map((p) => (
-          <div key={p.title} className="rounded-2xl border border-line bg-layer-1 p-4 shadow-card">
-            <p className="font-medium">{p.title}</p>
-            <p className="mt-1 text-sm leading-relaxed text-fg-2">{p.body}</p>
-          </div>
-        ))}
+    <section className="mt-12 rounded-2xl border border-brand/30 bg-brand-soft p-5 sm:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-lg font-semibold tracking-tight">New to business analysis?</h2>
+          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-fg-2">
+            Follow a beginner-friendly 30-session path: about an hour a day for foundations, hands-on practice, data skills and interview prep.
+            Take rest days as needed; the plan tells you what to study and practice each session.
+          </p>
+        </div>
+        <Link href="/business-analyst/study-plan" className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">
+          Open daily plan <ArrowRight size={16} />
+        </Link>
       </div>
+      <p className="mt-3 text-xs text-fg-3">Complete the chapter quizzes along the way; all {chapters} quizzes unlock the final exam.</p>
     </section>
   );
 }
