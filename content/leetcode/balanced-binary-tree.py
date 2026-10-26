@@ -7,9 +7,7 @@ class Solution:
             if node is None:
                 continue
             if not ready:
-                pending.append((node, True))
-                pending.append((node.left, False))
-                pending.append((node.right, False))
+                pending.extend(((node, True), (node.left, False), (node.right, False)))
                 continue
             left_height = height[node.left]
             right_height = height[node.right]
