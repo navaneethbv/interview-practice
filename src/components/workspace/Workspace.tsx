@@ -604,20 +604,22 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
         <div className="mx-auto flex items-center gap-0.5">
           <button
+            aria-label="Run code"
             onClick={run}
             disabled={!spec || busy}
-            className="flex h-8 items-center gap-1.5 rounded-l-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-fg-1 shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
+            className="workspace-action flex h-8 items-center gap-1.5 rounded-l-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-fg-1 shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
             title="Run (Ctrl/⌘ + ')"
           >
-            <Play size={13} className="fill-current" /> Run
+            <Play size={13} className="fill-current" /> <span className="workspace-action-label">Run</span>
           </button>
           <button
+            aria-label="Submit solution"
             onClick={submit}
             disabled={!spec || busy}
-            className="flex h-8 items-center gap-1.5 rounded-r-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-ok shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
+            className="workspace-action flex h-8 items-center gap-1.5 rounded-r-lg bg-layer-1 px-2.5 text-sm sm:px-3 font-medium text-ok shadow-sm ring-1 ring-line transition-colors hover:bg-layer-2 disabled:opacity-50"
             title="Submit (Ctrl/⌘ + Enter)"
           >
-            <CloudUpload size={15} /> Submit
+            <CloudUpload size={15} /> <span className="workspace-action-label">Submit</span>
           </button>
         </div>
 
