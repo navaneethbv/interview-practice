@@ -198,7 +198,7 @@
     "why": "Clear deferral records support future prioritization."
   },
   {
-    "lesson": 6,
+    "lesson": 2,
     "q": "Why involve technical partners early?",
     "options": [
       "They can expose feasibility, integration and migration constraints before commitments",
@@ -209,7 +209,7 @@
     "why": "Early collaboration helps shape feasible options and dependencies."
   },
   {
-    "lesson": 6,
+    "lesson": 3,
     "q": "What is a good acceptance target for a high-value write-off control?",
     "options": [
       "Every override records authorized user, reason, approval and timestamp",
