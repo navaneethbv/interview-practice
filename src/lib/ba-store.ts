@@ -12,7 +12,7 @@ import {
   type BaAttempt,
   type BaState,
 } from "./ba-data";
-import { safeGet, safeRemove, safeSet } from "./storage";
+import { safeGet, safeSet } from "./storage";
 
 /**
  * Browser store for the Business Analyst course, using the same guarded localStorage
