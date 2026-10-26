@@ -15,12 +15,12 @@ const GROUP_LABEL = { plans: "Study plans", tracks: "Topic tracks", companies: "
 export function ListSwitcher({ options, current }: Readonly<{ options: SwitcherOption[]; current: string }>) {
   const router = useRouter();
   return (
-    <label className="relative inline-flex items-center">
+    <label className="relative inline-flex min-w-0 max-w-full items-center">
       <span className="sr-only">Switch list</span>
       <select
         value={current}
         onChange={(e) => router.push(e.target.value)}
-        className="h-9 appearance-none rounded-lg border border-line bg-layer-1 pr-8 pl-3 text-sm text-fg-1 shadow-card hover:border-line-strong"
+        className="h-9 w-full max-w-full appearance-none rounded-lg border border-line bg-layer-1 pr-8 pl-3 text-sm text-fg-1 shadow-card hover:border-line-strong sm:w-auto"
       >
         {(Object.keys(GROUP_LABEL) as SwitcherOption["group"][]).map((g) => (
           <optgroup key={g} label={GROUP_LABEL[g]}>
