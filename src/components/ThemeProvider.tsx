@@ -2,7 +2,7 @@
 
 import { ThemeProvider as NextThemes, useTheme } from "next-themes";
 import { Check, Moon, Palette, Sun } from "lucide-react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 type PaletteId = "classic" | "ocean" | "sage" | "sand" | "rose" | "lavender";
 type PaletteOption = Readonly<{ id: PaletteId; light: string; dark: string; swatch: string }>;
@@ -16,34 +16,52 @@ const PALETTES: PaletteOption[] = [
   { id: "lavender", light: "Lavender", dark: "Amethyst", swatch: "#7763b7" },
 ];
 const STORAGE_KEY = "interview-practice-color-theme";
-
-const PaletteContext = createContext<Readonly<{
-  palette: PaletteId;
-  setPalette: (palette: PaletteId) => void;
-}>>({ palette: "classic", setPalette: () => {} });
+const PALETTE_CHANGE_EVENT = "interview-practice:color-theme-change";
 
 function isPalette(value: string | null): value is PaletteId {
   return PALETTES.some((item) => item.id === value);
 }
 
+function subscribeToPalette(callback: () => void) {
+  window.addEventListener(PALETTE_CHANGE_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(PALETTE_CHANGE_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function getPaletteSnapshot(): PaletteId {
+  const saved = window.localStorage.getItem(STORAGE_KEY);
+  return isPalette(saved) ? saved : "classic";
+}
+
+function getPaletteServerSnapshot(): PaletteId {
+  return "classic";
+}
+
+function savePalette(palette: PaletteId) {
+  window.localStorage.setItem(STORAGE_KEY, palette);
+  document.documentElement.dataset.colorTheme = palette;
+  window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
+}
+
+const PaletteContext = createContext<Readonly<{
+  palette: PaletteId;
+  setPalette: (palette: PaletteId) => void;
+}>>({ palette: "classic", setPalette: savePalette });
+
 export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [palette, setPalette] = useState<PaletteId>("classic");
-  const [ready, setReady] = useState(false);
+  const palette = useSyncExternalStore(subscribeToPalette, getPaletteSnapshot, getPaletteServerSnapshot);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (isPalette(saved)) setPalette(saved);
-    setReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (!ready) return;
     document.documentElement.dataset.colorTheme = palette;
-    window.localStorage.setItem(STORAGE_KEY, palette);
-  }, [palette, ready]);
+  }, [palette]);
+
+  const contextValue = useMemo(() => ({ palette, setPalette: savePalette }), [palette]);
 
   return (
-    <PaletteContext.Provider value={{ palette, setPalette }}>
+    <PaletteContext.Provider value={contextValue}>
       <NextThemes attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         {children}
       </NextThemes>
