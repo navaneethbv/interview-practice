@@ -198,7 +198,7 @@
     "why": "Cross-boundary decisions need the right owner and timing."
   },
   {
-    "lesson": 6,
+    "lesson": 2,
     "q": "How should current-state evidence be presented when sources disagree?",
     "options": [
       "Show the disagreement, confidence and how it will be resolved",
@@ -209,7 +209,7 @@
     "why": "Transparency about evidence quality supports sound decisions."
   },
   {
-    "lesson": 6,
+    "lesson": 5,
     "q": "What makes a roadmap useful?",
     "options": [
       "It shows what outcomes come when and what decisions or dependencies matter",
