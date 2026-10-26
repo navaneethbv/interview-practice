@@ -40,7 +40,7 @@ export function FinalView({ banks, size, passPercent, routeBase = "/business-ana
           draw={(recent) => drawFinalExam(banks.map((b) => ({ chapter: b.chapter, questions: b.questions })), size, recent)}
           reviewFor={(q) => {
             const b = q.chapter ? byId.get(q.chapter) : undefined;
-            return b ? { label: `Chapter ${b.number}: ${b.title}`, href: `${routeBase}/${b.chapter}` } : { label: "Course overview", href: "/business-analyst" };
+            return b ? { label: `Chapter ${b.number}: ${b.title}`, href: `${routeBase}/${b.chapter}` } : { label: "Course overview", href: routeBase };
           }}
           next={{ href: routeBase, label: "Back to the course" }}
         />
