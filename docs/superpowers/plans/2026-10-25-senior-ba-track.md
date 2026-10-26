@@ -51,7 +51,7 @@
 - Modify: src/components/ba/BaOverview.tsx
 - Modify: src/components/ba/ChapterView.tsx
 - Modify: src/components/ba/FinalView.tsx
-- Modify: src/components/ba/ba-store.ts or src/lib/ba-store.ts (actual existing path: src/lib/ba-store.ts)
+- Modify: src/lib/ba-store.ts
 
 **Interfaces:**
 - Consumes: BaTrack and track-specific content from Task 1.
