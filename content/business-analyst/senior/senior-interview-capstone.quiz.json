@@ -110,7 +110,7 @@
     "why": "The case starts by framing the need and who must decide."
   },
   {
-    "lesson": 4,
+    "lesson": 5,
     "q": "Which is a credible set of solution options?",
     "options": [
       "Improve current controls, add a shared service, or phase replacement",
@@ -121,7 +121,7 @@
     "why": "Materially different alternatives allow useful comparison."
   },
   {
-    "lesson": 4,
+    "lesson": 5,
     "q": "What should the roadmap include?",
     "options": [
       "Dependencies, pilot, decision gates, owners and fallback",
@@ -132,7 +132,7 @@
     "why": "A safe roadmap shows how evidence and risk guide progression."
   },
   {
-    "lesson": 5,
+    "lesson": 6,
     "q": "What makes a capstone artifact pack coherent?",
     "options": [
       "Traceability from problem through decisions, delivery and benefits",
@@ -143,7 +143,7 @@
     "why": "A coherent pack lets a reviewer follow the analysis to value."
   },
   {
-    "lesson": 5,
+    "lesson": 6,
     "q": "Which checklist item validates benefit design?",
     "options": [
       "Baseline, target, data source, owner and review timing",
@@ -154,7 +154,7 @@
     "why": "Benefits need measurable definitions and ownership."
   },
   {
-    "lesson": 5,
+    "lesson": 6,
     "q": "Should the capstone be a scored submission in this course?",
     "options": [
       "No; it is a self-reviewed portfolio exercise, while the final exam scores knowledge",
@@ -165,7 +165,7 @@
     "why": "The design calls for a self-reviewed, ungraded capstone and a separate final exam."
   },
   {
-    "lesson": 6,
+    "lesson": 7,
     "q": "What should a senior candidate research before an interview?",
     "options": [
       "Role scope, operating model and likely transformation challenges",
@@ -176,7 +176,7 @@
     "why": "Research helps tailor examples to the employer's context."
   },
   {
-    "lesson": 6,
+    "lesson": 7,
     "q": "Which follow-up question tests the depth of a story?",
     "options": [
       "What evidence changed your view?",
@@ -187,7 +187,7 @@
     "why": "Evidence and judgment reveal how the candidate handled the work."
   },
   {
-    "lesson": 6,
+    "lesson": 7,
     "q": "How should a candidate explain a missed benefit?",
     "options": [
       "Describe the evidence, causes and corrective action honestly",
@@ -198,7 +198,7 @@
     "why": "Senior candidates should demonstrate learning and accountability."
   },
   {
-    "lesson": 6,
+    "lesson": 7,
     "q": "What question can a candidate ask about senior BA scope?",
     "options": [
       "How are decision rights and success measures defined for this role?",
@@ -209,7 +209,7 @@
     "why": "Questions about authority and outcomes clarify the operating context."
   },
   {
-    "lesson": 6,
+    "lesson": 7,
     "q": "How long is the capstone presentation practice?",
     "options": [
       "A concise five-minute case summary",
