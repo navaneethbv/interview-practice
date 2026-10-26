@@ -34,7 +34,7 @@
   background: var(--bg);
 }
 [data-reader-content] {
-  max-width: var(--reader-width, 48rem) !important;
+  max-width: var(--reader-width, 48rem);
   margin-inline: auto;
   font-size: var(--reader-font-size, 18px);
   line-height: var(--reader-line-spacing, 1.8);

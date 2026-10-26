@@ -197,3 +197,20 @@ test("production download survives disconnected navigation and can be removed", 
   });
   expect(privateCaches).toEqual([]);
 });
+
+test("reader width and syntax colors follow preferences without priority overrides", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.setViewportSize({ width: 1366, height: 900 });
+  await page.goto("/learn/sliding-window-introduction");
+  const reader = page.locator("[data-reader-content]");
+  const width = page.getByRole("combobox", { name: "Reading width", exact: true });
+  await width.selectOption("32");
+  const narrow = await reader.evaluate((element) => element.getBoundingClientRect().width);
+  await width.selectOption("72");
+  await expect.poll(() => reader.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(narrow);
+  const token = page.locator(".shiki span[style]").first();
+  await expect(page.getByRole("button", { name: "Switch to dark mode", exact: true })).toBeVisible();
+  const light = await token.evaluate((element) => getComputedStyle(element).color);
+  await page.getByRole("button", { name: "Switch to dark mode", exact: true }).click();
+  await expect.poll(() => token.evaluate((element) => getComputedStyle(element).color)).not.toBe(light);
+});

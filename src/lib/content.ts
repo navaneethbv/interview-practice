@@ -301,7 +301,7 @@ export async function highlight(code: string, lang: "java" | "python"): Promise<
   return h.codeToHtml(code.trimEnd(), {
     lang,
     themes: { light: "github-light", dark: "github-dark-dimmed" },
-    defaultColor: "light",
+    defaultColor: false,
   });
 }
 

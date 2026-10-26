@@ -283,7 +283,8 @@ export function LabWorkspace({ lab }: Readonly<{ lab: Lab }>) {
               <pre className="mt-3 whitespace-pre-wrap font-mono text-xs leading-6 text-fg-2">
                 {d.template}
               </pre>
-              <button type="button"
+              <button
+                type="button"
                 className="mt-3 rounded-lg border border-line px-3 py-2 text-xs"
                 onClick={() =>
                   update({
@@ -332,11 +333,20 @@ export function LabWorkspace({ lab }: Readonly<{ lab: Lab }>) {
             <output className="text-xs text-fg-3">
               {message || "Drafts and review progress stay in this browser."}
             </output>
-            <button type="button"
+            <button
+              type="button"
               onClick={() => {
+                const reviewChecks = lab.rubric
+                  .map((criterion, index) => {
+                    const marker = attempt.checks.includes(String(index))
+                      ? "[x]"
+                      : "[ ]";
+                    return `${marker} ${criterion}`;
+                  })
+                  .join("\n");
                 const blob = new Blob(
                   [
-                    `${lab.title}\n\n${attempt.draft}\n\nReview checks:\n${lab.rubric.map((r, i) => `${attempt.checks.includes(String(i)) ? "[x]" : "[ ]"} ${r}`).join("\n")}`,
+                    `${lab.title}\n\n${attempt.draft}\n\nReview checks:\n${reviewChecks}`,
                   ],
                   { type: "text/plain" },
                 );

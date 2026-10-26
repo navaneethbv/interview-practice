@@ -2,6 +2,12 @@ import type { BrowserContext } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+function runtimeContentType(name: string): string {
+  if (name.endsWith(".js")) return "application/javascript";
+  if (name.endsWith(".wasm")) return "application/wasm";
+  return "application/octet-stream";
+}
+
 /**
  * The browser loads Monaco and the TypeScript compiler from jsdelivr. Serve them from node_modules
  * so the tests also run where the CDN is unreachable.
@@ -19,11 +25,7 @@ export async function serveCdnFromNodeModules(context: BrowserContext) {
         const body = await readFile(path.join(pyodideAssets, name));
         await route.fulfill({
           body,
-          contentType: name.endsWith(".js")
-            ? "application/javascript"
-            : name.endsWith(".wasm")
-              ? "application/wasm"
-              : "application/octet-stream",
+          contentType: runtimeContentType(name),
         });
       },
     );

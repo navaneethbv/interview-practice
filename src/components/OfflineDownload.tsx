@@ -44,12 +44,12 @@ export function OfflineDownload() {
         {busy ? "Saving…" : "Download lesson"}
       </button>
       {message && (
-        <span className="w-full text-xs text-fg-3" role="status">
+        <output className="w-full text-xs text-fg-3">
           {message}{" "}
           <a className="underline" href="/offline">
             Offline library
           </a>
-        </span>
+        </output>
       )}
     </>
   );

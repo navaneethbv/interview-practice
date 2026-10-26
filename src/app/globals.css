@@ -243,7 +243,7 @@ body {
 /* ------------------------------------------------------------ system design reader */
 
 .prose-reader {
-  font-size: 16.5px;
+  font-size: clamp(15.5px, calc(0.3vw + 14px), 17.5px);
   line-height: 1.8;
 }
 .prose-reader h2 {
@@ -376,11 +376,15 @@ body {
 /* ------------------------------------------------------------ shiki dual themes */
 
 .shiki {
-  background: transparent !important;
+  background: transparent;
+}
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
 }
 .dark .shiki,
 .dark .shiki span {
-  color: var(--shiki-dark) !important;
+  color: var(--shiki-dark);
 }
 
 
@@ -636,9 +640,6 @@ html.reader-mode-active [data-reader-controls] {
   max-width: min(88rem, 100%);
 }
 
-.prose-reader {
-  font-size: clamp(15.5px, calc(0.3vw + 14px), 17.5px);
-}
 
 .prose-lesson .katex-display,
 .prose-reader .katex-display,

@@ -3,9 +3,7 @@ import bank from "../../content/interviews/scenarios.json";
 export const INTERVIEWS_KEY = "ip:interviews:v1";
 export const INTERVIEW_DURATIONS = [15, 30, 45, 60] as const;
 export type InterviewTrack =
-  | "system-design"
-  | "business-analysis"
-  | "behavioral";
+  "system-design" | "business-analysis" | "behavioral";
 export interface InterviewStage {
   id: string;
   title: string;
@@ -191,12 +189,12 @@ function isSession(v: unknown, completed = false): v is InterviewSession {
     v.deadline !== v.startedAt + (v.duration as number) * 60000
   )
     return false;
-  const stages = INTERVIEW_TRACKS[scenario.track].stages.map((s) => s.id);
+  const stages = new Set(
+    INTERVIEW_TRACKS[scenario.track].stages.map((s) => s.id),
+  );
   return (
     record(v.answers) &&
-    Object.entries(v.answers).every(
-      ([k, a]) => stages.includes(k) && text(a),
-    ) &&
+    Object.entries(v.answers).every(([k, a]) => stages.has(k) && text(a)) &&
     text(v.notes) &&
     Number.isInteger(v.revealed) &&
     (v.revealed as number) >= 0 &&
@@ -217,9 +215,11 @@ function isSession(v: unknown, completed = false): v is InterviewSession {
 export function isCompletedInterview(v: unknown): v is CompletedInterview {
   if (!isSession(v, true)) return false;
   const c = v as unknown as Record<string, unknown>;
-  const stageIds = INTERVIEW_TRACKS[
-    interviewScenario(v.scenarioId)!.track
-  ].stages.map((s) => s.id);
+  const stageIds = new Set(
+    INTERVIEW_TRACKS[interviewScenario(v.scenarioId)!.track].stages.map(
+      (s) => s.id,
+    ),
+  );
   return (
     time(c.finishedAt) &&
     c.finishedAt >= v.startedAt &&
@@ -229,7 +229,7 @@ export function isCompletedInterview(v: unknown): v is CompletedInterview {
     record(c.ratings) &&
     Object.entries(c.ratings).every(
       ([k, n]) =>
-        stageIds.includes(k) &&
+        stageIds.has(k) &&
         typeof n === "number" &&
         Number.isInteger(n) &&
         n >= 0 &&

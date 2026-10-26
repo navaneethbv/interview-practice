@@ -70,7 +70,8 @@ export function readerSentences(text: string): string[] {
     start = end;
     lastSpace = -1;
   };
-  for (let index = 0; index < text.length; index++) {
+  let index = 0;
+  while (index < text.length) {
     if (whitespace(text[index])) lastSpace = index;
     const sentenceEnd =
       ".!?".includes(text[index]) &&
@@ -79,8 +80,10 @@ export function readerSentences(text: string): string[] {
     else if (index - start >= 219) {
       const end = lastSpace > start + 60 ? lastSpace : index + 1;
       append(end);
-      index = end - 1;
+      index = end;
+      continue;
     }
+    index++;
   }
   append(text.length);
   return parts;

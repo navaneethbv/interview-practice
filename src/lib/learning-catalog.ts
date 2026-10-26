@@ -4,6 +4,12 @@ import { getCourse, getLesson, hrefFor } from "./content";
 import { markupWordCount } from "./reading-estimate";
 import { readingMinutes, type LearningTask } from "./learning-data";
 
+function solvingMinutes(difficulty: string): number {
+  if (difficulty === "easy") return 20;
+  if (difficulty === "hard") return 45;
+  return 30;
+}
+
 export function learningCatalog(): LearningTask[] {
   const coding: LearningTask[] = Object.entries(practiceCatalog().entries).map(
     ([id, entry]) => ({
@@ -13,12 +19,7 @@ export function learningCatalog(): LearningTask[] {
       href: entry.href,
       track: "coding",
       kind: "solve",
-      minutes:
-        entry.difficulty === "easy"
-          ? 20
-          : entry.difficulty === "hard"
-            ? 45
-            : 30,
+      minutes: solvingMinutes(entry.difficulty),
     }),
   );
   const patternLessons: LearningTask[] = getCourse().chapters.flatMap(

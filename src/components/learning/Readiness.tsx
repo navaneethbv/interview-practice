@@ -219,14 +219,16 @@ export function Readiness({
                         ratings.length
                       ).toFixed(1)
                     : null;
+                  const ratingNoun =
+                    ratings.length === 1 ? "self-rating" : "self-ratings";
+                  const ratingLabel =
+                    average === null
+                      ? "No rating yet"
+                      : `${average} / 4 · ${ratings.length} ${ratingNoun}`;
                   return (
                     <div key={stage.id}>
                       <dt className="text-fg-2">{stage.title}</dt>
-                      <dd className="mt-0.5">
-                        {average === null
-                          ? "No rating yet"
-                          : `${average} / 4 · ${ratings.length} self-rating${ratings.length === 1 ? "" : "s"}`}
-                      </dd>
+                      <dd className="mt-0.5">{ratingLabel}</dd>
                     </div>
                   );
                 })}

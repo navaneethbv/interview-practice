@@ -209,7 +209,7 @@ self.addEventListener("message", event => {
       let result;
       if (data.type === "LIST") result = await entries();
       else if (data.type === "DOWNLOAD") { await download(data.path, false, Array.isArray(data.assets) ? data.assets : []); result = true; }
-      else if (data.type === "DELETE") { const saved = await entries(); if (!saved.some(entry => entry.path === data.path)) throw new Error("Download not found."); await writeEntries(saved.filter(entry => entry.path !== data.path)); await (await caches.open(DOCS)).delete(keyFor(data.path)); await cleanAssets(); result = true; }
+      else if (data.type === "DELETE") { const saved = await entries(); if (!saved.some(entry => entry.path === data.path)) { throw new Error("Download not found."); } await writeEntries(saved.filter(entry => entry.path !== data.path)); await (await caches.open(DOCS)).delete(keyFor(data.path)); await cleanAssets(); result = true; }
       else throw new Error("Unknown offline operation.");
       reply.postMessage({ result });
     } catch (error) { reply.postMessage({ error: error.message || "Could not update offline downloads. Browser storage may be full." }); }
