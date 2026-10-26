@@ -194,3 +194,33 @@ src/lib/judge/            spec types, harness generators, grading and runners
 | `npm run sandbox:snapshot` | Build the Java Sandbox snapshot |
 
 The JavaScript worker is generated before development, production builds and unit tests. Submitted code runs in a fresh QuickJS context with no browser globals, networking or module loader; only output and a clock are exposed. The interpreter has a 128 MiB memory limit, and the page terminates the worker after 10 seconds. TypeScript is transpiled before execution.
+
+## Learning workspace
+
+Open **Practice** or **Today** to find the complete learning workspace:
+
+| Route | What you can do |
+| --- | --- |
+| `/practice/today` | Choose coding, BA or mixed study; set a 30, 60 or 120 minute budget and dates; retain completed work in today's allocation. |
+| `/practice/notebook` | Reopen saved lessons/sections and edit, schedule or resolve mistakes. Problem and lesson pages provide Save and Record a mistake controls. |
+| `/practice/readiness` | Inspect accepted results, BA quiz passes, SQL checks, lab self-reviews and interview rubrics. Reading and self-assessment are labeled separately; these are not hiring predictions. |
+| `/practice/labs` | Complete an end-to-end BA returns project and six senior decision simulations, use the beginner glossary/prerequisites and download three Excel practice/answer pairs. |
+| `/practice/labs/sql` | Run twelve read-only SQLite exercises on fictional business data in a bounded browser worker, with schema, expected results and explanations. |
+| `/practice/interviews` | Rehearse twelve authored system-design, BA and behavioral scenarios with persisted deadlines, follow-up prompts, saved answers, debriefs and anchored self-ratings. |
+| `/offline` | Install the app where supported, explicitly download lessons, and manage the offline library. Only downloaded reading content is guaranteed offline; SQL/Python runtime downloads and compiled-language runners need a connection. |
+| `/settings/sync` | Optionally sign in with email OTP, compare local/cloud snapshots, download a recovery copy and explicitly confirm upload, restore or cloud deletion. |
+| `/content-status` | Check real source/review/added dates, unknown dates, source links and recorded changes. Repository additions are not evidence of a recent interview. |
+
+Reading controls now include text size, line spacing, width, available device voices, speed, real pause/resume, paragraph highlighting and saved playback positions. Reader mode traps keyboard focus and returns it on Escape, right-click or visible exit. Appearance and reading preferences are included in backups; legacy palette preferences migrate on first visit. Voice availability and installation affordances depend on the browser/device.
+
+A coding workspace's **Start an independent attempt** is a self-declaration before a fresh attempt. Hint and solution views stay attached to that attempt; a later reveal cannot rewrite a prior accepted result. Assistance outside the website cannot be detected. Existing accepted problems without tracked conditions remain unclassified.
+
+All new learning data uses guarded browser storage and is included in the existing version 1 JSON backup. Restore validates the entire file before writing and preserves unrelated local records. Account sync uses this same validation and remains optional: it requires a dedicated Supabase project, the reviewed RLS migration and public deployment configuration. No project or credentials are bundled; see [Account sync setup](docs/ACCOUNT_SYNC.md). Cloud writes use revision preconditions and never silently replace concurrent work.
+
+- [Offline behavior and limits](docs/OFFLINE_LESSONS.md)
+- [Authored labs, workbook generation and checks](content/labs/README.md)
+- [Content review conventions](docs/CONTENT_REVIEW.md)
+
+CI runs unit/content checks, production/browser checks and four deterministic reference-verification shards in parallel. The final **Quality checks** job retains the existing required-check name and fails if any constituent job fails or is canceled. Shard tests verify complete, disjoint coverage; every Python/Java reference is still checked.
+
+For browser verification use `npm run build` followed by `CI=1 npm run test:browser`. A local Chromium executable can be selected with `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`; by default Playwright uses its installed browser. Set `TEST_OFFLINE_PRODUCTION=1` when running production offline checks locally without CI. The compiled-language browser checks require a configured sandbox in a production server; CI verifies their local harnesses separately.
