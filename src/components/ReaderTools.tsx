@@ -1,11 +1,14 @@
 "use client";
 
 import { BookOpen, Pause, Volume2 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 type Speed = "slow" | "fast";
 
 const SPEED_RATE: Record<Speed, number> = { slow: 0.85, fast: 1.2 };
+const subscribeNoop = () => () => {};
+const speechSupported = () => "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+const speechUnsupportedOnServer = () => false;
 
 function isWhitespace(character: string) {
   return character === " " || character === "\n" || character === "\r" || character === "\t";
@@ -44,13 +47,10 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
   const [speed, setSpeed] = useState<Speed>("slow");
   const [speaking, setSpeaking] = useState(false);
   const [readerMode, setReaderMode] = useState(false);
-  const [supported, setSupported] = useState(false);
+  const supported = useSyncExternalStore(subscribeNoop, speechSupported, speechUnsupportedOnServer);
   const rateRef = useRef(SPEED_RATE.slow);
   const chunksRef = useRef<string[]>([]);
 
-  useEffect(() => {
-    setSupported("speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
-  }, []);
 
   const stopSpeaking = useCallback(() => {
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
