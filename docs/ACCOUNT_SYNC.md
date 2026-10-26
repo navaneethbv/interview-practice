@@ -31,6 +31,8 @@ Deleting the cloud snapshot also signs that browser out, because automatic sync 
 
 - The session (access and refresh token) is stored in `localStorage` under `interview-practice:cloud-session:v2`, outside the `ip:` prefix, so backups and snapshots never contain tokens.
   Sessions survive reloads and browser restarts and are renewed with the refresh token shortly before expiry.
+  They end 30 days after sign-in regardless of refreshes, and the account page tells people to sign out on shared devices.
+  For a server-enforced limit, also set a session time-box in Supabase Auth settings (a paid-plan feature).
   Any script running on the site could read them, as with the default `supabase-js` storage, so the site must keep its no-third-party-script posture.
 - GitHub, Google and emailed links use the authorization-code flow with PKCE.
   The verifier is stored in `localStorage` (an emailed link opens a new tab), expires after an hour and is single use; `/auth/callback` exchanges the code and only returns to same-origin paths.

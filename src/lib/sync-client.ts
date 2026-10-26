@@ -14,6 +14,8 @@ export interface SyncSession {
   userId: string;
   email: string;
   expiresAt: number;
+  /** When the person signed in; refreshes keep it, so sessions have an absolute lifetime. */
+  signedInAt: number;
 }
 export type OAuthProvider = "github" | "google";
 export interface CloudSnapshot {
@@ -31,6 +33,8 @@ const PKCE_TTL = 60 * 60 * 1000;
 export const SESSION_EVENT = "interview-practice:session";
 /** Refresh this long before expiry so requests never race the deadline. */
 const REFRESH_MARGIN = 60_000;
+/** Sign in again after this long, even if the refresh token is still accepted. */
+export const SESSION_LIFETIME = 30 * 24 * 60 * 60 * 1000;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function readBoundedChunks(
   reader: ReadableStreamDefaultReader<Uint8Array>,
@@ -162,7 +166,10 @@ export function readSyncSession(config: SyncConfig): SyncSession | null {
       UUID.test(session.userId) &&
       typeof session.email === "string" &&
       typeof session.expiresAt === "number" &&
-      Number.isFinite(session.expiresAt)
+      Number.isFinite(session.expiresAt) &&
+      typeof session.signedInAt === "number" &&
+      session.signedInAt <= Date.now() &&
+      Date.now() - session.signedInAt < SESSION_LIFETIME
     )
       return {
         accessToken: session.accessToken,
@@ -170,6 +177,7 @@ export function readSyncSession(config: SyncConfig): SyncSession | null {
         userId: session.userId,
         email: session.email,
         expiresAt: session.expiresAt,
+        signedInAt: session.signedInAt,
       };
   } catch {
     /* Unavailable or damaged session. */
@@ -267,7 +275,7 @@ export class SyncClient {
       throw new Error("Cloud returned an invalid response.");
     }
   }
-  private sessionFrom(value: unknown): SyncSession {
+  private sessionFrom(value: unknown, signedInAt = Date.now()): SyncSession {
     const data = value as Record<string, unknown> | null;
     const user = data?.user as Record<string, unknown> | undefined;
     if (
@@ -290,6 +298,7 @@ export class SyncClient {
       userId: user.id,
       email: user.email,
       expiresAt: Date.now() + data.expires_in * 1000,
+      signedInAt,
     };
     saveSyncSession(this.config, session);
     return session;
@@ -329,12 +338,19 @@ export class SyncClient {
     )
       return stored;
     const current = stored?.userId === session.userId ? stored : session;
+    if (Date.now() - current.signedInAt >= SESSION_LIFETIME) {
+      clearSyncSession();
+      throw new SyncAuthError(
+        "For your security, sign in again every 30 days. Local practice is safe.",
+      );
+    }
     try {
       return this.sessionFrom(
         await this.request("/auth/v1/token?grant_type=refresh_token", {
           method: "POST",
           body: JSON.stringify({ refresh_token: current.refreshToken }),
         }),
+        current.signedInAt,
       );
     } catch (error) {
       // A rejected refresh token ends the session; a network failure does not.

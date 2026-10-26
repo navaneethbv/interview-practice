@@ -290,9 +290,15 @@ function SignedIn({ config, session }: { config: SyncConfig; session: SyncSessio
       : "";
   return (
     <div className="mt-5 space-y-5">
-      <p className="break-all text-sm">
-        Signed in as <strong>{session.email}</strong>
-      </p>
+      <div>
+        <p className="break-all text-sm">
+          Signed in as <strong>{session.email}</strong>
+        </p>
+        <p className="mt-1 text-xs text-fg-3">
+          You stay signed in on this browser, even after closing it, for up to 30 days.
+          Sign out when you finish on a shared or public device.
+        </p>
+      </div>
       <div className="rounded-xl border border-line bg-layer-2 p-4">
         <p className="font-medium">
           {status.state === "syncing" && "Syncing…"}

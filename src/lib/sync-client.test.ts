@@ -8,6 +8,7 @@ import {
   oauthProviders,
   safeReturnPath,
   saveSyncSession,
+  SESSION_LIFETIME,
   SyncAuthError,
   SyncClient,
   SyncConflictError,
@@ -25,6 +26,7 @@ const session: SyncSession = {
   refreshToken: "test-refresh-token",
   email: "test@example.com",
   expiresAt: Date.now() + 3600000,
+  signedInAt: Date.now(),
 };
 const backup: PracticeBackup = {
   format: "interview-practice",
@@ -213,6 +215,40 @@ describe("optional account sync", () => {
         (error) => !(error instanceof SyncAuthError),
       );
       assert.ok(readSyncSession(config), "a network failure keeps the session");
+    } finally {
+      restore();
+    }
+  });
+  it("ends sessions 30 days after sign-in, even when refreshed", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
+    try {
+      const signedInAt = Date.now() - SESSION_LIFETIME + 60_000;
+      const old = { ...session, signedInAt, expiresAt: Date.now() + 1000 };
+      const renewed = await new SyncClient(
+        config,
+        mock(() =>
+          json({
+            access_token: "n",
+            refresh_token: "m",
+            expires_in: 3600,
+            user: { id: userId, email: session.email },
+          }),
+        ),
+      ).fresh(old);
+      assert.equal(renewed.signedInAt, signedInAt, "refresh keeps the sign-in time");
+      saveSyncSession(config, { ...session, signedInAt: Date.now() - SESSION_LIFETIME });
+      assert.equal(readSyncSession(config), null);
+      let calls = 0;
+      await assert.rejects(
+        new SyncClient(config, mock(() => { calls++; return json({}); })).fresh({
+          ...session,
+          signedInAt: Date.now() - SESSION_LIFETIME,
+          expiresAt: 0,
+        }),
+        SyncAuthError,
+      );
+      assert.equal(calls, 0, "an expired session is never refreshed");
     } finally {
       restore();
     }

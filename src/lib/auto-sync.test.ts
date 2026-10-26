@@ -11,6 +11,7 @@ const alice: SyncSession = {
   userId: "00000000-0000-4000-8000-00000000000a",
   email: "alice@example.com",
   expiresAt: Date.now() + 3600000,
+  signedInAt: Date.now(),
 };
 const bob: SyncSession = { ...alice, userId: "00000000-0000-4000-8000-00000000000b", email: "bob@example.com" };
 
