@@ -99,6 +99,22 @@ describe("optional account sync", () => {
       ),
     );
   });
+  it("calls the default fetch without binding it to the client, as browsers require", async () => {
+    const original = globalThis.fetch;
+    let called = false;
+    globalThis.fetch = function (this: unknown) {
+      // Browsers reject any receiver other than the global object.
+      if (this !== undefined && this !== globalThis) throw new TypeError("Illegal invocation");
+      called = true;
+      return Promise.resolve(json({}));
+    } as typeof fetch;
+    try {
+      await new SyncClient(config).sendCode("test@example.com");
+    } finally {
+      globalThis.fetch = original;
+    }
+    assert.equal(called, true);
+  });
   it("sends only the explicit email OTP request and validates verification responses", async () => {
     const calls: string[] = [];
     const client = new SyncClient(
