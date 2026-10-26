@@ -151,7 +151,7 @@ function ProgressCard({ hydrated, percent, passed, chapters, read, lessons, fina
         <p className="text-sm font-medium text-fg-2">Your progress</p>
         <p className="text-2xl font-semibold tabular-nums">{hydrated ? percent : 0}%</p>
       </div>
-      <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-layer-3" role="progressbar" aria-valuenow={hydrated ? percent : 0} aria-valuemin={0} aria-valuemax={100} aria-label="Course progress">
+      <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-layer-3" aria-hidden>
         <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${hydrated ? percent : 0}%` }} />
       </div>
       <dl className="mt-4 grid grid-cols-3 gap-2 text-center">

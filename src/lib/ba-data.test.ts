@@ -43,7 +43,7 @@ describe("present", () => {
     for (let seed = 1; seed < 50; seed++) {
       const p = present(bank[0], seeded(seed));
       assert.equal(p.choices[p.correct], "right 0");
-      assert.deepEqual([...p.choices].sort(), [...bank[0].options].sort());
+      assert.deepEqual([...p.choices].sort((a, b) => a.localeCompare(b)), [...bank[0].options].sort((a, b) => a.localeCompare(b)));
     }
   });
 
@@ -58,7 +58,7 @@ describe("drawChapterQuiz", () => {
     const quiz = drawChapterQuiz(bank, 10, new Set(), seeded(7));
     assert.equal(quiz.length, 10);
     assert.equal(new Set(quiz.map((q) => q.id)).size, 10);
-    assert.deepEqual([...new Set(quiz.map((q) => q.lesson))].sort(), [1, 2, 3, 4, 5, 6]);
+    assert.deepEqual([...new Set(quiz.map((q) => q.lesson))].sort((a, b) => a - b), [1, 2, 3, 4, 5, 6]);
   });
 
   it("prefers questions not shown in the previous attempt", () => {
@@ -86,7 +86,7 @@ describe("drawFinalExam", () => {
     const banks = ["a", "b", "c"].map((chapter) => ({ chapter, questions: bank.map((q) => ({ ...q, id: `${chapter}-${q.id}` })) }));
     const exam = drawFinalExam(banks, 30, new Set(), seeded(5));
     assert.equal(exam.length, 30);
-    assert.deepEqual([...new Set(exam.map((q) => q.chapter))].sort(), ["a", "b", "c"]);
+    assert.deepEqual([...new Set(exam.map((q) => q.chapter ?? ""))].sort((a, b) => a.localeCompare(b)), ["a", "b", "c"]);
   });
 });
 

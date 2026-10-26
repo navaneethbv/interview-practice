@@ -45,32 +45,36 @@ const STEPS = [
 /** A short, step-by-step introduction shown in a dialog. */
 export function Tour({ onClose }: Readonly<{ onClose: () => void }>) {
   const [step, setStep] = useState(0);
-  const dialog = useRef<HTMLDivElement>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
   const s = STEPS[step];
   const last = step === STEPS.length - 1;
 
   useEffect(() => {
+    const el = dialog.current;
+    el?.showModal();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
       if (e.key === "ArrowRight") setStep((n) => Math.min(n + 1, STEPS.length - 1));
       if (e.key === "ArrowLeft") setStep((n) => Math.max(n - 1, 0));
     };
     document.addEventListener("keydown", onKey);
-    dialog.current?.focus();
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      el?.close();
+    };
+  }, []);
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-neutral-950/50 p-4 backdrop-blur-sm" onClick={onClose}>
-      <div
-        ref={dialog}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="ba-tour-title"
-        tabIndex={-1}
-        onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-md rounded-2xl border border-line bg-layer-1 p-6 shadow-overlay outline-none"
-      >
+    <dialog
+      ref={dialog}
+      aria-labelledby="ba-tour-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      className="fixed inset-0 m-0 grid h-full max-h-none w-full max-w-none place-items-center bg-transparent p-4 text-fg-1 backdrop:bg-neutral-950/50 backdrop:backdrop-blur-sm"
+    >
+      <button type="button" aria-label="Close tour" tabIndex={-1} onClick={onClose} className="absolute inset-0 cursor-default" />
+      <div className="relative w-full max-w-md rounded-2xl border border-line bg-layer-1 p-6 shadow-overlay">
         <button onClick={onClose} aria-label="Close tour" className="absolute top-3 right-3 grid size-8 place-items-center rounded-md text-fg-3 hover:bg-layer-2 hover:text-fg-1">
           <X size={18} />
         </button>
@@ -80,7 +84,7 @@ export function Tour({ onClose }: Readonly<{ onClose: () => void }>) {
         <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{s.body}</p>
         <div className="mt-5 flex justify-center gap-1.5" aria-hidden>
           {STEPS.map((_, i) => (
-            <span key={i} className={`h-1.5 rounded-full transition-all ${i === step ? "w-6 bg-fg-1" : "w-1.5 bg-layer-3"}`} />
+            <span key={STEPS[i].title} className={`h-1.5 rounded-full transition-all ${i === step ? "w-6 bg-fg-1" : "w-1.5 bg-layer-3"}`} />
           ))}
         </div>
         <div className="mt-5 flex items-center justify-between gap-2">
@@ -99,6 +103,6 @@ export function Tour({ onClose }: Readonly<{ onClose: () => void }>) {
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
