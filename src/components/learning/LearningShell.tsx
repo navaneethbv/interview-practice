@@ -5,11 +5,11 @@ export function LearningShell({
   title,
   description,
   children,
-}: {
+}: Readonly<{
   title: string;
   description: string;
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <>
       <NavBar />

@@ -12,19 +12,17 @@ export const metadata: Metadata = { title: "Content status" };
 
 export default async function ContentStatusPage({
   searchParams,
-}: {
+}: Readonly<{
   searchParams: Promise<{ filter?: string }>;
-}) {
+}>) {
   const { filter } = await searchParams;
   const all = getContentReviews();
   const now = new Date();
-  const entries = all.filter((entry) =>
-    filter === "stale"
-      ? freshnessStatus(entry, now) === "stale"
-      : filter === "unknown"
-        ? !entry.sourceDate || !entry.reviewedAt
-        : true,
-  );
+  const entries = all.filter((entry) => {
+    if (filter === "stale") return freshnessStatus(entry, now) === "stale";
+    if (filter === "unknown") return !entry.sourceDate || !entry.reviewedAt;
+    return true;
+  });
   return (
     <>
       <NavBar />

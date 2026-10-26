@@ -12,7 +12,7 @@ import {
   syncConfig,
   type SyncSession,
 } from "./sync-client";
-import { type PracticeBackup } from "./practice-backup";
+import { BACKUP_LIMIT, type PracticeBackup } from "./practice-backup";
 
 const userId = "00000000-0000-4000-8000-000000000001";
 const revision = "00000000-0000-4000-8000-000000000002";
@@ -195,7 +195,7 @@ describe("optional account sync", () => {
     const client = new SyncClient(
       config,
       mock((url, init) => {
-        assert.match(url, new RegExp(`user_id=eq.${userId}`));
+        assert.equal(new URL(url).searchParams.get("user_id"), `eq.${userId}`);
         assert.equal(
           (init.headers as Record<string, string>).Authorization,
           "Bearer test-access-token",
@@ -226,6 +226,32 @@ describe("optional account sync", () => {
       )?.backup,
       backup,
     );
+    const encoded = new TextEncoder().encode(JSON.stringify([row]));
+    const chunked = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(encoded.slice(0, 20));
+        controller.enqueue(encoded.slice(20));
+        controller.close();
+      },
+    });
+    assert.deepEqual(
+      (await new SyncClient(config, mock(() => new Response(chunked))).read(session))?.backup,
+      backup,
+    );
+    let cancelled = false;
+    const oversized = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new Uint8Array(BACKUP_LIMIT + 1024 * 1024 + 1));
+      },
+      cancel() {
+        cancelled = true;
+      },
+    });
+    await assert.rejects(
+      new SyncClient(config, mock(() => new Response(oversized))).read(session),
+      /Cloud response is too large/,
+    );
+    assert.equal(cancelled, true);
   });
   it("validates uploads before any network mutation", async () => {
     let calls = 0;
@@ -257,8 +283,9 @@ describe("optional account sync", () => {
           assert.equal(url, `${config.url}/rest/v1/practice_snapshots`);
           return json({}, 409);
         }
-        assert.match(url, new RegExp(`revision=eq.${revision}`));
-        assert.match(url, /user_id=eq\./);
+        const requestUrl = new URL(url);
+        assert.equal(requestUrl.searchParams.get("revision"), `eq.${revision}`);
+        assert.equal(requestUrl.searchParams.get("user_id"), `eq.${userId}`);
         return json([]);
       }),
     );
@@ -326,7 +353,7 @@ describe("optional account sync", () => {
     assert.match(sql, /enable row level security/);
     assert.match(sql, /force row level security/);
     for (const op of ["select", "insert", "update", "delete"])
-      assert.match(sql, new RegExp(`for ${op} to authenticated`));
+      assert.ok(sql.includes(`for ${op} to authenticated`));
     assert.equal(
       (sql.match(/\(select auth.uid\(\)\) = user_id/g) ?? []).length,
       5,

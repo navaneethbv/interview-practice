@@ -19,7 +19,7 @@ import {
 import { BookmarkButton } from "./BookmarkButton";
 const input =
   "mt-1 w-full rounded-lg border border-line bg-layer-1 px-3 py-2 text-sm";
-export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
+export function DailyDashboard({ tasks }: Readonly<{ tasks: LearningTask[] }>) {
   const plan = learningPlan.use();
   const p = useProgress();
   const review = useReview();
@@ -55,7 +55,7 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
         <h2 className="text-xl font-semibold">Make a plan that fits today</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <label className="text-sm">
-            Goal
+            <span>Goal</span>
             <select
               className={input}
               value={plan.goal}
@@ -67,7 +67,7 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
             </select>
           </label>
           <label className="text-sm">
-            Daily budget
+            <span>Daily budget</span>
             <select
               className={input}
               value={plan.minutes}
@@ -85,7 +85,7 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
             </select>
           </label>
           <label className="text-sm">
-            Start date
+            <span>Start date</span>
             <input
               type="date"
               className={input}
@@ -94,7 +94,7 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
             />
           </label>
           <label className="text-sm">
-            Target interview date
+            <span>Target interview date</span>
             <input
               type="date"
               className={input}
@@ -110,9 +110,9 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
           next day always keeps your chosen time budget. Estimates are planning
           timeboxes, not deadlines.
         </p>
-        <p role="status" className="mt-2 text-sm text-red">
+        <output className="mt-2 block text-sm text-red">
           {message}
-        </p>
+        </output>
       </section>
       <section className="space-y-3">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -137,17 +137,13 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
           matching task verified today and keep its time in today&apos;s
           allocation. These results provide separate evidence on Readiness.
         </p>
-        {!hydrated ? (
-          <p>Loading your saved plan…</p>
-        ) : daily.length === 0 ? (
+        {!hydrated && <p>Loading your saved plan…</p>}
+        {hydrated && daily.length === 0 && (
           <p className="rounded-xl border border-line p-5">
-            {plan.startDate && today < plan.startDate
-              ? "Your plan begins on your start date."
-              : plan.targetDate && today > plan.targetDate
-                ? "Your target date has passed. Update it to continue your daily plan."
-                : "No remaining tasks fit this budget. Adjust the estimate or increase your budget to continue."}
+            {emptyPlanMessage(plan, today)}
           </p>
-        ) : (
+        )}
+        {hydrated && (
           daily.map((t) => (
             <article
               key={t.id}
@@ -174,24 +170,14 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
                     {t.title}
                   </Link>
                   <span className="mt-1 block text-xs text-fg-3">
-                    {evidenceDates[t.id] === today
-                      ? t.kind === "read"
-                        ? "Read today · "
-                        : "Verified today · "
-                      : ""}
+                    {completionLabel(t, evidenceDates[t.id] === today)}
                     {t.track === "ba" ? "Business analyst" : "Coding"} ·{" "}
-                    {t.kind === "read"
-                      ? "Lesson + reflection"
-                      : t.kind === "review"
-                        ? "Due revision · re-solve"
-                        : t.kind === "solve"
-                          ? "Problem practice"
-                          : "Chapter quiz (after reading lessons)"}
+                    {taskKindLabel(t.kind)}
                   </span>
                 </span>
               </label>
               <label className="text-xs text-fg-2">
-                Minutes
+                <span>Minutes</span>
                 <input
                   aria-label={`Estimated minutes for ${t.title}`}
                   type="number"
@@ -239,7 +225,7 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
               <span>
                 {allTasks.find((t) => t.id === id)?.title ?? id} · {date}
               </span>
-              <button
+              <button type="button"
                 className="text-brand"
                 onClick={() => {
                   const completed = { ...plan.completed };
@@ -255,4 +241,29 @@ export function DailyDashboard({ tasks }: { tasks: LearningTask[] }) {
       </details>
     </>
   );
+}
+
+function emptyPlanMessage(plan: PlanState, today: string): string {
+  if (plan.startDate && today < plan.startDate)
+    return "Your plan begins on your start date.";
+  if (plan.targetDate && today > plan.targetDate)
+    return "Your target date has passed. Update it to continue your daily plan.";
+  return "No remaining tasks fit this budget. Adjust the estimate or increase your budget to continue.";
+}
+function completionLabel(task: LearningTask, completedToday: boolean): string {
+  if (!completedToday) return "";
+  if (task.kind === "read") return "Read today · ";
+  return "Verified today · ";
+}
+function taskKindLabel(kind: LearningTask["kind"]): string {
+  switch (kind) {
+    case "read":
+      return "Lesson + reflection";
+    case "review":
+      return "Due revision · re-solve";
+    case "solve":
+      return "Problem practice";
+    case "quiz":
+      return "Chapter quiz (after reading lessons)";
+  }
 }

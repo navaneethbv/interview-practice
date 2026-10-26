@@ -24,7 +24,7 @@ This branch implements the twelve approved improvements. The feature map is in t
 
 - `npm run lint`: zero errors; one existing exhaustive-deps warning in the unchanged BA tour.
 - `npm run typecheck`: passed.
-- `npm test`: 272 Node tests, 266 passed and 6 skipped because Go is not installed locally; all 60 Python importer and 4 practice-addition tests passed. Java compilation used the installed real JDK 17 compiler module; CI provisions JDK 21.
+- `npm test`: 281 Node tests, 275 passed and 6 skipped because Go is not installed locally; all 60 Python importer and 4 practice-addition tests passed. Java compilation used the installed real JDK 17 compiler module; CI provisions JDK 21.
 - Independent BCTCI oracle suite: all 14 tests passed.
 - `npm run tests:build -- --java`: 1,227 specs processed, zero problems; 1,158 Python, 1,164 Java and 63 SQLite executions. No expected-output changes.
 - `npm run build`: passed after replacing a damaged local Turbopack persistence cache. No source configuration change was needed.
@@ -33,6 +33,10 @@ This branch implements the twelve approved improvements. The feature map is in t
 - Offline download, disconnect, navigation, hydration, removal and cache privacy checks passed. A separate review also navigated between BA lessons entirely offline.
 - Workbook downloads, draft/checkbox restoration, editable notebook data, appearance migration, quota/cross-tab behavior and structured interview reload/debrief flows passed.
 - Fresh-context branch review found budgeting, assistance chronology, narrow-layout and bounded-store issues; regression tests and fixes are included. No known Critical/Important review finding remains.
+
+## Pull request and scan follow-up
+
+Review branch: https://github.com/navaneethbv/interview-practice/pull/36. The initial GitHub quality workflow passed every unit, build/browser, oracle and reference-shard job. Automated analysis prompted additional regression-tested improvements: single-pass entity decoding, canonical public download URLs, linear resource/markup scanning, storage failure preservation, native dialog/output semantics and simpler typed helpers. Follow-up scan status is available on the PR.
 
 ## Setup and remaining external verification
 

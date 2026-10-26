@@ -8,10 +8,10 @@ const field =
 export function Notebook({
   initialQuestion = "",
   initialHref = "",
-}: {
+}: Readonly<{
   initialQuestion?: string;
   initialHref?: string;
-}) {
+}>) {
   const saved = bookmarks.use();
   const notes = mistakes.use();
   const today = useLocalDay();
@@ -69,7 +69,7 @@ export function Notebook({
                   </Link>
                   <p className="text-xs text-fg-3">{b.section}</p>
                 </div>
-                <button
+                <button type="button"
                   className="text-sm text-fg-2 hover:text-red"
                   onClick={() =>
                     bookmarks.write(saved.filter((x) => x.href !== b.href))
@@ -94,7 +94,7 @@ export function Notebook({
         >
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="text-sm">
-              Question or topic
+              <span>Question or topic</span>
               <input
                 name="question"
                 required
@@ -104,7 +104,7 @@ export function Notebook({
               />
             </label>
             <label className="text-sm">
-              Internal link (optional)
+              <span>Internal link (optional)</span>
               <input
                 name="href"
                 maxLength={1000}
@@ -115,7 +115,7 @@ export function Notebook({
             </label>
           </div>
           <label className="block text-sm">
-            My mistaken reasoning
+            <span>My mistaken reasoning</span>
             <textarea
               name="mistaken"
               maxLength={5000}
@@ -125,7 +125,7 @@ export function Notebook({
             />
           </label>
           <label className="block text-sm">
-            Corrected reasoning / what to try next
+            <span>Corrected reasoning / what to try next</span>
             <textarea
               name="corrected"
               maxLength={5000}
@@ -135,7 +135,7 @@ export function Notebook({
             />
           </label>
           <label className="block max-w-xs text-sm">
-            Review due date
+            <span>Review due date</span>
             <input
               name="dueDate"
               type="date"
@@ -161,9 +161,9 @@ export function Notebook({
               </button>
             )}
           </div>
-          <p role="status" className="text-sm text-red">
+          <output className="block text-sm text-red">
             {error}
-          </p>
+          </output>
         </form>
       </section>
       <section>
@@ -175,7 +175,7 @@ export function Notebook({
               checked={showResolved}
               onChange={(e) => setShowResolved(e.target.checked)}
             />
-            Show resolved
+            <span>Show resolved</span>
           </label>
         </div>
         {notes.filter((m) => showResolved || !m.resolved).length === 0 && (
@@ -217,13 +217,13 @@ function MistakeCard({
   onEdit,
   onResolve,
   onDelete,
-}: {
+}: Readonly<{
   note: Mistake;
   due: boolean;
   onEdit: () => void;
   onResolve: () => void;
   onDelete: () => void;
-}) {
+}>) {
   return (
     <article className="rounded-xl border border-line bg-layer-1 p-5">
       <div className="flex flex-wrap justify-between gap-2">
@@ -237,7 +237,7 @@ function MistakeCard({
           )}
         </h3>
         <span className={`text-xs ${due ? "text-red" : "text-fg-3"}`}>
-          {m.resolved ? "Resolved" : due ? "Review due" : "Review"} ·{" "}
+          {mistakeReviewLabel(m.resolved, due)} ·{" "}
           {m.dueDate}
         </span>
       </div>
@@ -256,14 +256,20 @@ function MistakeCard({
         </div>
       </dl>
       <div className="mt-4 flex flex-wrap gap-4 text-sm text-brand">
-        <button onClick={onEdit}>Edit / reschedule</button>
-        <button onClick={onResolve}>
+        <button type="button" onClick={onEdit}>Edit / reschedule</button>
+        <button type="button" onClick={onResolve}>
           {m.resolved ? "Reopen" : "Mark resolved"}
         </button>
-        <button className="text-fg-3" onClick={onDelete}>
+        <button type="button" className="text-fg-3" onClick={onDelete}>
           Delete
         </button>
       </div>
     </article>
   );
+}
+
+function mistakeReviewLabel(resolved: boolean, due: boolean): string {
+  if (resolved) return "Resolved";
+  if (due) return "Review due";
+  return "Review";
 }

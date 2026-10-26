@@ -52,7 +52,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
   const supported = useSyncExternalStore(noop, supportedSpeech, serverFalse);
   const controls = useRef<HTMLDivElement>(null);
   const enterButton = useRef<HTMLButtonElement>(null);
-  const session = useRef(0);
+  const speechSequence = useRef(0);
   const preferencesRef = useRef(preferences);
   const highlighted = useRef<HTMLElement | null>(null);
   const position = useRef({ paragraph: 0, sentence: 0 });
@@ -62,7 +62,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
     highlighted.current = null;
   }, []);
   const stop = useCallback(() => {
-    session.current++;
+    speechSequence.current++;
     if (supportedSpeech()) window.speechSynthesis.cancel();
     utterance.current = null;
     clearHighlight();
@@ -128,7 +128,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
     return () => {
       // This is a speech generation counter, intentionally read at cleanup time.
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      session.current++;
+      speechSequence.current++;
       window.removeEventListener("storage", refreshStored);
       if (supportedSpeech()) {
         window.speechSynthesis.cancel();
@@ -158,14 +158,14 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
     if (!supported) return;
     stop();
     if (window.speechSynthesis.paused) window.speechSynthesis.resume();
-    const token = session.current;
+    const playbackSequence = speechSequence.current;
     const blocks = paragraphs();
     let paragraph = resume
       ? Math.min(position.current.paragraph, Math.max(0, blocks.length - 1))
       : 0;
     let sentence = resume ? position.current.sentence : 0;
     const next = () => {
-      if (token !== session.current) return;
+      if (playbackSequence !== speechSequence.current) return;
       const block = blocks[paragraph];
       if (!block) {
         utterance.current = null;
@@ -192,12 +192,12 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           .getVoices()
           .find((v) => v.voiceURI === preferencesRef.current.voice) ?? null;
       speech.onend = () => {
-        if (token !== session.current) return;
+        if (playbackSequence !== speechSequence.current) return;
         sentence++;
         next();
       };
       speech.onerror = () => {
-        if (token === session.current) {
+        if (playbackSequence === speechSequence.current) {
           utterance.current = null;
           clearHighlight();
           setStatus("idle");
@@ -327,6 +327,24 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
       behavior: "smooth",
     });
   };
+  const togglePlayback = () => {
+    if (status === "idle") {
+      start();
+    } else if (status === "speaking") {
+      window.speechSynthesis.pause();
+      setStatus("paused");
+    } else {
+      window.speechSynthesis.resume();
+      setStatus("speaking");
+    }
+  };
+  const playbackLabels = { idle: "Read aloud", speaking: "Pause", paused: "Resume audio" };
+  const playbackMessages = {
+    idle: "Reading position is saved as you scroll or audio advances.",
+    speaking: "Reading aloud. The current paragraph is highlighted.",
+    paused: "Audio paused.",
+  };
+  const playbackMessage = supported ? playbackMessages[status] : "Read aloud is unavailable in this browser. Reading preferences still work.";
   return (
     <div
       ref={controls}
@@ -334,41 +352,31 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
       className="reader-tools mb-5 rounded-xl border border-line bg-layer-2 px-3 py-3"
     >
       <div className="flex flex-wrap items-center gap-2">
-        <button
+        <button type="button"
           className="reader-button"
           disabled={!supported}
-          onClick={() =>
-            status === "idle"
-              ? start()
-              : status === "speaking"
-                ? (window.speechSynthesis.pause(), setStatus("paused"))
-                : (window.speechSynthesis.resume(), setStatus("speaking"))
-          }
+          onClick={togglePlayback}
         >
-          {status === "idle"
-            ? "Read aloud"
-            : status === "speaking"
-              ? "Pause"
-              : "Resume audio"}
+          {playbackLabels[status]}
         </button>
         {status !== "idle" && (
-          <button className="reader-button" onClick={stop}>
+          <button type="button" className="reader-button" onClick={stop}>
             Stop
           </button>
         )}
         {resumeAvailable && (
           <>
-            <button className="reader-button" onClick={resumeReading}>
+            <button type="button" className="reader-button" onClick={resumeReading}>
               Resume position
             </button>
             {supported && (
-              <button className="reader-button" onClick={() => start(true)}>
+              <button type="button" className="reader-button" onClick={() => start(true)}>
                 Read from saved position
               </button>
             )}
           </>
         )}
-        <button
+        <button type="button"
           ref={enterButton}
           className="reader-button"
           aria-pressed={readerMode}
@@ -380,7 +388,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
       </div>
       <div className="reader-preferences">
         <label>
-          Text size
+          <span>Text size</span>
           <select
             value={preferences.fontSize}
             onChange={(e) => change({ fontSize: Number(e.target.value) })}
@@ -393,7 +401,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           </select>
         </label>
         <label>
-          Line spacing
+          <span>Line spacing</span>
           <select
             value={preferences.lineSpacing}
             onChange={(e) => change({ lineSpacing: Number(e.target.value) })}
@@ -404,7 +412,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           </select>
         </label>
         <label>
-          Reading width
+          <span>Reading width</span>
           <select
             value={preferences.width}
             onChange={(e) => change({ width: Number(e.target.value) })}
@@ -421,7 +429,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           </select>
         </label>
         <label>
-          Voice
+          <span>Voice</span>
           <select
             disabled={!supported}
             value={preferences.voice}
@@ -436,7 +444,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           </select>
         </label>
         <label>
-          Speed
+          <span>Speed</span>
           <select
             value={preferences.speed}
             onChange={(e) => change({ speed: Number(e.target.value) })}
@@ -456,16 +464,10 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
           </select>
         </label>
       </div>
-      <p className="mt-2 text-xs text-fg-3" role="status">
-        {!supported
-          ? "Read aloud is unavailable in this browser. Reading preferences still work."
-          : status === "paused"
-            ? "Audio paused."
-            : status === "speaking"
-              ? "Reading aloud. The current paragraph is highlighted."
-              : "Reading position is saved as you scroll or audio advances."}
+      <output className="mt-2 block text-xs text-fg-3">
+        {playbackMessage}
         {readerMode && " Press Escape or right-click to exit."}
-      </p>
+      </output>
     </div>
   );
 }

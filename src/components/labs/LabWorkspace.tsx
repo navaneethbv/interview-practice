@@ -247,7 +247,7 @@ function BeginnerGuide() {
     </section>
   );
 }
-export function LabWorkspace({ lab }: { lab: Lab }) {
+export function LabWorkspace({ lab }: Readonly<{ lab: Lab }>) {
   const state = useLabState();
   const [message, setMessage] = useState("");
   const attempt = state[lab.id] ?? { draft: "", checks: [], updated: 0 };
@@ -283,7 +283,7 @@ export function LabWorkspace({ lab }: { lab: Lab }) {
               <pre className="mt-3 whitespace-pre-wrap font-mono text-xs leading-6 text-fg-2">
                 {d.template}
               </pre>
-              <button
+              <button type="button"
                 className="mt-3 rounded-lg border border-line px-3 py-2 text-xs"
                 onClick={() =>
                   update({
@@ -329,10 +329,10 @@ export function LabWorkspace({ lab }: { lab: Lab }) {
             className="w-full rounded-xl border border-line bg-layer-0 p-4 font-mono text-sm leading-7 outline-none focus:border-brand"
           />
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-            <p role="status" className="text-xs text-fg-3">
+            <output className="text-xs text-fg-3">
               {message || "Drafts and review progress stay in this browser."}
-            </p>
-            <button
+            </output>
+            <button type="button"
               onClick={() => {
                 const blob = new Blob(
                   [

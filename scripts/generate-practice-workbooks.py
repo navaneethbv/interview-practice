@@ -42,6 +42,14 @@ def add_table(ws,name):
 def chart(ws,title,xcol,ycol,start,end,anchor):
     c=BarChart();c.title=title;c.y_axis.title='Value';c.x_axis.title='Category';c.add_data(Reference(ws,min_col=ycol,max_col=ycol,min_row=start-1,max_row=end),titles_from_data=True);c.set_categories(Reference(ws,min_col=xcol,min_row=start,max_row=end));c.width=20;c.height=10;ws.add_chart(c,anchor)
 
+def returns_prepared_rows(answer):
+    rows=[]
+    for n in range(2,50):rows.append([f'=Raw!A{n}',f'=LOWER(TRIM(Raw!B{n}))' if answer else None,f'=IFERROR(VLOOKUP(B{n},Owners!$A$2:$B$4,2,FALSE),"UNMAPPED")' if answer else None,f'=Raw!D{n}',f'=Raw!E{n}/60*Raw!F{n}' if answer else None,f'=IF(D{n}>4,1,0)' if answer else None])
+    return rows
+
+def returns_dashboard_rows(answer):
+    return [['Total cases','=COUNTA(Prepared!A2:A49)' if answer else None],['Total handling cost','=SUM(Prepared!E2:E49)' if answer else None],['Total SLA breaches','=SUM(Prepared!F2:F49)' if answer else None],['Breach rate','=B4/B2' if answer else None],['',''],['Channel','Cases','Handling cost','SLA breaches'],*[[c,f'=COUNTIF(Prepared!B$2:B$49,A{r})' if answer else None,f'=SUMIF(Prepared!B$2:B$49,A{r},Prepared!E$2:E$49)' if answer else None,f'=SUMIF(Prepared!B$2:B$49,A{r},Prepared!F$2:F$49)' if answer else None] for r,c in enumerate(['email','web','phone'],8)],['Recommendation','Enter a reasoned action; do not infer root cause from channel alone.'],['Check','Expected: 48 cases, 24 breaches; total cost £170.40.'],['Pivot instructions','Select Prepared table → Insert PivotTable → channel rows; count case_id, sum handling_cost, average refund_days. Answer summary above is formula-driven, not a native PivotTable.']]
+
 def returns(answer):
     tasks=['In Prepared clean Channel using LOWER(TRIM()). Keep source values in Raw.','Use VLOOKUP with exact match to map each cleaned channel to an owner; display UNMAPPED for missing keys.','Calculate handling cost = minutes / 60 × hourly cost. Flag refund_days > 4, including the exactly-4 boundary.','Create a pivot from Prepared: channel as rows, count case_id, sum handling_cost and average refund_days. Refresh when source changes.','Build a chart of cases by channel. Recommend an intervention using SLA rate, volume and cost together.']
     wb=base('Returns operations',tasks,answer)
@@ -49,11 +57,10 @@ def returns(answer):
     for i in range(48):raw.append([f'RET-{1001+i}',[' Email ','WEB',' phone '][i%3],['Damaged','Changed mind','Wrong item','Late delivery'][i%4],(i%8)+1,5+(i%5)*2,24])
     sheet(wb,'Raw',['case_id','channel','reason','refund_days','handling_minutes','hourly_cost'],raw)
     sheet(wb,'Owners',['channel','owner'],[['email','Customer operations'],['web','Digital operations'],['phone','Contact centre']])
-    rows=[]
-    for n in range(2,50):rows.append([f'=Raw!A{n}',f'=LOWER(TRIM(Raw!B{n}))' if answer else None,f'=IFERROR(VLOOKUP(B{n},Owners!$A$2:$B$4,2,FALSE),"UNMAPPED")' if answer else None,f'=Raw!D{n}',f'=Raw!E{n}/60*Raw!F{n}' if answer else None,f'=IF(D{n}>4,1,0)' if answer else None])
+    rows=returns_prepared_rows(answer)
     p=sheet(wb,'Prepared',['case_id','clean_channel','owner','refund_days','handling_cost','sla_breach'],rows);add_table(p,'ReturnsPrepared')
     for n in range(2,50):p[f'E{n}'].number_format='£#,##0.00'
-    dash=sheet(wb,'Dashboard',['Metric / channel','Value / cases','Handling cost','SLA breaches'],[['Total cases','=COUNTA(Prepared!A2:A49)' if answer else None],['Total handling cost','=SUM(Prepared!E2:E49)' if answer else None],['Total SLA breaches','=SUM(Prepared!F2:F49)' if answer else None],['Breach rate','=B4/B2' if answer else None],['',''],['Channel','Cases','Handling cost','SLA breaches'],*[[c,f'=COUNTIF(Prepared!B$2:B$49,A{r})' if answer else None,f'=SUMIF(Prepared!B$2:B$49,A{r},Prepared!E$2:E$49)' if answer else None,f'=SUMIF(Prepared!B$2:B$49,A{r},Prepared!F$2:F$49)' if answer else None] for r,c in enumerate(['email','web','phone'],8)],['Recommendation','Enter a reasoned action; do not infer root cause from channel alone.'],['Check','Expected: 48 cases, 24 breaches; total cost £170.40.'],['Pivot instructions','Select Prepared table → Insert PivotTable → channel rows; count case_id, sum handling_cost, average refund_days. Answer summary above is formula-driven, not a native PivotTable.']])
+    dash=sheet(wb,'Dashboard',['Metric / channel','Value / cases','Handling cost','SLA breaches'],returns_dashboard_rows(answer))
     dash['B3'].number_format='£#,##0.00';dash['B5'].number_format='0.0%';dash.column_dimensions['B'].width=50
     if answer:chart(dash,'Return cases by channel',1,2,8,10,'F2')
     wb._sheets.remove(dash);wb._sheets.insert(1,dash)
@@ -99,10 +106,15 @@ for name,fn in [('returns-analysis',returns),('invoice-reconciliation',reconcili
     for answer in [False,True]:
         wb=fn(answer);path=OUT/f'{name}-{"answers" if answer else "practice"}.xlsx';wb.save(path)
         check=load_workbook(path)
-        assert 'Start' in check.sheetnames and len(check.sheetnames)>=3
-        assert not any(c.data_type=='e' for ws in check for row in ws for c in row)
+        if 'Start' not in check.sheetnames or len(check.sheetnames)<3:
+            raise ValueError(f'{path.name}: expected Start and at least three worksheets')
+        if any(c.data_type=='e' for ws in check for row in ws for c in row):
+            raise ValueError(f'{path.name}: workbook contains spreadsheet errors')
         print(path.name,len(check.sheetnames),'sheets')
 # Independent source controls.
-assert sum(5+(i%5)*2 for i in range(48))*24/60 == 170.4
-assert sum([1000,800,1200,1500,600,2000,1100,2000])==10200
-assert sum([1000,300,500,1200,1000,600,1500,1000,2100])==9200
+if sum(5+(i%5)*2 for i in range(48))*24/60 != 170.4:
+    raise ValueError('Returns source control failed: expected handling cost of £170.40')
+if sum([1000,800,1200,1500,600,2000,1100,2000])!=10200:
+    raise ValueError('Invoice source control failed: expected total of £10,200')
+if sum([1000,300,500,1200,1000,600,1500,1000,2100])!=9200:
+    raise ValueError('Payment source control failed: expected allocated total of £9,200')

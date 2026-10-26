@@ -40,10 +40,10 @@ const field =
 function Debrief({
   session,
   retake,
-}: {
+}: Readonly<{
   session: CompletedInterview;
   retake: () => void;
-}) {
+}>) {
   const scenario = interviewScenario(session.scenarioId)!;
   const track = INTERVIEW_TRACKS[scenario.track];
   const score = interviewScore(session);
@@ -63,7 +63,7 @@ function Debrief({
             minute round
           </p>
         </div>
-        <button className={secondary} onClick={retake}>
+        <button type="button" className={secondary} onClick={retake}>
           <RotateCcw size={16} aria-hidden />
           Retake scenario
         </button>
@@ -271,6 +271,7 @@ export function InterviewPractice() {
               >
                 {stages.map((s, i) => (
                   <button
+                    type="button"
                     key={s.id}
                     className={`rounded-lg border px-3 py-2 text-left text-sm ${i === stageIndex ? "border-brand bg-brand-soft" : "border-line hover:bg-layer-2"}`}
                     onClick={() => setStageIndex(i)}
@@ -328,6 +329,7 @@ export function InterviewPractice() {
               />
               <div className="mt-3 flex justify-between gap-3">
                 <button
+                  type="button"
                   className={secondary}
                   disabled={stageIndex === 0}
                   onClick={() => setStageIndex((i) => i - 1)}
@@ -335,6 +337,7 @@ export function InterviewPractice() {
                   Previous stage
                 </button>
                 <button
+                  type="button"
                   className={secondary}
                   disabled={stageIndex === stages.length - 1}
                   onClick={() => setStageIndex((i) => i + 1)}
@@ -360,6 +363,7 @@ export function InterviewPractice() {
                   ))}
                 </ol>
                 <button
+                  type="button"
                   className={`${secondary} mt-4 w-full`}
                   disabled={active.revealed >= scenario.followUps.length}
                   onClick={() =>
@@ -407,6 +411,7 @@ export function InterviewPractice() {
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <button
+                        type="button"
                         className={button}
                         onClick={() => {
                           setSelectedHistory(null);
@@ -419,6 +424,7 @@ export function InterviewPractice() {
                         Finish round
                       </button>
                       <button
+                        type="button"
                         className={secondary}
                         onClick={() => setConfirmFinish(false)}
                       >
@@ -428,6 +434,7 @@ export function InterviewPractice() {
                   </>
                 ) : (
                   <button
+                    type="button"
                     className={`${button} w-full`}
                     onClick={() => setConfirmFinish(true)}
                   >
@@ -457,6 +464,7 @@ export function InterviewPractice() {
                 ][]
               ).map(([id, info]) => (
                 <button
+                  type="button"
                   key={id}
                   aria-pressed={track === id}
                   className={`rounded-xl border p-4 text-left ${track === id ? "border-brand bg-brand-soft" : "border-line hover:bg-layer-2"}`}
@@ -479,7 +487,7 @@ export function InterviewPractice() {
             </div>
             <div className="mt-5 grid items-end gap-4 sm:grid-cols-[minmax(0,1fr)_10rem_auto]">
               <label className="text-sm font-medium" htmlFor="scenario">
-                Scenario
+                <span>Scenario</span>
                 <select
                   id="scenario"
                   className={field}
@@ -496,7 +504,7 @@ export function InterviewPractice() {
                 </select>
               </label>
               <label className="text-sm font-medium" htmlFor="duration">
-                Duration
+                <span>Duration</span>
                 <select
                   id="duration"
                   className={field}
@@ -510,7 +518,7 @@ export function InterviewPractice() {
                   ))}
                 </select>
               </label>
-              <button className={button} onClick={() => begin()}>
+              <button type="button" className={button} onClick={() => begin()}>
                 Start timed round
                 <ArrowRight size={16} aria-hidden />
               </button>
@@ -574,6 +582,7 @@ export function InterviewPractice() {
                     </p>
                   </div>
                   <button
+                    type="button"
                     disabled={!!active}
                     className={secondary}
                     onClick={() => {

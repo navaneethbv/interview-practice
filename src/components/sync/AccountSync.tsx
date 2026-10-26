@@ -46,6 +46,23 @@ const button =
 const input =
   "w-full rounded-lg border border-line bg-layer-0 px-3 py-2 text-fg-1";
 type Review = { local: PracticeBackup | null; cloud: CloudSnapshot | null };
+const CONFIRMATION_COPY = {
+  upload: {
+    title: "Replace the cloud snapshot?",
+    description:
+      "The reviewed local copy will replace this account’s cloud copy. Other devices keep their local data. Download the existing cloud copy first if you want to keep it.",
+  },
+  download: {
+    title: "Apply cloud data to this browser?",
+    description:
+      "Matching local records will be replaced. Local-only records stay. Download a recovery copy of your current local data first.",
+  },
+  delete: {
+    title: "Permanently delete this cloud snapshot?",
+    description:
+      "This deletes the saved cloud snapshot for this account. It keeps your local data and sign-in account. Other devices can upload again.",
+  },
+} as const;
 
 export function AccountSync() {
   const [setup] = useState(() => {
@@ -69,7 +86,7 @@ export function AccountSync() {
   const config = setup.config;
   useEffect(() => {
     if (!config) return;
-    Promise.resolve().then(() => setSession(readSyncSession(config)));
+    void Promise.resolve().then(() => setSession(readSyncSession(config)));
   }, [config]);
   useEffect(() => {
     if (!session) return;
@@ -175,7 +192,7 @@ export function AccountSync() {
           copies, choose a direction, then confirm. Uploads include your drafts,
           notes and progress. No data is uploaded on sign-in.
         </p>
-        {!config ? (
+        {!config && (
           <div className="mt-5 rounded-xl border border-line bg-layer-2 p-4">
             <p className="font-medium">Cloud sync is not configured</p>
             <p className="mt-1 text-sm text-fg-2">
@@ -183,7 +200,8 @@ export function AccountSync() {
                 "This deployment has no Supabase connection. All practice and JSON backups continue to work in this browser. The deployment owner can enable sync using docs/ACCOUNT_SYNC.md."}
             </p>
           </div>
-        ) : !session ? (
+        )}
+        {config && !session && (
           <div className="mt-5 grid max-w-xl gap-5">
             <form
               className="space-y-3"
@@ -217,7 +235,7 @@ export function AccountSync() {
                 Requesting a code creates an account if you are new. Your email
                 is sent to this deployment&apos;s Supabase service.
               </p>
-              <button className={button} disabled={busy}>
+              <button type="submit" className={button} disabled={busy}>
                 Send sign-in code
               </button>
             </form>
@@ -254,19 +272,21 @@ export function AccountSync() {
                   onChange={(event) => setCode(event.target.value)}
                   disabled={busy}
                 />
-                <button className={button} disabled={busy}>
+                <button type="submit" className={button} disabled={busy}>
                   Verify code
                 </button>
               </form>
             )}
           </div>
-        ) : (
+        )}
+        {config && session && (
           <div className="mt-5 space-y-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="break-all text-sm">
                 Signed in as <strong>{session.email}</strong>
               </p>
               <button
+                type="button"
                 className={button}
                 disabled={busy}
                 onClick={() =>
@@ -290,6 +310,7 @@ export function AccountSync() {
               clears its stored session. Use sign-out on shared devices.
             </p>
             <button
+              type="button"
               className={button}
               disabled={busy}
               onClick={() =>
@@ -331,6 +352,7 @@ export function AccountSync() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <button
+                    type="button"
                     className={button}
                     disabled={busy || !review.local}
                     onClick={() => {
@@ -341,6 +363,7 @@ export function AccountSync() {
                     Upload local copy
                   </button>
                   <button
+                    type="button"
                     className={button}
                     disabled={busy || !review.cloud}
                     onClick={() => {
@@ -351,6 +374,7 @@ export function AccountSync() {
                     Apply cloud copy
                   </button>
                   <button
+                    type="button"
                     className={button}
                     disabled={busy || !review.cloud}
                     onClick={() => setConfirm("delete")}
@@ -366,21 +390,14 @@ export function AccountSync() {
                 className="space-y-3 rounded-xl border border-amber-500/40 bg-amber-500/5 p-4"
               >
                 <h3 id="sync-confirm-heading" className="font-semibold">
-                  {confirm === "upload"
-                    ? "Replace the cloud snapshot?"
-                    : confirm === "download"
-                      ? "Apply cloud data to this browser?"
-                      : "Permanently delete this cloud snapshot?"}
+                  {CONFIRMATION_COPY[confirm].title}
                 </h3>
                 <p className="text-sm text-fg-2">
-                  {confirm === "upload"
-                    ? "The reviewed local copy will replace this account’s cloud copy. Other devices keep their local data. Download the existing cloud copy first if you want to keep it."
-                    : confirm === "download"
-                      ? "Matching local records will be replaced. Local-only records stay. Download a recovery copy of your current local data first."
-                      : "This deletes the saved cloud snapshot for this account. It keeps your local data and sign-in account. Other devices can upload again."}
+                  {CONFIRMATION_COPY[confirm].description}
                 </p>
                 {confirm === "download" && review.local && (
                   <button
+                    type="button"
                     className={button}
                     disabled={busy}
                     onClick={() => {
@@ -393,6 +410,7 @@ export function AccountSync() {
                 )}
                 {confirm !== "download" && review.cloud && (
                   <button
+                    type="button"
                     className={button}
                     disabled={busy}
                     onClick={() =>
@@ -409,6 +427,7 @@ export function AccountSync() {
                 )}
                 <div className="flex flex-wrap gap-2">
                   <button
+                    type="button"
                     className={button}
                     disabled={
                       busy ||
@@ -419,6 +438,7 @@ export function AccountSync() {
                     Confirm {confirm === "download" ? "apply" : confirm}
                   </button>
                   <button
+                    type="button"
                     className={button}
                     disabled={busy}
                     onClick={() => setConfirm(null)}

@@ -14,7 +14,7 @@ export function generateStaticParams() {
   return [...lcAuthored()].map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: Readonly<{ params: Promise<{ slug: string }> }>): Promise<Metadata> {
   const problem = getLcProblem((await params).slug);
   return { title: problem ? `${problem.meta.number}. ${problem.meta.title}` : "Problem" };
 }

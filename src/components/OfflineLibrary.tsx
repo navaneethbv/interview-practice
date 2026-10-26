@@ -82,7 +82,7 @@ export function OfflineLibrary() {
       <div className="mt-8 rounded-xl border border-line p-5">
         <h2 className="text-lg font-semibold">Install on your device</h2>
         {install && (
-          <button
+          <button type="button"
             className="mt-3 rounded-lg border border-line px-4 py-2"
             onClick={async () => {
               await install.prompt();
@@ -105,7 +105,7 @@ export function OfflineLibrary() {
           practice progress is separate from lesson downloads. Up to 20 lessons
           can be saved. Remove older downloads to make room.
         </p>
-        <button
+        <button type="button"
           className="mt-3 rounded-lg border border-line px-3 py-2 text-sm"
           disabled={busy}
           onClick={() => {

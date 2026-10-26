@@ -91,6 +91,8 @@ function workerHarness() {
     Request,
     Response,
     Headers,
+    TextDecoder,
+    console,
     Map,
     Set,
     Promise,
@@ -235,9 +237,9 @@ test("offline removal preserves shared dependencies and the library has an expli
 
 test("incomplete downloads are never published as saved lessons", async () => {
   const { message, context, cacheStore } = workerHarness();
-  const originalFetch = context.fetch as (input: string) => Promise<Response>;
-  context.fetch = async (input: string) =>
-    input.includes("image.webp")
+  const originalFetch = context.fetch as (input: string | Request) => Promise<Response>;
+  context.fetch = async (input: string | Request) =>
+    (typeof input === "string" ? input : input.url).includes("image.webp")
       ? new Response("failure", { status: 503 })
       : originalFetch(input);
   assert.match(
@@ -249,4 +251,92 @@ test("incomplete downloads are never published as saved lessons", async () => {
     0,
   );
   assert.equal(cacheStore.get("ip-offline-documents-v1")?.size ?? 0, 0);
+});
+
+
+test("offline titles decode original entities once without double-unescaping nested entities", async () => {
+  const { message, context } = workerHarness();
+  context.fetch = async () => new Response('<html><title>&amp;quot; &amp;#x27; &quot; &#x27; &amp;</title></html>', { headers: { "Content-Type": "text/html" } });
+  assert.equal((await message({ type: "DOWNLOAD", path: "/learn/entities" })).result, true);
+  const list = (await message({ type: "LIST" })).result as { title: string }[];
+  assert.equal(list[0].title, `&quot; &#x27; " ' &`);
+});
+
+test("offline downloads reject noncanonical paths and never fetch unsafe supplied resources", async () => {
+  const { message, context } = workerHarness();
+  const originalFetch = context.fetch as (input: string | Request) => Promise<Response>;
+  const fetched: string[] = [];
+  context.fetch = async (input: string | Request) => {
+    const url = typeof input === "string" ? new URL(input, "https://example.test").href : input.url;
+    fetched.push(url);
+    return originalFetch(input);
+  };
+  for (const path of ["//other.test/learn/arrays", "/learn/../api/private", "/learn/%61rrays", "/learn/arrays?x=1", "/learn/arrays#fragment", "/learn/arrays\\private", 123, null]) {
+    assert.match((await message({ type: "DOWNLOAD", path })).error!, /Only public lesson/);
+  }
+  assert.equal(fetched.length, 0);
+  assert.equal((await message({ type: "DOWNLOAD", path: "/learn/arrays", assets: [
+    "https://other.test/_next/static/secret.js", "//other.test/_next/static/secret.js",
+    "/_next/static/../../../api/private.js", "/_next/static/%2e%2e/secret.js",
+    "/_next/static/file.js?private=1", "/_next/static/file.js#fragment",
+    "/_next/static/\\other.test/private.js", "/api/private.js", "/_next/static/safe.js",
+  ] })).result, true);
+  assert.ok(fetched.includes("https://example.test/_next/static/safe.js"));
+  assert.ok(fetched.every(url => url.startsWith("https://example.test/")));
+  assert.ok(fetched.every(url => !url.includes("private") && !url.includes("secret") && !url.includes("%") && !url.includes("?") && !url.includes("#")));
+});
+
+test("offline HTML limit counts encoded bytes rather than JavaScript character length", async () => {
+  const { message, context, cacheStore } = workerHarness();
+  const html = "é".repeat(13 * 1024 * 1024);
+  assert.ok(html.length < 25 * 1024 * 1024);
+  context.fetch = async () => new Response(html, { headers: { "Content-Type": "text/html" } });
+  assert.match((await message({ type: "DOWNLOAD", path: "/learn/large" })).error!, /too large/);
+  assert.equal(cacheStore.get("ip-offline-documents-v1")?.size ?? 0, 0);
+});
+
+
+test("offline resource and title scanners handle long malformed markup in linear time", () => {
+  const { context } = workerHarness();
+  for (const text of ["src=\"" + "src=href=url(".repeat(100000), "url(".repeat(200000), "<title>".repeat(100000)]) {
+    context.longMarkup = text;
+    const started = performance.now();
+    const resources = vm.runInContext('assetURLs(longMarkup, new URL("https://example.test/learn/arrays"))', context);
+    assert.equal(resources.length, 0);
+    assert.equal(vm.runInContext('lessonTitle(longMarkup, "fallback")', context), "fallback");
+    assert.ok(performance.now() - started < 2000);
+  }
+});
+
+
+test("offline index read failures preserve existing downloads instead of overwriting the library", async () => {
+  for (const failure of ["open", "match", "json"]) {
+    const { message, context, cacheStore } = workerHarness();
+    await message({ type: "DOWNLOAD", path: "/learn/existing" });
+    const index = cacheStore.get("ip-offline-index-v1")!;
+    const key = "https://example.test/__offline_index__";
+    if (failure === "json") index.set(key, new Response("{corrupted-json"));
+    const original = await index.get(key)!.clone().text();
+    const originalCaches = context.caches as { open(name: string): Promise<Record<string, unknown>> };
+    context.caches = { open: async (name: string) => {
+      if (failure === "open") throw new Error("disk unavailable");
+      const cache = await originalCaches.open(name);
+      if (failure === "match") return { ...cache, match: async () => { throw new Error("read unavailable"); } };
+      return cache;
+    } };
+    const result = await message({ type: "DOWNLOAD", path: "/learn/new" });
+    assert.match(result.error!, /Could not read the offline library/);
+    assert.equal(await index.get(key)!.clone().text(), original);
+    assert.equal(cacheStore.get("ip-offline-documents-v1")!.size, 1);
+  }
+});
+
+test("offline cleanup retains resources when shell metadata cannot be read", async () => {
+  const { message, context, cacheStore } = workerHarness();
+  await message({ type: "DOWNLOAD", path: "/learn/existing" });
+  const index = cacheStore.get("ip-offline-index-v1")!;
+  index.set("https://example.test/__offline_shell__", new Response("{invalid-json"));
+  const before = cacheStore.get("ip-offline-assets-v1")!.size;
+  await assert.rejects(vm.runInContext("cleanAssets()", context), /Could not clean offline assets/);
+  assert.equal(cacheStore.get("ip-offline-assets-v1")!.size, before);
 });

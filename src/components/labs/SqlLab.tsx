@@ -10,31 +10,42 @@ import {
 } from "@/lib/lab-sql";
 import { saveLabAttempt, useLabState } from "@/lib/lab-storage";
 const panel = "rounded-2xl border border-line bg-layer-1 p-5";
-function ResultTable({ result }: { result: SqlResult }) {
+function keyedValues<T>(values: T[], identify: (value: T) => string) {
+  const occurrences = new Map<string, number>();
+  return values.map((value) => {
+    const identity = identify(value);
+    const occurrence = occurrences.get(identity) ?? 0;
+    occurrences.set(identity, occurrence + 1);
+    return { key: JSON.stringify([identity, occurrence]), value };
+  });
+}
+function ResultTable({ result }: Readonly<{ result: SqlResult }>) {
+  const columns = keyedValues(result.columns, (column) => column);
+  const rows = keyedValues(result.rows, (row) => JSON.stringify(row));
   return (
     <div className="overflow-x-auto rounded-lg border border-line">
       <table className="w-full text-left text-xs">
         <thead className="bg-layer-2">
           <tr>
-            {result.columns.map((c, i) => (
-              <th className="whitespace-nowrap px-3 py-2 font-medium" key={i}>
-                {c}
+            {columns.map((column) => (
+              <th className="whitespace-nowrap px-3 py-2 font-medium" key={column.key}>
+                {column.value}
               </th>
             ))}
           </tr>
         </thead>
         <tbody className="divide-y divide-line">
-          {result.rows.map((r, i) => (
-            <tr key={i}>
-              {r.map((v, j) => (
+          {rows.map((row) => (
+            <tr key={row.key}>
+              {columns.map((column, position) => (
                 <td
                   className="whitespace-nowrap px-3 py-2 font-mono text-fg-2"
-                  key={j}
+                  key={column.key}
                 >
-                  {v === null ? (
+                  {row.value[position] === null ? (
                     <span className="italic text-fg-3">NULL</span>
                   ) : (
-                    String(v)
+                    String(row.value[position])
                   )}
                 </td>
               ))}
@@ -101,51 +112,50 @@ export function SqlLab() {
         "The browser could not start the SQL runtime. Check your connection, then try again.",
       );
     let gotResult = false;
+    function showQueryResult(line: string) {
+      try {
+        const actual = JSON.parse(line.slice(11)) as SqlResult;
+        const correct = sameSqlResult(actual, item.expected);
+        setResult(actual);
+        setPassed(correct);
+        setStatus(
+          correct
+            ? "Matches expected columns and rows. Explain what this means for the business."
+            : "Query ran. Compare column aliases and values with the expected result; row order is ignored.",
+        );
+        if (correct) {
+          const saved = saveLabAttempt(key, {
+            draft: query,
+            checks: ["passed"],
+            updated: Date.now(),
+          });
+          setSaveError(!saved);
+        }
+      } catch {
+        setStatus("The query returned a result that could not be read.");
+      }
+    }
+    function handleWorkerLine(line: string) {
+      if (line.startsWith("LAB_ERROR:")) {
+        setStatus(line.slice(10));
+        gotResult = true;
+      } else if (line.startsWith("LAB_RESULT:")) {
+        showQueryResult(line);
+        gotResult = true;
+      }
+    }
+    function handleWorkerReady() {
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(
+        () => fail("Query stopped after 8 seconds. Simplify the join or add LIMIT."),
+        8000,
+      );
+      setStatus("Running your read-only SQLite query…");
+    }
     w.onmessage = (event: MessageEvent) => {
       const msg = event.data;
-      if (msg.type === "ready") {
-        if (timer.current) clearTimeout(timer.current);
-        timer.current = setTimeout(
-          () =>
-            fail(
-              "Query stopped after 8 seconds. Simplify the join or add LIMIT.",
-            ),
-          8000,
-        );
-        setStatus("Running your read-only SQLite query…");
-      }
-      if (msg.type === "line") {
-        const line = String(msg.line);
-        if (line.startsWith("LAB_ERROR:")) {
-          setStatus(line.slice(10));
-          gotResult = true;
-        }
-        if (line.startsWith("LAB_RESULT:")) {
-          try {
-            const actual = JSON.parse(line.slice(11)) as SqlResult;
-            const correct = sameSqlResult(actual, item.expected);
-            setResult(actual);
-            setPassed(correct);
-            setStatus(
-              correct
-                ? "Matches expected columns and rows. Explain what this means for the business."
-                : "Query ran. Compare column aliases and values with the expected result; row order is ignored.",
-            );
-            gotResult = true;
-            if (correct) {
-              const saved = saveLabAttempt(key, {
-                draft: query,
-                checks: ["passed"],
-                updated: Date.now(),
-              });
-              setSaveError(!saved);
-            }
-          } catch {
-            setStatus("The query returned a result that could not be read.");
-            gotResult = true;
-          }
-        }
-      }
+      if (msg.type === "ready") handleWorkerReady();
+      if (msg.type === "line") handleWorkerLine(String(msg.line));
       if (msg.type === "done") {
         if (msg.error || msg.compileError)
           setStatus(String(msg.error ?? msg.compileError));
@@ -178,7 +188,7 @@ export function SqlLab() {
           </p>
           <div className="mt-4 space-y-1">
             {sqlExercises.map((e, i) => (
-              <button
+              <button type="button"
                 key={e.title}
                 disabled={busy}
                 onClick={() => {
@@ -239,7 +249,7 @@ export function SqlLab() {
               className="w-full rounded-xl border border-line bg-layer-0 p-4 font-mono text-sm leading-7 outline-none focus:border-brand"
             />
             <div className="mt-3 flex flex-wrap gap-2">
-              <button
+              <button type="button"
                 disabled={busy}
                 onClick={run}
                 className="inline-flex items-center gap-2 rounded-lg bg-fg-1 px-4 py-2 text-sm font-medium text-layer-1 disabled:opacity-50"
@@ -248,7 +258,7 @@ export function SqlLab() {
                 {busy ? "Running…" : "Run query"}
               </button>
               {busy && (
-                <button
+                <button type="button"
                   onClick={() => {
                     cleanup();
                     setBusy(false);
@@ -260,7 +270,7 @@ export function SqlLab() {
                   Cancel
                 </button>
               )}
-              <button
+              <button type="button"
                 disabled={busy}
                 onClick={() => {
                   setRevealed(!revealed);
@@ -287,12 +297,11 @@ export function SqlLab() {
               </pre>
             </div>
           )}
-          <p
-            role="status"
-            className={`text-sm leading-6 ${passed ? "text-brand" : "text-fg-2"}`}
+          <output
+            className={`block text-sm leading-6 ${passed ? "text-brand" : "text-fg-2"}`}
           >
             {status}
-          </p>
+          </output>
           {result && (
             <div>
               <h3 className="mb-2 text-sm font-semibold">

@@ -6,12 +6,12 @@ export function BookmarkButton({
   title,
   section,
   className = "",
-}: {
+}: Readonly<{
   href: string;
   title: string;
   section: string;
   className?: string;
-}) {
+}>) {
   const saved = bookmarks.use();
   const exists = saved.some((b) => b.href === href);
   return (

@@ -13,3 +13,5 @@ Ruling: Use one integration PR with focused commits because readiness, backups a
 Ruling: Live Supabase configuration requires a dedicated project; none matches the app in connected projects. Keep it honestly unconfigured and document staged two-account verification.
 Ruling: Preserve main-only Vercel deployments introduced upstream in PR35; local production verification supplies review evidence.
 Ruling: A damaged generated Turbopack cache was moved to temporary diagnostics and rebuilt; no cache setting or product behavior was changed.
+
+Task 9: PR36 opened and mergeable; initial quality workflow passed all jobs. Scan follow-up removes unsafe chained decoding, validates canonical public paths, preserves downloads on failed metadata reads, replaces extraction regexes with forward scans, simplifies helpers and fixes accessibility findings. Local regression evidence is recorded in LEARNING_PLATFORM_VALIDATION.md; remote analysis is rechecked after publication.

@@ -4,12 +4,12 @@ import { validHref } from "@/lib/learning-data";
 export const metadata = { title: "Bookmarks & mistake notebook" };
 export default async function NotebookPage({
   searchParams,
-}: {
+}: Readonly<{
   searchParams: Promise<{
     question?: string | string[];
     href?: string | string[];
   }>;
-}) {
+}>) {
   const params = await searchParams;
   const question =
     typeof params.question === "string" ? params.question.slice(0, 1000) : "";

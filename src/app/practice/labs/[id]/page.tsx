@@ -11,9 +11,9 @@ export function generateStaticParams() {
 }
 export async function generateMetadata({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
   return {
     title:
@@ -24,9 +24,9 @@ export async function generateMetadata({
 }
 export default async function Page({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
   const lab = labs.find((l) => l.id === id);
   if (id !== "sql" && !lab) notFound();

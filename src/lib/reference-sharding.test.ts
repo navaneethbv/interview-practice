@@ -1,19 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import path from "node:path";
 import {
   parseReferenceShard,
   selectReferenceShard,
 } from "../../scripts/judge/sharding";
 
 test("four reference shards are deterministic, disjoint and cover every repository fixture", () => {
-  const files = ["content/problems", "content/leetcode"].flatMap((dir) =>
-    fs
-      .readdirSync(dir)
-      .filter((f) => f.endsWith(".json"))
-      .map((f) => path.join(dir, f)),
-  );
+  const files = [
+    ...fs
+      .readdirSync("content/problems")
+      .filter((file) => file.endsWith(".json"))
+      .map((file) => `content/problems/${file}`),
+    ...fs
+      .readdirSync("content/leetcode")
+      .filter((file) => file.endsWith(".json"))
+      .map((file) => `content/leetcode/${file}`),
+  ];
   const shards = [1, 2, 3, 4].map((index) =>
     selectReferenceShard(files, { index, total: 4 }),
   );

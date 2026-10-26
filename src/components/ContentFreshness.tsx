@@ -6,7 +6,9 @@ import {
 } from "@/lib/freshness";
 
 /** Use catalog scope IDs: set:<id>, book:<id>, course:grokking, reports:<source>. */
-export function ContentFreshness({ contentId }: { contentId: string }) {
+export function ContentFreshness({
+  contentId,
+}: Readonly<{ contentId: string }>) {
   const entry = getContentReview(contentId);
   return (
     <aside

@@ -1,6 +1,7 @@
 import { practiceCatalog } from "./practice-catalog";
 import { listBaChapters } from "./ba-content";
 import { getCourse, getLesson, hrefFor } from "./content";
+import { markupWordCount } from "./reading-estimate";
 import { readingMinutes, type LearningTask } from "./learning-data";
 
 export function learningCatalog(): LearningTask[] {
@@ -28,11 +29,7 @@ export function learningCatalog(): LearningTask[] {
           const body = getLesson(item.id)?.body ?? [];
           const words = body
             .filter((block) => block.t === "html")
-            .map((block) => block.html.replace(/<[^>]*>/g, " "))
-            .join(" ")
-            .trim()
-            .split(/\s+/)
-            .filter(Boolean).length;
+            .reduce((total, block) => total + markupWordCount(block.html), 0);
           return {
             id: `coding:read:${item.id}`,
             evidenceId: item.id,

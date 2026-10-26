@@ -209,10 +209,10 @@ export function ColorThemePicker() {
         <Palette size={17} />
       </button>
       {open && (
-        <section
-          role="dialog"
+        <dialog
+          open
           aria-label="Color themes"
-          className="absolute top-full right-0 z-[70] mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
+          className="absolute top-full right-0 left-auto z-[70] m-0 mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
         >
           <p className="px-1 pb-2 text-sm font-semibold">Appearance</p>
           <div
@@ -273,7 +273,7 @@ export function ColorThemePicker() {
               </button>
             ))}
           </div>
-        </section>
+        </dialog>
       )}
     </div>
   );

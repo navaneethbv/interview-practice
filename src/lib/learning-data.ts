@@ -247,21 +247,7 @@ export function taskCompletionDates(
       ]),
   );
   for (const task of tasks) {
-    const timestamp =
-      task.kind === "solve"
-        ? progress.solved[task.evidenceId]
-        : task.kind === "review"
-          ? task.lastReviewedAt
-          : task.kind === "read"
-            ? task.track === "ba"
-              ? ba.read[task.evidenceId]
-              : progress.read[task.evidenceId]
-            : Math.max(
-                0,
-                ...(ba.quizzes[task.evidenceId] ?? [])
-                  .filter((attempt) => attempt.passed)
-                  .map((attempt) => attempt.at),
-              );
+    const timestamp = taskCompletionTimestamp(task, progress, ba);
     if (!timestamp) continue;
     const date = localDate(new Date(timestamp));
     // One accepted re-solve is one review session, not a second new-problem session.
@@ -270,6 +256,28 @@ export function taskCompletionDates(
     dates[task.id] = date;
   }
   return dates;
+}
+function taskCompletionTimestamp(
+  task: LearningTask,
+  progress: ProgressState,
+  ba: BaState,
+): number | undefined {
+  switch (task.kind) {
+    case "solve":
+      return progress.solved[task.evidenceId];
+    case "review":
+      return task.lastReviewedAt;
+    case "read":
+      if (task.track === "ba") return ba.read[task.evidenceId];
+      return progress.read[task.evidenceId];
+    case "quiz":
+      return Math.max(
+        0,
+        ...(ba.quizzes[task.evidenceId] ?? [])
+          .filter((attempt) => attempt.passed)
+          .map((attempt) => attempt.at),
+      );
+  }
 }
 /** Reading checks record exposure; they never become demonstrated problem-solving evidence. */
 export function exposureTasks(

@@ -22,6 +22,21 @@ export interface CloudSnapshot {
 }
 const SESSION_KEY = "interview-practice:cloud-session:v1";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+async function readBoundedChunks(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+  chunks: Uint8Array[],
+  size = 0,
+): Promise<number> {
+  const { done, value } = await reader.read();
+  if (done) return size;
+  const nextSize = size + value.byteLength;
+  if (nextSize > BACKUP_LIMIT + 1024 * 1024) {
+    await reader.cancel();
+    throw new Error("Cloud response is too large.");
+  }
+  chunks.push(value);
+  return readBoundedChunks(reader, chunks, nextSize);
+}
 export class SyncAuthError extends Error {}
 export class SyncConflictError extends Error {
   constructor() {
@@ -124,8 +139,8 @@ export function readSyncSession(config: SyncConfig): SyncSession | null {
 
 export class SyncClient {
   constructor(
-    private config: SyncConfig,
-    private fetcher: typeof fetch = fetch,
+    private readonly config: SyncConfig,
+    private readonly fetcher: typeof fetch = fetch,
   ) {}
   private async request(
     path: string,
@@ -179,17 +194,7 @@ export class SyncClient {
     if (!response.body) return null;
     const reader = response.body.getReader();
     const chunks: Uint8Array[] = [];
-    let size = 0;
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > BACKUP_LIMIT + 1024 * 1024) {
-        await reader.cancel();
-        throw new Error("Cloud response is too large.");
-      }
-      chunks.push(value);
-    }
+    const size = await readBoundedChunks(reader, chunks);
     const bytes = new Uint8Array(size);
     let offset = 0;
     for (const chunk of chunks) {

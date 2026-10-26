@@ -28,10 +28,10 @@ const panel = "rounded-xl border border-line bg-layer-1 p-5";
 export function Readiness({
   codingIds,
   codingEntries = {},
-}: {
+}: Readonly<{
   codingIds: string[];
   codingEntries?: Record<string, CatalogEntry>;
-}) {
+}>) {
   const progress = useProgress();
   const ba = useBa();
   const mock = useMock();
@@ -160,6 +160,7 @@ export function Readiness({
         </label>
         <div className="mt-3 flex flex-wrap items-center gap-4">
           <button
+            type="button"
             disabled={!selected}
             className="rounded-lg bg-fg-1 px-4 py-2 text-sm text-layer-1 disabled:opacity-50"
             onClick={() => {
@@ -276,7 +277,10 @@ export function Readiness({
     </>
   );
 }
-function EvidenceCount({ label, value }: { label: string; value: number }) {
+function EvidenceCount({
+  label,
+  value,
+}: Readonly<{ label: string; value: number }>) {
   return (
     <div>
       <dt className="text-fg-2">{label}</dt>

@@ -16,7 +16,7 @@ export function generateStaticParams() {
   return listSets().map((s) => ({ setId: s.id }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ setId: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: Readonly<{ params: Promise<{ setId: string }> }>): Promise<Metadata> {
   return { title: getSet((await params).setId)?.title ?? "Problems" };
 }
 
