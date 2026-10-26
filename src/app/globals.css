@@ -378,3 +378,40 @@ body {
 .dark .shiki span {
   color: var(--shiki-dark) !important;
 }
+
+
+/* ------------------------------------------------------------ responsive layout */
+
+/* Let shared page shells use more of a wide display while keeping their mobile gutters fluid. */
+.max-w-6xl {
+  max-width: min(88rem, 100%);
+}
+
+.prose-reader {
+  font-size: clamp(15.5px, calc(0.3vw + 14px), 17.5px);
+}
+
+.prose-lesson .katex-display,
+.prose-reader .katex-display,
+.prose-ba .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem;
+  text-align: left;
+}
+
+@media (max-width: 639.98px) {
+  .prose-lesson,
+  .prose-reader,
+  .prose-ba {
+    overflow-wrap: anywhere;
+  }
+
+  .prose-reader pre,
+  .prose-lesson pre,
+  .prose-ba pre {
+    max-width: 100%;
+    padding-inline: 0.75rem;
+  }
+}
