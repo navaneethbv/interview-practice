@@ -9,7 +9,7 @@ export default function SyncPage() {
     <>
       <NavBar />
       <PageHeader eyebrow="Settings" title="Account & sync">
-        Keep practice local, or move a reviewed snapshot between your devices.
+        Sign in to keep your progress in sync across devices.
       </PageHeader>
       <main className="mx-auto max-w-4xl px-4 py-8">
         <AccountSync />

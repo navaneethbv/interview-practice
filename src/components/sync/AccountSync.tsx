@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { forgetSyncState, syncNow, useAutoSyncStatus } from "@/lib/auto-sync";
 import {
   exportPractice,
   importPractice,
@@ -8,14 +9,18 @@ import {
   type PracticeBackup,
 } from "@/lib/practice-backup";
 import {
-  clearSyncSession,
   compareSnapshots,
+  oauthProviders,
   readSyncSession,
+  SESSION_EVENT,
+  SESSION_KEY,
   syncConfig,
   SyncAuthError,
   SyncClient,
   SyncConflictError,
   type CloudSnapshot,
+  type OAuthProvider,
+  type SyncConfig,
   type SyncSession,
 } from "@/lib/sync-client";
 
@@ -85,9 +90,281 @@ const CONFIRMATION_COPY = {
   delete: {
     title: "Permanently delete this cloud snapshot?",
     description:
-      "This deletes the saved cloud snapshot for this account. It keeps your local data and sign-in account. Other devices can upload again.",
+      "This deletes the saved cloud snapshot for this account and signs out this browser, so it is not uploaded again. It keeps your local data and sign-in account. Other devices that are still signed in upload their copy at their next sync.",
   },
 } as const;
+
+const primary =
+  "rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-neutral-950 transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed";
+const PROVIDER_LABELS: Record<OAuthProvider, string> = {
+  github: "Continue with GitHub",
+  google: "Continue with Google",
+};
+
+function subscribeSession(listener: () => void) {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === SESSION_KEY || event.key === null) listener();
+  };
+  window.addEventListener(SESSION_EVENT, listener);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    window.removeEventListener(SESSION_EVENT, listener);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+/** The stored session, re-read when this or another tab signs in or out. */
+function useSession(config: SyncConfig | null): SyncSession | null {
+  const raw = useSyncExternalStore(
+    subscribeSession,
+    () => {
+      if (!config) return "";
+      const session = readSyncSession(config);
+      return session ? JSON.stringify(session) : "";
+    },
+    () => "",
+  );
+  return raw ? (JSON.parse(raw) as SyncSession) : null;
+}
+
+function SignIn({ config }: { config: SyncConfig }) {
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [sentTo, setSentTo] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const providers = oauthProviders();
+  async function run(action: (client: SyncClient) => Promise<void>) {
+    if (busy) return;
+    setBusy(true);
+    setMessage("");
+    try {
+      await action(new SyncClient(config));
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Sign-in failed. Try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="mt-5 grid max-w-md gap-5">
+      {providers.length > 0 && (
+        <div className="grid gap-2">
+          {providers.map((provider) => (
+            <button
+              key={provider}
+              type="button"
+              className={button}
+              disabled={busy}
+              onClick={() =>
+                void run(async (client) => {
+                  window.location.assign(
+                    await client.oauthUrl(
+                      provider,
+                      `${window.location.origin}/auth/callback`,
+                      "/settings/sync",
+                    ),
+                  );
+                })
+              }
+            >
+              {PROVIDER_LABELS[provider]}
+            </button>
+          ))}
+          <p className="mt-2 text-center text-xs text-fg-3">or sign in by email</p>
+        </div>
+      )}
+      <form
+        className="space-y-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+          void run(async (client) => {
+            await client.sendCode(email.trim(), {
+              callbackUrl: `${window.location.origin}/auth/callback`,
+              returnTo: "/settings/sync",
+            });
+            setSentTo(email.trim());
+            setCode("");
+            setMessage(
+              "Email sent. Open its sign-in link in this browser; delivery may take a minute.",
+            );
+          });
+        }}
+      >
+        <label className="block text-sm font-medium" htmlFor="sync-email">
+          Email address
+        </label>
+        <input
+          id="sync-email"
+          type="email"
+          autoComplete="email"
+          required
+          maxLength={254}
+          className={input}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          disabled={busy}
+        />
+        <button type="submit" className={providers.length ? button : primary} disabled={busy}>
+          Email me a sign-in link
+        </button>
+      </form>
+      {sentTo && (
+        <form
+          className="space-y-3"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void run(async (client) => {
+              await client.verifyCode(sentTo, code.trim());
+              setCode("");
+            });
+          }}
+        >
+          <label className="block text-sm font-medium" htmlFor="sync-code">
+            Email to {sentTo} shows a code instead? Enter it here
+          </label>
+          <input
+            id="sync-code"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            required
+            minLength={6}
+            maxLength={10}
+            className={input}
+            value={code}
+            onChange={(event) => setCode(event.target.value)}
+            disabled={busy}
+          />
+          <button type="submit" className={primary} disabled={busy}>
+            Verify and sign in
+          </button>
+        </form>
+      )}
+      <p className="text-xs text-fg-3">
+        Signing in creates an account if you are new. Your email address is sent to this
+        site&apos;s Supabase project.
+      </p>
+      <p role="status" aria-live="polite" className="text-sm text-fg-2">
+        {busy ? "Working…" : message}
+      </p>
+    </div>
+  );
+}
+
+function timeAgo(at: number, now: number) {
+  const seconds = Math.max(0, Math.round((now - at) / 1000));
+  if (seconds < 45) return "just now";
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  return new Date(at).toLocaleString();
+}
+
+function SignedIn({ config, session }: { config: SyncConfig; session: SyncSession }) {
+  const status = useAutoSyncStatus();
+  const [busy, setBusy] = useState(false);
+  const [removeLocal, setRemoveLocal] = useState(false);
+  const [message, setMessage] = useState("");
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
+  async function signOut() {
+    setBusy(true);
+    try {
+      // Push the latest practice before leaving, unless it is being removed anyway.
+      if (!removeLocal) await syncNow().catch(() => undefined);
+      await new SyncClient(config).signOut(session).catch(() => undefined);
+      forgetSyncState(removeLocal);
+      setMessage(
+        removeLocal
+          ? "Signed out and removed this account's practice from this browser."
+          : "Signed out. Practice in this browser is kept.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  const lastSynced =
+    "lastSyncedAt" in status && status.lastSyncedAt
+      ? `Last synced ${timeAgo(status.lastSyncedAt, now)}.`
+      : "";
+  return (
+    <div className="mt-5 space-y-5">
+      <div>
+        <p className="break-all text-sm">
+          Signed in as <strong>{session.email}</strong>
+        </p>
+        <p className="mt-1 text-xs text-fg-3">
+          You stay signed in on this browser, even after closing it, for up to 30 days.
+          Sign out when you finish on a shared or public device.
+        </p>
+      </div>
+      <div className="rounded-xl border border-line bg-layer-2 p-4">
+        <p className="font-medium">
+          {status.state === "syncing" && "Syncing…"}
+          {status.state === "synced" && "Progress is synced"}
+          {status.state === "error" && "Sync paused"}
+          {status.state === "needs-choice" && "Choose what to do with this browser's practice"}
+          {(status.state === "off" || status.state === "signed-out") && "Starting sync…"}
+        </p>
+        <p className="mt-1 text-sm text-fg-2">
+          {status.state === "error" ? `${status.message} ` : ""}
+          {status.state === "needs-choice"
+            ? "This browser holds practice from a different account. Keep it by adding it to this account, or replace it with this account's saved progress."
+            : `Progress, drafts and notes save to your account automatically and appear on any device you sign in on. ${lastSynced}`}
+        </p>
+        {status.state === "needs-choice" ? (
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button type="button" className={button} onClick={() => void syncNow("merge")}>
+              Add it to this account
+            </button>
+            <button
+              type="button"
+              className={button}
+              onClick={() => {
+                try {
+                  const local = localBackup();
+                  if (local) preserve(local, "practice-before-account-switch");
+                } catch {
+                  /* Damaged data cannot be exported; the replace still proceeds on request. */
+                }
+                void syncNow("replace");
+              }}
+            >
+              Download it, then use this account&apos;s progress
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className={`${button} mt-3`}
+            disabled={status.state === "syncing"}
+            onClick={() => void syncNow()}
+          >
+            Sync now
+          </button>
+        )}
+      </div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <button type="button" className={button} disabled={busy} onClick={() => void signOut()}>
+          Sign out
+        </button>
+        <label className="flex items-center gap-2 text-sm text-fg-2">
+          <input
+            type="checkbox"
+            checked={removeLocal}
+            onChange={(event) => setRemoveLocal(event.target.checked)}
+            disabled={busy}
+          />
+          Also remove my practice from this browser (shared devices)
+        </label>
+      </div>
+      <p role="status" aria-live="polite" className="text-sm text-fg-2">
+        {message}
+      </p>
+    </div>
+  );
+}
 
 export function AccountSync() {
   const [setup] = useState(() => {
@@ -97,10 +374,46 @@ export function AccountSync() {
       return { config: null, error: (error as Error).message };
     }
   });
-  const [session, setSession] = useState<SyncSession | null>(null);
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
-  const [sentTo, setSentTo] = useState("");
+  const config = setup.config;
+  const session = useSession(config);
+  return (
+    <div className="space-y-6">
+      <section className="rounded-2xl border border-line bg-layer-1 p-5 sm:p-7">
+        <h2 className="text-xl font-semibold">{session ? "Your account" : "Sign in"}</h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-fg-2">
+          Practice works without an account and always stays in this browser. Sign in to
+          save your progress to your account and pick it up on any device.
+        </p>
+        {!config && (
+          <div className="mt-5 rounded-xl border border-line bg-layer-2 p-4">
+            <p className="font-medium">Accounts are not configured</p>
+            <p className="mt-1 text-sm text-fg-2">
+              {setup.error ||
+                "This deployment has no Supabase connection. All practice and JSON backups continue to work in this browser. The deployment owner can enable accounts using docs/ACCOUNT_SYNC.md."}
+            </p>
+          </div>
+        )}
+        {config && !session && <SignIn config={config} />}
+        {config && session && <SignedIn config={config} session={session} />}
+      </section>
+      {config && session && (
+        <details className="rounded-2xl border border-line bg-layer-1 p-5 sm:p-7">
+          <summary className="cursor-pointer font-semibold">
+            Advanced: compare and transfer snapshots manually
+          </summary>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-fg-2">
+            Automatic sync merges both copies. Use these tools to inspect the copies or to
+            replace one with the other after downloading a recovery file.
+          </p>
+          <ManualSync config={config} session={session} />
+        </details>
+      )}
+    </div>
+  );
+}
+
+/** The original reviewed snapshot transfer, kept for explicit recovery. */
+function ManualSync({ config, session }: { config: SyncConfig; session: SyncSession }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [review, setReview] = useState<Review | null>(null);
@@ -108,49 +421,30 @@ export function AccountSync() {
     "upload" | "download" | "delete" | null
   >(null);
   const [preserved, setPreserved] = useState(false);
-  const config = setup.config;
-  useEffect(() => {
-    if (!config) return;
-    void Promise.resolve().then(() => setSession(readSyncSession(config)));
-  }, [config]);
-  useEffect(() => {
-    if (!session) return;
-    const timer = window.setTimeout(
-      () => {
-        clearSyncSession();
-        setSession(null);
-        setReview(null);
-        setConfirm(null);
-        setMessage("Session expired. Sign in again; local practice is safe.");
-      },
-      Math.max(0, session.expiresAt - Date.now() - 5000),
-    );
-    return () => window.clearTimeout(timer);
-  }, [session]);
-  async function run(action: (client: SyncClient) => Promise<void>) {
-    if (!config || busy) return;
+  async function run(
+    action: (client: SyncClient, session: SyncSession) => Promise<void>,
+  ) {
+    if (busy) return;
     setBusy(true);
     setMessage("");
     try {
-      await action(new SyncClient(config));
+      const client = new SyncClient(config);
+      await action(client, await client.fresh(session));
     } catch (error) {
       setMessage(
         error instanceof Error
           ? error.message
           : "Cloud sync failed. Local data is safe.",
       );
-      if (error instanceof SyncAuthError) {
-        setSession(null);
-        setReview(null);
-      }
+      if (error instanceof SyncAuthError) setReview(null);
       if (error instanceof SyncConflictError) setReview(null);
       setConfirm(null);
     } finally {
       setBusy(false);
     }
   }
-  async function execute(client: SyncClient) {
-    if (!session || !review || !confirm) return;
+  async function execute(client: SyncClient, session: SyncSession) {
+    if (!review || !confirm) return;
     if (
       JSON.stringify(localBackup()?.entries ?? {}) !==
       JSON.stringify(review.local?.entries ?? {})
@@ -180,10 +474,10 @@ export function AccountSync() {
       if (!review.cloud)
         throw new Error("There is no cloud snapshot to delete.");
       await client.delete(session, review.cloud.revision);
-      setReview({ local: review.local, cloud: null });
-      setMessage(
-        "Cloud snapshot deleted. Local practice and your account are kept.",
-      );
+      // Signed in, automatic sync would upload this browser's copy straight back.
+      forgetSyncState(false);
+      await client.signOut(session).catch(() => undefined);
+      return;
     }
     setConfirm(null);
     setPreserved(false);
@@ -192,137 +486,13 @@ export function AccountSync() {
     ? compareSnapshots(review.local, review.cloud?.backup ?? null)
     : null;
   return (
-    <div className="space-y-6">
-      <section className="rounded-2xl border border-line bg-layer-1 p-5 sm:p-7">
-        <h2 className="text-xl font-semibold">Optional account &amp; sync</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-fg-2">
-          Practice works without an account. Cloud sync is manual: compare
-          copies, choose a direction, then confirm. Uploads include your drafts,
-          notes and progress. No data is uploaded on sign-in.
-        </p>
-        {!config && (
-          <div className="mt-5 rounded-xl border border-line bg-layer-2 p-4">
-            <p className="font-medium">Cloud sync is not configured</p>
-            <p className="mt-1 text-sm text-fg-2">
-              {setup.error ||
-                "This deployment has no Supabase connection. All practice and JSON backups continue to work in this browser. The deployment owner can enable sync using docs/ACCOUNT_SYNC.md."}
-            </p>
-          </div>
-        )}
-        {config && !session && (
-          <div className="mt-5 grid max-w-xl gap-5">
-            <form
-              className="space-y-3"
-              onSubmit={(event) => {
-                event.preventDefault();
-                void run(async (client) => {
-                  await client.sendCode(email.trim());
-                  setSentTo(email.trim());
-                  setCode("");
-                  setMessage(
-                    "Code requested. Check your inbox; delivery may take a minute.",
-                  );
-                });
-              }}
-            >
-              <label className="block text-sm font-medium" htmlFor="sync-email">
-                Email address
-              </label>
-              <input
-                id="sync-email"
-                type="email"
-                autoComplete="email"
-                required
-                maxLength={254}
-                className={input}
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                disabled={busy}
-              />
-              <p className="text-xs text-fg-3">
-                Requesting a code creates an account if you are new. Your email
-                is sent to this deployment&apos;s Supabase service.
-              </p>
-              <button type="submit" className={button} disabled={busy}>
-                Send sign-in code
-              </button>
-            </form>
-            {sentTo && (
-              <form
-                className="space-y-3"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  void run(async (client) => {
-                    setSession(await client.verifyCode(sentTo, code.trim()));
-                    setCode("");
-                    setReview(null);
-                    setMessage(
-                      "Signed in. Compare your copies to start syncing.",
-                    );
-                  });
-                }}
-              >
-                <label
-                  className="block text-sm font-medium"
-                  htmlFor="sync-code"
-                >
-                  Code sent to {sentTo}
-                </label>
-                <input
-                  id="sync-code"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  required
-                  minLength={6}
-                  maxLength={10}
-                  className={input}
-                  value={code}
-                  onChange={(event) => setCode(event.target.value)}
-                  disabled={busy}
-                />
-                <button type="submit" className={button} disabled={busy}>
-                  Verify code
-                </button>
-              </form>
-            )}
-          </div>
-        )}
-        {config && session && (
-          <div className="mt-5 space-y-5">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="break-all text-sm">
-                Signed in as <strong>{session.email}</strong>
-              </p>
-              <button
-                type="button"
-                className={button}
-                disabled={busy}
-                onClick={() =>
-                  void run(async (client) => {
-                    try {
-                      await client.signOut(session);
-                    } finally {
-                      setSession(null);
-                      setReview(null);
-                      setConfirm(null);
-                    }
-                    setMessage("Signed out. Local practice is kept.");
-                  })
-                }
-              >
-                Sign out
-              </button>
-            </div>
-            <p className="text-xs text-fg-3">
-              Sign-in lasts for this browser tab until expiry. Closing the tab
-              clears its stored session. Use sign-out on shared devices.
-            </p>
+    <div className="mt-4 space-y-5">
             <button
               type="button"
               className={button}
               disabled={busy}
               onClick={() =>
-                void run(async (client) => {
+                void run(async (client, session) => {
                   const local = localBackup();
                   const cloud = await client.read(session);
                   setReview({ local, cloud });
@@ -456,12 +626,9 @@ export function AccountSync() {
                 </div>
               </section>
             )}
-          </div>
-        )}
-        <p role="status" aria-live="polite" className="mt-4 text-sm text-fg-2">
-          {busy ? "Working…" : message}
-        </p>
-      </section>
+      <p role="status" aria-live="polite" className="text-sm text-fg-2">
+        {busy ? "Working…" : message}
+      </p>
     </div>
   );
 }

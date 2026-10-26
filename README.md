@@ -36,7 +36,8 @@ Outputs are compared in TypeScript, with order-insensitive checks and validators
 ## Back up practice data
 
 Code drafts, progress, submissions, review queues, mock interviews, preferences, and last-opened pages are stored in this browser.
-They are not synchronized between browsers or devices, and clearing site data removes them.
+Without an account they stay in that browser only, and clearing site data removes them.
+Signing in at **Account & sync** saves them to your account automatically and keeps every signed-in device up to date; see [Accounts and progress sync](docs/ACCOUNT_SYNC.md).
 Open **Back up or restore practice data** in the footer of a browsing or reading page and choose **Export backup** to download a JSON copy.
 To restore it, choose the backup file, inspect the confirmation, and select **Restore backup**.
 Matching records are replaced while unrelated records remain, so export the current data first when keeping both versions matters.
@@ -208,14 +209,14 @@ Open **Practice** or **Today** to find the complete learning workspace:
 | `/practice/labs/sql` | Run twelve read-only SQLite exercises on fictional business data in a bounded browser worker, with schema, expected results and explanations. |
 | `/practice/interviews` | Rehearse twelve authored system-design, BA and behavioral scenarios with persisted deadlines, follow-up prompts, saved answers, debriefs and anchored self-ratings. |
 | `/offline` | Install the app where supported, explicitly download lessons, and manage the offline library. Only downloaded reading content is guaranteed offline; SQL/Python runtime downloads and compiled-language runners need a connection. |
-| `/settings/sync` | Optionally sign in with email OTP, compare local/cloud snapshots, download a recovery copy and explicitly confirm upload, restore or cloud deletion. |
+| `/settings/sync` | Sign in with GitHub, Google or an emailed link; practice then syncs automatically across devices. Advanced tools compare snapshots and transfer one copy after a recovery download. |
 | `/content-status` | Check real source/review/added dates, unknown dates, source links and recorded changes. Repository additions are not evidence of a recent interview. |
 
 Reading controls now include text size, line spacing, width, available device voices, speed, real pause/resume, paragraph highlighting and saved playback positions. Reader mode traps keyboard focus and returns it on Escape, right-click or visible exit. Appearance and reading preferences are included in backups; legacy palette preferences migrate on first visit. Voice availability and installation affordances depend on the browser/device.
 
 A coding workspace's **Start an independent attempt** is a self-declaration before a fresh attempt. Hint and solution views stay attached to that attempt; a later reveal cannot rewrite a prior accepted result. Assistance outside the website cannot be detected. Existing accepted problems without tracked conditions remain unclassified.
 
-All new learning data uses guarded browser storage and is included in the existing version 1 JSON backup. Restore validates the entire file before writing and preserves unrelated local records. Account sync uses this same validation and remains optional: it requires a dedicated Supabase project, the reviewed RLS migration and public deployment configuration. No project or credentials are bundled; see [Account sync setup](docs/ACCOUNT_SYNC.md). Cloud writes use revision preconditions and never silently replace concurrent work.
+All new learning data uses guarded browser storage and is included in the existing version 1 JSON backup. Restore validates the entire file before writing and preserves unrelated local records. Account sync uses this same validation and remains optional: it needs a Supabase project with the RLS migration and public deployment configuration; see [Accounts and progress sync](docs/ACCOUNT_SYNC.md). Cloud writes use revision preconditions, and concurrent changes from several devices are merged rather than overwritten.
 
 - [Offline behavior and limits](docs/OFFLINE_LESSONS.md)
 - [Authored labs, workbook generation and checks](content/labs/README.md)

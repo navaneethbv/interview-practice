@@ -5,7 +5,10 @@ import {
   clearSyncSession,
   compareSnapshots,
   readSyncSession,
+  oauthProviders,
+  safeReturnPath,
   saveSyncSession,
+  SESSION_LIFETIME,
   SyncAuthError,
   SyncClient,
   SyncConflictError,
@@ -20,8 +23,10 @@ const config = { url: "https://example.supabase.co", key: "public-test-key" };
 const session: SyncSession = {
   userId,
   accessToken: "test-access-token",
+  refreshToken: "test-refresh-token",
   email: "test@example.com",
   expiresAt: Date.now() + 3600000,
+  signedInAt: Date.now(),
 };
 const backup: PracticeBackup = {
   format: "interview-practice",
@@ -46,6 +51,27 @@ const json = (value: unknown, status = 200) =>
     status,
     headers: { "Content-Type": "application/json" },
   });
+
+function fakeWindow(local: Map<string, string>, tab = new Map<string, string>()) {
+  const store = (values: Map<string, string>) => ({
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => void values.set(key, value),
+    removeItem: (key: string) => void values.delete(key),
+  });
+  const prior = Object.getOwnPropertyDescriptor(globalThis, "window");
+  Object.defineProperty(globalThis, "window", {
+    configurable: true,
+    value: {
+      localStorage: store(local),
+      sessionStorage: store(tab),
+      dispatchEvent: () => true,
+    },
+  });
+  return () => {
+    if (prior) Object.defineProperty(globalThis, "window", prior);
+    else Reflect.deleteProperty(globalThis, "window");
+  };
+}
 
 describe("optional account sync", () => {
   it("stays unconfigured with absent settings and refuses insecure external endpoints", () => {
@@ -109,26 +135,16 @@ describe("optional account sync", () => {
     );
     assert.equal(calls.length, 2);
   });
-  it("stores only the minimal tab session, scopes restoration to project, and clears it on sign-out failure", async () => {
-    const values = new Map<string, string>();
-    const prior = Object.getOwnPropertyDescriptor(globalThis, "window");
-    Object.defineProperty(globalThis, "window", {
-      configurable: true,
-      value: {
-        sessionStorage: {
-          getItem: (key: string) => values.get(key) ?? null,
-          setItem: (key: string, value: string) => values.set(key, value),
-          removeItem: (key: string) => values.delete(key),
-        },
-      },
-    });
+  it("persists the session for this project only and clears it on sign-out failure", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
     try {
       const client = new SyncClient(
         config,
         mock(() =>
           json({
             access_token: session.accessToken,
-            refresh_token: "must-not-persist",
+            refresh_token: session.refreshToken,
             expires_in: 3600,
             user: { id: userId, email: session.email },
           }),
@@ -136,15 +152,14 @@ describe("optional account sync", () => {
       );
       const verified = await client.verifyCode(session.email, "123456");
       assert.deepEqual(readSyncSession(config), verified);
-      assert.equal(values.size, 1);
-      const [key, value] = [...values][0];
-      assert.ok(!key.startsWith("ip:"));
-      assert.ok(!value.includes("must-not-persist"));
+      assert.equal(local.size, 1);
+      const [key] = [...local][0];
+      assert.ok(!key.startsWith("ip:"), "tokens must stay out of backups");
       assert.equal(
         readSyncSession({ ...config, url: "https://other.supabase.co" }),
         null,
       );
-      assert.equal(values.size, 0);
+      assert.equal(local.size, 0);
       saveSyncSession(config, session);
       await assert.rejects(
         new SyncClient(
@@ -154,14 +169,176 @@ describe("optional account sync", () => {
           }),
         ).signOut(session),
       );
-      assert.equal(values.size, 0);
-      saveSyncSession(config, { ...session, expiresAt: 0 });
-      assert.equal(readSyncSession(config), null);
+      assert.equal(local.size, 0);
       clearSyncSession();
     } finally {
-      if (prior) Object.defineProperty(globalThis, "window", prior);
-      else Reflect.deleteProperty(globalThis, "window");
+      restore();
     }
+  });
+  it("refreshes an expiring session and signs out when the refresh token is rejected", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
+    try {
+      const expiring = { ...session, expiresAt: Date.now() + 1000 };
+      const bodies: unknown[] = [];
+      const renewed = await new SyncClient(
+        config,
+        mock((url, init) => {
+          assert.ok(url.endsWith("/auth/v1/token?grant_type=refresh_token"));
+          bodies.push(JSON.parse(String(init.body)));
+          return json({
+            access_token: "new-access",
+            refresh_token: "new-refresh",
+            expires_in: 3600,
+            user: { id: userId, email: session.email },
+          });
+        }),
+      ).fresh(expiring);
+      assert.deepEqual(bodies, [{ refresh_token: session.refreshToken }]);
+      assert.equal(renewed.accessToken, "new-access");
+      assert.equal(readSyncSession(config)?.refreshToken, "new-refresh");
+      let calls = 0;
+      const unused = new SyncClient(config, mock(() => { calls++; return json({}); }));
+      assert.equal(await unused.fresh(renewed), renewed);
+      // Another tab already rotated the token: reuse its session instead of refreshing.
+      assert.equal((await unused.fresh(expiring)).accessToken, "new-access");
+      assert.equal(calls, 0);
+      local.clear();
+      await assert.rejects(
+        new SyncClient(config, mock(() => json({ error: "invalid_grant" }, 400))).fresh(expiring),
+        SyncAuthError,
+      );
+      assert.equal(readSyncSession(config), null);
+      saveSyncSession(config, expiring);
+      await assert.rejects(
+        new SyncClient(config, mock(() => { throw new Error("offline"); })).fresh(expiring),
+        (error) => !(error instanceof SyncAuthError),
+      );
+      assert.ok(readSyncSession(config), "a network failure keeps the session");
+    } finally {
+      restore();
+    }
+  });
+  it("ends sessions 30 days after sign-in, even when refreshed", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
+    try {
+      const signedInAt = Date.now() - SESSION_LIFETIME + 60_000;
+      const old = { ...session, signedInAt, expiresAt: Date.now() + 1000 };
+      const renewed = await new SyncClient(
+        config,
+        mock(() =>
+          json({
+            access_token: "n",
+            refresh_token: "m",
+            expires_in: 3600,
+            user: { id: userId, email: session.email },
+          }),
+        ),
+      ).fresh(old);
+      assert.equal(renewed.signedInAt, signedInAt, "refresh keeps the sign-in time");
+      saveSyncSession(config, { ...session, signedInAt: Date.now() - SESSION_LIFETIME });
+      assert.equal(readSyncSession(config), null);
+      let calls = 0;
+      await assert.rejects(
+        new SyncClient(config, mock(() => { calls++; return json({}); })).fresh({
+          ...session,
+          signedInAt: Date.now() - SESSION_LIFETIME,
+          expiresAt: 0,
+        }),
+        SyncAuthError,
+      );
+      assert.equal(calls, 0, "an expired session is never refreshed");
+    } finally {
+      restore();
+    }
+  });
+  it("runs the OAuth PKCE flow and only returns to same-origin paths", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
+    try {
+      const client = new SyncClient(
+        config,
+        mock((url, init) => {
+          assert.ok(url.endsWith("/auth/v1/token?grant_type=pkce"));
+          const body = JSON.parse(String(init.body));
+          assert.equal(body.auth_code, "the-code");
+          assert.equal(typeof body.code_verifier, "string");
+          return json({
+            access_token: "a",
+            refresh_token: "r",
+            expires_in: 3600,
+            user: { id: userId, email: session.email },
+          });
+        }),
+      );
+      await assert.rejects(client.exchangeCode("the-code"), /another browser or has expired/);
+      const url = new URL(
+        await client.oauthUrl("github", "https://app.example/auth/callback", "/problems?x=1"),
+      );
+      assert.equal(url.origin + url.pathname, `${config.url}/auth/v1/authorize`);
+      assert.equal(url.searchParams.get("provider"), "github");
+      assert.equal(url.searchParams.get("code_challenge_method"), "s256");
+      assert.match(url.searchParams.get("code_challenge") ?? "", /^[A-Za-z0-9_-]{43}$/);
+      assert.equal(url.searchParams.get("redirect_to"), "https://app.example/auth/callback");
+      const result = await client.exchangeCode("the-code");
+      assert.equal(result.returnTo, "/problems?x=1");
+      assert.equal(result.session.refreshToken, "r");
+      assert.ok(![...local.keys()].some((key) => key.includes("pkce")), "the verifier is single use");
+      await assert.rejects(client.exchangeCode("the-code"), /another browser or has expired/);
+    } finally {
+      restore();
+    }
+    for (const unsafe of ["https://evil.example", "//evil.example", "/\\evil.example", "javascript:x", null])
+      assert.equal(safeReturnPath(unsafe), "/");
+    assert.equal(safeReturnPath("/settings/sync"), "/settings/sync");
+  });
+  it("emails a PKCE sign-in link that finishes at the callback and expires", async () => {
+    const local = new Map<string, string>();
+    const restore = fakeWindow(local);
+    try {
+      let challenge = "";
+      const client = new SyncClient(
+        config,
+        mock((url, init) => {
+          const body = JSON.parse(String(init.body));
+          if (url.includes("/otp")) {
+            assert.equal(
+              new URL(url).searchParams.get("redirect_to"),
+              "https://app.example/auth/callback",
+            );
+            assert.equal(body.code_challenge_method, "s256");
+            challenge = body.code_challenge;
+            return json({});
+          }
+          return json({
+            access_token: "a",
+            refresh_token: "r",
+            expires_in: 3600,
+            user: { id: userId, email: session.email },
+          });
+        }),
+      );
+      await client.sendCode("test@example.com", {
+        callbackUrl: "https://app.example/auth/callback",
+        returnTo: "/settings/sync",
+      });
+      assert.match(challenge, /^[A-Za-z0-9_-]{43}$/);
+      assert.equal((await client.exchangeCode("c")).returnTo, "/settings/sync");
+      await client.sendCode("test@example.com", {
+        callbackUrl: "https://app.example/auth/callback",
+        returnTo: "/",
+      });
+      const key = [...local.keys()].find((name) => name.includes("pkce"))!;
+      local.set(key, JSON.stringify({ ...JSON.parse(local.get(key)!), expiresAt: Date.now() - 1 }));
+      await assert.rejects(client.exchangeCode("c"), /has expired/);
+    } finally {
+      restore();
+    }
+  });
+  it("offers only the OAuth providers a deployment enabled", () => {
+    assert.deepEqual(oauthProviders(undefined), []);
+    assert.deepEqual(oauthProviders(" Google , github,facebook"), ["github", "google"]);
   });
   it("stops at expired sessions and surfaces auth, forbidden and throttled failures", async () => {
     let calls = 0;
@@ -347,7 +524,7 @@ describe("optional account sync", () => {
   });
   it("ships explicit ownership policies for each operation and server-owned revisions", () => {
     const sql = readFileSync(
-      new URL("../../supabase/migrations/account_sync.sql", import.meta.url),
+      new URL("../../supabase/migrations/20261026000000_account_sync.sql", import.meta.url),
       "utf8",
     );
     assert.match(sql, /enable row level security/);

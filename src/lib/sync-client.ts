@@ -10,17 +10,31 @@ export interface SyncConfig {
 }
 export interface SyncSession {
   accessToken: string;
+  refreshToken: string;
   userId: string;
   email: string;
   expiresAt: number;
+  /** When the person signed in; refreshes keep it, so sessions have an absolute lifetime. */
+  signedInAt: number;
 }
+export type OAuthProvider = "github" | "google";
 export interface CloudSnapshot {
   user_id: string;
   revision: string;
   updated_at: string;
   backup: PracticeBackup;
 }
-const SESSION_KEY = "interview-practice:cloud-session:v1";
+// Outside the "ip:" prefix so backups and cloud snapshots never contain tokens.
+export const SESSION_KEY = "interview-practice:cloud-session:v2";
+const LEGACY_SESSION_KEY = "interview-practice:cloud-session:v1";
+const PKCE_KEY = "interview-practice:pkce:v1";
+const PKCE_TTL = 60 * 60 * 1000;
+/** Same-tab notification; other tabs observe the localStorage "storage" event. */
+export const SESSION_EVENT = "interview-practice:session";
+/** Refresh this long before expiry so requests never race the deadline. */
+const REFRESH_MARGIN = 60_000;
+/** Sign in again after this long, even if the refresh token is still accepted. */
+export const SESSION_LIFETIME = 30 * 24 * 60 * 60 * 1000;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 async function readBoundedChunks(
   reader: ReadableStreamDefaultReader<Uint8Array>,
@@ -38,6 +52,14 @@ async function readBoundedChunks(
   return readBoundedChunks(reader, chunks, nextSize);
 }
 export class SyncAuthError extends Error {}
+export class SyncHttpError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
 export class SyncConflictError extends Error {
   constructor() {
     super(
@@ -93,48 +115,91 @@ export function syncConfig(
   return { url: parsed.origin, key };
 }
 
+function announceSession() {
+  try {
+    window.dispatchEvent(new Event(SESSION_EVENT));
+  } catch {
+    /* No window outside the browser. */
+  }
+}
+/** OAuth buttons to offer. Providers must also be enabled in the Supabase project,
+ * so each one is opt-in per deployment, e.g. NEXT_PUBLIC_AUTH_PROVIDERS=github,google. */
+export function oauthProviders(
+  value = process.env.NEXT_PUBLIC_AUTH_PROVIDERS,
+): OAuthProvider[] {
+  const requested = new Set((value ?? "").split(",").map((name) => name.trim().toLowerCase()));
+  return (["github", "google"] as const).filter((name) => requested.has(name));
+}
+
 export function clearSyncSession() {
   try {
-    window.sessionStorage.removeItem(SESSION_KEY);
+    window.localStorage.removeItem(SESSION_KEY);
+    window.sessionStorage.removeItem(LEGACY_SESSION_KEY);
   } catch {
     /* Session may be memory-only. */
   }
+  announceSession();
 }
 export function saveSyncSession(config: SyncConfig, session: SyncSession) {
   try {
-    window.sessionStorage.setItem(
+    window.localStorage.setItem(
       SESSION_KEY,
       JSON.stringify({ origin: config.url, ...session }),
     );
   } catch {
     /* Remain signed in for this page only. */
   }
+  announceSession();
 }
+/** The stored session for this project, even if its access token has expired:
+ * the refresh token can still renew it. */
 export function readSyncSession(config: SyncConfig): SyncSession | null {
   try {
-    const session = JSON.parse(
-      window.sessionStorage.getItem(SESSION_KEY) || "null",
-    );
+    const raw = window.localStorage.getItem(SESSION_KEY);
+    if (raw === null) return null;
+    const session = JSON.parse(raw);
     if (
       session?.origin === config.url &&
       typeof session.accessToken === "string" &&
+      typeof session.refreshToken === "string" &&
+      session.refreshToken.length > 0 &&
       UUID.test(session.userId) &&
       typeof session.email === "string" &&
       typeof session.expiresAt === "number" &&
       Number.isFinite(session.expiresAt) &&
-      session.expiresAt > Date.now() + 5000
+      typeof session.signedInAt === "number" &&
+      session.signedInAt <= Date.now() &&
+      Date.now() - session.signedInAt < SESSION_LIFETIME
     )
       return {
         accessToken: session.accessToken,
+        refreshToken: session.refreshToken,
         userId: session.userId,
         email: session.email,
         expiresAt: session.expiresAt,
+        signedInAt: session.signedInAt,
       };
   } catch {
     /* Unavailable or damaged session. */
   }
   clearSyncSession();
   return null;
+}
+
+function base64Url(bytes: Uint8Array) {
+  return btoa(String.fromCodePoint(...bytes))
+    .replaceAll("+", "-")
+    .replaceAll("/", "_")
+    .replace(/=+$/, "");
+}
+/** Only same-origin relative paths survive the OAuth round trip. */
+export function safeReturnPath(path: unknown): string {
+  return typeof path === "string" &&
+    path.startsWith("/") &&
+    !path.startsWith("//") &&
+    !path.includes("\\")
+    ? path
+    : "/";
 }
 
 export class SyncClient {
@@ -183,7 +248,8 @@ export class SyncClient {
     }
     if (response.status === 409) throw new SyncConflictError();
     if (!response.ok)
-      throw new Error(
+      throw new SyncHttpError(
+        response.status,
         response.status === 429
           ? "Too many attempts. Wait before trying again."
           : `Cloud request failed (${response.status}). Check account permissions and setup. Local data is safe.`,
@@ -209,20 +275,13 @@ export class SyncClient {
       throw new Error("Cloud returned an invalid response.");
     }
   }
-  async sendCode(email: string) {
-    await this.request("/auth/v1/otp", {
-      method: "POST",
-      body: JSON.stringify({ email, create_user: true }),
-    });
-  }
-  async verifyCode(email: string, token: string): Promise<SyncSession> {
-    const data = (await this.request("/auth/v1/verify", {
-      method: "POST",
-      body: JSON.stringify({ email, token, type: "email" }),
-    })) as Record<string, unknown>;
+  private sessionFrom(value: unknown, signedInAt = Date.now()): SyncSession {
+    const data = value as Record<string, unknown> | null;
     const user = data?.user as Record<string, unknown> | undefined;
     if (
       typeof data?.access_token !== "string" ||
+      typeof data.refresh_token !== "string" ||
+      !data.refresh_token ||
       !user ||
       typeof user.id !== "string" ||
       !UUID.test(user.id) ||
@@ -235,12 +294,148 @@ export class SyncClient {
       throw new Error("Cloud returned an invalid sign-in session.");
     const session = {
       accessToken: data.access_token,
+      refreshToken: data.refresh_token,
       userId: user.id,
       email: user.email,
       expiresAt: Date.now() + data.expires_in * 1000,
+      signedInAt,
     };
     saveSyncSession(this.config, session);
     return session;
+  }
+  /** Emails a sign-in message. With `link`, the email's link completes a PKCE
+   * sign-in at `link.callbackUrl` in this browser; the email may also carry a
+   * code for `verifyCode` when the project's template includes one. */
+  async sendCode(email: string, link?: { callbackUrl: string; returnTo: string }) {
+    const pkce = link ? await this.startPkce(link.returnTo) : null;
+    const query = link ? `?${new URLSearchParams({ redirect_to: link.callbackUrl })}` : "";
+    await this.request(`/auth/v1/otp${query}`, {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        create_user: true,
+        ...(pkce ? { code_challenge: pkce, code_challenge_method: "s256" } : {}),
+      }),
+    });
+  }
+  async verifyCode(email: string, token: string): Promise<SyncSession> {
+    return this.sessionFrom(
+      await this.request("/auth/v1/verify", {
+        method: "POST",
+        body: JSON.stringify({ email, token, type: "email" }),
+      }),
+    );
+  }
+  /** Returns a session whose access token is valid for at least a minute,
+   * renewing it with the refresh token when needed. */
+  async fresh(session: SyncSession): Promise<SyncSession> {
+    if (session.expiresAt > Date.now() + REFRESH_MARGIN) return session;
+    // Another tab may already have rotated the refresh token.
+    const stored = readSyncSession(this.config);
+    if (
+      stored?.userId === session.userId &&
+      stored.expiresAt > Date.now() + REFRESH_MARGIN
+    )
+      return stored;
+    const current = stored?.userId === session.userId ? stored : session;
+    if (Date.now() - current.signedInAt >= SESSION_LIFETIME) {
+      clearSyncSession();
+      throw new SyncAuthError(
+        "For your security, sign in again every 30 days. Local practice is safe.",
+      );
+    }
+    try {
+      return this.sessionFrom(
+        await this.request("/auth/v1/token?grant_type=refresh_token", {
+          method: "POST",
+          body: JSON.stringify({ refresh_token: current.refreshToken }),
+        }),
+        current.signedInAt,
+      );
+    } catch (error) {
+      // A rejected refresh token ends the session; a network failure does not.
+      if (
+        error instanceof SyncAuthError ||
+        (error instanceof SyncHttpError && error.status === 400)
+      ) {
+        clearSyncSession();
+        throw new SyncAuthError(
+          "Your sign-in expired. Sign in again; local practice is safe.",
+        );
+      }
+      throw error;
+    }
+  }
+  /** Stores a single-use verifier and returns its S256 challenge. localStorage,
+   * not sessionStorage, because an emailed link opens in a new tab. */
+  private async startPkce(returnTo: string): Promise<string> {
+    const verifier = base64Url(crypto.getRandomValues(new Uint8Array(32)));
+    const challenge = base64Url(
+      new Uint8Array(
+        await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier)),
+      ),
+    );
+    try {
+      window.localStorage.setItem(
+        PKCE_KEY,
+        JSON.stringify({
+          verifier,
+          origin: this.config.url,
+          returnTo: safeReturnPath(returnTo),
+          expiresAt: Date.now() + PKCE_TTL,
+        }),
+      );
+    } catch {
+      throw new Error(
+        "This browser blocked storage, which sign-in needs. Allow site data and try again.",
+      );
+    }
+    return challenge;
+  }
+  /** Starts the PKCE authorization-code flow; the browser returns to `callbackUrl`. */
+  async oauthUrl(
+    provider: OAuthProvider,
+    callbackUrl: string,
+    returnTo: string,
+  ): Promise<string> {
+    const params = new URLSearchParams({
+      provider,
+      redirect_to: callbackUrl,
+      code_challenge: await this.startPkce(returnTo),
+      code_challenge_method: "s256",
+    });
+    return `${this.config.url}/auth/v1/authorize?${params}`;
+  }
+  /** Completes the PKCE flow and returns the session and where to go next. */
+  async exchangeCode(code: string): Promise<{ session: SyncSession; returnTo: string }> {
+    let pending: {
+      verifier?: unknown;
+      origin?: unknown;
+      returnTo?: unknown;
+      expiresAt?: unknown;
+    } | null = null;
+    try {
+      pending = JSON.parse(window.localStorage.getItem(PKCE_KEY) ?? "null");
+      window.localStorage.removeItem(PKCE_KEY);
+    } catch {
+      /* Treated as a missing sign-in attempt below. */
+    }
+    if (
+      typeof pending?.verifier !== "string" ||
+      pending.origin !== this.config.url ||
+      typeof pending.expiresAt !== "number" ||
+      pending.expiresAt < Date.now()
+    )
+      throw new Error(
+        "This sign-in link was started in another browser or has expired. Open it in the browser where you asked for it, or start sign-in again.",
+      );
+    const session = this.sessionFrom(
+      await this.request("/auth/v1/token?grant_type=pkce", {
+        method: "POST",
+        body: JSON.stringify({ auth_code: code, code_verifier: pending.verifier }),
+      }),
+    );
+    return { session, returnTo: safeReturnPath(pending.returnTo) };
   }
   async signOut(session: SyncSession) {
     try {
@@ -252,6 +447,21 @@ export class SyncClient {
     } finally {
       clearSyncSession();
     }
+  }
+  /** Cheap check of the cloud revision, without downloading the snapshot. */
+  async revision(session: SyncSession): Promise<string | null> {
+    const rows = await this.request(
+      `${this.path(session)}&select=revision&limit=1`,
+      {},
+      session,
+    );
+    if (!Array.isArray(rows) || rows.length > 1)
+      throw new Error("Cloud returned an invalid snapshot list.");
+    const revision = (rows[0] as { revision?: unknown } | undefined)?.revision;
+    if (revision === undefined) return null;
+    if (typeof revision !== "string" || !UUID.test(revision))
+      throw new Error("Cloud returned an invalid revision.");
+    return revision;
   }
   private path(session: SyncSession) {
     if (!UUID.test(session.userId)) throw new Error("Invalid account ID.");

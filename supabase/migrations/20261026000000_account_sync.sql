@@ -1,6 +1,5 @@
--- Reviewed provisioning script. With Supabase CLI installed, run
--- `supabase migration new account_sync`, then copy this SQL into that generated
--- timestamped file before applying. Never apply both files.
+-- Per-user practice snapshots for account sync. Apply with `supabase db push`
+-- after `supabase link`, or paste once into the SQL editor. See docs/ACCOUNT_SYNC.md.
 begin;
 
 create table public.practice_snapshots (
