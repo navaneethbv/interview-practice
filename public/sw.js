@@ -223,7 +223,8 @@ function unavailableLessonResponse() {
 function incomingPublicURL(request, kind) {
   try {
     const received = new URL(request.url);
-    if (received.origin !== self.location.origin || received.search || received.hash) return null;
+    // Navigation requests keep the #fragment, which is never sent to the server, so only the query is refused.
+    if (received.origin !== self.location.origin || received.search) return null;
     return downloadURL(received.pathname, kind);
   } catch { return null; }
 }

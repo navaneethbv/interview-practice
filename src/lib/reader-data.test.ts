@@ -216,6 +216,29 @@ test("offline worker serves saved documents without caching unsaved navigation o
   assert.equal(cacheStore.get("ip-offline-documents-v1")?.size, 1);
 });
 
+test("offline worker loads lesson links with a #fragment from the network, or the saved copy offline", async () => {
+  const { message, events, context } = workerHarness();
+  const responseFor = async (path: string) => {
+    let response: Promise<Response> | undefined;
+    events.fetch({
+      request: { url: `https://example.test${path}`, method: "GET", mode: "navigate", headers: new Headers() },
+      respondWith: (value: Promise<Response>) => {
+        response = value;
+      },
+    });
+    return response!;
+  };
+  const online = await responseFor("/business-analyst/foundations#quiz");
+  assert.equal(online.status, 200);
+  assert.match(await online.text(), /<title>Lesson<\/title>/);
+  await message({ type: "DOWNLOAD", path: "/learn/arrays" });
+  context.fetch = async () => {
+    throw new Error("offline");
+  };
+  assert.equal((await responseFor("/learn/arrays#lesson-2")).status, 200);
+  assert.equal((await responseFor("/learn/unsaved#top")).status, 503);
+});
+
 test("offline removal preserves shared dependencies and the library has an explicit cap", async () => {
   const { message, cacheStore } = workerHarness();
   for (let index = 0; index < 20; index++)
