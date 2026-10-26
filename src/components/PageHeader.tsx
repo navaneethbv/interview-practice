@@ -36,7 +36,7 @@ export function PageHeader({
             <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h1>
             {children && <div className="mt-2 text-fg-2 sm:text-[15px] sm:leading-relaxed">{children}</div>}
           </div>
-          {actions && <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>}
+          {actions && <div className="flex min-w-0 max-w-full flex-wrap gap-2">{actions}</div>}
         </div>
       </div>
     </div>
