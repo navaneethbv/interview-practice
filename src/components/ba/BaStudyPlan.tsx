@@ -29,7 +29,7 @@ const days: [string, string, string][] = [
   ["Excel and SQL · formulas", "Practice IF, XLOOKUP or VLOOKUP, text/date cleanup and error checks on a small sample.", "60 min"],
   ["Excel and SQL · pivot tables", "Summarize sample expenses by department, status and month. Write one useful finding and one data-quality caveat.", "60 min"],
   ["Excel and SQL · SQL basics", "Practice SELECT, WHERE, ORDER BY, COUNT, SUM, GROUP BY and HAVING. Predict the result before running queries.", "60 min"],
-  ["Excel and SQL · joins and quality", "Practice INNER/LEFT JOIN, NULL, CASE and a simple CTE. Check for duplicates and missing values; take the chapter quiz.", "60 min"],
+  ["Excel and SQL · joins and quality", "Practice INNER/LEFT JOIN using the department lookup table below, then try NULL, CASE and a simple CTE. Check for duplicates and missing values; take the chapter quiz.", "60 min"],
   ["KPIs · choose measures", "Study metrics, KPIs, OKRs and leading/lagging indicators. Define formula, baseline, target, owner and data source for one KPI.", "60 min"],
   ["KPIs · report and explain", "Sketch a simple dashboard and choose appropriate charts. Present one insight, evidence and recommendation; take the chapter quiz.", "60 min"],
   ["Process improvement · Lean", "Learn common waste, DMAIC, PDCA and Kaizen. Choose one waste in the case process and propose a measurable experiment; take the quiz.", "60 min"],
