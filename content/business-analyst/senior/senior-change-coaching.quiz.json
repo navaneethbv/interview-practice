@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What is a useful readiness assessment?",
+    "options": [
+      "Check skills, capacity, leadership, process, access and support by affected group",
+      "Count training invitations only",
+      "Ask only the sponsor",
+      "Wait for complaints"
+    ],
+    "why": "Readiness depends on multiple factors and varies across groups."
+  },
+  {
+    "lesson": 1,
+    "q": "Why should groups be assessed separately?",
+    "options": [
+      "One team may be ready while another lacks skills, capacity or support",
+      "It increases document length",
+      "It guarantees adoption",
+      "It replaces pilots"
+    ],
+    "why": "Readiness is not uniform across an organization."
+  },
+  {
+    "lesson": 1,
+    "q": "What is evidence of adoption?",
+    "options": [
+      "Observed use and outcome measures after rollout",
+      "Training attendance alone",
+      "A signed email",
+      "A launch announcement"
+    ],
+    "why": "Attendance shows exposure, not whether behavior changed."
+  },
+  {
+    "lesson": 2,
+    "q": "What should a change communication plan specify?",
+    "options": [
+      "Audience, message, sender, channel, timing, action and feedback path",
+      "Only a logo",
+      "Only launch date",
+      "The BA's preferred channel"
+    ],
+    "why": "Communication should lead each audience to understand and act."
+  },
+  {
+    "lesson": 2,
+    "q": "How should uncertainty be communicated?",
+    "options": [
+      "State what is known, unknown and undecided honestly",
+      "Promise the expected benefits as certain",
+      "Avoid mentioning decisions",
+      "Use more acronyms"
+    ],
+    "why": "Trust depends on accurate statements about what remains unsettled."
+  },
+  {
+    "lesson": 2,
+    "q": "Why tailor messages by audience?",
+    "options": [
+      "Executives, users and technical teams need different decisions and details",
+      "It prevents consistency",
+      "It removes shared outcomes",
+      "It means messages can contradict"
+    ],
+    "why": "Audience needs differ while underlying facts should remain consistent."
+  },
+  {
+    "lesson": 3,
+    "q": "What should realistic training include?",
+    "options": [
+      "Normal work, exceptions, approvals and recovery scenarios",
+      "Only a product tour",
+      "Only policy slides",
+      "Only a quiz score"
+    ],
+    "why": "Role-based scenarios help learners perform real tasks."
+  },
+  {
+    "lesson": 3,
+    "q": "What makes a pilot decision-ready?",
+    "options": [
+      "Defined population, success/stop criteria, safety controls and owner",
+      "A start date only",
+      "No feedback method",
+      "No rollback plan"
+    ],
+    "why": "A pilot should produce evidence and allow a deliberate next decision."
+  },
+  {
+    "lesson": 3,
+    "q": "Why tell users how feedback changed the plan?",
+    "options": [
+      "It builds trust and closes the feedback loop",
+      "It replaces testing",
+      "It reduces the need for support",
+      "It hides scope changes"
+    ],
+    "why": "People need to know their input was considered and what happened."
+  },
+  {
+    "lesson": 4,
+    "q": "What is effective mentoring?",
+    "options": [
+      "Ask about reasoning and give specific feedback while growing ownership",
+      "Rewrite every deliverable",
+      "Keep difficult work away from analysts",
+      "Evaluate only writing style"
+    ],
+    "why": "Mentoring builds judgment and lets the analyst retain meaningful responsibility."
+  },
+  {
+    "lesson": 4,
+    "q": "How should senior BAs delegate?",
+    "options": [
+      "Give bounded work with clear outcomes and decision rights",
+      "Assign work without context",
+      "Retain every stakeholder relationship",
+      "Delegate only administrative tasks"
+    ],
+    "why": "Clear ownership supports growth while maintaining support."
+  },
+  {
+    "lesson": 4,
+    "q": "What should happen after a mistake?",
+    "options": [
+      "Review impact, learn and support honest correction",
+      "Hide it from stakeholders",
+      "Remove all autonomy",
+      "Treat it as proof the analyst cannot grow"
+    ],
+    "why": "Psychological safety and accountability can coexist."
+  },
+  {
+    "lesson": 5,
+    "q": "What is a good practice standard?",
+    "options": [
+      "A lightweight rule tied to a problem it prevents",
+      "A mandatory template with no purpose",
+      "A process that duplicates existing records",
+      "A measure of document length"
+    ],
+    "why": "Standards should improve quality, decisions or controls."
+  },
+  {
+    "lesson": 5,
+    "q": "How should standards be rolled out?",
+    "options": [
+      "Pilot with teams, refine and allow justified exceptions",
+      "Impose them without feedback",
+      "Never update them",
+      "Use them to remove local accountability"
+    ],
+    "why": "Piloting tests whether the standard helps in real work."
+  },
+  {
+    "lesson": 5,
+    "q": "What should a community of practice do?",
+    "options": [
+      "Share patterns, examples and peer learning",
+      "Replace all accountable owners",
+      "Approve every project decision",
+      "Enforce one solution everywhere"
+    ],
+    "why": "A community supports practice and learning without replacing decision rights."
+  },
+  {
+    "lesson": 6,
+    "q": "What is a senior BA ethical responsibility?",
+    "options": [
+      "Protect confidentiality and present adverse evidence honestly",
+      "Hide data that weakens a preferred recommendation",
+      "Share private data broadly",
+      "Treat silence as consent"
+    ],
+    "why": "Professional integrity requires accurate evidence and appropriate information handling."
+  },
+  {
+    "lesson": 6,
+    "q": "How can a senior BA improve inclusion?",
+    "options": [
+      "Invite input from impacted groups with less organizational power",
+      "Only ask executives",
+      "Assume one meeting represents everyone",
+      "Ignore language barriers"
+    ],
+    "why": "Inclusive engagement reduces the chance of missing important perspectives."
+  },
+  {
+    "lesson": 6,
+    "q": "What should happen when policy conflicts with delivery pressure?",
+    "options": [
+      "Raise the conflict with the proper decision or control owner",
+      "Bypass the policy quietly",
+      "Let the vendor decide",
+      "Remove the requirement"
+    ],
+    "why": "Risk and policy conflicts need accountable review."
+  },
+  {
+    "lesson": 6,
+    "q": "Why distinguish facts from assumptions in communication?",
+    "options": [
+      "It helps leaders make informed decisions and revisit uncertain claims",
+      "It makes reports longer",
+      "It prevents all disagreement",
+      "It is only a testing practice"
+    ],
+    "why": "Clear labels support trust and evidence-based choices."
+  },
+  {
+    "lesson": 6,
+    "q": "What is a sign of useful coaching feedback?",
+    "options": [
+      "It is specific, tied to reasoning or impact and includes a next step",
+      "It says “be better”",
+      "It rewrites the work without discussion",
+      "It focuses on personality"
+    ],
+    "why": "Actionable feedback helps the learner understand what to change."
+  }
+]
