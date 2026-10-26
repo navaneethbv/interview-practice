@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BaStudyPlanShell, type BaStudySession } from "@/components/ba/BaStudyPlanShell";
 
 const days: [string, string][] = [
   ["Senior scope and strategic outcomes", "Read chapter 1 lessons on senior accountability and strategy. Map one strategic objective to a measurable outcome and a change hypothesis."],
@@ -46,37 +46,28 @@ const chapterIds = [
   "senior-interview-capstone", "senior-interview-capstone", "final",
 ];
 
+const sessions: BaStudySession[] = days.map(([title, task], index) => ({
+  title,
+  task,
+  href: chapterIds[index] === "final" ? "/business-analyst/senior/final" : `/business-analyst/senior/${chapterIds[index]}`,
+}));
+
 export function SeniorStudyPlan() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
-      <Link href="/business-analyst/senior" className="text-sm font-medium text-brand hover:underline">← Back to Senior BA Track</Link>
-      <header className="mt-5 rounded-3xl border border-line bg-layer-1 p-6 shadow-card sm:p-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-brand uppercase">Advanced study plan</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">30 sessions for senior BA practice</h1>
-        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for 60–75 minutes per session; take rest or catch-up days as needed. Each session combines short lessons, applied work and recall. At five sessions a week, this is about six weeks. The final exam session takes about 90 minutes.</p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">20 min</b><span className="text-sm text-fg-2">Read and take notes</span></div>
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">30 min</b><span className="text-sm text-fg-2">Apply the ideas to the case</span></div>
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">10 min</b><span className="text-sm text-fg-2">Recall and reflect</span></div>
-        </div>
-        <p className="mt-4 text-sm leading-relaxed text-fg-2">Take each chapter quiz when scheduled and review every explanation. The ungraded capstone is a self-reviewed portfolio exercise; passing all eight chapter quizzes unlocks the separate 30-question final exam.</p>
-      </header>
-      <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-card">
-        <h2 className="border-b border-line bg-layer-2 px-5 py-4 text-lg font-semibold">Daily schedule</h2>
-        <ol className="divide-y divide-line">
-          {days.map(([title, task], index) => (
-            <li key={title} className="grid gap-2 px-5 py-4 sm:grid-cols-[5rem_1fr]">
-              <span className="text-sm font-semibold text-brand">Day {index + 1}</span>
-              <div>
-                <h3 className="font-medium">
-                  <Link href={chapterIds[index] === "final" ? "/business-analyst/senior/final" : `/business-analyst/senior/${chapterIds[index]}`} className="hover:text-brand hover:underline">{title}</Link>
-                </h3>
-                <p className="mt-1 text-sm leading-relaxed text-fg-2">{task}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
+    <BaStudyPlanShell
+      backHref="/business-analyst/senior"
+      backLabel="Senior BA Track"
+      levelLabel="Advanced study plan"
+      title="30 sessions for senior BA practice"
+      intro="Plan for 60–75 minutes per session; take rest or catch-up days as needed. Each session combines short lessons, applied work and recall. At five sessions a week, this is about six weeks. The final exam session takes about 90 minutes."
+      timeBlocks={[
+        { duration: "20 min", label: "Read and take notes" },
+        { duration: "30 min", label: "Apply the ideas to the case" },
+        { duration: "10 min", label: "Recall and reflect" },
+      ]}
+      note="Take each chapter quiz when scheduled and review every explanation. The ungraded capstone is a self-reviewed portfolio exercise; passing all eight chapter quizzes unlocks the separate 30-question final exam."
+      sessions={sessions}
+    >
       <aside className="mt-8 rounded-2xl border border-brand/30 bg-brand-soft p-5">
         <h2 className="font-semibold">Self-review before you present the capstone</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-fg-2">
@@ -87,6 +78,6 @@ export function SeniorStudyPlan() {
           <li>Benefits have a baseline, target, source, owner and review date.</li>
         </ul>
       </aside>
-    </main>
+    </BaStudyPlanShell>
   );
 }
