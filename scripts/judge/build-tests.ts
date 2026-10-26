@@ -8,9 +8,10 @@
  *  - with --java, also runs the Java reference (<id>.java) and requires every case to pass;
  *  - with --langs, also runs any JavaScript, TypeScript, C++ and Go references (<id>.js/.ts/.cpp/.go).
  *
- * Usage: npm run tests:build -- [--java] [--langs] [--regen] [id ...]
+ * Usage: npm run tests:build -- [--java] [--langs] [--regen] [--shard=INDEX/TOTAL] [id ...]
  */
 import fs from "node:fs";
+import { parseReferenceShard, selectReferenceShard } from "./sharding";
 import path from "node:path";
 import { buildPythonScript } from "../../src/lib/judge/python";
 import { buildJavaProgram, mapJavaCompileErrors } from "../../src/lib/judge/java";
@@ -165,8 +166,11 @@ async function main() {
   for (const id of only) {
     if (!files.some((file) => path.basename(file, ".json") === id)) errors.push(`${id}: no matching spec`);
   }
+  const shard = parseReferenceShard(args);
+  const selected = selectReferenceShard(files, shard);
+  if (shard) console.log(`Reference shard ${shard.index}/${shard.total}: ${selected.length}/${files.length} specs`);
   let done = 0;
-  const queue = [...files];
+  const queue = [...selected];
   // Six workers each take the next spec from the shared queue until it is empty.
   const worker = async (): Promise<void> => {
     const f = queue.shift();

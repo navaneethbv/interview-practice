@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { StudyActions } from "@/components/StudyActions";
+import { recordLearningAcceptance, recordLearningAssistance, startIndependentAttempt } from "@/lib/learning-store";
 import {
   BookOpenText,
   ChevronLeft,
@@ -400,7 +402,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         addSubmission(id, sub);
         setSubmissions((s) => [sub, ...s].slice(0, 30));
         recordSubmission(id, outcome.verdict === "Accepted");
-        if (outcome.verdict === "Accepted") reviewAccepted(id);
+        if (outcome.verdict === "Accepted") { reviewAccepted(id); recordLearningAcceptance(id); }
       }
     } catch (e) {
       setResult({ mode: "submit", tests: [], inputs: [], outcome: errorOutcome((e as Error).message) });
@@ -425,7 +427,10 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           id="workspace-solution-tab"
           panelId="workspace-solution-panel"
           active={leftTab === "solution"}
-          onClick={() => setLeftTab("solution")}
+          onClick={() => {
+            if (!inMock) { recordLearningAssistance(id, "solution"); }
+            setLeftTab("solution");
+          }}
           icon={<FlaskConical size={15} className="text-medium" />}
         >
           Solution
@@ -441,7 +446,11 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </PanelTab>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
-        <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>{description}</div>
+        <div id="workspace-description-panel" role="tabpanel" aria-labelledby="workspace-description-tab" tabIndex={0} hidden={leftTab !== "description"}>
+          <StudyActions href={id.startsWith("lc:") ? `/problems/lc/${id.slice(3)}` : `/problems/${id}`} title={title} section="Coding practice" />
+          <button type="button" onClick={() => { startIndependentAttempt(id); setLeftTab("description"); }} className="mb-4 rounded-lg border border-line px-3 py-2 text-xs text-fg-2 hover:bg-layer-2" title="Self declaration: attempt from scratch without referring to hints or solutions. Prior evidence is preserved.">Start an independent attempt</button>
+          {description}
+        </div>
         <div id="workspace-solution-panel" role="tabpanel" aria-labelledby="workspace-solution-tab" tabIndex={0} hidden={leftTab !== "solution"}>
           {inMock ? (
             <p className="rounded-lg bg-brand-soft px-3 py-2 text-sm text-fg-2">
@@ -494,7 +503,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           </select>
         </label>
         <div className="ml-auto flex items-center gap-0.5 text-fg-3">
-          <button
+          <button type="button"
             onClick={() => changeFont(-1)}
             className="grid size-7 place-items-center rounded-md hover:bg-layer-2 hover:text-fg-1"
             aria-label="Decrease font size"
@@ -503,7 +512,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
             <Minus size={14} />
           </button>
           <span className="w-6 text-center text-xs tabular-nums">{fontSize}</span>
-          <button
+          <button type="button"
             onClick={() => changeFont(1)}
             className="grid size-7 place-items-center rounded-md hover:bg-layer-2 hover:text-fg-1"
             aria-label="Increase font size"
@@ -511,7 +520,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           >
             <Plus size={14} />
           </button>
-          <button
+          <button type="button"
             onClick={reset}
             className="ml-1 grid size-7 place-items-center rounded-md hover:bg-layer-2 hover:text-fg-1"
             aria-label="Reset to starter code"
@@ -523,8 +532,8 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
       </div>
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line px-3 py-1 text-xs text-fg-2">
         <output>{pendingWrites ? "Changes are not saved to this browser" : "Draft saves automatically"}</output>
-        <button className="text-blue hover:underline" onClick={() => downloadText(`${id.replaceAll(":", "-")}.${lang === "python" ? "py" : lang}`, code)}>Download code</button>
-        {recovery !== null && <button className="text-blue hover:underline" onClick={() => {
+        <button type="button" className="text-blue hover:underline" onClick={() => downloadText(`${id.replaceAll(":", "-")}.${lang === "python" ? "py" : lang}`, code)}>Download code</button>
+        {recovery !== null && <button type="button" className="text-blue hover:underline" onClick={() => {
           if (code !== (starters[lang] ?? "") && !window.confirm("Replace this draft with the version saved before reset? Download your current draft first if you want to keep it.")) return;
           restoreCode(id, lang, recovery);
           setCode(recovery);
@@ -603,7 +612,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
         </div>
 
         <div className="mx-auto flex items-center gap-0.5">
-          <button
+          <button type="button"
             aria-label="Run"
             onClick={run}
             disabled={!spec || busy}
@@ -612,7 +621,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
           >
             <Play size={13} className="fill-current" /> <span className="workspace-action-label">Run</span>
           </button>
-          <button
+          <button type="button"
             aria-label="Submit"
             onClick={submit}
             disabled={!spec || busy}
@@ -736,7 +745,7 @@ function SubmissionList({ id, submissions, onLoad }: Readonly<{ id: string; subm
                 {s.passed}/{s.total}
               </td>
               <td className="py-2.5 text-right">
-                <button onClick={() => onLoad(s)} className="rounded-md px-2 py-1 text-xs text-blue hover:bg-layer-2">
+                <button type="button" onClick={() => onLoad(s)} className="rounded-md px-2 py-1 text-xs text-blue hover:bg-layer-2">
                   Load code
                 </button>
               </td>

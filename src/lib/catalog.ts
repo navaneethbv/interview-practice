@@ -1,5 +1,8 @@
 import { designChapters, hrefFor, lcAuthored, lcMetaAll, listDesignBooks, listProblems, listSets, setRows } from "./content";
 import { COURSE_SCOPE, lcProgressId, type Difficulty, type SetKind } from "./content-types";
+import { LEARNING_TOOLS } from "./platform-navigation";
+import { listBaChapters } from "./ba-content";
+import { labs } from "./lab-data";
 
 /** One problem list as shown on the hub and home pages. */
 export interface ListSummary {
@@ -69,6 +72,11 @@ export interface SearchEntry {
 /** Everything the command palette can jump to. */
 export function searchIndex(): SearchEntry[] {
   const pages: SearchEntry[] = [
+    ...LEARNING_TOOLS.map(tool => ({ t: tool.title, h: tool.href, k: "page" as const, s: tool.description })),
+    { t: "Account and progress sync", h: "/settings/sync", k: "page" },
+    { t: "Content sources and review dates", h: "/content-status", k: "page" },
+    { t: "Business Analyst beginner course", h: "/business-analyst", k: "page" },
+    { t: "Senior Business Analyst track", h: "/business-analyst/senior", k: "page" },
     { t: "Problem lists", h: "/problems", k: "page" },
     { t: "Practice: mock interview", h: "/practice#mock", k: "page" },
     { t: "Practice: review queue", h: "/practice#review", k: "page" },
@@ -87,7 +95,16 @@ export function searchIndex(): SearchEntry[] {
     { t: book.title, h: `/system-design/${book.id}`, k: "book" as const },
     ...designChapters(book).map((c): SearchEntry => ({ t: c.title, h: `/system-design/${book.id}/${c.id}`, k: "chapter", s: book.title })),
   ]);
-  return [...pages, ...lists, ...problems, ...lessons, ...guides];
+  const ba = (["beginner", "senior"] as const).flatMap(track => {
+    const root = track === "senior" ? "/business-analyst/senior" : "/business-analyst";
+    return listBaChapters(track).flatMap(chapter => [
+      { t: chapter.title, h: `${root}/${chapter.id}`, k: "chapter" as const, s: `${track} Business Analyst` },
+      ...chapter.lessons.map(lesson => ({ t: lesson.title, h: `${root}/${chapter.id}#lesson-${lesson.n}`, k: "lesson" as const, s: chapter.title })),
+    ]);
+  });
+  const exercises = labs.map(lab => ({ t: lab.title, h: `/practice/labs/${lab.id}`, k: "page" as const, s: lab.summary }));
+  exercises.push({ t: "Interactive business SQL exercises", h: "/practice/labs/sql", k: "page", s: "SQLite joins aggregation window functions reconciliation" });
+  return [...pages, ...lists, ...problems, ...lessons, ...guides, ...ba, ...exercises];
 }
 
 /** Options for the list switcher on list pages. */

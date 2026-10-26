@@ -14,7 +14,7 @@ export function generateStaticParams() {
   return [...lcAuthored()].map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: Readonly<{ params: Promise<{ slug: string }> }>): Promise<Metadata> {
   const problem = getLcProblem((await params).slug);
   return { title: problem ? `${problem.meta.number}. ${problem.meta.title}` : "Problem" };
 }
@@ -64,7 +64,7 @@ export default async function LcProblemPage({ params }: Readonly<{ params: Promi
           </div>
           <LessonContent blocks={[{ t: "html", html: problem.statementHtml }]} />
           {spec.kind !== "sql" && (
-            <ProblemCoach info={{ topics: meta.topics, pattern: meta.pattern, hint: meta.hint, time: meta.time, space: meta.space }} />
+            <ProblemCoach progressId={`lc:${slug}`} info={{ topics: meta.topics, pattern: meta.pattern, hint: meta.hint, time: meta.time, space: meta.space }} />
           )}
         </>
       }

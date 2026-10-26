@@ -64,6 +64,7 @@ test("a mock interview hides walkthroughs and accepted problems join the review 
   await expect(page.getByTitle("Mock interview: walkthroughs are hidden until you finish")).toBeVisible();
   await page.getByRole("tab", { name: "Solution" }).click();
   await expect(page.getByText("The walkthrough is hidden during your mock interview")).toBeVisible();
+  expect(await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem("ip:learning-evidence:v1") ?? "{}") as Record<string, { solutions: number }[]>).flat().reduce((sum, attempt) => sum + attempt.solutions, 0))).toBe(0);
 
   await page.goto("/practice");
   await page.getByRole("button", { name: "End interview" }).click();

@@ -6,6 +6,8 @@ import { NavBar, SiteFooter } from "@/components/NavBar";
 import { LessonContent } from "@/components/LessonContent";
 import { MarkRead } from "@/components/MarkRead";
 import { ReaderTools } from "@/components/ReaderTools";
+import { StudyActions } from "@/components/StudyActions";
+import { ContentFreshness } from "@/components/ContentFreshness";
 import { getCourse, getLesson, hrefFor, neighbors, renderBlocks } from "@/lib/content";
 
 export function generateStaticParams() {
@@ -42,6 +44,7 @@ export default async function LessonPage({ params }: PageProps) {
           <span>{chapter?.title}</span>
         </nav>
         <article className="reader-page rounded-2xl border border-line bg-layer-1 px-5 py-7 sm:px-10 sm:py-10">
+          <StudyActions href={`/learn/${id}`} title={lesson.title} section="Patterns" />
           <ReaderTools targetId="reader-content" />
           <div id="reader-content" data-reader-content>
             <h1 className="mb-6 text-3xl font-semibold tracking-tight">{lesson.title}</h1>
@@ -51,6 +54,7 @@ export default async function LessonPage({ params }: PageProps) {
             <MarkRead id={lesson.id} />
           </div>
         </article>
+        <ContentFreshness contentId="course:grokking" />
         <div className="mt-6 flex justify-between gap-4 text-sm">
           {prev ? (
             <Link

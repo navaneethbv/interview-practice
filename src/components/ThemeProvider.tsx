@@ -2,10 +2,29 @@
 
 import { ThemeProvider as NextThemes, useTheme } from "next-themes";
 import { Check, Moon, Palette, Sun } from "lucide-react";
-import { createContext, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { safeGet, safeSet } from "@/lib/storage";
+import {
+  APPEARANCE_KEY,
+  isAppearance,
+  type Appearance,
+  type PaletteId,
+} from "@/lib/appearance-data";
 
-type PaletteId = "classic" | "ocean" | "sage" | "sand" | "rose" | "lavender";
-type PaletteOption = Readonly<{ id: PaletteId; light: string; dark: string; swatch: string }>;
+type PaletteOption = Readonly<{
+  id: PaletteId;
+  light: string;
+  dark: string;
+  swatch: string;
+}>;
 
 const PALETTES: PaletteOption[] = [
   { id: "classic", light: "Classic", dark: "Graphite", swatch: "#e8930c" },
@@ -32,8 +51,55 @@ function subscribeToPalette(callback: () => void) {
 }
 
 function getPaletteSnapshot(): PaletteId {
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-  return isPalette(saved) ? saved : "classic";
+  return readAppearance().palette;
+}
+
+function readAppearance(): Appearance {
+  try {
+    const value: unknown = JSON.parse(safeGet(APPEARANCE_KEY) ?? "null");
+    if (isAppearance(value)) return value;
+  } catch {
+    /* Fall back to legacy preferences. */
+  }
+  const palette = safeGet(STORAGE_KEY);
+  const mode = safeGet("theme");
+  return {
+    palette: isPalette(palette) ? palette : "classic",
+    mode: mode === "light" || mode === "dark" ? mode : "system",
+  };
+}
+function saveMode(mode: Appearance["mode"]) {
+  safeSet(APPEARANCE_KEY, JSON.stringify({ ...readAppearance(), mode }));
+  window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
+}
+function AppearanceMode() {
+  const { theme, setTheme } = useTheme();
+  const raw = useSyncExternalStore(
+    subscribeToPalette,
+    () => safeGet(APPEARANCE_KEY),
+    () => null,
+  );
+  const applied = useRef<string | null>(null);
+  useEffect(() => {
+    if (safeGet(APPEARANCE_KEY) !== null) return;
+    safeSet(APPEARANCE_KEY, JSON.stringify(readAppearance()));
+    window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
+  }, []);
+  useEffect(() => {
+    // Legacy next-themes storage events can change `theme` independently. Apply
+    // each canonical revision once to avoid tabs fighting over a pending write.
+    if (!raw || applied.current === raw) return;
+    try {
+      const value: unknown = JSON.parse(raw);
+      if (isAppearance(value)) {
+        applied.current = raw;
+        if (theme !== value.mode) setTheme(value.mode);
+      }
+    } catch {
+      /* Invalid imported preferences cannot change appearance. */
+    }
+  }, [raw, theme, setTheme]);
+  return null;
 }
 
 function getPaletteServerSnapshot(): PaletteId {
@@ -41,28 +107,45 @@ function getPaletteServerSnapshot(): PaletteId {
 }
 
 function savePalette(palette: PaletteId) {
-  window.localStorage.setItem(STORAGE_KEY, palette);
+  safeSet(APPEARANCE_KEY, JSON.stringify({ ...readAppearance(), palette }));
   document.documentElement.dataset.colorTheme = palette;
   window.dispatchEvent(new Event(PALETTE_CHANGE_EVENT));
 }
 
-const PaletteContext = createContext<Readonly<{
-  palette: PaletteId;
-  setPalette: (palette: PaletteId) => void;
-}>>({ palette: "classic", setPalette: savePalette });
+const PaletteContext = createContext<
+  Readonly<{
+    palette: PaletteId;
+    setPalette: (palette: PaletteId) => void;
+  }>
+>({ palette: "classic", setPalette: savePalette });
 
-export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  const palette = useSyncExternalStore(subscribeToPalette, getPaletteSnapshot, getPaletteServerSnapshot);
+export function ThemeProvider({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const palette = useSyncExternalStore(
+    subscribeToPalette,
+    getPaletteSnapshot,
+    getPaletteServerSnapshot,
+  );
 
   useEffect(() => {
     document.documentElement.dataset.colorTheme = palette;
   }, [palette]);
 
-  const contextValue = useMemo(() => ({ palette, setPalette: savePalette }), [palette]);
+  const contextValue = useMemo(
+    () => ({ palette, setPalette: savePalette }),
+    [palette],
+  );
 
   return (
     <PaletteContext.Provider value={contextValue}>
-      <NextThemes attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <NextThemes
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <AppearanceMode />
         {children}
       </NextThemes>
     </PaletteContext.Provider>
@@ -75,7 +158,11 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={() => setTheme(dark ? "light" : "dark")}
+      onClick={() => {
+        const mode = dark ? "light" : "dark";
+        saveMode(mode);
+        setTheme(mode);
+      }}
       className="grid size-8 shrink-0 place-items-center rounded-md text-fg-2 transition-colors hover:bg-layer-2 hover:text-fg-1"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
@@ -122,17 +209,23 @@ export function ColorThemePicker() {
         <Palette size={17} />
       </button>
       {open && (
-        <section
-          role="dialog"
+        <dialog
+          open
           aria-label="Color themes"
-          className="absolute top-full right-0 z-[70] mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
+          className="absolute top-full right-0 left-auto z-[70] m-0 mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
         >
           <p className="px-1 pb-2 text-sm font-semibold">Appearance</p>
-          <div className="mb-3 grid grid-cols-2 gap-1 rounded-xl bg-layer-2 p-1" role="group" aria-label="Color mode">
+          <fieldset
+            className="mb-3 grid min-w-0 grid-cols-2 gap-1 rounded-xl bg-layer-2 p-1"
+            aria-label="Color mode"
+          >
             <button
               type="button"
               aria-pressed={!dark}
-              onClick={() => setTheme("light")}
+              onClick={() => {
+                saveMode("light");
+                setTheme("light");
+              }}
               className={`inline-flex h-9 items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors ${!dark ? "bg-layer-1 text-fg-1 shadow-card" : "text-fg-3 hover:text-fg-1"}`}
             >
               <Sun size={15} /> Light
@@ -140,13 +233,18 @@ export function ColorThemePicker() {
             <button
               type="button"
               aria-pressed={dark}
-              onClick={() => setTheme("dark")}
+              onClick={() => {
+                saveMode("dark");
+                setTheme("dark");
+              }}
               className={`inline-flex h-9 items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors ${dark ? "bg-layer-1 text-fg-1 shadow-card" : "text-fg-3 hover:text-fg-1"}`}
             >
               <Moon size={15} /> Dark
             </button>
-          </div>
-          <p className="px-1 pb-2 text-xs font-medium text-fg-3">{dark ? "Dark themes" : "Light themes"}</p>
+          </fieldset>
+          <p className="px-1 pb-2 text-xs font-medium text-fg-3">
+            {dark ? "Dark themes" : "Light themes"}
+          </p>
           <div className="grid grid-cols-2 gap-1.5">
             {PALETTES.map((item) => (
               <button
@@ -156,13 +254,25 @@ export function ColorThemePicker() {
                 onClick={() => setPalette(item.id)}
                 className={`flex min-w-0 items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition-colors ${palette === item.id ? "border-brand bg-brand-soft text-fg-1" : "border-transparent text-fg-2 hover:bg-layer-2"}`}
               >
-                <span className="size-3.5 shrink-0 rounded-full ring-1 ring-black/10" style={{ backgroundColor: item.swatch }} aria-hidden />
-                <span className="min-w-0 flex-1 truncate">{dark ? item.dark : item.light}</span>
-                {palette === item.id && <Check size={14} className="shrink-0 text-brand" aria-hidden />}
+                <span
+                  className="size-3.5 shrink-0 rounded-full ring-1 ring-black/10"
+                  style={{ backgroundColor: item.swatch }}
+                  aria-hidden
+                />
+                <span className="min-w-0 flex-1 truncate">
+                  {dark ? item.dark : item.light}
+                </span>
+                {palette === item.id && (
+                  <Check
+                    size={14}
+                    className="shrink-0 text-brand"
+                    aria-hidden
+                  />
+                )}
               </button>
             ))}
           </div>
-        </section>
+        </dialog>
       )}
     </div>
   );

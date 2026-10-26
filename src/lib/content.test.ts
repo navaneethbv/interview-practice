@@ -52,3 +52,16 @@ test("loads optional solution content without publishing walkthroughs as problem
     fs.rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test("syntax highlighting exposes both theme colors without inline color overrides", async () => {
+  const { highlight } = await import("./content");
+  const { load } = await import("cheerio");
+  const document = load(await highlight("def total(values):\n    return sum(values)", "python"));
+  const styles = document(".shiki, .shiki span[style]").toArray().map((node) => document(node).attr("style") ?? "");
+  assert.ok(styles.length > 1);
+  for (const style of styles) {
+    assert.match(style, /--shiki-light:/);
+    assert.match(style, /--shiki-dark:/);
+    assert.doesNotMatch(style, /(?:^|;)\s*(?:color|background-color):/);
+  }
+});

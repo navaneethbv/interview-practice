@@ -1,0 +1,1337 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "set:ctci",
+      "title": "Cracking the Coding Interview",
+      "href": "/problems/sets/ctci",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Official CTCI site",
+          "url": "https://www.crackingthecodinginterview.com/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:bctci",
+      "title": "Beyond Cracking the Coding Interview",
+      "href": "/problems/sets/bctci",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "BCTCI online materials",
+          "url": "https://start.interviewing.io/beyond-ctci/all-problems/technical-topics"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:sql-50",
+      "title": "SQL 50",
+      "href": "/problems/sets/sql-50",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "LeetCode SQL 50 study plan",
+          "url": "https://leetcode.com/studyplan/top-sql-50/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:concurrency",
+      "title": "Concurrency",
+      "href": "/problems/sets/concurrency",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:object-oriented-design",
+      "title": "Object-Oriented Design",
+      "href": "/problems/sets/object-oriented-design",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:ml-coding",
+      "title": "ML Coding",
+      "href": "/problems/sets/ml-coding",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:blind-75",
+      "title": "Blind 75",
+      "href": "/problems/sets/blind-75",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:grind-75",
+      "title": "Grind 75",
+      "href": "/problems/sets/grind-75",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:neetcode-150",
+      "title": "NeetCode 150",
+      "href": "/problems/sets/neetcode-150",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": "2026-10-04",
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Official NeetCode catalog, reviewed October 4, 2026",
+          "url": "https://github.com/neetcode-gh/leetcode/blob/5a3c1b2d59b4e5c6252006343d73849ebc75f796/.problemSiteData.json"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Review date is explicitly recorded in the existing catalog source label. The pinned source revision has no recorded publication date here."
+    },
+    {
+      "id": "set:grind-169",
+      "title": "Grind 169",
+      "href": "/problems/sets/grind-169",
+      "contentPath": "content/sets/sets.json",
+      "kind": "curated",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "No verified content review is recorded. Catalog inclusion and repository updates are not source publication dates."
+    },
+    {
+      "id": "set:meta",
+      "title": "Meta",
+      "href": "/problems/sets/meta",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/meta"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:google",
+      "title": "Google",
+      "href": "/problems/sets/google",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/google"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:amazon",
+      "title": "Amazon",
+      "href": "/problems/sets/amazon",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/amazon"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:apple",
+      "title": "Apple",
+      "href": "/problems/sets/apple",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/apple"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:microsoft",
+      "title": "Microsoft",
+      "href": "/problems/sets/microsoft",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/microsoft"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:uber",
+      "title": "Uber",
+      "href": "/problems/sets/uber",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/uber"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:nvidia",
+      "title": "NVIDIA",
+      "href": "/problems/sets/nvidia",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/nvidia"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:openai",
+      "title": "OpenAI",
+      "href": "/problems/sets/openai",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/openai"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "set:anthropic",
+      "title": "Anthropic",
+      "href": "/problems/sets/anthropic",
+      "contentPath": "content/sets/sets.json",
+      "kind": "snapshot",
+      "sourceDate": "2026-07-12",
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-27",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "LeetCode tag snapshot \u00b7 2026-07-12",
+          "url": "https://github.com/snehasishroy/leetcode-companywise-interview-questions/tree/e095c259cfd036e3ddb6886e84d7075c2faac477/anthropic"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "c4db33f",
+          "summary": "feat(content): add NVIDIA, OpenAI and Anthropic company lists"
+        }
+      ],
+      "notes": "Source snapshot date is stated in the catalog. Company tags and candidate reports are observations, not guarantees about an interview."
+    },
+    {
+      "id": "book:advanced",
+      "title": "Grokking the Advanced System Design Interview",
+      "href": "/system-design/advanced",
+      "contentPath": "content/system-design/advanced/index.json",
+      "kind": "imported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        },
+        {
+          "date": "2026-09-28",
+          "commit": "b05a6ef",
+          "summary": "Rebuild system design as a read-only book reader (#12)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:ai-assisted",
+      "title": "AI-Assisted Coding Interviews",
+      "href": "/system-design/ai-assisted",
+      "contentPath": "content/system-design/ai-assisted/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-11",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Formation on AI-assisted interviews",
+          "url": "https://formation.dev/blog/ai-assisted-coding-interviews"
+        },
+        {
+          "label": "Exponent on Google's AI coding interview",
+          "url": "https://www.tryexponent.com/blog/google-ai-coding-interview"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:ai-design",
+      "title": "AI System Design Practice",
+      "href": "/system-design/ai-design",
+      "contentPath": "content/system-design/ai-design/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-05",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Anthropic engineering",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        },
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:alex-xu",
+      "title": "System Design Interview Notes",
+      "href": "/system-design/alex-xu",
+      "contentPath": "content/system-design/alex-xu/index.json",
+      "kind": "imported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "ByteByteGo",
+          "url": "https://bytebytego.com/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-09-28",
+          "commit": "9f6e47b",
+          "summary": "feat: expand interview practice content (#14)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:behavioral",
+      "title": "Behavioral and Leadership Interviews",
+      "href": "/system-design/behavioral",
+      "contentPath": "content/system-design/behavioral/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-05",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Amazon interview preparation",
+          "url": "https://amazon.jobs/content/en/how-we-hire/sde-ii-interview-prep"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        },
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:career",
+      "title": "Resume, Job Search and Offers",
+      "href": "/system-design/career",
+      "contentPath": "content/system-design/career/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-11",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:case-studies",
+      "title": "System Design Case Studies",
+      "href": "/system-design/case-studies",
+      "contentPath": "content/system-design/case-studies/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-11",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-25",
+          "commit": "27a6e37",
+          "summary": "Add recent system design interview practice cases (#31)"
+        },
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:ctci",
+      "title": "CTCI System Design Notes",
+      "href": "/system-design/ctci",
+      "contentPath": "content/system-design/ctci/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-09-28",
+          "commit": "9f6e47b",
+          "summary": "feat: expand interview practice content (#14)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:data-systems",
+      "title": "Data Systems Notes",
+      "href": "/system-design/data-systems",
+      "contentPath": "content/system-design/data-systems/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "DDIA official site",
+          "url": "https://dataintensive.net/"
+        },
+        {
+          "label": "Database Internals on O'Reilly",
+          "url": "https://www.oreilly.com/library/view/database-internals/9781492040330/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        },
+        {
+          "date": "2026-09-28",
+          "commit": "9f6e47b",
+          "summary": "feat: expand interview practice content (#14)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:domain-design",
+      "title": "Domain and Software Design Notes",
+      "href": "/system-design/domain-design",
+      "contentPath": "content/system-design/domain-design/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Code Simplicity",
+          "url": "https://www.codesimplicity.com/"
+        },
+        {
+          "label": "Domain Language",
+          "url": "https://www.domainlanguage.com/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-09-28",
+          "commit": "9f6e47b",
+          "summary": "feat: expand interview practice content (#14)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:frontend",
+      "title": "Frontend Interviews",
+      "href": "/system-design/frontend",
+      "contentPath": "content/system-design/frontend/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-11",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "web.dev Core Web Vitals",
+          "url": "https://web.dev/articles/vitals"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:fundamentals",
+      "title": "CS Fundamentals Quick Reference",
+      "href": "/system-design/fundamentals",
+      "contentPath": "content/system-design/fundamentals/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-11",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:grokking",
+      "title": "Grokking the System Design Interview",
+      "href": "/system-design/grokking",
+      "contentPath": "content/system-design/grokking/index.json",
+      "kind": "imported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-09-28",
+          "commit": "b05a6ef",
+          "summary": "Rebuild system design as a read-only book reader (#12)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:linux-operations",
+      "title": "Linux and Operations Notes",
+      "href": "/system-design/linux-operations",
+      "contentPath": "content/system-design/linux-operations/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Linux Pocket Guide",
+          "url": "https://www.oreilly.com/library/view/linux-pocket-guide/9781098157951/"
+        },
+        {
+          "label": "UNIX and Linux Administration Handbook",
+          "url": "https://www.admin.com/"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        },
+        {
+          "date": "2026-09-28",
+          "commit": "9f6e47b",
+          "summary": "feat: expand interview practice content (#14)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:low-level-design",
+      "title": "Low-Level Design Practice",
+      "href": "/system-design/low-level-design",
+      "contentPath": "content/system-design/low-level-design/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-05",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Amazon technical topics",
+          "url": "https://amazon.jobs/content/en/how-we-hire/interview-prep/software-development-topics"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-11",
+          "commit": "eb1a454",
+          "summary": "feat(content): add and expand interview guides"
+        },
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:notes",
+      "title": "System Design Interview Notes",
+      "href": "/system-design/notes",
+      "contentPath": "content/system-design/notes/index.json",
+      "kind": "imported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-28",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-09-28",
+          "commit": "b05a6ef",
+          "summary": "Rebuild system design as a read-only book reader (#12)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "book:testing-debugging",
+      "title": "Testing, Debugging, and Code Review",
+      "href": "/system-design/testing-debugging",
+      "contentPath": "content/system-design/testing-debugging/index.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-05",
+      "reviewIntervalDays": 180,
+      "sources": [
+        {
+          "label": "Microsoft technical interviews",
+          "url": "https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing.html"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-05",
+          "commit": "81e6458",
+          "summary": "feat(content): expand interview preparation material (#17)"
+        }
+      ],
+      "notes": "Review needed: no verified source publication or editorial review date is recorded. Repository history only records local changes."
+    },
+    {
+      "id": "course:grokking",
+      "title": "Grokking coding patterns",
+      "href": "/learn",
+      "contentPath": "content/courses/grokking/course.json",
+      "kind": "imported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-09-26",
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [
+        {
+          "date": "2026-09-26",
+          "commit": "ee97320",
+          "summary": "Add Grokking course ingestion and extracted lesson content"
+        }
+      ],
+      "notes": "Imported course material; source publication and editorial review dates are unknown."
+    },
+    {
+      "id": "reports:1point3acres",
+      "title": "1point3acres company reports",
+      "href": "/problems",
+      "contentPath": "scripts/ingest/company_report_observations.json",
+      "kind": "reported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-12",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/amazon"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/anthropic"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/apple"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/google"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/meta"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/microsoft"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/nvidia"
+        },
+        {
+          "label": "1point3acres",
+          "url": "https://www.1point3acres.com/interview/problems/company/uber"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        }
+      ],
+      "observedAt": "2026-10-13",
+      "notes": "Observed date records collection, not an interview date or verification. Reported date is the latest source-reported last-asked date, where available; these reports are not independently verified."
+    },
+    {
+      "id": "reports:gothamloop",
+      "title": "gothamloop company reports",
+      "href": "/problems",
+      "contentPath": "scripts/ingest/company_report_observations.json",
+      "kind": "reported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-12",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "gothamloop",
+          "url": "https://www.gothamloop.com/anthropic"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        }
+      ],
+      "observedAt": "2026-10-13",
+      "notes": "Observed date records collection, not an interview date or verification. Reported date is the latest source-reported last-asked date, where available; these reports are not independently verified."
+    },
+    {
+      "id": "reports:hellointerview",
+      "title": "hellointerview company reports",
+      "href": "/problems",
+      "contentPath": "scripts/ingest/company_report_observations.json",
+      "kind": "reported",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": "2026-10-12",
+      "reviewIntervalDays": 90,
+      "sources": [
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/maximum-coins-from-k-consecutive-bags/112756e1-20fc-4f02-9959-6fe4b3b55dcf"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/sliding-window-rate-limiter/cmni1bvsy02uw0dadl09u4g1r"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/http-route-matching/cmou3jp0m13rl0cadz84s19xd"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/hit-counter/cm5eh7nri04x2838ob5n06oin"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/key-value-ttl/cmjxixyya02aj07adok8leqq5"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/follow-graph-recommendations/cmobtcld30s420fadjyp8zgv3"
+        },
+        {
+          "label": "hellointerview",
+          "url": "https://www.hellointerview.com/community/questions/circuit-breaker-client/cmk5b2t4p00xh08advuhtl6x6"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-10-12",
+          "commit": "1f33dbe",
+          "summary": "Refresh company sources and preserve dated interview evidence"
+        },
+        {
+          "date": "2026-10-12",
+          "commit": "e5acd7c",
+          "summary": "Add reviewed website interview questions and runnable practice exercises"
+        }
+      ],
+      "observedAt": "2026-10-12",
+      "notes": "Observed date records collection, not an interview date or verification. Reported date is the latest source-reported last-asked date, where available; these reports are not independently verified. Approximate periods are retained verbatim; the source date scope spans all listed companies and does not establish an individual company interview date.",
+      "reportedPeriods": [
+        "Early October, 2026",
+        "Late August, 2026",
+        "Late September, 2026",
+        "Mid September, 2026"
+      ]
+    },
+    {
+      "id": "practice:interviews",
+      "title": "Interview simulation prompts",
+      "href": "/practice/interviews",
+      "contentPath": "content/interviews/scenarios.json",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": null,
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [],
+      "notes": "Original practice material. Source publication date does not apply; no verified editorial review is recorded."
+    },
+    {
+      "id": "practice:labs",
+      "title": "Debugging and review labs",
+      "href": "/practice/labs",
+      "contentPath": "content/labs",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": null,
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [],
+      "notes": "Original practice material. Source publication date does not apply; no verified editorial review is recorded."
+    },
+    {
+      "id": "business-analyst",
+      "title": "Business analyst learning track",
+      "href": "/business-analyst",
+      "contentPath": "content/business-analyst",
+      "kind": "authored",
+      "sourceDate": null,
+      "reportedAt": null,
+      "reviewedAt": null,
+      "addedAt": null,
+      "reviewIntervalDays": 180,
+      "sources": [],
+      "history": [],
+      "notes": "Original practice material. Source publication date does not apply; no verified editorial review is recorded."
+    }
+  ]
+}

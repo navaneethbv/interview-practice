@@ -5,6 +5,7 @@ import { NavBar, SiteFooter } from "@/components/NavBar";
 import { PageHeader } from "@/components/PageHeader";
 import { ProgressPanel } from "@/components/ProgressPanel";
 import { SetTable } from "@/components/SetTable";
+import { ContentFreshness } from "@/components/ContentFreshness";
 import { switcherOptions } from "@/lib/catalog";
 import { getSet, listSets, setRows } from "@/lib/content";
 import { lcProgressId } from "@/lib/content-types";
@@ -15,7 +16,7 @@ export function generateStaticParams() {
   return listSets().map((s) => ({ setId: s.id }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ setId: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: Readonly<{ params: Promise<{ setId: string }> }>): Promise<Metadata> {
   return { title: getSet((await params).setId)?.title ?? "Problems" };
 }
 
@@ -42,6 +43,7 @@ export default async function SetPage({ params }: Readonly<{ params: Promise<{ s
         )}
       </PageHeader>
       <main className="mx-auto max-w-6xl px-4 py-6">
+        <ContentFreshness contentId={`set:${setId}`} />
         {set.snapshotDate && (
           <p className="mb-4 text-sm text-fg-3">
             “Last 30 days”, “Last 3 months” and “Last 6 months” refer to the snapshot ending on{" "}

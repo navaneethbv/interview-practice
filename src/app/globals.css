@@ -108,6 +108,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media (max-width: 1279.98px) {
+  .navbar-brand-text { display: none; }
+}
+
 /* Soft brand glow behind page headers. */
 .hero-glow {
   background-image:
@@ -239,7 +243,7 @@ body {
 /* ------------------------------------------------------------ system design reader */
 
 .prose-reader {
-  font-size: 16.5px;
+  font-size: clamp(15.5px, calc(0.3vw + 14px), 17.5px);
   line-height: 1.8;
 }
 .prose-reader h2 {
@@ -372,11 +376,15 @@ body {
 /* ------------------------------------------------------------ shiki dual themes */
 
 .shiki {
-  background: transparent !important;
+  background: transparent;
+}
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
 }
 .dark .shiki,
 .dark .shiki span {
-  color: var(--shiki-dark) !important;
+  color: var(--shiki-dark);
 }
 
 
@@ -581,29 +589,29 @@ html.reader-mode-active body {
 }
 
 html.reader-mode-active body * {
-  visibility: hidden !important;
+  visibility: hidden;
 }
 
 html.reader-mode-active .reader-page,
 html.reader-mode-active .reader-page * {
-  visibility: visible !important;
+  visibility: visible;
 }
 
 html.reader-mode-active .reader-page {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 100 !important;
-  width: 100vw !important;
-  max-width: none !important;
-  height: 100dvh !important;
-  max-height: none !important;
-  overflow-y: auto !important;
-  margin: 0 !important;
-  padding: clamp(1.25rem, 4vw, 3.5rem) max(1rem, env(safe-area-inset-right)) clamp(2rem, 5vw, 4rem) max(1rem, env(safe-area-inset-left)) !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: var(--bg) !important;
-  box-shadow: none !important;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  overflow-y: auto;
+  margin: 0;
+  padding: clamp(1.25rem, 4vw, 3.5rem) max(1rem, env(safe-area-inset-right)) clamp(2rem, 5vw, 4rem) max(1rem, env(safe-area-inset-left));
+  border: 0;
+  border-radius: 0;
+  background: var(--bg);
+  box-shadow: none;
 }
 
 html.reader-mode-active .reader-page > * {
@@ -614,7 +622,7 @@ html.reader-mode-active .reader-page > * {
 }
 
 html.reader-mode-active .reader-hide {
-  display: none !important;
+  display: none;
 }
 
 html.reader-mode-active [data-reader-controls] {
@@ -632,9 +640,6 @@ html.reader-mode-active [data-reader-controls] {
   max-width: min(88rem, 100%);
 }
 
-.prose-reader {
-  font-size: clamp(15.5px, calc(0.3vw + 14px), 17.5px);
-}
 
 .prose-lesson .katex-display,
 .prose-reader .katex-display,

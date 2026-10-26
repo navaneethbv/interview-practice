@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NavBar, SiteFooter } from "@/components/NavBar";
 import { ChapterView } from "@/components/ba/ChapterView";
+import { ContentFreshness } from "@/components/ContentFreshness";
 import { getBaBank, getBaChapter, getBaIndex, getBaTips, type BaTrack } from "@/lib/ba-content";
 
 type PageProps = Readonly<{ params: Promise<{ chapter: string }> }>;
@@ -37,6 +38,7 @@ export function createBaChapterRoute(track: BaTrack) {
       <>
         <NavBar />
         <main className="px-4 pt-6 pb-16 sm:pt-8">
+          <div className="mx-auto max-w-[46rem]"><ContentFreshness contentId="business-analyst" /></div>
           <ChapterView
             chapter={{
               id: chapter.id,
