@@ -6,6 +6,7 @@ import type { BaQuestion } from "./ba-data";
 import indexJson from "../../content/business-analyst/index.json";
 import seniorIndexJson from "../../content/business-analyst/senior/index.json";
 import tipsJson from "../../content/business-analyst/tips.json";
+import seniorTipsJson from "../../content/business-analyst/senior/tips.json";
 
 /**
  * Loads the Business Analyst course from content/business-analyst/. Each chapter is one
@@ -114,7 +115,7 @@ export const getBaBank = cache((id: string, track: BaTrack = "beginner"): BaQues
 
 export const listBaChapters = cache((track: BaTrack = "beginner") => getBaIndex(track).chapters.map((c) => getBaChapter(c.id, track)).filter((c): c is BaChapter => c !== null));
 
-export const getBaTips = cache((): string[] => tipsJson);
+export const getBaTips = cache((track: BaTrack = "beginner"): string[] => track === "senior" ? seniorTipsJson : tipsJson);
 
 /** Lightweight chapter summaries for client components (no lesson HTML). */
 export function baOutline(track: BaTrack = "beginner") {
