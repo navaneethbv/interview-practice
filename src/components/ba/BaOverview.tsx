@@ -112,14 +112,14 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize, co
 
   return (
     <>
-      {tourOpen && <Tour onClose={closeTour} />}
+      {tourOpen && <Tour onClose={closeTour} courseTitle={trackLabel} chapterCount={outline.length} quizSize={quizSize} passPercent={passPercent} finalSize={finalSize} bankSize={Math.min(...outline.map((c) => c.questions))} />}
 
       <div className="hero-glow border-b border-line">
         <section className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:py-12 lg:grid-cols-[1fr_minmax(0,24rem)] lg:items-end">
           <div className="max-w-2xl">
             <p className="mb-3 text-xs font-semibold tracking-[0.16em] text-brand uppercase">{trackLabel}</p>
             <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-[2.4rem] sm:leading-[1.1]">
-              From the basics to interview-ready, one short lesson at a time.
+              {headline}
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-fg-2">
               {outline.length} chapters · {totalLessons} bite-size lessons · a {quizSize}-question quiz after each chapter
