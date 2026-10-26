@@ -1,0 +1,259 @@
+[
+  {
+    "id": "sd-ticketing",
+    "track": "system-design",
+    "title": "A fair ticket sale",
+    "brief": "Design a ticket booking service for a global concert launch. Users search events, reserve seats briefly and pay without overselling.",
+    "context": [
+      "A stadium has 60,000 seats; 2 million buyers may arrive in the first minute.",
+      "Payment confirmation can arrive after a reservation expires. Customers refresh aggressively.",
+      "The business values fair access and correct inventory over a perfectly fresh seat map."
+    ],
+    "followUps": [
+      "The payment provider times out after charging the buyer. How do you reconcile this without issuing two tickets?",
+      "A hot event overwhelms one inventory partition. What protects the authoritative write path?",
+      "The primary region fails during checkout. Which operations remain available?"
+    ],
+    "debrief": [
+      "Separate cached discovery from authoritative inventory. An atomic conditional transition can reserve an available seat with an expiry and version.",
+      "Treat payment and booking as a recoverable workflow: idempotency keys, durable events, reconciliation and explicit refund rules for late payments.",
+      "A waiting room and admission control protect capacity. Quantify the hot key limit; partitioning alone does not solve contention on a single seat.",
+      "Alert on reservation-to-payment latency, oversell invariants, queue age and reconciliation backlog; enforce per-user limits and audit access."
+    ]
+  },
+  {
+    "id": "sd-notifications",
+    "track": "system-design",
+    "title": "Reliable notifications",
+    "brief": "Design a multi-channel notification platform for transactional email, SMS and push with user preferences.",
+    "context": [
+      "10 million users receive an average of 8 messages daily; product launches create 20\u00d7 peaks.",
+      "Password reset messages should arrive within seconds. Marketing messages can wait.",
+      "Providers may duplicate callbacks, throttle requests or fail for an hour."
+    ],
+    "followUps": [
+      "A provider accepts a message but the request times out. Can you promise exactly-once delivery?",
+      "A user opts out while a campaign is queued. Where is consent checked?",
+      "One tenant sends 90% of traffic. How do you preserve other tenants\u2019 latency?"
+    ],
+    "debrief": [
+      "Separate priority queues and per-tenant quotas; estimate throughput and peak drain time rather than provisioning from daily averages.",
+      "Persist message intent and idempotency identifiers. At-least-once processing plus deduplication reduces duplicates but cannot guarantee external exactly-once delivery.",
+      "Check consent at send time, minimize retained content and protect reset links; give retries a bounded lifetime.",
+      "Measure end-to-end age by priority, delivery success, suppression and provider error rates; include dead-letter inspection and replay controls."
+    ]
+  },
+  {
+    "id": "sd-files",
+    "track": "system-design",
+    "title": "Team file sharing",
+    "brief": "Design a secure team file sharing service with large uploads, version history and expiring share links.",
+    "context": [
+      "Five million users store an average of 2 GB each. Files range from 1 KB to 10 GB.",
+      "A team can revoke a public link immediately; some users work on unreliable networks.",
+      "Customers request audit history and a defined deletion policy."
+    ],
+    "followUps": [
+      "An upload completes but the metadata transaction fails. How are orphaned objects cleaned up?",
+      "A revoked link still has a cached download response. What guarantee can you make?",
+      "Two people edit the same version offline. How does your product surface the conflict?"
+    ],
+    "debrief": [
+      "Keep binary objects in object storage and metadata, versions and access rules in an indexed transactional store. Use resumable multipart upload with checksums.",
+      "Make upload completion idempotent and reconcile orphaned parts; distinguish garbage collection from user-visible deletion and retention obligations.",
+      "Use short-lived scoped download credentials and authorize each link resolution. CDN lifetime bounds revocation guarantees; document that tradeoff.",
+      "Use optimistic concurrency for conflicting versions; audit security-sensitive events without logging secrets and monitor failed uploads, authorization denials and storage growth."
+    ]
+  },
+  {
+    "id": "sd-metrics",
+    "track": "system-design",
+    "title": "Near-real-time metrics",
+    "brief": "Design a product analytics pipeline that ingests events and serves near-real-time dashboards.",
+    "context": [
+      "100,000 events per second at peak, about 500 bytes each. Keep raw events for 30 days.",
+      "Dashboards show minute-level aggregates by tenant; a few tenants dominate volume.",
+      "Events arrive late, out of order and sometimes duplicated."
+    ],
+    "followUps": [
+      "A client changes its clock and sends events dated tomorrow. How are windows handled?",
+      "A dashboard total differs after a backfill. How do you explain and verify the correction?",
+      "A tenant asks to delete one person\u2019s historical events. Where is identity retained?"
+    ],
+    "debrief": [
+      "Estimate peak ingest at 50 MB/s and distinguish peak from sustained storage assumptions. Separate durable ingestion, stream processing and query-serving aggregates.",
+      "Use event identifiers, event and receive times, a lateness policy and versioned schemas; state whether results are provisional.",
+      "Partition to handle hot tenants; use bounded cardinality and preaggregation instead of promising arbitrary low-latency queries.",
+      "Plan backfill isolation, reconciliation, deletion propagation, tenant access control and freshness/lag alerts with traceable pipeline lineage."
+    ]
+  },
+  {
+    "id": "ba-onboarding",
+    "track": "business-analysis",
+    "title": "Reduce onboarding drop-off",
+    "brief": "A bank wants an \u201cAI onboarding assistant\u201d because only 45% of started applications reach completion. Discover the actual problem and propose an MVP.",
+    "context": [
+      "Compliance requires identity checks before activation. Operations reports many manual reviews.",
+      "Sales wants fewer questions; risk wants more evidence. The sponsor wants launch in six weeks.",
+      "The available funnel data does not distinguish voluntary exits from technical failures."
+    ],
+    "followUps": [
+      "Compliance says a proposed shortcut breaches policy. How do you make the tradeoff visible?",
+      "The sponsor calls all features \u201cmust-have.\u201d Show a defensible MVP cut.",
+      "Completion rises after launch, but a marketing campaign changed the applicant mix. How do you evaluate value?"
+    ],
+    "debrief": [
+      "Establish funnel definitions, customer segments and exit reasons before accepting the AI solution. Interview applicants, risk, support and operations.",
+      "Map handoffs and exception queues. Write acceptance criteria for missing documents, failed verification and accessible recovery.",
+      "Prioritize verified sources of friction with risk gates, effort and dependencies. Keep required controls and record the decision owner.",
+      "Trace UAT to requirements with synthetic identity data. Compare cohorts or an experiment, while tracking review effort, fraud and completion as guardrails."
+    ]
+  },
+  {
+    "id": "ba-returns",
+    "track": "business-analysis",
+    "title": "Fix a returns process",
+    "brief": "An online retailer receives complaints about slow refunds. Warehouse and finance teams blame one another. Lead analysis of the returns process.",
+    "context": [
+      "Customers see \u201creceived\u201d before warehouse inspection is complete. Finance batches refunds nightly.",
+      "Exceptions are handled in spreadsheets; some returns have no order reference.",
+      "A new system must be delivered before the holiday peak."
+    ],
+    "followUps": [
+      "Warehouse wants mandatory inspection for every item; finance wants automatic refunds. How do you resolve this?",
+      "An order contains two items but only one was returned. Write a UAT example.",
+      "The average refund time improves while the longest waits worsen. What do you report?"
+    ],
+    "debrief": [
+      "Map event definitions, queue waits, handoffs and exception ownership from return initiation to settled refund. Validate complaints with segment-level data.",
+      "Separate customer status from internal processing state. Acceptance criteria should cover partial returns, duplicate scans, missing references and failed refunds.",
+      "Compare risk-based automation against universal inspection; prioritize a traceable happy path plus owned exception handling before peak.",
+      "UAT should reconcile item, amount and payment records. Measure median and tail refund times, rework, errors and contact rate against a baseline."
+    ]
+  },
+  {
+    "id": "ba-scheduling",
+    "track": "business-analysis",
+    "title": "Clinic scheduling modernization",
+    "brief": "A clinic network wants to replace telephone appointment booking with a self-service portal. Define a safe, valuable first release.",
+    "context": [
+      "Reception staff handle cancellations and urgent requests differently across clinics.",
+      "Some patients need interpreters or cannot use a smartphone. Specialist appointments need referrals.",
+      "The sponsor wants lower call volume without increasing missed or inappropriate appointments."
+    ],
+    "followUps": [
+      "A clinic insists its exception is unique. How do you test whether customization is necessary?",
+      "Two patients select the final slot simultaneously. Specify expected behavior.",
+      "Call volume falls but no-shows rise. How should success be judged?"
+    ],
+    "debrief": [
+      "Elicit needs from patients, reception, clinicians and scheduling administrators; capture accessibility and assisted-channel needs.",
+      "Model slot availability, referral rules, cancellations and urgent triage. Define observable conflict handling and role permissions.",
+      "Choose a constrained appointment type or pilot clinic based on value and risk; document out-of-scope flows and dependencies on the record system.",
+      "Use synthetic patient records in UAT, test double booking and referral failures, and assign clinical sign-off. Measure call effort with access, no-show and safety guardrails."
+    ]
+  },
+  {
+    "id": "ba-reporting",
+    "track": "business-analysis",
+    "title": "One trusted revenue report",
+    "brief": "Finance and sales publish conflicting monthly revenue figures. The CFO asks for a single dashboard. Establish requirements and a delivery plan.",
+    "context": [
+      "Sales counts signed contracts; finance recognizes revenue over the service period.",
+      "Currencies, credits and late adjustments are handled inconsistently.",
+      "Executives want the dashboard in four weeks and insist existing reports are correct."
+    ],
+    "followUps": [
+      "The CFO asks you to remove reconciliation to meet the date. What options do you present?",
+      "A credit note arrives after month close. Specify how historical totals should behave.",
+      "How can a dashboard\u2019s business value be measured beyond page views?"
+    ],
+    "debrief": [
+      "Treat conflicting definitions as a business rule problem. Agree measures, grain, cutoff, currency and authoritative data owners before designing visuals.",
+      "Map lineage and adjustment controls. Specify recognized revenue separately from bookings and label the period and refresh status.",
+      "Prioritize reconciled core figures, documented exceptions and access control; make confidence and unresolved variances visible.",
+      "UAT should reconcile signed-off samples including FX, credits and late changes. Measure reporting effort, decision turnaround and variance resolution with accountable owners."
+    ]
+  },
+  {
+    "id": "behavior-ownership",
+    "track": "behavioral",
+    "title": "Ownership beyond your remit",
+    "brief": "Tell me about a time you took ownership of a problem that crossed team boundaries.",
+    "context": [
+      "Use a real work, volunteering or study example. Do not invent scale or responsibility.",
+      "Explain why intervention mattered and how you avoided bypassing the accountable owner."
+    ],
+    "followUps": [
+      "What did you personally do that would not otherwise have happened?",
+      "Who disagreed with your approach and how did you involve them?",
+      "What remained unresolved, and how did you hand over ownership?"
+    ],
+    "debrief": [
+      "A strong story states the gap, stakes and your bounded responsibility before describing the intervention.",
+      "Explain alignment and escalation, not only heroic extra hours. Distinguish your actions from others\u2019 work.",
+      "Use an honest outcome and describe a durable owner, process or monitoring change; reflect on whether earlier alignment would have helped."
+    ]
+  },
+  {
+    "id": "behavior-conflict",
+    "track": "behavioral",
+    "title": "Disagree and commit",
+    "brief": "Tell me about a meaningful disagreement with a colleague or stakeholder and how you handled it.",
+    "context": [
+      "Choose a disagreement with real stakes, not a harmless preference.",
+      "Represent the other person\u2019s reasoning fairly and protect confidential details."
+    ],
+    "followUps": [
+      "What evidence would have changed your mind?",
+      "What did you do after the decision went against your preferred option?",
+      "How did the relationship change, and what feedback did you receive?"
+    ],
+    "debrief": [
+      "Explain the competing goals and your assumptions without making the other person a villain.",
+      "Describe listening, evidence and a decision mechanism. Escalation may be appropriate when ownership or risk requires it.",
+      "A credible conclusion can be a compromise or a decision you opposed. Show professional follow-through and a specific lesson about working together."
+    ]
+  },
+  {
+    "id": "behavior-failure",
+    "track": "behavioral",
+    "title": "A failure you owned",
+    "brief": "Tell me about a mistake or failed initiative for which you were personally accountable.",
+    "context": [
+      "Choose an example where your decision or omission mattered.",
+      "Focus on accountability, repair and changed behavior; avoid confidential incident details."
+    ],
+    "followUps": [
+      "When did you first know the approach was failing and whom did you tell?",
+      "Which consequence was not repaired?",
+      "Give a later example that demonstrates you changed your behavior."
+    ],
+    "debrief": [
+      "State the intended result, your decision and what actually happened without shifting responsibility.",
+      "Explain containment, communication and repair proportionately; acknowledge harm that remained.",
+      "Connect root cause to a concrete habit or system change. A later example is stronger evidence of learning than saying you now \u201ccommunicate more.\u201d"
+    ]
+  },
+  {
+    "id": "behavior-return",
+    "track": "behavioral",
+    "title": "Returning to work",
+    "brief": "Rehearse how you would describe your return to work after a career break, and an example showing readiness for the role.",
+    "context": [
+      "Share only the personal context you choose. A brief neutral description of the break is sufficient.",
+      "You may use recent study, volunteering, caregiving logistics or earlier work as evidence; label the context honestly.",
+      "Focus on transferable skills and current preparation without apologizing for the break."
+    ],
+    "followUps": [
+      "Which part of this role would require the most ramp-up, and what is your plan?",
+      "Tell me about a recent challenge that demonstrates a relevant skill.",
+      "What support or working arrangement helps you do your best work? Share only what you want to disclose."
+    ],
+    "debrief": [
+      "Keep the transition explanation concise, voluntary and forward-looking. Personal medical or family details are not required.",
+      "Use a specific STAR example with your actions and credible results; do not equate course completion with professional experience.",
+      "Explain role-relevant refresh work, an achievable ramp-up plan and the evidence you can discuss. Treat readiness as current skills and learning, not the absence of a career break."
+    ]
+  }
+]
