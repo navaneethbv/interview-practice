@@ -12,7 +12,6 @@ import {
   Target,
 } from "lucide-react";
 import {
-  chapterStatuses,
   drawChapterQuiz,
   hasPassed,
   lessonKey,
@@ -46,7 +45,6 @@ interface Props {
   };
   bank: BaQuestion[];
   chapterIds: string[];
-  prev: { id: string; title: string } | null;
   next: { id: string; title: string } | null;
   quizSize: number;
   passPercent: number;
@@ -67,7 +65,6 @@ export function ChapterView({
   chapter,
   bank,
   chapterIds,
-  prev,
   next,
   quizSize,
   passPercent,
@@ -86,7 +83,6 @@ export function ChapterView({
   );
   const top = useRef<HTMLDivElement>(null);
 
-  const status = chapterStatuses(ba, chapterIds)[chapter.number - 1];
   const readCount = lessonsRead(ba, id, lessons.length);
   const allRead = readCount === lessons.length;
   const saved = ba.position[id];
@@ -106,16 +102,6 @@ export function ChapterView({
   };
 
   if (!hydrated) return <div className="min-h-[60vh]" aria-busy="true" />;
-
-  if (status === "locked")
-    return (
-      <LockedChapter
-        number={chapter.number}
-        title={chapter.title}
-        prev={prev}
-        routeBase={routeBase}
-      />
-    );
 
   const lesson = lessons[step - 1];
   const isRead = lesson ? !!ba.read[lessonKey(id, lesson.n)] : false;
@@ -292,55 +278,6 @@ export function ChapterView({
       <div className="mt-6 space-y-4">
         <TipCard tips={tips} compact />
         <NotesBox chapter={id} placeholder={notesPlaceholder} />
-      </div>
-    </div>
-  );
-}
-
-function LockedChapter({
-  number,
-  title,
-  prev,
-  routeBase,
-}: Readonly<{
-  number: number;
-  title: string;
-  prev: Props["prev"];
-  routeBase: string;
-}>) {
-  return (
-    <div className="mx-auto max-w-xl rounded-2xl border border-line bg-layer-1 p-7 text-center shadow-card">
-      <span className="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-layer-2 text-fg-3">
-        <Lock size={22} />
-      </span>
-      <p className="text-sm text-fg-3">Chapter {number}</p>
-      <h1 className="mt-1 text-2xl font-semibold tracking-tight">{title}</h1>
-      <p className="mt-3 text-fg-2">
-        This chapter unlocks when you pass the quiz for the previous chapter
-        {prev ? (
-          <>
-            , <b className="text-fg-1">{prev.title}</b>
-          </>
-        ) : (
-          ""
-        )}
-        .
-      </p>
-      <div className="mt-6 flex justify-center gap-2">
-        {prev && (
-          <Link
-            href={`${routeBase}/${prev.id}`}
-            className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90"
-          >
-            Go to {prev.title} <ArrowRight size={16} />
-          </Link>
-        )}
-        <Link
-          href={routeBase}
-          className="inline-flex h-10 items-center rounded-xl border border-line-strong px-4 text-sm font-medium hover:bg-layer-2"
-        >
-          All chapters
-        </Link>
       </div>
     </div>
   );

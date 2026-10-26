@@ -48,7 +48,7 @@ export function FinalView({ banks, size, passPercent, routeBase = "/business-ana
       ) : (
         <section className="rounded-2xl border border-line bg-layer-1 p-7 text-center shadow-card">
           <span className="mx-auto mb-4 grid size-12 place-items-center rounded-2xl bg-layer-2 text-fg-3"><Lock size={22} /></span>
-          <p className="text-fg-2">The final exam unlocks after you pass all {banks.length} chapter quizzes.</p>
+          <p className="text-fg-2">The final exam unlocks after you take all {banks.length} chapter quizzes. You don&apos;t need to pass them.</p>
           <Link href={routeBase} className="mt-5 inline-flex h-10 items-center rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 hover:opacity-90">See your chapters</Link>
         </section>
       )}

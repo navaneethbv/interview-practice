@@ -65,7 +65,7 @@ export function SeniorStudyPlan() {
         { duration: "30 min", label: "Apply the ideas to the case" },
         { duration: "10 min", label: "Recall and reflect" },
       ]}
-      note="Take each chapter quiz when scheduled and review every explanation. The ungraded capstone is a self-reviewed portfolio exercise; passing all eight chapter quizzes unlocks the separate 30-question final exam."
+      note="Take each chapter quiz when scheduled and review every explanation. The ungraded capstone is a self-reviewed portfolio exercise; taking all eight chapter quizzes unlocks the separate 30-question final exam."
       sessions={sessions}
     >
       <aside className="mt-8 rounded-2xl border border-brand/30 bg-brand-soft p-5">

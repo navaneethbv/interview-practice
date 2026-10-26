@@ -45,13 +45,11 @@ function welcomeMessage(finalPassed: boolean, percent: number, current?: BaOutli
 }
 
 function chapterBadgeTone(status: ChapterStatus) {
-  if (status === "passed") return "bg-ok-soft text-ok";
-  return status === "locked" ? "bg-layer-2 text-fg-3" : "bg-brand-soft text-brand";
+  return status === "passed" ? "bg-ok-soft text-ok" : "bg-brand-soft text-brand";
 }
 
 function chapterBadgeIcon(status: ChapterStatus, number: number) {
-  if (status === "passed") return <CheckCircle2 size={19} />;
-  return status === "locked" ? <Lock size={16} /> : number;
+  return status === "passed" ? <CheckCircle2 size={19} /> : number;
 }
 
 function finalTone(open: boolean, passed: boolean) {
@@ -64,7 +62,7 @@ function finalMessage(open: boolean, passed: boolean, best: ReturnType<typeof be
     const score = best ? ` — best ${best.score}/${best.total}` : "";
     return `Passed${score}.`;
   }
-  return open ? "Unlocked — you're ready!" : `Unlocks after you pass all ${chapters} chapter quizzes.`;
+  return open ? "Unlocked — you're ready!" : `Unlocks after you take all ${chapters} chapter quizzes.`;
 }
 
 interface Props {
@@ -169,7 +167,7 @@ export function BaOverview({ outline, tips, quizSize, passPercent, finalSize, co
         <ol className="grid gap-3 md:grid-cols-2">
           {outline.map((c, i) => (
             <li key={c.id}>
-              <ChapterCard chapter={c} status={hydrated ? statuses[i] : "locked"} ba={ba} hydrated={hydrated} coursePath={coursePath} />
+              <ChapterCard chapter={c} status={hydrated ? statuses[i] : "open"} upNext={c === current} ba={ba} hydrated={hydrated} coursePath={coursePath} />
             </li>
           ))}
           <li className="md:col-span-2">
@@ -223,10 +221,9 @@ function Stat({ label, value }: Readonly<{ label: string; value: string }>) {
   );
 }
 
-function ChapterCard({ chapter: c, status, ba, hydrated, coursePath }: Readonly<{ chapter: BaOutline[number]; status: ChapterStatus; ba: BaState; hydrated: boolean; coursePath: string }>) {
+function ChapterCard({ chapter: c, status, upNext, ba, hydrated, coursePath }: Readonly<{ chapter: BaOutline[number]; status: ChapterStatus; upNext: boolean; ba: BaState; hydrated: boolean; coursePath: string }>) {
   const read = lessonsRead(ba, c.id, c.lessons.length);
   const best = bestScore(ba, c.id);
-  const locked = status === "locked";
   const body = (
     <>
       <div className="flex items-start gap-3">
@@ -238,7 +235,8 @@ function ChapterCard({ chapter: c, status, ba, hydrated, coursePath }: Readonly<
           <h3 className="font-semibold leading-snug">{c.title}</h3>
         </div>
         {status === "passed" && best && <span className="shrink-0 rounded-full bg-ok-soft px-2.5 py-0.5 text-xs font-medium text-ok">Best {best.score}/{best.total}</span>}
-        {status === "open" && hydrated && <span className="shrink-0 rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand">{read ? "In progress" : "Up next"}</span>}
+        {status === "taken" && best && <span className="shrink-0 rounded-full bg-layer-2 px-2.5 py-0.5 text-xs font-medium text-fg-2">Best {best.score}/{best.total}</span>}
+        {status === "open" && hydrated && (read > 0 || upNext) && <span className="shrink-0 rounded-full bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-brand">{read ? "In progress" : "Up next"}</span>}
       </div>
       <p className="mt-2 text-sm leading-relaxed text-fg-2">{c.summary}</p>
       <div className="mt-3 flex flex-wrap items-center gap-1.5">
@@ -249,7 +247,7 @@ function ChapterCard({ chapter: c, status, ba, hydrated, coursePath }: Readonly<
         <span>{hydrated ? `${read}/` : ""}{c.lessons.length} lessons</span>
         <span>{c.questions} quiz questions</span>
       </div>
-      {!locked && c.lessons.length > 0 && (
+      {hydrated && c.lessons.length > 0 && (
         <div className="mt-3 h-1 overflow-hidden rounded-full bg-layer-3" aria-hidden>
           <div className={`h-full rounded-full ${status === "passed" ? "bg-ok" : "bg-brand"}`} style={{ width: `${status === "passed" ? 100 : (read / (c.lessons.length + 1)) * 100}%` }} />
         </div>
@@ -257,9 +255,6 @@ function ChapterCard({ chapter: c, status, ba, hydrated, coursePath }: Readonly<
     </>
   );
   const base = "block h-full rounded-2xl border p-5 shadow-card transition";
-  if (locked) {
-    return <div aria-disabled="true" className={`${base} border-line bg-layer-1/60 opacity-70`}>{body}<p className="mt-3 text-xs text-fg-3">Pass the previous chapter&apos;s quiz to unlock.</p></div>;
-  }
   return <Link href={`${coursePath}/${c.id}`} className={`${base} border-line bg-layer-1 hover:-translate-y-px hover:border-line-strong hover:shadow-raised`}>{body}</Link>;
 }
 

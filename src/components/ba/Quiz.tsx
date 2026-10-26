@@ -86,7 +86,7 @@ export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, 
             <li>• <b className="text-fg-1">{total} questions</b>, picked at random from a bank of {bankSize}.</li>
             <li>• Answer choices are shuffled every time, so you can&apos;t rely on remembering positions.</li>
             <li>• You&apos;ll see whether you were right, with an explanation, after each question.</li>
-            <li>• You need <b className="text-fg-1">{needed} of {total}</b> ({passPercent}%) to pass{isFinal ? " and finish the course" : " and unlock the next chapter"}.</li>
+            <li>• You need <b className="text-fg-1">{needed} of {total}</b> ({passPercent}%) to pass{isFinal ? " and finish the course" : ""}.</li>
             <li>• Retakes are unlimited. Each retake prefers questions you didn&apos;t see last time.</li>
           </ul>
           {attempts.length > 0 && (
@@ -100,7 +100,7 @@ export function Quiz({ id, title, size, bankSize, passPercent, draw, reviewFor, 
             <button onClick={start} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 shadow-raised hover:opacity-90">
               {attempts.length ? "Take it again" : "Start the quiz"} <ArrowRight size={16} />
             </button>
-            {passed && next && (
+            {attempts.length > 0 && next && (
               <Link href={next.href} className="inline-flex h-10 items-center rounded-xl border border-line-strong bg-layer-1 px-4 text-sm font-medium hover:bg-layer-2">
                 {next.label}
               </Link>
@@ -224,8 +224,10 @@ function Results({ questions, answers, needed, onRetry, reviewFor, next, isFinal
     review.set(target.label, target);
   }
 
-  let verdict = `Not yet — you need ${needed} of ${total} to pass. Review the lessons below, then try again with a new set of questions.`;
-  if (passed) verdict = isFinal ? "You passed the final exam. Congratulations — you've completed the course!" : "You passed! The next chapter is unlocked.";
+  let verdict = isFinal
+    ? `Not yet — you need ${needed} of ${total} to pass. Review the chapters below, then try again with a new set of questions.`
+    : `Not yet — you need ${needed} of ${total} to pass. You can move on now and retake this quiz anytime after reviewing the lessons below.`;
+  if (passed) verdict = isFinal ? "You passed the final exam. Congratulations — you've completed the course!" : "You passed this chapter's quiz!";
 
   return (
     <section className="space-y-4">
@@ -239,7 +241,7 @@ function Results({ questions, answers, needed, onRetry, reviewFor, next, isFinal
           {verdict}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
-          {passed && next && (
+          {(passed || !isFinal) && next && (
             <Link href={next.href} className="inline-flex h-10 items-center gap-2 rounded-xl bg-fg-1 px-4 text-sm font-medium text-layer-1 shadow-raised hover:opacity-90">
               {next.label} <ArrowRight size={16} />
             </Link>
