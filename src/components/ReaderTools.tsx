@@ -33,7 +33,6 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
   const [supported, setSupported] = useState(false);
   const rateRef = useRef(SPEED_RATE.slow);
   const chunksRef = useRef<string[]>([]);
-  const nextChunkRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     setSupported("speechSynthesis" in window && "SpeechSynthesisUtterance" in window);
@@ -65,7 +64,6 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
       utterance.onerror = () => setSpeaking(false);
       window.speechSynthesis.speak(utterance);
     };
-    nextChunkRef.current = speakNext;
     speakNext();
   }, [targetId]);
 
