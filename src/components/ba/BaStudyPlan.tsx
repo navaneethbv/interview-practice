@@ -1,36 +1,45 @@
 import Link from "next/link";
 
 const days: [string, string, string][] = [
-  ["BA foundations", "Read the first foundations lessons. Start a glossary of 10 terms and write, in your own words, what a BA does.", "60 min"],
-  ["BABOK concepts", "Finish foundations. Explain Change, Need, Solution, Stakeholder, Value and Context using one familiar business process. Take the chapter quiz.", "60 min"],
-  ["Stakeholder discovery", "List everyone affected by a delayed expense reimbursement: employees, approvers, finance, IT, support and compliance.", "60 min"],
-  ["Stakeholder analysis", "Use a power/interest grid and make a small RACI for requirements, approval, delivery and UAT.", "60 min"],
-  ["Elicitation", "Compare interviews, workshops, observation, documents, surveys and prototypes. Choose two methods and explain why. Take the chapter quiz.", "60 min"],
-  ["Interview practice", "Draft 8 open questions for an employee, approver and finance analyst. Practice neutral follow-ups.", "60 min"],
-  ["Requirements overview", "Study business, stakeholder, functional, non-functional and transition requirements. Write one example of each.", "60 min"],
-  ["Testable requirements", "Improve vague requests. Add measurable outcomes, rules, permissions, error cases and performance needs.", "60 min"],
-  ["Stories and acceptance criteria", "Write 3 user stories with Given/When/Then acceptance criteria. Check each is small and testable.", "60 min"],
-  ["Prioritization and traceability", "Link a business goal to requirements and tests. Practice prioritization and change control; take the chapter quiz.", "60 min"],
-  ["As-is process", "Draw the current expense process. Include decisions, handoffs, waits, rework and exceptions.", "60 min"],
-  ["To-be process", "Draw an improved process with swimlanes. Label who owns each step and what changes.", "60 min"],
-  ["BPMN, SIPOC and value stream", "Study the symbols and purpose of each method. Choose the simplest useful model for a given question.", "60 min"],
-  ["Use cases and data models", "Define 5 important fields in a data dictionary: name, meaning, type, allowed values and source. Take the chapter quiz.", "60 min"],
-  ["Root cause", "Use 5 Whys and a fishbone diagram. Stop at a cause that can be checked with evidence.", "60 min"],
-  ["Pareto and gap analysis", "Rank sample delay reasons and identify the gap between today's process and the target.", "60 min"],
-  ["Strategy tools", "Study SWOT, PESTLE and feasibility. Compare two solution options by cost, benefit, risk and time.", "60 min"],
-  ["Business case", "Estimate one-time and ongoing costs, benefits, assumptions and risks. Define how success will be measured; take the quiz.", "60 min"],
-  ["Delivery methods", "Compare Waterfall, Agile and hybrid. Explain how a BA contributes in each.", "60 min"],
-  ["Scrum and Kanban", "Study roles, events, artifacts, stories, refinement and flow. Practice explaining the BA's role; take the quiz.", "60 min"],
-  ["Coordination and risk", "Create a RAID log with an owner, next action and date. Write a clear status update with a decision request.", "60 min"],
-  ["Testing", "Turn 3 acceptance criteria into test scenarios and test cases with expected results.", "60 min"],
-  ["UAT and release", "Practice severity versus priority. Make a go/no-go checklist with cutover, rollback and hypercare; take the quiz.", "60 min"],
-  ["Data and Excel basics", "Learn rows, columns, tables, keys and data types. Practice sort, filter, SUM, COUNTIF and cleanup.", "60 min"],
-  ["Excel analysis", "Practice IF, XLOOKUP or VLOOKUP, and pivot tables. Summarize sample expenses by department and status.", "60 min"],
-  ["SQL fundamentals", "Practice SELECT, WHERE, ORDER BY, COUNT, SUM, GROUP BY and HAVING. Predict results before running queries.", "60 min"],
-  ["SQL joins and data quality", "Practice INNER/LEFT JOIN, NULL, CASE and a simple CTE. Check duplicates and missing values; take the quiz.", "60 min"],
-  ["KPIs and dashboards", "Define a KPI with formula, baseline, target, owner, data source and reporting frequency. Sketch a simple dashboard.", "60 min"],
-  ["Process improvement and banking", "Review Lean, DMAIC and PDCA, then accounting, reconciliation, payments and controls. Take both chapter quizzes.", "60 min"],
-  ["Communication and interview case", "Practice a 90-second introduction and two STAR answers. Present a mini-case from problem to requirements, UAT and success measures. Take remaining quizzes and the final exam when unlocked.", "60–90 min"],
+  ["Foundations · BA role", "Read What a Business Analyst Does. Start a glossary of 10 terms and explain, in your own words, the need, solution and value in a familiar process.", "60 min"],
+  ["Foundations · BABOK", "Finish the foundations chapter. Explain the six core concepts with one example each, then take the chapter quiz and review every answer.", "60 min"],
+  ["Stakeholders · discovery", "List everyone affected by a delayed expense reimbursement: employees, approvers, finance, IT, support, compliance and customers.", "60 min"],
+  ["Stakeholders · analysis", "Use a power/interest grid and make a small RACI for discovery, requirements, approval, delivery and UAT.", "60 min"],
+  ["Stakeholders · elicitation", "Compare interviews, workshops, observation, documents, surveys and prototypes. Choose two methods and explain why.", "60 min"],
+  ["Stakeholders · practice", "Draft 8 open questions for an employee, approver and finance analyst. Summarize findings, open questions and decisions; take the chapter quiz.", "60 min"],
+  ["Requirements · types", "Study business, stakeholder, functional, non-functional and transition requirements. Write one example of each.", "60 min"],
+  ["Requirements · quality", "Improve vague requests. Add measurable outcomes, rules, permissions, error cases and performance needs.", "60 min"],
+  ["Requirements · stories", "Write 3 user stories with Given/When/Then acceptance criteria. Check that each is small and testable.", "60 min"],
+  ["Requirements · lifecycle", "Link a business goal to requirements and tests. Practice prioritization, traceability and change control; take the chapter quiz.", "60 min"],
+  ["Process modeling · as-is", "Draw the current expense process. Include decisions, handoffs, waits, rework and exceptions.", "60 min"],
+  ["Process modeling · to-be", "Draw an improved process with swimlanes. Label who owns each step and what changes.", "60 min"],
+  ["Process modeling · notation", "Study flowcharts, swimlanes and BPMN. Explain the meaning of the key symbols using your own example.", "60 min"],
+  ["Process modeling · data and scope", "Study SIPOC, use cases and data models. Define 5 data fields with meaning, type, allowed values and source; take the chapter quiz.", "60 min"],
+  ["Analysis · root cause", "Use 5 Whys and a fishbone diagram. Stop at a cause that can be checked with evidence.", "60 min"],
+  ["Analysis · prioritize", "Use Pareto to rank sample delay reasons. Identify the gap between today's process and the target.", "60 min"],
+  ["Analysis · strategy", "Study SWOT, PESTLE and feasibility. Compare two options by cost, benefit, risk, time and operational impact.", "60 min"],
+  ["Analysis · business case", "Estimate one-time and ongoing costs, benefits, assumptions and risks. Define success measures; take the chapter quiz.", "60 min"],
+  ["Agile · delivery methods", "Compare Waterfall, Agile and hybrid. Explain when each fits and how a BA contributes.", "60 min"],
+  ["Agile · Scrum and Kanban", "Study roles, events, artifacts, stories, refinement, estimation and flow. Explain the BA's role; take the chapter quiz.", "60 min"],
+  ["Coordination · status and priorities", "Practice tracking several initiatives. Write a status update with progress, next steps, risks and a clear decision request.", "60 min"],
+  ["Coordination · RAID and change", "Create a RAID log with owner, next action and due date. Study dependencies, escalation and organizational change; take the chapter quiz.", "60 min"],
+  ["Testing · test design", "Review test levels and types. Turn 3 acceptance criteria into test scenarios and test cases with expected results.", "60 min"],
+  ["Testing · UAT and release", "Practice severity versus priority, defect triage, UAT, cutover, rollback and hypercare. Make a go/no-go checklist; take the quiz.", "60 min"],
+  ["Excel and SQL · data basics", "Learn rows, columns, tables, keys and data types. Practice sorting, filtering, SUM, COUNTIF and basic cleanup.", "60 min"],
+  ["Excel and SQL · formulas", "Practice IF, XLOOKUP or VLOOKUP, text/date cleanup and error checks on a small sample.", "60 min"],
+  ["Excel and SQL · pivot tables", "Summarize sample expenses by department, status and month. Write one useful finding and one data-quality caveat.", "60 min"],
+  ["Excel and SQL · SQL basics", "Practice SELECT, WHERE, ORDER BY, COUNT, SUM, GROUP BY and HAVING. Predict the result before running queries.", "60 min"],
+  ["Excel and SQL · joins and quality", "Practice INNER/LEFT JOIN, NULL, CASE and a simple CTE. Check for duplicates and missing values; take the chapter quiz.", "60 min"],
+  ["KPIs · choose measures", "Study metrics, KPIs, OKRs and leading/lagging indicators. Define formula, baseline, target, owner and data source for one KPI.", "60 min"],
+  ["KPIs · report and explain", "Sketch a simple dashboard and choose appropriate charts. Present one insight, evidence and recommendation; take the chapter quiz.", "60 min"],
+  ["Process improvement · Lean", "Learn common waste, DMAIC, PDCA and Kaizen. Choose one waste in the case process and propose a measurable experiment; take the quiz.", "60 min"],
+  ["Banking and finance · basics", "Review assets, liabilities, equity, debits, credits, general ledger and reconciliation. Explain one example in plain language.", "60 min"],
+  ["Banking and finance · controls", "Study payments, reconciliation breaks, maker-checker controls and financial statements. Explain risks of a bad process change; take the quiz.", "60 min"],
+  ["Communication · clear writing", "Write a short decision email using bottom line first. Record a 2-minute explanation of a process map for a non-technical audience.", "60 min"],
+  ["Communication · conflict and influence", "Practice a response to two stakeholders who disagree. Find their interests, use evidence, offer options and document the decision; take the quiz.", "60 min"],
+  ["Interview prep · your story", "Draft a 60–90 second introduction and four STAR stories: elicitation, conflict, improvement and data. Use truthful results only.", "60 min"],
+  ["Interview prep · case and mock", "Walk through a case from problem and stakeholders to requirements, process map, UAT and success measures. Answer common questions aloud; take the chapter quiz.", "60 min"],
+  ["Final review", "Take the final exam in one sitting. Review missed answers, revisit the weakest chapter and explain your case study in 5 minutes.", "60–90 min"],
 ];
 
 export function BaStudyPlan() {
@@ -39,14 +48,14 @@ export function BaStudyPlan() {
       <Link href="/business-analyst" className="text-sm font-medium text-brand hover:underline">← Back to Business Analyst Prep</Link>
       <header className="mt-5 rounded-3xl border border-line bg-layer-1 p-6 shadow-card sm:p-8">
         <p className="text-xs font-semibold tracking-[0.16em] text-brand uppercase">Beginner study plan</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">30 study sessions from zero to interview-ready</h1>
-        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for about 60 minutes per study day. These are 30 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas.</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">38 study sessions from zero to interview-ready</h1>
+        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for about 60 minutes per study day. These are 38 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas. At five sessions a week, the plan takes about eight weeks.</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">20 min</b><span className="text-sm text-fg-2">Read the assigned lessons</span></div>
           <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">30 min</b><span className="text-sm text-fg-2">Complete the practice task</span></div>
           <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">10 min</b><span className="text-sm text-fg-2">Recall key ideas without notes</span></div>
         </div>
-        <p className="mt-4 text-sm leading-relaxed text-fg-2">Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on.</p>
+        <p className="mt-4 text-sm leading-relaxed text-fg-2">Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on. The final exam unlocks after all chapter quizzes are passed.</p>
       </header>
       <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-card">
         <h2 className="border-b border-line bg-layer-2 px-5 py-4 text-lg font-semibold">Daily schedule</h2>
