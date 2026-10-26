@@ -80,7 +80,7 @@ export function BaStudyPlan() {
         { duration: "30 min", label: "Complete the practice task" },
         { duration: "10 min", label: "Recall key ideas without notes" },
       ]}
-      note="Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on. The final exam unlocks after all chapter quizzes are passed."
+      note="Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on. The final exam unlocks after every chapter quiz has been taken."
       sessions={sessions}
     >
       <details className="mt-6 rounded-2xl border border-line bg-layer-1 p-5">

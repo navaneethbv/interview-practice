@@ -149,19 +149,23 @@ export function lessonsRead(state: BaState, chapter: string, lessons: number) {
   return n;
 }
 
-export type ChapterStatus = "locked" | "open" | "passed";
+export function hasTaken(state: BaState, id: string) {
+  return (state.quizzes[id]?.length ?? 0) > 0;
+}
 
-/** A chapter opens once the chapter before it is passed. */
+/** "taken" means the quiz was attempted but not passed yet; every chapter stays open either way. */
+export type ChapterStatus = "open" | "taken" | "passed";
+
 export function chapterStatuses(state: BaState, chapterIds: string[]): ChapterStatus[] {
-  return chapterIds.map((id, i) => {
+  return chapterIds.map((id) => {
     if (hasPassed(state, id)) return "passed";
-    if (i === 0 || hasPassed(state, chapterIds[i - 1])) return "open";
-    return "locked";
+    return hasTaken(state, id) ? "taken" : "open";
   });
 }
 
+/** The final exam opens once every chapter quiz has been taken, passed or not. */
 export function finalUnlocked(state: BaState, chapterIds: string[]) {
-  return chapterIds.every((id) => hasPassed(state, id));
+  return chapterIds.every((id) => hasTaken(state, id));
 }
 
 /* ------------------------------------------------------------ state updates */

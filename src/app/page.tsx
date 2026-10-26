@@ -109,7 +109,7 @@ export default function Home() {
               tone="bg-violet-soft text-violet"
               title="Business Analyst prep"
               meta={`${baChapters} chapters · ${baLessons} lessons`}
-              body="Bite-size lessons from BA basics to banking domain and interviews, with a quiz to unlock each chapter."
+              body="Bite-size lessons from BA basics to banking domain and interviews, with a quiz after each chapter and a final exam."
             />
           </div>
         </Section>

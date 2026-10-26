@@ -31,7 +31,6 @@ export function createBaChapterRoute(track: BaTrack) {
     if (!chapter) notFound();
 
     const ids = index.chapters.map((item) => item.id);
-    const prevMeta = index.chapters[chapter.number - 2];
     const nextMeta = index.chapters[chapter.number];
 
     return (
@@ -51,7 +50,6 @@ export function createBaChapterRoute(track: BaTrack) {
             }}
             bank={getBaBank(chapter.id, track)}
             chapterIds={ids}
-            prev={prevMeta ? { id: prevMeta.id, title: prevMeta.title } : null}
             next={nextMeta ? { id: nextMeta.id, title: nextMeta.title } : null}
             quizSize={index.quizSize}
             passPercent={index.passPercent}

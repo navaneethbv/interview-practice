@@ -7,7 +7,7 @@ import { baOutline, getBaIndex, getBaTips, type BaTrack } from "@/lib/ba-content
 export const BA_OVERVIEW_METADATA: Record<BaTrack, Metadata> = {
   beginner: {
     title: "Business Analyst Prep",
-    description: "A step-by-step Business Analyst course with bite-size lessons, gated chapter quizzes and a final exam.",
+    description: "A step-by-step Business Analyst course with bite-size lessons, chapter quizzes and a final exam.",
   },
   senior: {
     title: "Senior Business Analyst Track",

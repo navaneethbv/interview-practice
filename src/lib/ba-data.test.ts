@@ -104,25 +104,25 @@ describe("scoring", () => {
   });
 });
 
-describe("chapter locking", () => {
+describe("chapter progression", () => {
   const ids = ["one", "two", "three"];
 
-  it("opens only the first chapter at the start", () => {
-    assert.deepEqual(chapterStatuses(EMPTY_BA, ids), ["open", "locked", "locked"]);
+  it("opens every chapter from the start", () => {
+    assert.deepEqual(chapterStatuses(EMPTY_BA, ids), ["open", "open", "open"]);
   });
 
-  it("opens the next chapter only after a passing attempt", () => {
+  it("marks a failed quiz as taken and a passing attempt as passed", () => {
     let state = withAttempt(EMPTY_BA, "one", fail);
-    assert.deepEqual(chapterStatuses(state, ids), ["open", "locked", "locked"]);
+    assert.deepEqual(chapterStatuses(state, ids), ["taken", "open", "open"]);
     state = withAttempt(state, "one", pass("one"));
-    assert.deepEqual(chapterStatuses(state, ids), ["passed", "open", "locked"]);
+    assert.deepEqual(chapterStatuses(state, ids), ["passed", "open", "open"]);
   });
 
-  it("unlocks the final exam when every chapter is passed", () => {
-    let state = EMPTY_BA;
-    for (const id of ids.slice(0, 2)) state = withAttempt(state, id, pass(id));
+  it("unlocks the final exam once every chapter quiz is taken, even if failed", () => {
+    let state = withAttempt(EMPTY_BA, "one", pass("one"));
+    state = withAttempt(state, "two", fail);
     assert.equal(finalUnlocked(state, ids), false);
-    state = withAttempt(state, "three", pass("three"));
+    state = withAttempt(state, "three", fail);
     assert.equal(finalUnlocked(state, ids), true);
   });
 });

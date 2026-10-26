@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Compass, Lightbulb, Lock, Target, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Compass, GraduationCap, Lightbulb, Target, X } from "lucide-react";
 
 function buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSize, bankSize }: Readonly<{ courseTitle: string; chapterCount: number; quizSize: number; passPercent: number; finalSize: number; bankSize: number }>) {
   return [
@@ -20,14 +20,14 @@ function buildSteps({ courseTitle, chapterCount, quizSize, passPercent, finalSiz
   {
     icon: <Target size={22} />,
     tone: "bg-violet-soft text-violet",
-    title: "Pass the quiz to move on",
+    title: "Take the chapter quiz",
     body: `When every lesson in a chapter is read, its quiz opens: ${quizSize} questions drawn at random from a bank of at least ${bankSize}, with the answers shuffled every time. Score ${Math.ceil(quizSize * passPercent / 100)} out of ${quizSize} to pass. You get an explanation after every question and can retry as often as you like.`,
   },
   {
-    icon: <Lock size={22} />,
+    icon: <GraduationCap size={22} />,
     tone: "bg-bad-soft text-bad",
-    title: "Chapters unlock in order",
-    body: `The next chapter stays locked until you pass the current quiz. After all ${chapterCount} chapters, the final exam unlocks: ${finalSize} questions from across this track.`,
+    title: "Move on at your own pace",
+    body: `Every chapter is open, and you can move on even if you don't pass a quiz yet. Once you've taken all ${chapterCount} chapter quizzes, the final exam unlocks: ${finalSize} questions from across this track.`,
   },
   {
     icon: <CheckCircle2 size={22} />,
