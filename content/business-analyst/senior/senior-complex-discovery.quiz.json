@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What makes a stakeholder list insufficient for senior discovery?",
+    "options": [
+      "It does not explain influence, impact, knowledge or engagement needs",
+      "It contains too many names",
+      "It uses a spreadsheet",
+      "It includes technical people"
+    ],
+    "why": "A senior engagement strategy prioritizes how and why each group should participate."
+  },
+  {
+    "lesson": 1,
+    "q": "Who should be included to understand frontline workarounds?",
+    "options": [
+      "People who perform the process",
+      "Only the steering committee",
+      "Only the system vendor",
+      "Only the sponsor"
+    ],
+    "why": "Frontline practitioners provide evidence about actual work and exceptions."
+  },
+  {
+    "lesson": 1,
+    "q": "What should an engagement plan capture?",
+    "options": [
+      "Decision authority, impact, knowledge, trusted evidence and participation needs",
+      "Job title alone",
+      "Meeting attendance only",
+      "Preferred software brand"
+    ],
+    "why": "These factors help select useful engagement and avoid missing key voices."
+  },
+  {
+    "lesson": 2,
+    "q": "What should an executive discovery meeting focus on?",
+    "options": [
+      "Outcomes, constraints, decisions and trade-offs",
+      "A detailed task-by-task requirements review",
+      "Reading the status report aloud",
+      "Approving every design detail"
+    ],
+    "why": "Executive time is most useful when directed toward strategic questions and decisions."
+  },
+  {
+    "lesson": 2,
+    "q": "A leader requests one global platform. What should the BA ask?",
+    "options": [
+      "What need or outcome makes a global platform necessary",
+      "Which font should it use",
+      "Who can write the most stories",
+      "Can the decision be hidden until launch"
+    ],
+    "why": "A requested solution may be a proxy for a need such as consistent control evidence."
+  },
+  {
+    "lesson": 2,
+    "q": "What should follow an executive decision?",
+    "options": [
+      "A confirmed summary with rationale, conditions, owner and open questions",
+      "A verbal note kept by the BA",
+      "A new unapproved requirement",
+      "A change to the budget without a record"
+    ],
+    "why": "A clear record prevents different interpretations of the decision."
+  },
+  {
+    "lesson": 3,
+    "q": "Two regions disagree on matching thresholds. What is a strong facilitation step?",
+    "options": [
+      "Clarify the shared outcome, interests and evidence before comparing options",
+      "Choose the larger region's position",
+      "Ask developers to decide business policy",
+      "Require consensus before any analysis"
+    ],
+    "why": "Facilitation should surface the protected interests and decision criteria."
+  },
+  {
+    "lesson": 3,
+    "q": "When should the BA force consensus?",
+    "options": [
+      "The BA should not force consensus when the decision belongs to an accountable owner",
+      "Whenever there is a deadline",
+      "When the sponsor is absent",
+      "When one option has a higher score"
+    ],
+    "why": "The BA facilitates informed decisions but respects decision rights."
+  },
+  {
+    "lesson": 3,
+    "q": "What should be recorded if a decision-maker accepts a risk over dissent?",
+    "options": [
+      "The decision, rationale, accepted risk and dissenting evidence",
+      "Only that the meeting ended",
+      "The dissent as an individual performance issue",
+      "Nothing, because the decision is final"
+    ],
+    "why": "Accurate records support transparency and future review."
+  },
+  {
+    "lesson": 4,
+    "q": "How should a high-impact assumption be handled?",
+    "options": [
+      "Assign an owner and test it with evidence quickly",
+      "Treat it as fact",
+      "Remove it from the log",
+      "Wait until after launch"
+    ],
+    "why": "High-impact assumptions can invalidate recommendations and should be tested early."
+  },
+  {
+    "lesson": 4,
+    "q": "What makes a timeboxed experiment useful?",
+    "options": [
+      "It has a decision to inform and criteria for support or rejection",
+      "It has no time limit",
+      "It guarantees the preferred outcome",
+      "It replaces all stakeholder consultation"
+    ],
+    "why": "An experiment needs a clear purpose and evaluation criteria."
+  },
+  {
+    "lesson": 4,
+    "q": "What is a sign of confirmation bias?",
+    "options": [
+      "Only seeking evidence that supports the current hypothesis",
+      "Checking data quality",
+      "Interviewing affected users",
+      "Revising a hypothesis after new evidence"
+    ],
+    "why": "Seeking contrary evidence helps prevent confirmation bias."
+  },
+  {
+    "lesson": 5,
+    "q": "How is a decision register different from a broad RACI?",
+    "options": [
+      "It captures specific decision owner, options, rationale, deadline and conditions",
+      "It lists only meeting attendees",
+      "It replaces ownership",
+      "It is always a project schedule"
+    ],
+    "why": "A decision register makes consequential choices and rationale explicit."
+  },
+  {
+    "lesson": 5,
+    "q": "Who can decide a business trade-off between cost and timing?",
+    "options": [
+      "The accountable business sponsor",
+      "The BA by default",
+      "The software tester",
+      "The vendor salesperson"
+    ],
+    "why": "Decision rights depend on authority; the sponsor normally owns investment trade-offs."
+  },
+  {
+    "lesson": 5,
+    "q": "When should a decision be escalated?",
+    "options": [
+      "When ownership is unclear, overdue or beyond the team's risk tolerance",
+      "Whenever someone disagrees",
+      "Only after launch",
+      "When the BA wants a faster meeting"
+    ],
+    "why": "Escalation is appropriate when authority or risk exceeds the team's boundary."
+  },
+  {
+    "lesson": 6,
+    "q": "How can a distributed workshop reduce hidden disagreement?",
+    "options": [
+      "Use pre-reads, asynchronous input and explicit written confirmation",
+      "Assume silence means agreement",
+      "Hold every session at one region's local time",
+      "Invite only senior leaders"
+    ],
+    "why": "Inclusive participation and written confirmation reduce time-zone and hierarchy effects."
+  },
+  {
+    "lesson": 6,
+    "q": "Why should meeting times rotate across regions?",
+    "options": [
+      "To avoid placing the participation burden on the same region each time",
+      "To make every meeting longer",
+      "To prevent written decisions",
+      "To ensure only managers attend"
+    ],
+    "why": "Rotating times can share the inconvenience across participants."
+  },
+  {
+    "lesson": 6,
+    "q": "What is a safer interpretation of silence in a workshop?",
+    "options": [
+      "It is not proof of agreement; confirm understanding and concerns",
+      "It proves unanimous support",
+      "It means the topic is irrelevant",
+      "It should be recorded as approval"
+    ],
+    "why": "Silence may reflect power, language or time-zone dynamics."
+  },
+  {
+    "lesson": 6,
+    "q": "What should the BA do when regional variation appears?",
+    "options": [
+      "Ask what regulation, customer need, system or history explains it",
+      "Assume one region is noncompliant",
+      "Standardize it immediately",
+      "Exclude it from the analysis"
+    ],
+    "why": "Understanding context prevents dismissing valid local requirements."
+  },
+  {
+    "lesson": 6,
+    "q": "What is the value of a post-workshop summary?",
+    "options": [
+      "It confirms decisions, actions, owners and unresolved issues",
+      "It replaces the workshop",
+      "It gives the BA authority to decide",
+      "It removes the need for follow-up"
+    ],
+    "why": "A summary aligns participants on what was actually agreed."
+  }
+]
