@@ -1,0 +1,222 @@
+[
+  {
+    "lesson": 1,
+    "q": "What makes a senior BA interview answer strong?",
+    "options": [
+      "It shows judgment, trade-offs, influence and measurable outcome",
+      "It lists every method ever used",
+      "It focuses only on team size",
+      "It avoids discussing decisions"
+    ],
+    "why": "Senior interviews evaluate how the candidate handles complexity and outcomes."
+  },
+  {
+    "lesson": 1,
+    "q": "How should an individual contribution be described?",
+    "options": [
+      "Separate personal actions from shared team results",
+      "Claim the entire program result",
+      "Use “we” for every action",
+      "Avoid naming collaborators"
+    ],
+    "why": "Accurate ownership helps interviewers understand the candidate's impact."
+  },
+  {
+    "lesson": 1,
+    "q": "What should accompany an outcome metric in an interview story?",
+    "options": [
+      "How it was measured and the candidate's role in the result",
+      "An invented precise number",
+      "A company slogan",
+      "A list of tools"
+    ],
+    "why": "Credible evidence and attribution make the result trustworthy."
+  },
+  {
+    "lesson": 2,
+    "q": "Two executives disagree. What should a senior BA do first?",
+    "options": [
+      "Clarify shared outcomes, interests, evidence and decision owner",
+      "Choose a side immediately",
+      "Ask developers to vote",
+      "Delay the issue without a plan"
+    ],
+    "why": "Understanding criteria and authority supports a fair decision."
+  },
+  {
+    "lesson": 2,
+    "q": "A program is off track. What should a senior answer include?",
+    "options": [
+      "Verified variance, dependencies, risk exposure and recovery options",
+      "Only a red status label",
+      "A blame assignment",
+      "A promise to recover without evidence"
+    ],
+    "why": "Senior leadership requires clear evidence and actionable options."
+  },
+  {
+    "lesson": 2,
+    "q": "Requirements keep changing. What should the BA do?",
+    "options": [
+      "Reassess need, impact, priority and authority, then update traceability",
+      "Reject every change",
+      "Accept silently",
+      "Stop measuring scope"
+    ],
+    "why": "Change is handled through analysis and transparent decisions."
+  },
+  {
+    "lesson": 3,
+    "q": "What belongs in an executive decision brief?",
+    "options": [
+      "Decision/date, recommendation, options, evidence, risks, assumptions, owner and next steps",
+      "Every detailed meeting minute",
+      "Only a feature list",
+      "Only the BA's resume"
+    ],
+    "why": "Executives need a concise, decision-oriented summary with supporting detail available."
+  },
+  {
+    "lesson": 3,
+    "q": "How should uncertain evidence be presented?",
+    "options": [
+      "Label facts, estimates and assumptions clearly",
+      "Hide estimates",
+      "Present all inputs as verified",
+      "Avoid discussing risks"
+    ],
+    "why": "Transparency helps decision-makers judge confidence."
+  },
+  {
+    "lesson": 3,
+    "q": "What is a useful way to present a recommendation?",
+    "options": [
+      "Lead with the decision and explain the trade-off and evidence",
+      "Start with every project detail",
+      "Show only the preferred feature",
+      "End without an ask"
+    ],
+    "why": "A concise recommendation makes the decision clear."
+  },
+  {
+    "lesson": 4,
+    "q": "What should the reconciliation capstone begin with?",
+    "options": [
+      "Strategic fit, measurable problem, stakeholder/decision map and assumptions",
+      "Vendor selection",
+      "A screen redesign",
+      "A final test plan"
+    ],
+    "why": "The case starts by framing the need and who must decide."
+  },
+  {
+    "lesson": 4,
+    "q": "Which is a credible set of solution options?",
+    "options": [
+      "Improve current controls, add a shared service, or phase replacement",
+      "Only replace all systems immediately",
+      "Only increase headcount",
+      "Only add a dashboard"
+    ],
+    "why": "Materially different alternatives allow useful comparison."
+  },
+  {
+    "lesson": 4,
+    "q": "What should the roadmap include?",
+    "options": [
+      "Dependencies, pilot, decision gates, owners and fallback",
+      "Only release dates",
+      "Only team names",
+      "A guaranteed benefit"
+    ],
+    "why": "A safe roadmap shows how evidence and risk guide progression."
+  },
+  {
+    "lesson": 5,
+    "q": "What makes a capstone artifact pack coherent?",
+    "options": [
+      "Traceability from problem through decisions, delivery and benefits",
+      "Many unrelated diagrams",
+      "A long glossary",
+      "A list of interview questions only"
+    ],
+    "why": "A coherent pack lets a reviewer follow the analysis to value."
+  },
+  {
+    "lesson": 5,
+    "q": "Which checklist item validates benefit design?",
+    "options": [
+      "Baseline, target, data source, owner and review timing",
+      "A color palette",
+      "A release nickname",
+      "The number of slides"
+    ],
+    "why": "Benefits need measurable definitions and ownership."
+  },
+  {
+    "lesson": 5,
+    "q": "Should the capstone be a scored submission in this course?",
+    "options": [
+      "No; it is a self-reviewed portfolio exercise, while the final exam scores knowledge",
+      "Yes; every artifact is graded by the system",
+      "Only the number of slides is scored",
+      "It unlocks chapters based on peer voting"
+    ],
+    "why": "The design calls for a self-reviewed, ungraded capstone and a separate final exam."
+  },
+  {
+    "lesson": 6,
+    "q": "What should a senior candidate research before an interview?",
+    "options": [
+      "Role scope, operating model and likely transformation challenges",
+      "Only the company logo",
+      "Only the interviewer's hobbies",
+      "None of the role requirements"
+    ],
+    "why": "Research helps tailor examples to the employer's context."
+  },
+  {
+    "lesson": 6,
+    "q": "Which follow-up question tests the depth of a story?",
+    "options": [
+      "What evidence changed your view?",
+      "What color was the slide?",
+      "How many emails did you send?",
+      "Did everyone like you?"
+    ],
+    "why": "Evidence and judgment reveal how the candidate handled the work."
+  },
+  {
+    "lesson": 6,
+    "q": "How should a candidate explain a missed benefit?",
+    "options": [
+      "Describe the evidence, causes and corrective action honestly",
+      "Change the baseline silently",
+      "Blame the users",
+      "Avoid the result"
+    ],
+    "why": "Senior candidates should demonstrate learning and accountability."
+  },
+  {
+    "lesson": 6,
+    "q": "What question can a candidate ask about senior BA scope?",
+    "options": [
+      "How are decision rights and success measures defined for this role?",
+      "What is the team logo?",
+      "Can I skip stakeholder meetings?",
+      "Can you guarantee a promotion?"
+    ],
+    "why": "Questions about authority and outcomes clarify the operating context."
+  },
+  {
+    "lesson": 6,
+    "q": "How long is the capstone presentation practice?",
+    "options": [
+      "A concise five-minute case summary",
+      "A full-day workshop",
+      "One sentence only",
+      "No limit"
+    ],
+    "why": "The course asks learners to practice a five-minute executive case narrative."
+  }
+]
