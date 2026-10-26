@@ -58,7 +58,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
   const position = useRef({ paragraph: 0, sentence: 0 });
   const utterance = useRef<SpeechSynthesisUtterance | null>(null);
   const clearHighlight = useCallback(() => {
-    highlighted.current?.removeAttribute("data-reading-active");
+    if (highlighted.current) delete highlighted.current.dataset.readingActive;
     highlighted.current = null;
   }, []);
   const stop = useCallback(() => {
@@ -183,7 +183,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
       }
       clearHighlight();
       highlighted.current = block;
-      block.setAttribute("data-reading-active", "true");
+      block.dataset.readingActive = "true";
       savePosition(paragraph, sentence);
       const speech = new SpeechSynthesisUtterance(sentences[sentence]);
       speech.rate = preferencesRef.current.speed;

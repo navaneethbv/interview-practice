@@ -20,13 +20,17 @@ export function Notebook({
   const [showResolved, setShowResolved] = useState(false);
   function submit(data: FormData) {
     const id = editing ?? crypto.randomUUID();
+    const field = (name: string): string => {
+      const value = data.get(name);
+      return typeof value === "string" ? value : "";
+    };
     const note = {
       id,
-      question: String(data.get("question") ?? "").trim(),
-      href: String(data.get("href") ?? "").trim(),
-      mistaken: String(data.get("mistaken") ?? ""),
-      corrected: String(data.get("corrected") ?? ""),
-      dueDate: String(data.get("dueDate") ?? ""),
+      question: field("question").trim(),
+      href: field("href").trim(),
+      mistaken: field("mistaken"),
+      corrected: field("corrected"),
+      dueDate: field("dueDate"),
       resolved: notes.find((mistake) => mistake.id === id)?.resolved ?? false,
     };
     if (!isMistake(note)) {
@@ -69,7 +73,8 @@ export function Notebook({
                   </Link>
                   <p className="text-xs text-fg-3">{b.section}</p>
                 </div>
-                <button type="button"
+                <button
+                  type="button"
                   className="text-sm text-fg-2 hover:text-red"
                   onClick={() =>
                     bookmarks.write(saved.filter((x) => x.href !== b.href))
@@ -161,9 +166,7 @@ export function Notebook({
               </button>
             )}
           </div>
-          <output className="block text-sm text-red">
-            {error}
-          </output>
+          <output className="block text-sm text-red">{error}</output>
         </form>
       </section>
       <section>
@@ -237,8 +240,7 @@ function MistakeCard({
           )}
         </h3>
         <span className={`text-xs ${due ? "text-red" : "text-fg-3"}`}>
-          {mistakeReviewLabel(m.resolved, due)} ·{" "}
-          {m.dueDate}
+          {mistakeReviewLabel(m.resolved, due)} · {m.dueDate}
         </span>
       </div>
       <dl className="mt-3 space-y-3 text-sm">
@@ -256,7 +258,9 @@ function MistakeCard({
         </div>
       </dl>
       <div className="mt-4 flex flex-wrap gap-4 text-sm text-brand">
-        <button type="button" onClick={onEdit}>Edit / reschedule</button>
+        <button type="button" onClick={onEdit}>
+          Edit / reschedule
+        </button>
         <button type="button" onClick={onResolve}>
           {m.resolved ? "Reopen" : "Mark resolved"}
         </button>

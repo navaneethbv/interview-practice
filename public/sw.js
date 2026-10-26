@@ -17,7 +17,9 @@ const keyFor = path => new Request(new URL(path, self.location.origin));
 function downloadURL(path, kind) {
   const message = kind === "asset" ? "Invalid lesson asset URL." : "Only public lesson pages can be downloaded.";
   if (typeof path !== "string" || path.length > 2048 || !path.startsWith("/") || path.startsWith("//") || /[\\%?#\s]/.test(path)) throw new Error(message);
-  const url = new URL(path, self.location.origin);
+  // Fix the authority before assigning the validated path: input cannot select a host.
+  const url = new URL(self.location.origin);
+  url.pathname = path;
   if (url.origin !== self.location.origin || url.username || url.password || url.search || url.hash || url.pathname !== path) throw new Error(message);
   const allowed = kind === "asset" ? assetPath(url.pathname) : lessonPath(url.pathname) || kind === "shell" && url.pathname === SHELL;
   if (!allowed) throw new Error(message);
@@ -26,8 +28,8 @@ function downloadURL(path, kind) {
 
 // Decode each original entity exactly once; nested entities stay encoded.
 function decodeEntities(text) {
-  const entities = { "&amp;": "&", "&#x27;": "'", "&quot;": '"' };
-  return text.replace(/&(?:amp|#x27|quot);/g, entity => entities[entity]);
+  const entities = new Map([["&amp;", "&"], ["&#x27;", "'"], ["&quot;", '"']]);
+  return text.replace(/&(?:amp|#x27|quot);/g, entity => entities.get(entity) ?? entity);
 }
 async function entries() {
   try {
@@ -69,11 +71,11 @@ function referenceStart(text, index) {
   if (text.startsWith("href=", index)) return { start: index + 5, css: false };
   if (!text.startsWith("url(", index)) return null;
   let start = index + 4;
-  while (referenceWhitespace(text[start])) start++;
+  while (referenceWhitespace(text.charAt(start))) start++;
   return { start, css: true };
 }
 function readReference(text, start, css) {
-  const quote = text[start];
+  const quote = text.charAt(start);
   if (quote === '"' || quote === "'") {
     const end = text.indexOf(quote, start + 1);
     return { end, value: text.slice(start + 1, end) };
@@ -84,14 +86,15 @@ function readReference(text, start, css) {
 }
 /** Each scan advances beyond its delimiter, including malformed references. */
 function scanResourceReferences(text, visit) {
-  for (let index = 0; index < text.length; index++) {
-    const opening = referenceStart(text, index);
-    if (!opening) continue;
+  let cursor = 0;
+  while (cursor < text.length) {
+    const opening = referenceStart(text, cursor);
+    if (!opening) { cursor++; continue; }
     const reference = readReference(text, opening.start, opening.css);
-    if (!reference) continue;
+    if (!reference) { cursor++; continue; }
     if (reference.end < 0) return;
     visit(reference.value);
-    index = reference.end;
+    cursor = reference.end + 1;
   }
 }
 function assetURLs(text, base) {
@@ -109,11 +112,11 @@ function assetURLs(text, base) {
   });
   return [...urls];
 }
-function lessonTitle(html, fallback) {
-  const start = html.indexOf("<title>");
+function lessonTitle(sourceText, fallback) {
+  const start = sourceText.indexOf("<title>");
   if (start < 0) return fallback;
-  const end = html.indexOf("</title>", start + 7);
-  return end < 0 ? fallback : decodeEntities(html.slice(start + 7, Math.min(end, start + 507)));
+  const end = sourceText.indexOf("</title>", start + 7);
+  return end < 0 ? fallback : decodeEntities(sourceText.slice(start + 7, Math.min(end, start + 507)));
 }
 function suppliedAssetPaths(values) {
   return values.flatMap(value => {
@@ -123,7 +126,7 @@ function suppliedAssetPaths(values) {
 }
 async function fetchAsset(path, budget) {
   const url = downloadURL(path, "asset");
-  const request = new Request(url.href, { credentials: "omit", cache: "force-cache", redirect: "error" });
+  const request = new Request(url, { credentials: "omit", cache: "force-cache", redirect: "error" });
   const response = await fetch(request);
   if (!response.ok || response.redirected) throw new Error("A lesson asset could not be downloaded. Try again online.");
   const buffer = await response.clone().arrayBuffer();
@@ -146,13 +149,13 @@ async function download(path, shell = false, suppliedAssets = []) {
   const url = downloadURL(path, shell ? "shell" : "lesson");
   let saved = await entries();
   if (!shell && !saved.some(entry => entry.path === path) && saved.length >= MAX_LESSONS) throw new Error("Your offline library is full (20 lessons). Remove a download first.");
-  const request = new Request(url.href, { credentials: "omit", cache: "reload", redirect: "error", headers: { Accept: "text/html" } });
+  const request = new Request(url, { credentials: "omit", cache: "reload", redirect: "error", headers: { Accept: "text/html" } });
   const response = await fetch(request);
   if (!response.ok || response.redirected || !response.headers.get("content-type")?.includes("text/html")) throw new Error("Could not download this lesson. Check your connection.");
   const buffer = await response.clone().arrayBuffer();
   if (buffer.byteLength > MAX_DOWNLOAD_BYTES) throw new Error("This lesson is too large to save offline.");
-  const html = new TextDecoder().decode(buffer);
-  const pending = [...assetURLs(html, url), ...suppliedAssetPaths(suppliedAssets)];
+  const sourceText = new TextDecoder().decode(buffer);
+  const pending = [...assetURLs(sourceText, url), ...suppliedAssetPaths(suppliedAssets)];
   const downloaded = new Map();
   await fetchAssets(pending, downloaded, { bytes: buffer.byteLength });
   const assetCache = await caches.open(ASSETS);
@@ -165,7 +168,7 @@ async function download(path, shell = false, suppliedAssets = []) {
   if (shell) {
     await (await caches.open(INDEX)).put(keyFor("/__offline_shell__"), new Response(JSON.stringify([...downloaded.keys()])));
   } else {
-    const title = lessonTitle(html, path);
+    const title = lessonTitle(sourceText, path);
     saved = saved.filter(entry => entry.path !== path);
     saved.push({ path, title, savedAt: Date.now(), assets: [...downloaded.keys()] });
     await writeEntries(saved);
@@ -177,7 +180,15 @@ self.addEventListener("install", event => {
   event.waitUntil(download(SHELL, true).catch(error => { console.warn("Offline shell could not be downloaded.", error); }));
 });
 self.addEventListener("activate", event => { event.waitUntil(self.clients.claim()); });
+function trustedMessageSource(source) {
+  if (!source || typeof source.url !== "string") return false;
+  try { return new URL(source.url).origin === self.location.origin; }
+  catch { return false; }
+}
 self.addEventListener("message", event => {
+  // A message port alone does not authorize cache reads, downloads or deletion.
+  if (event.origin !== self.location.origin) return;
+  if (!trustedMessageSource(event.source)) return;
   const reply = event.ports?.[0]; if (!reply) return;
   const data = event.data ?? {};
   const operation = async () => {
@@ -192,23 +203,40 @@ self.addEventListener("message", event => {
   };
   queue = queue.then(operation, operation); event.waitUntil(queue);
 });
-function unavailableLesson() {
+function unavailableLessonHTML() {
   return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Lesson unavailable offline</title><body><h1>This lesson has not been downloaded</h1><p>Connect to the internet to download it, or open a saved lesson.</p><a href="/offline">Offline library</a></body></html>', { status: 503, headers: { "Content-Type": "text/html; charset=utf-8" } });
 }
-async function navigate(request, pathname) {
-  try { return await fetch(request); }
-  catch {
-    try { return await (await caches.open(DOCS)).match(keyFor(pathname)) || unavailableLesson(); }
-    catch (error) { console.warn("Offline document storage is unavailable.", error); return unavailableLesson(); }
+function incomingPublicURL(request, kind) {
+  try {
+    const received = new URL(request.url);
+    if (received.origin !== self.location.origin || received.search || received.hash) return null;
+    return downloadURL(received.pathname, kind);
+  } catch { return null; }
+}
+async function offlineDocument(pathname) {
+  try { return await (await caches.open(DOCS)).match(keyFor(pathname)) || unavailableLessonHTML(); }
+  catch (error) {
+    console.warn("Offline document storage is unavailable.", error);
+    return unavailableLessonHTML();
   }
 }
-async function staticResource(request, pathname) {
+async function navigate(request) {
+  const url = incomingPublicURL(request, "shell");
+  if (!url) return unavailableLessonHTML();
+  const publicRequest = new Request(url, { credentials: "omit", redirect: "error", headers: { Accept: "text/html" } });
+  try { return await fetch(publicRequest); }
+  catch { return offlineDocument(url.pathname); }
+}
+async function staticResource(request) {
+  const url = incomingPublicURL(request, "asset");
+  if (!url) return Response.error();
   try {
-    const saved = await (await caches.open(ASSETS)).match(keyFor(pathname));
+    const saved = await (await caches.open(ASSETS)).match(keyFor(url.pathname));
     if (saved) return saved;
   } catch (error) { console.warn("Offline asset storage is unavailable.", error); }
   // Runtime fetches are never cached: only explicit lesson downloads and shell assets persist.
-  try { return await fetch(request); }
+  const publicRequest = new Request(url, { credentials: "omit", redirect: "error" });
+  try { return await fetch(publicRequest); }
   catch { return Response.error(); }
 }
 self.addEventListener("fetch", event => {
@@ -216,6 +244,6 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET" || url.origin !== self.location.origin || blocked(url.pathname) || url.search || request.headers.has("RSC")) return;
   if (request.mode === "navigate") {
     if (!lessonPath(url.pathname) && url.pathname !== SHELL) return;
-    event.respondWith(navigate(request, url.pathname));
-  } else if (assetPath(url.pathname)) event.respondWith(staticResource(request, url.pathname));
+    event.respondWith(navigate(request));
+  } else if (assetPath(url.pathname)) event.respondWith(staticResource(request));
 });

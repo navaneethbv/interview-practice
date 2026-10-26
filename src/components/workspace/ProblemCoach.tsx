@@ -13,17 +13,35 @@ export interface CoachInfo {
   space?: string;
 }
 
-const COMMON = ["O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n^2)", "O(n^3)", "O(2^n)", "O(n!)", "O(m * n)", "O(V + E)", "O(k)", "O(h)"];
+const COMMON = [
+  "O(1)",
+  "O(log n)",
+  "O(n)",
+  "O(n log n)",
+  "O(n^2)",
+  "O(n^3)",
+  "O(2^n)",
+  "O(n!)",
+  "O(m * n)",
+  "O(V + E)",
+  "O(k)",
+  "O(h)",
+];
 
 /**
  * Hints that reveal one step at a time (topic, pattern, approach) and a complexity check that
  * asks for your own answer before showing the reference.
  */
-export function ProblemCoach({ info, progressId }: Readonly<{ info: CoachInfo; progressId?: string }>) {
+export function ProblemCoach({
+  info,
+  progressId,
+}: Readonly<{ info: CoachInfo; progressId?: string }>) {
   const hints = [
     info.topics?.length ? `Topics: ${info.topics.join(", ")}.` : undefined,
     info.pattern ? `Pattern to consider: ${info.pattern}.` : undefined,
-    info.hint && info.hint !== info.pattern ? info.hint.replace(/^[^:]+:\s*/, "Approach: ") : undefined,
+    info.hint && info.hint !== info.pattern
+      ? info.hint.replace(/^[^:]+:\s*/, "Approach: ")
+      : undefined,
   ].filter((h): h is string => Boolean(h));
   const [shown, setShown] = useState(0);
   const hasComplexity = Boolean(info.time || info.space);
@@ -32,7 +50,10 @@ export function ProblemCoach({ info, progressId }: Readonly<{ info: CoachInfo; p
   return (
     <div className="mt-6 space-y-3">
       {hints.length > 0 && (
-        <section className="rounded-lg border border-line px-4 py-3 text-sm" aria-label="Hints">
+        <section
+          className="rounded-lg border border-line px-4 py-3 text-sm"
+          aria-label="Hints"
+        >
           <div className="flex items-center gap-2">
             <Lightbulb size={15} className="text-medium" aria-hidden />
             <h2 className="font-medium text-fg-1">Hints</h2>
@@ -42,7 +63,12 @@ export function ProblemCoach({ info, progressId }: Readonly<{ info: CoachInfo; p
             {shown < hints.length && (
               <button
                 type="button"
-                onClick={() => { if (progressId) recordLearningAssistance(progressId, "hint"); setShown(shown + 1); }}
+                onClick={() => {
+                  if (progressId) {
+                    recordLearningAssistance(progressId, "hint");
+                  }
+                  setShown(shown + 1);
+                }}
                 className="ml-auto rounded-md bg-layer-2 px-2.5 py-1 text-xs font-medium text-fg-1 hover:bg-layer-3"
               >
                 {shown === 0 ? "Show a hint" : "Next hint"}
@@ -63,7 +89,10 @@ export function ProblemCoach({ info, progressId }: Readonly<{ info: CoachInfo; p
   );
 }
 
-function ComplexityCheck({ time, space }: Readonly<{ time?: string; space?: string }>) {
+function ComplexityCheck({
+  time,
+  space,
+}: Readonly<{ time?: string; space?: string }>) {
   const [answer, setAnswer] = useState({ time: "", space: "" });
   const [checked, setChecked] = useState(false);
   const rows = [
@@ -72,12 +101,18 @@ function ComplexityCheck({ time, space }: Readonly<{ time?: string; space?: stri
   ].filter((r) => r.expected);
 
   return (
-    <section className="rounded-lg border border-line px-4 py-3 text-sm" aria-label="Complexity check">
+    <section
+      className="rounded-lg border border-line px-4 py-3 text-sm"
+      aria-label="Complexity check"
+    >
       <div className="flex items-center gap-2">
         <Gauge size={15} className="text-blue" aria-hidden />
         <h2 className="font-medium text-fg-1">Complexity check</h2>
       </div>
-      <p className="mt-1 text-xs text-fg-3">State the complexity of your approach before you look, as you would in an interview.</p>
+      <p className="mt-1 text-xs text-fg-3">
+        State the complexity of your approach before you look, as you would in
+        an interview.
+      </p>
       <form
         className="mt-2 flex flex-wrap items-end gap-3"
         onSubmit={(e) => {
@@ -105,7 +140,10 @@ function ComplexityCheck({ time, space }: Readonly<{ time?: string; space?: stri
             />
           </label>
         ))}
-        <button type="submit" className="h-8 rounded-md bg-layer-2 px-3 text-xs font-medium text-fg-1 hover:bg-layer-3">
+        <button
+          type="submit"
+          className="h-8 rounded-md bg-layer-2 px-3 text-xs font-medium text-fg-1 hover:bg-layer-3"
+        >
           Check
         </button>
       </form>
@@ -113,13 +151,17 @@ function ComplexityCheck({ time, space }: Readonly<{ time?: string; space?: stri
         <ul className="mt-2 space-y-1" aria-live="polite">
           {rows.map((r) => {
             const mine = answer[r.key].trim();
-            const match = mine && normalizeComplexity(mine) === normalizeComplexity(r.expected!);
+            const match =
+              mine &&
+              normalizeComplexity(mine) === normalizeComplexity(r.expected!);
             return (
               <li key={r.key} className="text-fg-2">
                 {r.label}: reference <code>{r.expected}</code>
                 {mine ? (
                   <span className={match ? "text-ok" : "text-medium"}>
-                    {match ? " (matches yours)" : ` (yours: ${mine}; check whether they agree)`}
+                    {match
+                      ? " (matches yours)"
+                      : ` (yours: ${mine}; check whether they agree)`}
                   </span>
                 ) : (
                   <span className="text-fg-3"> (you left this blank)</span>

@@ -260,8 +260,7 @@ export class SyncClient {
   private snapshot(value: unknown, session: SyncSession): CloudSnapshot {
     const row = value as CloudSnapshot;
     if (
-      !row ||
-      row.user_id !== session.userId ||
+      row?.user_id !== session.userId ||
       !UUID.test(row.revision) ||
       !Number.isFinite(Date.parse(row.updated_at))
     )

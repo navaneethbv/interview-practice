@@ -215,9 +215,8 @@ export function ColorThemePicker() {
           className="absolute top-full right-0 left-auto z-[70] m-0 mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
         >
           <p className="px-1 pb-2 text-sm font-semibold">Appearance</p>
-          <div
-            className="mb-3 grid grid-cols-2 gap-1 rounded-xl bg-layer-2 p-1"
-            role="group"
+          <fieldset
+            className="mb-3 grid min-w-0 grid-cols-2 gap-1 rounded-xl bg-layer-2 p-1"
             aria-label="Color mode"
           >
             <button
@@ -242,7 +241,7 @@ export function ColorThemePicker() {
             >
               <Moon size={15} /> Dark
             </button>
-          </div>
+          </fieldset>
           <p className="px-1 pb-2 text-xs font-medium text-fg-3">
             {dark ? "Dark themes" : "Light themes"}
           </p>

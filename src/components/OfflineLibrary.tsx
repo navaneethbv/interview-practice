@@ -51,9 +51,7 @@ export function OfflineLibrary() {
         include lesson text, images, fonts, and the page interface. Coding
         execution and cloud services need a connection.
       </p>
-      <p role="status" className="my-3 text-sm text-fg-3">
-        {message}
-      </p>
+      <output className="my-3 text-sm text-fg-3">{message}</output>
       <ul className="space-y-3">
         {lessons.map((lesson) => (
           <li
@@ -82,7 +80,8 @@ export function OfflineLibrary() {
       <div className="mt-8 rounded-xl border border-line p-5">
         <h2 className="text-lg font-semibold">Install on your device</h2>
         {install && (
-          <button type="button"
+          <button
+            type="button"
             className="mt-3 rounded-lg border border-line px-4 py-2"
             onClick={async () => {
               await install.prompt();
@@ -105,7 +104,8 @@ export function OfflineLibrary() {
           practice progress is separate from lesson downloads. Up to 20 lessons
           can be saved. Remove older downloads to make room.
         </p>
-        <button type="button"
+        <button
+          type="button"
           className="mt-3 rounded-lg border border-line px-3 py-2 text-sm"
           disabled={busy}
           onClick={() => {

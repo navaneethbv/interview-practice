@@ -142,7 +142,7 @@ export function Readiness({
           self-assessed conditions, not proof of unaided ability.
         </p>
         <label className="mt-5 block text-sm">
-          Problem for a new independent attempt
+          <span>Problem for a new independent attempt</span>
           <select
             value={selected}
             onChange={(event) => {
@@ -181,9 +181,7 @@ export function Readiness({
             </Link>
           )}
         </div>
-        <p role="status" className="mt-3 text-sm text-fg-2">
-          {message}
-        </p>
+        <output className="mt-3 text-sm text-fg-2">{message}</output>
       </section>
       <section className={panel}>
         <h2 className="text-xl font-semibold">

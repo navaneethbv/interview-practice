@@ -94,10 +94,11 @@ export function ChapterView({
   const passed = hasPassed(ba, id);
 
   const go = (n: number) => {
+    const fragment = n <= lessons.length ? "#lesson-" + n : "#quiz";
     window.history.replaceState(
       window.history.state,
       "",
-      `${window.location.pathname}${n <= lessons.length ? `#lesson-${n}` : "#quiz"}`,
+      window.location.pathname + fragment,
     );
     window.dispatchEvent(new HashChangeEvent("hashchange"));
     savePosition(id, n);

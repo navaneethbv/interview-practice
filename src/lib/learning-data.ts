@@ -211,10 +211,12 @@ export function dailyTasks(
   // Alternate the first track on small budgets so mixed plans do not starve BA work.
   const baFirst =
     Math.floor(Date.parse(`${today}T00:00:00Z`) / 86400000) % 2 === 0;
+  const firstTrack = baFirst ? ba : coding;
+  const secondTrack = baFirst ? coding : ba;
   const sorted = [
     ...reviews,
     ...(plan.goal === "mixed"
-      ? interleave(baFirst ? ba : coding, baFirst ? coding : ba)
+      ? interleave(firstTrack, secondTrack)
       : eligible.filter((task) => task.kind !== "review")),
   ];
   // A user may reduce the budget or do extra work outside this plan. Preserve that

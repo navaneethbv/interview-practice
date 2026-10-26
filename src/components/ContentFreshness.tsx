@@ -49,7 +49,9 @@ export function ContentFreshness({
       ))}
       <Link
         className="mt-2 inline-block text-brand underline underline-offset-2"
-        href={`/content-status${entry ? `#${entry.id.replaceAll(":", "-")}` : ""}`}
+        href={
+          "/content-status" + (entry ? "#" + entry.id.replaceAll(":", "-") : "")
+        }
       >
         Source and review history
       </Link>

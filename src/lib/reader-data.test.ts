@@ -127,6 +127,8 @@ function workerHarness() {
     new Promise<{ result?: unknown; error?: string }>((resolve) =>
       events.message({
         data,
+        origin,
+        source: { url: `${origin}/learn/arrays` },
         ports: [{ postMessage: resolve }],
         waitUntil: () => {},
       }),
@@ -339,4 +341,54 @@ test("offline cleanup retains resources when shell metadata cannot be read", asy
   const before = cacheStore.get("ip-offline-assets-v1")!.size;
   await assert.rejects(vm.runInContext("cleanAssets()", context), /Could not clean offline assets/);
   assert.equal(cacheStore.get("ip-offline-assets-v1")!.size, before);
+});
+
+
+test("offline messages reject foreign, missing and mismatched sender origins before accessing caches", async () => {
+  const { events, context } = workerHarness();
+  let accessed = false;
+  context.caches = { open: async () => { accessed = true; throw new Error("must not access storage"); } };
+  for (const [origin, source] of [
+    ["https://other.test", { url: "https://other.test/learn/arrays" }],
+    ["", { url: "https://example.test/learn/arrays" }],
+    ["https://example.test", { url: "https://other.test/learn/arrays" }],
+    ["https://example.test", null],
+    ["https://example.test", { url: "invalid URL" }],
+  ]) {
+    let replied = false;
+    let queued = false;
+    events.message({ origin, source, data: { type: "DELETE", path: "/learn/arrays" }, ports: [{ postMessage: () => { replied = true; } }], waitUntil: () => { queued = true; } });
+    await Promise.resolve();
+    assert.equal(replied, false);
+    assert.equal(queued, false);
+    assert.equal(accessed, false);
+  }
+});
+
+test("offline requests fix their authority independently of validated path assignment", () => {
+  const { context } = workerHarness();
+  const url = vm.runInContext('downloadURL("/learn/arrays", "lesson")', context) as URL;
+  assert.equal(url.origin, "https://example.test");
+  assert.equal(url.pathname, "/learn/arrays");
+  for (const path of ["//other.test/learn/arrays", "https://other.test/learn/arrays", "/learn/../api/private", "/learn/arrays?next=https://other.test"]) {
+    context.untrustedPath = path;
+    assert.throws(() => vm.runInContext('downloadURL(untrustedPath, "lesson")', context), /Only public lesson/);
+  }
+});
+
+test("navigation rebuilds public requests without forwarding caller credentials or headers", async () => {
+  const { context } = workerHarness();
+  const fetched: Request[] = [];
+  context.fetch = async (request: Request) => { fetched.push(request); return new Response("public lesson"); };
+  context.receivedRequest = new Request("https://example.test/learn/arrays", { headers: { Authorization: "Bearer private", Cookie: "session=private" }, credentials: "include" });
+  assert.equal((await vm.runInContext("navigate(receivedRequest)", context) as Response).status, 200);
+  assert.equal(fetched.length, 1);
+  assert.equal(fetched[0].url, "https://example.test/learn/arrays");
+  assert.equal(fetched[0].credentials, "omit");
+  assert.equal(fetched[0].redirect, "error");
+  assert.equal(fetched[0].headers.get("Authorization"), null);
+  assert.equal(fetched[0].headers.get("Cookie"), null);
+  context.receivedRequest = new Request("https://other.test/learn/arrays");
+  assert.equal((await vm.runInContext("navigate(receivedRequest)", context) as Response).status, 503);
+  assert.equal(fetched.length, 1);
 });

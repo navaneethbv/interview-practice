@@ -31,7 +31,7 @@ export function selectReferenceShard(
   files: readonly string[],
   shard?: ReferenceShard,
 ): string[] {
-  const sorted = [...files].sort();
+  const sorted = [...files].sort((a, b) => a.localeCompare(b, "en"));
   return shard
     ? sorted.filter((_, index) => index % shard.total === shard.index - 1)
     : sorted;

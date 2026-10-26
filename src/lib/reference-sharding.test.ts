@@ -21,7 +21,7 @@ test("four reference shards are deterministic, disjoint and cover every reposito
     selectReferenceShard(files, { index, total: 4 }),
   );
   assert.ok(files.length > 0);
-  assert.deepEqual(shards.flat().sort(), [...files].sort());
+  assert.deepEqual(shards.flat().sort(), [...files].sort((a, b) => a.localeCompare(b, "en")));
   assert.equal(new Set(shards.flat()).size, files.length);
   assert.ok(
     Math.max(...shards.map((s) => s.length)) -
@@ -33,7 +33,7 @@ test("four reference shards are deterministic, disjoint and cover every reposito
       shards[index - 1],
       selectReferenceShard([...files].reverse(), { index, total: 4 }),
     );
-  assert.deepEqual(selectReferenceShard(files), [...files].sort());
+  assert.deepEqual(selectReferenceShard(files), [...files].sort((a, b) => a.localeCompare(b, "en")));
 });
 
 test("shard arguments reject malformed or empty selections", () => {

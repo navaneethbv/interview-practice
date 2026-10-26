@@ -46,6 +46,31 @@ const button =
 const input =
   "w-full rounded-lg border border-line bg-layer-0 px-3 py-2 text-fg-1";
 type Review = { local: PracticeBackup | null; cloud: CloudSnapshot | null };
+async function applyCloudCopy(
+  client: SyncClient,
+  session: SyncSession,
+  review: Review,
+  preserved: boolean,
+) {
+  if (!review.cloud)
+    throw new Error("There is no cloud snapshot to download.");
+  const latest = await client.read(session);
+  if (latest?.revision !== review.cloud.revision)
+    throw new SyncConflictError();
+  if (
+    JSON.stringify(localBackup()?.entries ?? {}) !==
+    JSON.stringify(review.local?.entries ?? {})
+  )
+    throw new Error(
+      "Local data changed during download. Compare again before continuing.",
+    );
+  // Never discard conflicting local data without an explicit recovery download.
+  if (review.local && !preserved)
+    throw new Error(
+      "Download your local recovery copy before applying cloud data.",
+    );
+  importPractice(parseBackup(JSON.stringify(review.cloud.backup)));
+}
 const CONFIRMATION_COPY = {
   upload: {
     title: "Replace the cloud snapshot?",
@@ -146,24 +171,7 @@ export function AccountSync() {
         "Uploaded the reviewed local snapshot. Local practice is unchanged.",
       );
     } else if (confirm === "download") {
-      if (!review.cloud)
-        throw new Error("There is no cloud snapshot to download.");
-      const latest = await client.read(session);
-      if (latest?.revision !== review.cloud.revision)
-        throw new SyncConflictError();
-      if (
-        JSON.stringify(localBackup()?.entries ?? {}) !==
-        JSON.stringify(review.local?.entries ?? {})
-      )
-        throw new Error(
-          "Local data changed during download. Compare again before continuing.",
-        );
-      // Never discard conflicting local data without an explicit recovery download.
-      if (review.local && !preserved)
-        throw new Error(
-          "Download your local recovery copy before applying cloud data.",
-        );
-      importPractice(parseBackup(JSON.stringify(review.cloud.backup)));
+      await applyCloudCopy(client, session, review, preserved);
       setReview(null);
       setMessage(
         "Applied the reviewed cloud data. Keys present in the backup replace matching local keys; other local data stays.",

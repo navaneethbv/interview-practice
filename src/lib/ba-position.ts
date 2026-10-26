@@ -1,12 +1,12 @@
 /** Resolve explicit bookmark navigation before the saved chapter position. */
 export function resolveBaStep(
-  hash: string,
+  fragment: string,
   saved: number | undefined,
   lessonCount: number,
 ): number {
   const quizStep = lessonCount + 1;
-  if (hash === "#quiz") return quizStep;
-  const match = /^#lesson-([1-9][0-9]*)$/.exec(hash);
+  if (fragment === "#quiz") return quizStep;
+  const match = /^#lesson-([1-9]\d*)$/.exec(fragment);
   if (match) {
     const linked = Number(match[1]);
     if (linked <= lessonCount) return linked;
