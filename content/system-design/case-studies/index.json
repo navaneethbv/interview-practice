@@ -2,7 +2,7 @@
  "id": "case-studies",
  "title": "System Design Case Studies",
  "short": "Design Case Studies",
- "description": "Original worked designs for frequently asked prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache and email.",
+ "description": "Original worked designs for interview prompts: payments, job scheduling, collaborative editing, leaderboards, a matching engine, ad click aggregation, metrics, object storage, hotel booking, a distributed cache, email, global rate limiting and real-time pedestrian intent.",
  "source": "system_design_case_studies.md",
  "parts": [
   {
@@ -55,6 +55,14 @@
     {
      "id": "design-an-email-service",
      "title": "Design an email service"
+    },
+    {
+     "id": "design-a-global-multi-region-rate-limiter",
+     "title": "Design a global multi-region rate limiter"
+    },
+    {
+     "id": "design-a-real-time-pedestrian-intent-system",
+     "title": "Design a real-time pedestrian-intent system"
     }
    ]
   }
