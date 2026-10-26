@@ -45,7 +45,7 @@ export function ReaderTools({ targetId }: Readonly<{ targetId: string }>) {
   }, []);
 
   const startSpeaking = useCallback(() => {
-    const text = document.getElementById(targetId)?.innerText?.replace(/\\s+/g, " ").trim();
+    const text = document.getElementById(targetId)?.innerText?.replace(/\s+/g, " ").trim();
     if (!text || !("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
     window.speechSynthesis.cancel();
     chunksRef.current = speechChunks(text);
