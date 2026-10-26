@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BaStudyPlanShell, type BaStudySession } from "@/components/ba/BaStudyPlanShell";
 
 const days: [string, string, string][] = [
   ["Foundations · BA role", "Read What a Business Analyst Does. Start a glossary of 10 terms and explain, in your own words, the need, solution and value in a familiar process.", "60 min"],
@@ -60,33 +60,29 @@ const chapterIds = [
   "final",
 ];
 
+const sessions: BaStudySession[] = days.map(([title, task, time], index) => ({
+  title,
+  task,
+  time,
+  href: chapterIds[index] === "final" ? "/business-analyst/final" : `/business-analyst/${chapterIds[index]}`,
+}));
+
 export function BaStudyPlan() {
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
-      <Link href="/business-analyst" className="text-sm font-medium text-brand hover:underline">← Back to Business Analyst Prep</Link>
-      <header className="mt-5 rounded-3xl border border-line bg-layer-1 p-6 shadow-card sm:p-8">
-        <p className="text-xs font-semibold tracking-[0.16em] text-brand uppercase">Beginner study plan</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">39 study sessions from zero to interview-ready</h1>
-        <p className="mt-4 max-w-3xl leading-relaxed text-fg-2">Plan for about 60 minutes per study day. These are 39 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas. At five sessions a week, the plan takes about eight weeks.</p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">20 min</b><span className="text-sm text-fg-2">Read the assigned lessons</span></div>
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">30 min</b><span className="text-sm text-fg-2">Complete the practice task</span></div>
-          <div className="rounded-xl bg-layer-2 p-3"><b className="block text-sm">10 min</b><span className="text-sm text-fg-2">Recall key ideas without notes</span></div>
-        </div>
-        <p className="mt-4 text-sm leading-relaxed text-fg-2">Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on. The final exam unlocks after all chapter quizzes are passed.</p>
-      </header>
-      <section className="mt-8 overflow-hidden rounded-2xl border border-line bg-layer-1 shadow-card">
-        <h2 className="border-b border-line bg-layer-2 px-5 py-4 text-lg font-semibold">Daily schedule</h2>
-        <ol className="divide-y divide-line">
-          {days.map(([title, task, time], index) => (
-            <li key={title} className="grid gap-2 px-5 py-4 sm:grid-cols-[5rem_1fr_auto] sm:items-start">
-              <span className="text-sm font-semibold text-brand">Day {index + 1}</span>
-              <div><h3 className="font-medium"><Link href={chapterIds[index] === "final" ? "/business-analyst/final" : `/business-analyst/${chapterIds[index]}`} className="hover:text-brand hover:underline">{title}</Link></h3><p className="mt-1 text-sm leading-relaxed text-fg-2">{task}</p></div>
-              <span className="text-xs text-fg-3 sm:pt-1">{time}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
+    <BaStudyPlanShell
+      backHref="/business-analyst"
+      backLabel="Business Analyst Prep"
+      levelLabel="Beginner study plan"
+      title="39 study sessions from zero to interview-ready"
+      intro="Plan for about 60 minutes per study day. These are 39 study sessions, not a deadline; take rest or catch-up days whenever you need them. Each session combines course reading with a small task so you can apply the ideas. At five sessions a week, the plan takes about eight weeks."
+      timeBlocks={[
+        { duration: "20 min", label: "Read the assigned lessons" },
+        { duration: "30 min", label: "Complete the practice task" },
+        { duration: "10 min", label: "Recall key ideas without notes" },
+      ]}
+      note="Take each chapter quiz after its lessons and review every explanation, including correct answers. If a topic is new, repeat that session before moving on. The final exam unlocks after all chapter quizzes are passed."
+      sessions={sessions}
+    >
       <details className="mt-6 rounded-2xl border border-line bg-layer-1 p-5">
         <summary className="cursor-pointer font-semibold">Starter data for the Excel and SQL sessions</summary>
         <p className="mt-2 text-sm leading-relaxed text-fg-2">These fictional rows are enough to practice formulas, pivot tables, grouping, joins and basic data checks. Add a duplicate or blank value to practice finding quality issues.</p>
@@ -124,6 +120,6 @@ export function BaStudyPlan() {
           <li>Support UAT, communicate risks and walk through a case from discovery to measured results.</li>
         </ul>
       </aside>
-    </main>
+    </BaStudyPlanShell>
   );
 }
