@@ -1,7 +1,7 @@
 Each chapter is an original worked design for a prompt that comes up often in system design interviews.
 They follow the same order you would use in a 45-minute round: requirements, estimates, API, data model, architecture, deep dives, failure modes, and the follow-up questions an interviewer is likely to ask.
 Numbers are illustrative assumptions; state your own and adjust the design when they change.
-Reviewed October 11, 2026.
+Reviewed October 25, 2026.
 
 ## Before reading a chapter
 
