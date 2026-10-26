@@ -71,6 +71,22 @@ export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
+  const dark = resolvedTheme === "dark";
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(dark ? "light" : "dark")}
+      className="grid size-8 shrink-0 place-items-center rounded-md text-fg-2 transition-colors hover:bg-layer-2 hover:text-fg-1"
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Light mode" : "Dark mode"}
+    >
+      {dark ? <Sun size={17} /> : <Moon size={17} />}
+    </button>
+  );
+}
+
+export function ColorThemePicker() {
+  const { resolvedTheme, setTheme } = useTheme();
   const { palette, setPalette } = useContext(PaletteContext);
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -98,17 +114,17 @@ export function ThemeToggle() {
         type="button"
         onClick={() => setOpen((value) => !value)}
         className="grid size-8 shrink-0 place-items-center rounded-md text-fg-2 transition-colors hover:bg-layer-2 hover:text-fg-1"
-        aria-label="Appearance settings"
+        aria-label="Choose color theme"
         aria-expanded={open}
         aria-haspopup="dialog"
-        title="Appearance and color themes"
+        title="Choose a color theme"
       >
         <Palette size={17} />
       </button>
       {open && (
         <section
           role="dialog"
-          aria-label="Appearance settings"
+          aria-label="Color themes"
           className="absolute top-full right-0 z-[70] mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-line bg-layer-1 p-3 shadow-overlay"
         >
           <p className="px-1 pb-2 text-sm font-semibold">Appearance</p>
