@@ -8,9 +8,7 @@ class Solution:
             if node is None:
                 continue
             if not ready:
-                stack.append((node, True))
-                stack.append((node.right, False))
-                stack.append((node.left, False))
+                stack.extend(((node, True), (node.right, False), (node.left, False)))
                 continue
             left_info = info[node.left]
             right_info = info[node.right]

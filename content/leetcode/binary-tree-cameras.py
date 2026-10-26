@@ -8,9 +8,7 @@ class Solution:
             if node is None:
                 continue
             if not expanded:
-                stack.append((node, True))
-                stack.append((node.right, False))
-                stack.append((node.left, False))
+                stack.extend(((node, True), (node.right, False), (node.left, False)))
                 continue
             left_state = states.get(id(node.left), 1)
             right_state = states.get(id(node.right), 1)

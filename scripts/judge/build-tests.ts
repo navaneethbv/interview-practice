@@ -167,23 +167,26 @@ async function main() {
   }
   let done = 0;
   const queue = [...files];
-  await Promise.all(
-    Array.from({ length: 6 }, async () => {
-      while (queue.length) {
-        const f = queue.shift()!;
-        try {
-          errors.push(...(await processSpec(f)));
-        } catch (e) {
-          errors.push(`${path.basename(f)}: ${(e as Error).message}`);
-        }
-        done++;
-      }
-    }),
-  );
+  // Six workers each take the next spec from the shared queue until it is empty.
+  const worker = async (): Promise<void> => {
+    const f = queue.shift();
+    if (!f) return;
+    try {
+      errors.push(...(await processSpec(f)));
+    } catch (e) {
+      errors.push(`${path.basename(f)}: ${(e as Error).message}`);
+    }
+    done++;
+    return worker();
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
   for (const e of errors) console.error(`✗ ${e}`);
   console.log(`${done} specs processed, ${errors.length} problems found.`);
   console.log(`Reference executions: ${executions.python} Python, ${executions.java} Java, ${executions.sqlite} SQLite, ${executions.other} other languages.`);
   if (errors.length) process.exit(1);
 }
 
-main();
+main().catch((e: unknown) => {
+  console.error(e);
+  process.exit(1);
+});
