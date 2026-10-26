@@ -2,6 +2,7 @@ import { isRecord, isSubmission, normalizeProgress, parsePrefs } from "./progres
 import { isPracticeVisit } from "./practice-resume";
 import { isMockState, isReviewState, MOCK_KEY, REVIEW_KEY } from "./practice-data";
 import { restoreEntries, storedEntries } from "./storage";
+import { BA_KEY, isBaState } from "./ba-data";
 
 export const BACKUP_LIMIT = 20 * 1024 * 1024;
 export interface PracticeBackup {
@@ -26,6 +27,7 @@ function validStructuredEntry(key: string, value: unknown): boolean {
     return Object.keys(value).every((field) => field === "lang" || field === "fontSize")
       && value.lang === parsed.lang && value.fontSize === parsed.fontSize;
   }
+  if (key === BA_KEY) return isBaState(value);
   if (key === REVIEW_KEY) return isReviewState(value);
   if (key === MOCK_KEY) return isMockState(value);
   if (key === "ip:resume:v1") return Object.entries(value).every(([kind, visit]) =>
@@ -64,7 +66,7 @@ export function exportPractice(): string {
       try {
         const value: unknown = JSON.parse(raw);
         if (validStructuredEntry(key, value)) entries[key] = raw;
-        else if (["ip:progress:v1", "ip:prefs:v1", "ip:resume:v1", REVIEW_KEY, MOCK_KEY].includes(key) || HISTORY_KEY.test(key)) {
+        else if (["ip:progress:v1", "ip:prefs:v1", "ip:resume:v1", REVIEW_KEY, MOCK_KEY, BA_KEY].includes(key) || HISTORY_KEY.test(key)) {
           throw new Error("Stored practice data is damaged. Export individual drafts before repairing it.");
         }
       } catch {
