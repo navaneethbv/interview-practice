@@ -42,7 +42,7 @@ import { AccessibleTab } from "../AccessibleTab";
 import { PracticeVisit } from "../PracticeVisit";
 import { downloadText } from "@/lib/download";
 import { usePendingWrites } from "@/lib/storage";
-import { ThemeToggle } from "../ThemeProvider";
+import { ColorThemePicker, ThemeToggle } from "../ThemeProvider";
 import { CodeEditor } from "./CodeEditor";
 import { MockTimer, useInMock } from "./MockTimer";
 import { reviewAccepted } from "@/lib/practice";
@@ -623,6 +623,7 @@ function WorkspaceInner({ id, title, spec, reference, starters, nav: initialNav,
 
         <MockTimer id={id} />
         <span className="hidden max-w-[28%] truncate text-sm text-fg-3 xl:inline">{title}</span>
+        <ColorThemePicker />
         <ThemeToggle />
       </header>
 
