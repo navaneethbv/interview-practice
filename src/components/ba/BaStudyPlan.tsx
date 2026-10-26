@@ -87,6 +87,25 @@ export function BaStudyPlan() {
           ))}
         </ol>
       </section>
+      <details className="mt-6 rounded-2xl border border-line bg-layer-1 p-5">
+        <summary className="cursor-pointer font-semibold">Starter data for the Excel and SQL sessions</summary>
+        <p className="mt-2 text-sm leading-relaxed text-fg-2">These fictional rows are enough to practice formulas, pivot tables, grouping, joins and basic data checks. Add a duplicate or blank value to practice finding quality issues.</p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[38rem] text-left text-sm">
+            <thead className="border-b border-line text-fg-2"><tr><th className="p-2">Expense ID</th><th className="p-2">Department</th><th className="p-2">Amount</th><th className="p-2">Status</th><th className="p-2">Submitted</th></tr></thead>
+            <tbody className="divide-y divide-line">
+              <tr><td className="p-2">E-101</td><td className="p-2">Finance</td><td className="p-2">$125.00</td><td className="p-2">Paid</td><td className="p-2">2026-09-04</td></tr>
+              <tr><td className="p-2">E-102</td><td className="p-2">Sales</td><td className="p-2">$48.50</td><td className="p-2">Pending</td><td className="p-2">2026-09-05</td></tr>
+              <tr><td className="p-2">E-103</td><td className="p-2">Operations</td><td className="p-2">$310.00</td><td className="p-2">Rejected</td><td className="p-2">2026-09-07</td></tr>
+              <tr><td className="p-2">E-104</td><td className="p-2">Finance</td><td className="p-2">$72.25</td><td className="p-2">Pending</td><td className="p-2">2026-09-08</td></tr>
+              <tr><td className="p-2">E-105</td><td className="p-2">Sales</td><td className="p-2">$180.00</td><td className="p-2">Paid</td><td className="p-2">2026-09-09</td></tr>
+              <tr><td className="p-2">E-106</td><td className="p-2">Operations</td><td className="p-2">$95.00</td><td className="p-2">Pending</td><td className="p-2">2026-09-10</td></tr>
+              <tr><td className="p-2">E-107</td><td className="p-2">Finance</td><td className="p-2">$42.00</td><td className="p-2">Paid</td><td className="p-2">2026-09-10</td></tr>
+              <tr><td className="p-2">E-108</td><td className="p-2">Sales</td><td className="p-2">$215.00</td><td className="p-2">Pending</td><td className="p-2">2026-09-12</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
       <aside className="mt-8 rounded-2xl border border-brand/30 bg-brand-soft p-5">
         <h2 className="font-semibold">You are ready to apply when you can…</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-fg-2">
