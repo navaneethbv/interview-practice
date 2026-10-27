@@ -7,6 +7,7 @@ import {
   prepChapters,
   prepQuestions,
   chaptersFor,
+  questionsFor,
   COMPLEXITY_REFERENCE,
 } from "@/lib/technical-prep";
 export const metadata: Metadata = { title: "Technical interview prep" };
@@ -61,7 +62,7 @@ export default function TechnicalPrepPage() {
                   className="mt-4 inline-block text-sm text-brand underline"
                   href={`/interview-prep/${topic.id}#question-bank`}
                 >
-                  15 questions: beginner → advanced
+                  {questionsFor(topic.id).length} questions: beginner → advanced
                 </Link>
               </article>
             ))}
@@ -71,7 +72,9 @@ export default function TechnicalPrepPage() {
           id="study-schedule"
           className="scroll-mt-20 rounded-2xl border border-line bg-layer-1 p-5 sm:p-7"
         >
-          <h2 className="text-2xl font-semibold">20-session study schedule</h2>
+          <h2 className="text-2xl font-semibold">
+            {prepChapters.length}-session study schedule
+          </h2>
           <p className="mt-3 leading-7 text-fg-2">
             Plan 60–90 minutes per session: 25–35 minutes reading, 15–20 minutes
             tracing or writing the example, 10–15 minutes attempting the
@@ -83,7 +86,7 @@ export default function TechnicalPrepPage() {
           <p className="mt-3 text-sm text-fg-2">
             Before session 1, learn Java variables, conditionals, loops and
             method syntax. Java chapters 1–2 can also be read first if the
-            examples are unfamiliar. After each four-session track, attempt its
+            examples are unfamiliar. After each five-session track, attempt its
             remaining questions and revisit mistakes.
           </p>
           <ol className="mt-5 grid gap-3 sm:grid-cols-2">

@@ -1,6 +1,6 @@
 /** Shared discovery links for the home page, practice hub and command palette. */
 export const LEARNING_TOOLS = [
-  { href: "/interview-prep", title: "Technical interview prep", description: "20 theory chapters, 75 questions and Big O across DSA, Java, Spring Boot and OOD." },
+  { href: "/interview-prep", title: "Technical interview prep", description: "25 theory chapters, 100 questions and Big O across DSA, Java, Spring Boot and OOD." },
   {
     href: "/practice/today",
     title: "Today's plan",

@@ -116,6 +116,35 @@
     }
   },
   {
+    "topic": "data-structures",
+    "id": "range-structures",
+    "title": "Intervals, bit sets and range-query structures",
+    "goal": "Pick a structure from the queries it must answer, not from its name.",
+    "sections": [
+      {
+        "title": "Start from the query mix",
+        "body": "Range problems differ by what changes and what is asked. A static array with many range-sum queries needs only a prefix array: O(n) preprocessing and O(1) per query. When point updates interleave with range queries, prefix sums degrade to O(n) per update, so a Fenwick tree or segment tree is worth its extra code. Write the expected counts of updates and queries before choosing; a structure that is optimal for one mix can be the slowest choice for another."
+      },
+      {
+        "title": "Fenwick trees and segment trees",
+        "body": "A Fenwick (binary indexed) tree stores partial sums whose spans follow the lowest set bit of each index. Both prefix queries and point updates touch O(log n) cells, and the array uses n + 1 slots. A segment tree stores an aggregate for every node of a balanced partition; it supports any associative combine such as min, max or gcd, and with lazy propagation it also supports range updates, at roughly four times the memory and more code to get right."
+      },
+      {
+        "title": "Intervals and bit sets",
+        "body": "Sorted, non-overlapping intervals in a TreeMap keyed by start allow O(log n) lookup of the interval covering a point and amortized merging on insert, because each interval is created once and removed at most once. A BitSet packs booleans into 64-bit words, so membership is O(1) and bulk and/or/xor operations process 64 flags per word. Bit sets fit dense small integer universes; sparse or huge universes waste memory, and a hash set or sorted list is better."
+      }
+    ],
+    "code": "final class Fenwick {\n    private final long[] tree;\n    Fenwick(int n) { tree = new long[n + 1]; }\n\n    void add(int index, long delta) {           // index is 0-based\n        for (int i = index + 1; i < tree.length; i += i & -i) tree[i] += delta;\n    }\n\n    long prefixSum(int endExclusive) {          // sum of [0, endExclusive)\n        long sum = 0;\n        for (int i = endExclusive; i > 0; i -= i & -i) sum += tree[i];\n        return sum;\n    }\n\n    long rangeSum(int from, int toExclusive) {\n        return prefixSum(toExclusive) - prefixSum(from);\n    }\n}",
+    "walkthrough": "i & -i isolates the lowest set bit, which is the span length of tree[i]. add climbs to every cell whose span covers the index; prefixSum walks down by removing the lowest bit until zero. For n = 8, add(2, 5) updates cells 3, 4 and 8; prefixSum(5) reads cells 5 and 4. rangeSum subtracts two prefixes, so it needs an invertible combine: sums work, but min and max do not, which is when a segment tree is required.",
+    "exercise": "A dashboard receives 10^5 point updates and 10^5 range-sum queries over 10^6 counters. Compare a plain array, a prefix array and a Fenwick tree, then explain what changes if the query becomes range minimum.",
+    "solution": "A plain array gives O(1) updates but O(n) queries, around 10^11 operations worst case. A prefix array gives O(1) queries but O(n) updates, the same worst case. The Fenwick tree gives O(log n) for both, about 2 × 10^5 × 20 = 4 × 10^6 cell touches. Range minimum is not invertible, so prefix subtraction fails; use a segment tree with O(log n) query and update, or a sparse table if the data is static.",
+    "complexity": {
+      "time": "O(log n) per update and per prefix or range query",
+      "space": "O(n) for the tree array",
+      "notes": "n is the number of positions; build by n adds is O(n log n), or O(n) with the parent-propagation build."
+    }
+  },
+  {
     "topic": "algorithms",
     "id": "complexity",
     "title": "Big O from first principles",
@@ -229,6 +258,35 @@
       "time": "O(nW)",
       "space": "O(W) auxiliary",
       "notes": "n items and integer capacity W; pseudopolynomial in numeric capacity, not polynomial in the bit-length of W."
+    }
+  },
+  {
+    "topic": "algorithms",
+    "id": "strings-and-bits",
+    "title": "String matching, hashing and bit manipulation",
+    "goal": "Avoid quadratic rescans by reusing what earlier comparisons already proved.",
+    "sections": [
+      {
+        "title": "Why naive matching is quadratic",
+        "body": "Checking a pattern of length m at every start in a text of length n costs O(n · m) in the worst case, for example searching aaaab inside a long run of a characters. Each failed attempt throws away the knowledge that the previous characters matched. Linear-time matchers keep that knowledge: KMP stores, for every pattern prefix, the length of its longest proper prefix that is also a suffix, so after a mismatch it resumes from that border instead of restarting."
+      },
+      {
+        "title": "Rolling hashes and their limits",
+        "body": "Rabin–Karp computes a polynomial hash of each window in O(1) by removing the outgoing character and adding the incoming one. Equal hashes only suggest a match; collisions mean candidates must be verified, or a double hash with two moduli used to make collisions unlikely. Expected time is O(n + m), but adversarial inputs against a fixed modulus can force many collisions. Rolling hashes also compare substrings in O(1) for problems such as longest duplicate substring with binary search."
+      },
+      {
+        "title": "Bit manipulation as a data structure",
+        "body": "An int can represent a subset of up to 32 items: x & (1 << i) tests membership, x | (1 << i) adds, x & (x - 1) clears the lowest set bit and x & -x isolates it. Integer.bitCount is a constant-time population count on fixed-width integers. Bitmask dynamic programming over subsets costs O(2^k · k) for k items, which is practical only for small k around 20. Remember that Java shifts use the low five bits of the shift distance for int."
+      }
+    ],
+    "code": "static int[] prefixFunction(String p) {\n    int[] border = new int[p.length()];\n    for (int i = 1, k = 0; i < p.length(); i++) {\n        while (k > 0 && p.charAt(i) != p.charAt(k)) k = border[k - 1];\n        if (p.charAt(i) == p.charAt(k)) k++;\n        border[i] = k;\n    }\n    return border;\n}\n\nstatic int indexOf(String text, String p) {\n    if (p.isEmpty()) return 0;\n    int[] border = prefixFunction(p);\n    for (int i = 0, k = 0; i < text.length(); i++) {\n        while (k > 0 && text.charAt(i) != p.charAt(k)) k = border[k - 1];\n        if (text.charAt(i) == p.charAt(k)) k++;\n        if (k == p.length()) return i - k + 1;\n    }\n    return -1;\n}",
+    "walkthrough": "For pattern ababc the border array is [0, 0, 1, 2, 0]. Searching ababababc, the matcher reaches k = 4 (abab), mismatches on a versus c, and falls back to border[3] = 2 instead of zero, because ab is already known to match. The inner while loop looks nested, but k rises by at most one per text character and every fallback lowers it, so total fallbacks are bounded by n.",
+    "exercise": "Use the prefix function to decide whether a string s is a repetition of a shorter block, such as abcabcabc. State the cost.",
+    "solution": "Compute border for s and let p = n − border[n − 1]. s is a repetition exactly when border[n − 1] > 0 and n % p == 0; the block is s.substring(0, p). For abcabcabc, border[8] = 6, p = 3 and 9 % 3 == 0. It runs in O(n) time and O(n) space for the border array.",
+    "complexity": {
+      "time": "O(n + m) for prefix function plus search",
+      "space": "O(m) for the border array",
+      "notes": "n is text length and m is pattern length; amortized argument bounds the fallback loops."
     }
   },
   {
@@ -348,6 +406,35 @@
     }
   },
   {
+    "topic": "java",
+    "id": "modern-java",
+    "title": "Records, sealed types and pattern matching",
+    "goal": "Model closed sets of data so the compiler checks every case for you.",
+    "sections": [
+      {
+        "title": "Records are transparent data carriers",
+        "body": "A record declares its components once and receives a canonical constructor, accessors, equals, hashCode and toString derived from those components. Fields are final, but a record is only shallowly immutable: a List component can still be mutated by whoever holds it, so copy defensively in a compact constructor with List.copyOf. Records cannot extend other classes, may implement interfaces and fit DTOs, keys and value objects whose identity is their data."
+      },
+      {
+        "title": "Sealed hierarchies close the set of cases",
+        "body": "A sealed interface lists its permitted subtypes, and each subtype must be final, sealed or non-sealed. That turns an open extension point into a known, finite set, which models results, commands and protocol messages well. Unlike an enum, each case can carry different data. The trade-off is deliberate: adding a new case is a compile-time breaking change for every exhaustive switch, which is exactly the signal you want for domain states and the wrong choice for plugin-style extension."
+      },
+      {
+        "title": "Pattern matching for switch in Java 21",
+        "body": "Java 21 finalizes pattern matching for switch and record patterns. A switch over a sealed type can deconstruct each record and is checked for exhaustiveness without a default branch; the compiler reports a missing case. Guards with when refine a case. Prefer this to instanceof chains and visitor boilerplate for closed hierarchies, but keep behavior on the type itself when each case naturally owns its logic. A null selector still throws unless a case null is written."
+      }
+    ],
+    "code": "sealed interface Payment permits Card, Wallet, BankTransfer {}\nrecord Card(String last4, long cents) implements Payment {}\nrecord Wallet(String provider, long cents) implements Payment {}\nrecord BankTransfer(String iban, long cents, boolean instant) implements Payment {}\n\nstatic long feeCents(Payment p) {\n    return switch (p) {\n        case Card c -> Math.max(30, c.cents() * 29 / 1000);\n        case Wallet w when w.provider().equals(\"internal\") -> 0;\n        case Wallet w -> w.cents() / 100;\n        case BankTransfer(var iban, var cents, var instant) -> instant ? 50 : 0;\n    };\n}",
+    "walkthrough": "The switch has no default, so adding a Crypto record to the permits list makes feeCents fail to compile until it is handled. The guarded Wallet case must precede the unguarded one, or the compiler reports it as dominated. The BankTransfer case uses a record pattern to bind components directly. A Card of 10,000 cents pays max(30, 290) = 290; a 500-cent card pays the 30-cent minimum.",
+    "exercise": "A teammate adds default -> 0 to the switch \"for safety\". Explain what that costs and when a default is still appropriate.",
+    "solution": "The default silently assigns a zero fee to any future Payment subtype, turning a compile error into a revenue bug discovered in production. Without it the compiler forces a decision for every new case. A default remains reasonable for open types such as Object or non-sealed interfaces, where exhaustiveness cannot be proven, and should usually throw rather than return a plausible value.",
+    "complexity": {
+      "time": "O(1) per dispatch",
+      "space": "O(1) beyond the record instances",
+      "notes": "Pattern switch dispatch is constant for a fixed number of cases; costs shown ignore string comparison length."
+    }
+  },
+  {
     "topic": "spring-boot",
     "id": "container",
     "title": "Spring container, injection and auto-configuration",
@@ -464,6 +551,35 @@
     }
   },
   {
+    "topic": "spring-boot",
+    "id": "events-and-messaging",
+    "title": "Events, messaging and idempotent consumers",
+    "goal": "Publish and consume events without losing, duplicating or reordering business effects.",
+    "sections": [
+      {
+        "title": "The dual-write problem",
+        "body": "Saving an order and then sending a Kafka message are two separate writes. If the database commits and the send fails, downstream services never learn about the order; if the send succeeds and the transaction rolls back, they act on an order that does not exist. No try/catch fixes this, because the process can crash between the two operations. The transactional outbox pattern writes the event into an outbox table inside the same database transaction, and a relay publishes committed rows afterwards."
+      },
+      {
+        "title": "In-process events and transaction phases",
+        "body": "Spring's ApplicationEventPublisher delivers events synchronously to listeners in the same thread by default. @TransactionalEventListener defers delivery to a transaction phase, AFTER_COMMIT by default, so listeners never see rolled-back data. Work done in an AFTER_COMMIT listener is outside the original transaction; if it needs its own database writes it requires a new transaction, and failures there do not undo the committed business change. In-process events are lost on a crash, which is why durable effects belong in the outbox."
+      },
+      {
+        "title": "At-least-once delivery needs idempotent consumers",
+        "body": "Brokers and outbox relays typically guarantee at-least-once delivery: a message can arrive twice after a retry, rebalance or relay restart. Consumers must make the effect idempotent, usually by recording processed message IDs under a unique constraint in the same transaction as the business change, or by using naturally idempotent operations such as upserts keyed by a business ID. Ordering is usually guaranteed only per partition key, so choose the key that groups events which must stay ordered."
+      }
+    ],
+    "code": "@Service\nclass PaymentEventsConsumer {\n    private final ProcessedMessageRepository processed;\n    private final LedgerService ledger;\n\n    PaymentEventsConsumer(ProcessedMessageRepository processed, LedgerService ledger) {\n        this.processed = processed;\n        this.ledger = ledger;\n    }\n\n    @KafkaListener(topics = \"payments\")\n    @Transactional\n    public void onPayment(PaymentCaptured event) {\n        // Unique key on message_id: a duplicate insert fails and rolls back the whole effect.\n        if (!processed.tryInsert(event.messageId())) return;\n        ledger.credit(event.accountId(), event.amountCents());\n    }\n}",
+    "walkthrough": "tryInsert performs INSERT ... ON CONFLICT DO NOTHING (or catches the unique violation) and reports whether a row was written. The insert and the ledger credit commit together, so a redelivered message finds its ID already present and returns without crediting twice. If the credit throws, both writes roll back and redelivery retries cleanly. Offsets are committed after the listener returns, so a crash before commit causes redelivery, never loss.",
+    "exercise": "The ledger lives in another service reached over HTTP rather than in the same database. Explain why the processed-message table alone no longer guarantees exactly-once effects, and what you would change.",
+    "solution": "The local insert and the remote call no longer share a transaction: the remote credit can succeed and the local commit fail, or the reverse, so a retry may double-credit. Pass the message ID as an idempotency key to the ledger API so the ledger deduplicates on its side, and treat timeouts as unknown outcomes that are safe to retry with the same key. The local table then becomes an optimization rather than the guarantee.",
+    "complexity": {
+      "time": "O(1) expected database work per message",
+      "space": "O(M) rows in the processed-message table",
+      "notes": "M is retained message IDs; expire rows older than the maximum redelivery window to bound storage."
+    }
+  },
+  {
     "topic": "object-oriented-design",
     "id": "contracts",
     "title": "Objects, contracts and invariants",
@@ -577,6 +693,35 @@
       "time": "Determined by storage indexes, contention and provider operations",
       "space": "Proportional to retained holds, bookings and audit records",
       "notes": "Define the query and consistency model before assigning Big O; remote round-trip count alone is not full algorithmic complexity."
+    }
+  },
+  {
+    "topic": "object-oriented-design",
+    "id": "notification-service",
+    "title": "Designing for change: a notification service",
+    "goal": "Separate what varies (channels, templates, policies) from what must stay reliable (delivery state).",
+    "sections": [
+      {
+        "title": "Clarify the axes of change first",
+        "body": "A notification service usually grows along three independent axes: new channels such as email, SMS and push; new message types with their own templates; and policy rules such as quiet hours, user preferences and rate limits. Ask which of these the interviewer expects to change and how often. Each independent axis deserves its own abstraction, so adding an SMS provider does not touch template rendering and adding a template does not touch retries."
+      },
+      {
+        "title": "Core objects and responsibilities",
+        "body": "A Notification is an immutable request: recipient, type, data and idempotency key. A Channel interface sends a rendered message and returns a result that distinguishes permanent failures, such as an invalid address, from transient ones, such as a timeout. A TemplateRenderer turns type and data into content. A DeliveryAttempt records state transitions from PENDING to SENT, FAILED_RETRYABLE or FAILED_PERMANENT. A Dispatcher coordinates them and owns no channel-specific logic."
+      },
+      {
+        "title": "Reliability is part of the design",
+        "body": "Retries need bounded attempts with exponential backoff and jitter, and only for transient errors. The idempotency key prevents duplicate sends when a caller retries. Preferences and quiet hours are policies applied before dispatch, modelled as a chain of filters that can each veto or delay. Under concurrency, two workers must not claim the same attempt; a conditional state update such as compare-and-set on the attempt status gives single ownership without a global lock."
+      }
+    ],
+    "code": "sealed interface SendResult permits Sent, Retryable, Permanent {}\nrecord Sent(String providerId) implements SendResult {}\nrecord Retryable(String reason) implements SendResult {}\nrecord Permanent(String reason) implements SendResult {}\n\ninterface Channel { String name(); SendResult send(Recipient to, Rendered message); }\ninterface Policy { Optional<Instant> deferUntil(Notification n, Instant now); }\n\nfinal class Dispatcher {\n    private final Map<String, Channel> channels;\n    private final List<Policy> policies;\n    private final TemplateRenderer renderer;\n    private final AttemptStore attempts;\n\n    Dispatcher(Map<String, Channel> channels, List<Policy> policies,\n               TemplateRenderer renderer, AttemptStore attempts) {\n        this.channels = Map.copyOf(channels);\n        this.policies = List.copyOf(policies);\n        this.renderer = renderer;\n        this.attempts = attempts;\n    }\n\n    void dispatch(Notification n, Instant now) {\n        if (!attempts.claim(n.idempotencyKey())) return;          // already handled\n        for (Policy p : policies) {\n            Optional<Instant> later = p.deferUntil(n, now);\n            if (later.isPresent()) { attempts.reschedule(n, later.get()); return; }\n        }\n        Channel channel = channels.get(n.channel());\n        SendResult result = channel.send(n.recipient(), renderer.render(n));\n        attempts.record(n, result);                                // state machine transition\n    }\n}",
+    "walkthrough": "Adding a push channel means one new Channel implementation registered in the map; Dispatcher does not change. Quiet hours are a Policy that returns the next allowed time. claim uses the idempotency key with a conditional insert, so a caller retrying the same request or two workers racing on it produce one send. AttemptStore.record maps Retryable to a scheduled retry with backoff and Permanent to a terminal failure, keeping retry policy out of every channel.",
+    "exercise": "Product asks for a fallback: if push fails permanently, send an SMS instead. Where does this belong, and what must you avoid?",
+    "solution": "Model fallback as routing configuration owned by the dispatcher or a FallbackPolicy, not inside PushChannel, so channels stay unaware of each other. On a Permanent result from push, enqueue a new notification for SMS with a derived idempotency key such as original-key + \":sms\". Avoid falling back on Retryable results, which would double-notify once the push retry succeeds, and avoid unbounded fallback chains.",
+    "complexity": {
+      "time": "O(P + C) per dispatch",
+      "space": "O(A) for stored delivery attempts",
+      "notes": "P is policy count, C is the channel call cost, A is retained attempts; map lookup is expected O(1)."
     }
   }
 ]

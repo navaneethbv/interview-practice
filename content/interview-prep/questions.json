@@ -90,6 +90,36 @@
     }
   },
   {
+    "id": "data-structures-deque",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "When is ArrayDeque better than Stack or LinkedList?",
+    "answer": "ArrayDeque is a resizable circular array that supports push, pop, offer and poll at both ends in amortized constant time. Stack extends Vector and synchronizes every call, and LinkedList allocates a node per element with poor locality, so ArrayDeque is the default for both stacks and queues in single-threaded code.",
+    "example": "Use Deque<Integer> stack = new ArrayDeque<>() for iterative DFS and the same type with offer/poll for BFS.",
+    "pitfall": "ArrayDeque rejects null elements; code that used null as a sentinel will throw NullPointerException.",
+    "followUp": "Which implementation would you use if producers and consumers run on different threads?",
+    "complexity": {
+      "time": "O(1) amortized at either end; O(n) for contains or removal from the middle",
+      "space": "O(n)",
+      "notes": "n is element count; occasional resize copies the backing array."
+    }
+  },
+  {
+    "id": "data-structures-string-builder",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "Why is concatenating strings in a loop slow?",
+    "answer": "Java strings are immutable, so s += part creates a new string and copies every existing character each iteration. Across n appends with total length L, the copies sum to O(L²) in the worst case. StringBuilder keeps a growable buffer and doubles capacity, so appends are amortized O(length of the appended part).",
+    "example": "Building a CSV row from 10,000 fields with += copies the growing prefix 10,000 times; StringBuilder copies each character about twice.",
+    "pitfall": "Assuming the compiler always rewrites loops into one StringBuilder; it optimizes single expressions, not repeated loop concatenation.",
+    "followUp": "When would String.join or a Collector.joining be clearer than an explicit builder?",
+    "complexity": {
+      "time": "O(L) amortized total with StringBuilder; O(L²) worst case with repeated +=",
+      "space": "O(L)",
+      "notes": "L is final string length; resizing doubles capacity so total copy work is linear."
+    }
+  },
+  {
     "id": "data-structures-bst",
     "topic": "data-structures",
     "level": "Intermediate",
@@ -210,6 +240,21 @@
     }
   },
   {
+    "id": "data-structures-circular-buffer",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "Design a fixed-size ring buffer for the last N events.",
+    "answer": "Use an array of capacity N, a head index for the oldest element and a size counter. Writes go to (head + size) % N; when full, overwrite the oldest slot and advance head. Reads index from head. All operations are constant time and memory never grows, which suits rolling metrics, logs and rate windows.",
+    "example": "Keeping the last 1,000 request latencies to compute a moving p99 on demand without unbounded memory.",
+    "pitfall": "Using only head and tail without a size counter makes full and empty indistinguishable when head == tail.",
+    "followUp": "How would you make it safe for a single producer and a single consumer thread without locks?",
+    "complexity": {
+      "time": "O(1) per append and per indexed read",
+      "space": "O(N)",
+      "notes": "N is fixed capacity; computing a percentile over the window costs O(N log N) or O(N) with selection."
+    }
+  },
+  {
     "id": "data-structures-immutable",
     "topic": "data-structures",
     "level": "Advanced",
@@ -222,6 +267,36 @@
       "time": "Copy-on-write array update O(n); path-copy balanced tree update O(log n)",
       "space": "O(n) copy or O(log n) new tree nodes per update",
       "notes": "Bounds depend on the chosen representation, not the word immutable."
+    }
+  },
+  {
+    "id": "data-structures-fenwick",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "Fenwick tree or segment tree for mutable range queries?",
+    "answer": "Both support point updates and range queries in O(log n). A Fenwick tree is shorter and uses n + 1 slots, but its prefix-difference trick needs an invertible operation such as sum or xor. A segment tree supports any associative combine, including min, max and gcd, and with lazy propagation it also supports range updates, at more memory and code.",
+    "example": "Live leaderboard counts per score bucket: Fenwick. Range minimum of sensor readings with updates: segment tree.",
+    "pitfall": "Using Fenwick prefix differences for range minimum; min(0..r) − min(0..l) is meaningless.",
+    "followUp": "How would you support adding a value to every element in a range?",
+    "complexity": {
+      "time": "O(log n) per update and query for both",
+      "space": "O(n) Fenwick; about 4n for an array-backed segment tree",
+      "notes": "n is the number of positions; lazy propagation keeps range updates O(log n)."
+    }
+  },
+  {
+    "id": "data-structures-bloom-filter",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "What does a Bloom filter guarantee, and when should you use one?",
+    "answer": "A Bloom filter is a bit array with k hash functions. Adding sets k bits; a query returns maybe-present only if all k bits are set. It never gives false negatives for inserted items but allows tunable false positives, and standard filters do not support deletion. It saves memory when a cheap negative answer avoids an expensive lookup.",
+    "example": "A storage engine checks a per-file Bloom filter before reading a disk block, skipping files that definitely lack the key.",
+    "pitfall": "Using it as a set of record of truth; a positive answer must still be verified, and removing items requires a counting variant.",
+    "followUp": "How do you size m bits and k hashes for one million keys and a one percent false-positive rate?",
+    "complexity": {
+      "time": "O(k) per insert and query",
+      "space": "O(m) bits",
+      "notes": "m is bit-array size, k hash count; about 9.6 bits per key gives roughly 1% false positives with k ≈ 7."
     }
   },
   {
@@ -282,6 +357,21 @@
       "time": "Sorted scan O(n); sorting first adds O(n log n)",
       "space": "O(1) auxiliary for scan, excluding sort workspace",
       "notes": "n is array length; sorted input is a precondition for this pointer rule."
+    }
+  },
+  {
+    "id": "algorithms-merge-intervals",
+    "topic": "algorithms",
+    "level": "Beginner",
+    "title": "How do you merge overlapping intervals?",
+    "answer": "Sort intervals by start. Walk them while keeping a current merged interval: if the next start is at most the current end, extend the end to the maximum of both ends; otherwise emit the current interval and start a new one. Sorting makes every possible overlap adjacent, so a single pass suffices.",
+    "example": "[[1,3],[2,6],[8,10],[9,12]] becomes [[1,6],[8,12]].",
+    "pitfall": "Forgetting to take the maximum end; [1,10] followed by [2,3] must stay [1,10], not shrink to [1,3].",
+    "followUp": "How would you insert one new interval into an already merged, sorted list without resorting?",
+    "complexity": {
+      "time": "O(n log n) dominated by sorting",
+      "space": "O(n) for output; O(log n) to O(n) for the sort",
+      "notes": "n is interval count; the merge pass alone is O(n)."
     }
   },
   {
@@ -435,6 +525,36 @@
     }
   },
   {
+    "id": "algorithms-kmp",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "How does KMP achieve linear-time string matching?",
+    "answer": "KMP precomputes a prefix function: for each pattern prefix, the longest proper prefix that is also a suffix. On a mismatch, the matcher falls back to that border instead of restarting, so text characters are never re-examined. The pointer into the pattern increases at most once per text character, which bounds total fallbacks.",
+    "example": "Pattern ababc has borders [0,0,1,2,0]; after matching abab and failing on c, matching resumes at position 2.",
+    "pitfall": "Claiming the nested while loop makes it O(n·m); the amortized argument shows total fallback work is O(n).",
+    "followUp": "How would you find all occurrences, including overlapping ones?",
+    "complexity": {
+      "time": "O(n + m)",
+      "space": "O(m)",
+      "notes": "n is text length, m pattern length."
+    }
+  },
+  {
+    "id": "algorithms-amortized",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "Explain amortized analysis with a dynamic array.",
+    "answer": "Amortized cost is the average over a worst-case sequence of operations, not an expectation over random inputs. When a dynamic array doubles from capacity c to 2c, it copies c elements, but that happens only after c cheap appends. Over n appends total copies are below 2n, so each append is O(1) amortized even though a single append can cost O(n).",
+    "example": "Appending 1,024 items with doubling from capacity 1 copies 1 + 2 + ... + 512 = 1,023 elements in total.",
+    "pitfall": "Confusing amortized with average-case; amortized bounds hold for every sequence, while a latency-sensitive single call can still pay O(n).",
+    "followUp": "Why does growing by a fixed 100 elements instead of doubling make appends O(n) amortized?",
+    "complexity": {
+      "time": "O(1) amortized per append; O(n) worst single append",
+      "space": "O(n)",
+      "notes": "n is element count; growth factor must be geometric for the bound."
+    }
+  },
+  {
     "id": "algorithms-recursion",
     "topic": "algorithms",
     "level": "Intermediate",
@@ -447,6 +567,36 @@
       "time": "Merge-sort recurrence O(n log n)",
       "space": "O(n) merge buffer plus O(log n) call stack",
       "notes": "Assume one reusable buffer; copying slices can change allocation volume."
+    }
+  },
+  {
+    "id": "algorithms-bit-tricks",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "Find the element that appears once when every other appears twice.",
+    "answer": "XOR every element. XOR is associative and commutative, x ^ x = 0 and x ^ 0 = x, so paired values cancel and the unique value remains. This uses constant extra space, unlike a hash-set count, and a single pass.",
+    "example": "[4, 1, 2, 1, 2] → 4 ^ 1 ^ 2 ^ 1 ^ 2 = 4.",
+    "pitfall": "Applying the same trick when others appear three times; that variant needs per-bit counts modulo three.",
+    "followUp": "If two distinct values appear once, how can x & -x split the array into two groups?",
+    "complexity": {
+      "time": "O(n)",
+      "space": "O(1)",
+      "notes": "n is array length; assumes fixed-width integers."
+    }
+  },
+  {
+    "id": "algorithms-quickselect",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "Find the k-th largest element faster than sorting.",
+    "answer": "Quickselect partitions around a pivot like quicksort but recurses only into the side containing the target rank. With a random pivot the expected work is n + n/2 + n/4 ... = O(n). Alternatively, a min-heap of size k gives O(n log k), which is better for streams or when k is small.",
+    "example": "For k = 1 in a million-element array, quickselect touches about two million elements on average; a full sort costs about twenty million comparisons.",
+    "pitfall": "Using the first element as pivot on sorted input degrades quickselect to O(n²); randomize or use median-of-medians.",
+    "followUp": "When would you prefer the heap approach despite its log k factor?",
+    "complexity": {
+      "time": "Expected O(n); worst case O(n²); heap alternative O(n log k)",
+      "space": "O(1) extra for in-place quickselect; O(k) for the heap",
+      "notes": "n is length; median-of-medians guarantees O(n) worst case with larger constants."
     }
   },
   {
@@ -525,6 +675,28 @@
     "example": "An API boundary maps a domain not-found exception to a documented response.",
     "pitfall": "Catching Exception and returning success destroys failure visibility.",
     "followUp": "When would try-with-resources preserve suppressed exceptions?",
+    "complexity": null
+  },
+  {
+    "id": "java-optional",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "When should a method return Optional?",
+    "answer": "Optional is designed as a return type that makes \"no result\" explicit for lookups such as findById. Callers then choose orElse, orElseThrow or map instead of forgetting a null check. It is not intended for fields, parameters or collections, where it adds allocation and awkward APIs; return an empty collection rather than Optional<List>.",
+    "example": "userRepository.findByEmail(email).map(User::id).orElseThrow(() -> new NotFound(email)).",
+    "pitfall": "Calling optional.get() without checking, or using orElse(expensiveCall()) which evaluates eagerly; use orElseGet for lazy defaults.",
+    "followUp": "Why might Optional be avoided in a hot loop that runs millions of times?",
+    "complexity": null
+  },
+  {
+    "id": "java-records",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "What do records give you, and what do they not?",
+    "answer": "A record declares components and gets a canonical constructor, accessors, equals, hashCode and toString derived from them. Fields are final, so records make good DTOs, map keys and value objects. They are only shallowly immutable, cannot extend classes and should not be used for JPA entities that need a no-argument constructor and mutable state.",
+    "example": "record Point(int x, int y) {} can be a HashMap key without hand-writing equals and hashCode.",
+    "pitfall": "Storing a mutable List in a record and assuming the record is immutable; copy it with List.copyOf in a compact constructor.",
+    "followUp": "How would you validate that a record's amount is non-negative?",
     "complexity": null
   },
   {
@@ -628,6 +800,28 @@
     "complexity": null
   },
   {
+    "id": "java-hashmap-internals",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "How does HashMap work internally, and what breaks it?",
+    "answer": "HashMap stores entries in an array of buckets indexed by a spread hash of the key. Collisions chain in a bucket; since Java 8 a bucket with many entries can become a balanced tree when the table is large enough, bounding degenerate lookups to O(log n). When size exceeds capacity × load factor (0.75 by default) the table doubles and entries are redistributed.",
+    "example": "Pre-size with HashMap.newHashMap(expected) in Java 19+ to avoid repeated resizing when loading a known number of entries.",
+    "pitfall": "Mutating a key's fields after insertion changes its hash; the entry becomes unreachable even though it is still stored.",
+    "followUp": "Why is HashMap unsafe under concurrent writes, and what does ConcurrentHashMap do differently?",
+    "complexity": null
+  },
+  {
+    "id": "java-sealed-switch",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "How do sealed interfaces improve switch statements?",
+    "answer": "A sealed interface lists permitted subtypes, so the compiler knows the full set of cases. A Java 21 pattern switch over it can be exhaustive without a default, and adding a new subtype causes compile errors at every unhandled switch. Record patterns let each case deconstruct its data directly.",
+    "example": "switch (result) { case Success(var value) -> ...; case Failure(var error) -> ...; } with no default branch.",
+    "pitfall": "Adding default -> to silence the compiler, which hides newly added cases until they fail at runtime.",
+    "followUp": "When would you prefer polymorphic methods on the subtypes instead of a switch?",
+    "complexity": null
+  },
+  {
     "id": "java-resources",
     "topic": "java",
     "level": "Advanced",
@@ -636,6 +830,17 @@
     "example": "A request blocked on a database connection needs different treatment from a CPU-hot serialization loop.",
     "pitfall": "Optimizing a microbenchmark that excludes the bottleneck may not improve request latency.",
     "followUp": "What production-safe evidence would you capture during an incident?",
+    "complexity": null
+  },
+  {
+    "id": "java-gc-choice",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "How would you choose between G1, ZGC and Parallel GC?",
+    "answer": "G1 is the default and balances throughput and pause targets for most heaps. ZGC performs almost all work concurrently and keeps pauses in the low milliseconds even for large heaps, at some throughput and memory cost; generational ZGC is the default ZGC mode from JDK 23. Parallel GC maximizes throughput for batch jobs that tolerate longer pauses. Measure with GC logs before and after.",
+    "example": "A latency-sensitive API with a 32 GB heap and p99.9 pauses above 200 ms under G1 is a candidate for ZGC; a nightly batch job may prefer Parallel.",
+    "pitfall": "Tuning flags before checking allocation rate and live-set size; excessive allocation or a leak is not fixed by changing collectors.",
+    "followUp": "Which GC log fields would you inspect to confirm the change helped?",
     "complexity": null
   },
   {
@@ -702,6 +907,28 @@
     "example": "POST an order and return its identifier and Location when a new resource is created.",
     "pitfall": "Returning HTTP 200 for every failure forces clients to infer errors from ambiguous bodies.",
     "followUp": "How do you distinguish malformed input from a business conflict?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-profiles",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "How do profiles and externalized configuration work?",
+    "answer": "Spring Boot reads properties from many sources with a defined precedence: command-line arguments and environment variables override application.yml, and profile-specific files such as application-prod.yml override the base file when that profile is active. @ConfigurationProperties binds a prefix into a typed, validatable object, which is preferable to scattering @Value annotations.",
+    "example": "SPRING_PROFILES_ACTIVE=prod with SPRING_DATASOURCE_URL supplied by the deployment environment, not committed to the repository.",
+    "pitfall": "Encoding environment behavior in code with if (profile == prod) instead of configuration, or committing secrets to profile files.",
+    "followUp": "How would you fail application startup if a required property is missing or invalid?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-actuator",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "What does Spring Boot Actuator provide?",
+    "answer": "Actuator adds operational endpoints such as health, info, metrics and readiness or liveness probes, and integrates Micrometer for metrics export to systems such as Prometheus. Health aggregates indicators for databases, disks and custom dependencies. Most endpoints are not exposed over HTTP by default, and exposed ones should be secured.",
+    "example": "Kubernetes uses /actuator/health/readiness to stop routing traffic while a pod warms up, and /actuator/health/liveness to restart a stuck one.",
+    "pitfall": "Exposing every endpoint publicly, including env or heapdump, which can leak configuration and memory contents.",
+    "followUp": "Should a slow downstream dependency make liveness fail? Why or why not?",
     "complexity": null
   },
   {
@@ -786,6 +1013,17 @@
     "complexity": null
   },
   {
+    "id": "spring-boot-n-plus-one",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "What is the N+1 query problem in JPA and how do you fix it?",
+    "answer": "Loading N parent entities and then touching a lazy association on each triggers one query for the parents plus one per parent. Fix it by fetching what the use case needs in one query: a JOIN FETCH, an @EntityGraph, batch fetching with hibernate.default_batch_fetch_size, or a DTO projection. Detect it by logging SQL or counting statements in tests.",
+    "example": "Listing 50 orders with their customer names issues 51 queries; @EntityGraph(attributePaths = \"customer\") reduces it to one.",
+    "pitfall": "Switching associations to EAGER globally; it moves the problem to every other query and can cause cartesian products.",
+    "followUp": "Why does JOIN FETCH with pagination over a collection association produce a warning or in-memory paging?",
+    "complexity": null
+  },
+  {
     "id": "spring-boot-resilience",
     "topic": "spring-boot",
     "level": "Advanced",
@@ -808,6 +1046,28 @@
     "complexity": null
   },
   {
+    "id": "spring-boot-outbox",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "How do you reliably publish an event when a database row changes?",
+    "answer": "Write the business row and an outbox row in the same local transaction. A separate relay, either a poller or change-data-capture such as Debezium, publishes committed outbox rows to the broker and marks them sent. This removes the dual-write gap between database and broker; delivery becomes at least once, so consumers must be idempotent.",
+    "example": "OrderService saves Order and OutboxEvent(type=OrderPlaced, payload, aggregateId) together; the relay publishes keyed by aggregateId to keep per-order ordering.",
+    "pitfall": "Publishing to Kafka inside the @Transactional method, which can send events for transactions that later roll back.",
+    "followUp": "How would you clean up the outbox table and monitor relay lag?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-idempotency",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "How do you make a POST endpoint idempotent?",
+    "answer": "Require an Idempotency-Key header. Store the key with a request fingerprint and the response in the same transaction as the business effect, protected by a unique constraint. A retry with the same key and body returns the stored response; the same key with a different body is rejected. Concurrent duplicates are serialized by the unique insert.",
+    "example": "A mobile client retries POST /payments after a timeout with the same key and receives the original 201 response instead of a second charge.",
+    "pitfall": "Checking for the key and then inserting in two steps without a constraint, letting two concurrent retries both pass the check.",
+    "followUp": "How long should keys be retained, and what status do you return while the first request is still in progress?",
+    "complexity": null
+  },
+  {
     "id": "object-oriented-design-oo",
     "topic": "object-oriented-design",
     "level": "Beginner",
@@ -827,6 +1087,28 @@
     "example": "A report service uses a formatter strategy rather than subclassing for every format/delivery combination.",
     "pitfall": "Reusing code through inheritance can expose methods that violate a subtype's invariants.",
     "followUp": "What changes when subclasses need incompatible preconditions?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-encapsulation",
+    "topic": "object-oriented-design",
+    "level": "Beginner",
+    "title": "What does encapsulation protect beyond hiding fields?",
+    "answer": "Encapsulation protects invariants. An object should expose operations that keep its state valid instead of setters that let callers put it in any state. Private fields with public getters and setters for everything is still poor encapsulation, because the rules live in callers and drift apart.",
+    "example": "BankAccount.withdraw(amount) checks the balance and records a transaction; there is no setBalance.",
+    "pitfall": "Returning internal mutable collections from getters, which lets callers bypass every check.",
+    "followUp": "How would you expose an account's transaction history without allowing modification?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-interface-vs-abstract",
+    "topic": "object-oriented-design",
+    "level": "Beginner",
+    "title": "Interface or abstract class?",
+    "answer": "Use an interface to define a capability that unrelated classes can implement, since a class can implement many interfaces; default methods can add behavior without breaking implementers. Use an abstract class when subclasses share state or a construction protocol and a single inheritance line is acceptable. Prefer interfaces at boundaries so callers depend on contracts.",
+    "example": "PaymentGateway as an interface implemented by Stripe and Adyen adapters; AbstractRetryingClient holding shared HTTP state and backoff.",
+    "pitfall": "Creating deep abstract hierarchies for code reuse when composition with a helper would be simpler.",
+    "followUp": "When could a default method on an interface cause a conflict for an implementing class?",
     "complexity": null
   },
   {
@@ -979,6 +1261,28 @@
     "complexity": null
   },
   {
+    "id": "object-oriented-design-state-pattern",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "When should you use the State pattern?",
+    "answer": "Use State when an object's allowed operations depend on its current state and conditional logic over a status field is spreading. Each state object implements the operations it permits and returns the next state, so illegal transitions are impossible or explicit. In Java, a sealed interface of state records or an enum with transition methods often expresses this compactly.",
+    "example": "An Order moves Created → Paid → Shipped → Delivered; cancel is allowed only before Shipped.",
+    "pitfall": "Creating a class per state for a two-state toggle; a boolean or enum is clearer.",
+    "followUp": "How would you persist the state and guard against two concurrent transitions?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-decorator",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "How does the Decorator pattern differ from inheritance?",
+    "answer": "A decorator implements the same interface as the object it wraps and adds behavior before or after delegating. Decorators compose at runtime in any order, while subclassing fixes combinations at compile time and multiplies classes. Java I/O streams and Spring's proxies are familiar examples.",
+    "example": "new RetryingClient(new CachingClient(new HttpPriceClient())) adds caching and retries without changing HttpPriceClient.",
+    "pitfall": "Ordering mistakes, such as caching outside retries versus inside them, change behavior and must be deliberate.",
+    "followUp": "How would you test each decorator independently?",
+    "complexity": null
+  },
+  {
     "id": "object-oriented-design-thread-safety",
     "topic": "object-oriented-design",
     "level": "Advanced",
@@ -998,6 +1302,17 @@
     "example": "Add a second payment provider and trace which code must change and which contract tests stay valid.",
     "pitfall": "Presenting only the happy path misses concurrency, recovery and lifecycle responsibilities.",
     "followUp": "Which requirement would force the largest redesign, and why?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-notification",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "Design a notification service supporting email, SMS and push.",
+    "answer": "Model an immutable Notification with an idempotency key, a Channel interface per transport that returns sent, retryable or permanent results, a TemplateRenderer and a chain of Policy objects for preferences and quiet hours. A Dispatcher claims the notification, applies policies, renders and sends, and a DeliveryAttempt state machine drives bounded retries with backoff.",
+    "example": "Adding WhatsApp is one new Channel implementation; adding quiet hours is one new Policy; neither changes the Dispatcher.",
+    "pitfall": "Putting retry and fallback logic inside each channel, which duplicates policy and causes double sends on fallback.",
+    "followUp": "How would you guarantee a user is not notified twice when two workers pick up the same job?",
     "complexity": null
   }
 ]

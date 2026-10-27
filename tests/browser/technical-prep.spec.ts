@@ -44,7 +44,7 @@ for (const width of [320, 768, 1024, 1366, 2560]) {
         exact: true,
       }),
     ).toBeVisible();
-    await expect(page.locator("section[aria-labelledby=question-bank] output")).toHaveText("1 of 15 questions");
+    await expect(page.locator("section[aria-labelledby=question-bank] output")).toHaveText("1 of 20 questions");
     await page.locator("#java-volatile").getByText("Reveal answer and example", { exact: true }).click();
     await expect(
       page.getByText("Use AtomicInteger.incrementAndGet", { exact: false }),
