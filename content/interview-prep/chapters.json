@@ -1,0 +1,582 @@
+[
+  {
+    "topic": "data-structures",
+    "id": "sequences",
+    "title": "Arrays, lists, stacks and queues",
+    "goal": "Choose a representation from the operations your program needs.",
+    "sections": [
+      {
+        "title": "Start with a model",
+        "body": "A data structure is a representation of information plus operations that preserve rules about that representation. First write down the workload: lookup by index, lookup by key, append, remove, iterate, or find the minimum. An abstract queue specifies first-in-first-out behavior; it does not require a particular array or linked-node implementation. Separate this contract from its implementation before comparing costs."
+      },
+      {
+        "title": "Arrays and dynamic capacity",
+        "body": "An array supports indexed access because an index identifies an element location directly. A Java array has fixed length; ArrayList wraps a resizable backing array. Appending usually writes into spare capacity, but a resize copies existing references. Geometric capacity growth spreads these occasional copies across many appends. Middle insertion still shifts later references. A LinkedList must follow links to an index; a known-node splice is cheap only after the relevant node references have been obtained."
+      },
+      {
+        "title": "End operations and ownership",
+        "body": "Stacks remove the newest item; queues remove the oldest. ArrayDeque offers both ends and is commonly preferable to legacy Stack for single-threaded stack work. Its lack of thread safety matters when sharing work between threads. Null elements are not permitted. A producer-consumer system also needs a capacity and overload policy; choosing a collection does not by itself define blocking, rejection, fairness or lifecycle."
+      }
+    ],
+    "code": "Deque<String> work = new ArrayDeque<>();\nwork.addLast(\"validate\");\nwork.addLast(\"save\");\nString next = work.removeFirst(); // \"validate\": FIFO\nwork.addFirst(\"retry\");          // priority at the front\nString urgent = work.removeFirst(); // \"retry\"",
+    "walkthrough": "The queue starts empty. The first two additions produce [validate, save]. Removing from the front leaves [save]. Adding retry to the front produces [retry, save]. Removing from the same end returns retry. If both insertion and removal use the front, the behavior is a stack. These are alternative policies over the same deque representation.",
+    "exercise": "Implement a bracket validator. Decide what an empty input means, reject a closing bracket without a matching opener, and test mixed bracket types.",
+    "solution": "Push openers. For a closer, reject an empty stack or an incorrect top, otherwise pop. Accept only if the stack is empty after the scan. Cases include empty text, (), ([{}]), ([)] and an unmatched opener.",
+    "complexity": {
+      "time": "Bracket validation O(n); deque end operations amortized O(1)",
+      "space": "O(n) auxiliary bracket stack",
+      "notes": "n is input characters. An individual deque resize may be linear; stored input and output are excluded from auxiliary space."
+    }
+  },
+  {
+    "topic": "data-structures",
+    "id": "hashing",
+    "title": "Hashing, equality and stable keys",
+    "goal": "Explain expected constant-time lookup without hiding its assumptions.",
+    "sections": [
+      {
+        "title": "Buckets are not identities",
+        "body": "A hash function maps a key to a number, from which a table chooses a bucket. Different keys can select the same bucket: this is a collision, not an equality result. A lookup must still compare candidate keys. Expected constant-time behavior assumes a useful distribution and reasonably bounded equality/hash computation. Hashing a long string or comparing a large compound key has its own cost."
+      },
+      {
+        "title": "Load factor and resizing",
+        "body": "As entries accumulate relative to buckets, collisions become more likely. A table may resize and redistribute entries to manage that load. The occasional resize makes insertion costs different from a strict per-operation bound. Java HashMap can use tree-shaped bins in certain collision-heavy cases, but this implementation detail should not become a claim that every hash table offers the same guarantee. A sorted range query usually needs a different structure."
+      },
+      {
+        "title": "Equality must remain coherent",
+        "body": "Java requires equal objects to have equal hash codes. Store an immutable identity as the key when possible. If fields used in equality change after insertion, the key can remain in its old bucket while future lookups choose another. A thread-safe map also cannot repair a mutable key contract. For concurrent compound updates, choose methods with the required atomicity instead of assuming get followed by put is one action."
+      }
+    ],
+    "code": "Map<String, Integer> counts = new HashMap<>();\nfor (String word : words) {\n    counts.merge(word, 1, Integer::sum);\n}\nint occurrences = counts.getOrDefault(\"java\", 0);",
+    "walkthrough": "For [java, spring, java], the first java creates value 1, spring creates another entry, and the second java replaces its value with 2. The map retains two distinct keys. HashMap is suitable here only when the loop is not concurrently mutating that shared instance; ConcurrentHashMap can supply atomic per-key merge when that requirement changes.",
+    "exercise": "Create an immutable customer ID key and demonstrate that two separately constructed but equal IDs retrieve the same value. Then explain what changes if the ID is mutable.",
+    "solution": "A value record with stable immutable components is one option. Two equal records have compatible generated equality/hashCode. A mutable key can change its hash or equality after insertion, so it should not be used this way.",
+    "complexity": {
+      "time": "Expected O(n) updates for n words; worst-case general hashing can degrade",
+      "space": "O(u) entries",
+      "notes": "u is unique words; hash/equality costs depend on word length and are not necessarily constant."
+    }
+  },
+  {
+    "topic": "data-structures",
+    "id": "ordered-structures",
+    "title": "Trees, heaps and prefix indexes",
+    "goal": "Distinguish ordered search, priority selection and prefix lookup.",
+    "sections": [
+      {
+        "title": "Search trees and height",
+        "body": "A binary search tree orders subtrees by a comparator: smaller keys left, larger keys right. Search follows a single downward path. Its cost depends on height, not merely the number of nodes: sorted insertion can create a chain in an ordinary unbalanced tree. Balanced trees keep height logarithmic through structural maintenance. TreeMap is useful when floor, ceiling, sorted traversal or range operations are part of the workload."
+      },
+      {
+        "title": "A heap is only partially ordered",
+        "body": "In a binary min-heap, every parent is no larger than its children. This makes the root a minimum, while leaving most pairs unrelated. Removing the root moves another element into its place and restores the invariant by sifting. Java PriorityQueue iteration is not sorted output. Bottom-up heap construction is linear because most nodes sit near the leaves and need little work; repeated insertion is a different procedure."
+      },
+      {
+        "title": "Tries share prefixes",
+        "body": "A trie follows symbols along edges, so words with a common prefix share a path. Reaching a prefix of length p can take O(p) steps with suitable child access, but returning suggestions also visits output nodes. Fixed-size child arrays trade memory for direct access; sparse maps reduce unused children but introduce hashing or comparison costs. Unicode and normalization policies must be defined before treating every Java char as one user-visible character."
+      }
+    ],
+    "code": "PriorityQueue<Integer> top = new PriorityQueue<>();\nfor (int value : values) {\n    top.offer(value);\n    if (top.size() > k) top.poll();\n}\n// With k > 0, top.peek() is the kth largest after all input.",
+    "walkthrough": "For [4, 1, 7, 3] and k = 2, the heap keeps [1, 4], then inserts 7 and discards 1, then inserts 3 and discards 3. It retains the largest two values, 4 and 7; its root is 4. Do not treat heap iteration as the sorted sequence [4, 7]. Validate k and decide what to return when fewer than k values exist.",
+    "exercise": "Compare a heap and a TreeMap for a service that repeatedly asks for the cheapest price at or above a threshold.",
+    "solution": "A heap cheaply exposes the global minimum but not arbitrary successor queries. An ordered map supports ceilingEntry in logarithmic time. Keep duplicate prices through counts or lists rather than losing products with equal prices.",
+    "complexity": {
+      "time": "Top-k scan O(n log(k + 1))",
+      "space": "O(k) auxiliary heap",
+      "notes": "n is input size, 1 ≤ k ≤ n; the +1 expresses the k = 1 case cleanly. Output ordering would add work."
+    }
+  },
+  {
+    "topic": "data-structures",
+    "id": "graphs-and-caches",
+    "title": "Graphs, connectivity and composite structures",
+    "goal": "Combine structures while preserving an explicit invariant.",
+    "sections": [
+      {
+        "title": "Graph representation changes the cost",
+        "body": "A graph describes vertices and edges. An adjacency list stores actual neighbors and suits sparse graphs; a matrix allocates space for every possible vertex pair. Lists support full traversal in O(V + E), while scanning every matrix row takes O(V²). Directed and undirected storage differ: an undirected list usually stores each edge twice. Add visited state because cycles break tree-only recursion assumptions."
+      },
+      {
+        "title": "Connectivity without paths",
+        "body": "Disjoint-set union stores a parent forest for components. find returns a representative; union merges representatives. Union by size/rank and path compression make long sequences nearly constant amortized time, expressed using the inverse Ackermann function. This structure answers whether two vertices are connected as edges are added. It does not provide the actual route or efficiently handle arbitrary deletions without a different approach."
+      },
+      {
+        "title": "An LRU cache has two linked invariants",
+        "body": "Use a hash map to locate a key node and a doubly linked list to track recency. Every cached key must have exactly one list node; every list node must have a corresponding map entry. A hit moves its node to the front, and eviction removes the tail from both structures. Under concurrency these changes need one consistency boundary. Capacity, null behavior, expiration and failure semantics are part of the contract."
+      }
+    ],
+    "code": "Map<Integer, List<Integer>> graph = new HashMap<>();\ngraph.computeIfAbsent(1, key -> new ArrayList<>()).add(2);\ngraph.computeIfAbsent(2, key -> new ArrayList<>()).add(1);\n// Undirected edge {1, 2}: store both directions.",
+    "walkthrough": "The two map entries represent the same undirected edge from opposite endpoints. A traversal from 1 discovers 2, then must recognize that returning from 2 to 1 does not discover a new vertex. Without visited tracking, a recursive walk can continue indefinitely. Isolated vertices need explicit representation if the algorithm must include them.",
+    "exercise": "Design tests for an LRU cache of capacity two, including repeated access, update of an existing key, and eviction.",
+    "solution": "Insert A then B, access A, insert C and verify B is gone. Updating A should not create another list node or grow the entry count. Specify capacity zero behavior and verify that every map entry appears exactly once in the recency list.",
+    "complexity": {
+      "time": "Adjacency-list traversal O(V + E); LRU operations expected O(1)",
+      "space": "Graph O(V + E); traversal auxiliary O(V); cache O(c)",
+      "notes": "V vertices, E edges and c cache capacity; cache bounds assume constant-cost well-distributed hashing."
+    }
+  },
+  {
+    "topic": "algorithms",
+    "id": "complexity",
+    "title": "Big O from first principles",
+    "goal": "Describe growth, assumptions and memory costs before optimizing.",
+    "sections": [
+      {
+        "title": "Choose the input variables",
+        "body": "Complexity describes how required resources grow with input size in a defined model. Use n for a list length, m for a second independent list, V/E for graph size, k for a window or capacity, and L for a string length. Big O is an upper bound, Θ a tight asymptotic bound and Ω a lower bound. State the case separately: worst case, expected input behavior and amortized cost are different claims."
+      },
+      {
+        "title": "Account for the actual operations",
+        "body": "Consecutive independent scans add to O(n + m). A full cross-product costs O(nm). A dependent loop such as 1 + 2 + ... + n is quadratic; two advancing pointers may instead perform only linear total steps. Library calls are not free: sorting, copying a slice, hashing a long key, or searching a list can dominate a loop that looks constant at the source-code level."
+      },
+      {
+        "title": "Count memory honestly",
+        "body": "Auxiliary space excludes inputs and often excludes required output, but say which convention you use. Recursion uses stack frames even when no array is allocated. Enumerating all subsets requires exponential output storage if you materialize them. Numeric assumptions also matter: fixed-width arithmetic can overflow, and arbitrary-precision arithmetic costs grow with the number of digits. An asymptotic improvement is useful but does not replace measuring real latency."
+      }
+    ],
+    "code": "long pairs = 0;\nfor (int i = 0; i < n; i++) {\n    for (int j = i + 1; j < n; j++) {\n        pairs++;\n    }\n}",
+    "walkthrough": "The inner counts are n−1, n−2, down to zero. Their sum is n(n−1)/2, which grows quadratically. There are only a few counters, so auxiliary space is constant. Use long for the count and check input constraints; the loop indices and total count have different overflow limits.",
+    "exercise": "Analyze a loop that doubles i each time, followed by a scan of all n entries. Then analyze the scan nested inside that doubling loop.",
+    "solution": "The doubling loop has O(log n) iterations for positive n. Consecutive work is O(log n + n) = O(n). Nesting a complete n-element scan in every doubling iteration gives O(n log n). Assume bounded integer arithmetic and prevent overflow in doubling.",
+    "complexity": {
+      "time": "Pair enumeration Θ(n²)",
+      "space": "O(1) auxiliary",
+      "notes": "n is a nonnegative integer; one increment is constant cost in this machine-integer model."
+    }
+  },
+  {
+    "topic": "algorithms",
+    "id": "search-and-windows",
+    "title": "Binary search, two pointers and sliding windows",
+    "goal": "Derive pointer movement from a maintained invariant.",
+    "sections": [
+      {
+        "title": "Binary search discards impossible regions",
+        "body": "Start with a sorted random-access array or a monotone predicate. For lower bound, maintain a half-open candidate interval [low, high) and seek the first element at least the target. Each comparison removes a region that cannot contain that boundary. Consistent endpoint rules avoid infinite loops and duplicate-value bugs. A binary search over a linked list does not get the same cheap midpoint access."
+      },
+      {
+        "title": "Two pointers need a proof",
+        "body": "On a sorted array, if left plus right is too small, decreasing right cannot increase the sum, so advancing left is safe. If the sum is too large, reduce right. Without sorted order this reasoning fails. Sorting first may be worthwhile, but it changes index positions and adds cost; preserve original indices if the required answer refers to the input ordering."
+      },
+      {
+        "title": "Sliding windows maintain a property",
+        "body": "A window is a contiguous interval with incrementally maintained state. For unique characters, track counts or last-seen positions and move the left edge until the invariant holds. For a minimum length reaching a sum, the common shrink rule relies on nonnegative values; arbitrary negatives can invalidate it. Before coding, articulate what extension and contraction do to validity and what information the window retains."
+      }
+    ],
+    "code": "static int lowerBound(int[] a, int target) {\n    int low = 0, high = a.length;\n    while (low < high) {\n        int mid = low + (high - low) / 2;\n        if (a[mid] < target) low = mid + 1;\n        else high = mid;\n    }\n    return low;\n}",
+    "walkthrough": "For [2, 4, 4, 9] and target 4, low/high start at 0/4. Mid 2 contains 4, so high becomes 2. Mid 1 contains 4, so high becomes 1. Mid 0 contains 2, so low becomes 1. The interval is empty and index 1 is the first valid boundary. Returning a.length means no element meets the condition.",
+    "exercise": "Test lowerBound with an empty array, all duplicates, a target smaller than every value, and a target greater than every value.",
+    "solution": "The empty array returns 0. For [4,4,4] targeting 4, return 0; targeting 5, return 3. For a smaller target return 0. The return is an insertion boundary, not necessarily a matching index, so verify equality separately if membership is required.",
+    "complexity": {
+      "time": "O(log n) comparisons",
+      "space": "O(1) auxiliary",
+      "notes": "n is sorted array length; each array access/comparison is constant time."
+    }
+  },
+  {
+    "topic": "algorithms",
+    "id": "traversal-and-ordering",
+    "title": "Graph traversal, dependency ordering and shortest paths",
+    "goal": "Match the traversal algorithm to the meaning of an edge.",
+    "sections": [
+      {
+        "title": "BFS versus DFS",
+        "body": "BFS explores equal-edge-distance layers using a queue, so first discovery gives a shortest path in edge count for unweighted graphs. DFS explores one branch deeply and can support cycle analysis or topological reasoning. Both require visited tracking for general graphs. Mark BFS vertices when they are enqueued to avoid redundant frontier entries. Iterative DFS avoids deep Java call stacks but needs an explicit stack and deliberate state handling."
+      },
+      {
+        "title": "Dependencies are directed",
+        "body": "For Kahn topological sorting, count incoming edges, enqueue all zero-indegree vertices, emit them and decrement successors. If fewer than V vertices are emitted, a directed cycle remains. There may be many valid orders; an interview answer should not assume uniqueness. A priority queue can choose a deterministic smallest available vertex, but it changes the cost relative to an ordinary FIFO queue."
+      },
+      {
+        "title": "Weights change shortest-path reasoning",
+        "body": "Dijkstra settles the vertex with the smallest tentative distance and relaxes outgoing nonnegative edges. That nonnegative condition is central to its correctness. A standard Java PriorityQueue implementation often inserts a new distance entry rather than decreasing a key, so discard stale entries when popped and account for the larger queue. For negative edges, consider an appropriate alternative such as Bellman–Ford, and discuss negative cycles."
+      }
+    ],
+    "code": "Queue<Integer> queue = new ArrayDeque<>();\nSet<Integer> visited = new HashSet<>();\nvisited.add(source);\nqueue.add(source);\nwhile (!queue.isEmpty()) {\n    int vertex = queue.remove();\n    for (int next : graph.getOrDefault(vertex, List.of())) {\n        if (visited.add(next)) queue.add(next);\n    }\n}",
+    "walkthrough": "When source reaches neighbors A and B, both become visited immediately. If A also points to B, the attempted add of B returns false, so B is not enqueued again. This makes each reachable vertex enter the queue once. To reconstruct a shortest unweighted route, record a predecessor at first discovery and trace backward from the destination.",
+    "exercise": "Explain why ordinary BFS can choose the wrong cheapest route when one direct edge costs ten and a two-edge route costs one plus one.",
+    "solution": "BFS minimizes edge count and therefore favors the direct one-edge route. The cheaper route has two edges. With nonnegative weights use a weighted shortest-path algorithm; this example distinguishes hop count from total weight.",
+    "complexity": {
+      "time": "BFS O(V + E) expected with hash visited",
+      "space": "O(V) auxiliary beyond graph",
+      "notes": "Reachable V/E with adjacency lists; hashing assumes suitable distribution. A matrix requires different traversal accounting."
+    }
+  },
+  {
+    "topic": "algorithms",
+    "id": "optimization-and-proof",
+    "title": "Dynamic programming, greedy proofs and backtracking",
+    "goal": "Choose a technique by subproblem structure rather than memorizing names.",
+    "sections": [
+      {
+        "title": "Define a DP state before the recurrence",
+        "body": "Dynamic programming reuses overlapping subproblem results. A state must retain every fact needed for later decisions; omitting capacity, position or previous choice can merge incompatible situations. Specify base cases, transition, evaluation order and answer location. Top-down memoization and bottom-up tabulation are ways of evaluating the same valid recurrence. Compress storage only after identifying which previous states remain needed."
+      },
+      {
+        "title": "Greedy needs a correctness argument",
+        "body": "A greedy method makes a local choice that must be extendable to an optimum. For unweighted interval scheduling, an exchange argument shows that the earliest-finishing compatible interval can replace an optimal first interval without reducing remaining opportunity. Adding weights breaks that objective and may require DP. A collection of successful examples is useful testing, but not a proof that the local choice is always safe."
+      },
+      {
+        "title": "Backtracking explores a decision tree",
+        "body": "Backtracking builds a partial solution, tests or extends it, and undoes the choice before the next branch. Pruning can save work but needs a reason that every pruned branch cannot produce a required answer. Subset generation has exponential output; a small recursion stack does not make total output space small. Duplicate inputs require a uniqueness policy, often sorting and skipping equivalent choices at a given depth."
+      }
+    ],
+    "code": "int[] best = new int[capacity + 1];\nfor (int i = 0; i < weights.length; i++) {\n    for (int w = capacity; w >= weights[i]; w--) {\n        best[w] = Math.max(best[w],\n            best[w - weights[i]] + values[i]);\n    }\n}",
+    "walkthrough": "This 0/1 knapsack formulation assumes nonnegative integer capacity, positive item weights, compatible arrays and values that fit int. Descending w reads a smaller-capacity value from the previous item stage. Ascending w could read a value already improved by this same item and reuse it, changing the problem to an unbounded variant.",
+    "exercise": "Use one item of weight two and value three with capacity four. Compare the descending and ascending updates.",
+    "solution": "Descending updates best[4] from an earlier-stage best[2] of zero, so the answer is three. Ascending sets best[2] to three and later reuses it for best[4] = six, incorrectly selecting the single item twice in the 0/1 problem.",
+    "complexity": {
+      "time": "O(nW)",
+      "space": "O(W) auxiliary",
+      "notes": "n items and integer capacity W; pseudopolynomial in numeric capacity, not polynomial in the bit-length of W."
+    }
+  },
+  {
+    "topic": "java",
+    "id": "language-and-values",
+    "title": "Java values, references and object contracts",
+    "goal": "Reason about objects without confusing references, identity and equality.",
+    "sections": [
+      {
+        "title": "Values cross method boundaries",
+        "body": "Java variables hold primitive values or reference values. Arguments copy these values into parameters. If two references identify the same mutable object, a mutation through one is visible through the other; replacing one reference does not replace the other. This explains why a method can alter a passed list yet cannot replace the caller variable by assigning its parameter. Draw variables and objects separately when tracing code."
+      },
+      {
+        "title": "Identity and logical equality",
+        "body": "The == operator on references asks about identity; equals can define logical equality. When value equality is implemented, hashCode must obey the same contract. Keys should remain stable after insertion into hashed collections. Strings are immutable, but arrays and lists are not automatically value objects. A record simplifies a value carrier yet does not deep-freeze mutable components or remove the need to validate construction."
+      },
+      {
+        "title": "Contracts and failure",
+        "body": "An interface describes promises about operations, not merely names and parameter types. Document null behavior, ownership of returned mutable objects and exceptions callers can expect. Checked exceptions make a compiler-visible handling obligation; unchecked exceptions can still be part of the public failure contract. Preserve causes when translating failures and avoid swallowing an exception just to return a success-shaped default."
+      }
+    ],
+    "code": "static void change(List<String> names) {\n    names.add(\"Mira\");\n    names = new ArrayList<>();\n    names.add(\"Arun\");\n}\nList<String> names = new ArrayList<>();\nchange(names); // caller’s list contains only \"Mira\"",
+    "walkthrough": "The parameter initially holds a copy of the reference to the caller list. add(\"Mira\") mutates that list. The assignment then makes the parameter refer to a different list; it does not change the caller variable. The final add changes only the newly allocated local list. The key distinction is which object each reference identifies at each step.",
+    "exercise": "Write two different customer objects with the same ID. Decide when == and equals should return true, then state what hashCode must do.",
+    "solution": "Distinct allocations normally fail reference ==. If customer identity is defined solely by an immutable ID, equals may return true and their hash codes must match. Choose an equality model appropriate to the domain rather than comparing every mutable field automatically.",
+    "complexity": {
+      "time": "O(1) amortized for the shown additions",
+      "space": "O(1) additional elements in this example",
+      "notes": "General collection costs depend on size; the concept of pass-by-value itself has no meaningful input-size complexity."
+    }
+  },
+  {
+    "topic": "java",
+    "id": "collections-generics-streams",
+    "title": "Collections, generics and stream pipelines",
+    "goal": "Choose APIs that make data flow and mutation explicit.",
+    "sections": [
+      {
+        "title": "Pick operations before implementation",
+        "body": "List preserves positional sequence, Set represents uniqueness and Map associates keys with values. ArrayList offers direct indexed reads; ArrayDeque offers efficient ends; TreeMap supports comparator-ordered queries. Iteration order, null policies and concurrency vary across implementations. Unmodifiable views can still reflect changes to an underlying collection; copies isolate structure but may still share mutable elements."
+      },
+      {
+        "title": "Generics constrain safe use",
+        "body": "Generic types are invariant: List<Integer> is not a List<Number>. A ? extends Number source can produce values safely read as Number, but its unknown element subtype prevents arbitrary inserts. A ? super Integer destination can consume Integer values, while reading gives only Object without further knowledge. This producer/consumer reasoning is more reliable than memorizing the wildcard syntax alone. Type erasure limits runtime generic type information."
+      },
+      {
+        "title": "Pipelines are lazy until terminal work",
+        "body": "A stream pipeline describes operations and is evaluated by a terminal operation. Avoid side effects on shared mutable state, especially under parallel execution. Reductions require compatible identity/combination behavior and associativity. sorted retains and orders data; collect materializes output; short-circuit operations may avoid full traversal. Parallel streams add coordination overhead and should not be a default response to a slow dependency call."
+      }
+    ],
+    "code": "int sum = values.stream()\n    .filter(value -> value > 0)\n    .mapToInt(Integer::intValue)\n    .sum();",
+    "walkthrough": "filter keeps positive values, mapToInt avoids retaining boxed Integer values for the reduction, and sum is the terminal operation. For [-2, 3, 4] the result is seven. The pipeline does not mutate values. An int sum can overflow, so use a suitable wider type or checked arithmetic when input constraints require it.",
+    "exercise": "Explain how adding sorted before sum affects cost, and whether it improves correctness for this operation.",
+    "solution": "Sorting is unnecessary for summing positive values. It introduces O(n log n) sorting time and generally O(n) buffering without changing the mathematical result when no overflow occurs. The original pipeline is O(n) with constant incremental state.",
+    "complexity": {
+      "time": "O(n) for the shown pipeline",
+      "space": "O(1) auxiliary reduction state",
+      "notes": "n is list length; assumes constant-cost lambdas, sequential execution and fixed-width arithmetic."
+    }
+  },
+  {
+    "topic": "java",
+    "id": "concurrency",
+    "title": "Visibility, atomicity and concurrent work",
+    "goal": "Identify the invariant and synchronization boundary before choosing an API.",
+    "sections": [
+      {
+        "title": "Visibility is different from atomicity",
+        "body": "The Java memory model defines when writes become visible and the ordering guarantees of synchronization actions. A volatile field supports visibility and ordering for that field, but count++ still performs a read, arithmetic and write. synchronized protects a critical section; AtomicInteger exposes specific atomic actions. If a rule spans several fields or objects, individually atomic field updates may not preserve that rule."
+      },
+      {
+        "title": "Shared collections and overload",
+        "body": "ConcurrentHashMap provides defined concurrent access and atomic per-key operations such as merge, but its mutable values and cross-key sequences need their own coordination. Executors also require a capacity and lifecycle policy. An unbounded backlog can hide overload until memory or latency collapses. Bound scarce resources, distinguish queue wait from execution time and propagate deadline/cancellation decisions deliberately."
+      },
+      {
+        "title": "Threads are not extra downstream capacity",
+        "body": "Virtual threads are well suited to large numbers of waiting tasks, not faster CPU arithmetic. They do not increase a database pool size or a vendor quota. Version matters: JDK 24 removed the earlier monitor-related pinning limitation; native or foreign operations can still pin. CompletableFuture expresses composition, but blocking join calls and an unsuitable executor can erase its benefit. Measure the real workload before changing execution models."
+      }
+    ],
+    "code": "ConcurrentHashMap<String, Integer> counters = new ConcurrentHashMap<>();\nvoid record(String route) {\n    counters.merge(route, 1, Integer::sum);\n}",
+    "walkthrough": "merge makes the update for one route atomic under concurrent callers. A get-then-put alternative can lose an increment if both callers read the old value. This design still needs a bounded set of route names: using raw user IDs or full URLs can grow the map indefinitely. Per-key atomicity does not provide a consistent snapshot across every route.",
+    "exercise": "Design a bounded worker service. State what happens when the queue is full, a task exceeds its deadline and shutdown begins.",
+    "solution": "Choose a bounded queue and explicit rejection/backpressure policy, account for queue time in the deadline, make interruption/cancellation cooperative where possible, and stop admission before draining or cancelling work during shutdown. Do not promise cancellation of a remote operation that may already have committed.",
+    "complexity": {
+      "time": "Expected O(1) simple per-key merge, plus callback work",
+      "space": "O(r) retained route keys",
+      "notes": "r is bounded route cardinality; contention, resizing and scheduling mean this is not a latency guarantee."
+    }
+  },
+  {
+    "topic": "java",
+    "id": "jvm-and-diagnostics",
+    "title": "JVM memory, resources and diagnosis",
+    "goal": "Use evidence to separate allocation, contention and dependency delays.",
+    "sections": [
+      {
+        "title": "Reachability explains retention",
+        "body": "Objects generally occupy managed heap memory; each thread has execution frames, although runtime optimization can eliminate some allocations. Garbage collection reclaims unreachable objects rather than objects the program no longer intends to use. A long-lived map, listener or thread-local value can retain a large graph. Classify retained memory by ownership and lifetime instead of calling every high heap measurement a leak."
+      },
+      {
+        "title": "Resources need deterministic lifetimes",
+        "body": "Database connections, files and sockets are not safely managed by waiting for garbage collection. Use try-with-resources for AutoCloseable ownership and respect pool/library return semantics. Closing one layer may close another underlying resource, so define who owns the stream. Exception handling should preserve the primary failure and allow suppressed close failures to remain available for diagnosis."
+      },
+      {
+        "title": "Investigate the request path",
+        "body": "Begin with a symptom and evidence: latency percentiles, error rates, CPU, allocation, thread states and dependency spans. High CPU suggests different hypotheses from parked workers or a saturated connection pool. Use production-appropriate profiling or recordings, compare representative before/after load, and make one interpretable change at a time. A microbenchmark that avoids network, warmup or allocation can answer a useful narrow question without predicting whole-service latency."
+      }
+    ],
+    "code": "static String firstLine(Path path) throws IOException {\n    try (BufferedReader reader = Files.newBufferedReader(path)) {\n        return reader.readLine();\n    }\n}",
+    "walkthrough": "The reader is created at the try boundary and closed whether reading succeeds or throws. The caller receives the first line or null for an empty file and handles the declared IOException. The method does not return the reader after closing it. Character decoding, line length and the file system can dominate cost even though only one line is requested.",
+    "exercise": "A service has low CPU but rising request latency and many threads waiting for connections. What would you examine before adding threads?",
+    "solution": "Inspect pool occupancy/wait times, slow queries, leaked/unreturned connections, transaction duration and downstream limits. More request threads may add waiting rather than throughput. Verify the bottleneck with traces and database evidence before changing pool settings.",
+    "complexity": {
+      "time": "O(L) character work to read the first line",
+      "space": "O(L) returned line plus buffered reader storage",
+      "notes": "L is first-line length; I/O latency and buffer read-ahead are additional practical costs."
+    }
+  },
+  {
+    "topic": "spring-boot",
+    "id": "container",
+    "title": "Spring container, injection and auto-configuration",
+    "goal": "Understand how an application is assembled before using annotations.",
+    "sections": [
+      {
+        "title": "The container creates an object graph",
+        "body": "Spring manages configured objects called beans and supplies their dependencies. Constructor injection expresses mandatory collaborators, supports final fields and makes unit construction possible without a container. Component scanning discovers eligible classes within configured packages; explicit configuration can register others. An annotation on a class outside the scanned/imported configuration does not automatically make it a managed object."
+      },
+      {
+        "title": "Boot supplies conditional defaults",
+        "body": "Spring Boot uses starters, auto-configuration and conventions to reduce setup. Conditions can depend on classpath, application type, properties and existing beans. A user bean can make a conditional default back off where the relevant condition supports that behavior. Inspect the condition evaluation report when configuration surprises you. Spring Boot versions differ in modules and packages, so examples should be read against the application’s selected version."
+      },
+      {
+        "title": "Scope is not synchronization",
+        "body": "A singleton is normally one bean instance per bean definition per container. Mutable request state in a singleton is shared, so storing a current user or order there can mix requests. Prefer stateless services and put request-specific data in parameters or an appropriate scoped object. Constructor dependency cycles often indicate responsibilities that should be separated rather than a need for a clever injection workaround."
+      }
+    ],
+    "code": "@Service\nclass OrderService {\n    private final OrderRepository orders;\n    OrderService(OrderRepository orders) {\n        this.orders = orders;\n    }\n    Order find(long id) {\n        return orders.findById(id).orElseThrow();\n    }\n}",
+    "walkthrough": "This illustrative service requires a repository at construction. Spring can supply that dependency when both beans are registered; a plain unit test can pass a fake directly. The example omits domain exception translation and assumes the repository contract shown. The final field fixes the reference, not the internal mutability or thread safety of the repository implementation.",
+    "exercise": "A service constructor needs twelve collaborators. What would you review before changing the injection style?",
+    "solution": "Review cohesion and the use cases the service owns. Extract independently meaningful responsibilities where appropriate. Field injection would hide the dependency count rather than solve the coupling. Do not split mechanically into meaningless forwarding classes.",
+    "complexity": {
+      "time": "No universal Big O for dependency injection",
+      "space": "Depends on registered bean graph and initialization work",
+      "notes": "Measure startup with actual conditions and constructors; a framework annotation is not an algorithmic complexity promise."
+    }
+  },
+  {
+    "topic": "spring-boot",
+    "id": "http-and-security",
+    "title": "HTTP boundaries, validation and security",
+    "goal": "Keep transport contracts clear while enforcing rules on the server.",
+    "sections": [
+      {
+        "title": "Controllers translate a protocol",
+        "body": "A controller maps HTTP requests to application use cases and maps results/errors back to a documented response contract. Keep business invariants in services or domain objects so they apply outside one endpoint. Distinguish malformed requests, missing resources and business conflicts. A stable error representation helps clients respond without parsing arbitrary exception messages. Pagination and maximum request sizes are also part of the boundary."
+      },
+      {
+        "title": "Layer validation by responsibility",
+        "body": "Boundary validation checks request shape, lengths and simple constraints. Domain validation checks business meaning. Database constraints or atomic conditional writes protect invariants under competing requests. A pre-check that a record does not exist cannot prevent two instances from simultaneously inserting it. Central exception mapping can translate known failures while logging unexpected failures without leaking secrets or stack traces to callers."
+      },
+      {
+        "title": "Identity does not grant every action",
+        "body": "Authentication establishes identity, while authorization checks the requested operation and resource ownership. Enforce authorization on the server even if the browser hides a button. CORS controls browser cross-origin access and is not identity verification. Cookie/session-based authentication has different CSRF considerations from correctly handled bearer tokens; configure security according to the actual credential flow rather than disabling protections by habit."
+      }
+    ],
+    "code": "record CreateOrderRequest(@NotBlank String productId,\n                          @Min(1) int quantity) {}\n// In a registered REST controller:\n@PostMapping(\"/orders\")\nResponseEntity<OrderResponse> create(\n        @Valid @RequestBody CreateOrderRequest request) {\n    OrderResponse result = orders.create(request);\n    return ResponseEntity.created(\n        URI.create(\"/orders/\" + result.id())).body(result);\n}",
+    "walkthrough": "The snippet is a controller fragment, not a standalone application. Jakarta validation support must be configured. Validation rejects malformed quantities; orders.create must still enforce inventory, ownership and persistence invariants. The created response has a Location and body. Use a constrained or safely encoded identifier when constructing real resource URIs.",
+    "exercise": "Two requests both pass an availability check for the last seat. Explain why input validation and a controller lock may still be insufficient.",
+    "solution": "Input validation does not serialize competing business operations. A lock in one instance does not cover another instance. Use a storage-enforced conditional reservation or constraint in the appropriate transaction, handle the conflict, and make retries safe.",
+    "complexity": {
+      "time": "Cost depends on request size and application/storage operations",
+      "space": "Depends on bounded input and response sizes",
+      "notes": "Do not label an endpoint O(1) merely because its controller delegates to one method."
+    }
+  },
+  {
+    "topic": "spring-boot",
+    "id": "persistence",
+    "title": "Transactions, JPA queries and concurrent updates",
+    "goal": "Make consistency and database work visible.",
+    "sections": [
+      {
+        "title": "Transactions are boundaries with interception",
+        "body": "A transaction groups storage operations with commit/rollback semantics supplied by the underlying system. In typical Spring proxy mode, advice applies when a call passes through the bean proxy. A method invoking another annotated method on itself bypasses that interception. A practical remedy is to place the transactional use case in an appropriately separate bean. Default rollback normally covers RuntimeException and Error; checked exceptions need suitable rules unless application defaults change."
+      },
+      {
+        "title": "Propagation and isolation solve different problems",
+        "body": "REQUIRED joins or creates a transaction; REQUIRES_NEW suspends an outer transaction and commits independently, often needing another connection. It can exhaust a pool when every outer transaction holds a connection while waiting for a new one. Isolation governs what competing transactions can observe. Choose storage constraints and locking deliberately; annotations cannot make an external payment and a local database commit one atomic action."
+      },
+      {
+        "title": "JPA convenience can hide expensive I/O",
+        "body": "Loading roots and then accessing lazy associations may issue an N+1 query pattern. Inspect SQL counts and result cardinality; consider joins, entity graphs, batching or DTO queries. Fetching everything eagerly is not a universal solution and collection joins can complicate pagination. Optimistic version checks detect stale updates; pessimistic locks block competitors. Retry only with a clear idempotency and side-effect policy."
+      }
+    ],
+    "code": "@Service\nclass TransferService {\n    @Transactional\n    public void transfer(long from, long to, BigDecimal amount) {\n        debit(from, amount);\n        credit(to, amount);\n    }\n    // debit/credit implementations and invariants omitted.\n}",
+    "walkthrough": "The transaction wraps the public use case when invoked through its managed proxy. debit and credit must use the intended transactional storage resources; an uncaught configured rollback-triggering failure should undo storage changes. Calling this method through this from the same object does not create a new proxy-intercepted boundary. Lock ordering, sufficient funds and numeric/currency validation are additional responsibilities.",
+    "exercise": "Design an integration test that proves a credit failure rolls back a successful debit, without hiding the result in the test framework transaction.",
+    "solution": "Invoke the managed service through its proxy, induce the failure and read balances in a separate committed observation boundary. Assert neither balance changed. A mocked repository cannot prove rollback; avoid an outer test transaction that makes the assertion accidentally pass.",
+    "complexity": {
+      "time": "N+1 pattern performs 1 + n database round trips",
+      "space": "O(n + associations loaded) managed objects",
+      "notes": "n is root rows. Round trips are not a complete SQL complexity model; indexes, joins and query plans matter."
+    }
+  },
+  {
+    "topic": "spring-boot",
+    "id": "testing-and-operations",
+    "title": "Testing, resilience and production operation",
+    "goal": "Verify actual boundaries and keep failure behavior bounded.",
+    "sections": [
+      {
+        "title": "Use the smallest test that proves the behavior",
+        "body": "Plain unit tests verify isolated business decisions quickly. WebMvcTest covers a web slice for routing, validation, serialization and configured security, while SpringBootTest covers wider context wiring. Realistic database tests are needed for query behavior, constraints and transactions; a mocked repository cannot establish them. Spring Boot 3.x and 4.x differ in some test modules/packages, so confirm imports for the selected release."
+      },
+      {
+        "title": "Retry only inside a defined budget",
+        "body": "A caller needs an overall deadline that includes queue wait, execution and dependency calls. Bound each attempt and retry only suitable transient failures, using backoff and jitter. A timed-out payment may have committed remotely, so idempotency and outcome reconciliation matter more than blindly calling again. Retries at multiple layers can multiply load. A circuit breaker does not replace timeouts, concurrency limits or a meaningful fallback."
+      },
+      {
+        "title": "Observe and drain safely",
+        "body": "Track latency distributions, errors, saturation and dependency timing with low-cardinality dimensions. Secure management endpoints and avoid exposing secrets in logs. Readiness tells traffic routing whether the instance can serve; liveness tells a supervisor whether restarting is appropriate. Making a downstream outage fail liveness can create restart storms. During shutdown stop admission, drain for a bounded period and decide how interrupted work is recovered."
+      }
+    ],
+    "code": "// Plain unit-test shape; no Spring context is needed.\nOrderRepository fake = new InMemoryOrderRepository();\nOrderService service = new OrderService(fake);\n// Arrange a known order, invoke the use case, assert its result.\n// Use a database integration test for SQL/transaction behavior.",
+    "walkthrough": "This sketch demonstrates test scope rather than a complete repository implementation. A fake makes domain decisions reproducible without a server. It must not be mistaken for evidence about real database isolation or an HTTP security filter chain. Separate these questions into tests that actually execute the relevant boundary.",
+    "exercise": "A dependency is down and requests are retrying for thirty seconds. The public request budget is two seconds. Propose a correction.",
+    "solution": "Set attempt timeouts and retry/backoff limits that fit the remaining two-second deadline, stop admitting excessive concurrent work, and choose a contract-appropriate error or fallback. Preserve idempotency and record uncertain outcomes rather than reporting a false success.",
+    "complexity": {
+      "time": "No single framework Big O; retries multiply dependency work",
+      "space": "Bound queues, retained results and in-flight work explicitly",
+      "notes": "A practical latency budget is distinct from asymptotic operation count."
+    }
+  },
+  {
+    "topic": "object-oriented-design",
+    "id": "contracts",
+    "title": "Objects, contracts and invariants",
+    "goal": "Model responsibilities and legal states before drawing classes.",
+    "sections": [
+      {
+        "title": "Objects protect rules",
+        "body": "An object combines behavior with state whose invariants it can enforce. Encapsulation is more than private fields plus public setters: a setter that permits an impossible state still exposes the invariant. Start with a use case, the decisions it makes and the rules that must always hold. Identify entities with identity, value objects with value equality and services that coordinate behavior without becoming bags of unrelated state."
+      },
+      {
+        "title": "Interfaces describe behavioral promises",
+        "body": "An interface should express capabilities callers actually need. Its contract includes preconditions, results, failures, ownership and timing expectations. Substitutable implementations must preserve those promises; a subtype that rejects valid parent inputs or unexpectedly changes state breaks that reasoning even if method signatures compile. Composition lets one object delegate to another without inheriting capabilities it should not expose."
+      },
+      {
+        "title": "Value boundaries reduce accidental coupling",
+        "body": "Use immutable value objects for concepts such as money, identifiers and date intervals, with explicit validation. Money includes a currency and rounding policy; time needs an instant or a business time-zone interpretation rather than a server-default assumption. Records are convenient but their components can still refer to mutable objects. Model behavior around the domain vocabulary rather than passing a loose map of strings everywhere."
+      }
+    ],
+    "code": "record Money(BigDecimal amount, Currency currency) {\n    Money {\n        Objects.requireNonNull(amount);\n        Objects.requireNonNull(currency);\n    }\n    Money add(Money other) {\n        if (!currency.equals(other.currency())) {\n            throw new IllegalArgumentException(\"Currency mismatch\");\n        }\n        return new Money(amount.add(other.amount()), currency);\n    }\n}",
+    "walkthrough": "Adding two Money values returns a new value and keeps the inputs unchanged. Different currencies cannot be combined implicitly. This simplified value still needs a business policy for scale, rounding and equality: BigDecimal.equals distinguishes values with different scales. Currency conversion needs an explicit rate/time/source, not an accidental arithmetic shortcut.",
+    "exercise": "Design a DateRange value object. Decide whether end is inclusive, whether empty ranges are valid and which time representation it contains.",
+    "solution": "One reasonable contract is a half-open [start, end) range of instants with start ≤ end. Validate construction, document whether equality uses normalized instants and define overlap as startA < endB and startB < endA for nonempty intervals. Business-local dates need a different explicit model.",
+    "complexity": {
+      "time": "BigDecimal addition O(d) in operand digits at a high level",
+      "space": "O(d) new amount storage",
+      "notes": "d is relevant decimal digit length; fixed-size domain values are often treated as bounded, but arbitrary precision is not automatically O(1)."
+    }
+  },
+  {
+    "topic": "object-oriented-design",
+    "id": "patterns",
+    "title": "Composition, SOLID and patterns with purpose",
+    "goal": "Use patterns to manage real variation, not to decorate a class diagram.",
+    "sections": [
+      {
+        "title": "Cohesion and dependency direction",
+        "body": "Single responsibility means a cohesive reason to change, not one method per class. Dependency inversion puts stable business policy behind suitable contracts rather than tying it to transport or storage details. Interface segregation keeps clients from depending on capabilities they do not use. Open/closed design seeks useful extension boundaries without pretending future requirements can be predicted perfectly. Evaluate these principles through a concrete change."
+      },
+      {
+        "title": "Strategy, factory and builder solve different problems",
+        "body": "A Strategy encapsulates alternative behavior behind one contract. A factory chooses or constructs an implementation. A builder assembles a value with readable configuration and validation. Dependency injection wires collaborators and lifecycle ownership. These ideas can work together, but they are not interchangeable labels. A small fixed conditional may be clearer than several types if no independent variation exists."
+      },
+      {
+        "title": "State and observation need lifecycle rules",
+        "body": "A State design can make legal transitions explicit instead of permitting invalid combinations of flags. Observer-style notification needs subscription ownership, failure isolation and delivery timing. In-process callbacks are neither durable nor automatically asynchronous. Document who can trigger a transition, which side effects occur once and what happens when a collaborator fails halfway through. Patterns help express those contracts; they do not supply them automatically."
+      }
+    ],
+    "code": "interface DiscountPolicy {\n    BigDecimal discount(BigDecimal subtotal);\n}\nclass Checkout {\n    private final DiscountPolicy policy;\n    Checkout(DiscountPolicy policy) { this.policy = policy; }\n    BigDecimal total(BigDecimal subtotal) {\n        return subtotal.subtract(policy.discount(subtotal));\n    }\n}",
+    "walkthrough": "Checkout delegates only the discount decision. A production contract should require a nonnegative discount no greater than the eligible subtotal and define currency/rounding. If policy violations are possible, validate at the boundary. The caller can test checkout with a deterministic policy without inheriting from Checkout or connecting to a promotion service.",
+    "exercise": "An application supports email and SMS notifications. Where would you put provider selection, retry policy and message formatting?",
+    "solution": "Separate formatting and transport where those concerns vary independently. A factory or configuration can select a transport; bounded retries and idempotency belong to delivery coordination rather than every formatter. Keep the contracts small and specify whether success means accepted or delivered.",
+    "complexity": {
+      "time": "Depends on the selected strategy; delegation adds O(1) dispatch",
+      "space": "Depends on strategy and returned data",
+      "notes": "A design pattern itself does not define the complexity of business work."
+    }
+  },
+  {
+    "topic": "object-oriented-design",
+    "id": "stateful-systems",
+    "title": "Designing caches, schedulers and rate limiters",
+    "goal": "Connect class structure to operation costs and concurrency requirements.",
+    "sections": [
+      {
+        "title": "Specify the operation contract",
+        "body": "Before implementing an LRU cache, define key/value behavior, capacity zero, replacement, concurrency and whether expired entries count toward capacity. A map and recency list are one design because their strengths complement each other. Explain the consistency invariant and the sequence of changes on hit, insert and eviction. Tests should check structure consistency, not only a few successful returned values."
+      },
+      {
+        "title": "Scheduling requires a claim boundary",
+        "body": "A delayed-task scheduler needs identity, due time, lifecycle state and execution ownership. A min-heap finds the next due task, but removing an arbitrary task may require a linear search unless the heap is indexed. Cancellation must define whether it prevents a task already claimed by a worker. Tombstones simplify cancellation but require a cleanup bound. Persisted scheduling introduces recovery and duplicate-execution questions beyond an in-memory class."
+      },
+      {
+        "title": "Rate limiting is an atomic decision",
+        "body": "A token bucket tracks capacity, refill rate, tokens and last refill time. Refill from elapsed monotonic time, cap at capacity and atomically consume on admission. For multiple application instances, per-process buckets do not enforce a global user quota. An atomic shared store or a deliberate partitioned policy is needed. Bound retained user buckets and avoid holding a local lock during slow external work."
+      }
+    ],
+    "code": "// Single-process sketch: synchronization covers refill AND consume.\nsynchronized boolean allow(long nowNanos) {\n    double elapsed = (nowNanos - lastNanos) / 1_000_000_000.0;\n    tokens = Math.min(capacity, tokens + elapsed * tokensPerSecond);\n    lastNanos = nowNanos;\n    if (tokens < 1) return false;\n    tokens -= 1;\n    return true;\n}",
+    "walkthrough": "Assume validated positive capacity/rate, initialized fields and monotonic calls for one bucket. The synchronized boundary prevents two callers from spending the same token. This code does not implement global fleet limits, inactive-user cleanup or fair waiting. Inject a monotonic clock for deterministic tests instead of sleeping in tests.",
+    "exercise": "Design tests for capacity two and refill one token per second using a fake clock.",
+    "solution": "At initial time, admit two and reject a third. Advance half a second and still reject if no full token is available; advance another half and admit one. Verify capacity caps after a long idle period and that concurrent calls cannot admit more than available tokens.",
+    "complexity": {
+      "time": "O(1) arithmetic per local bucket admission",
+      "space": "O(1) per bucket; O(u) for u retained users",
+      "notes": "Lock contention and distributed storage latency are separate from the sequential operation count."
+    }
+  },
+  {
+    "topic": "object-oriented-design",
+    "id": "design-round",
+    "title": "A complete design round: booking and payment",
+    "goal": "Walk a design through success, conflict, failure and recovery.",
+    "sections": [
+      {
+        "title": "Clarify the product boundary",
+        "body": "For seat booking, ask what is reserved, how long a hold lasts, how payment works and which operations must be globally consistent. Start with a small model: Seat, Hold, Booking, PaymentAttempt and explicit state transitions. Keep a clock and persistence/payment interfaces at testable boundaries. A class diagram helps communication, but an operation walkthrough establishes whether the classes can preserve the required rules."
+      },
+      {
+        "title": "Concurrency belongs in the invariant",
+        "body": "Two requests can both read an available seat before either writes. Enforce the reservation through an atomic conditional storage operation or suitable constraint and transaction. A lock inside one application instance does not coordinate the fleet. A payment provider and a database generally do not share one local transaction; use idempotency keys and explicit recovery/reconciliation for uncertain outcomes rather than assuming a failed HTTP call means no charge happened."
+      },
+      {
+        "title": "Test the uncomfortable transitions",
+        "body": "Specify expiry, cancellation, confirmation, duplicate request behavior and payment success followed by local failure. Preserve an audit trail for uncertain outcomes. State whether the system retries automatically, returns pending or requires reconciliation. Test with a fake clock and deterministic failures, then verify the real persistence constraints in integration tests. Explain how a new payment provider or seat type changes the design without promising that every future requirement is free."
+      }
+    ],
+    "code": "interface SeatStore {\n    // Must atomically reserve only if no conflicting active hold exists.\n    Hold tryHold(SeatId seat, CustomerId customer,\n                 Instant expiresAt, String requestKey);\n}\ninterface PaymentGateway {\n    PaymentResult charge(Money amount, String idempotencyKey);\n}",
+    "walkthrough": "The interfaces state the critical promises but do not implement them. SeatStore needs a real storage mechanism proving conflict exclusion. PaymentGateway needs a provider-supported idempotency contract and a policy for timeouts/unknown outcomes. An application service coordinates these boundaries and records transitions so a crash can be reconciled.",
+    "exercise": "The provider charged successfully, but the service crashed before marking the booking confirmed. What must the retry do?",
+    "solution": "Use the same idempotency key to recover the original payment outcome rather than initiate another charge. Reconcile the durable booking/hold state, confirm only if the seat can still be assigned under the chosen contract, and define compensation or manual resolution if it cannot. Never infer no charge solely from a timeout.",
+    "complexity": {
+      "time": "Determined by storage indexes, contention and provider operations",
+      "space": "Proportional to retained holds, bookings and audit records",
+      "notes": "Define the query and consistency model before assigning Big O; remote round-trip count alone is not full algorithmic complexity."
+    }
+  }
+]

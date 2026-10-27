@@ -1,0 +1,1003 @@
+[
+  {
+    "id": "data-structures-array",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "Array or linked list: which should you choose?",
+    "answer": "Arrays store indexed elements with good locality. Linked lists store nodes with links; they trade index access and extra allocation for convenient splicing when a node and its predecessor are already known.",
+    "example": "Use an array for a scoreboard read by rank; a list can help splice a known work item.",
+    "pitfall": "Saying linked-list deletion is always constant time ignores finding the node.",
+    "followUp": "How would the choice change when most operations are iteration?",
+    "complexity": {
+      "time": "Array access O(1), middle insert O(n); list lookup O(n), known-node splice O(1)",
+      "space": "Array storage O(n); list storage O(n) including links",
+      "notes": "n is the number of elements; singly linked deletion needs the predecessor."
+    }
+  },
+  {
+    "id": "data-structures-dynamic-array",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "Why is ArrayList append amortized O(1)?",
+    "answer": "Most appends write into unused capacity. Occasionally a larger buffer must be allocated and existing elements copied; spread across geometrically growing capacity, total copying over n appends is linear.",
+    "example": "Appending one million items does not copy a million items on every append.",
+    "pitfall": "Amortized is not the same as average over randomly distributed inputs.",
+    "followUp": "When would reserving capacity help?",
+    "complexity": {
+      "time": "Append amortized O(1), individual growth O(n)",
+      "space": "O(n) stored capacity; resizing temporarily needs another buffer",
+      "notes": "Assume geometric growth and constant-cost reference copies."
+    }
+  },
+  {
+    "id": "data-structures-stack",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "What is a stack and when is it useful?",
+    "answer": "A stack removes the most recently added item first. It represents unfinished nested work, such as matching brackets or undo operations; in Java, ArrayDeque is a common single-threaded choice.",
+    "example": "Push each opening bracket and match each closing bracket against the top.",
+    "pitfall": "Popping without checking for an empty stack can hide invalid input.",
+    "followUp": "How would you implement a minimum stack?",
+    "complexity": {
+      "time": "Push/pop amortized O(1); bracket scan O(n)",
+      "space": "O(n) auxiliary space for unmatched brackets",
+      "notes": "n is the number of characters; deque resizing can cost O(n) once."
+    }
+  },
+  {
+    "id": "data-structures-queue",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "How does a queue differ from a stack?",
+    "answer": "A queue removes the earliest enqueued item first. It supports breadth-first work and buffering, while a stack explores the newest work first.",
+    "example": "Process tree nodes level by level with a queue.",
+    "pitfall": "Using ArrayList.remove(0) shifts elements on every removal.",
+    "followUp": "How would a bounded blocking queue handle a slow consumer?",
+    "complexity": {
+      "time": "ArrayDeque enqueue/dequeue amortized O(1)",
+      "space": "O(w) queued elements",
+      "notes": "w is the maximum queue size; this excludes consumer processing."
+    }
+  },
+  {
+    "id": "data-structures-hash-table",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "How does a hash table find a key?",
+    "answer": "A hash chooses a bucket and equality identifies the matching key within it. Good hash distribution keeps buckets short; resizing maintains load but occasionally moves many entries.",
+    "example": "Store customer ID to customer record for exact lookups.",
+    "pitfall": "A hash collision does not mean two keys are equal.",
+    "followUp": "Why must a key's hash-relevant state stay stable?",
+    "complexity": {
+      "time": "Expected get/put O(1); worst-case lookup O(n) in a general chained table",
+      "space": "O(n) entries and buckets",
+      "notes": "Assume constant-cost hash/equality; Java tree bins are an implementation-specific mitigation, not a universal hash-table guarantee."
+    }
+  },
+  {
+    "id": "data-structures-set-map",
+    "topic": "data-structures",
+    "level": "Beginner",
+    "title": "When should you use a set instead of a map?",
+    "answer": "A set represents membership and uniqueness. A map associates each key with a value; choose it when you need counts, metadata or a lookup result rather than only presence.",
+    "example": "Use a set for visited IDs and a map for visit counts.",
+    "pitfall": "A set removes duplicates but does not inherently preserve order.",
+    "followUp": "How would you preserve encounter order?",
+    "complexity": {
+      "time": "Hash-based membership expected O(1); processing n values expected O(n)",
+      "space": "O(u) distinct entries",
+      "notes": "u is the number of unique keys; hashing/equality costs are excluded."
+    }
+  },
+  {
+    "id": "data-structures-bst",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "What invariant makes a binary search tree useful?",
+    "answer": "Every left subtree contains smaller keys and every right subtree larger keys according to a consistent comparator. Search follows one branch; balancing keeps height logarithmic.",
+    "example": "Use a balanced ordered map for predecessor and range queries.",
+    "pitfall": "An ordinary BST built from sorted input can become a chain.",
+    "followUp": "How do duplicates affect your invariant?",
+    "complexity": {
+      "time": "Search/insert O(h); balanced O(log n), unbalanced worst O(n)",
+      "space": "O(n) tree storage; iterative search O(1) auxiliary",
+      "notes": "h is tree height; comparator calls are assumed constant time."
+    }
+  },
+  {
+    "id": "data-structures-heap",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "What does a binary heap guarantee?",
+    "answer": "A min-heap guarantees each parent is no greater than its children, so the root is the minimum. It does not keep siblings or the full backing array sorted.",
+    "example": "Maintain the largest k stream values using a min-heap of size k.",
+    "pitfall": "Iteration over PriorityQueue does not produce sorted order.",
+    "followUp": "Why is heap construction faster than repeated insertion?",
+    "complexity": {
+      "time": "Peek O(1), insert/remove root O(log n), bottom-up build O(n)",
+      "space": "O(n) storage; sift operations O(1) auxiliary when iterative",
+      "notes": "n is heap size; arbitrary element search remains O(n)."
+    }
+  },
+  {
+    "id": "data-structures-graph",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "Adjacency list or adjacency matrix?",
+    "answer": "Lists store only present edges and suit sparse graphs. A matrix stores every possible pair and makes edge existence cheap, but scans a full row to enumerate neighbors.",
+    "example": "Road networks are usually sparse; a tiny dense compatibility graph may suit a matrix.",
+    "pitfall": "Calling every graph operation O(V + E) ignores representation.",
+    "followUp": "How would you represent weighted directed edges?",
+    "complexity": {
+      "time": "List traversal O(V + E); matrix traversal O(V²); matrix edge lookup O(1)",
+      "space": "List O(V + E); matrix O(V²)",
+      "notes": "V is vertices, E is stored directed edges; undirected lists typically store each edge twice."
+    }
+  },
+  {
+    "id": "data-structures-trie",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "How does a trie support prefix search?",
+    "answer": "Each step follows one character, sharing prefix nodes across words. Reaching a prefix node locates its subtree; enumerating suggestions still costs the size of the output.",
+    "example": "Autocomplete for words beginning with inter.",
+    "pitfall": "Prefix lookup is not the same cost as returning every matching word.",
+    "followUp": "How would compressed edges reduce memory?",
+    "complexity": {
+      "time": "Prefix lookup O(p); suggestions O(p + visited output subtree)",
+      "space": "O(total stored characters) worst case",
+      "notes": "p is prefix length; child lookup is constant for a fixed alphabet or expected constant with hashing."
+    }
+  },
+  {
+    "id": "data-structures-lru",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "Design an LRU cache with efficient operations.",
+    "answer": "Combine a key-to-node hash map with a doubly linked recency list. On access move the node to the front; on insertion beyond capacity unlink the tail and remove its key.",
+    "example": "Capacity two: access A, B, A, then insert C; evict B.",
+    "pitfall": "A concurrent map alone cannot make map/list updates atomic.",
+    "followUp": "How would TTL expiration interact with recency?",
+    "complexity": {
+      "time": "Expected O(1) get/put/evict",
+      "space": "O(c) entries plus links",
+      "notes": "c is cache capacity; assumes expected O(1) hashing and excludes locking contention."
+    }
+  },
+  {
+    "id": "data-structures-union-find",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "What problems does disjoint-set union solve?",
+    "answer": "It tracks connected components while edges are added. Union by rank or size plus path compression avoids repeatedly walking long parent chains.",
+    "example": "Detect whether a new undirected edge joins two already connected vertices.",
+    "pitfall": "It does not efficiently undo arbitrary deletions or return a path between vertices.",
+    "followUp": "What changes for offline dynamic connectivity?",
+    "complexity": {
+      "time": "Amortized O(α(n)) per union/find with both optimizations",
+      "space": "O(n) parent and rank/size storage",
+      "notes": "α is inverse Ackermann; this is an amortized bound, not strict O(1)."
+    }
+  },
+  {
+    "id": "data-structures-monotonic",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "Why use a monotonic deque for sliding-window maximum?",
+    "answer": "Keep candidate indices in decreasing value order. Remove expired indices from the front and smaller candidates from the back; each index enters and leaves at most once.",
+    "example": "For window size three, track the largest of each consecutive triple.",
+    "pitfall": "Storing only values makes duplicate expiration harder to handle correctly.",
+    "followUp": "How does this differ from a monotonic stack?",
+    "complexity": {
+      "time": "O(n) total time",
+      "space": "O(k) auxiliary deque, excluding output",
+      "notes": "n is input length; k is window width; each index is inserted and removed at most once."
+    }
+  },
+  {
+    "id": "data-structures-ordered-map",
+    "topic": "data-structures",
+    "level": "Intermediate",
+    "title": "HashMap or TreeMap for ordered queries?",
+    "answer": "HashMap suits exact lookups. TreeMap maintains comparator order and supports floor, ceiling and sorted ranges, paying a logarithmic update cost.",
+    "example": "Find the most recent price at or before a timestamp with floorEntry.",
+    "pitfall": "A comparator returning zero treats keys as equivalent even when equals differs.",
+    "followUp": "What happens if comparator order disagrees with equals?",
+    "complexity": {
+      "time": "TreeMap get/put/remove O(log n); range iteration O(log n + r)",
+      "space": "O(n) map storage",
+      "notes": "r is returned entries; assume constant-cost comparisons."
+    }
+  },
+  {
+    "id": "data-structures-immutable",
+    "topic": "data-structures",
+    "level": "Advanced",
+    "title": "What does an immutable data structure buy you?",
+    "answer": "Readers can share a stable snapshot without defensive locking around mutations. Persistent structures can share unchanged nodes, but immutability alone does not specify operation costs.",
+    "example": "Publish a new configuration snapshot while existing requests retain the old one.",
+    "pitfall": "An unmodifiable wrapper is not a deep immutable copy of its elements.",
+    "followUp": "How would you safely publish a snapshot between threads?",
+    "complexity": {
+      "time": "Copy-on-write array update O(n); path-copy balanced tree update O(log n)",
+      "space": "O(n) copy or O(log n) new tree nodes per update",
+      "notes": "Bounds depend on the chosen representation, not the word immutable."
+    }
+  },
+  {
+    "id": "algorithms-big-o",
+    "topic": "algorithms",
+    "level": "Beginner",
+    "title": "What do Big O, Θ and Ω mean?",
+    "answer": "Big O is an asymptotic upper bound, Ω a lower bound and Θ a tight bound in a stated cost model. Specify worst case, expected or amortized separately; the notation alone does not choose a case.",
+    "example": "A complete array scan is Θ(n) even though O(n²) is also a loose upper bound.",
+    "pitfall": "Big O is not a stopwatch measurement or automatically the worst case.",
+    "followUp": "Why can an O(n²) algorithm win for tiny inputs?",
+    "complexity": {
+      "time": "Full scan Θ(n)",
+      "space": "O(1) auxiliary for a running sum",
+      "notes": "n is input length; arithmetic on bounded machine integers is constant cost."
+    }
+  },
+  {
+    "id": "algorithms-loops",
+    "topic": "algorithms",
+    "level": "Beginner",
+    "title": "How do you analyze nested and consecutive loops?",
+    "answer": "Add consecutive costs and multiply nested costs only after checking their bounds. A dependent inner bound may form a sum; two pointers that only advance can still take linear total work.",
+    "example": "A loop over n customers containing a loop over m orders costs O(nm).",
+    "pitfall": "Two syntactically nested loops are not automatically O(n²).",
+    "followUp": "Analyze a pointer that advances across the input only once.",
+    "complexity": {
+      "time": "O(n + m) for separate scans; O(nm) for a full nested scan",
+      "space": "O(1) auxiliary if only counters are kept",
+      "notes": "n and m are independent input sizes; no copied slices or hidden allocations."
+    }
+  },
+  {
+    "id": "algorithms-binary-search",
+    "topic": "algorithms",
+    "level": "Beginner",
+    "title": "State the invariant for binary search.",
+    "answer": "Keep the possible answer inside a clearly defined interval, compare its middle and discard an impossible half. State whether endpoints are inclusive; compute mid as low + (high - low) / 2.",
+    "example": "Find the first value at least a target using a half-open interval.",
+    "pitfall": "Returning any matching duplicate does not implement lower bound.",
+    "followUp": "How would you search a monotone feasibility function?",
+    "complexity": {
+      "time": "O(log n) comparisons",
+      "space": "O(1) auxiliary iteratively",
+      "notes": "Requires sorted random-access data or a monotone predicate; predicate cost multiplies the bound."
+    }
+  },
+  {
+    "id": "algorithms-two-pointers",
+    "topic": "algorithms",
+    "level": "Beginner",
+    "title": "When can two pointers replace nested search?",
+    "answer": "Exploit an invariant that tells you which pointer can move without losing a solution. In a sorted pair-sum search, a sum too small means the left value must increase.",
+    "example": "Find a pair summing to a target in a sorted array.",
+    "pitfall": "Sorting changes original indices unless you preserve them explicitly.",
+    "followUp": "What if the input is unsorted and original indices are required?",
+    "complexity": {
+      "time": "Sorted scan O(n); sorting first adds O(n log n)",
+      "space": "O(1) auxiliary for scan, excluding sort workspace",
+      "notes": "n is array length; sorted input is a precondition for this pointer rule."
+    }
+  },
+  {
+    "id": "algorithms-sliding-window",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "When is a sliding window valid?",
+    "answer": "Maintain a contiguous interval and an invariant that can be updated incrementally. The condition must tell you how shrinking affects validity; arbitrary negative values break some sum-based shrink rules.",
+    "example": "Longest substring without repeated characters uses last-seen positions.",
+    "pitfall": "The positive-only minimum-sum window algorithm is incorrect with unrestricted negatives.",
+    "followUp": "Which data structure supports signed prefix sums instead?",
+    "complexity": {
+      "time": "Expected O(n) with hash-based last-seen tracking",
+      "space": "O(u) auxiliary distinct symbols",
+      "notes": "n is sequence length and u distinct symbols; define characters versus Unicode code points."
+    }
+  },
+  {
+    "id": "algorithms-prefix-sum",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "Why do prefix sums help range queries?",
+    "answer": "Store cumulative totals so a range sum becomes the difference of two prefix totals. For target-sum subarray counting, a frequency map of earlier prefixes avoids enumerating every range.",
+    "example": "Initialize frequency of prefix zero to one so ranges starting at index zero count.",
+    "pitfall": "A set loses multiplicities when equal prefix totals occur repeatedly.",
+    "followUp": "How do you handle many updates as well as queries?",
+    "complexity": {
+      "time": "Build O(n), each static range sum O(1); target count expected O(n)",
+      "space": "O(n) prefix storage or frequency map",
+      "notes": "Use a sufficiently wide numeric type; hash-map costs are expected."
+    }
+  },
+  {
+    "id": "algorithms-sorting",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "Compare merge sort, quicksort and heapsort.",
+    "answer": "Merge sort gives predictable n log n work and can be stable. Quicksort partitions in place but depends on pivot quality; heapsort gives worst-case n log n without linear merge workspace.",
+    "example": "Choose a stable merge implementation when equal-key records must retain input order.",
+    "pitfall": "Do not claim every library sort uses the same algorithm or workspace.",
+    "followUp": "When can counting sort beat comparison sorting?",
+    "complexity": {
+      "time": "Merge O(n log n); randomized quicksort expected O(n log n), worst O(n²); heapsort O(n log n)",
+      "space": "Array merge O(n); quicksort expected O(log n) recursion, worst O(n); iterative heapsort O(1)",
+      "notes": "Comparison model; implementation and recursion strategy determine workspace."
+    }
+  },
+  {
+    "id": "algorithms-bfs-dfs",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "When should you choose BFS over DFS?",
+    "answer": "BFS finds minimum edge count from a source in an unweighted graph. DFS is useful for dependency structure, cycle reasoning and exhaustive exploration; both need visited tracking on general graphs.",
+    "example": "Use BFS to find the fewest moves in an unweighted maze.",
+    "pitfall": "Marking visited only on dequeue can enqueue duplicates unnecessarily.",
+    "followUp": "Why does BFS fail as a shortest-path method for arbitrary weighted edges?",
+    "complexity": {
+      "time": "O(V + E) with adjacency lists",
+      "space": "O(V) auxiliary visited and frontier/stack",
+      "notes": "V and E refer to the reachable graph or full traversal; BFS assumes equal edge weights."
+    }
+  },
+  {
+    "id": "algorithms-dijkstra",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "Explain Dijkstra's invariant and its limitation.",
+    "answer": "Repeatedly settle the unsettled vertex with smallest tentative distance and relax outgoing edges. Nonnegative weights make the settled distance final; negative edges invalidate that argument.",
+    "example": "Find cheapest routes with nonnegative fares and a min-priority queue.",
+    "pitfall": "A visited flag alone cannot fix Dijkstra for negative edges.",
+    "followUp": "Which algorithm would you choose with negative edges?",
+    "complexity": {
+      "time": "O((V + E) log V) with an indexed binary heap",
+      "space": "O(V + E) including graph, O(V) algorithm workspace",
+      "notes": "A lazy heap storing duplicate entries instead uses O(E) heap space and O((V + E) log(V + E)) time."
+    }
+  },
+  {
+    "id": "algorithms-topological",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "How do you order tasks with dependencies?",
+    "answer": "In Kahn's algorithm, enqueue zero-indegree vertices, remove them and decrement successors. If fewer than V vertices are emitted, a directed cycle prevents a full ordering.",
+    "example": "Order build steps while allowing independent steps to run together.",
+    "pitfall": "A valid ordering is not necessarily unique.",
+    "followUp": "How would you report an actual cycle rather than only its presence?",
+    "complexity": {
+      "time": "O(V + E)",
+      "space": "O(V) auxiliary beyond adjacency lists",
+      "notes": "Directed graph; count indegrees using the same edge multiplicities as traversal."
+    }
+  },
+  {
+    "id": "algorithms-dp",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "When is dynamic programming appropriate?",
+    "answer": "Define states whose optimal values depend on smaller states, with overlapping subproblems and a valid recurrence. State the base cases and evaluation order before optimizing storage.",
+    "example": "For climbing stairs, ways(i) = ways(i-1) + ways(i-2) with defined starting cases.",
+    "pitfall": "Memoizing an incorrect state definition does not make the recurrence correct.",
+    "followUp": "Which states can be discarded after processing?",
+    "complexity": {
+      "time": "Stairs O(n) time",
+      "space": "O(1) auxiliary with two rolling values",
+      "notes": "n is stair count; fixed-width arithmetic may overflow, while arbitrary-precision costs grow with digit length."
+    }
+  },
+  {
+    "id": "algorithms-knapsack",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "Why does 0/1 knapsack update capacity in descending order?",
+    "answer": "A one-dimensional DP must read values from the previous item iteration. Descending capacity prevents the current item from being reused during its own update.",
+    "example": "At capacity ten, one item of weight five can be selected only once.",
+    "pitfall": "Ascending capacity solves an unbounded reuse variant instead.",
+    "followUp": "Why is this called pseudopolynomial time?",
+    "complexity": {
+      "time": "O(nW)",
+      "space": "O(W) auxiliary",
+      "notes": "n items and integer capacity W; W is a numeric value, not its bit-length."
+    }
+  },
+  {
+    "id": "algorithms-backtracking",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "How do you analyze subset generation?",
+    "answer": "At each position choose include or exclude, maintaining a partial choice and undoing it afterward. There are 2^n subsets; copying each output contributes up to n work.",
+    "example": "Generate all subsets, including the empty subset.",
+    "pitfall": "Reporting O(2^n) alone ignores materializing the elements of every subset.",
+    "followUp": "How would duplicate inputs change generation?",
+    "complexity": {
+      "time": "O(n · 2^n) when materializing every subset",
+      "space": "O(n) auxiliary path/stack; O(n · 2^n) output",
+      "notes": "n is input length; output storage is reported separately."
+    }
+  },
+  {
+    "id": "algorithms-greedy",
+    "topic": "algorithms",
+    "level": "Advanced",
+    "title": "How do you justify a greedy algorithm?",
+    "answer": "Prove that a locally chosen step can be part of an optimal solution, often by exchange argument, then show the remaining problem has the same structure.",
+    "example": "For maximum nonoverlapping intervals, choose the earliest finishing interval next.",
+    "pitfall": "A greedy rule that works for unweighted intervals need not solve weighted scheduling.",
+    "followUp": "Give a counterexample to selecting the shortest interval.",
+    "complexity": {
+      "time": "O(n log n) sorting plus O(n) scan",
+      "space": "O(n) sort workspace for a typical stable array sort; scan O(1)",
+      "notes": "n intervals; output selection costs additional storage if retained."
+    }
+  },
+  {
+    "id": "algorithms-recursion",
+    "topic": "algorithms",
+    "level": "Intermediate",
+    "title": "How do you account for recursion and divide-and-conquer?",
+    "answer": "Write the recurrence and count both work per level and depth. Include stack frames in auxiliary space even when no explicit collection is allocated.",
+    "example": "Merge sort uses T(n) = 2T(n/2) + O(n), giving logarithmically many linear-work levels.",
+    "pitfall": "Depth O(log n) does not mean the whole algorithm is O(log n).",
+    "followUp": "What changes if each recursive call copies its input slice?",
+    "complexity": {
+      "time": "Merge-sort recurrence O(n log n)",
+      "space": "O(n) merge buffer plus O(log n) call stack",
+      "notes": "Assume one reusable buffer; copying slices can change allocation volume."
+    }
+  },
+  {
+    "id": "java-pass-by-value",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "Is Java pass-by-value or pass-by-reference?",
+    "answer": "Java passes values. For an object variable, that value is a reference: a method can mutate the referenced object, but rebinding its parameter does not rebind the caller's variable.",
+    "example": "A method can add to the caller's list, but assigning parameter = new ArrayList does not replace that caller's list.",
+    "pitfall": "Describing Java as pass-by-reference obscures the distinction between mutation and reassignment.",
+    "followUp": "What happens when the referenced object is immutable?",
+    "complexity": null
+  },
+  {
+    "id": "java-equals",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "How do equals and hashCode work together?",
+    "answer": "Equal objects must have equal hash codes; unequal objects may collide. Override both for value-based keys and keep equality reflexive, symmetric, transitive and consistent.",
+    "example": "An immutable OrderId value can safely key a map.",
+    "pitfall": "Mutating a key's equality fields after insertion can make lookups fail.",
+    "followUp": "How can inheritance break equals symmetry?",
+    "complexity": {
+      "time": "Hash-map lookup expected O(1) bucket work",
+      "space": "O(n) map storage",
+      "notes": "Hash/equality may themselves cost O(k) for keys containing k characters or fields."
+    }
+  },
+  {
+    "id": "java-string",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "Why is String immutable, and when use StringBuilder?",
+    "answer": "Immutable strings can be safely shared and used as stable keys. A mutable builder avoids repeatedly copying a growing string inside a loop; it is not automatically safe for shared concurrent mutation.",
+    "example": "Accumulate a CSV line in one builder, then call toString at the boundary.",
+    "pitfall": "Repeated concatenation inside a growing loop may copy all earlier characters repeatedly.",
+    "followUp": "How would you process Unicode code points rather than UTF-16 code units?",
+    "complexity": {
+      "time": "Builder construction O(L) total with amortized growth; repeated growing concatenation can be O(L²)",
+      "space": "O(L) character storage",
+      "notes": "L is total output length for bounded-size appended pieces."
+    }
+  },
+  {
+    "id": "java-collections",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "Which Java collection fits a workload?",
+    "answer": "Choose by required operations: ArrayList for indexed access, ArrayDeque for a stack/queue, HashMap for exact lookup and TreeMap for sorted navigation. Then consider null handling, iteration order and concurrency.",
+    "example": "A FIFO work queue needs poll/offer semantics, not arbitrary list indexing.",
+    "pitfall": "Selecting LinkedList solely because inserts are O(1) ignores lookup and allocation costs.",
+    "followUp": "What would you measure before changing a hot collection?",
+    "complexity": {
+      "time": "ArrayList get O(1); deque end ops amortized O(1); TreeMap lookup O(log n)",
+      "space": "O(n) stored elements",
+      "notes": "Single-threaded operations; allocations, key comparisons and contention can dominate real latency."
+    }
+  },
+  {
+    "id": "java-generics",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "What do extends and super mean in generic APIs?",
+    "answer": "A producer of T can be accepted as ? extends T, while a destination consuming T can be ? super T. Generic types are invariant; List<Integer> is not a subtype of List<Number>.",
+    "example": "Copy numbers from a List<? extends Number> into a List<? super Number>.",
+    "pitfall": "You generally cannot add arbitrary values to an extends wildcard because its actual element type is unknown.",
+    "followUp": "How does type erasure affect overloads and runtime checks?",
+    "complexity": null
+  },
+  {
+    "id": "java-exceptions",
+    "topic": "java",
+    "level": "Beginner",
+    "title": "Checked or unchecked exception: how do you choose?",
+    "answer": "Checked exceptions make callers acknowledge a recoverable contract at compile time; unchecked exceptions often represent programming errors or domain failures handled at a boundary. Preserve causes and translate at meaningful layers.",
+    "example": "An API boundary maps a domain not-found exception to a documented response.",
+    "pitfall": "Catching Exception and returning success destroys failure visibility.",
+    "followUp": "When would try-with-resources preserve suppressed exceptions?",
+    "complexity": null
+  },
+  {
+    "id": "java-streams",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "When are streams clearer than loops?",
+    "answer": "Streams express transformations and reductions over a source. Keep operations free of shared side effects, understand laziness and short-circuiting, and use loops where control flow is clearer.",
+    "example": "Filter invalid orders and sum amounts without mutating an external accumulator.",
+    "pitfall": "Parallel streams do not guarantee lower latency and often use shared execution infrastructure.",
+    "followUp": "Why must a reduction's combining operation be associative?",
+    "complexity": {
+      "time": "Filter/map/reduce O(n); sorted adds O(n log n)",
+      "space": "O(1) incremental reduction, O(n) for sorting or collecting",
+      "notes": "Assume constant-cost lambdas; retained output and stateful operations change space."
+    }
+  },
+  {
+    "id": "java-immutability",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "Does a final field make an object immutable?",
+    "answer": "final prevents reassignment of that field after construction; it does not freeze a referenced list or array. Use encapsulation, defensive copies and immutable elements, and avoid leaking this during construction.",
+    "example": "A record containing a mutable List still needs an appropriate copy policy.",
+    "pitfall": "List.copyOf protects the list structure but does not deep-copy mutable elements.",
+    "followUp": "What does safe publication guarantee for properly constructed final fields?",
+    "complexity": {
+      "time": "Defensive list copy O(n)",
+      "space": "O(n) new references",
+      "notes": "n is list size; a deep-copy cost also depends on the reachable object graph."
+    }
+  },
+  {
+    "id": "java-volatile",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "volatile, synchronized or atomic variable?",
+    "answer": "volatile provides visibility and ordering for a variable, but a read-modify-write increment is multiple actions. synchronized protects a critical section; atomics provide specific atomic operations such as compare-and-set.",
+    "example": "Use AtomicInteger.incrementAndGet for a shared counter rather than volatile count++.",
+    "pitfall": "Thread-safe individual fields do not automatically preserve a multi-field invariant.",
+    "followUp": "How would you update two account balances atomically?",
+    "complexity": null
+  },
+  {
+    "id": "java-concurrent-map",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "Why is ConcurrentHashMap safer than sharing HashMap?",
+    "answer": "It supports concurrent access with defined visibility guarantees. Use atomic per-key methods such as compute or merge for compound changes; arbitrary get-then-put sequences can still race.",
+    "example": "Use merge(key, 1, Integer::sum) for independent per-key counts.",
+    "pitfall": "A concurrent map does not make mutable values or a cross-key transfer atomic.",
+    "followUp": "When should compute callbacks avoid blocking external work?",
+    "complexity": {
+      "time": "Expected O(1) simple key operations under good hashing",
+      "space": "O(n) entries",
+      "notes": "Contention, resizing, key costs and callback work affect latency; this is not a lock-free timing guarantee."
+    }
+  },
+  {
+    "id": "java-executors",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "How do you size and bound an executor?",
+    "answer": "Separate CPU work from waiting work, bound accepted backlog and define rejection behavior. Measure queue time and service time; unbounded queues can turn overload into memory exhaustion.",
+    "example": "Reject excess requests or apply backpressure rather than enqueueing indefinitely.",
+    "pitfall": "Increasing threads does not increase database connection capacity.",
+    "followUp": "How would you choose a timeout budget across queued and running work?",
+    "complexity": null
+  },
+  {
+    "id": "java-virtual-threads",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "What do virtual threads solve and what do they not solve?",
+    "answer": "They make many blocking tasks cheaper to represent, improving scalability for waiting-heavy workloads. They do not accelerate CPU-bound work or remove limits on connections, downstream services or shared locks.",
+    "example": "Use one virtual thread per blocking request while bounding scarce database access with a semaphore.",
+    "pitfall": "Java 21-era synchronized pinning advice is version-specific: JDK 24 removed that monitor limitation; native/foreign calls can still pin.",
+    "followUp": "Which JDK version and blocking operations would you profile first?",
+    "complexity": null
+  },
+  {
+    "id": "java-completable-future",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "How do you compose asynchronous work safely?",
+    "answer": "Use thenCompose for dependent asynchronous stages and thenCombine for independent results. Choose executors deliberately, propagate exceptions and define timeouts and cancellation ownership.",
+    "example": "Fetch independent inventory and price results before combining a quote.",
+    "pitfall": "join inside an asynchronous pipeline can block a worker; a timeout does not necessarily cancel underlying I/O.",
+    "followUp": "How would partial failure affect the response contract?",
+    "complexity": null
+  },
+  {
+    "id": "java-jvm",
+    "topic": "java",
+    "level": "Intermediate",
+    "title": "How do stack, heap and garbage collection relate?",
+    "answer": "Each thread has execution frames; objects are generally managed on the heap, though optimizations can eliminate allocations. GC reclaims unreachable objects, so retained references can cause memory growth even without manual allocation leaks.",
+    "example": "A static map retaining every request prevents those request graphs from becoming unreachable.",
+    "pitfall": "Not every pause is GC; inspect allocation, threads, CPU and I/O evidence.",
+    "followUp": "How would you distinguish a leak from an intentionally growing cache?",
+    "complexity": null
+  },
+  {
+    "id": "java-resources",
+    "topic": "java",
+    "level": "Advanced",
+    "title": "How would you diagnose a slow Java service?",
+    "answer": "Start from latency distributions and traces, then inspect CPU samples, thread states, allocation and dependency timings. Form a hypothesis and measure before changing pool sizes or GC flags.",
+    "example": "A request blocked on a database connection needs different treatment from a CPU-hot serialization loop.",
+    "pitfall": "Optimizing a microbenchmark that excludes the bottleneck may not improve request latency.",
+    "followUp": "What production-safe evidence would you capture during an incident?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-boot",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "What does Spring Boot add to Spring?",
+    "answer": "Spring supplies dependency injection and application infrastructure. Boot adds opinionated auto-configuration, starters and operational conventions to reduce setup; it still uses Spring's container and APIs.",
+    "example": "A web starter and matching classpath can configure a web application without manually wiring every infrastructure bean.",
+    "pitfall": "Boot is not a replacement for understanding bean lifecycles or application configuration.",
+    "followUp": "How would you inspect why an auto-configuration matched?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-di",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "Why prefer constructor injection?",
+    "answer": "Constructor injection declares required dependencies, supports straightforward unit testing and allows final fields. It also makes an excessive number of dependencies visible as a design smell.",
+    "example": "Construct OrderService with an OrderRepository interface and a PaymentGateway.",
+    "pitfall": "Field injection hides required collaborators and makes plain unit construction awkward.",
+    "followUp": "What would a circular constructor dependency tell you about the design?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-beans",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "What is a bean scope and is singleton thread-safe?",
+    "answer": "A singleton is normally one instance per bean definition per container. It says nothing about thread safety: request-specific mutable state should not be kept in an unprotected singleton field.",
+    "example": "A stateless service can be shared; a currentCustomer field in that service can mix requests.",
+    "pitfall": "Singleton does not mean one object across every process or every application context.",
+    "followUp": "How would a request-scoped dependency be used from a singleton?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-autoconfig",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "How does auto-configuration back off?",
+    "answer": "Boot uses conditions on classpath, properties, application type and existing beans. User configuration can supply a bean that causes a conditional default to back off; inspect the condition report rather than guessing.",
+    "example": "Defining a supported custom bean can replace an infrastructure default when its condition permits.",
+    "pitfall": "A starter is a dependency bundle, not a guarantee that every related bean will be created.",
+    "followUp": "How would you test a custom conditional auto-configuration?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-config",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "How should you manage configuration and secrets?",
+    "answer": "Bind related settings into validated ConfigurationProperties objects and understand property-source precedence. Supply secrets through deployment secret mechanisms and avoid committing or logging them.",
+    "example": "Fail startup when a required endpoint or timeout is invalid.",
+    "pitfall": "A profile name is not a security boundary; accidentally enabled diagnostics can still expose data.",
+    "followUp": "How would you validate production configuration before rollout?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-rest",
+    "topic": "spring-boot",
+    "level": "Beginner",
+    "title": "How do you design a clear REST controller?",
+    "answer": "Keep transport parsing and response mapping in the controller, with business rules in application/domain services. Validate input, use appropriate status codes and document stable error shapes.",
+    "example": "POST an order and return its identifier and Location when a new resource is created.",
+    "pitfall": "Returning HTTP 200 for every failure forces clients to infer errors from ambiguous bodies.",
+    "followUp": "How do you distinguish malformed input from a business conflict?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-validation",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "Where should validation happen?",
+    "answer": "Validate request shape and constraints at the boundary, enforce domain invariants in the domain/service layer, and use database constraints for concurrent integrity. Map failures through consistent exception handling.",
+    "example": "Validate a positive quantity, then atomically enforce inventory availability in storage.",
+    "pitfall": "A pre-check alone cannot prevent two concurrent requests from violating uniqueness.",
+    "followUp": "How would cross-field validation differ from field-level annotations?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-transaction",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "What does Transactional actually intercept?",
+    "answer": "With the usual proxy mode, an external call through the proxy gets transaction advice. A method calling another annotated method on the same instance bypasses that proxy; place the boundary deliberately or use an appropriate explicit mechanism.",
+    "example": "Move the transactional operation into a separate collaborator invoked through its bean proxy.",
+    "pitfall": "By default RuntimeException and Error trigger rollback; checked exceptions need suitable rollback rules unless defaults are customized.",
+    "followUp": "How would you prove rollback with an integration test?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-propagation",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "REQUIRED versus REQUIRES_NEW: what changes?",
+    "answer": "REQUIRED joins an existing transaction or creates one. REQUIRES_NEW suspends the outer transaction and uses an independent transaction, usually needing another connection; its commit survives a later outer rollback.",
+    "example": "An independent audit write may need a deliberately separate transaction and failure policy.",
+    "pitfall": "An inner rollback-only mark can cause the outer REQUIRED commit to fail unexpectedly.",
+    "followUp": "What happens if all pool connections are held by outer transactions?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-jpa",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "How do you detect and fix an N+1 query problem?",
+    "answer": "Inspect query counts for representative requests. Fetch associations deliberately with joins, entity graphs, batching or DTO queries; choose based on cardinality and pagination requirements.",
+    "example": "Loading 50 orders and then each customer's data may issue many extra queries.",
+    "pitfall": "Making every association eager can increase work and does not guarantee one efficient SQL query.",
+    "followUp": "Why can collection fetch joins complicate pagination?",
+    "complexity": {
+      "time": "Naive N+1 uses 1 + n database round trips",
+      "space": "O(n + loaded associations) application objects",
+      "notes": "n is root records; SQL work, indexes, network latency and result size must be measured separately."
+    }
+  },
+  {
+    "id": "spring-boot-locking",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "How do you prevent lost updates?",
+    "answer": "Optimistic locking uses a version check and detects stale writes; pessimistic locking reserves database locks and can block competitors. Choose based on contention and transaction duration.",
+    "example": "A versioned inventory update fails when another transaction has already changed that version.",
+    "pitfall": "Blindly retrying a payment after a version conflict can duplicate external side effects.",
+    "followUp": "How would you bound retries and handle a conflict for the caller?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-security",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "How do authentication and authorization differ?",
+    "answer": "Authentication establishes identity; authorization decides what that identity may do. Apply server-side checks to routes and business operations, validate tokens correctly and keep browser-specific CSRF assumptions explicit.",
+    "example": "A valid token for user A must not allow reading user B's order.",
+    "pitfall": "CORS is not authentication, and hiding a button does not authorize the API.",
+    "followUp": "How would cookie-based sessions change CSRF protection needs?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-testing",
+    "topic": "spring-boot",
+    "level": "Intermediate",
+    "title": "Unit test, WebMvcTest or SpringBootTest?",
+    "answer": "Use plain unit tests for isolated logic, a web slice for controller mapping/validation/security behavior, and a full application context for integration wiring. Use realistic database integration tests when SQL behavior matters.",
+    "example": "A service unit test need not start the container; a rollback test should exercise the real transactional boundary.",
+    "pitfall": "Mocking the repository cannot prove database constraints, query correctness or rollback semantics.",
+    "followUp": "Which behavior requires a real external dependency instead of a mock?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-resilience",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "How do timeouts, retries and idempotency fit together?",
+    "answer": "Assign a total deadline, bound each dependency call and retry only transient failures within that budget. Backoff with jitter reduces synchronized retries; idempotency prevents repeated business effects.",
+    "example": "Store an idempotency key and result for a payment request, with a defined retention period.",
+    "pitfall": "Retries at every layer multiply traffic and can worsen an outage.",
+    "followUp": "How do you handle a timeout when the remote side may have committed?",
+    "complexity": null
+  },
+  {
+    "id": "spring-boot-operations",
+    "topic": "spring-boot",
+    "level": "Advanced",
+    "title": "What makes a Boot application production-ready?",
+    "answer": "Expose appropriately secured health and metrics, distinguish readiness from liveness, propagate trace context and design graceful shutdown. Observe latency, errors and saturation with bounded-cardinality labels.",
+    "example": "Stop accepting new work before terminating while giving in-flight requests a bounded drain period.",
+    "pitfall": "An unrestricted actuator endpoint or user IDs as metric labels can create operational and security problems.",
+    "followUp": "When should a database outage affect readiness but not liveness?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-oo",
+    "topic": "object-oriented-design",
+    "level": "Beginner",
+    "title": "What are encapsulation, abstraction and polymorphism?",
+    "answer": "Encapsulation protects state and invariants. Abstraction exposes the capabilities callers need, while polymorphism lets implementations satisfy the same contract with different behavior.",
+    "example": "A PaymentGateway contract hides provider-specific network details from checkout.",
+    "pitfall": "Getters and setters for every field do not automatically produce meaningful encapsulation.",
+    "followUp": "Where should payment validation live?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-composition",
+    "topic": "object-oriented-design",
+    "level": "Beginner",
+    "title": "Composition or inheritance?",
+    "answer": "Prefer composition when behavior should vary independently or the relationship is uses-a. Use inheritance only when subtypes genuinely honor the parent's behavioral contract and substitution remains safe.",
+    "example": "A report service uses a formatter strategy rather than subclassing for every format/delivery combination.",
+    "pitfall": "Reusing code through inheritance can expose methods that violate a subtype's invariants.",
+    "followUp": "What changes when subclasses need incompatible preconditions?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-solid",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "How do you apply SOLID without overengineering?",
+    "answer": "Keep responsibilities cohesive, depend on useful abstractions at change boundaries and preserve substitutable contracts. Apply interface segregation and extension points to actual variation rather than inventing a hierarchy for every class.",
+    "example": "Separate price calculation from receipt delivery so either can change independently.",
+    "pitfall": "One interface per class is not a goal; unnecessary indirection makes simple flows harder to follow.",
+    "followUp": "Which likely change justifies an interface in your current design?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-strategy",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "When should you use Strategy instead of conditionals?",
+    "answer": "Use Strategy when alternative policies have a stable contract and evolve independently. A short, stable switch can be clearer when the choices are fixed; explain the change pressure before adding objects.",
+    "example": "A ShippingCostPolicy computes a quote for a destination and package.",
+    "pitfall": "A strategy that mutates unrelated shared state makes interchangeable behavior difficult to reason about.",
+    "followUp": "How would you validate and select an allowed strategy?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-factory",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "Factory, builder or dependency injection?",
+    "answer": "A factory encapsulates creation choices; a builder assembles a complex value with readable optional parameters. Dependency injection supplies collaborators and lifecycle ownership rather than being another name for any constructor.",
+    "example": "A builder validates an immutable search request; a container wires the search service.",
+    "pitfall": "Builders should not allow invalid objects to escape before validation.",
+    "followUp": "How would you prevent callers from forgetting a required field?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-observer",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "What should an event publisher promise to subscribers?",
+    "answer": "Specify delivery timing, ordering, failure isolation and subscription lifetime. In-process observer callbacks are not durable messaging and need explicit handling for slow or failing subscribers.",
+    "example": "A UI model publishes changes and unregisters listeners when the view closes.",
+    "pitfall": "One throwing callback should not accidentally prevent required cleanup or unrelated delivery.",
+    "followUp": "When must an event move to a durable outbox/message broker?",
+    "complexity": {
+      "time": "Notify O(s) plus callback work",
+      "space": "O(s) subscription storage",
+      "notes": "s is subscribers; asynchronous delivery adds queue bounds and scheduling costs."
+    }
+  },
+  {
+    "id": "object-oriented-design-parking",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "Design a parking lot from requirements.",
+    "answer": "Clarify vehicle/space types, allocation, pricing and concurrency first. Model a ticket lifecycle, a spot repository and pricing policy; make spot reservation and ticket creation atomic within the chosen persistence boundary.",
+    "example": "A ticket transitions from active to paid to exited with a defined policy for lost tickets.",
+    "pitfall": "A class diagram alone does not prevent two attendants allocating the same spot.",
+    "followUp": "How would EV charging or reservations change the model?",
+    "complexity": {
+      "time": "Indexed available-spot selection can be expected O(1) by type; scanning O(n)",
+      "space": "O(n) spots and active tickets",
+      "notes": "n is spots; database consistency and query plans determine real production cost."
+    }
+  },
+  {
+    "id": "object-oriented-design-elevator",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "How would you design an elevator controller?",
+    "answer": "Separate car state, door safety, request queues and a scheduling policy. Define permitted transitions and hardware interlocks before optimizing routing; a local simulation cannot replace real safety systems.",
+    "example": "A car must not move while its door-open interlock is active.",
+    "pitfall": "Treating an elevator as a simple sorted list ignores direction, capacity and safety constraints.",
+    "followUp": "How would emergency mode interrupt normal scheduling?",
+    "complexity": {
+      "time": "Ordered stop insertion/removal O(log n) with a balanced set",
+      "space": "O(n) queued stops",
+      "notes": "n is queued stops for one car; selecting across cars needs its own cost model."
+    }
+  },
+  {
+    "id": "object-oriented-design-vending",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "How do you model a vending machine with State?",
+    "answer": "Represent legal transitions such as idle, funded, dispensing and refunding. Keep inventory and money invariants explicit and handle a dispense failure without pretending the sale succeeded.",
+    "example": "Insufficient funds must not decrement inventory; a failed dispenser needs a refund/recovery policy.",
+    "pitfall": "A collection of booleans permits impossible combinations like idle and dispensing together.",
+    "followUp": "What happens if the process restarts after charging but before dispensing?",
+    "complexity": {
+      "time": "Indexed inventory lookup expected O(1)",
+      "space": "O(p) product inventory",
+      "notes": "p is products; change-making algorithm cost is separate from state transitions."
+    }
+  },
+  {
+    "id": "object-oriented-design-rate-limiter",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "Design a token-bucket rate limiter.",
+    "answer": "Define capacity and refill rate, update tokens using elapsed monotonic time, then atomically consume if enough remain. Clarify whether limits apply per process, tenant or across a distributed fleet.",
+    "example": "A capacity of ten allows a burst of ten while refilling at the configured rate.",
+    "pitfall": "Unsynchronized read-check-write can grant the same tokens to multiple threads.",
+    "followUp": "How do you bound memory for inactive users?",
+    "complexity": {
+      "time": "Expected O(1) per key update with hash lookup",
+      "space": "O(u) tracked users",
+      "notes": "u is retained keys; distributed atomic storage adds network and contention costs."
+    }
+  },
+  {
+    "id": "object-oriented-design-scheduler",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "Design a task scheduler with cancellation.",
+    "answer": "Separate task identity, due time, execution ownership and lifecycle. Use a priority queue for next due time and define whether cancellation can prevent execution after a worker has claimed a task.",
+    "example": "Cancellation before claim prevents execution; after claim it may only request cooperative interruption.",
+    "pitfall": "Removing an arbitrary item from a basic heap is not automatically logarithmic.",
+    "followUp": "What must change to survive a process crash?",
+    "complexity": {
+      "time": "Enqueue/pop O(log n); arbitrary cancel O(n) in a basic heap",
+      "space": "O(n) queued tasks",
+      "notes": "An indexed heap can support O(log n) removal; tombstones need bounded cleanup."
+    }
+  },
+  {
+    "id": "object-oriented-design-reservation",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "Design a booking workflow that prevents double booking.",
+    "answer": "Define the availability interval, hold expiration and confirmation states. Use a storage-enforced uniqueness/exclusion rule or atomic conditional write, and make payment retries idempotent.",
+    "example": "Two concurrent requests for the same seat cannot both confirm, even if both earlier reads saw it free.",
+    "pitfall": "An in-memory lock on one application instance does not protect a multi-instance service.",
+    "followUp": "How would you recover payment success followed by confirmation failure?",
+    "complexity": {
+      "time": "Depends on storage index and conflict detection; no universal O(1) guarantee",
+      "space": "Proportional to holds/bookings retained",
+      "notes": "Specify data model, index and isolation before assigning asymptotic costs."
+    }
+  },
+  {
+    "id": "object-oriented-design-money",
+    "topic": "object-oriented-design",
+    "level": "Intermediate",
+    "title": "How do you model money and time correctly?",
+    "answer": "Use a money value object with amount, currency and explicit rounding rules. Represent instants and business time zones separately; use a clock abstraction for deterministic time-sensitive tests.",
+    "example": "Two USD amounts can be added; adding USD to EUR requires an explicit conversion policy.",
+    "pitfall": "Binary floating-point and a server-default time zone are unsafe defaults for many financial rules.",
+    "followUp": "Where should tax rounding occur: line item or invoice total?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-thread-safety",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "How do you make a stateful object thread-safe?",
+    "answer": "State an invariant and identify the atomic boundary needed to preserve it. Choose confinement, immutability, locks or appropriate concurrent primitives; document ownership and avoid holding locks during slow external calls.",
+    "example": "Protect both balance updates under a consistent lock order for an in-memory transfer.",
+    "pitfall": "Concurrent collections do not make a sequence across several objects atomic.",
+    "followUp": "How would you detect and prevent a lock-order deadlock?",
+    "complexity": null
+  },
+  {
+    "id": "object-oriented-design-review",
+    "topic": "object-oriented-design",
+    "level": "Advanced",
+    "title": "How do you evaluate an object-oriented design in an interview?",
+    "answer": "Walk a concrete use case through interfaces, state transitions, failures and tests. Evaluate cohesion, dependency direction and how likely changes affect the model; explain tradeoffs rather than naming patterns as the answer.",
+    "example": "Add a second payment provider and trace which code must change and which contract tests stay valid.",
+    "pitfall": "Presenting only the happy path misses concurrency, recovery and lifecycle responsibilities.",
+    "followUp": "Which requirement would force the largest redesign, and why?",
+    "complexity": null
+  }
+]

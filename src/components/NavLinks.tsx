@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 const LINKS: { href: string; label: string; blurb: string }[] = [
   { href: "/practice/today", label: "Today", blurb: "Your daily schedule, saved work and readiness" },
   { href: "/problems", label: "Problems", blurb: "Study plans, topic tracks and company lists" },
+  { href: "/interview-prep", label: "Interview Prep", blurb: "Theory, Java, Spring Boot, OOD and algorithm questions with Big O" },
   { href: "/learn", label: "Patterns", blurb: "Lessons on the patterns behind the problems" },
   { href: "/practice", label: "Practice", blurb: "Mock interviews, reviews and the study plan" },
   { href: "/system-design", label: "Guides", blurb: "System design, behavioral and more" },
@@ -22,7 +23,7 @@ function isActive(path: string, href: string) {
 export function NavLinks() {
   const path = usePathname();
   return (
-    <nav className="hidden min-w-0 items-center gap-0.5 text-sm md:flex" aria-label="Main">
+    <nav className="hidden min-w-0 items-center gap-0.5 text-sm xl:flex" aria-label="Main">
       {LINKS.map((l) => {
         const active = isActive(path, l.href);
         return (
@@ -43,7 +44,7 @@ export function NavLinks() {
   );
 }
 
-/** Menu button and drop-down panel shown below the md breakpoint. */
+/** Menu button and drop-down panel shown below the xl breakpoint. */
 export function MobileMenu() {
   const path = usePathname();
   const [openAt, setOpenAt] = useState<string | null>(null);
@@ -58,7 +59,7 @@ export function MobileMenu() {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="xl:hidden">
       <button
         type="button"
         onClick={() => setOpenAt(open ? null : path)}

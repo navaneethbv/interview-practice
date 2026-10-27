@@ -10,7 +10,8 @@ const MAX_ASSET_BYTES = 8 * 1024 * 1024;
 const SHELL = "/offline";
 const ALLOWED_ORIGINS = new Set([self.location.origin]);
 const blocked = pathname => /(?:^|\/)(?:api|auth|sync|login|logout|account|settings)(?:\/|$)/.test(pathname) || /(?:worker|runner|pyodide|monaco)/i.test(pathname);
-const lessonPath = pathname => /^\/learn\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/system-design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/business-analyst\/(?:senior\/)?[a-zA-Z0-9_-]+$/.test(pathname) && !/\/(final|study-plan)$/.test(pathname);
+const technicalLesson = pathname => /^\/interview-prep\/(?:data-structures|algorithms|java|spring-boot|object-oriented-design)\/[a-zA-Z0-9_-]+$/.test(pathname);
+const lessonPath = pathname => technicalLesson(pathname) || /^\/learn\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/system-design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/.test(pathname) || /^\/business-analyst\/(?:senior\/)?[a-zA-Z0-9_-]+$/.test(pathname) && !/\/(final|study-plan)$/.test(pathname);
 const assetPath = pathname => !blocked(pathname) && (pathname.startsWith("/_next/static/") || /^\/(?:course-assets|system-design|icons|images)\/.+\.(?:png|jpe?g|webp|avif|gif|svg|woff2?|css|js)$/i.test(pathname) || pathname === "/favicon.ico" || pathname === "/manifest.webmanifest");
 const keyFor = path => new Request(new URL(path, self.location.origin));
 
