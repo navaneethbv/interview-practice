@@ -2,6 +2,7 @@ import { designChapters, hrefFor, lcAuthored, lcMetaAll, listDesignBooks, listPr
 import { COURSE_SCOPE, lcProgressId, type Difficulty, type SetKind } from "./content-types";
 import { LEARNING_TOOLS } from "./platform-navigation";
 import { listBaChapters } from "./ba-content";
+import { PREP_TOPICS, prepChapters, prepQuestions } from "./technical-prep";
 import { labs } from "./lab-data";
 
 /** One problem list as shown on the hub and home pages. */
@@ -72,6 +73,9 @@ export interface SearchEntry {
 /** Everything the command palette can jump to. */
 export function searchIndex(): SearchEntry[] {
   const pages: SearchEntry[] = [
+    ...PREP_TOPICS.map(topic => ({ t: topic.title + " interview prep", h: `/interview-prep/${topic.id}`, k: "page" as const, s: topic.description })),
+    ...prepChapters.map(chapter => ({ t: chapter.title, h: `/interview-prep/${chapter.topic}/${chapter.id}`, k: "chapter" as const, s: "Technical interview theory " + chapter.topic })),
+    ...prepQuestions.map(question => ({ t: question.title, h: `/interview-prep/${question.topic}#${question.id}`, k: "lesson" as const, s: question.topic + " " + question.level })),
     ...LEARNING_TOOLS.map(tool => ({ t: tool.title, h: tool.href, k: "page" as const, s: tool.description })),
     { t: "Account and progress sync", h: "/settings/sync", k: "page" },
     { t: "Content sources and review dates", h: "/content-status", k: "page" },

@@ -5,13 +5,15 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const LINKS: { href: string; label: string; blurb: string }[] = [
+/** `short` replaces the label between the md and xl breakpoints so tablet headers keep every link beside search. */
+const LINKS: { href: string; label: string; short?: string; blurb: string }[] = [
   { href: "/practice/today", label: "Today", blurb: "Your daily schedule, saved work and readiness" },
   { href: "/problems", label: "Problems", blurb: "Study plans, topic tracks and company lists" },
+  { href: "/interview-prep", label: "Interview Prep", short: "Prep", blurb: "Theory, Java, Spring Boot, OOD and algorithm questions with Big O" },
   { href: "/learn", label: "Patterns", blurb: "Lessons on the patterns behind the problems" },
   { href: "/practice", label: "Practice", blurb: "Mock interviews, reviews and the study plan" },
   { href: "/system-design", label: "Guides", blurb: "System design, behavioral and more" },
-  { href: "/business-analyst", label: "Business Analyst", blurb: "Step-by-step BA course with chapter quizzes" },
+  { href: "/business-analyst", label: "Business Analyst", short: "BA", blurb: "Step-by-step BA course with chapter quizzes" },
 ];
 
 function isActive(path: string, href: string) {
@@ -34,7 +36,12 @@ export function NavLinks() {
               active ? "font-medium text-fg-1" : "text-fg-2 hover:bg-layer-2 hover:text-fg-1"
             }`}
           >
-            {l.label}
+            {l.short ? (
+              <>
+                <span className="xl:hidden">{l.short}</span>
+                <span className="hidden xl:inline">{l.label}</span>
+              </>
+            ) : l.label}
             {active && <span aria-hidden className="absolute inset-x-2.5 -bottom-[11px] h-0.5 rounded-full bg-brand" />}
           </Link>
         );

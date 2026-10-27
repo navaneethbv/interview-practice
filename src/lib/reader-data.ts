@@ -41,7 +41,7 @@ export function isReaderPositions(v: unknown): v is ReaderPositions {
     Object.keys(v).length <= 200 &&
     Object.entries(v).every(
       ([key, p]) =>
-        /^\/(learn|system-design|business-analyst|behavioral|ba)\/[a-zA-Z0-9/_-]+(?:#[a-zA-Z0-9_-]+)?$/.test(
+        /^\/(learn|system-design|business-analyst|interview-prep|behavioral|ba)\/[a-zA-Z0-9/_-]+(?:#[a-zA-Z0-9_-]+)?$/.test(
           key,
         ) &&
         key.length <= 300 &&

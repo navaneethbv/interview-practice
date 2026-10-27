@@ -23,6 +23,7 @@ test("reader backup validators enforce finite bounds and lesson identities", () 
   assert.equal(
     isReaderPositions({
       "/learn/arrays#reader-content": position,
+      "/interview-prep/algorithms/complexity#technical-chapter": position,
       "/business-analyst/senior/chapter-1#ba-reader-1-2": position,
     }),
     true,
@@ -429,4 +430,17 @@ test("shared public fetch policy rejects foreign authorities and fixes GET, cred
   assert.equal(fetched[0].method, "GET");
   assert.equal(fetched[0].credentials, "omit");
   assert.equal(fetched[0].redirect, "error");
+});
+
+
+test("technical course downloads allow chapter routes but reject unsupported private paths", () => {
+  const { context } = workerHarness();
+  const path = "/interview-prep/algorithms/complexity";
+  context.technicalPath = path;
+  const url = vm.runInContext('downloadURL(technicalPath, "lesson")', context) as URL;
+  assert.equal(url.pathname, path);
+  for (const forbidden of ["/interview-prep/api/private", "/interview-prep/java", "/interview-prep/java/../settings"]) {
+    context.technicalPath = forbidden;
+    assert.throws(() => vm.runInContext('downloadURL(technicalPath, "lesson")', context));
+  }
 });
