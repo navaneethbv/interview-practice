@@ -1,5 +1,6 @@
 import { Sandbox } from "@vercel/sandbox";
 import { CPP_COMPILE_ARGS, runCppLocally, runGoLocally, runJavaLocally, type CompiledRunResult } from "@/lib/judge/local-java";
+import { isCrossOrigin } from "@/lib/same-origin";
 
 export const maxDuration = 60;
 
@@ -59,8 +60,7 @@ function snapshotFor(lang: ServerLang) {
  * egress blocked. Development: the local toolchains, only when no snapshot is configured.
  */
 export async function POST(req: Request, ctx: { params: Promise<{ lang: string }> }) {
-  const origin = req.headers.get("origin");
-  if (origin && new URL(origin).host !== req.headers.get("host")) {
+  if (isCrossOrigin(req.headers.get("origin"), req.headers.get("host"))) {
     return Response.json({ error: "Cross-origin requests are not allowed." }, { status: 403 });
   }
   const { lang } = await ctx.params;

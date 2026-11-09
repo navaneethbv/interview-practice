@@ -65,7 +65,7 @@ export function Tour({ onClose, courseTitle, chapterCount, quizSize, passPercent
       document.removeEventListener("keydown", onKey);
       el?.close();
     };
-  }, []);
+  }, [steps.length]);
 
   return (
     <dialog
